@@ -24,7 +24,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Uli Fechner
@@ -48,6 +48,6 @@ class StatusMessagesOutputTest {
     @ParameterizedTest
     @MethodSource("statusGetHigherSeverityTestMethodSource")
     void statusGetHigherSeverityTest(final StatusMessagesOutput.Status statusThis, final StatusMessagesOutput.Status statusOther, final StatusMessagesOutput.Status expected) {
-        assertEquals(expected, statusThis.getHigherSeverity(statusOther));
+        assertThat(statusThis.getHigherSeverity(statusOther)).isEqualTo(expected);
     }
 }

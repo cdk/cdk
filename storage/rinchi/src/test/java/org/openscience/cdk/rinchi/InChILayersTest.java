@@ -26,7 +26,7 @@ import org.openscience.cdk.exception.CDKException;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  *  @author Uli Fechner
@@ -42,9 +42,9 @@ class InChILayersTest {
         inChILayers.append("");
 
         // assert
-        assertTrue(inChILayers.getMajors().isEmpty());
-        assertTrue(inChILayers.getMinors().isEmpty());
-        assertEquals(0, inChILayers.getProtonCount());
+        assertThat(inChILayers.getMajors()).isEmpty();
+        assertThat(inChILayers.getMinors()).isEmpty();
+        assertThat(inChILayers.getProtonCount()).isEqualTo(0);
     }
 
     @Test
@@ -53,7 +53,7 @@ class InChILayersTest {
         final InChILayers inChILayers = new InChILayers();
 
         // act & assert
-        assertThrows(CDKException.class, () -> inChILayers.append("InChI=1S"));
+        assertThatThrownBy(() -> inChILayers.append("InChI=1S")).isInstanceOf(CDKException.class);
     }
 
     @Test
@@ -62,7 +62,7 @@ class InChILayersTest {
         final InChILayers inChILayers = new InChILayers();
 
         // act & assert
-        assertThrows(CDKException.class, () -> inChILayers.append("InChI=1A/C2H6O/c1-2-3/h3H,2H2,1H3"));
+        assertThatThrownBy(() -> inChILayers.append("InChI=1A/C2H6O/c1-2-3/h3H,2H2,1H3")).isInstanceOf(CDKException.class);
     }
 
     @Test
@@ -71,7 +71,7 @@ class InChILayersTest {
         final InChILayers inChILayers = new InChILayers();
 
         // act & assert
-        assertThrows(CDKException.class, () -> inChILayers.append("InChI=2S/C2H6O/c1-2-3/h3H,2H2,1H3"));
+        assertThatThrownBy(() -> inChILayers.append("InChI=2S/C2H6O/c1-2-3/h3H,2H2,1H3")).isInstanceOf(CDKException.class);
     }
 
     @Test
@@ -80,7 +80,7 @@ class InChILayersTest {
         final InChILayers inChILayers = new InChILayers();
 
         // act & assert
-        assertThrows(CDKException.class, () -> inChILayers.append("inchi=1S/C2H6O/c1-2-3/h3H,2H2,1H3"));
+        assertThatThrownBy(() -> inChILayers.append("inchi=1S/C2H6O/c1-2-3/h3H,2H2,1H3")).isInstanceOf(CDKException.class);
     }
 
     static Stream<Arguments> append_validInchi_Test_MethodSource() {
@@ -111,9 +111,9 @@ class InChILayersTest {
         inChILayers.append(inchi);
 
         // assert
-        assertEquals(majorsExpected, inChILayers.getMajors());
-        assertEquals(minorsExpected, inChILayers.getMinors());
-        assertEquals(protonCountExpected, inChILayers.getProtonCount());
+        assertThat(inChILayers.getMajors()).isEqualTo(majorsExpected);
+        assertThat(inChILayers.getMinors()).isEqualTo(minorsExpected);
+        assertThat(inChILayers.getProtonCount()).isEqualTo(protonCountExpected);
     }
 
     static Stream<Arguments> protonCount2CharTestMethodSource() {
@@ -154,6 +154,6 @@ class InChILayersTest {
     @MethodSource("protonCount2CharTestMethodSource")
     void protonCount2CharTest (final int protonCount, final char expected) {
         final char actual = InChILayers.protonCount2Char(protonCount);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

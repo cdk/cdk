@@ -44,9 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.openscience.cdk.rinchi.RInChIGeneratorTest.messages.ELEMENT_R_NOT_RECOGNISED;
 import static org.openscience.cdk.rinchi.RInChIGeneratorTest.messages.EMPTY_STRUCTURE;
 import static org.openscience.cdk.rinchi.StatusMessagesOutput.Status.ERROR;
@@ -144,7 +142,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         final boolean actual = generator.isProductsFirst(reactants, products);
 
         // assert
-        assertFalse(actual);
+        assertThat(actual).isFalse();
     }
 
     @Test
@@ -170,7 +168,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         final boolean actual = generator.isProductsFirst(reactants, products);
 
         // assert
-        assertTrue(actual);
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -196,7 +194,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         final boolean actual = generator.isProductsFirst(reactants, products);
 
         // assert
-        assertTrue(actual);
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -222,7 +220,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         final boolean actual = generator.isProductsFirst(reactants, products);
 
         // assert
-        assertTrue(actual);
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -248,7 +246,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         final boolean actual = generator.isProductsFirst(reactants, products);
 
         // assert
-        assertTrue(actual);
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -490,7 +488,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         final RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
 
         // assert
-        assertNotNull(generator);
+        assertThat(generator).isNotNull();
         Assertions.assertEquals(rinchiFullInformation.get("RInChI"), generator.getRInChI(), "RinChI:");
         Assertions.assertEquals(rinchiFullInformation.get("RAuxInfo"), generator.getAuxInfo(), "RAuxInfo:");
         Assertions.assertEquals(rinchiFullInformation.get("Long-RInChIKey"), generator.getLongRInChIKey(), "Long-RInChIKey:");
@@ -515,7 +513,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         final Map<String, String> rinchiFullInformation = new HashMap<>();
 
         final URL resource = this.getClass().getClassLoader().getResource(filename);
-        assertNotNull(resource, String.format("File %s not found in classpath!", filename));
+        assertThat(resource).describedAs(String.format("File %s not found in classpath!", filename)).isNotNull();
         final Path path = Paths.get(resource.toURI());
         final List<String> lines = Files.readAllLines(path);
 

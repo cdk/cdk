@@ -25,8 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.security.NoSuchAlgorithmException;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Uli Fechner
@@ -45,7 +44,7 @@ class RInChIHashTest {
     @ParameterizedTest
     @MethodSource("generateSha2TestMethodSource")
     void generateSha2Test(final String input, final int[] expected) throws NoSuchAlgorithmException {
-        assertArrayEquals(expected, RInChIHash.generateSha2(input));
+        assertThat(RInChIHash.generateSha2(input)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> hash04CharTestMethodSource() {
@@ -58,7 +57,7 @@ class RInChIHashTest {
     @ParameterizedTest
     @MethodSource("hash04CharTestMethodSource")
     void hash04CharTest(final String input, final String expected) throws NoSuchAlgorithmException {
-        assertEquals(expected, RInChIHash.hash04char(input));
+        assertThat(RInChIHash.hash04char(input)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> hash10CharTestMethodSource() {
@@ -71,7 +70,7 @@ class RInChIHashTest {
     @ParameterizedTest
     @MethodSource("hash10CharTestMethodSource")
     void hash10CharTest(final String input, final String expected) throws NoSuchAlgorithmException {
-        assertEquals(expected, RInChIHash.hash10char(input));
+        assertThat(RInChIHash.hash10char(input)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> hash12CharTestMethodSource() {
@@ -84,7 +83,7 @@ class RInChIHashTest {
     @ParameterizedTest
     @MethodSource("hash12CharTestMethodSource")
     void hash12CharTest(final String input, final String expected) throws NoSuchAlgorithmException {
-        assertEquals(expected, RInChIHash.hash12char(input));
+        assertThat(RInChIHash.hash12char(input)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> hash14CharTestMethodSource() {
@@ -97,7 +96,7 @@ class RInChIHashTest {
     @ParameterizedTest
     @MethodSource("hash14CharTestMethodSource")
     void hash14CharTest(final String input, final String expected) throws NoSuchAlgorithmException {
-        assertEquals(expected, RInChIHash.hash14char(input));
+        assertThat(RInChIHash.hash14char(input)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> hash17CharTestMethodSource() {
@@ -110,6 +109,6 @@ class RInChIHashTest {
     @ParameterizedTest
     @MethodSource("hash17CharTestMethodSource")
     void hash17CharTest(final String input, final String expected) throws NoSuchAlgorithmException {
-        assertEquals(expected, RInChIHash.hash17char(input));
+        assertThat(RInChIHash.hash17char(input)).isEqualTo(expected);
     }
 }

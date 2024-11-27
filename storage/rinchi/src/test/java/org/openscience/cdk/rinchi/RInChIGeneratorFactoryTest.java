@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.rinchi;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
@@ -38,7 +37,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Nikolay Kochev
@@ -49,22 +48,22 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 	@Test
 	void testGetInstance() {
 		RInChIGeneratorFactory factory = RInChIGeneratorFactory.getInstance();
-		assertNotNull(factory);
+		assertThat(factory).isNotNull();
 	}
 
 	@Test
 	void testGetInstance_multipleCalls_sameInstance() {
 		RInChIGeneratorFactory factory1 = RInChIGeneratorFactory.getInstance();
-		assertNotNull(factory1);
+		assertThat(factory1).isNotNull();
 
 		RInChIGeneratorFactory factory2 = RInChIGeneratorFactory.getInstance();
-		assertNotNull(factory2);
+		assertThat(factory2).isNotNull();
 
 		RInChIGeneratorFactory factory3 = RInChIGeneratorFactory.getInstance();
-		assertNotNull(factory3);
+		assertThat(factory3).isNotNull();
 
-		assertSame(factory1, factory2, "Asserting that getInstance returns the same instance with every call");
-		assertSame(factory2, factory3, "Asserting that getInstance returns the same instance with every call");
+		assertThat(factory1).isSameAs(factory2);
+		assertThat(factory2).isSameAs(factory3);
 	}
 
 	@Test
@@ -83,11 +82,11 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		}
 
 		executorService.shutdown();
-		assertTrue(executorService.awaitTermination(5, TimeUnit.SECONDS));
+		assertThat(executorService.awaitTermination(5, TimeUnit.SECONDS)).isTrue();
 
-		Assertions.assertEquals(numberOfMethodCalls, factoryInstancesQueue.size());
+		assertThat(factoryInstancesQueue.size()).isEqualTo(numberOfMethodCalls);
 		for (RInChIGeneratorFactory factory: factoryInstancesQueue) {
-			assertSame(singletonInstance, factory);
+			assertThat(factory).isSameAs(singletonInstance);
 		}
 	}
 	
@@ -144,46 +143,42 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		
 		//Generate RInChI
 		RInChIGenerator generator1 = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
-		Assertions.assertEquals(StatusMessagesOutput.Status.SUCCESS, generator1.getStatus(), "RInChI status: ");
-		Assertions.assertTrue(generator1.getRInChI().endsWith("/d+"), "Forward reaction RInChI: ");
-		
+		assertThat(generator1.getStatus()).isEqualTo(StatusMessagesOutput.Status.SUCCESS);
+		assertThat(generator1.getRInChI()).endsWith("/d+");
+
 		//Generate RInChI with option ForceEquilibrium		
 		RInChIGenerator generatorEquilibrium = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction, RInChIOption.FORCE_EQUILIBRIUM);
-		Assertions.assertTrue(generatorEquilibrium.getRInChI().endsWith("/d="), "Equilibrium reaction RInChI: ");
-				
+		assertThat(generatorEquilibrium.getRInChI()).endsWith("/d=");
+
 		//Create reverse reaction and generate RInChI
 		IReaction reaction2 = SilentChemObjectBuilder.getInstance().newReaction();
 		reaction2.addReactant(molecule3);
 		reaction2.addProduct(molecule1);
 		reaction2.addProduct(molecule2);
 		RInChIGenerator generator2 = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction2);
-		Assertions.assertTrue(generator2.getRInChI().endsWith("/d-"), "Backward reaction RInChI: ");
-		
+		assertThat(generator2.getRInChI()).endsWith("/d-");
+
 		//Backward, forward and equilibrium RInChIs differ only in their last char
 		int n = generator1.getRInChI().length();
-		Assertions.assertEquals(generator1.getRInChI().substring(0, n-1), generator2.getRInChI().substring(0, n-1),
-				"Forward and backward RInChI comparison: ");
-		Assertions.assertEquals(generator1.getRInChI().substring(0, n-1), generatorEquilibrium.getRInChI().substring(0, n-1),
-				"Forward and equilibrium RInChI comparison: ");
-		
+		assertThat(generator1.getRInChI().substring(0, n-1)).isEqualTo(generator2.getRInChI().substring(0, n-1));
+		assertThat(generator1.getRInChI().substring(n-1)).isEqualTo(generatorEquilibrium.getRInChI().substring(n-1));
+
 		//Backward, forward and equilibrium RInChIs-Keys differ only in their 19-th char
-		Assertions.assertEquals(generator1.getLongRInChIKey().substring(0, 18), generator2.getLongRInChIKey().substring(0, 18),
-				"Forward and backward Long-RInChI-Key comparison: ");
-		Assertions.assertEquals(generator1.getLongRInChIKey().substring(19), generator2.getLongRInChIKey().substring(19),
-				"Forward and backward Long-RInChI-Key comparison: ");
-		Assertions.assertEquals('F', generator1.getLongRInChIKey().charAt(18), "Reaction direction char in Long-RInChI-Key");
-		Assertions.assertEquals('E', generatorEquilibrium.getLongRInChIKey().charAt(18), "Reaction direction char in Long-RInChI-Key");
-		Assertions.assertEquals('B', generator2.getLongRInChIKey().charAt(18), "Reaction direction char in Long-RInChI-Key");
-		
+		assertThat(generator1.getLongRInChIKey().substring(0, 18)).isEqualTo(generator2.getLongRInChIKey().substring(0, 18));
+		assertThat(generator1.getLongRInChIKey().substring(19)).isEqualTo(generator2.getLongRInChIKey().substring(19));
+		assertThat(generator1.getLongRInChIKey().charAt(18)).isEqualTo('F');
+		assertThat(generatorEquilibrium.getLongRInChIKey().charAt(18)).isEqualTo('E');
+		assertThat(generator2.getLongRInChIKey().charAt(18)).isEqualTo('B');
+
 		//Generate back a IReaction object from RInChI
 		RInChIToReaction rinchiToReaction = RInChIGeneratorFactory.getInstance().getRInChIToReaction(generator1.getRInChI());
-		Assertions.assertEquals(StatusMessagesOutput.Status.SUCCESS, rinchiToReaction.getStatus(), "RInChI status: ");
+		assertThat(rinchiToReaction.getStatus()).isEqualTo(StatusMessagesOutput.Status.SUCCESS);
 		IReaction reaction3 = rinchiToReaction.getReaction();
-		Assertions.assertEquals(2, reaction3.getReactantCount(), "Reactant count: ");
-		Assertions.assertEquals(1, reaction3.getProductCount(), "Product count: ");
-		Assertions.assertEquals(2, reaction3.getReactants().getAtomContainer(0).getAtomCount(), "Reactant 1 atom count: ");
-		Assertions.assertEquals(4, reaction3.getReactants().getAtomContainer(1).getAtomCount(), "Reactant 2 atom count: ");
-		Assertions.assertEquals(6, reaction3.getProducts().getAtomContainer(0).getAtomCount(), "Product atom count: ");
+		assertThat(reaction3.getReactantCount()).isEqualTo(2);
+		assertThat(reaction3.getProductCount()).isEqualTo(1);
+		assertThat(reaction3.getReactants().getAtomContainer(0).getAtomCount()).isEqualTo(2);
+		assertThat(reaction3.getReactants().getAtomContainer(1).getAtomCount()).isEqualTo(4);
+		assertThat(reaction3.getReactants().getAtomContainer(0).getAtomCount()).isEqualTo(6);
 	}
 
 	@Test
@@ -239,14 +234,13 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 
 		//Generate RInChI
 		RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
-		Assertions.assertEquals(RInChIGenerator.Status.SUCCESS, generator.getStatus(), "RInChI status: ");
-		Assertions.assertEquals("RInChI=1.00.1S/<>C6H6/c1-2-4-6-5-3-1/h1-6H/d-", generator.getRInChI());
-		Assertions.assertEquals("Long-RInChIKey=SA-BUHFF---UHOVQNZJYSORNB-UHFFFAOYSA-N", generator.getLongRInChIKey());
-		Assertions.assertEquals("Short-RInChIKey=SA-BUHFF-UHFFFADPSC-UHOVQNZJYS-UHFFFADPSC-NUHFF-NUHFF-NUHFF-ZZZ", generator.getShortRInChIKey());
-		Assertions.assertEquals("Web-RInChIKey=UHOVQNZJYSORNBOAP-NUHFFFADPSCTJSA", generator.getWebRInChIKey());
+		assertThat(generator.getStatus()).isEqualTo(StatusMessagesOutput.Status.SUCCESS);
+		assertThat(generator.getRInChI()).isEqualTo("RInChI=1.00.1S/<>C6H6/c1-2-4-6-5-3-1/h1-6H/d-");
+		assertThat(generator.getLongRInChIKey()).isEqualTo("Long-RInChIKey=SA-BUHFF---UHOVQNZJYSORNB-UHFFFAOYSA-N");
+		assertThat(generator.getShortRInChIKey()).isEqualTo("Short-RInChIKey=SA-BUHFF-UHFFFADPSC-UHOVQNZJYS-UHFFFADPSC-NUHFF-NUHFF-NUHFF-ZZZ");
+		assertThat(generator.getWebRInChIKey()).isEqualTo("Web-RInChIKey=UHOVQNZJYSORNBOAP-NUHFFFADPSCTJSA");
 	}
 
-	@Disabled("IBond.Order.UNSET not supported by jna-inchi.")
 	@Test
 	void test03_benzene_aromatic() {
 		//Create aromatic benzene for testing conversion of CDK bonds of type UNSET flagged as aromatic
@@ -300,10 +294,9 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 
 		//Generate RInChI
 		RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
-		Assertions.assertEquals("Cannot generate RInChI: Failed to generate InChI: Unsupported bond type", generator.getMessages().get(0), "RInChIGenerator messages:");
-		//Since jna-inchi does not support IBond.Order.UNSET this will always fail
-		Assertions.assertEquals(StatusMessagesOutput.Status.SUCCESS, generator.getStatus(), "RInChI status: ");
-		Assertions.assertEquals("RInChI=1.00.1S/<>C6H6/c1-2-4-6-5-3-1/h1-6H/d-", generator.getRInChI(), "RInChI for benzene: ");
+		// since jna-inchi does not support IBond.Order.UNSET this will always fail
+		assertThat(generator.getMessages().get(0)).isEqualTo("Cannot generate RInChI: Failed to generate InChI: Unsupported bond type");
+		assertThat(generator.getStatus()).isEqualTo(StatusMessagesOutput.Status.ERROR);
 	}
 
 	@Test
@@ -333,9 +326,9 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		
 		//Generate RInChI
 		RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
-		Assertions.assertEquals(StatusMessagesOutput.Status.SUCCESS, generator.getStatus(), "RInChI status: ");
-		Assertions.assertEquals("RInChI=1.00.1S/<>C3H7/c1-3-2/h1,3H2,2H3/d-", generator.getRInChI(), "RInChI for propane radical: ");
-		Assertions.assertEquals("RAuxInfo=1.00.1/<>0/N:1,3,2/CRV:1d/rA:3nC.2CC/rB:s1;s2;/rC:;;;", generator.getAuxInfo(), "RAuxInfo for propane radical: ");
+		assertThat(generator.getStatus()).isEqualTo(StatusMessagesOutput.Status.SUCCESS);
+		assertThat(generator.getRInChI()).isEqualTo("RInChI=1.00.1S/<>C3H7/c1-3-2/h1,3H2,2H3/d-");
+		assertThat(generator.getAuxInfo()).isEqualTo("RAuxInfo=1.00.1/<>0/N:1,3,2/CRV:1d/rA:3nC.2CC/rB:s1;s2;/rC:;;;");
 	}
 
 	@Test
@@ -367,9 +360,9 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		
 		//Generate RInChI
 		RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
-		Assertions.assertEquals(RInChIGenerator.Status.SUCCESS, generator.getStatus(), "RInChI status: ");
-		Assertions.assertEquals("RInChI=1.00.1S/<>C3H6/c1-3-2/h1H,3H2,2H3/d-", generator.getRInChI(), "RInChI for propane radical: ");
-		Assertions.assertEquals("RAuxInfo=1.00.1/<>0/N:1,3,2/CRV:1t/rA:3nC.3CC/rB:s1;s2;/rC:;;;", generator.getAuxInfo(), "RAuxInfo for propane radical: ");
+		assertThat(generator.getStatus()).isEqualTo(StatusMessagesOutput.Status.SUCCESS);
+		assertThat(generator.getRInChI()).isEqualTo("RInChI=1.00.1S/<>C3H6/c1-3-2/h1H,3H2,2H3/d-");
+		assertThat(generator.getAuxInfo()).isEqualTo("RAuxInfo=1.00.1/<>0/N:1,3,2/CRV:1t/rA:3nC.3CC/rB:s1;s2;/rC:;;;");
 	}
 
 }

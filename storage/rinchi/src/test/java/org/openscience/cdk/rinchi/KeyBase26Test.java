@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Felix Bänsch
@@ -39,42 +39,42 @@ class KeyBase26Test {
 
     @Test
     void getBase26Triplet_2703_DZZ() {
-        assertEquals("DZZ", KeyBase26.getBase26Triplet(2703));
+        assertThat(KeyBase26.getBase26Triplet(2703)).isEqualTo("DZZ");
     }
 
     @Test
     void getBase26Triplet_2704_FAA() {
-        assertEquals("FAA", KeyBase26.getBase26Triplet(2704));
+        assertThat(KeyBase26.getBase26Triplet(2704)).isEqualTo("FAA");
     }
 
     @Test
     void getBase26Triplet_16383_ZZZ() {
-        assertEquals("ZZZ", KeyBase26.getBase26Triplet(16383));
+        assertThat(KeyBase26.getBase26Triplet(16383)).isEqualTo("ZZZ");
     }
 
     @Test
     void base26Triplet_701_BAZ_Test() {
-        assertEquals("BAZ", KeyBase26.getBase26Triplet(701));
+        assertThat(KeyBase26.getBase26Triplet(701)).isEqualTo("BAZ");
     }
 
     @Test
     void base26Triplet_676_BAA_Test() {
-        assertEquals("BAA", KeyBase26.getBase26Triplet(676));
+        assertThat(KeyBase26.getBase26Triplet(676)).isEqualTo("BAA");
     }
 
     @Test
     void base26Triplet_0_AAA_Test() {
-        assertEquals("AAA", KeyBase26.getBase26Triplet(0));
+        assertThat(KeyBase26.getBase26Triplet(0)).isEqualTo("AAA");
     }
 
     @Test
     void base26Doublet_675_ZZ_Test() {
-        assertEquals("ZZ", KeyBase26.getBase26Doublet(675));
+        assertThat(KeyBase26.getBase26Doublet(675)).isEqualTo("ZZ");
     }
 
     @Test
     void base26Doublet_256_JW_Test() {
-        assertEquals("JW", KeyBase26.getBase26Doublet(256));
+        assertThat(KeyBase26.getBase26Doublet(256)).isEqualTo("JW");
     }
 
     @Test
@@ -84,7 +84,7 @@ class KeyBase26Test {
             final String[] doublet26 = reader.lines().toArray(String[]::new);
 
             for (int index = 0; index < doublet26.length; index++) {
-                assertEquals(doublet26[index], KeyBase26.getBase26Doublet(index));
+                assertThat(KeyBase26.getBase26Doublet(index)).isEqualTo(doublet26[index]);
             }
         }
     }
@@ -96,7 +96,7 @@ class KeyBase26Test {
             final String[] triplets26 = reader.lines().toArray(String[]::new);
 
             for (int index = 0; index < triplets26.length; index++) {
-                assertEquals(triplets26[index], KeyBase26.getBase26Triplet(index));
+                assertThat(KeyBase26.getBase26Triplet(index)).isEqualTo(triplets26[index]);
             }
         }
     }
@@ -116,7 +116,7 @@ class KeyBase26Test {
     @MethodSource("base26Triplet1TestMethodSource")
     void base26Triplet1Test(final int[] input, final String expected) {
         final String actual = KeyBase26.base26Triplet1(input);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     static Stream<Arguments> base26Triplet2TestMethodSource() {
@@ -133,7 +133,7 @@ class KeyBase26Test {
     @MethodSource("base26Triplet2TestMethodSource")
     void base26Triplet2Test(final int[] input, final String expected) {
         final String actual = KeyBase26.base26Triplet2(input);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     static Stream<Arguments> base26Triplet3TestMethodSource() {
@@ -149,7 +149,7 @@ class KeyBase26Test {
     @MethodSource("base26Triplet3TestMethodSource")
     void base26Triplet3Test(final int[] input, final String expected) {
         final String actual = KeyBase26.base26Triplet3(input);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     static Stream<Arguments> base26Triplet4TestMethodSource() {
@@ -165,7 +165,7 @@ class KeyBase26Test {
     @MethodSource("base26Triplet4TestMethodSource")
     void base26Triplet4Test(final int[] input, final String expected) {
         final String actual = KeyBase26.base26Triplet4(input);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     static Stream<Arguments> base26DoubletForBits56To64MethodSource() {
@@ -180,7 +180,7 @@ class KeyBase26Test {
     @MethodSource("base26DoubletForBits56To64MethodSource")
     void base26DoubletForBits56To64Test(final int[] input, final String expected) {
         final String actual = KeyBase26.base26DoubletForBits56To64(input);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
 }
