@@ -305,7 +305,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         // integer with value 1 n positions to the left
         // for cases where n > 32 an exception is thrown
         int n = nums.length;
-        if (n > 30) {
+        if (n > 31) {
             throw new ArithmeticException("You attempted to make more subsets than an primitive integer can handle");
         }
         int numOfSubsets = 1 << n;
