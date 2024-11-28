@@ -33,7 +33,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -190,14 +189,14 @@ public class ExhaustiveFragmenter implements IFragmenter {
         int numberOfIterations = (1 << splittableBondsLength) - 1;
 
 
-        List<List<Integer>> allSubsets = generateSubsets(IntStream.rangeClosed(0, splittableBondsLength).toArray());
+        int[][] allSubsets = generateSubsets(IntStream.rangeClosed(0, splittableBondsLength).toArray());
         int[] splittableBondIndices = new int[splittableBondsLength];
         for (int i = 0; i < splittableBondsLength; i++) {
             splittableBondIndices[i] = splittableBonds[i].getIndex();
         }
 
         for (int i = 0; i < numberOfIterations; i ++){
-            int subsetSize = allSubsets.get(i).size();
+            int subsetSize = allSubsets[i].length;
             IBond[] bondsToRemove = new IBond[subsetSize];
             for (int j = 0; j < subsetSize; j++) {
                 bondsToRemove[j] = atomContainer.getBond(splittableBondIndices[j]);
@@ -278,37 +277,64 @@ public class ExhaustiveFragmenter implements IFragmenter {
         return splitableBonds.toArray(new IBond[0]);
     }
 
-    private static List<List<Integer>> generateSubsets(int[] nums) throws ArithmeticException {
+    /**
+     * Generates all possible subsets (of all possible sample sizes, ranging from 1 to the length of nums)
+     * of the numbers given in nums, ignoring the order, so [1,2] and [2,1] are regarded as equal and only
+     * one of them is returned.
+     * The number of possible subsets is (2^n) - 1 with n = length of nums.
+     * Example output for nums = [1,2,3] (2^3 - 1 = 7):
+     * [1]
+     * [2]
+     * [3]
+     * [1,2]
+     * [1,3]
+     * [2,3]
+     * [1,2,3]
+     * The empty set [] is not part of the output.
+     * The returned subsets will be ordered differently because they are generated based on bit shifts internally.
+     *
+     * @param nums set of integers from which to generate all possible subsets, sets
+     *             containing the same number multiple times do not lead to an exception but maybe do not make much sense.
+     * @return all possible subsets.
+     * @throws ArithmeticException if the number of elements in the nums array is greater than 30. Because it is not
+     *         possible to create indexed data structures with more than 2^31 - 1 values.
+     * @author Tom Weiß
+     */
+    private static int[][] generateSubsets(int[] nums) throws ArithmeticException {
+        // calculate nr of different subsets (2^n including the empty set) by shifting the 0th bit of an
+        // integer with value 1 n positions to the left
+        // for cases where n > 32 an exception is thrown
         int n = nums.length;
         if (n > 30) {
             throw new ArithmeticException("You attempted to make more subsets than an primitive integer can handle");
         }
         int numOfSubsets = 1 << n;
-        List<List<Integer>> result = new ArrayList<>(numOfSubsets);
 
-        // we can collect all subsets if we iterate from one (to disregard the empty set) to the number
-        // of possible subsets and check for each number which bits are set to one and replace this
-        // index by the respective number at the same index from the given nums list.
+        // collect all subsets by iterating from one (to disregard the empty set) to the number
+        // of possible subsets and check for each number which bits are on and replace this
+        // index by the respective number at the same index from the given nums int array
         // Example:
         // nums = [1, 2, 3]
-        // first iteration:
-        // 0b001 (1)
-        // -> [1]
-        // second iteration:
-        // 0b010 (2)
-        // -> [2]
-        // third iteration:
-        // 0b011 (3)
-        // -> [1, 2]
-        // ...
+        // i    bit value   subset
+        // 1    0b001       [1]
+        // 2    0b010       [2]
+        // 3    0b011       [1,2]
+        // 4    0b100       [3]
+        // 5    0b101       [1,3]
+        // 6    0b110       [2,3]
+        // 7    0b111       [1,2,3]
+        int[][] result = new int[numOfSubsets - 1][];
         for (int i = 1; i < numOfSubsets; i++) {
-            List<Integer> subset = new ArrayList<>();
+            int[] subset = new int[Integer.bitCount(i)];
+            // keep track of the next index to add a number
+            int resultIndex = 0;
             for (int j = 0; j < n; j++) {
                 if (((i >> j) & 1) == 1) {
-                    subset.add(nums[j]);
+                    subset[resultIndex] = nums[j];
+                    resultIndex++;
                 }
             }
-            result.add(subset);
+            result[i - 1] = subset;
         }
         return result;
     }
