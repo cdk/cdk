@@ -187,7 +187,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
         // {1,3}
         // {2,3}
         // {1,2,3}
-        BigInteger numberOfIterations = BigInteger.ONE.shiftLeft(splittableBondsLength).subtract(BigInteger.ONE);
+        int numberOfIterations = (1 << splittableBondsLength) - 1;
+
 
         List<List<Integer>> allSubsets = generateSubsets(IntStream.rangeClosed(0, splittableBondsLength).toArray());
         int[] splittableBondIndices = new int[splittableBondsLength];
@@ -195,8 +196,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
             splittableBondIndices[i] = splittableBonds[i].getIndex();
         }
 
-        for (BigInteger i = BigInteger.ZERO; i.compareTo(numberOfIterations) < 0; i = i.add(BigInteger.ONE)){
-            int subsetSize = allSubsets.get(i.intValue()).size();
+        for (int i = 0; i < numberOfIterations; i ++){
+            int subsetSize = allSubsets.get(i).size();
             IBond[] bondsToRemove = new IBond[subsetSize];
             for (int j = 0; j < subsetSize; j++) {
                 bondsToRemove[j] = atomContainer.getBond(splittableBondIndices[j]);
@@ -277,17 +278,13 @@ public class ExhaustiveFragmenter implements IFragmenter {
         return splitableBonds.toArray(new IBond[0]);
     }
 
-    private static List<List<Integer>> generateSubsets(int[] nums) {
+    private static List<List<Integer>> generateSubsets(int[] nums) throws ArithmeticException {
         int n = nums.length;
-        // Just in case n > 32, we make an integer of arbitrary size.
-        List<List<Integer>> result;
-        BigInteger numOfSubsets = BigInteger.ONE.shiftLeft(n);
-        if (n > 32) {
-            result = new ArrayList<>(Integer.MAX_VALUE);
+        if (n > 31) {
+            throw new ArithmeticException("You attempted to make more subsets than an primitive integer can handle");
         }
-        else {
-            result = new ArrayList<>(numOfSubsets.intValue());
-        }
+        int numOfSubsets = 1 << n;
+        List<List<Integer>> result = new ArrayList<>(numOfSubsets);
 
         // we can collect all subsets if we iterate from one (to disregard the empty set) to the number
         // of possible subsets and check for each number which bits are set to one and replace this
@@ -304,10 +301,10 @@ public class ExhaustiveFragmenter implements IFragmenter {
         // 0b011 (3)
         // -> [1, 2]
         // ...
-        for (BigInteger i = BigInteger.ONE; i.compareTo(numOfSubsets) < 0; i = i.add(BigInteger.ONE)) {
+        for (int i = 1; i < numOfSubsets; i++) {
             List<Integer> subset = new ArrayList<>();
-            for (int j = 0; j < n; j++) {
-                if (i.testBit(j)) {
+            for (int j = 0; j < i; j++) {
+                if (((i >> j) & 1) == 1) {
                     subset.add(nums[j]);
                 }
             }
