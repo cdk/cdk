@@ -280,8 +280,14 @@ public class ExhaustiveFragmenter implements IFragmenter {
     private static List<List<Integer>> generateSubsets(int[] nums) {
         int n = nums.length;
         // Just in case n > 32, we make an integer of arbitrary size.
+        List<List<Integer>> result;
         BigInteger numOfSubsets = BigInteger.ONE.shiftLeft(n);
-        List<List<Integer>> result = new ArrayList<>(numOfSubsets.intValue());
+        if (n > 32) {
+            result = new ArrayList<>(Integer.MAX_VALUE);
+        }
+        else {
+            result = new ArrayList<>(numOfSubsets.intValue());
+        }
 
         // we can collect all subsets if we iterate from one (to disregard the empty set) to the number
         // of possible subsets and check for each number which bits are set to one and replace this
