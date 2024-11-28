@@ -280,7 +280,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     private static List<List<Integer>> generateSubsets(int[] nums) throws ArithmeticException {
         int n = nums.length;
-        if (n > 31) {
+        if (n > 30) {
             throw new ArithmeticException("You attempted to make more subsets than an primitive integer can handle");
         }
         int numOfSubsets = 1 << n;
@@ -303,7 +303,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         // ...
         for (int i = 1; i < numOfSubsets; i++) {
             List<Integer> subset = new ArrayList<>();
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < n; j++) {
                 if (((i >> j) & 1) == 1) {
                     subset.add(nums[j]);
                 }
