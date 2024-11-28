@@ -25,10 +25,7 @@ package org.openscience.cdk.fragment;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -36,17 +33,16 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigInteger;
+import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * Generate fragments exhaustively.
  * <p>
- * This fragmentation scheme simply breaks single non-ring bonds. By default
- * fragments smaller than 6 atoms in size are not considered and the returned
- * fragments are not saturated, but this can be changed by the user.
+ * This fragmentation scheme simply breaks single non-ring bonds. By default,
+ * fragments smaller than 6 atoms (without implicit hydrogen) in size are not
+ * considered and the returned fragments are not saturated, but this can be changed by the user.
  * Side chains are retained.
  *
  * <p>Example Usage</p>
@@ -174,40 +170,66 @@ public class ExhaustiveFragmenter implements IFragmenter {
     private void runSaturated(IAtomContainer atomContainer) throws CDKException {
 
         if (atomContainer.getBondCount() < 3) return;
-        List<IBond> splitableBonds = getSplitableBonds(atomContainer);
-        if (splitableBonds.size() == 0) return;
-        logger.debug("Got " + splitableBonds.size() + " splittable bonds");
+        IBond[] splittableBonds = getSplitableBonds(atomContainer);
+        int splittableBondsLength = splittableBonds.length;
+        if (splittableBondsLength == 0) return;
+        logger.debug("Got " + splittableBondsLength + " splittable bonds");
 
-        String tmpSmiles;
-//        int[] saturatedAtomIDs = new int[splitableBonds.size() * 2];
-        for (IBond bond : splitableBonds) {
-            List<IAtomContainer> parts = FragmentUtils.splitMolecule(atomContainer, bond);
+        // If we want to check all unique combinations of splittings we calculate the power set of the splittable bonds.
+        // which is 2^n and without considering the empty set we can say it is 2^n - 1.
+        // example:
+        // if we have a set of splittable bonds here represented as numbers {1, 2, 3}, we can describe all unique
+        // subsets as follows:
+        // {1}
+        // {2}
+        // {3}
+        // {1,2}
+        // {1,3}
+        // {2,3}
+        // {1,2,3}
+        BigInteger numberOfIterations = BigInteger.ONE.shiftLeft(splittableBondsLength).subtract(BigInteger.ONE);
 
-            // make sure we don't add the same fragment twice
+        List<List<Integer>> allSubsets = generateSubsets(IntStream.rangeClosed(0, splittableBondsLength).toArray());
+        int[] splittableBondIndices = new int[splittableBondsLength];
+        for (int i = 0; i < splittableBondsLength; i++) {
+            splittableBondIndices[i] = splittableBonds[i].getIndex();
+        }
+
+        for (BigInteger i = BigInteger.ZERO; i.compareTo(numberOfIterations) < 0; i = i.add(BigInteger.ONE)){
+            int subsetSize = allSubsets.get(i.intValue()).size();
+            IBond[] bondsToRemove = new IBond[subsetSize];
+            for (int j = 0; j < subsetSize; j++) {
+                bondsToRemove[j] = atomContainer.getBond(splittableBondIndices[j]);
+            }
+//                List<IAtomContainer> parts = FragmentUtils.splitMolecule(molToSplit, bondToSplit);
+            IAtomContainer[] parts = splitMoleculeWithCopy(atomContainer, bondsToRemove);
             for (IAtomContainer partContainer : parts) {
                 AtomContainerManipulator.clearAtomConfigurations(partContainer);
-                for (IAtom atom : partContainer.atoms())
-                    atom.setImplicitHydrogenCount(null);
+                for (IAtom atom : partContainer.atoms()) {
+                    atom.setImplicitHydrogenCount(0);
+                }
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
                 CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
                 Aromaticity.cdkLegacy().apply(partContainer);
-                tmpSmiles = smilesGenerator.create(partContainer);
-                if (partContainer.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
+                String tmpSmiles = smilesGenerator.create(partContainer);
+                int numberOfAtoms = partContainer.getAtomCount();
+                if (numberOfAtoms >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
                     fragMap.put(tmpSmiles, partContainer);
-                    if (partContainer.getAtomCount() > minFragSize) {
-                        runSaturated(partContainer);
-                    }
+                }
+                if (numberOfAtoms < minFragSize) {
+                    break;
                 }
             }
+
         }
     }
 
     private void runUnsaturated(IAtomContainer atomContainer) throws CDKException {
 
         if (atomContainer.getBondCount() < 3) return;
-        List<IBond> splitableBonds = getSplitableBonds(atomContainer);
-        if (splitableBonds.size() == 0) return;
-        logger.debug("Got " + splitableBonds.size() + " splittable bonds");
+        IBond[] splitableBonds = getSplitableBonds(atomContainer);
+        if (splitableBonds.length == 0) return;
+        logger.debug("Got " + splitableBonds.length + " splittable bonds");
 
         String tmpSmiles;
         for (IBond bond : splitableBonds) {
@@ -226,7 +248,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         }
     }
 
-    private List<IBond> getSplitableBonds(IAtomContainer atomContainer) {
+    private IBond[] getSplitableBonds(IAtomContainer atomContainer) {
         // do ring detection
         SpanningTree spanningTree = new SpanningTree(atomContainer);
         IRingSet allRings = spanningTree.getAllRings();
@@ -252,7 +274,101 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
             if (!(isInRing || isTerminal)) splitableBonds.add(bond);
         }
-        return splitableBonds;
+        return splitableBonds.toArray(new IBond[0]);
+    }
+
+    private static List<List<Integer>> generateSubsets(int[] nums) {
+        int n = nums.length;
+        // Just in case n > 32, we make an integer of arbitrary size.
+        BigInteger numOfSubsets = BigInteger.ONE.shiftLeft(n);
+        List<List<Integer>> result = new ArrayList<>(numOfSubsets.intValue());
+
+        // we can collect all subsets if we iterate from one (to disregard the empty set) to the number
+        // of possible subsets and check for each number which bits are set to one and replace this
+        // index by the respective number at the same index from the given nums list.
+        // Example:
+        // nums = [1, 2, 3]
+        // first iteration:
+        // 0b001 (1)
+        // -> [1]
+        // second iteration:
+        // 0b010 (2)
+        // -> [2]
+        // third iteration:
+        // 0b011 (3)
+        // -> [1, 2]
+        // ...
+        for (BigInteger i = BigInteger.ONE; i.compareTo(numOfSubsets) < 0; i = i.add(BigInteger.ONE)) {
+            List<Integer> subset = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                if (i.testBit(j)) {
+                    subset.add(nums[j]);
+                }
+            }
+            result.add(subset);
+        }
+        return result;
+    }
+
+    private static IAtom copyAtom(IAtom originalAtom, IAtomContainer atomContainer) {
+        IAtom cpyAtom = atomContainer.newAtom(originalAtom.getAtomicNumber(),
+                originalAtom.getImplicitHydrogenCount());
+        cpyAtom.setIsAromatic(originalAtom.isAromatic());
+        cpyAtom.setValency(originalAtom.getValency());
+        cpyAtom.setAtomTypeName(originalAtom.getAtomTypeName());
+        return cpyAtom;
+    }
+
+    private static IAtomContainer[] splitMoleculeWithCopy(IAtomContainer mol, IBond[] bondsToSplit) {
+        boolean[] alreadyVisited = new boolean[mol.getAtomCount()];
+        // set all values of already visited to false
+        Arrays.fill(alreadyVisited, false);
+        int numberOfFragments = bondsToSplit.length + 1;
+        IAtomContainer[] fragments = new IAtomContainer[numberOfFragments];
+        for (IBond bond : bondsToSplit) {
+            mol.removeBond(bond);
+        }
+        for (int i = 0; i < numberOfFragments; i++) {
+            // new container to hold a fragment
+            IAtomContainer fragmentContainer = mol.getBuilder().newInstance(IAtomContainer.class);
+
+            // a stack to make a DFS through the subgraph
+            IAtom firstAtom;
+            Stack<IAtom> atomStack = new Stack<>();
+            if (i == 0) {
+                atomStack.add(bondsToSplit[0].getBegin());
+                firstAtom = copyAtom(atomStack.peek(), fragmentContainer);
+                for (IAtom nbor : firstAtom.neighbors()) {
+                    IAtom cpyNbor = copyAtom(nbor, fragmentContainer);
+                    fragmentContainer.newBond(firstAtom, cpyNbor, mol.getBond(atomStack.peek(), nbor).getOrder());
+                    atomStack.add(nbor);
+                }
+            } else {
+                atomStack.add(bondsToSplit[i - 1].getEnd());
+                firstAtom = copyAtom(atomStack.peek(), fragmentContainer);
+                for (IAtom nbor : firstAtom.neighbors()) {
+                    IAtom cpyNbor = copyAtom(nbor, fragmentContainer);
+                    fragmentContainer.newBond(firstAtom, cpyNbor, mol.getBond(atomStack.peek(), nbor).getOrder());
+                    atomStack.add(nbor);
+                }
+            }
+            while (!atomStack.isEmpty()) {
+                IAtom lastAtom = atomStack.pop();
+                IAtom cpyAtom = copyAtom(lastAtom, fragmentContainer);
+                alreadyVisited[lastAtom.getIndex()] = true;
+                //FIXME: Add cycle connections together !!!!
+                for (IAtom neighbor: lastAtom.neighbors()) {
+                    if (alreadyVisited[neighbor.getIndex()] == false) {
+                        alreadyVisited[neighbor.getIndex()] = true;
+                        IAtom cpyNeighbor = copyAtom(neighbor, fragmentContainer);
+                        fragmentContainer.newBond(cpyAtom, cpyNeighbor, mol.getBond(lastAtom, neighbor).getOrder());
+                        atomStack.add(neighbor);
+                    }
+                }
+            }
+            fragments[i] = fragmentContainer;
+        }
+        return fragments;
     }
 
     /**

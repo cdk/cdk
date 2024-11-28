@@ -185,10 +185,6 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         Assertions.assertNotNull(fragmenterUnsaturated.getFragmentsAsContainers());
         Assertions.assertEquals(26, fragmenterUnsaturated.getFragmentsAsContainers().length);
 
-        for (String smile : frags) {
-            System.out.println(smile);
-        }
-
         MatcherAssert.assertThat(frags, hasItems("[c]1ccccc1", "[CH2]CC1CCC(c2ccccc2)(CC3C=CC=C3)C1", "[CH2]C1CCC([CH2])(c2ccccc2)C1"));
     }
 
@@ -198,6 +194,9 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterSaturated.generateFragments(mol);
         List<String> frags = Arrays.asList(fragmenterSaturated.getFragments());
         Assertions.assertNotNull(frags);
+        for (String f : frags) {
+            System.out.println(f);
+        }
         Assertions.assertEquals(25, frags.size());
 
         Assertions.assertNotNull(fragmenterSaturated.getFragmentsAsContainers());
