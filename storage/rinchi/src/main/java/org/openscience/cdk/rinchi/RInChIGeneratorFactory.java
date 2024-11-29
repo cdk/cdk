@@ -132,7 +132,7 @@ public final class RInChIGeneratorFactory {
      * @param rinchi RInChI that is decomposed
      */
     public RInChIDecomposition getRInChIDecomposition(String rinchi) {
-        return (new RInChIDecomposition(rinchi));
+        return (new RInChIDecomposition(rinchi).decompose());
     }
 
     /**
@@ -142,6 +142,6 @@ public final class RInChIGeneratorFactory {
      * @param auxInfo RInChI auxiliary information (<i>AuxInfo</i>)
      */
     public RInChIDecomposition getRInChIDecomposition(String rinchi, String auxInfo) {
-        return (new RInChIDecomposition(rinchi, auxInfo));
+        return (new RInChIDecomposition(rinchi, auxInfo).decompose());
     }
 }

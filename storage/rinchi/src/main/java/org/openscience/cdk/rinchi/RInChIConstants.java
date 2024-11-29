@@ -34,7 +34,7 @@ final class RInChIConstants {
     static final String INCHI_VERSION_1 = "1";
     static final String INCHI_IDENTIFIER = "InChI";
     static final String INCHI_STD_HEADER = INCHI_IDENTIFIER + "=" + INCHI_VERSION_1 + "S/";
-    static final String RINCHI_STD_HEADER = RINCHI_EMPTY_HEADER + RINCHI_VERSION_1_0_0 + "." + INCHI_VERSION_1 + "S/";
+    static final String RINCHI_STD_HEADER = RINCHI_IDENTIFIER + "." + INCHI_VERSION_1 + "S/";
 
     static final String INCHI_AUXINFO_HEADER = "AuxInfo=" + INCHI_VERSION_1 + "/";
     static final String RINCHI_AUXINFO_HEADER = "RAuxInfo=" + RINCHI_VERSION_1_0_0 + "." + INCHI_VERSION_1 + "/";
@@ -45,9 +45,9 @@ final class RInChIConstants {
     static final String DELIMITER_GROUP = "<>";
 
     static final String DIRECTION_TAG = "/d";
-    static final char DIRECTION_FORWARD = '+';
-    static final char DIRECTION_REVERSE = '-';
-    static final char DIRECTION_EQUILIBRIUM = '=';
+    static final String DIRECTION_FORWARD = "+";
+    static final String DIRECTION_REVERSE = "-";
+    static final String DIRECTION_EQUILIBRIUM = "=";
 
     static final String NOSTRUCT_INCHI = INCHI_STD_HEADER + DELIMITER_LAYER;
     static final String NOSTRUCT_AUXINFO = INCHI_AUXINFO_HEADER + DELIMITER_LAYER;

@@ -245,7 +245,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         }
 
         // add direction
-        sb.append(RInChIConstants.DIRECTION_TAG).append(this.directionToRInChIChar(this.direction));
+        sb.append(RInChIConstants.DIRECTION_TAG).append(this.directionToRInChICharacter(this.direction));
 
         // add no structs layer
         if (this.noStructCounts.stream().anyMatch(c -> c > 0)) {
@@ -500,7 +500,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @param direction the reaction direction, represented by the {@link IReaction.Direction} enum
      * @return the corresponding RInChI character for the direction, or {@code 0} if the direction is unsupported
      */
-    char directionToRInChIChar(final IReaction.Direction direction) {
+    String directionToRInChICharacter(final IReaction.Direction direction) {
         switch (direction) {
             case FORWARD:
                 return RInChIConstants.DIRECTION_FORWARD;
