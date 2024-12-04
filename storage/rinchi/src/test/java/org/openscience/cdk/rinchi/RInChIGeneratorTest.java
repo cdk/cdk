@@ -494,11 +494,11 @@ class RInChIGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    void r28_forceEquilibrium_test() throws Exception {
+    void r29_forceEquilibrium_test() throws Exception {
         // Cambridge_rxnfiles/appel.rxn
         rxnFileRinchiFullInformationFileTest(
-                "org.openscience.cdk.rinchi/r28_forceEquilibrium.rxn",
-                "org.openscience.cdk.rinchi/r28_forceEquilibrium.txt",
+                "org.openscience.cdk.rinchi/r29_forceEquilibrium.rxn",
+                "org.openscience.cdk.rinchi/r29_forceEquilibrium.txt",
                 SUCCESS,
                 new ArrayList<>(),
                 RInChIOptions.builder().forceEquilibrium(true).timeoutMillisecondsPerComponent(1000).build()
