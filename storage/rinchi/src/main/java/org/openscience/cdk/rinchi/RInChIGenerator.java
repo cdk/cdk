@@ -30,14 +30,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.openscience.cdk.rinchi.RInChIConstants.*;
+import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_STD_HEADER;
+import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
 
 /**
  * This class generates the IUPAC Reaction International Chemical Identifier (RInChI) for a CDK IReaction object.
@@ -63,9 +62,8 @@ import static org.openscience.cdk.rinchi.RInChIConstants.*;
 public final class RInChIGenerator extends StatusMessagesOutput {
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(RInChIGenerator.class);
     private static final int NUMBER_OF_COMPONENTS = 3;
-    private static final EnumSet<RInChIOption> DEFAULT_OPTIONS = EnumSet.noneOf(RInChIOption.class);
 
-    private final EnumSet<RInChIOption> rinchiOptions;
+    private final RInChIOptions rinchiOptions;
     private final List<RInChIComponent> reactants;
     private final List<RInChIComponent> products;
     private final List<RInChIComponent> agents;
@@ -80,14 +78,17 @@ public final class RInChIGenerator extends StatusMessagesOutput {
     private String longRinchiKeyOutput;
     private String webRinchiKeyOutput;
 
+    RInChIGenerator() {
+        this(RInChIOptions.DEFAULT_OPTIONS);
+    }
+
     /**
      * Generates RInChI from a CDK Reaction.
      *
      * @param options zero or more optional RInChI generation options
      */
-    RInChIGenerator(RInChIOption... options) {
-        this.rinchiOptions = ((options == null || options.length == 0) ? DEFAULT_OPTIONS : EnumSet.copyOf(Arrays.asList(options)));
-
+    RInChIGenerator(RInChIOptions options) {
+        this.rinchiOptions = options;
         this.reactants = new ArrayList<>();
         this.products = new ArrayList<>();
         this.agents = new ArrayList<>();
@@ -203,7 +204,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         this.noStructCounts.add((int) this.agents.stream().filter(RInChIComponent::isNoStructure).count());
         this.layers.add(new InChILayers(this.agents));
 
-        if (this.rinchiOptions.contains(RInChIOption.FORCE_EQUILIBRIUM) || reaction.getDirection() == IReaction.Direction.BIDIRECTIONAL)
+        if (this.rinchiOptions.isForceEquilibrium() || reaction.getDirection() == IReaction.Direction.BIDIRECTIONAL)
             this.direction = IReaction.Direction.BIDIRECTIONAL;
     }
 
@@ -474,13 +475,18 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @return the {@link InChIGenerator} if successful, otherwise {@code null}
      */
     private InChIGenerator getInChIGenerator(IAtomContainer atomContainer) throws CDKException {
-        // TODO add timeout option
-        final InchiOptions options = new InchiOptions.InchiOptionsBuilder().build();
+        InchiOptions options;
+        if (this.rinchiOptions.hasTimeout()) {
+            options = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(this.rinchiOptions.getTimeoutMillisecondsPerComponent()).build();
+        } else {
+            options = new InchiOptions.InchiOptionsBuilder().build();
+        }
         final InChIGenerator generator = InChIGeneratorFactory.getInstance().getInChIGenerator(atomContainer, options);
+
         if (generator.getStatus() != InchiStatus.ERROR)
             return generator;
         else {
-            addMessage("InChIGenerator did not returned status success" +
+            addMessage("InChIGenerator did not return status success" +
                     (generator.getMessage() != null && !generator.getMessage().isEmpty() ? (": " + generator.getMessage()) : "") + ".", Status.WARNING);
             return null;
         }

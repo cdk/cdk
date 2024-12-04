@@ -1007,4 +1007,48 @@ class InChIGeneratorTest extends CDKTestCase {
         InChIGenerator generator = factory.getInChIGenerator(ac);
         assertThat(generator.getInchi(), is("InChI=1S/Tc/i1+1"));
     }
+
+//    @Disabled("Difference in AuxInfo atom reversibility - actual /rA:14nCCCSCCNCONCCOO - expected /rA:14cCCCSCCNCONCCOO")
+    @Test
+    void azabicyclo_1_test() throws Exception {
+        try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("azabicyclo_1.mol"))) {
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+            InchiOptions inchiOptions = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(5000).build();
+            InChIGenerator generator = getFactory().getInChIGenerator(container, inchiOptions);
+            Assertions.assertEquals("InChI=1S/C8H10N2O3S/c1-3-2-14-7-4(9)6(11)10(7)5(3)8(12)13/h4,7H,2,9H2,1H3,(H,12,13)", generator.getInchi());
+            Assertions.assertEquals(
+                    "AuxInfo=1/1/N:1,3,2,6,11,8,5,12,7,10,9,13,14,4/E:(12,13)/rA:14cCCCSCCNCONCCOO/rB:s1;s2;s3;s4;s5;s6;s6;d8;s5s8;d2s10;s11;s12;d12;/rC:;;;;;;;;;;;;;;",
+                    generator.getAuxInfo());
+        }
+    }
+
+//    @Disabled("Difference in AuxInfo atom reversibility - actual /rA:31nCCOCCCSCCNCCOCCOCCCCCCOCONCCOOO - expected /rA:31cCCOCCCSCCNCCOCCOCCCCCCOCONCCOOO")
+    @Test
+    void azabicyclo_2_test() throws Exception {
+        try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("azabicyclo_2.mol"))) {
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+            InchiOptions inchiOptions = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(5000).build();
+            InChIGenerator generator = getFactory().getInChIGenerator(container, inchiOptions);
+            Assertions.assertEquals("InChI=1S/C20H20N2O8S/c1-10(23)29-8-13-9-31-19-14(18(26)22(19)15(13)20(27)28)21-17(25)16(30-11(2)24)12-6-4-3-5-7-12/h3-7,14,16,19H,8-9H2,1-2H3,(H,21,25)(H,27,28)", generator.getInchi());
+            Assertions.assertEquals(
+                    "AuxInfo=1/1/N:1,15,20,19,21,18,22,4,6,2,14,17,5,9,27,12,11,24,8,28,10,26,31,16,23,25,29,30,3,13,7/E:(4,5)(6,7)(27,28)" +
+                            "/rA:31cCCOCCCSCCNCCOCCOCCCCCCOCONCCOOO/rB:s1;s2;s3;s4;s5;s6;s7;s8;s9;s10;s11;s12;s13;s14;d14;s12;s17;d18;s19;d20;d17s21;d11;s9;d24;s8s24;d5s26;s27;s28;d28;d2;/rC:;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+                    generator.getAuxInfo());
+        }
+    }
+
+    //    @Disabled("Difference in InChI (actual has additional /t, /m, /s layers) and AuxInfo (additional abs stereo /it layer and differences in /rA layer)")
+    @Test
+    void azabicyclo_3_test() throws Exception {
+        try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("azabicyclo_3.mol"))) {
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+            InchiOptions inchiOptions = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(5000).build();
+            InChIGenerator generator = getFactory().getInChIGenerator(container, inchiOptions);
+            Assertions.assertEquals("InChI=1S/C8H10N2O3S/c1-3-2-14-7-4(9)6(11)10(7)5(3)8(12)13/h4,7H,2,9H2,1H3,(H,12,13)", generator.getInchi());
+            Assertions.assertEquals(
+                    "AuxInfo=1/1/N:1,3,2,6,11,8,5,12,7,10,9,13,14,4/E:(12,13)/rA:14cCCCSCCNCONCCOO/rB:s1;s2;s3;p4;s5;P6;s6;d8;s5s8;w2s10;s11;s12;d12;/rC:;;;;;;;;;;;;;;",
+                    generator.getAuxInfo());
+        }
+    }
+
 }

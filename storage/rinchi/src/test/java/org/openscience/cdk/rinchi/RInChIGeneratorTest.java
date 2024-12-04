@@ -58,8 +58,8 @@ import static org.openscience.cdk.rinchi.StatusMessagesOutput.Status.WARNING;
 class RInChIGeneratorTest extends CDKTestCase {
 
     enum messages{
-        ELEMENT_R_NOT_RECOGNISED("InChIGenerator did not returned status success: Element name R is not recognised."),
-        EMPTY_STRUCTURE("InChIGenerator did not returned status success: Empty structure."),
+        ELEMENT_R_NOT_RECOGNISED("InChIGenerator did not return status success: Element name R is not recognised."),
+        EMPTY_STRUCTURE("InChIGenerator did not return status success: Empty structure."),
         ;
 
         private final String text;
@@ -475,17 +475,51 @@ class RInChIGeneratorTest extends CDKTestCase {
                 Arrays.asList(ELEMENT_R_NOT_RECOGNISED.toString(), ELEMENT_R_NOT_RECOGNISED.toString(), ELEMENT_R_NOT_RECOGNISED.toString()));
     }
 
+//    @Disabled("RInChI: differences in layers /t, /m, /s - propagates RAuxInfo and keys")
+    @Test
+    void r27_uspto_1976_US03930949_16_withStereochemistrytest() throws Exception {
+        rxnFileRinchiFullInformationFileTest(
+                "org.openscience.cdk.rinchi/r27_uspto_1976_US03930949_16_withStereochemistry.rxn",
+                "org.openscience.cdk.rinchi/r27_uspto_1976_US03930949_16_withStereochemistry.txt"
+        );
+    }
+
+//    @Disabled("RAuxInfo: differences in /rA layers")
+    @Test
+    void r28_uspto_1976_US03930949_16_withoutStereochemistry_forceEquilibrium_test() throws Exception {
+        rxnFileRinchiFullInformationFileTest(
+                "org.openscience.cdk.rinchi/r28_uspto_1976_US03930949_16_withoutStereochemistry.rxn",
+                "org.openscience.cdk.rinchi/r28_uspto_1976_US03930949_16_withoutStereochemistry.txt"
+        );
+    }
+
+    @Test
+    void r28_forceEquilibrium_test() throws Exception {
+        // Cambridge_rxnfiles/appel.rxn
+        rxnFileRinchiFullInformationFileTest(
+                "org.openscience.cdk.rinchi/r28_forceEquilibrium.rxn",
+                "org.openscience.cdk.rinchi/r28_forceEquilibrium.txt",
+                SUCCESS,
+                new ArrayList<>(),
+                RInChIOptions.builder().forceEquilibrium(true).timeoutMillisecondsPerComponent(1000).build()
+        );
+    }
+
     void rxnFileRinchiFullInformationFileTest(final String reactionFile, final String rinchiFile) throws Exception {
         rxnFileRinchiFullInformationFileTest(reactionFile, rinchiFile, SUCCESS, new ArrayList<>());
     }
     
     void rxnFileRinchiFullInformationFileTest(final String reactionFile, final String rinchiFile, StatusMessagesOutput.Status status, List<String> messages) throws Exception {
+        rxnFileRinchiFullInformationFileTest(reactionFile, rinchiFile, status, messages, RInChIOptions.DEFAULT_OPTIONS);
+    }
+
+    void rxnFileRinchiFullInformationFileTest(final String reactionFile, final String rinchiFile, StatusMessagesOutput.Status status, List<String> messages, RInChIOptions options) throws Exception {
         // arrange
         final IReaction reaction = readReactionFromRxnFile(reactionFile);
         final Map<String, String> rinchiFullInformation = readRinchiFullInformationFromResourceFile(rinchiFile);
 
         // act
-        final RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
+        final RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction, options);
 
         // assert
         assertThat(generator).isNotNull();

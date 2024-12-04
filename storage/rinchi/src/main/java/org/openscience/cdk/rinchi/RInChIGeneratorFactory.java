@@ -99,11 +99,11 @@ public final class RInChIGeneratorFactory {
      * Gets a RInChI generator for a {@link IReaction} providing one or more options to customise the generation.
      *
      * @param reaction reaction to generate RInChI for
-     * @param options    one or more options
+     * @param option   options used to generate the RInChI (e.g., timeout)
      * @return the RInChI generator object
      */
-    public RInChIGenerator getRInChIGenerator(IReaction reaction, RInChIOption... options) {
-        return (new RInChIGenerator(options).generate(reaction));
+    public RInChIGenerator getRInChIGenerator(IReaction reaction, RInChIOptions option) {
+        return (new RInChIGenerator(option).generate(reaction));
     }
 
     /**

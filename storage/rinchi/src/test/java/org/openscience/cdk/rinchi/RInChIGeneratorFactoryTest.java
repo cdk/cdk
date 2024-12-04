@@ -147,7 +147,7 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		assertThat(generator1.getRInChI()).endsWith("/d+");
 
 		//Generate RInChI with option ForceEquilibrium		
-		RInChIGenerator generatorEquilibrium = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction, RInChIOption.FORCE_EQUILIBRIUM);
+		RInChIGenerator generatorEquilibrium = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction, RInChIOptions.builder().forceEquilibrium(true).build());
 		assertThat(generatorEquilibrium.getRInChI()).endsWith("/d=");
 
 		//Create reverse reaction and generate RInChI
