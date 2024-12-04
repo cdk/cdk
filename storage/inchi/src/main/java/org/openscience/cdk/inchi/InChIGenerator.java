@@ -549,7 +549,7 @@ public class InChIGenerator {
     }
 
     /**
-     * Gets auxillary information.
+     * Gets auxiliary information.
      */
     public String getAuxInfo() {
         if (auxNone)

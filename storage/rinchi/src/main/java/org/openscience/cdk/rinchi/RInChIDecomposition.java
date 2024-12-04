@@ -133,7 +133,7 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
     private final String rinchi;
     private final String rAuxInfo;
     private IReaction.Direction reactionDirection;
-    private List<Component> components = new ArrayList<>();
+    private final List<Component> components = new ArrayList<>();
 
     /**
      * Decomposes a RInChI into a set of InChIs.

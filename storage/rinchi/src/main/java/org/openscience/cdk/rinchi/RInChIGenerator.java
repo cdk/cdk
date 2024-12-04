@@ -474,6 +474,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @return the {@link InChIGenerator} if successful, otherwise {@code null}
      */
     private InChIGenerator getInChIGenerator(IAtomContainer atomContainer) throws CDKException {
+        // TODO add timeout option
         final InchiOptions options = new InchiOptions.InchiOptionsBuilder().build();
         final InChIGenerator generator = InChIGeneratorFactory.getInstance().getInChIGenerator(atomContainer, options);
         if (generator.getStatus() != InchiStatus.ERROR)

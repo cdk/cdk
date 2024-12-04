@@ -19,36 +19,18 @@
  */
 package org.openscience.cdk.inchi;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.anyOf;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
+import io.github.dan2097.jnainchi.InchiOptions;
 import net.sf.jniinchi.INCHI_OPTION;
+import net.sf.jniinchi.INCHI_RET;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
-import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -56,8 +38,19 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.test.CDKTestCase;
 
-import net.sf.jniinchi.INCHI_RET;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
 
 /**
  * TestCase for the InChIGenerator.
@@ -768,14 +761,15 @@ class InChIGeneratorTest extends CDKTestCase {
 
      @Test
     void andEnantiomer_test() throws Exception {
-        MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("ANDEnantiomer.mol"));
-        try {
-            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
-            InChIGenerator generator = getFactory().getInChIGenerator(container);
-            Assertions.assertEquals("InChI=1S/C4H8O/c1-3-4(2)5-3/h3-4H,1-2H3/t3-,4?/m0/s1", generator.getInchi());
-        } finally {
-            reader.close();
-        }
+         try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("ANDEnantiomer.mol"))) {
+             IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+             InchiOptions inchiOptions = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(5000).build();
+             InChIGenerator generator = getFactory().getInChIGenerator(container, inchiOptions);
+             Assertions.assertEquals("InChI=1S/C4H8O/c1-3-4(2)5-3/h3-4H,1-2H3/t3-,4?/m0/s1", generator.getInchi());
+             Assertions.assertEquals(
+                     "AuxInfo=1/0/N:4,1,3,2,5/E:(1,2)(3,4)/it:im/rA:5nCC.?C.?CO/rB:N1;s2;P3;s2s3;/rC:-1.127,-.5635,0;-.4125,-.151,0;.4125,-.151,0;1.127,-.5635,0;0,.5635,0;",
+                     generator.getAuxInfo());
+         }
     }
 
     @Test

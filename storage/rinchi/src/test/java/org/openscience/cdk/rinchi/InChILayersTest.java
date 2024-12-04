@@ -23,6 +23,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.stream.Stream;
 
@@ -31,7 +32,7 @@ import static org.assertj.core.api.Assertions.*;
 /**
  *  @author Uli Fechner
  */
-class InChILayersTest {
+class InChILayersTest extends CDKTestCase {
 
     @Test
     void append_emptyInchi_Test() throws CDKException {
