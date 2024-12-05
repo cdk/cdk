@@ -58,7 +58,6 @@ import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
  * @cdk.module rinchi
  * @cdk.githash
  */
-
 public final class RInChIGenerator extends StatusMessagesOutput {
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(RInChIGenerator.class);
     private static final int NUMBER_OF_COMPONENTS = 3;
