@@ -98,7 +98,7 @@ class RInChIDecompositionTest extends CDKTestCase {
         RInChIDecomposition rInChIDecomposition = new RInChIDecomposition(null);
         // act & assert
         assertThatThrownBy(() -> rInChIDecomposition.decomposeRAuxInfo(""))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(RInChIException.class)
                 .hasMessage("Invalid/unsupported RInChI auxiliary information string. First layer must be equal to 'RAuxInfo=1.00.1/'.");
     }
 
@@ -132,7 +132,7 @@ class RInChIDecompositionTest extends CDKTestCase {
 
     @ParameterizedTest
     @MethodSource("decomposeRAuxInfoArgumentsProvider")
-    void decomposeRAuxInfo_test(String rAuxInfo, List<String> layer1, List<String> layer2, List<String> layer3) {
+    void decomposeRAuxInfo_test(String rAuxInfo, List<String> layer1, List<String> layer2, List<String> layer3) throws RInChIException {
         // arrange
         RInChIDecomposition rInChIDecomposition = new RInChIDecomposition(null);
         // act

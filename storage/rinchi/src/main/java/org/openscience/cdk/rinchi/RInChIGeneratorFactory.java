@@ -21,6 +21,7 @@ package org.openscience.cdk.rinchi;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 
 /**
@@ -111,8 +112,8 @@ public final class RInChIGeneratorFactory {
      *
      * @param rinchi RInChI to generate the reaction from
      */
-    public RInChIToReaction getRInChIToReaction(String rinchi) {
-        return (new RInChIToReaction(rinchi));
+    public RInChIToReaction getRInChIToReaction(String rinchi, IChemObjectBuilder builder) {
+        return (new RInChIToReaction(rinchi, builder));
     }
 
     /**
@@ -122,8 +123,8 @@ public final class RInChIGeneratorFactory {
      * @param rinchi  RInChI to generate reaction from
      * @param auxInfo RInChI auxiliary information (<i>AuxInfo</i>)
      */
-    public RInChIToReaction getRInChIToReaction(String rinchi, String auxInfo) {
-        return (new RInChIToReaction(rinchi, auxInfo));
+    public RInChIToReaction getRInChIToReaction(String rinchi, String auxInfo, IChemObjectBuilder builder) {
+        return (new RInChIToReaction(rinchi, auxInfo, builder));
     }
 
     /**

@@ -175,7 +175,7 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
         return this.reactionDirection;
     }
 
-    RInChIDecomposition decompose() throws IllegalArgumentException {
+    RInChIDecomposition decompose() {
         if (this.rinchi == null) {
             addMessage("RInChI string provided as input is 'null'.", Status.ERROR);
         }
@@ -191,7 +191,7 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
             Matcher matcher = RINCHI_PATTERN.matcher(this.rinchi);
             boolean matches = matcher.matches();
             if (!matches) {
-                throw new IllegalArgumentException("Cannot decompose invalid RInChI string '" + rinchi + "'.");
+                throw new RInChIException("Cannot decompose invalid RInChI string '" + rinchi + "'.");
             }
 
             // extract layer 2, 3 and 4
@@ -213,7 +213,7 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
                 rAuxInfoLayers = decomposeRAuxInfo(this.rAuxInfo);
                 // verify that the number of molecules in each layer is identical for rinchi and rauxinfo
                 if (rAuxInfoLayers.get(0).size() != layer2.size() || rAuxInfoLayers.get(1).size() != layer3.size() || rAuxInfoLayers.get(2).size() != layer4.size()) {
-                    throw new IllegalArgumentException(String.format("Different number of molecules in RInChI (%d, %d, %d) and Auxiliary Information (%s).",
+                    throw new RInChIException(String.format("Different number of molecules in RInChI (%d, %d, %d) and Auxiliary Information (%s).",
                             layer2.size(), layer3.size(), layer4.size(),
                             rAuxInfoLayers.stream().map(list -> Integer.toString(list.size())).collect(Collectors.joining(", "))));
                 }
@@ -234,9 +234,8 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
             ));
             this.components.addAll(getComponentsForLayer(layer4, rAuxInfoLayers != null ? rAuxInfoLayers.get(2) : null, ReactionRole.Agent));
 
-        } catch (IllegalArgumentException exception) {
+        } catch (RInChIException exception) {
             addMessage(exception.getMessage(), Status.ERROR);
-            return this;
         }
 
         return this;
@@ -248,11 +247,11 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
      *
      * @param rAuxInfo the RInChI auxiliary information string to be decomposed.
      * @return a list of layers, each represented as a list of components, extracted from the RInChI auxiliary information.
-     * @throws IllegalArgumentException if the provided RInChI auxiliary information string does not start with the expected header.
+     * @throws RInChIException if the provided RInChI auxiliary information string does not start with the expected header.
      */
-    List<List<String>> decomposeRAuxInfo(String rAuxInfo) throws IllegalArgumentException {
+    List<List<String>> decomposeRAuxInfo(String rAuxInfo) throws RInChIException {
         if (!rAuxInfo.startsWith(RInChIConstants.RINCHI_AUXINFO_HEADER)) {
-            throw new IllegalArgumentException("Invalid/unsupported RInChI auxiliary information string. First layer must be equal to '" + RInChIConstants.RINCHI_AUXINFO_HEADER + "'.");
+            throw new RInChIException("Invalid/unsupported RInChI auxiliary information string. First layer must be equal to '" + RInChIConstants.RINCHI_AUXINFO_HEADER + "'.");
         }
         String rAuxInfoWithoutFirstLayer = rAuxInfo.substring(RInChIConstants.RINCHI_AUXINFO_HEADER.length());
 

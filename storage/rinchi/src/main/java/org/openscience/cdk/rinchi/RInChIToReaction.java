@@ -18,20 +18,15 @@
  */
 package org.openscience.cdk.rinchi;
 
+import io.github.dan2097.jnainchi.InchiStatus;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.inchi.InChIGeneratorFactory;
+import org.openscience.cdk.inchi.InChIToStructure;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 
 /**
- * This class generates the IUPAC Reaction International Chemical Identifier (RInChI) for a CDK IReaction object.
- * <br>
- * Given a RInChI and optionally its RAuxInfo here is how to generate an IReaction:
- * <pre>
- *     RInChIToReaction rinchiToReaction = RInChIGeneratorFactory.getInstance().getRInChIToReaction(rinchi, rAuxInfo);
- *     IReaction reaction = rinchiToReaction.getReaction();
- *
- *     // if a RAuxInfo isn't available an overloaded method can be called
- *     RInChIToReaction rinchiToReactionNoRauxinfo = RInChIGeneratorFactory.getInstance().getRInChIToReaction(rinchi);
- *     IReaction reaction2 = rinchiToReactionNoRauxinfo.getReaction();
- * </pre>
+ * This class generates a CDK IReaction for a given IUPAC Reaction International Chemical Identifier (RInChI).
  *
  * @author Uli Fechner
  * @cdk.module rinchi
@@ -46,13 +41,8 @@ public final class RInChIToReaction extends StatusMessagesOutput {
      *
      * @param rinchi RInChI string
      */
-    RInChIToReaction(String rinchi) {
-        if (rinchi == null) {
-            addMessage("RInChI string provided as input is 'null'.", Status.ERROR);
-            return;
-        }
-
-        generateReactionFromRinchi(rinchi, "");
+    RInChIToReaction(String rinchi, IChemObjectBuilder builder) {
+        this(rinchi, "", builder);
     }
 
     /**
@@ -61,27 +51,61 @@ public final class RInChIToReaction extends StatusMessagesOutput {
      * @param rinchi                      RInChI string
      * @param auxInfo                     RInChI auxiliary information (AuxInfo) string
      */
-    RInChIToReaction(String rinchi, String auxInfo) {
+    RInChIToReaction(String rinchi, String auxInfo, IChemObjectBuilder builder) {
         if (rinchi == null) {
-            addMessage("RInChI string provided as input is 'null'.", Status.ERROR);
+            addMessage("RInChI string provided as argument is 'null'.", Status.ERROR);
             return;
         }
         if (auxInfo == null) {
-            addMessage("RInChI auxiliary info string provided as input is 'null'.", Status.ERROR);
+            addMessage("RInChI auxiliary information string provided as argument is 'null'.", Status.ERROR);
             return;
-        } else if (auxInfo.isEmpty()) {
-            addMessage("RInChI auxiliary info string provided as input is empty.", Status.WARNING);
+        }
+        if (builder == null) {
+            addMessage("IChemObjectBuilder provided as argument is 'null'.", Status.ERROR);
+            return;
         }
 
-        generateReactionFromRinchi(rinchi, auxInfo);
+        try {
+            this.reaction = generateReactionFromRinchi(rinchi, auxInfo, builder);
+        } catch (CDKException exception) {
+            addMessage(String.format("RInChI to Reaction failed: %s", exception.getMessage()), Status.ERROR);
+        }
     }
 
     /**
      * Produces a reaction from given RInChI.
      * The RInChI library data structure (RinchiInput object) is converted to an {@link IReaction}.
      */
-    private void generateReactionFromRinchi(final String rinchi, final String auxInfo) {
-        // TODO implement logic here
+    private IReaction generateReactionFromRinchi(final String rinchi, final String rAuxInfo, IChemObjectBuilder builder) throws CDKException {
+        // decompose rinchi into components
+        RInChIDecomposition rinchiDecomposition = new RInChIDecomposition(rinchi, rAuxInfo).decompose();
+        if (rinchiDecomposition.getStatus() == Status.ERROR) {
+            throw new RInChIException(String.format("Encountered issue with decomposing RInChI and/or RAuxInfo: %s", String.join("; ", rinchiDecomposition.getMessages())));
+        }
+
+        this.reaction = builder.newReaction();
+        for(RInChIDecomposition.Component component: rinchiDecomposition.getComponents()) {
+            InChIToStructure inChIToStructure = InChIGeneratorFactory.getInstance().getInChIToStructure(component.getInchi(), builder);
+            if (inChIToStructure.getStatus() == InchiStatus.SUCCESS) {
+                switch(component.getReactionRole()) {
+                    case Reactant:
+                        this.reaction.addReactant(inChIToStructure.getAtomContainer());
+                        break;
+                    case Product:
+                        this.reaction.addProduct(inChIToStructure.getAtomContainer());
+                        break;
+                    case Agent:
+                        this.reaction.addAgent(inChIToStructure.getAtomContainer());
+                        break;
+                    default:
+                        throw new RInChIException(String.format("Encountered unexpected reaction role: %s", component.getReactionRole().toString()));
+                }
+            } else {
+                throw new RInChIException(String.format("Encountered issue with InChIToStructure: %s", String.join("; ", inChIToStructure.getMessage())));
+            }
+        }
+
+        return reaction;
     }
 
     /**

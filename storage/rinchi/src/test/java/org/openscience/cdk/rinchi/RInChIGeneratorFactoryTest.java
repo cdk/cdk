@@ -24,10 +24,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Writer.SPIN_MULTIPLICITY;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
@@ -93,6 +90,7 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 	@Disabled("not implemented yet")
 	@Test
 	void test01() {
+		IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 		//Create Diels–Alder Reaction using CDK
 		//Reactant 1
 		IAtomContainer molecule1 = new AtomContainer();
@@ -136,7 +134,7 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		molecule3.addBond(new Bond (productAtom6, productAtom1, IBond.Order.SINGLE));
 		
 		//Create reaction and set reagents and products
-		IReaction reaction = SilentChemObjectBuilder.getInstance().newReaction();
+		IReaction reaction = builder.newReaction();
 		reaction.addReactant(molecule1);
 		reaction.addReactant(molecule2);
 		reaction.addProduct(molecule3);
@@ -151,7 +149,7 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		assertThat(generatorEquilibrium.getRInChI()).endsWith("/d=");
 
 		//Create reverse reaction and generate RInChI
-		IReaction reaction2 = SilentChemObjectBuilder.getInstance().newReaction();
+		IReaction reaction2 = builder.newReaction();
 		reaction2.addReactant(molecule3);
 		reaction2.addProduct(molecule1);
 		reaction2.addProduct(molecule2);
@@ -171,7 +169,7 @@ class RInChIGeneratorFactoryTest extends CDKTestCase {
 		assertThat(generator2.getLongRInChIKey().charAt(18)).isEqualTo('B');
 
 		//Generate back a IReaction object from RInChI
-		RInChIToReaction rinchiToReaction = RInChIGeneratorFactory.getInstance().getRInChIToReaction(generator1.getRInChI());
+		RInChIToReaction rinchiToReaction = RInChIGeneratorFactory.getInstance().getRInChIToReaction(generator1.getRInChI(), builder);
 		assertThat(rinchiToReaction.getStatus()).isEqualTo(StatusMessagesOutput.Status.SUCCESS);
 		IReaction reaction3 = rinchiToReaction.getReaction();
 		assertThat(reaction3.getReactantCount()).isEqualTo(2);
