@@ -1184,7 +1184,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IAtomContainer ethanol = new SmilesParser(bldr).parseSmiles("C[CH2:6]O");
         assertThat(SmilesGenerator.generic().create(ethanol), is("CCO"));
-        assertThat(SmilesGenerator.generic().withAtomClasses().create(ethanol), is("C[CH2:6]O"));
+        assertThat(new SmilesGenerator(SmiFlavor.Generic | SmiFlavor.AtomAtomMap).create(ethanol), is("C[CH2:6]O"));
     }
 
     /**
