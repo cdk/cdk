@@ -21,7 +21,7 @@ package org.openscience.cdk.rinchi;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Exception specifically thrown by classes residing in the module cdk-rinchi.
+ * Exception thrown by classes residing in the module {@code cdk-rinchi}.
  *
  * @author Uli Fechner
  * @cdk.module rinchi

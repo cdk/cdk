@@ -475,21 +475,19 @@ class RInChIGeneratorTest extends CDKTestCase {
                 Arrays.asList(ELEMENT_R_NOT_RECOGNISED.toString(), ELEMENT_R_NOT_RECOGNISED.toString(), ELEMENT_R_NOT_RECOGNISED.toString()));
     }
 
-//    @Disabled("RInChI: differences in layers /t, /m, /s - propagates RAuxInfo and keys")
     @Test
-    void r27_uspto_1976_US03930949_16_withStereochemistrytest() throws Exception {
+    void r27_uspto_1976_US03930949_16_test() throws Exception {
         rxnFileRinchiFullInformationFileTest(
-                "org.openscience.cdk.rinchi/r27_uspto_1976_US03930949_16_withStereochemistry.rxn",
-                "org.openscience.cdk.rinchi/r27_uspto_1976_US03930949_16_withStereochemistry.txt"
+                "org.openscience.cdk.rinchi/r27_uspto_1976_US03930949_16_test.rxn",
+                "org.openscience.cdk.rinchi/r27_uspto_1976_US03930949_16_test.txt"
         );
     }
 
-//    @Disabled("RAuxInfo: differences in /rA layers")
     @Test
-    void r28_uspto_1976_US03930949_16_withoutStereochemistry_forceEquilibrium_test() throws Exception {
+    void r28_test() throws Exception {
         rxnFileRinchiFullInformationFileTest(
-                "org.openscience.cdk.rinchi/r28_uspto_1976_US03930949_16_withoutStereochemistry.rxn",
-                "org.openscience.cdk.rinchi/r28_uspto_1976_US03930949_16_withoutStereochemistry.txt"
+                "org.openscience.cdk.rinchi/r28.rxn",
+                "org.openscience.cdk.rinchi/r28.txt"
         );
     }
 
@@ -499,6 +497,32 @@ class RInChIGeneratorTest extends CDKTestCase {
         rxnFileRinchiFullInformationFileTest(
                 "org.openscience.cdk.rinchi/r29_forceEquilibrium.rxn",
                 "org.openscience.cdk.rinchi/r29_forceEquilibrium.txt",
+                SUCCESS,
+                new ArrayList<>(),
+                RInChIOptions.builder().forceEquilibrium(true).timeoutMillisecondsPerComponent(1000).build()
+        );
+    }
+
+    @Disabled("RAuxInfo difference: rinchi web demo /rA:9nCCCOCOOOO vs CDK /rA:9nC.?CCOCOOOO")
+    @Test
+    void r30_malate_oxaloacetate_notChiral_forceEquilibrium_test() throws Exception {
+        // Cambridge_rxnfiles/appel.rxn
+        rxnFileRinchiFullInformationFileTest(
+                "org.openscience.cdk.rinchi/r30_malate_oxaloacetate_notChiral_forceEquilibrium.rxn",
+                "org.openscience.cdk.rinchi/r30_malate_oxaloacetate_notChiral_forceEquilibrium.txt",
+                SUCCESS,
+                new ArrayList<>(),
+                RInChIOptions.builder().forceEquilibrium(true).timeoutMillisecondsPerComponent(1000).build()
+        );
+    }
+
+    @Disabled("RAuxInfo difference: rinchi web demo //rA:9cCCCOCOOOO vs CDK /rA:9nC.eCCOCOOOO")
+    @Test
+    void r31_malate_oxaloacetate_chiral_forceEquilibrium_test() throws Exception {
+        // Cambridge_rxnfiles/appel.rxn
+        rxnFileRinchiFullInformationFileTest(
+                "org.openscience.cdk.rinchi/r31_malate_oxaloacetate_chiral_forceEquilibrium.rxn",
+                "org.openscience.cdk.rinchi/r31_malate_oxaloacetate_chiral_forceEquilibrium.txt",
                 SUCCESS,
                 new ArrayList<>(),
                 RInChIOptions.builder().forceEquilibrium(true).timeoutMillisecondsPerComponent(1000).build()
