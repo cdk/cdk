@@ -38,6 +38,10 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+/**
+ * @author Uli Fechner
+ * @cdk.module test-rinchi
+ */
 class RInChIDecompositionTest extends CDKTestCase {
 
     static Stream<Arguments> rinchiCharacterToDirectionArgumentsProvider() {

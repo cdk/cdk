@@ -35,6 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Felix Bänsch
  * @author Uli Fechner
+ * @cdk.module test-rinchi
  */
 class KeyBase26Test extends CDKTestCase {
 

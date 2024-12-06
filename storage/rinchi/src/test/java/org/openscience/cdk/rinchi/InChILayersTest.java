@@ -31,6 +31,7 @@ import static org.assertj.core.api.Assertions.*;
 
 /**
  *  @author Uli Fechner
+ * @cdk.module test-rinchi
  */
 class InChILayersTest extends CDKTestCase {
 

@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.rinchi;
 
-import org.openscience.cdk.exception.CDKException;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
@@ -35,6 +33,7 @@ import java.util.List;
  * and generate various hash formats based on the layers contained.</p>
  *
  * @author Felix Bänsch
+ * @cdk.module rinchi
  */
 final class InChILayers {
 
@@ -46,9 +45,9 @@ final class InChILayers {
      * Constructs an {@code InChILayers} instance by appending components from the given list.
      *
      * @param rInChIComponents a list of {@link RInChIComponent} objects to append as layers
-     * @throws CDKException if there is an error processing the components
+     * @throws RInChIException if there is an error processing the components
      */
-    InChILayers(List<RInChIComponent> rInChIComponents) throws CDKException {
+    InChILayers(List<RInChIComponent> rInChIComponents) throws RInChIException {
         this();
         appendComponents(rInChIComponents);
     }
@@ -82,9 +81,9 @@ final class InChILayers {
      * and updates the proton count accordingly. It supports only standard InChI version 1.</p>
      *
      * @param inchiString the InChI string to append
-     * @throws CDKException if the InChI string is invalid or if there is an error processing it
+     * @throws RInChIException if the InChI string is invalid or if there is an error processing it
      */
-    void append(String inchiString) throws CDKException {
+    void append(String inchiString) throws RInChIException {
         if (inchiString.isEmpty()) {
             return;
         }
@@ -93,13 +92,13 @@ final class InChILayers {
         int tokenStart = delimPos + RInChIConstants.DELIMITER_LAYER.length();
 
         if (delimPos != 8)
-            throw new CDKException("Invalid InChI string - no layers.");
+            throw new RInChIException("Invalid InChI string - no layers.");
         if (inchiString.charAt(delimPos - 1) != 'S')
-            throw new CDKException("Only standard InChIs are supported.");
+            throw new RInChIException("Only standard InChIs are supported.");
         if (inchiString.charAt(delimPos - 2) != '1')
-            throw new CDKException("Only InChI version 1 supported.");
+            throw new RInChIException("Only InChI version 1 supported.");
         if (!inchiString.startsWith(RInChIConstants.INCHI_STD_HEADER))
-            throw new CDKException("InChI string must start with " + RInChIConstants.INCHI_STD_HEADER.substring(0, 6) + ".");
+            throw new RInChIException("InChI string must start with " + RInChIConstants.INCHI_STD_HEADER.substring(0, 6) + ".");
 
         boolean isEmpiricalFormula = true;
         final StringBuilder majorLayers = new StringBuilder();
@@ -138,7 +137,7 @@ final class InChILayers {
                         minorLayers.append(layer);
                         break;
                     default:
-                        throw new CDKException(String.format("Invalid InChI string with invalid layer %s.", layer.charAt(1)));
+                        throw new RInChIException(String.format("Invalid InChI string with invalid layer %s.", layer.charAt(1)));
                 }
             }
         } while (delimPos != -1);
@@ -169,9 +168,9 @@ final class InChILayers {
      * Appends components from the provided list of {@link RInChIComponent} objects.
      *
      * @param rInChIComponents a list of {@link RInChIComponent} objects to append
-     * @throws CDKException if there is an error processing any of the components
+     * @throws RInChIException if there is an error processing any of the components
      */
-    void appendComponents(List<RInChIComponent> rInChIComponents) throws CDKException {
+    void appendComponents(List<RInChIComponent> rInChIComponents) throws RInChIException {
         for (RInChIComponent rc : rInChIComponents) {
             if (!rc.isNoStructure()) {
                 append(rc.getInchi());

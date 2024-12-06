@@ -39,6 +39,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Nikolay Kochev
  * @author Uli Fechner
+ * @cdk.module test-rinchi
  */
 class RInChIGeneratorFactoryTest extends CDKTestCase {
 

@@ -30,13 +30,14 @@ import org.openscience.cdk.inchi.InChIGenerator;
  * providing methods to retrieve InChI-related information while reporting status messages.</p>
  *
  * @author Felix Bänsch
+ * @cdk.module rinchi
  */
 class RInChIComponent {
 
     private boolean isNoStructure;
-    private String inchi;
-    private String auxInfo;
-    private String inchiKey;
+    private final String inchi;
+    private final String auxInfo;
+    private final String inchiKey;
 
     /**
      * Constructs an {@code RInChIComponent} using the specified {@link InChIGenerator}.

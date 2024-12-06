@@ -29,21 +29,19 @@ import java.util.stream.Collectors;
 /**
  * This class decomposes a RInChI into the individual InChIs and auxiliary Information (if available)
  * of each reaction component.
- * Moreover, roles of individual components (reactant, product, agent) and the reaction direction are returned.
- * <br>
+ * Roles of individual components (reactant, product, agent) and the reaction direction are returned.
+ * <p>
  * A RInChI and its associated RAuxInfo can be decomposed into the constituent InChIs and AuxInfo as follows:
+ * </p>
  * <pre>
- * RInChIDecomposition rinchiDecomposition = RInChIGeneratorFactory.getInstance().getRInChIDecomposition(rinchi);
- * List&lt;String&gt; inchis = rinchiDecomposition.getInchis();
- * List&lt;String&gt; auxInfos = rinchiDecomposition.getAuxInfo();
- * // getting the roles of the individual reaction components and the direction of the reaction
- * List&lt;ReactionComponentRole&gt; roles =  rinchiDecomposition.getReactionComponentRoles();
- * ReactionDirection direction = rinchiDecomposition.getReactionDirection();
- *
- * // there are also utility methods to get a map of (Inchi, AuxInfo) pairs ...
- * Map&lt;String,String&gt; inchiAuxInfoMap = rinchiDecomposition.getInchiAuxInfoMap();
- * // ... and a map of (inchi, reaction component roles) pairs
- * Map&lt;String,ReactionComponentRole&gt; inchiReactionComponentRoleMap = rinchiDecomposition.getInchiReactionComponentRoleMap();
+ * RInChIDecomposition rinchiDecomposition = new RInChIDecomposition(rinchi, rauxinfo).decompose();
+ * List&lt;RInChIDecomposition.Component&gt; components = rinchiDecomposition.getComponents();
+ * for (RInChIDecomposition.Components component: components) {
+ *   System.out.println(component.getInchi())
+ *   if (component.hasAuxInfo) {
+ *       System.out.println(component.getAuxInfo())
+ *   }
+ * }
  * </pre>
  *
  * @author Uli Fechner
@@ -52,6 +50,9 @@ import java.util.stream.Collectors;
  */
 public final class RInChIDecomposition extends StatusMessagesOutput {
 
+    /**
+     * Data class that models a component of a chemical reaction with its InChI identifier, auxiliary information, and reaction role.
+     */
     public static class Component {
         private final String inchi;
         private final String auxInfo;
@@ -111,6 +112,7 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
     static final String PATTERN_GROUP_NOSTRUCT_1 = "patternGroupNoStruct1";
     static final String PATTERN_GROUP_NOSTRUCT_2 = "patternGroupNoStruct2";
     static final String PATTERN_GROUP_NOSTRUCT_3 = "patternGroupNoStruct3";
+    // Matches a complete RInChI string respecting parts being mandatory or optional.
     static final Pattern RINCHI_PATTERN = Pattern.compile(
             "^" +
             // layer 1, mandatory
@@ -136,29 +138,27 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
     private final List<Component> components = new ArrayList<>();
 
     /**
-     * Decomposes a RInChI into a set of InChIs.
+     * Instantiates a RInChIDecomposition object for the given RInChI string.
      *
      * @param rinchi RInChI string
      */
-    RInChIDecomposition(String rinchi) {
+    public RInChIDecomposition(String rinchi) {
         this(rinchi, "");
     }
 
     /**
-     * Decomposes a RInChI and its auxiliary information into a set of InChIs and AuxInfo.
+     * Instantiates a RInChIDecomposition object for the given RInChI and RAuxInfo string.
      *
      * @param rinchi  RInChI string
-     * @param auxInfo RInChI aux info string
+     * @param rauxinfo RInChI auxiliary information string
      */
-    RInChIDecomposition(String rinchi, String auxInfo) {
+    public RInChIDecomposition(String rinchi, String rauxinfo) {
         this.rinchi = rinchi;
-        this.rAuxInfo = auxInfo;
+        this.rAuxInfo = rauxinfo;
     }
 
     /**
-     * Retrieves the list of reaction components generated during the RInChI
-     * decomposition process. Each component contains InChI, its role in the
-     * reaction, and auxiliary information if provided.
+     * Retrieves the list of reaction components generated during the RInChI decomposition process.
      *
      * @return an unmodifiable list of reaction components
      */
@@ -167,7 +167,7 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
     }
 
     /**
-     * Returns RInChI reaction direction.
+     * Returns the reaction direction as extracted from the RInChI.
      *
      * @return the reaction direction of the RInChI
      */
@@ -175,7 +175,16 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
         return this.reactionDirection;
     }
 
-    RInChIDecomposition decompose() {
+    /**
+     * Decomposes the RInChI string and its auxiliary information if provided into its constituent reaction components.
+     * <p>
+     * It validates the input strings, parses the RInChI layers, extracts molecules and assigns appropriate roles
+     * and direction based on the reaction type. Any issues are captured as messages. It is recommended to assess
+     * the status using {@link #getStatus()} before accessing results.
+     * </p>
+     * @return the current instance of RInChIDecomposition with decomposed components
+     */
+    public RInChIDecomposition decompose() {
         if (this.rinchi == null) {
             addMessage("RInChI string provided as input is 'null'.", Status.ERROR);
         }
@@ -247,7 +256,7 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
      *
      * @param rAuxInfo the RInChI auxiliary information string to be decomposed.
      * @return a list of layers, each represented as a list of components, extracted from the RInChI auxiliary information.
-     * @throws RInChIException if the provided RInChI auxiliary information string does not start with the expected header.
+     * @throws RInChIException if the provided RInChI auxiliary information string does not start with the expected header
      */
     List<List<String>> decomposeRAuxInfo(String rAuxInfo) throws RInChIException {
         if (!rAuxInfo.startsWith(RInChIConstants.RINCHI_AUXINFO_HEADER)) {
@@ -270,6 +279,13 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
         return layerList;
     }
 
+    /**
+     * Extracts and returns a list of auxiliary information each of which is associated with a molecule from the given component layer string.
+     * The component layer string is expected to have molecules separated by '!' characters.
+     *
+     * @param componentLayer the component layer string
+     * @return a list of auxiliary information strings of individual molecules
+     */
     List<String> getMoleculesFromComponentLayer(String componentLayer) {
         if (componentLayer == null || componentLayer.isEmpty()) {
             return new ArrayList<>();
@@ -278,6 +294,13 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
         return Arrays.stream(componentLayer.split("!")).filter(s -> !s.isEmpty()).collect(Collectors.toList());
     }
 
+    /**
+     * Converts a given RInChI direction character into the corresponding {@link IReaction.Direction}.
+     * Defaults to {@link IReaction.Direction#UNDIRECTED} if an invalid character is provided.
+     *
+     * @param reactionDirectionCharacter the character representing the direction of the reaction as specified in the RInChI standard
+     * @return the IReaction.Direction corresponding to the reaction direction character.
+     */
     IReaction.Direction rinchiCharacterToDirection(String reactionDirectionCharacter) {
         if (reactionDirectionCharacter == null || reactionDirectionCharacter.isEmpty()) {
             return IReaction.Direction.UNDIRECTED;
@@ -295,6 +318,14 @@ public final class RInChIDecomposition extends StatusMessagesOutput {
         }
     }
 
+    /**
+     * Returns a list of {@code Component} objects for each entry in the given RInChI and RInChI auxiliary information layers.
+     *
+     * @param rinchiLayer a list of RInChI strings representing different components of a reaction
+     * @param rAuxInfoLayer a list of auxiliary information strings corresponding to each component in the reaction, can be null
+     * @param reactionRole the role of the components in the reaction (reactant, agent, product)
+     * @return a list of {@code Component} objects each containing an InChI string, auxiliary information string, and a reaction role
+     */
     List<Component> getComponentsForLayer(List<String> rinchiLayer, List<String> rAuxInfoLayer, ReactionRole reactionRole) {
         List<Component> components = new ArrayList<>();
         for (int i = 0; i < rinchiLayer.size(); i++) {

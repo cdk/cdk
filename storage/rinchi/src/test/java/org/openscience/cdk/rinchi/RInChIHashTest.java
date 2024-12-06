@@ -30,6 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Uli Fechner
+ * @cdk.module test-rinchi
  */
 class RInChIHashTest extends CDKTestCase {
 
