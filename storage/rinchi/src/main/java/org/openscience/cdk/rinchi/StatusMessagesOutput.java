@@ -64,6 +64,11 @@ public abstract class StatusMessagesOutput {
     private Status status = Status.SUCCESS;
     private final List<String> messages = new ArrayList<>();
 
+    /**
+     * Resets field to initial state.
+     * <br>
+     * Resets the current status to {@link Status#SUCCESS} and clears all accumulated messages.
+     */
     protected void clearStatusAndMessages() {
         this.status = Status.SUCCESS;
         this.messages.clear();

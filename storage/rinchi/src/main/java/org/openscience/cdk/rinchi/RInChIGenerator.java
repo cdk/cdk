@@ -25,8 +25,6 @@ import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -39,19 +37,54 @@ import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_STD_HEADER;
 import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
 
 /**
- * This class generates the IUPAC Reaction International Chemical Identifier (RInChI) for a CDK IReaction object.
- * <br>
- * Given an IReaction, RInChI, RAuxInfo, Long-RInChIKey, Short-RInChIKey and Web-RInChIKey can be generated with:
+ * This class generates a IUPAC Reaction International Chemical Identifier (RInChI) for a provided CDK IReaction object.
+ * <p>
+ * In this implementation, generation of the RInChI is based on generating InChIs and associated auxiliary information
+ * (auxinfo) for the individual reaction components using the JNA wrapper for the InChI C++ library. The pieces are
+ * then assembled into a RInChI string and reaction auxiliary information (rauxinfo) string. Computation of the
+ * three different RInChI keys Long-RInChIKey, Short-RInChIKey and Web-RInChIKey are implemented in Java.
+ * </p>
+ * <p>
+ * Consequently, any limitation of the {@link InChIGenerator} also impacts on the computation of the RInChI. In
+ * addition, this RInChI implementation has the following limitations:
+ * // TODO
+ * </p>
+ * <p>
+ * Please note that there are no exceptions thrown if an issue is encountered during processing. Instead,
+ * a {@link Status} can be retrieved with {@link #getStatus()} that should be assessed. If the status is
+ * not {@link Status#SUCCESS} emitted messages can be accessed with {@link #getMessages()}. These
+ * messages should capture relevant information about what exactly went wrong.
+ * </p>
+ * Given an IReaction, RInChI, RAuxInfo, Long-RInChIKey, Short-RInChIKey and Web-RInChIKey can be generated
+ * using default options:
  * <pre>
- *     // all that's needed is an IReaction object, e.g., by loading an RXN file
+ *     // All that's needed is an IReaction object, e.g., by loading an RXN file.
  *     IReaction reaction = ....;
- *     RInChIGenerator generator = RInChIGeneratorFactory.getInstance().getRInChIGenerator(reaction);
- *     String rinchi = generator.getRInChI();
- *     String rAuxInfo = generator.getAuxInfo();
- *     String longKey = generator.getLongRInChIKey();
- *     String shortKey = generator.getShortRInChIKey();
- *     String webKey = generator.getWebRInChIKey();
+ *     RInChIGenerator generator = new RInChIGenerator().generate(reaction);
+ *     if (generator.getStatus() == Status.SUCCESS) {
+ *         String rinchi = generator.getRInChI();
+ *         String rAuxInfo = generator.getAuxInfo();
+ *         String longKey = generator.getLongRInChIKey();
+ *         String shortKey = generator.getShortRInChIKey();
+ *         String webKey = generator.getWebRInChIKey();*
+ *     } else {
+ *         System.out.printf("RInChIGenerator came back with status %s: %s",
+ *           generator.getStatus(), String.join("; ", generator.getMessages()));
+ *     }
  * </pre>
+ * Alternatively, a customized set of options can be used:
+ * <pre>
+ *     IReaction reaction = ....;
+ *     RInChIOptions rinchiOptions = RInChIOptions.RInChIOptions.builder().forceEquilibrium().build();
+ *     RInChIGenerator generator = new RInChIGenerator(rinchiOptions).generate(reaction);
+ * </pre>
+ * </p>
+ * See:
+ * <ul>
+ * <li><a href="https://github.com/dan2097/jna-inchi">https://github.com/dan2097/jna-inchi</a></li>
+ * <li><a href="http://www.iupac.org/inchi/">http://www.iupac.org/inchi/</a></li>
+ * <li><a href="https://www.inchi-trust.org/">https://www.inchi-trust.org/</a></li>
+ * </ul>
  *
  * @author Felix Bänsch
  * @author Uli Fechner
@@ -59,7 +92,6 @@ import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
  * @cdk.githash
  */
 public final class RInChIGenerator extends StatusMessagesOutput {
-    private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(RInChIGenerator.class);
     private static final int NUMBER_OF_COMPONENTS = 3;
 
     private final RInChIOptions rinchiOptions;
@@ -77,16 +109,19 @@ public final class RInChIGenerator extends StatusMessagesOutput {
     private String longRinchiKeyOutput;
     private String webRinchiKeyOutput;
 
-    RInChIGenerator() {
+    /**
+     * Constructs a new instance of RInChIGenerator using the {@link RInChIOptions#DEFAULT_OPTIONS default RInChIOptions}.
+     */
+    public RInChIGenerator() {
         this(RInChIOptions.DEFAULT_OPTIONS);
     }
 
     /**
      * Generates RInChI from a CDK Reaction.
      *
-     * @param options zero or more optional RInChI generation options
+     * @param options zero or more options
      */
-    RInChIGenerator(RInChIOptions options) {
+    public RInChIGenerator(RInChIOptions options) {
         this.rinchiOptions = options;
         this.reactants = new ArrayList<>();
         this.products = new ArrayList<>();
@@ -96,7 +131,13 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         this.layers = new ArrayList<>(NUMBER_OF_COMPONENTS);
     }
 
-    RInChIGenerator generate(final IReaction reaction) {
+    /**
+     * Generates RInChI and related keys for the provided chemical reaction.
+     *
+     * @param reaction the chemical reaction to be converted into the RInChI format;
+     * @return the current instance of RInChIGenerator with generated RInChI and keys,
+     */
+    public RInChIGenerator generate(final IReaction reaction) {
         clear();
 
         if (reaction == null) {
@@ -119,6 +160,9 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         return this;
     }
 
+    /**
+     * Clears the current state of the object by resetting all relevant collections and fields.
+     */
     void clear() {
         clearStatusAndMessages();
 
@@ -157,23 +201,17 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * The extracted components are stored in instance variables for further processing.</p>
      *
      * @param reaction The reaction from which components will be extracted.
-     * @throws CDKException If there is an error in generating InChI components from atom containers.
      */
     private void extractComponents(final IReaction reaction) throws CDKException {
         //create InChIComponent for each component
-        try {
-            for (IAtomContainer ac : reaction.getReactants()) {
-                this.reactants.add(new RInChIComponent(getInChIGenerator(ac)));
-            }
-            for (IAtomContainer ac : reaction.getProducts()) {
-                this.products.add(new RInChIComponent(getInChIGenerator(ac)));
-            }
-            for (IAtomContainer ac : reaction.getAgents()) {
-                this.agents.add(new RInChIComponent(getInChIGenerator(ac)));
-            }
-        } catch (CDKException exception) {
-            addMessage(String.format("Cannot generate RInChI: %s", exception.getMessage()), Status.ERROR);
-            return;
+        for (IAtomContainer ac : reaction.getReactants()) {
+            this.reactants.add(new RInChIComponent(getInChIGenerator(ac)));
+        }
+        for (IAtomContainer ac : reaction.getProducts()) {
+            this.products.add(new RInChIComponent(getInChIGenerator(ac)));
+        }
+        for (IAtomContainer ac : reaction.getAgents()) {
+            this.agents.add(new RInChIComponent(getInChIGenerator(ac)));
         }
 
         // sort components lexicographically by InChI
@@ -229,7 +267,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         final StringBuilder sb = new StringBuilder();
         sb.append(RINCHI_STD_HEADER);
 
-        if(this.components == null || this.components.isEmpty())
+        if (this.components == null || this.components.isEmpty())
             return sb.toString();
 
         // add components
@@ -240,7 +278,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
                     .map(c -> c.getInchi().substring(RInChIConstants.INCHI_STD_HEADER.length()))
                     .collect(Collectors.joining(RInChIConstants.DELIMITER_COMPONENT));
             sb.append(componentString);
-            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components.get(i + 1).isEmpty() && this.components.get(i+1).stream().anyMatch(c -> !c.isNoStructure()))
+            if (i < NUMBER_OF_COMPONENTS - 1 && !this.components.get(i + 1).isEmpty() && this.components.get(i + 1).stream().anyMatch(c -> !c.isNoStructure()))
                 sb.append(RInChIConstants.DELIMITER_GROUP);
         }
 
@@ -276,7 +314,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         final StringBuilder sb = new StringBuilder();
         sb.append(RInChIConstants.RINCHI_AUXINFO_HEADER);
 
-        if(this.components == null || this.components.isEmpty())
+        if (this.components == null || this.components.isEmpty())
             return sb.toString();
 
         //add components
@@ -292,7 +330,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         }
 
         // If the components only consist of NoStructs one or more group delimiter will be added to the AuxInfo string that need to be removed.
-        // Example 1: RAuxInfo=1.00.1/<> --> RAuxInfo=1.00.1/
+        // Example: RAuxInfo=1.00.1/<> --> RAuxInfo=1.00.1/
         while (sb.lastIndexOf(RInChIConstants.DELIMITER_GROUP) == sb.length() - 2) {
             sb.delete(sb.length() - 2, sb.length());
         }
@@ -323,7 +361,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         sb.append(RInChIConstants.RINCHI_KEY_VERSION_ID_HEADER);
         sb.append(RInChIConstants.KEY_DELIMITER_BLOCK);
 
-        if(this.components == null || this.components.isEmpty())
+        if (this.components == null || this.components.isEmpty())
             return sb.toString();
 
         try {
@@ -344,8 +382,8 @@ public final class RInChIGenerator extends StatusMessagesOutput {
                     .collect(Collectors.joining(RInChIConstants.KEY_DELIMITER_COMPONENT));
             sb.append(componentString);
             if (this.noStructCounts.get(i) != 0) {
-                for (int j = 0; j < this.noStructCounts.get(i); j++){
-                    if(sb.lastIndexOf("-") != sb.length()-1)
+                for (int j = 0; j < this.noStructCounts.get(i); j++) {
+                    if (sb.lastIndexOf("-") != sb.length() - 1)
                         sb.append(RInChIConstants.KEY_DELIMITER_COMPONENT);
                     sb.append(RInChIConstants.NOSTRUCT_RINCHI_LONGKEY);
                 }
@@ -383,7 +421,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
         sb.append(RInChIConstants.RINCHI_KEY_VERSION_ID_HEADER);
         sb.append(RInChIConstants.KEY_DELIMITER_COMPONENT);
 
-        if(this.components == null || this.components.isEmpty())
+        if (this.components == null || this.components.isEmpty())
             return sb.toString();
 
         try {
@@ -432,7 +470,7 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * @return Web-RInChI-Key or {@code null} if an error prevents generation of the key
      */
     String generateWebKey() {
-        if(this.components == null || this.components.isEmpty())
+        if (this.components == null || this.components.isEmpty())
             return RINCHI_WEB_KEY_HEADER;
 
         try {
@@ -462,16 +500,18 @@ public final class RInChIGenerator extends StatusMessagesOutput {
 
     /**
      * Returns an {@link InChIGenerator} for the given atom container using the InChI library.
-     *
-     * <p>This method uses the {@link InChIGeneratorFactory} to create an {@link InChIGenerator} for the provided
+     * <p>
+     * This method uses the {@link InChIGeneratorFactory} to create an {@link InChIGenerator} for the provided
      * {@link IAtomContainer}. The default {@link InchiOptions} are used for generating the InChI. If the generation
-     * is successful, the generator is returned. Otherwise, a warning is logged, and the method returns {@code null}.</p>
-     *
+     * is successful, the generator is returned. Otherwise, a warning is logged, and the method returns {@code null}.
+     * </p>
      * <p>If an exception occurs during the process (e.g., due to an issue with the chemistry library), the error is logged,
-     * and {@code null} is returned.</p>
+     * and {@code null} is returned.
+     * </p>
      *
      * @param atomContainer the {@link IAtomContainer} to generate an InChI for
      * @return the {@link InChIGenerator} if successful, otherwise {@code null}
+     * @throws CDKException thrown if an issue is encountered by InChIGenerator
      */
     private InChIGenerator getInChIGenerator(IAtomContainer atomContainer) throws CDKException {
         InchiOptions options;
@@ -505,8 +545,9 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      *
      * @param direction the reaction direction, represented by the {@link IReaction.Direction} enum
      * @return the corresponding RInChI character for the direction, or {@code 0} if the direction is unsupported
+     * @throws IllegalStateException thrown if an unsupported reaction direction is provided as an argument
      */
-    String directionToRInChICharacter(final IReaction.Direction direction) {
+    String directionToRInChICharacter(final IReaction.Direction direction) throws IllegalStateException {
         switch (direction) {
             case FORWARD:
                 return RInChIConstants.DIRECTION_FORWARD;
@@ -532,8 +573,9 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      *
      * @param direction the reaction direction, represented by the {@link IReaction.Direction} enum
      * @return the corresponding character key ('F', 'B', or 'E'), or {@code 0} if the direction is unsupported
+     * @throws IllegalStateException thrown if an unsupported reaction direction is provided as an argument
      */
-    char directionToRInChIKeyChar(final IReaction.Direction direction) {
+    char directionToRInChIKeyChar(final IReaction.Direction direction) throws IllegalStateException {
         switch (direction) {
             case FORWARD:
                 return 'F';
@@ -550,8 +592,9 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      * Determines if the first product's InChI string is lexicographically greater than the first reactant's InChI string.
      *
      * <p>This method compares the InChI strings of the first reactant and the first product to determine their ordering.
-     * If the product's InChI string is lexicographically greater than the reactant's, the method returns {@code true}, indicating that
-     * products should come first in the ordering. If the reactant comes first or if either list is empty or null, the method returns {@code false}.</p>
+     * If the product's InChI string is lexicographically greater than the reactant's, the method returns {@code true},
+     * indicating that products should come first in the ordering. If the reactant comes first or if either list is empty
+     * or null, the method returns {@code false}.</p>
      *
      * <p>Comparisons are based on the Unicode value of the characters in the InChI strings.</p>
      *
@@ -581,8 +624,9 @@ public final class RInChIGenerator extends StatusMessagesOutput {
      *
      * @param count the number of components with no structure
      * @return the corresponding character representation of the count
+     * @throws IllegalArgumentException if a negative number for the argument {@code count} is provided
      */
-    char noStructCountToRInChIKeyChar(final int count) {
+    char noStructCountToRInChIKeyChar(final int count) throws IllegalArgumentException {
         if (count < 0) {
             throw new IllegalArgumentException(String.format("Negative count of %d of no-structures.", count));
         }

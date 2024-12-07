@@ -26,13 +26,14 @@ import java.util.Arrays;
 /**
  * Class to provide static methods for generating hash values
  * based on SHA-256 for InChI (International Chemical Identifier) strings.
- * It includes methods to generate hashes of different lengths, which are often used
- * for identifying and comparing chemical structures.
+ * It includes methods to generate hashes of different lengths, which ca be used
+ * to identify and compare chemical structures.
  *
  * <p>Hashing is performed using the SHA-256 algorithm, and the resulting byte array
  * is converted to a string representation suitable for various applications.</p>
  *
  * @author Felix Bänsch
+ * @cdk.module rinchi
  */
 final class RInChIHash {
 

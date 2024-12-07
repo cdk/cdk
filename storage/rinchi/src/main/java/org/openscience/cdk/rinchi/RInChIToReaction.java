@@ -22,11 +22,37 @@ import io.github.dan2097.jnainchi.InchiStatus;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.inchi.InChIToStructure;
+import org.openscience.cdk.interfaces.ICDKObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * This class generates a CDK IReaction for a given IUPAC Reaction International Chemical Identifier (RInChI).
+ * <p>
+ * At its core, the conversion of a given RInChI to a CDK reaction object is based on the
+ * <a href="https://github.com/dan2097/jna-inchi">JNA wrapper</a> for the native
+ * <a href="https://github.com/IUPAC-InChI/InChI">InChI C++ library</a>.
+ * Consequently, any limitation of {@link InChIToStructure} also impacts on the conversion implemented in
+ * this class.
+ * <p>
+ * Please note that there are no exceptions thrown if an issue is encountered during processing. Instead,
+ * a {@link Status} can be retrieved with {@link #getStatus()} that should be assessed. If the status is
+ * not {@link Status#SUCCESS} emitted messages can be accessed with {@link #getMessages()}. These
+ * messages should capture relevant information about what exactly went wrong.
+ * </p>
+ * </p>
+ * Given a RInChI string a CDK reaction object can be produced as follows:
+ * <pre>
+ *     IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+ *     String rinchi = ....
+ *     RInChIToReaction rinchiToReaction = new RInChIToReaction(rinchi, builder);
+ *     if (rinchiToReaction.getStatus() == Status.SUCCESS) {
+ *         IReaction reaction = rinchiToReaction.getReaction();
+ *     } else {
+ *         System.out.printf("RInChIToReaction came back with status %s: %s",
+ *           rinchiToReaction.getStatus(), String.join("; ", rinchiToReaction.getMessages()));
+ *     }
+ * </pre>
  *
  * @author Uli Fechner
  * @cdk.module rinchi
@@ -40,24 +66,11 @@ public final class RInChIToReaction extends StatusMessagesOutput {
      * Consumes a RInChI and produces a CDK Reaction.
      *
      * @param rinchi RInChI string
+     * @param builder a builder to instantiate {@link ICDKObject} instances
      */
     RInChIToReaction(String rinchi, IChemObjectBuilder builder) {
-        this(rinchi, "", builder);
-    }
-
-    /**
-     * Consumes a RInChI with associated auxiliary information and produces a CDK Reaction.
-     *
-     * @param rinchi                      RInChI string
-     * @param auxInfo                     RInChI auxiliary information (AuxInfo) string
-     */
-    RInChIToReaction(String rinchi, String auxInfo, IChemObjectBuilder builder) {
         if (rinchi == null) {
             addMessage("RInChI string provided as argument is 'null'.", Status.ERROR);
-            return;
-        }
-        if (auxInfo == null) {
-            addMessage("RInChI auxiliary information string provided as argument is 'null'.", Status.ERROR);
             return;
         }
         if (builder == null) {
@@ -66,19 +79,23 @@ public final class RInChIToReaction extends StatusMessagesOutput {
         }
 
         try {
-            this.reaction = generateReactionFromRinchi(rinchi, auxInfo, builder);
+            this.reaction = generateReactionFromRinchi(rinchi, builder);
         } catch (CDKException exception) {
             addMessage(String.format("RInChI to Reaction failed: %s", exception.getMessage()), Status.ERROR);
         }
     }
 
     /**
-     * Produces a reaction from given RInChI.
-     * The RInChI library data structure (RinchiInput object) is converted to an {@link IReaction}.
+     * Generates a chemical reaction from the provided RInChI string.
+     *
+     * @param rinchi the RInChI string representing the reaction
+     * @param builder a builder to create instances of chemical objects
+     * @return the IReaction object constructed from the given RInChI
+     * @throws CDKException if there is an error during the decomposition of RInChI or conversion to chemical structures
      */
-    private IReaction generateReactionFromRinchi(final String rinchi, final String rAuxInfo, IChemObjectBuilder builder) throws CDKException {
+    private IReaction generateReactionFromRinchi(final String rinchi, IChemObjectBuilder builder) throws CDKException {
         // decompose rinchi into components
-        RInChIDecomposition rinchiDecomposition = new RInChIDecomposition(rinchi, rAuxInfo).decompose();
+        RInChIDecomposition rinchiDecomposition = new RInChIDecomposition(rinchi).decompose();
         if (rinchiDecomposition.getStatus() == Status.ERROR) {
             throw new RInChIException(String.format("Encountered issue with decomposing RInChI and/or RAuxInfo: %s", String.join("; ", rinchiDecomposition.getMessages())));
         }

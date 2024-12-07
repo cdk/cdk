@@ -26,7 +26,7 @@ package org.openscience.cdk.rinchi;
  * // default options use a 5000 msec timeout per reaction component
  * RInChIOptions optionsDefault = RInChIOptions.builder().build();
  *
- * // you can also specify the timeout
+ * // the timeout can also be specified
  * RInChIOptions optionsWithTimeout = RInChIOptions.builder().timeoutMillisecondsPerComponent(5000).build();
  * </pre>
  *

@@ -55,20 +55,9 @@ class RInChIToReactionTest extends CDKTestCase {
     }
 
     @Test
-    public void rinchiToReaction_rAuxInfoIsNull_test() {
-        // arrange
-        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        // act
-        RInChIToReaction rInChIToReaction = new RInChIToReaction("", null, builder);
-        // assert
-        assertThat(rInChIToReaction.getStatus()).isEqualTo(StatusMessagesOutput.Status.ERROR);
-        assertThat(rInChIToReaction.getMessages()).containsExactly("RInChI auxiliary information string provided as argument is 'null'.");
-    }
-
-    @Test
     public void rinchiToReaction_builderIsNull_test() {
         // act
-        RInChIToReaction rInChIToReaction = new RInChIToReaction("", "", null);
+        RInChIToReaction rInChIToReaction = new RInChIToReaction("", null);
         // assert
         assertThat(rInChIToReaction.getStatus()).isEqualTo(StatusMessagesOutput.Status.ERROR);
         assertThat(rInChIToReaction.getMessages()).containsExactly("IChemObjectBuilder provided as argument is 'null'.");
@@ -115,7 +104,7 @@ class RInChIToReactionTest extends CDKTestCase {
         // arrange
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         // act
-        RInChIToReaction rInChIToReaction = new RInChIToReaction(rinchi, rAuxInfo, builder);
+        RInChIToReaction rInChIToReaction = new RInChIToReaction(rinchi, builder);
         // assert
         assertThat(rInChIToReaction.getStatus()).isEqualTo(expectedStatus);
         assertThat(rInChIToReaction.getMessages()).containsExactlyElementsOf(expectedMessages);
