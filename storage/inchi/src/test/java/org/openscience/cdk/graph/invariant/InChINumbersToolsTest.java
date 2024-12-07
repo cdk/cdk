@@ -109,13 +109,13 @@ class InChINumbersToolsTest extends CDKTestCase {
     }
 
     @Test
-    void parseStandard() throws Exception {
+    void parseStandard() {
         assertThat(InChINumbersTools.parseUSmilesNumbers("AuxInfo=1/0/N:3,2,1/rA:3OCC/rB:s1;s2;/rC:;;;", mock(3)),
                 is(new long[]{3, 2, 1}));
     }
 
     @Test
-    void parseRecMet() throws Exception {
+    void parseRecMet() {
 
         // C(=O)O[Pt](N)(N)Cl
         assertThat(
@@ -125,7 +125,7 @@ class InChINumbersToolsTest extends CDKTestCase {
     }
 
     @Test
-    void parseFixedH() throws Exception {
+    void parseFixedH() {
         // N1C=NC=C1
         assertThat(InChINumbersTools.parseUSmilesNumbers(
                 "AuxInfo=1/1/N:4,5,2,3,1/E:(1,2)(4,5)/F:5,4,2,1,3/rA:5NCNCC/rB:s1;d2;s3;s1d4;/rC:;;;;;", mock(5)),
@@ -133,7 +133,7 @@ class InChINumbersToolsTest extends CDKTestCase {
     }
 
     @Test
-    void parseDisconnected() throws Exception {
+    void parseDisconnected() {
         // O.N1C=NC=C1
         assertThat(InChINumbersTools.parseUSmilesNumbers(
                 "AuxInfo=1/1/N:5,6,3,4,2;1/E:(1,2)(4,5);/F:6,5,3,2,4;m/rA:6ONCNCC/rB:;s2;d3;s4;s2d5;/rC:;;;;;;",
@@ -141,7 +141,7 @@ class InChINumbersToolsTest extends CDKTestCase {
     }
 
     @Test
-    void parseMultipleDisconnected() throws Exception {
+    void parseMultipleDisconnected() {
         // O.N1C=NC=C1.O.O=O
         assertThat(
                 InChINumbersTools.parseUSmilesNumbers(
@@ -175,6 +175,12 @@ class InChINumbersToolsTest extends CDKTestCase {
         IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance())
             .parseSmiles("[H+].[H+].F[Si-2](F)(F)(F)(F)F");
         assertThat(InChINumbersTools.getUSmilesNumbers(container), is(new long[]{8, 9, 1, 7, 2, 3, 4, 5, 6}));
+    }
+
+    @Test
+    void emptyAtomContainer_test() throws Exception {
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        assertThat(InChINumbersTools.getUSmilesNumbers(container), is(new long[0]));
     }
 
     static IAtomContainer mock(int nAtoms) {
