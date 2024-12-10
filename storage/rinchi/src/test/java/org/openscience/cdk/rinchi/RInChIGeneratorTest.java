@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Writer;
+import org.openscience.cdk.io.RdfileReader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -443,7 +444,6 @@ class RInChIGeneratorTest extends CDKTestCase {
         assertThat(generator.getAuxInfo()).isEqualTo("RAuxInfo=1.00.1/<>0/N:1,3,2/CRV:1t/rA:3nC.3CC/rB:s1;s2;/rC:;;;");
     }
 
-    @Disabled("not implemented yet")
     @Test
     void test01() {
         //Create Diels–Alder Reaction
@@ -526,7 +526,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         //Backward, forward and equilibrium RInChIs differ only in their last char
         int n = generator1.getRInChI().length();
         assertThat(generator1.getRInChI().substring(0, n-1)).isEqualTo(generator2.getRInChI().substring(0, n-1));
-        assertThat(generator1.getRInChI().substring(n-1)).isEqualTo(generatorEquilibrium.getRInChI().substring(n-1));
+        assertThat(generator1.getRInChI().substring(0,n-1)).isEqualTo(generatorEquilibrium.getRInChI().substring(0,n-1));
 
         //Backward, forward and equilibrium RInChIs-Keys differ only in their 19-th char
         assertThat(generator1.getLongRInChIKey().substring(0, 18)).isEqualTo(generator2.getLongRInChIKey().substring(0, 18));

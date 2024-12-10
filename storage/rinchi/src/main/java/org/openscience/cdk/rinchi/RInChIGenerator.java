@@ -47,7 +47,20 @@ import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
  * <p>
  * Consequently, any limitation of the {@link InChIGenerator} also impacts on the computation of the RInChI. In
  * addition, this RInChI implementation has the following limitations:
- * // TODO
+ * <ul>
+ *     <li>
+ *         The RAuxInfo may differ in the /rA layers, as the CDK interprets the mol-file differently than the command
+ *         line interface of the RInChI.
+ *     </li>
+ *     <li>
+ *         If one of the reaction components contains an invalid symbol, which can not be interpreted by the CDK,
+ *         this leads to an CDKException.
+ *     </li>
+ *     <li>
+ *         If the Rxnfile contains additional structures other than those specified in the ‘count line’,
+ *         these are interpreted by the CDK as products. The RInChI software strictly adheres to the ‘count line’.
+ *     </li>
+ * </ul>
  * </p>
  * <p>
  * Please note that there are no exceptions thrown if an issue is encountered during processing. Instead,
