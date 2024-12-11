@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Writer;
-import org.openscience.cdk.io.RdfileReader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -445,7 +444,7 @@ class RInChIGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    void test01() {
+    void dielsAlderReaction_test() {
         //Create Diels–Alder Reaction
         //Reactant 1
         IAtomContainer molecule1 = BUILDER.newAtomContainer();
@@ -659,7 +658,7 @@ class RInChIGeneratorTest extends CDKTestCase {
     @Test
     void r14_1_struct_reactant_R_1_struct_product_A_test() throws Exception {
         // err__R_reactant-A_product.rxn
-        // individual structures of reaction returns no inchis, which leads to a reaction with two no structs and in our code an empty Rinchi (RInChI=1.00.1S//d+/u1-1-0)
+        // individual structures of reaction returns no inchis, which leads to a reaction with two no structs and in this implementation an empty Rinchi (RInChI=1.00.1S//d+/u1-1-0)
         rxnFileRinchiFullInformationFileTest(
                 "org.openscience.cdk.rinchi/r14_1_struct_reactant_R_1_struct_product_A.rxn",
                 "org.openscience.cdk.rinchi/r14_1_struct_reactant_R_1_struct_product_A-rinchi.txt",
@@ -673,9 +672,10 @@ class RInChIGeneratorTest extends CDKTestCase {
         rxnFileRinchiFullInformationFileTest("org.openscience.cdk.rinchi/r15_4_struct_reactant_1_struct_product.rxn", "org.openscience.cdk.rinchi/r15_4_struct_reactant_1_struct_product-rinchi.txt");
     }
 
-    @Disabled("rinchi web demo includes all agents and catalysts, we don't atm, CDK loads 5 structs.")
+    @Disabled("RInChI web demo includes agents and catalysts present in data block, whereas CDK only loads the five structures defined by molfiles at the beginning.")
     @Test
     void r16_rinchi_repo_1_variation_4_steps_test() throws Exception {
+        // File not according to specification: The file does not have rdfile header, but a data block at the end.
         // file taken from https://github.com/IUPAC-InChI/RInChI/blob/d122a78457c592b9728906f3c0b565a2c2c5d6dd/src/test/RDfiles/1_variation_4_steps.rdf
         rxnFileRinchiFullInformationFileTest("org.openscience.cdk.rinchi/r16_rinchi_repo_1_variation_4_steps.rdf", "org.openscience.cdk.rinchi/r16_rinchi_repo_1_variation_4_steps-rinchi.txt");
     }
@@ -698,10 +698,11 @@ class RInChIGeneratorTest extends CDKTestCase {
                 Collections.singletonList(ELEMENT_R_NOT_RECOGNISED.toString()));
     }
 
-    @Disabled("RInChI only reads 1 reactant and 1 product, whereas MDLRXNV2000Reader gets 2 additional agents.")
+    @Disabled("RInChI correctly reads 1 reactant and 1 product, whereas MDLRXNV2000Reader gets 2 additional agents.")
     @Test
     void r19_rinchi_repo_example_01_ccr_test() throws Exception {
         // Example_01_CCR.rdf
+        // File not according to specification: The file does not have rdfile header, but data blocks and a second rxn block.
         rxnFileRinchiFullInformationFileTest(
                 "org.openscience.cdk.rinchi/r19_rinchi_repo_example_01_ccr.rxn",
                 "org.openscience.cdk.rinchi/r19_rinchi_repo_example_01_ccr-rinchi.txt");
@@ -717,6 +718,7 @@ class RInChIGeneratorTest extends CDKTestCase {
     @Test
     void r21_rinchi_repo_example_04_simple_test() throws Exception {
         // Example_04_simple.rdf
+        // File not according to specification: The file does not have rdfile header, but data blocks.
         rxnFileRinchiFullInformationFileTest("org.openscience.cdk.rinchi/r21_rinchi_repo_example_04_simple.rxn", "org.openscience.cdk.rinchi/r21_rinchi_repo_example_04_simple-rinchi.txt");
     }
 
@@ -724,7 +726,7 @@ class RInChIGeneratorTest extends CDKTestCase {
     @Test
     void r22_rinchi_repo_example_05_groups_udm_test() throws Exception {
         // Example_05_groups_UDM
-        // diff in rxn file, only reactants and agents in line 5
+        // File not according to specification: The file does not have rdfile header, but data blocks and a second rxn block.
         rxnFileRinchiFullInformationFileTest("org.openscience.cdk.rinchi/r22_rinchi_repo_example_05_groups_udm.rxn", "org.openscience.cdk.rinchi/r22_rinchi_repo_example_05_groups_udm-rinchi.txt");
     }
 
