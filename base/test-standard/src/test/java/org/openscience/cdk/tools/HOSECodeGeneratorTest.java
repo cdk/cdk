@@ -591,12 +591,12 @@ class HOSECodeGeneratorTest extends CDKTestCase {
         reader.close();
         HOSECodeGenerator hcg = new HOSECodeGenerator();
         //Note that those two atoms are symmetrical
-        String hose1=hcg.getHOSECode(molecule, molecule.getAtom(2), 6, true);
-        String hose2=hcg.getHOSECode(molecule, molecule.getAtom(3), 6, true);
+        String hose1=hcg.getHOSECode(molecule, molecule.getAtom(11), 6, true);
+        String hose2=hcg.getHOSECode(molecule, molecule.getAtom(12), 6, true);
         Assertions.assertEquals(hose1, hose2);
         //and so are those
-        hose1=hcg.getHOSECode(molecule, molecule.getAtom(4), 6, true);
-        hose2=hcg.getHOSECode(molecule, molecule.getAtom(5), 6, true);
+        hose1=hcg.getHOSECode(molecule, molecule.getAtom(13), 6, true);
+        hose2=hcg.getHOSECode(molecule, molecule.getAtom(14), 6, true);
         Assertions.assertEquals(hose1, hose2);
     }
 }
