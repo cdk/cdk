@@ -505,7 +505,10 @@ public class HOSECodeGenerator implements java.io.Serializable {
                 sortNodesByScore(spheres[f]);
             }
         }
-
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+            atomContainer.getAtom(i).setFlag(IChemObject.VISITED, false);
+        }
+        
         HOSECode.append(centerCode);
         for (int f = 0; f < maxSphere; f++) {
             sphere = f + 1;
@@ -606,7 +609,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         return sym;
     }
 
-    /**
+	/**
      *  Determines the ranking score for each node, allowing for a sorting of nodes
      *  within one sphere.
      *
@@ -615,14 +618,23 @@ public class HOSECodeGenerator implements java.io.Serializable {
      */
     private void calculateNodeScores(List<TreeNode> sphereNodes) throws CDKException {
         TreeNode treeNode;
+        List<TreeNode> visitedTreeNodes=new ArrayList<>();
         for (TreeNode sphereNode : sphereNodes) {
             treeNode = sphereNode;
-            treeNode.score += getElementRank(treeNode.symbol);
+            if ((flags&LEGACY_MODE) == 0 && treeNode.atom != null && treeNode.atom.getFlag(IChemObject.VISITED)) {
+            	treeNode.score += getElementRank("&");
+            }else {
+            	treeNode.score += getElementRank(treeNode.symbol);
+            }
             if (treeNode.bondType <= 4) {
                 treeNode.score += bondRankings[(int) treeNode.bondType];
             } else {
                 throw new CDKException("Unknown bond type encountered in HOSECodeGenerator");
             }
+            if (treeNode.atom != null) visitedTreeNodes.add(treeNode);
+        }
+        for(TreeNode treeNode2 : visitedTreeNodes) {
+        	treeNode2.atom.setFlag(IChemObject.VISITED, true);
         }
     }
 

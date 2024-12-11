@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -30,7 +32,6 @@ import javax.vecmath.Point2d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
@@ -39,6 +40,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -301,20 +303,20 @@ class HOSECodeGeneratorTest extends CDKTestCase {
         String[] result = {
 
         "O-1;=C(CC/*C*C,=C/*C*C,*C,&)", "C-3;=OCC(,*C*C,=C/*C*C,*C,&/*C*C,*C&,*&O)",
-                "C-3;=CC(C,=OC/*C*C,,*&*C/*C*&,*C,*C)", "C-3;=CC(C,*C*C/=OC,*C*&,*C/,*&*C,*C*C,*&)",
+                "C-3;=CC(C,=OC/*C*C,,*&*C/*C*&,*C,*C)", "C-3;=CC(C,*C*C/=OC,*C*&,*C/,*C*&,*C*C,*&)",
                 "C-3;*C*CC(*C*C,*C,=C/*C*C,*CC,*&,&/*CO,*&C,*&,=O&)", "C-3;*C*C(*CC,*C/*C*C,=C,*&C/*C*&,*CC,&,*C*C)",
                 "C-3;*C*C(*CC,*C/*C*C,*C*C,*&C/*C*&,*CO,*C&,*C,=C)",
                 "C-3;*C*CC(*C*C,*C,*C*C/*C*C,*CO,*&,*C&,*C/*CC,*&C,*&O,&,*C,*&)",
-                "C-3;*C*CC(*CO,*C,*C*C/*C,C,*&,*C*&,*C/*&,*&*C,*C*C,*&)", "C-3;*C*C(*CC,*C/*CO,*C*C,*&/*&,C,*C*&,*C)",
+                "C-3;*C*CC(*CO,*C,*C*C/*C,C,*&,*C*&,*C/*&,*C*&,*C*C,*&)", "C-3;*C*C(*CC,*C/*CO,*C*C,*&/*&,C,*C*&,*C)",
                 "C-3;*C*C(*C,*C/*CC,*&/*&O,*C*C)", "C-3;*C*C(*C,*C/*CO,*&/*&C,C)",
                 "C-3;*C*C(*CO,*C/*CC,C,*&/*&,*C*C,*&*C)", "C-3;*C*CO(*CC,*C,C/*C,*C*C,*&,*&*C/*&,*C*&,*C,*CO)",
                 "O-2;CC(*C*C,*C*C/*C*C,*CO,*C&,*C/*C*C,*C&,*&,C,*C,*&)",
-                "C-3;*C*CO(*C*C,*CO,C/*C*C,*CC,*&,C,*&*C/*&C,*CC,*&,*&*C,,*C)",
-                "C-3;*C*CO(*CO,*C,C/*C*C,C,*&C,/*&*C,*CC,*&*C,=OC)", "O-2;CC(*C*C,/*CO,*C/*C*C,C,*&C)",
-                "C-4;O(C/*C*C/*CO,*C)", "C-3;*C*C(*CC,*CO/*C*C,=OC,*&O,C/*&*C,*CC,,=&,C,)",
+                "C-3;*C*CO(*C*C,*CO,C/*C*C,*CC,*&,C,*&*C/*&C,*CC,*&,*C*&,,*C)",
+                "C-3;*C*CO(*CO,*C,C/*C*C,C,*&C,/*C*&,*CC,*&*C,=OC)", "O-2;CC(*C*C,/*CO,*C/*C*C,C,*&C)",
+                "C-4;O(C/*C*C/*CO,*C)", "C-3;*C*C(*CC,*CO/*C*C,=OC,*&O,C/*C*&,*CC,,=&,C,)",
                 "C-3;*C*CC(*C*C,*C,=OC/*C*C,*CC,*&O,,=&/*&O,*CC,*&,=&,C)",
                 "C-3;*C*C*C(*C*C,*CC,*CC/*CO,*CC,*&,=OC,*&,=&/*&O,C,*&,*&*C,,=&)",
-                "C-3;*C*C*C(*C*C,*CO,*CC/*CC,*CC,*&O,C,*&,*&*C/*&,=OC,*&,=&,C,*&*C,*C)"};
+                "C-3;*C*C*C(*C*C,*CO,*CC/*CC,*CC,*&O,C,*&,*&*C/*&,=OC,*&,=&,C,*C*&,*C)"};
 
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "O");
@@ -464,9 +466,9 @@ class HOSECodeGeneratorTest extends CDKTestCase {
     @Test
     void test4() throws Exception {
         String[] result = {"C-3;*C*C*C(*C*N,*C,*C/*C,*&,*&,*&/*&)", "C-3;*C*C(*C*C,*N/*C*&,*C,*&/*C,*&)",
-                "C-3;*C*N(*C,*C/*&*C,*&*C/,*C,*C)", "N-3;*C*C(*C*C,*C/*C*&,*C,*&/*C,*&)",
+                "C-3;*C*N(*C,*C/*C*&,*C*&/*C,*C)", "N-3;*C*C(*C*C,*C/*C*&,*C,*&/*C,*&)",
                 "C-3;*C*C*N(*C*C,*C,*C/*C,*&,*&,*&/*&)", "C-3;*C*C(*C*N,*C/*C*C,*C,*&/*&,*&,*&)",
-                "C-3;*C*C(*C,*C/*C*N,*&/*&*C,*C)", "C-3;*C*C(*C,*C/*C*C,*&/*&*N,*C)",
+                "C-3;*C*C(*C,*C/*C*N,*&/*C*&,*C)", "C-3;*C*C(*C,*C/*C*C,*&/*N*&,*C)",
                 "C-3;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
 
         IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance()))
@@ -580,4 +582,21 @@ class HOSECodeGeneratorTest extends CDKTestCase {
         Assertions.assertEquals("Br", atoms.get(1).getSymbol());
     }
 
+    @Test
+    public void testSymmetryAndStop() throws Exception {
+        String filename = "symmetryandstopinhose.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        reader.close();
+        HOSECodeGenerator hcg = new HOSECodeGenerator();
+        //Note that those two atoms are symmetrical
+        String hose1=hcg.getHOSECode(molecule, molecule.getAtom(2), 6, true);
+        String hose2=hcg.getHOSECode(molecule, molecule.getAtom(3), 6, true);
+        Assertions.assertEquals(hose1, hose2);
+        //and so are those
+        hose1=hcg.getHOSECode(molecule, molecule.getAtom(4), 6, true);
+        hose2=hcg.getHOSECode(molecule, molecule.getAtom(5), 6, true);
+        Assertions.assertEquals(hose1, hose2);
+    }
 }
