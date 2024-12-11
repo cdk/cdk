@@ -585,7 +585,7 @@ class HOSECodeGeneratorTest extends CDKTestCase {
     @Test
     public void testSymmetryAndStop() throws Exception {
         String filename = "symmetryandstopinhose.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         reader.close();
