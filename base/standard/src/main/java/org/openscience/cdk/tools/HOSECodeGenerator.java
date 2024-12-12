@@ -42,7 +42,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+
+import static java.util.Map.entry;
 
 /**
  * Generates HOSE codes {@cdk.cite BRE78}.
@@ -111,25 +115,17 @@ public class HOSECodeGenerator implements java.io.Serializable {
 
     protected String            centerCode           = null;
 
-    private TreeNode             rootNode             = null;
-
     boolean                     debug                = false;
 
     private final IAtomContainer      acold                = null;
     private IRingSet            soar                 = null;
 
     /**
-     *  The rank order for the given element symbols.
+     *  The ranks for the given element and other symbols.
      */
-
-    private static final String[]       rankedSymbols        = {"C", "O", "N", "S", "P", "Si", "B", "F", "Cl", "Br", ";", "I",
-            "#", "&", ","                            };
-
-    /**
-     *  The ranking values to be used for the symbols above.
-     */
-    private static final int[]          symbolRankings       = {9000, 8900, 8800, 8700, 8600, 8500, 8400, 8300, 8200, 8100,
-            8000, 7900, 1200, 1100, 1000             };
+    Map<String, Integer> rankedSymbols = Map.ofEntries(
+    	entry("C",9000),entry("O",8900),entry("N",8800),entry("S",8700),entry("P",8600),entry("Si",8500),entry("B",8400),entry("F",8300),
+    	entry("Cl",8200),entry("Br",8100),entry(";",8000),entry("I",7900),entry("#",1200),entry("&",1100),entry(",",1000));
 
     /**
      * The bond rankings to be used for the four bond order possibilities.
@@ -219,7 +215,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
             ac.getAtom(i).setFlag(IChemObject.VISITED, false);
         }
         root.setFlag(IChemObject.VISITED, true);
-        rootNode = new TreeNode(root.getSymbol(), null, root, 0, atomContainer.getConnectedBondsCount(root), 0);
         /*
          * All we need to observe is how the ranking of substituents in the
          * subsequent spheres of the root nodes influences the ranking of the
@@ -286,7 +281,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
             ac.getAtom(i).setFlag(IChemObject.VISITED, false);
         }
         root.setFlag(IChemObject.VISITED, true);
-        rootNode = new TreeNode(root.getSymbol(), null, root, 0, atomContainer.getConnectedBondsCount(root), 0);
         /*
          * All we need to observe is how the ranking of substituents in the
          * subsequent spheres of the root nodes influences the ranking of the
@@ -574,11 +568,8 @@ public class HOSECodeGenerator implements java.io.Serializable {
      *@return         The element rank
      */
     private double getElementRank(String symbol) {
-        for (int f = 0; f < rankedSymbols.length; f++) {
-            if (rankedSymbols[f].equals(symbol)) {
-                return symbolRankings[f];
-            }
-        }
+        if(rankedSymbols.containsKey(symbol))
+        	return rankedSymbols.get(symbol);
         IIsotope isotope = isotopeFac.getMajorIsotope(symbol);
         if (isotope.getMassNumber() != null) {
             return ((double) 800000 - isotope.getMassNumber());
