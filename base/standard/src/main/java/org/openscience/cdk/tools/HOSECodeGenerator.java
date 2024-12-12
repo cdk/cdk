@@ -122,9 +122,10 @@ public class HOSECodeGenerator implements java.io.Serializable {
     /**
      *  The ranks for the given element and other symbols.
      */
-    Map<String, Long> rankedSymbols = Map.ofEntries(
+    private static final long RING_RANK = 1100l;
+    private Map<String, Long> rankedSymbols = Map.ofEntries(
     	entry("C",9000l),entry("O",8900l),entry("N",8800l),entry("S",8700l),entry("P",8600l),entry("Si",8500l),entry("B",8400l),entry("F",8300l),
-    	entry("Cl",8200l),entry("Br",8100l),entry(";",8000l),entry("I",7900l),entry("#",1200l),entry("&",1100l),entry(",",1000l)
+    	entry("Cl",8200l),entry("Br",8100l),entry(";",8000l),entry("I",7900l),entry("#",1200l),entry("&",RING_RANK),entry(",",1000l)
     );
 
     /**
@@ -613,7 +614,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         for (TreeNode sphereNode : sphereNodes) {
             treeNode = sphereNode;
             if ((flags&LEGACY_MODE) == 0 && treeNode.atom != null && treeNode.atom.getFlag(IChemObject.VISITED)) {
-            	treeNode.score += 1100l;//same as getElementRank("&") but faster
+            	treeNode.score += RING_RANK;
             }else {
             	treeNode.score += getElementRank(treeNode.symbol);
             }
