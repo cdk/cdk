@@ -39,6 +39,20 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     }
 
     @Test
+    void getAgentCount_test() {
+        IReaction reaction = (IReaction) newChemObject();
+        Assertions.assertEquals(0, reaction.getAgentCount());
+
+        reaction.addReactant(reaction.getBuilder().newInstance(IAtomContainer.class));
+        reaction.addReactant(reaction.getBuilder().newInstance(IAtomContainer.class));
+        reaction.addProduct(reaction.getBuilder().newInstance(IAtomContainer.class));
+        Assertions.assertEquals(0, reaction.getAgentCount());
+
+        reaction.addAgent(reaction.getBuilder().newInstance(IAtomContainer.class));
+        Assertions.assertEquals(1, reaction.getAgentCount());
+    }
+
+    @Test
     public void testAddReactant_IAtomContainer() {
         IReaction reaction = (IReaction) newChemObject();
         IAtomContainer sodiumhydroxide = reaction.getBuilder().newInstance(IAtomContainer.class);
@@ -296,7 +310,7 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         IReaction reaction = (IReaction) newChemObject();
         Object clone = reaction.clone();
         Assertions.assertNotNull(clone);
-        Assertions.assertTrue(clone instanceof IReaction);
+        Assertions.assertInstanceOf(IReaction.class, clone);
     }
 
     @Test
