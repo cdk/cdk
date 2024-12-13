@@ -89,6 +89,13 @@ public interface IReaction extends IChemObject, Iterable<IAtomContainer> {
     int getProductCount();
 
     /**
+     * Returns the number of agents in this reaction.
+     *
+     * @return The number of agents in this reaction
+     */
+    int getAgentCount();
+
+    /**
      * Returns a IAtomContaineSet containing the reactants in this reaction.
      *
      * @return A IAtomContaineSet containing the reactants in this reaction
