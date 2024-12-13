@@ -32,6 +32,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -123,10 +125,10 @@ public class HOSECodeGenerator implements java.io.Serializable {
      *  The ranks for the given element and other symbols.
      */
     private static final long RING_RANK = 1100l;
-    private Map<String, Long> rankedSymbols = Map.ofEntries(
-    	entry("C",9000l),entry("O",8900l),entry("N",8800l),entry("S",8700l),entry("P",8600l),entry("Si",8500l),entry("B",8400l),entry("F",8300l),
-    	entry("Cl",8200l),entry("Br",8100l),entry(";",8000l),entry("I",7900l),entry("#",1200l),entry("&",RING_RANK),entry(",",1000l)
-    );
+    private Map<String, Long> rankedSymbols = Stream.of(new Object[][] {
+    	{"C",9000l},{"O",8900l},{"N",8800l},{"S",8700l},{"P",8600l},{"Si",8500l},{"B",8400l},{"F",8300l},
+    	{"Cl",8200l},{"Br",8100l},{";",8000l},{"I",7900l},{"#",1200l},{"&",RING_RANK},{",",1000l}
+    }).collect(Collectors.toMap(data -> (String) data[0], data -> (Long) data[1]));
 
     /**
      * The bond rankings to be used for the four bond order possibilities.
