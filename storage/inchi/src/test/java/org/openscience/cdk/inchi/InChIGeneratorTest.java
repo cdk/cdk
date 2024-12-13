@@ -895,7 +895,7 @@ class InChIGeneratorTest extends CDKTestCase {
         InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
         InChIGenerator generator = inchiFact.getInChIGenerator(mol, "W0.01");
         assertThat(generator.getStatus()).isEqualTo(InchiStatus.ERROR);
-        assertThat(generator.getMessage()).contains("Time limit exceeded");
+        assertThat(generator.getMessage()).containsAnyOf("Time limit exceeded", "Structure normalization timeout");
     }
 
     /**
