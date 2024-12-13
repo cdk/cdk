@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.tools;
 
-import static java.util.Map.entry;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
