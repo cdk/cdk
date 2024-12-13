@@ -202,7 +202,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 bondsToRemove[j] = atomContainer.getBond(splittableBondIndices[j]);
             }
 //                List<IAtomContainer> parts = FragmentUtils.splitMolecule(molToSplit, bondToSplit);
-            IAtomContainer[] parts = splitMoleculeWithCopy(atomContainer, bondsToRemove);
+            IAtomContainer[] parts = splitMoleculeBondsWithCopy(atomContainer, bondsToRemove);
             for (IAtomContainer partContainer : parts) {
                 AtomContainerManipulator.clearAtomConfigurations(partContainer);
                 for (IAtom atom : partContainer.atoms()) {
@@ -348,75 +348,64 @@ public class ExhaustiveFragmenter implements IFragmenter {
         return cpyAtom;
     }
 
-    private static IAtomContainer[] splitMoleculeWithCopy(IAtomContainer mol, IBond[] bondsToSplit) {
-        boolean[] alreadyVisitedtoms = new boolean[mol.getAtomCount()];
+    private static IAtomContainer[] splitMoleculeBondsWithCopy(IAtomContainer mol, IBond[] bondsToSplit) {
+        boolean[] alreadyVisitedAtoms = new boolean[mol.getAtomCount()];
         // set all values of already visited to false
-        Arrays.fill(alreadyVisitedtoms, false);
+        Arrays.fill(alreadyVisitedAtoms, false);
         // map to keep track of the original atoms and the copies thereof
         Map<IAtom, IAtom> origToCpyMap = new HashMap<>(mol.getAtomCount());
-        Map<IAtom, IAtom> atomsToSeperate = new HashMap<>(bondsToSplit.length);
-        for (IBond bond : bondsToSplit) {
-            atomsToSeperate.put(bond.getBegin(), bond.getEnd());
-        }
         int numberOfFragments = bondsToSplit.length + 1;
         IAtomContainer[] fragments = new IAtomContainer[numberOfFragments];
+        Set<List<Integer>> pairIdxToSplit = new HashSet<>(bondsToSplit.length);
+        for (IBond bond : bondsToSplit) {
+            List<Integer> pair = new ArrayList<>(2);
+            pair.add(bond.getBegin().getIndex());
+            pair.add(bond.getBegin().getIndex());
+            pairIdxToSplit.add(pair);
+        }
         for (int i = 0; i < numberOfFragments; i++) {
             // new container to hold a fragment
             IAtomContainer fragmentContainer = mol.getBuilder().newInstance(IAtomContainer.class);
-
             // a stack to make a DFS through the subgraph
             Stack<IAtom> atomStack = new Stack<>();
             if (i == 0) {
                 atomStack.add(bondsToSplit[0].getBegin());
-                IAtom firstAtom = atomStack.peek();
-                IAtom firstAtomCpy = copyAtom(atomStack.peek(), fragmentContainer);
-                origToCpyMap.put(firstAtom, firstAtomCpy);
-                for (IAtom nbor : firstAtom.neighbors()) {
-                    if (nbor != atomsToSeperate.get(firstAtom)) {
-                        IAtom cpyNbor = copyAtom(nbor, fragmentContainer);
-                        fragmentContainer.newBond(firstAtomCpy, cpyNbor, mol.getBond(firstAtom, nbor).getOrder());
-                        atomStack.add(nbor);
-                        origToCpyMap.put(nbor, cpyNbor);
-                    }
-                }
+                IAtom atom = atomStack.peek();
+                IAtom atomCpy = copyAtom(atomStack.peek(), fragmentContainer);
+                alreadyVisitedAtoms[atom.getIndex()] = true;
+                origToCpyMap.put(atom, atomCpy);
             } else {
                 atomStack.add(bondsToSplit[i - 1].getEnd());
-                IAtom firstAtom = atomStack.peek();
-                IAtom firstAtomCpy = copyAtom(firstAtom, fragmentContainer);
-                origToCpyMap.put(firstAtom, firstAtomCpy);
-                for (IAtom nbor : firstAtom.neighbors()) {
-                    if (nbor != atomsToSeperate.get(firstAtom)) {
-                        IAtom cpyNbor = copyAtom(nbor, fragmentContainer);
-                        fragmentContainer.newBond(firstAtomCpy, cpyNbor, mol.getBond(firstAtom, nbor).getOrder());
-                        atomStack.add(nbor);
-                        origToCpyMap.put(nbor, cpyNbor);
-                    }
-                }
+                IAtom atom = atomStack.peek();
+                IAtom atomCpy = copyAtom(atom, fragmentContainer);
+                alreadyVisitedAtoms[atom.getIndex()] = true;
+                origToCpyMap.put(atom, atomCpy);
             }
             while (!atomStack.isEmpty()) {
-                IAtom lastAtom = atomStack.pop();
-                IAtom cpyAtom = copyAtom(lastAtom, fragmentContainer);
-
-                alreadyVisitedtoms[lastAtom.getIndex()] = true;
-                for (IAtom nbor: lastAtom.neighbors()) {
-                    if (!alreadyVisitedtoms[nbor.getIndex()]) {
-                        if (nbor == atomsToSeperate.get(lastAtom)) {
+                IAtom atom = atomStack.pop();
+                IAtom cpyAtom = copyAtom(atom, fragmentContainer);
+                alreadyVisitedAtoms[atom.getIndex()] = true;
+                for (IAtom nbor: atom.neighbors()) {
+                    if (!alreadyVisitedAtoms[nbor.getIndex()]) {
+                        List<Integer> pair = new ArrayList<>(2);
+                        pair.add(atom.getIndex());
+                        pair.add(nbor.getIndex());
+                        if (!pairIdxToSplit.contains(pair)) {
+                            IAtom cpyNbor = copyAtom(nbor, fragmentContainer);
+                            fragmentContainer.newBond(cpyAtom, cpyNbor, mol.getBond(atom, nbor).getOrder());
+                            atomStack.add(nbor);
+                            origToCpyMap.put(nbor, cpyNbor);
+                            alreadyVisitedAtoms[nbor.getIndex()] = true;
+                        }
+                    } else {
+                        IAtom nborCpy = origToCpyMap.get(nbor);
+                        if (nborCpy == null || cpyAtom.getContainer() != nborCpy.getContainer()) {
                             continue;
                         }
-                        alreadyVisitedtoms[nbor.getIndex()] = true;
-                        IAtom cpyNbor = copyAtom(nbor, fragmentContainer);
-                        fragmentContainer.newBond(cpyAtom, cpyNbor, mol.getBond(lastAtom, nbor).getOrder());
-                        atomStack.add(nbor);
-                        origToCpyMap.put(nbor, cpyNbor);
-                    } else {
-                        IBond cycleConeectionBond = mol.getBond(lastAtom, nbor);
-//                        System.out.println(cpyAtom.getContainer().toString());
-//                        System.out.println(cycleConeectionBond.getContainer().toString());
-//                        System.out.println(cpyAtom.getContainer().equals(origToCpyMap.get(nbor).getContainer()));
                         fragmentContainer.newBond(
                                 cpyAtom,
                                 origToCpyMap.get(nbor),
-                                cycleConeectionBond.getOrder()
+                                mol.getBond(atom, nbor).getOrder()
                         );
                     }
                 }
