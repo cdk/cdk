@@ -194,6 +194,13 @@ public class DebugReaction extends Reaction implements IReaction {
 
     /** {@inheritDoc} */
     @Override
+    public int getAgentCount() {
+        logger.debug("Getting agent count: ", super.getAgentCount());
+        return super.getAgentCount();
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public IAtomContainerSet getReactants() {
         logger.debug("Getting reactants: ", super.getReactants());
         return super.getReactants();
