@@ -19,22 +19,17 @@
  */
 package org.openscience.cdk.inchi;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.anyOf;
-
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import net.sf.jniinchi.INCHI_OPTION;
-import org.junit.jupiter.api.Assertions;
+import io.github.dan2097.jnainchi.InchiFlag;
+import io.github.dan2097.jnainchi.InchiOptions;
+import io.github.dan2097.jnainchi.InchiStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -57,12 +52,15 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
-import net.sf.jniinchi.INCHI_RET;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * TestCase for the InChIGenerator.
  *
  * @cdk.module test-inchi
+ * @author Sam Adams
+ * @author Egon Willighagen
+ * @author Uli Fechner
  *
  * @see org.openscience.cdk.inchi.InChIGenerator
  */
@@ -87,8 +85,8 @@ class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("ClH"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/ClH/h1H", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1/ClH/h1H");
     }
 
     @Test
@@ -96,7 +94,7 @@ class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("Cl"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertNotNull(gen.getLog());
+        assertThat(gen.getLog()).isNotNull();
     }
 
     @Test
@@ -110,8 +108,8 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.SINGLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "");
-        Assertions.assertNotNull(gen.getAuxInfo());
-        Assertions.assertTrue(gen.getAuxInfo().startsWith("AuxInfo="));
+        assertThat(gen.getAuxInfo()).isNotNull();
+        assertThat(gen.getAuxInfo()).startsWith("AuxInfo=");
     }
 
     @Test
@@ -119,7 +117,7 @@ class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("Cl"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertEquals("", gen.getMessage(), "Because this generation should work, I expected an empty message String.");
+        assertThat(gen.getMessage()).isEmpty();
     }
 
     @Test
@@ -129,8 +127,8 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(new Atom("H"));
         ac.addBond(0, 1, Order.TRIPLE);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertNotNull(gen.getMessage());
-        Assertions.assertTrue(gen.getMessage().contains("Accepted unusual valence"));
+        assertThat(gen.getMessage()).isNotNull();
+        assertThat(gen.getMessage()).contains("Accepted unusual valence");
     }
 
     /**
@@ -145,8 +143,8 @@ class InChIGeneratorTest extends CDKTestCase {
         a.setFormalCharge(+1);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/Li/q+1", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1/Li/q+1");
     }
 
     /**
@@ -161,8 +159,8 @@ class InChIGeneratorTest extends CDKTestCase {
         a.setMassNumber(37);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/ClH/h1H/i1+2", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1/ClH/h1H/i1+2");
     }
 
     /**
@@ -177,8 +175,8 @@ class InChIGeneratorTest extends CDKTestCase {
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/ClH/h1H", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1/ClH/h1H");
     }
 
     /**
@@ -194,8 +192,8 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a);
         ac.addSingleElectron(new SingleElectron(a));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/CH3/h1H3", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1/CH3/h1H3");
     }
 
     /**
@@ -214,9 +212,9 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.SINGLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/C2H6/c1-2/h1-2H3", gen.getInchi());
-        Assertions.assertEquals("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.getInchiKey());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1/C2H6/c1-2/h1-2H3");
+        assertThat(gen.getInchiKey()).isEqualTo("OTMSDBZUPAUEDD-UHFFFAOYNA-N");
     }
 
     /**
@@ -236,17 +234,15 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a1);
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.SINGLE));
-        List<INCHI_OPTION> options = new ArrayList<>();
-        options.add(INCHI_OPTION.FixedH);
-        options.add(INCHI_OPTION.SAbs);
-        options.add(INCHI_OPTION.SAsXYZ);
-        options.add(INCHI_OPTION.SPXYZ);
-        options.add(INCHI_OPTION.FixSp3Bug);
-        options.add(INCHI_OPTION.AuxNone);
+        InchiOptions options = new InchiOptions.InchiOptionsBuilder()
+                .withFlag(InchiFlag.FixedH)
+                .withFlag(InchiFlag.SAbs)
+                .withFlag(InchiFlag.AuxNone)
+                .build();
         InChIGenerator gen = getFactory().getInChIGenerator(ac, options);
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/C2H6/c1-2/h1-2H3", gen.getInchi());
-        Assertions.assertEquals("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.getInchiKey());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1/C2H6/c1-2/h1-2H3");
+        assertThat(gen.getInchiKey()).isEqualTo("OTMSDBZUPAUEDD-UHFFFAOYNA-N");
     }
 
     /**
@@ -265,8 +261,8 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.DOUBLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/C2H4/c1-2/h1-2H2", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1/C2H4/c1-2/h1-2H2");
     }
 
     /**
@@ -285,8 +281,8 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.TRIPLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/C2H2/c1-2/h1-2H", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1/C2H2/c1-2/h1-2H");
     }
 
     /**
@@ -315,8 +311,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acE.addBond(new Bond(a2E, a4E, Order.SINGLE));
 
         InChIGenerator genE = getFactory().getInChIGenerator(acE, "FixedH");
-        Assertions.assertEquals(genE.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.getInchi());
+        assertThat(genE.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genE.getInchi()).isEqualTo("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+");
 
         // (Z)-1,2-dichloroethene
         IAtomContainer acZ = DefaultChemObjectBuilder.getInstance().newAtomContainer();
@@ -336,8 +332,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acZ.addBond(new Bond(a2Z, a4Z, Order.SINGLE));
 
         InChIGenerator genZ = getFactory().getInChIGenerator(acZ, "FixedH");
-        Assertions.assertEquals(genZ.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", genZ.getInchi());
+        assertThat(genZ.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genZ.getInchi()).isEqualTo("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-");
     }
 
     /**
@@ -374,8 +370,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acL.addBond(new Bond(a2L, a6L, Order.DOUBLE));
 
         InChIGenerator genL = getFactory().getInChIGenerator(acL, "FixedH");
-        Assertions.assertEquals(genL.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1/f/h5H", genL.getInchi());
+        assertThat(genL.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genL.getInchi()).isEqualTo("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1/f/h5H");
 
         // D-Alanine
         IAtomContainer acD = DefaultChemObjectBuilder.getInstance().newAtomContainer();
@@ -403,8 +399,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acD.addBond(new Bond(a2D, a6D, Order.DOUBLE));
 
         InChIGenerator genD = getFactory().getInChIGenerator(acD, "FixedH");
-        Assertions.assertEquals(genD.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1/f/h5H", genD.getInchi());
+        assertThat(genD.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genD.getInchi()).isEqualTo("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1/f/h5H");
     }
 
     // ensure only
@@ -414,8 +410,8 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(new Atom("O"));
         ac.getAtom(0).setImplicitHydrogenCount(0);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/O", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1S/O");
     }
 
     /**
@@ -428,8 +424,8 @@ class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("ClH"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1S/ClH/h1H");
     }
 
     /**
@@ -444,8 +440,8 @@ class InChIGeneratorTest extends CDKTestCase {
         a.setFormalCharge(+1);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/Li/q+1", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1S/Li/q+1");
     }
 
     /**
@@ -460,8 +456,8 @@ class InChIGeneratorTest extends CDKTestCase {
         a.setMassNumber(37);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/ClH/h1H/i1+2", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1S/ClH/h1H/i1+2");
     }
 
     /**
@@ -476,8 +472,8 @@ class InChIGeneratorTest extends CDKTestCase {
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        Assertions.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1S/ClH/h1H");
     }
 
     /**
@@ -493,8 +489,8 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a);
         ac.addSingleElectron(new SingleElectron(a));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/CH3/h1H3", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1S/CH3/h1H3");
     }
 
     /**
@@ -513,9 +509,9 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.SINGLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/C2H6/c1-2/h1-2H3", gen.getInchi());
-        Assertions.assertEquals("OTMSDBZUPAUEDD-UHFFFAOYSA-N", gen.getInchiKey());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1S/C2H6/c1-2/h1-2H3");
+        assertThat(gen.getInchiKey()).isEqualTo("OTMSDBZUPAUEDD-UHFFFAOYSA-N");
     }
 
     /**
@@ -534,8 +530,8 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.DOUBLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/C2H4/c1-2/h1-2H2", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1S/C2H4/c1-2/h1-2H2");
     }
 
     /**
@@ -554,8 +550,8 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.TRIPLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        Assertions.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/C2H2/c1-2/h1-2H", gen.getInchi());
+        assertThat(gen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(gen.getInchi()).isEqualTo("InChI=1S/C2H2/c1-2/h1-2H");
     }
 
     /**
@@ -584,8 +580,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acE.addBond(new Bond(a2E, a4E, Order.SINGLE));
 
         InChIGenerator genE = getFactory().getInChIGenerator(acE);
-        Assertions.assertEquals(INCHI_RET.OKAY, genE.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.getInchi());
+        assertThat(genE.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genE.getInchi()).isEqualTo("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+");
 
         // (Z)-1,2-dichloroethene
         IAtomContainer acZ = DefaultChemObjectBuilder.getInstance().newAtomContainer();
@@ -605,8 +601,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acZ.addBond(new Bond(a2Z, a4Z, Order.SINGLE));
 
         InChIGenerator genZ = getFactory().getInChIGenerator(acZ);
-        Assertions.assertEquals(INCHI_RET.OKAY, genZ.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", genZ.getInchi());
+        assertThat(genZ.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genZ.getInchi()).isEqualTo("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-");
     }
 
     /**
@@ -643,8 +639,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acL.addBond(new Bond(a2L, a6L, Order.DOUBLE));
 
         InChIGenerator genL = getFactory().getInChIGenerator(acL);
-        Assertions.assertEquals(INCHI_RET.OKAY, genL.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", genL.getInchi());
+        assertThat(genL.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genL.getInchi()).isEqualTo("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1");
 
         // D-Alanine
         IAtomContainer acD = DefaultChemObjectBuilder.getInstance().newAtomContainer();
@@ -672,8 +668,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acD.addBond(new Bond(a2D, a6D, Order.DOUBLE));
 
         InChIGenerator genD = getFactory().getInChIGenerator(acD);
-        Assertions.assertEquals(INCHI_RET.OKAY, genD.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1", genD.getInchi());
+        assertThat(genD.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genD.getInchi()).isEqualTo("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1");
     }
 
     @Test
@@ -715,8 +711,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acL.addStereoElement(chirality);
 
         InChIGenerator genL = getFactory().getInChIGenerator(acL);
-        Assertions.assertEquals(INCHI_RET.OKAY, genL.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", genL.getInchi());
+        assertThat(genL.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genL.getInchi()).isEqualTo("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1");
     }
 
     @Test
@@ -746,8 +742,8 @@ class InChIGeneratorTest extends CDKTestCase {
         acE.addStereoElement(stereo);
 
         InChIGenerator genE = getFactory().getInChIGenerator(acE);
-        Assertions.assertEquals(INCHI_RET.OKAY, genE.getReturnStatus());
-        Assertions.assertEquals("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.getInchi());
+        assertThat(genE.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(genE.getInchi()).isEqualTo("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+");
     }
 
     /**
@@ -755,13 +751,10 @@ class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     void bug1295() throws Exception {
-        MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("bug1295.mol"));
-        try {
+        try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("bug1295.mol"))) {
             IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             InChIGenerator generator = getFactory().getInChIGenerator(container);
-            Assertions.assertEquals("InChI=1S/C7H15NO/c1-4-7(3)6-8-9-5-2/h6-7H,4-5H2,1-3H3", generator.getInchi());
-        } finally {
-            reader.close();
+            assertThat(generator.getInchi()).isEqualTo("InChI=1S/C7H15NO/c1-4-7(3)6-8-9-5-2/h6-7H,4-5H2,1-3H3");
         }
     }
 
@@ -789,7 +782,7 @@ class InChIGeneratorTest extends CDKTestCase {
             m.setStereoElements(Collections.singletonList(element));
 
             InChIGenerator generator = getFactory().getInChIGenerator(m);
-            assertThat(generator.getInchi(), is("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1"));
+            assertThat(generator.getInchi()).isEqualTo("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1");
 
         }
     }
@@ -819,7 +812,7 @@ class InChIGeneratorTest extends CDKTestCase {
             m.setStereoElements(Collections.singletonList(element));
 
             InChIGenerator generator = getFactory().getInChIGenerator(m);
-            assertThat(generator.getInchi(), is("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1"));
+            assertThat(generator.getInchi()).isEqualTo("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1");
 
         }
     }
@@ -853,7 +846,7 @@ class InChIGeneratorTest extends CDKTestCase {
             m.setStereoElements(Collections.singletonList(element));
 
             InChIGenerator generator = getFactory().getInChIGenerator(m);
-            assertThat(generator.getInchi(), is("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1"));
+            assertThat(generator.getInchi()).isEqualTo("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1");
 
         }
     }
@@ -887,25 +880,22 @@ class InChIGeneratorTest extends CDKTestCase {
             m.setStereoElements(Collections.singletonList(element));
 
             InChIGenerator generator = getFactory().getInChIGenerator(m);
-            assertThat(generator.getInchi(), is("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1"));
+            assertThat(generator.getInchi()).isEqualTo("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1");
 
         }
     }
 
     @Test
-    void timeout() throws Exception {
-        Assertions.assertTimeout(Duration.ofMillis(1500), () -> {
-            IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
-            SmilesParser smipar = new SmilesParser(bldr);
-            String smiles = "C(CCCNC(=N)N)(COCC(COP([O])(=O)OCCCCCCNC(NC1=CC(=C(C=C1)C2(C3=CC=C(C=C3OC=4C2=CC=C(C4)O)O)C)C(=O)[O])=S)OP(=O)([O])OCC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(=N)N)CCCNC(=N)N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP(OCC(COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCCNC(N)=N)CCC/[NH]=C(/N)\\[NH])OP([O])(=O)CCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP([O])(=O)OCC(COCC(CCCNC(N)=N)(CCCNC(N)=N)CCC/[NH]=C(\\[NH])/N)OP(OCC(COCC(CCCNC(N)=N)(CCC/[NH]=C(/N)\\[NH])CCCNC(N)=N)O=P([O])(OCC(COP(=OC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(N)=N)CCCNC(N)=N)COP([O])(=O)OC(COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP([O])(=O)OC(COP(OC(COP(OC(COP(=O)([O])OC(COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(N)=N)CCCNC(=N)N)COP([O])(=O)OCCCCCCNC(NC=5C=CC(=C(C5)C(=O)[O])C6(C7=CC=C(C=C7OC=8C6=CC=C(C8)O)O)C)=S)COCC(CCCNC(N)=N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)([O])=O)([O])=O)COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(=N)N)CCCNC(=N)N)([O])[O])(C)COP(OCCCCCCO)(=O)[O])[O])(=O)[O])([O])=O)(CCC/[NH]=C(\\[NH])/[NH])CCCNC(=N)N";
-            IAtomContainer mol = smipar.parseSmiles(smiles);
-            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
-            InChIGenerator generator = inchiFact.getInChIGenerator(mol, "W0.01");
-            assertThat(generator.getReturnStatus(), is(INCHI_RET.ERROR));
-            assertThat(generator.getMessage(),
-                       anyOf(containsString("Time limit exceeded"),
-                             containsString("Structure normalization timeout")));
-        });
+    @Timeout(value = 1500, unit = TimeUnit.MILLISECONDS)
+    void timeout() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        String smiles = "C(CCCNC(=N)N)(COCC(COP([O])(=O)OCCCCCCNC(NC1=CC(=C(C=C1)C2(C3=CC=C(C=C3OC=4C2=CC=C(C4)O)O)C)C(=O)[O])=S)OP(=O)([O])OCC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(=N)N)CCCNC(=N)N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP(OCC(COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCCNC(N)=N)CCC/[NH]=C(/N)\\[NH])OP([O])(=O)CCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP([O])(=O)OCC(COCC(CCCNC(N)=N)(CCCNC(N)=N)CCC/[NH]=C(\\[NH])/N)OP(OCC(COCC(CCCNC(N)=N)(CCC/[NH]=C(/N)\\[NH])CCCNC(N)=N)O=P([O])(OCC(COP(=OC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(N)=N)CCCNC(N)=N)COP([O])(=O)OC(COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP([O])(=O)OC(COP(OC(COP(OC(COP(=O)([O])OC(COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(N)=N)CCCNC(=N)N)COP([O])(=O)OCCCCCCNC(NC=5C=CC(=C(C5)C(=O)[O])C6(C7=CC=C(C=C7OC=8C6=CC=C(C8)O)O)C)=S)COCC(CCCNC(N)=N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)([O])=O)([O])=O)COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(=N)N)CCCNC(=N)N)([O])[O])(C)COP(OCCCCCCO)(=O)[O])[O])(=O)[O])([O])=O)(CCC/[NH]=C(\\[NH])/[NH])CCCNC(=N)N";
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
+        InChIGenerator generator = inchiFact.getInChIGenerator(mol, "W0.01");
+        assertThat(generator.getStatus()).isEqualTo(InchiStatus.ERROR);
+        assertThat(generator.getMessage()).contains("Time limit exceeded");
     }
 
     /**
@@ -920,8 +910,8 @@ class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles(smiles);
         InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
         InChIGenerator inchigen = inchiFact.getInChIGenerator(mol);
-        assertThat(inchigen.getReturnStatus(), is(INCHI_RET.OKAY));
-        assertThat(inchigen.getInchi(), is("InChI=1S/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,6,7,8,9,10,11)"));
+        assertThat(inchigen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(inchigen.getInchi()).isEqualTo("InChI=1S/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,6,7,8,9,10,11)");
     }
 
     /**
@@ -936,10 +926,8 @@ class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles(smiles);
         InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
         InChIGenerator inchigen = inchiFact.getInChIGenerator(mol, "KET");
-        assertThat(inchigen.getReturnStatus(),
-                   is(INCHI_RET.OKAY));
-        assertThat(inchigen.getInchi(),
-                   is("InChI=1/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,2,6,7,8,9,10,11)"));
+        assertThat(inchigen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(inchigen.getInchi()).isEqualTo("InChI=1/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,2,6,7,8,9,10,11)");
     }
 
     /**
@@ -954,13 +942,11 @@ class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles(smiles);
         InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
         InChIGenerator stdinchi = inchiFact.getInChIGenerator(mol);
-        assertThat(stdinchi.getReturnStatus(), is(INCHI_RET.OKAY));
-        assertThat(stdinchi.getInchi(),
-                   is("InChI=1S/C3H5NO/c4-2-1-3-5/h1-3H,4H2/b2-1-"));
+        assertThat(stdinchi.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(stdinchi.getInchi()).isEqualTo("InChI=1S/C3H5NO/c4-2-1-3-5/h1-3H,4H2/b2-1-");
         InChIGenerator inchigen = inchiFact.getInChIGenerator(mol, "15T");
-        assertThat(inchigen.getReturnStatus(), is(INCHI_RET.OKAY));
-        assertThat(inchigen.getInchi(),
-                   is("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)"));
+        assertThat(inchigen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(inchigen.getInchi()).isEqualTo("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)");
     }
 
     /**
@@ -975,9 +961,8 @@ class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles(smiles);
         InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
         InChIGenerator inchigen = inchiFact.getInChIGenerator(mol, "15T");
-        assertThat(inchigen.getReturnStatus(), is(INCHI_RET.OKAY));
-        assertThat(inchigen.getInchi(),
-                   is("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)"));
+        assertThat(inchigen.getStatus()).isEqualTo(InchiStatus.SUCCESS);
+        assertThat(inchigen.getInchi()).isEqualTo("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)");
     }
     
     /**
@@ -989,7 +974,7 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(new Atom("C"));
     	InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
     	InChIGenerator generator = factory.getInChIGenerator(ac);
-        assertThat(generator.options.getTimeoutMilliSeconds(), is(5000L));
+        assertThat(generator.options.getTimeoutMilliSeconds()).isEqualTo(5000);
     }
 
     @Test
@@ -998,6 +983,6 @@ class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(new Atom("99Tc"));
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
         InChIGenerator generator = factory.getInChIGenerator(ac);
-        assertThat(generator.getInchi(), is("InChI=1S/Tc/i1+1"));
+        assertThat(generator.getInchi()).isEqualTo("InChI=1S/Tc/i1+1");
     }
 }
