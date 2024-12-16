@@ -74,10 +74,14 @@ public class InChINumbersTools {
      * hydrogens are labelled as 0.
      *
      * @param container the structure to obtain the numbers of
-     * @return the atom numbers
+     * @return the atom numbers or an array of length 0 if the container is empty
      * @throws CDKException
      */
     public static long[] getUSmilesNumbers(IAtomContainer container) throws CDKException {
+        if (container.isEmpty()) {
+            return new long[0];
+        }
+
         String aux = auxInfo(container, InchiFlag.RecMet, InchiFlag.FixedH,
                              InchiFlag.LargeMolecules);
         return parseUSmilesNumbers(aux, container);
@@ -222,8 +226,7 @@ public class InChINumbersTools {
     }
     
     /**
-     * Obtain the InChI auxiliary info for the provided structure using
-     * using the specified InChI options.
+     * Obtain the InChI auxiliary info for the provided structure using the specified InChI options.
      *
      * @param  container the structure to obtain the numbers of
      * @param  flags varargs ... the JNA InChI flags
