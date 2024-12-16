@@ -58,6 +58,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         ELEMENT_R_NOT_RECOGNISED("InChIGenerator did not return status success: Element name R is not recognised."),
         EMPTY_STRUCTURE("InChIGenerator did not return status success: Empty structure.");
 
+
         private final String text;
 
         Messages(final String text) {
@@ -730,23 +731,25 @@ class RInChIGeneratorTest extends CDKTestCase {
         rxnFileRinchiFullInformationFileTest("org.openscience.cdk.rinchi/r22_rinchi_repo_example_05_groups_udm.rxn", "org.openscience.cdk.rinchi/r22_rinchi_repo_example_05_groups_udm-rinchi.txt");
     }
 
-    @Disabled("org.openscience.cdk.exception.CDKException: invalid symbol: X")
     @Test
     void r23_rinchi_repo_1_nostruct_reactant_1_struct_product_test() throws Exception {
         // ok__nostruct-X.rdf
         rxnFileRinchiFullInformationFileTest(
                 "org.openscience.cdk.rinchi/r23_rinchi_repo_1_nostruct_reactant_1_struct_product.rxn",
-                "org.openscience.cdk.rinchi/r23_rinchi_repo_1_nostruct_reactant_1_struct_product-rinchi.txt"
+                "org.openscience.cdk.rinchi/r23_rinchi_repo_1_nostruct_reactant_1_struct_product-rinchi.txt",
+                WARNING,
+                Arrays.asList(ELEMENT_R_NOT_RECOGNISED.toString(), EMPTY_STRUCTURE.toString())
         );
     }
 
-    @Disabled("org.openscience.cdk.exception.CDKException: invalid symbol: X")
     @Test
     void r24_rinchi_repo_1_struct_reactant_R_1_struct_product_X_test() throws Exception {
         // ok__R-X.rdf
         rxnFileRinchiFullInformationFileTest(
                 "org.openscience.cdk.rinchi/r24_rinchi_repo_1_struct_reactant_R_1_struct_product_X.rxn",
-                "org.openscience.cdk.rinchi/r24_rinchi_repo_1_struct_reactant_R_1_struct_product_X-rinchi.txt"
+                "org.openscience.cdk.rinchi/r24_rinchi_repo_1_struct_reactant_R_1_struct_product_X-rinchi.txt",
+                WARNING,
+                Arrays.asList(ELEMENT_R_NOT_RECOGNISED.toString(), ELEMENT_R_NOT_RECOGNISED.toString())
         );
     }
 

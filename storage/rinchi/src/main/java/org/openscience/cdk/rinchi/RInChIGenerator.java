@@ -53,10 +53,6 @@ import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
  *         line interface of the RInChI.
  *     </li>
  *     <li>
- *         If one of the reaction components contains an invalid symbol, which can not be interpreted by the CDK,
- *         this leads to an CDKException.
- *     </li>
- *     <li>
  *         If the Rxnfile contains additional structures other than those specified in the ‘count line’,
  *         these are interpreted by the CDK as products. The RInChI software strictly adheres to the ‘count line’.
  *     </li>
