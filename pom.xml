@@ -486,27 +486,27 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
-                <version>5.10.1</version>
+                <version>5.11.3</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-params</artifactId>
-                <version>5.10.1</version>
+                <version>5.11.3</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.10.1</version>
+                <version>5.11.3</version>
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
                 <artifactId>hamcrest-core</artifactId>
-                <version>2.2</version>
+                <version>3.0</version>
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
                 <artifactId>hamcrest</artifactId>
-                <version>2.2</version>
+                <version>3.0</version>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
@@ -618,7 +618,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>3.5.2</version>
                 <configuration>
                     <!-- prevent the annoying ForkedBooter process from stealing
                          window focus on Mac OS -->
@@ -637,7 +637,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.4.2</version>
                 <inherited>true</inherited>
                 <configuration>
                     <archive>
@@ -774,7 +774,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.22.0</version>
+                <version>3.26.0</version>
                 <configuration>
                     <rulesets>
                         <ruleset>/pmd/custom.xml</ruleset>
