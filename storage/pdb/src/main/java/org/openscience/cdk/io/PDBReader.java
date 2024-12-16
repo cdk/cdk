@@ -224,7 +224,7 @@ public class PDBReader extends DefaultChemObjectReader {
         PDBAtom oAtom;
         PDBPolymer oBP = new PDBPolymer();
         IAtomContainer molecularStructure = oFile.getBuilder().newInstance(IAtomContainer.class);
-        StringBuffer cResidue;
+        String cResidue;
         String oObj;
         IMonomer oMonomer;
         String cRead = "";
@@ -261,19 +261,19 @@ public class PDBReader extends DefaultChemObjectReader {
 
                         if (isProteinStructure) {
                             // construct a string describing the residue
-                            cResidue = new StringBuffer(8);
+                        	cResidue = "";
                             oObj = oAtom.getResName();
                             if (oObj != null) {
-                                cResidue = cResidue.append(oObj.trim());
+                                cResidue = cResidue + oObj.trim();
                             }
                             oObj = oAtom.getChainID();
                             if (oObj != null) {
                                 // cResidue = cResidue.append(((String)oObj).trim());
-                                cResidue = cResidue.append(chain);
+                                cResidue = cResidue + chain;
                             }
                             oObj = oAtom.getResSeq();
                             if (oObj != null) {
-                                cResidue = cResidue.append(oObj.trim());
+                                cResidue = cResidue + oObj.trim();
                             }
 
                             // search for an existing strand or create a new one.
