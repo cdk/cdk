@@ -579,7 +579,7 @@ class RInChIGeneratorTest extends CDKTestCase {
         rxnFileRinchiFullInformationFileTest("org.openscience.cdk.rinchi/r05_0_reactant_1_struct_product.rxn", "org.openscience.cdk.rinchi/r05_0_reactant_1_struct_product-rinchi.txt");
     }
 
-    @Disabled("AND enantiomer with stereocenters set to undefined in RAuxInfo.")
+    @Disabled("Difference in the /rA layer of the RAuxInfo, due to different interpretation of the rxn file in contrast to the native RInChI code.")
     @Test
     void r06_2_struct_reactant_1_struct_product_1_nostruct_product_test() throws Exception {
         // nostruct_one_in_products.rxn
@@ -590,7 +590,7 @@ class RInChIGeneratorTest extends CDKTestCase {
                 Collections.singletonList(EMPTY_STRUCTURE.toString()));
     }
 
-    @Disabled("AND enantiomer with stereocenters set to undefined in RAuxInfo.")
+    @Disabled("Difference in the /rA layer of the RAuxInfo, due to different interpretation of the rxn file in contrast to the native RInChI code.")
     @Test
     void r07_2_struct_reactant_1_nostruct_reactant_1_struct_product_test() throws Exception {
         // nostruct_one_in_reactants.rxn
@@ -601,7 +601,7 @@ class RInChIGeneratorTest extends CDKTestCase {
                 Collections.singletonList(EMPTY_STRUCTURE.text));
     }
 
-    @Disabled("AND enantiomer with stereocenters set to undefined in RAuxInfo.")
+    @Disabled("Difference in the /rA layer of the RAuxInfo, due to different interpretation of the rxn file in contrast to the native RInChI code.")
     @Test
     void r08_2_struct_reactant_2_nostruct_reactant_1_struct_product_test() throws Exception {
         // nostruct_two_in_reactants.rxn
@@ -612,7 +612,7 @@ class RInChIGeneratorTest extends CDKTestCase {
                 Arrays.asList(EMPTY_STRUCTURE.toString(), EMPTY_STRUCTURE.toString()));
     }
 
-    @Disabled("AND enantiomer with stereocenters set to undefined in RAuxInfo.")
+    @Disabled("Difference in the /rA layer of the RAuxInfo, due to different interpretation of the rxn file in contrast to the native RInChI code.")
     @Test
     void r09_1_struct_reactant_1_nostruct_reactant_1_struct_product_test() throws Exception {
         // R005a.rxn
