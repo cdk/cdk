@@ -353,8 +353,6 @@ public class InChIGenerator {
                 InchiAtom at3 = atomMap.get(surroundingAtoms[3]);
                 InchiStereoParity p;
 
-                //If all Tetrahedral stereo are marked as AND1 (&1), which means
-                //this molecule is this stereoisomer "and" the enantiomer, set parity to undefined.
                 if(stereoElem.getGroupInfo() == IStereoElement.GRP_RAC1){
                     p = InchiStereoParity.UNDEFINED;
                 } else if (stereoType == Stereo.ANTI_CLOCKWISE) {
