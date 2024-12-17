@@ -32,6 +32,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMapping;
@@ -42,15 +43,15 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * TestCase for the reading MDL RXN files using one test file.
  *
  * @cdk.module test-io
  *
- * @see org.openscience.cdk.io.MDLRXNReader
+ * @see org.openscience.cdk.io.MDLRXNV2000Reader
  */
 class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
@@ -140,11 +141,84 @@ class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void testAgentParts() throws Exception {
-        try (InputStream in = this.getClass().getResourceAsStream("ethylesterification.mol");
-             MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(in)) {
-            IReaction reaction = rdr.read(new Reaction());
-            assertThat(reaction.getAgents().getAtomContainerCount(), is(1));
+    void countsLineHasAgents_countsLineMatchesMolfiles_modeRelaxed_test() throws Exception {
+        // default mode of MDLRXNV2000Reader is RELAXED
+        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(
+                this.getClass().getResourceAsStream("ethylesterification_countsLineHasAgents_countsLineMatchesMolfiles.rxn"))) {
+            IReaction reaction = reader.read(SilentChemObjectBuilder.getInstance().newReaction());
+            assertThat(reaction.getReactants().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getProducts().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getAgents().getAtomContainerCount()).isEqualTo(1);
+        }
+    }
+
+    @Test
+    void countsLineHasAgents_countsLineMismatchMolfiles_modeRelaxed_test() throws Exception {
+        // default mode of MDLRXNV2000Reader is RELAXED
+        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(
+                this.getClass().getResourceAsStream("ethylesterification_countsLineHasAgents_countsLineMismatchMolfiles.rxn"))) {
+            IReaction reaction = reader.read(SilentChemObjectBuilder.getInstance().newReaction());
+            assertThat(reaction.getReactants().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getProducts().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getAgents().getAtomContainerCount()).isEqualTo(1);
+        }
+    }
+
+    @Test
+    void countsLineHasNoAgents_countsLineMatchesMolfiles_modeRelaxed_test() throws Exception {
+        // default mode of MDLRXNV2000Reader is RELAXED
+        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(
+                this.getClass().getResourceAsStream("ethylesterification_countsLineHasNoAgents_countsLineMatchesMolfiles.rxn"))) {
+            IReaction reaction = reader.read(SilentChemObjectBuilder.getInstance().newReaction());
+            assertThat(reaction.getReactants().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getProducts().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getAgents().getAtomContainerCount()).isEqualTo(0);
+        }
+    }
+
+    @Test
+    void countsLineHasNoAgents_countsLineMismatchesMolfiles_modeRelaxed_test() throws Exception {
+        // default mode of MDLRXNV2000Reader is RELAXED
+        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(
+                this.getClass().getResourceAsStream("ethylesterification_countsLineHasNoAgents_countsLineMismatchMolfiles.rxn"))) {
+            IReaction reaction = reader.read(SilentChemObjectBuilder.getInstance().newReaction());
+            assertThat(reaction.getReactants().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getProducts().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getAgents().getAtomContainerCount()).isEqualTo(1);
+        }
+    }
+
+    @Test
+    void countsLineHasNoAgents_countsLineMatchesMolfiles_modeStrict_test() throws Exception {
+        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(
+                this.getClass().getResourceAsStream("ethylesterification_countsLineHasNoAgents_countsLineMatchesMolfiles.rxn"),
+                Mode.STRICT)) {
+            IReaction reaction = reader.read(SilentChemObjectBuilder.getInstance().newReaction());
+            assertThat(reaction.getReactants().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getProducts().getAtomContainerCount()).isEqualTo(2);
+            assertThat(reaction.getAgents().getAtomContainerCount()).isEqualTo(0);
+        }
+    }
+
+    @Test
+    void countsLineHasAgents_countsLineMatchesMolfiles_modeStrict_test() throws Exception {
+        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(
+                this.getClass().getResourceAsStream("ethylesterification_countsLineHasAgents_countsLineMatchesMolfiles.rxn"),
+                Mode.STRICT)) {
+            assertThatThrownBy(() -> reader.read(SilentChemObjectBuilder.getInstance().newReaction()))
+                    .isInstanceOf(CDKException.class)
+                    .hasMessage("RXN files uses agent count extension. This is not supported in mode STRICT");
+        }
+    }
+
+    @Test
+    void countsLineHasAgents_countsLineMismatchMolfiles_modeStrict_test() throws Exception {
+        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(
+                this.getClass().getResourceAsStream("ethylesterification_countsLineHasNoAgents_countsLineMismatchMolfiles.rxn"),
+                Mode.STRICT)) {
+            assertThatThrownBy(() -> reader.read(SilentChemObjectBuilder.getInstance().newReaction()))
+                    .isInstanceOf(CDKException.class)
+                    .hasMessage("Agents are not supported in mode STRICT. Found 5 molecular entities, but there are only 4 molecular entities declared on the counts line.");
         }
     }
 
@@ -174,10 +248,10 @@ class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(new StringReader(sb.toString()))) {
             IReaction rxn = reader.read(bldr.newInstance(IReaction.class));
-            assertThat(rxn.getReactants().getAtomContainerCount(), is(2));
-            assertThat(rxn.getProducts().getAtomContainerCount(), is(1));
-            assertThat(rxn.getReactants().getAtomContainer(0).getAtomCount(), is(3));
-            assertThat(rxn.getReactants().getAtomContainer(1).getAtomCount(), is(3));
+            assertThat(rxn.getReactants().getAtomContainerCount()).isEqualTo(2);
+            assertThat(rxn.getProducts().getAtomContainerCount()).isEqualTo(1);
+            assertThat(rxn.getReactants().getAtomContainer(0).getAtomCount()).isEqualTo((3));
+            assertThat(rxn.getReactants().getAtomContainer(1).getAtomCount()).isEqualTo((3));
         }
     }
 }

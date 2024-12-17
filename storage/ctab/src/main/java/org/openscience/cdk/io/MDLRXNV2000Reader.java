@@ -222,7 +222,6 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
         int numReactants;
         int numProducts;
-        int agentCount;
         try {
             String countsLine = input.readLine();
             // this line contains the number of reactants and products
@@ -232,7 +231,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             numProducts = Integer.parseInt(tokenizer.nextToken());
             logger.info("Expecting " + numProducts + " products in file");
             if (tokenizer.hasMoreTokens()) {
-                agentCount = Integer.parseInt(tokenizer.nextToken());
+                int agentCount = Integer.parseInt(tokenizer.nextToken());
                 // ChemAxon extension, technically BIOVIA now support this but not documented yet
                 if (mode == Mode.STRICT && agentCount > 0)
                     throw new CDKException("RXN files uses agent count extension. This is not supported in mode " + mode);
