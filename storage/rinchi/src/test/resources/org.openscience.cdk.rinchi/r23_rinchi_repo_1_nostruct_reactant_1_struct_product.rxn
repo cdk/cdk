@@ -1,0 +1,67 @@
+$RXN
+
+      ISIS     012420161411
+
+  1  1
+$MOL
+
+  -ISIS-  01241614112D
+
+  0  0  0  0  0  0  0  0  0  0999 V2000
+M  END
+$MOL
+
+  -ISIS-  01241614112D
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    8.5292   -2.7458    0.0000 X   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+$DTYPE RXN:RXNREGNO
+$DATUM 167
+$DTYPE RXN:VARIATION(1):VARIATION_NO
+$DATUM 1
+$DTYPE RXN:VARIATION(1):STEPNO(1):STEP_NO
+$DATUM 1
+$DTYPE RXN:VARIATION(1):STEPNO(1):CATALYST(1):CATALYST_NO
+$DATUM 1
+$DTYPE RXN:VARIATION(1):STEPNO(1):CATALYST(1):MOL(1):MOLSTRUCTURE
+$DATUM $MFMT
+
+  -ISIS-  01241614112D
+
+  3  2  0  0  0  0  0  0  0  0999 V2000
+    6.4250   -2.8250    0.0000 Mn  0  0  0  0  0  0  0  0  0  0  0  0
+    7.1395   -2.4167    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    5.7064   -3.2417    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  2  0  0  0  0
+M  END
+$DTYPE RXN:VARIATION(1):STEPNO(1):SOLVENT(1):SOLVENT_NO
+$DATUM 1
+$DTYPE RXN:VARIATION(1):STEPNO(1):SOLVENT(1):MOL(1):MOLSTRUCTURE
+$DATUM $MFMT
+
+  -ISIS-  01241614112D
+
+  5  5  0  0  0  0  0  0  0  0999 V2000
+    1.3166   -1.1834    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1416   -1.1834    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.3984   -0.3992    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7291    0.0875    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0641   -0.3992    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  1  1  0  0  0  0
+M  END
+$DTYPE RXN:PRODUCT_LINK(1):MOL(1):MOLSTRUCTURE
+$DATUM $MFMT
+
+  -ISIS-  01241614112D
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    8.5292   -2.7458    0.0000 X   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+$DTYPE RXN:RXNCOMMENT
+$DATUM exported nostruct_-_X.rxn

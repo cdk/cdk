@@ -57,6 +57,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
+
 /**
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
  * a CDK IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
@@ -350,7 +352,10 @@ public class InChIGenerator {
                 InchiAtom at2 = atomMap.get(surroundingAtoms[2]);
                 InchiAtom at3 = atomMap.get(surroundingAtoms[3]);
                 InchiStereoParity p;
-                if (stereoType == Stereo.ANTI_CLOCKWISE) {
+
+                if(stereoElem.getGroupInfo() == IStereoElement.GRP_RAC1){
+                    p = InchiStereoParity.UNDEFINED;
+                } else if (stereoType == Stereo.ANTI_CLOCKWISE) {
                     p = InchiStereoParity.ODD;
                 } else if (stereoType == Stereo.CLOCKWISE) {
                     p = InchiStereoParity.EVEN;
@@ -542,7 +547,7 @@ public class InChIGenerator {
     }
 
     /**
-     * Gets auxillary information.
+     * Gets auxiliary information.
      */
     public String getAuxInfo() {
         if (auxNone)

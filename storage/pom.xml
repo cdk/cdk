@@ -12,14 +12,15 @@
     <name>cdk-storage</name>
     <modules>
         <module>ctab</module>
+        <module>inchi</module>
         <module>io</module>
         <module>ioformats</module>
+        <module>jniinchi-support</module>
         <module>libiocml</module>
         <module>libiomd</module>
         <module>pdb</module>
         <module>pdbcml</module>
-        <module>inchi</module>
-        <module>jniinchi-support</module>
+        <module>rinchi</module>
         <module>smiles</module>
     </modules>
     <packaging>pom</packaging>
