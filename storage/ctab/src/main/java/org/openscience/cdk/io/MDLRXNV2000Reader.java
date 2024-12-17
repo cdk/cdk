@@ -55,20 +55,31 @@ import java.util.StringTokenizer;
  * This MDL RXN reader uses the {@link MDLV2000Reader} to read each mol file.
  * <p>
  * This reader has two modes: {@link Mode#STRICT} and {@link Mode#RELAXED}. It
- * defaults to mode {@code RELAXED}. In {@code STRICT} mode this reader throws
- * a {@link CDKException} if there is an entry for agents on the counts line.
- * Additionally, MDLV2000Reader used for reading the individual molecular entities
- * comes with its own set of constraints when running in {@code STRICT} mode.
+ * defaults to mode {@code RELAXED}.
  * </p>
  * <p>
- *
+ * In mode {@code RELAXED} it supports an entry for agents on the count line. It
+ * also silently accepts any molecular entities that are not declared on the counts
+ * line as agents.
+ * </p>
+ * <br>
+ * In {@code STRICT} mode this reader throws a {@link CDKException} if
+ * <ul>
+ *   <li>there is an entry for agents on the counts line or</li>
+ *   <li>the number of molecular entities is greater than the sum of the number
+ *   of reactants and the number of products (i.e., there are undeclared agents)</li>
+ * </ul>
+ * <p>
+ * Additionally, {@code MDLV2000Reader} used for reading the individual molecular
+ * entities comes with its own set of constraints when running in {@code STRICT} mode.
  * </p>
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
  *
- * @author     Egon Willighagen
- * @author 	   Thomas Kuhn
+ * @author Egon Willighagen
+ * @author Thomas Kuhn
+ * @author Uli Fechner
  * @cdk.created    2003-07-24
  *
  * @cdk.keyword    file format, MDL RXN
@@ -302,8 +313,6 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
         // map the atoms
         int mappingCount = 0;
-        //        IAtom[] reactantAtoms = reactingSide.getAtoms();
-        //        IAtom[] producedAtoms = producedSide.getAtoms();
         for (int i = 0; i < reactingSide.getAtomCount(); i++) {
             for (int j = 0; j < producedSide.getAtomCount(); j++) {
                 IAtom eductAtom = reactingSide.getAtom(i);

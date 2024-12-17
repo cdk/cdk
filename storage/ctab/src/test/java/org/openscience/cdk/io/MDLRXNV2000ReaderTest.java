@@ -48,7 +48,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * TestCase for the reading MDL RXN files using one test file.
- *
+ * @author Egon Willighagen
+ * @author Uli Fechner
  * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.MDLRXNV2000Reader
@@ -235,18 +236,17 @@ class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
                        "  1  3  1  0  0  0  0\n" +
                        "M  END\n" +
                        "$$$$\n";
-        StringBuilder sb = new StringBuilder();
-        sb.append("$RXN\n");
-        sb.append("Test\n\n\n  2  1\n");
-        sb.append("$MOL\n");
-        sb.append(dummyRecord);
-        sb.append("$MOL\n");
-        sb.append(dummyRecord);
-        sb.append("$MOL\n");
-        sb.append(dummyRecord);
+        String sb = "$RXN\n" +
+                "Test\n\n\n  2  1\n" +
+                "$MOL\n" +
+                dummyRecord +
+                "$MOL\n" +
+                dummyRecord +
+                "$MOL\n" +
+                dummyRecord;
 
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
-        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(new StringReader(sb.toString()))) {
+        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(new StringReader(sb))) {
             IReaction rxn = reader.read(bldr.newInstance(IReaction.class));
             assertThat(rxn.getReactants().getAtomContainerCount()).isEqualTo(2);
             assertThat(rxn.getProducts().getAtomContainerCount()).isEqualTo(1);
