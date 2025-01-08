@@ -44,6 +44,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
+import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -754,15 +755,20 @@ class InChIGeneratorTest extends CDKTestCase {
         }
     }
 
-     @Test
+    @Test
     void andEnantiomer_test() throws Exception {
          try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("ANDEnantiomer.mol"))) {
              IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+             // wipe existing stereochemistry and redo in strict mode - note chiral flags are lost
+             container.setStereoElements(StereoElementFactory.using2DCoordinates(container)
+                     .withStrictMode()
+                     .createAll());
+
              InchiOptions inchiOptions = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(5000).build();
              InChIGenerator generator = getFactory().getInChIGenerator(container, inchiOptions);
              assertThat(generator.getInchi()).isEqualTo("InChI=1S/C4H8O/c1-3-4(2)5-3/h3-4H,1-2H3/t3-,4?/m0/s1");
              assertThat(generator.getAuxInfo())
-                     .isEqualTo("AuxInfo=1/0/N:4,1,3,2,5/E:(1,2)(3,4)/it:im/rA:5nCC.?C.?CO/rB:N1;s2;P3;s2s3;/rC:-1.127,-.5635,0;-.4125,-.151,0;.4125,-.151,0;1.127,-.5635,0;0,.5635,0;");
+                     .isEqualTo("AuxInfo=1/0/N:4,1,3,2,5/E:(1,2)(3,4)/it:im/rA:5nCCC.eCO/rB:N1;s2;P3;s2s3;/rC:-1.127,-.5635,0;-.4125,-.151,0;.4125,-.151,0;1.127,-.5635,0;0,.5635,0;");
          }
     }
 
