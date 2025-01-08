@@ -48,12 +48,12 @@ import java.util.stream.Collectors;
  * @cdk.module rinchi
  * @cdk.githash
  */
-public final class RInChIDecomposition extends StatusMessagesOutput {
+class RInChIDecomposition extends StatusMessagesOutput {
 
     /**
      * Data class that models a component of a chemical reaction with its InChI identifier, auxiliary information, and reaction role.
      */
-    public static class Component {
+    static class Component {
         private final String inchi;
         private final String auxInfo;
         private final ReactionRole reactionRole;
