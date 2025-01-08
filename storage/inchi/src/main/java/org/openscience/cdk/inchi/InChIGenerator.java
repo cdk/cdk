@@ -57,8 +57,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
-
 /**
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
  * a CDK IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
@@ -68,7 +66,6 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
  *
  * <p><i>Spin multiplicities and some aspects of stereochemistry are not
  * currently handled completely.</i>
- *
  * <b>Example usage</b><br/>
  *
  * <code>// Generate factory - throws CDKException if native code does not load</code><br>
@@ -353,9 +350,7 @@ public class InChIGenerator {
                 InchiAtom at3 = atomMap.get(surroundingAtoms[3]);
                 InchiStereoParity p;
 
-                if(stereoElem.getGroupInfo() == IStereoElement.GRP_RAC1){
-                    p = InchiStereoParity.UNDEFINED;
-                } else if (stereoType == Stereo.ANTI_CLOCKWISE) {
+                if (stereoType == Stereo.ANTI_CLOCKWISE) {
                     p = InchiStereoParity.ODD;
                 } else if (stereoType == Stereo.CLOCKWISE) {
                     p = InchiStereoParity.EVEN;
@@ -513,7 +508,7 @@ public class InChIGenerator {
      * has failed. This returns the JNI INCHI enum and requires the optional
      * "cdk-jniinchi-support" module to be loaded (or the full JNI InChI lib
      * to be on the class path).
-     * @deprecated use getStatus
+     * @deprecated use {@link #getStatus()}
      */
     @Deprecated
     public INCHI_RET getReturnStatus() {
