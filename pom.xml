@@ -6,7 +6,7 @@
     <artifactId>cdk</artifactId>
     <name>cdk</name>
     <description>Modular library for Cheminformatics</description>
-    <version>2.10</version>
+    <version>2.11-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://sourceforge.net/projects/cdk/</url>
     <modules>
@@ -733,7 +733,7 @@
                     </tagletArtifact>
                     <failOnError>false</failOnError>
                     <doctitle>Chemistry Development Kit ${project.version} API</doctitle>
-                    <stylesheetfile>${basedir}/doc/javadoc/stylesheet.css</stylesheetfile>
+<!--                    <stylesheetfile>${basedir}/doc/javadoc/stylesheet.css</stylesheetfile>-->
                 </configuration>
                 <executions>
                     <execution>

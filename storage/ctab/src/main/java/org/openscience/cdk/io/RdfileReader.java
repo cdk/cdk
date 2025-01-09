@@ -135,10 +135,9 @@ public final class RdfileReader implements Closeable, Iterator<RdfileRecord> {
      * Creates a new RdfileReader instance with the given InputStream and IChemObjectBuilder.
      *
      * @param reader the Reader providing the RDfile data
-     * @param chemObjectBuilder the IChemObjectBuilder for creating CDK objects
      */
-    public RdfileReader(Reader reader, IChemObjectBuilder chemObjectBuilder) {
-        this(reader, chemObjectBuilder, true);
+    public RdfileReader(Reader reader) {
+        this(reader, null, true);
     }
 
     /**
