@@ -28,29 +28,25 @@ import javax.vecmath.Point3d;
 import io.github.dan2097.jnainchi.InchiFlag;
 import io.github.dan2097.jnainchi.InchiOptions;
 import io.github.dan2097.jnainchi.InchiStatus;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
-import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
+import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.test.CDKTestCase;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -485,6 +481,7 @@ class InChIGeneratorTest extends CDKTestCase {
     void testGetStandardInchiFromMethylRadical() throws Exception {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a = new Atom("C");
+        a.setPoint2d(new Point2d(1.0, -2));
         a.setImplicitHydrogenCount(3);
         ac.addAtom(a);
         ac.addSingleElectron(new SingleElectron(a));
@@ -759,6 +756,23 @@ class InChIGeneratorTest extends CDKTestCase {
     }
 
     @Test
+    void andEnantiomer_test() throws Exception {
+         try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("ANDEnantiomer.mol"))) {
+             IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+             // wipe existing stereochemistry and redo in strict mode - note chiral flags are lost
+             container.setStereoElements(StereoElementFactory.using2DCoordinates(container)
+                     .withStrictMode()
+                     .createAll());
+
+             InchiOptions inchiOptions = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(5000).build();
+             InChIGenerator generator = getFactory().getInChIGenerator(container, inchiOptions);
+             assertThat(generator.getInchi()).isEqualTo("InChI=1S/C4H8O/c1-3-4(2)5-3/h3-4H,1-2H3/t3-,4?/m0/s1");
+             assertThat(generator.getAuxInfo())
+                     .isEqualTo("AuxInfo=1/0/N:4,1,3,2,5/E:(1,2)(3,4)/it:im/rA:5nCCC.eCO/rB:N1;s2;P3;s2s3;/rC:-1.127,-.5635,0;-.4125,-.151,0;.4125,-.151,0;1.127,-.5635,0;0,.5635,0;");
+         }
+    }
+
+    @Test
     void r_penta_2_3_diene_impl_h() throws Exception {
         IAtomContainer m = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(new Atom("CH3"));
@@ -985,4 +999,45 @@ class InChIGeneratorTest extends CDKTestCase {
         InChIGenerator generator = factory.getInChIGenerator(ac);
         assertThat(generator.getInchi()).isEqualTo("InChI=1S/Tc/i1+1");
     }
+
+    @Test
+    void azabicyclo_1_test() throws Exception {
+        try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("azabicyclo_1.mol"))) {
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+            InchiOptions inchiOptions = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(5000).build();
+            InChIGenerator generator = getFactory().getInChIGenerator(container, inchiOptions);
+            assertThat(generator.getInchi()).isEqualTo("InChI=1S/C8H10N2O3S/c1-3-2-14-7-4(9)6(11)10(7)5(3)8(12)13/h4,7H,2,9H2,1H3,(H,12,13)");
+            assertThat(generator.getAuxInfo()).isEqualTo("AuxInfo=1/1/N:1,3,2,6,11,8,5,12,7,10,9,13,14,4/E:(12,13)" +
+                    "/rA:14nCCCSCCNCONCCOO/rB:s1;s2;s3;s4;s5;s6;s6;d8;s5s8;d2s10;s11;s12;d12;/rC:;;;;;;;;;;;;;;");
+        }
+    }
+
+    @Test
+    void azabicyclo_2_test() throws Exception {
+        try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("azabicyclo_2.mol"))) {
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+            InchiOptions inchiOptions = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(5000).build();
+            InChIGenerator generator = getFactory().getInChIGenerator(container, inchiOptions);
+            assertThat(generator.getInchi()).isEqualTo("InChI=1S/C20H20N2O8S/c1-10(23)29-8-13-9-31-19-14(18(26)22(19)15(13)20(27)28)21-17(25)16(30-11(2)24)12-6-4-3-5-7-12" +
+                    "/h3-7,14,16,19H,8-9H2,1-2H3,(H,21,25)(H,27,28)");
+            assertThat(generator.getAuxInfo()).isEqualTo("AuxInfo=1/1/N:1,15,20,19,21,18,22,4,6,2,14,17,5,9,27,12,11,24,8,28,10,26,31,16,23,25,29,30,3,13,7/E:(4,5)(6,7)(27,28)" +
+                    "/rA:31nCCOCCCSCCNCCOCCOCCCCCCOCONCCOOO/rB:s1;s2;s3;s4;s5;s6;s7;s8;s9;s10;s11;s12;s13;s14;d14;s12;s17;d18;s19;d20;d17s21;d11;s9;d24;s8s24;d5s26;s27;s28;d28;d2;" +
+                    "/rC:;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
+        }
+    }
+
+    @Disabled("Difference in AuxInfo /rA layer")
+    @Test
+    void azabicyclo_3_test() throws Exception {
+        try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("azabicyclo_3.mol"))) {
+            IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+            InchiOptions inchiOptions = new InchiOptions.InchiOptionsBuilder().withTimeoutMilliSeconds(5000).build();
+            InChIGenerator generator = getFactory().getInChIGenerator(container, inchiOptions);
+            assertThat(generator.getInchi()).isEqualTo("InChI=1S/C8H10N2O3S/c1-3-2-14-7-4(9)6(11)10(7)5(3)8(12)13/h4,7H,2,9H2,1H3,(H,12,13)/t4-,7+/m1/s1");
+            assertThat(generator.getAuxInfo()).isEqualTo("AuxInfo=1/1/N:1,3,2,6,11,8,5,12,7,10,9,13,14,4/E:(12,13)/it:im/rA:14nCCCSCCNCONCCOO/rB:s1;s2;s3;s4;s5;N6;s6;d8;P5s8;d2s10;s11;s12;d12;" +
+                    "/rC:3.8339,2.2135,0;3.1194,1.801,0;3.1194,.976,0;2.4049,.5635,0;1.6905,.976,0;.8655,.976,0;.2821,.3926,0;.8655,1.801,0;.2821,2.3843,0;" +
+                    "1.6905,1.801,0;2.4049,2.2135,0;2.4049,3.0385,0;3.1194,3.451,0;1.6905,3.451,0;");
+        }
+    }
+
 }
