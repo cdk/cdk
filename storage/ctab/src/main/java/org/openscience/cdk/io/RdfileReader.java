@@ -137,7 +137,7 @@ public final class RdfileReader implements Closeable, Iterator<RdfileRecord> {
      * @param reader the Reader providing the RDfile data
      */
     public RdfileReader(Reader reader) {
-        this(reader, null, true);
+        this(reader, IChemObjectBuilder.find(), true);
     }
 
     /**
@@ -158,6 +158,8 @@ public final class RdfileReader implements Closeable, Iterator<RdfileRecord> {
             this.bufferedReader = new BufferedReader(reader);
         }
 
+        if (chemObjectBuilder == null)
+            throw new NullPointerException("A ChemObjectBuilder must be provided or available on the class path!");
         this.chemObjectBuilder = chemObjectBuilder;
         this.continueOnError = continueOnError;
     }
