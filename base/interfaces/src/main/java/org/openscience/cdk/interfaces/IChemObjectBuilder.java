@@ -18,6 +18,11 @@
  */
 package org.openscience.cdk.interfaces;
 
+import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * A helper class to instantiate a {@link ICDKObject} instance for a specific
  * implementation.
@@ -79,4 +84,15 @@ public interface IChemObjectBuilder {
      */
     IReaction newReaction();
 
+    /**
+     * This function is used to find an IChemObject builder using reflection. It
+     * first tries to create a SilentChemObjectBuilder and failing that a
+     * DefaultChemObjectBuilder. It should be used sparingly since APIs should
+     * require a builder is passed in.
+     *
+     * @return the IChemObject builder
+     */
+    static IChemObjectBuilder find() {
+        return ChemObjectBuilderCache.INSTANCE.get();
+    }
 }
