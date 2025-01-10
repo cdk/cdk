@@ -279,8 +279,10 @@ class BeamToCDKTest {
     }
 
     private IStereoElement getFirstStereoElement(IAtomContainer ac) {
-        for (IStereoElement se : ac.stereoElements())
-            return se;
+        for (IStereoElement se : ac.stereoElements()) {
+            if (se != null)
+                return se;
+        }
         return null;
     }
 
