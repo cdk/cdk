@@ -133,15 +133,6 @@ public final class RdfileReader implements Closeable, Iterator<RdfileRecord> {
 
     /**
      * Creates a new RdfileReader instance with the given InputStream and IChemObjectBuilder.
-     *
-     * @param reader the Reader providing the RDfile data
-     */
-    public RdfileReader(Reader reader) {
-        this(reader, IChemObjectBuilder.find(), true);
-    }
-
-    /**
-     * Creates a new RdfileReader instance with the given InputStream and IChemObjectBuilder.
      * <p>
      * If {@code continueOnError} is {@code true} remaining records are processed when an error
      * is encountered; if {@code false} all remaining records in the file are skipped.
