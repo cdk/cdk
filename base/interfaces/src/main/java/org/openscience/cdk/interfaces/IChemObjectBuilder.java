@@ -18,11 +18,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 /**
  * A helper class to instantiate a {@link ICDKObject} instance for a specific
  * implementation.
