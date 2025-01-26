@@ -1,0 +1,75 @@
+name: Add checksums to release
+
+on:
+  # allows to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: 'git tag of the release (e.g., cdk-2.10)'
+        required: true
+        type: string
+
+permissions:
+  # requires write permission to add an asset to a release
+  contents: write
+
+env:
+  # Constant referring to the directory the downloaded artifacts are extracted into (relative to default working directory of runner).
+  BINARY_RELEASE_ASSETS_PATTERN: '*.jar'
+  ASSETS_FOLDER: 'assets'
+  BINARY_RELEASE_ASSETS_FOLDER: 'binary'
+  CHECKSUM_RELEASE_ASSETS_FOLDER: 'checksum'
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  add_checksums_to_release:
+    name: Add files with checksums as assets to a given release
+    runs-on: 'ubuntu-24.04'
+
+    steps:
+      - name: 📁 Create directory for release assets
+        run: |
+          mkdir --parents ${{ env.ASSETS_FOLDER }}/${{ env.BINARY_RELEASE_ASSETS_FOLDER }}
+          mkdir --parents ${{ env.ASSETS_FOLDER }}/${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}
+
+      - name: 🔽 Download release assets matching the pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }}
+        run: |
+          gh release download ${{ inputs.release-tag }} \
+            --repo ${{ github.repository }} \
+            --pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }} \
+            --dir ${{ env.ASSETS_FOLDER }}/${{ env.BINARY_RELEASE_ASSETS_FOLDER }}
+
+      - name: 👓 Generate sha256 and sha512 checksums for release assets matching ${{ env.BINARY_RELEASE_ASSETS_PATTERN }}
+        working-directory: ${{ env.ASSETS_FOLDER }}
+        run: |
+          find ${{ env.BINARY_RELEASE_ASSETS_FOLDER }} -name "*.jar" -print0 | \
+            while IFS= read -r -d '' file; do
+              filename=$(basename "$file")
+              checksum256=$(sha256sum "$file" | cut -d ' ' -f 1)
+              echo "$checksum256  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/${{ inputs.release-tag }}-checksums-sha256.txt
+              checksum512=$(sha512sum "$file" | cut -d ' ' -f 1)
+              echo "$checksum512  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/${{ inputs.release-tag }}-checksums-sha512.txt
+          done
+
+      - name: 🖨️ Cat contents of checksum files
+        working-directory: ${{ env.ASSETS_FOLDER }}
+        run: |
+          find ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }} -name "*.txt" -print0 | \
+            while IFS= read -r -d '' file; do
+            echo $(basename "$file")
+            cat "$file"
+            echo
+          done
+
+      - name: 🌳️ Tree the current working directory
+        run: find . -print | sort | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+
+      - name: 📢 Add checksum files as assets to GitHub release ${{ inputs.release-tag }}
+        uses: svenstaro/upload-release-action@v2
+        id: upload_checksum_files_as_release_assets
+        with:
+          file_glob: true
+          file: ${{ env.ASSETS_FOLDER }}/${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/*.txt
+          tag: ${{ inputs.release-tag }}
+          # Ensures that re-runs of a workflow don't fail.
+          overwrite: true
