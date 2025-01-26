@@ -70,3 +70,9 @@ jobs:
           file: ${{ env.ASSETS_FOLDER }}/${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/*.txt
           tag: ${{ inputs.release-tag }}
           overwrite: true  # ensures that re-runs of workflow do not fail
+
+      - name: 🖨️ Print {name, url} of all assets of GitHub release ${{ inputs.release-tag }}
+        run: |
+          gh release view ${{ inputs.release-tag }} \
+            --repo ${{ github.repository }} --json assets | \
+            jq ".assets[] | { name: .name, url: .url }"
