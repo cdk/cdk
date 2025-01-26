@@ -49,7 +49,7 @@ jobs:
               echo "$checksum512  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/${{ inputs.release-tag }}-checksums-sha512.txt
           done
 
-      - name: 🖨️ Cat contents of checksum files
+      - name: 🐈 Cat contents of checksum files
         working-directory: ${{ env.ASSETS_FOLDER }}
         run: |
           find ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }} -name "*.txt" -print0 | \
