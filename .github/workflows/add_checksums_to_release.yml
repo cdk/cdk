@@ -10,16 +10,14 @@ on:
         type: string
 
 permissions:
-  # requires write permission to add an asset to a release
-  contents: write
+  contents: write  # required to add an asset to a release
 
 env:
-  # Constant referring to the directory the downloaded artifacts are extracted into (relative to default working directory of runner).
-  BINARY_RELEASE_ASSETS_PATTERN: '*.jar'
-  ASSETS_FOLDER: 'assets'
-  BINARY_RELEASE_ASSETS_FOLDER: 'binary'
-  CHECKSUM_RELEASE_ASSETS_FOLDER: 'checksum'
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  BINARY_RELEASE_ASSETS_PATTERN: '*.jar'     # file pattern binary releases must match to be considered
+  ASSETS_FOLDER: 'assets'                    # working directory of the workflow
+  BINARY_RELEASE_ASSETS_FOLDER: 'binary'     # directory binary releases get downloaded to
+  CHECKSUM_RELEASE_ASSETS_FOLDER: 'checksum' # directory checksum files get written to
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}      # required by gh CLI
 
 jobs:
   add_checksums_to_release:
@@ -32,14 +30,14 @@ jobs:
           mkdir --parents ${{ env.ASSETS_FOLDER }}/${{ env.BINARY_RELEASE_ASSETS_FOLDER }}
           mkdir --parents ${{ env.ASSETS_FOLDER }}/${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}
 
-      - name: 🔽 Download release assets matching the pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }}
+      - name: 🔽 Download assets of GitHub release ${{ inputs.release-tag }} matching the pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }}
         run: |
           gh release download ${{ inputs.release-tag }} \
             --repo ${{ github.repository }} \
             --pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }} \
             --dir ${{ env.ASSETS_FOLDER }}/${{ env.BINARY_RELEASE_ASSETS_FOLDER }}
 
-      - name: 👓 Generate sha256 and sha512 checksums for release assets matching ${{ env.BINARY_RELEASE_ASSETS_PATTERN }}
+      - name: 👓 Generate sha256 and sha512 checksums for downloaded release assets
         working-directory: ${{ env.ASSETS_FOLDER }}
         run: |
           find ${{ env.BINARY_RELEASE_ASSETS_FOLDER }} -name "*.jar" -print0 | \
@@ -71,5 +69,4 @@ jobs:
           file_glob: true
           file: ${{ env.ASSETS_FOLDER }}/${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/*.txt
           tag: ${{ inputs.release-tag }}
-          # Ensures that re-runs of a workflow don't fail.
-          overwrite: true
+          overwrite: true  # ensures that re-runs of workflow do not fail
