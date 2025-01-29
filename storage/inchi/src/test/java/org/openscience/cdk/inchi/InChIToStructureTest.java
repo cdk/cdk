@@ -190,7 +190,7 @@ class InChIToStructureTest extends CDKTestCase {
         try (MDLV2000Writer wtr = new MDLV2000Writer(sw)) {
             wtr.write(mol);
         }
-        assertThat(sw.toString(), containsString("M  RAD"));
+        assertThat(sw.toString(), containsString("M  RAD  1   1   2"));
     }
 
     @Test
