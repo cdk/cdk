@@ -230,9 +230,9 @@ public class InChIToStructure {
             addHydrogenIsotopes(builder, cAt, 3, iAt.getImplicitTritium());
 
             InchiRadical radical = iAt.getRadical();
-            if (radical == InchiRadical.SINGLET) {
+            if (radical == InchiRadical.DOUBLET) {
                 molecule.addSingleElectron(molecule.indexOf(cAt));
-            } else if (radical == InchiRadical.DOUBLET ||
+            } else if (radical == InchiRadical.SINGLET ||
                        radical == InchiRadical.TRIPLET) {
                 // Information loss - we should make MDL SPIN_MULTIPLICITY avaliable to this API
                 molecule.addSingleElectron(molecule.indexOf(cAt));
