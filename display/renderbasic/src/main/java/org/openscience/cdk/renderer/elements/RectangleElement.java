@@ -84,6 +84,14 @@ public class RectangleElement implements IRenderingElement {
         this.color = color;
     }
 
+    // create a square centered on the given coords
+    public static IRenderingElement createSquare(double cx, double cy, double size,
+                                                 boolean filled, Color color) {
+        return new RectangleElement(cx - size, cy + size,
+                                    2*size, 2*-size,
+                                    filled, color);
+    }
+
     /** {@inheritDoc }**/
     @Override
     public void accept(IRenderingVisitor visitor) {
