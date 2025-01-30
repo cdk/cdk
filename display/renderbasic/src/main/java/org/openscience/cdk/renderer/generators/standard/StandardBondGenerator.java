@@ -1730,16 +1730,19 @@ final class StandardBondGenerator {
         }
 
         private final boolean hasMetal;
+        private final IAtomContainer mol;
 
         /**
          * Create a new comparator.
          */
         RingBondOffsetComparator(IAtomContainer mol) {
             hasMetal = hasMetal(mol);
+            this.mol = mol;
         }
 
         RingBondOffsetComparator() {
             hasMetal = false;
+            this.mol = null;
         }
 
         private static boolean hasMetal(IAtomContainer mol) {
@@ -1772,6 +1775,10 @@ final class StandardBondGenerator {
             int piBondCmp = Integer.compare(nDoubleBonds(ringa), nDoubleBonds(ringb));
             if (piBondCmp != 0) return -piBondCmp;
 
+            // the ring with more atoms with only 2 ring bonds
+            int nSimpleRing = Integer.compare(nSimpleRingAtoms(ringa), nSimpleRingAtoms(ringb));
+            if (nSimpleRing != 0) return -nSimpleRing;
+
             // order by element frequencies, all carbon rings are preferred
             int[] freqA = countLightElements(ringa);
             int[] freqB = countLightElements(ringb);
@@ -1781,6 +1788,7 @@ final class StandardBondGenerator {
                 int elemCmp = Integer.compare(freqA[element.number()], freqB[element.number()]);
                 if (elemCmp != 0) return -elemCmp;
             }
+
 
             return 0;
         }
@@ -1807,6 +1815,28 @@ final class StandardBondGenerator {
             int count = 0;
             for (IBond bond : container.bonds())
                 if (IBond.Order.DOUBLE.equals(bond.getOrder())) count++;
+            return count;
+        }
+
+        int nSimpleRingAtoms(IAtomContainer ring) {
+            if (mol == null) return 0;
+            int count = 0;
+            for (IAtom atom : ring.atoms()) {
+                int rcount = 0;
+
+                List<IBond> bonds = mol.getConnectedBondsList(atom);
+                if (bonds.size() == 2) {
+                    rcount = 2; // a ring atom with 2 bonds, they MUST be cyclic
+                } else {
+                    for (IBond bond : bonds) {
+                        if (bond.isInRing())
+                            rcount++;
+                    }
+                }
+
+                if (rcount == 2)
+                    count++;
+            }
             return count;
         }
 
