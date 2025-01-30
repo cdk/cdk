@@ -325,6 +325,7 @@ public class RendererModel implements Serializable, Cloneable {
     public void setHighlightedAtom(IAtom highlightedAtom) {
         if ((this.highlightedAtom != null) || (highlightedAtom != null)) {
             this.highlightedAtom = highlightedAtom;
+            this.highlightedBond = null;
             fireChange();
         }
     }
@@ -347,6 +348,7 @@ public class RendererModel implements Serializable, Cloneable {
     public void setHighlightedBond(IBond highlightedBond) {
         if ((this.highlightedBond != null) || (highlightedBond != null)) {
             this.highlightedBond = highlightedBond;
+            this.highlightedAtom = null;
             fireChange();
         }
     }
