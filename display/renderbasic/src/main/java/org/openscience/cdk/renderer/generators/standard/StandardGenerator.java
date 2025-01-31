@@ -293,6 +293,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         // convert the atom symbols to IRenderingElements
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom atom = container.getAtom(i);
+            atom.removeProperty(CDKConstants.RENDER_BOUNDS);
 
             if (isHidden(atom))
                 continue;
@@ -318,6 +319,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 GeneralPath path = GeneralPath.shapeOf(shape, color);
                 symbolElements.add(path);
             }
+            atom.setProperty(CDKConstants.RENDER_BOUNDS,
+                             new Bounds(symbolElements));
 
             // add the annotations of the symbol to the annotations ElementGroup
             for (Shape shape : symbols[i].getAnnotationOutlines()) {
