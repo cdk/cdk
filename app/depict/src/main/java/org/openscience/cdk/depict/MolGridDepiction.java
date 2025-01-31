@@ -34,6 +34,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,7 +183,7 @@ final class MolGridDepiction extends Depiction {
     }
 
     @Override
-    String toVecStr(String fmt, String units) {
+    byte[] toVecBytes(String fmt, String units) {
 
         // format margins and padding for raster images
         double margin  = getMarginValue(units.equals(Depiction.UNITS_MM) ? DepictionGenerator.DEFAULT_MM_MARGIN
@@ -257,9 +258,9 @@ final class MolGridDepiction extends Depiction {
 
         if (wrapper != null) {
             wrapper.dispose();
-            return wrapper.toString();
+            return wrapper.getBytes();
         } else {
-            return visitor.toString();
+            return visitor.toString().getBytes(StandardCharsets.UTF_8);
         }
     }
 

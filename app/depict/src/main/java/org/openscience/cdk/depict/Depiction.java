@@ -179,6 +179,15 @@ public abstract class Depiction {
     }
 
     /**
+     * Render the image to an PDF format byte array.
+     *
+     * @return pdf content
+     */
+    public final byte[] toPdf() {
+        return toVecBytes(PDF_FMT, UNITS_MM);
+    }
+
+    /**
      * Access the specified padding value or fallback to a provided
      * default.
      *
@@ -214,7 +223,11 @@ public abstract class Depiction {
      * @param units the units to use (px or mm)
      * @return the vector graphics format string
      */
-    abstract String toVecStr(String fmt, String units);
+    private final String toVecStr(String fmt, String units) {
+        return new String(toVecBytes(fmt, units));
+    }
+
+    abstract byte[] toVecBytes(String fmt, String units);
 
     /**
      * List the available formats that can be rendered.
@@ -249,7 +262,7 @@ public abstract class Depiction {
         } else if (fmt.equalsIgnoreCase(PS_FMT)) {
             out.write(toEpsStr().getBytes(StandardCharsets.UTF_8));
         } else if (fmt.equalsIgnoreCase(PDF_FMT)) {
-            out.write(toPdfStr().getBytes(StandardCharsets.UTF_8));
+            out.write(toPdf());
         } else {
             ImageIO.write(toImg(), fmt, out);
         }
