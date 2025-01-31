@@ -112,53 +112,71 @@ final class FreeHepWrapper {
         g2.dispose();
     }
 
+    /**
+     * Access the RAW bytes.
+     * @return
+     */
+    byte[] getBytes() {
+        byte[] data = bout.toByteArray();
+        if (fmt.equals(Depiction.EPS_FMT))
+            data = patchEps(dim, new String(data, StandardCharsets.UTF_8))
+                    .getBytes(StandardCharsets.UTF_8);
+        return data;
+    }
+
     @Override
     public String toString() {
         String result = new String(bout.toByteArray(), StandardCharsets.UTF_8);
-        // we want SVG in mm not pixels!
-        if (fmt.equals(Depiction.SVG_FMT)) {
-            result = result.replaceAll("\"([-+0-9.]+)px\"", "\"$1mm\"");
-        } else if (fmt.equals(Depiction.EPS_FMT)) {
-            String nl;
-            // We should determine new-line separator (nl) not from OS type, but from the line-endings
-            // in the actual EPS output; there is nothing that would prevent us from generating Unix-style
-            // file in Windows :)
-            if( result.contains("\r\n")) {
-                nl = "\r\n";
-            } else if( result.contains("\r")) {
-                nl = "\r";
-            } else {
-                nl = "\n";
-            }
-            String[] split = result.split(nl,2);
-            if( split.length > 1 && split[0].startsWith("%!PS-") ) {
-                String boundingBox = "%%BoundingBox: 0 0 " + dim.width + " " + dim.height + nl;
-                if(!split[0].contains("EPS")) {
-                    split[0] += " EPSF-3.0";
-                }
-                // EGFF96 (p. 379):
-                // "Both the %%PS-Adobe- [sic] and the %%BoundingBox: lines must appear in every EPS file.
-                // Ordinary PostScript files may formally be changed into EPS files by adding these two lines
-                // to the PostScript header."
+        if (fmt.equals(Depiction.EPS_FMT))
+            result = patchEps(dim, result);
+        return result;
+    }
 
-                // PLDS92 (p. 29):
-                // "The order of some comments in the document is significant, but in a
-                // section of the document they may appear in any order. For example, in the
-                // header section, %%DocumentResources:, %%Title:, and %%Creator: may
-                // appear in any order."
-                //
-                // Thus, I infer that the "%%BoundingBox:" comment may be added immediately after the
-                // "%!PS-..." header line. This is also given as a valid example in EPSF92, p. 4.
-
-                result = split[0] + nl +
-                    boundingBox +
-                    split[1].
-                    replaceFirst("(\\d+ ){4}setmargins",
-                                 "0 0 0 0 setmargins").
-                    replaceFirst("(\\d+ ){2}setpagesize",
-                                 dim.width + " " + dim.height +
-                                 " setpagesize");
+    /**
+     * EPS format needs some tweaks to make it work correctly.
+     * @param result the string to patch
+     * @return the patched string
+     */
+    static String patchEps(Dimension dim, String result) {
+        String nl;
+        // We should determine new-line separator (nl) not from OS type, but from the line-endings
+        // in the actual EPS output; there is nothing that would prevent us from generating Unix-style
+        // file in Windows :)
+        if (result.contains("\r\n")) {
+            nl = "\r\n";
+        } else if (result.contains("\r")) {
+            nl = "\r";
+        } else {
+            nl = "\n";
+        }
+        String[] split = result.split(nl, 2);
+        if (split.length > 1 && split[0].startsWith("%!PS-")) {
+            String boundingBox = "%%BoundingBox: 0 0 " + dim.width + " " + dim.height + nl;
+            if (!split[0].contains("EPS")) {
+                split[0] += " EPSF-3.0";
             }
+            // EGFF96 (p. 379):
+            // "Both the %%PS-Adobe- [sic] and the %%BoundingBox: lines must appear in every EPS file.
+            // Ordinary PostScript files may formally be changed into EPS files by adding these two lines
+            // to the PostScript header."
+
+            // PLDS92 (p. 29):
+            // "The order of some comments in the document is significant, but in a
+            // section of the document they may appear in any order. For example, in the
+            // header section, %%DocumentResources:, %%Title:, and %%Creator: may
+            // appear in any order."
+            //
+            // Thus, I infer that the "%%BoundingBox:" comment may be added immediately after the
+            // "%!PS-..." header line. This is also given as a valid example in EPSF92, p. 4.
+
+            result = split[0] + nl +
+                     boundingBox +
+                     split[1].
+                             replaceFirst("(\\d+ ){4}setmargins",
+                                          "0 0 0 0 setmargins").
+                             replaceFirst("(\\d+ ){2}setpagesize",
+                                          dim.width + " " + dim.height +
+                                          " setpagesize");
         }
         return result;
     }
