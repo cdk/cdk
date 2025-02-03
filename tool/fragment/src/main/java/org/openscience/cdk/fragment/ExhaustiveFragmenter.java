@@ -34,7 +34,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 /**
  * Generate fragments exhaustively.
@@ -90,34 +89,10 @@ public class ExhaustiveFragmenter implements IFragmenter {
                                                               .createLoggingTool(ExhaustiveFragmenter.class);
 
     /**
-     * Instantiate fragmenter with default minimum fragment size.
+     * Instantiate fragmenter with default minimum fragment size and unsaturated fragments.
      */
     public ExhaustiveFragmenter() {
         this(DEFAULT_MIN_FRAG_SIZE, DEFAULT_SATURATION);
-    }
-
-    /**
-     * Instantiate fragmenter with user specified minimum fragment size and default saturation (saturated fragments).
-     *
-     * @param minFragSize the minimum fragment size desired.
-     */
-    public ExhaustiveFragmenter(int minFragSize) {
-        this.minFragSize = minFragSize;
-        this.saturationSetting = DEFAULT_SATURATION;
-        fragMap = new HashMap<>();
-        smilesGenerator = new SmilesGenerator(SmiFlavor.UseAromaticSymbols | SmiFlavor.Unique);
-    }
-
-    /**
-     * Instantiate fragmenter with default minimum fragment size and user specified saturation setting.
-     *
-     * @param saturationSetting setting to specify if the returned fragments should be saturated or not.
-     */
-    public ExhaustiveFragmenter(Saturation saturationSetting) {
-        this.minFragSize = DEFAULT_MIN_FRAG_SIZE;
-        this.saturationSetting = saturationSetting;
-        fragMap = new HashMap<>();
-        smilesGenerator = new SmilesGenerator(SmiFlavor.UseAromaticSymbols | SmiFlavor.Unique);
     }
 
     /**
@@ -130,7 +105,25 @@ public class ExhaustiveFragmenter implements IFragmenter {
         this.minFragSize = minFragSize;
         this.saturationSetting = saturationSetting;
         fragMap = new HashMap<>();
-        smilesGenerator = new SmilesGenerator(SmiFlavor.UseAromaticSymbols | SmiFlavor.Unique);
+        smilesGenerator = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
+    }
+
+    /**
+     * Instantiate fragmenter with user specified minimum fragment size and default saturation (saturated fragments).
+     *
+     * @param minFragSize the minimum fragment size desired.
+     */
+    public ExhaustiveFragmenter(int minFragSize) {
+        this(minFragSize, DEFAULT_SATURATION);
+    }
+
+    /**
+     * Instantiate fragmenter with default minimum fragment size and user specified saturation setting.
+     *
+     * @param saturationSetting setting to specify if the returned fragments should be saturated or not.
+     */
+    public ExhaustiveFragmenter(Saturation saturationSetting) {
+        this(DEFAULT_MIN_FRAG_SIZE, saturationSetting);
     }
 
     /**
@@ -189,19 +182,17 @@ public class ExhaustiveFragmenter implements IFragmenter {
         int numberOfIterations = (1 << splittableBondsLength) - 1;
 
 
-        int[][] allSubsets = generateSubsets(IntStream.rangeClosed(0, splittableBondsLength).toArray());
         int[] splittableBondIndices = new int[splittableBondsLength];
         for (int i = 0; i < splittableBondsLength; i++) {
             splittableBondIndices[i] = splittableBonds[i].getIndex();
         }
-
-        for (int i = 0; i < numberOfIterations; i ++){
-            int subsetSize = allSubsets[i].length;
+        for (int i = 1; i <= numberOfIterations; i ++){
+            int[] subset = generateSubset(i, splittableBondIndices);
+            int subsetSize = subset.length;
             IBond[] bondsToRemove = new IBond[subsetSize];
             for (int j = 0; j < subsetSize; j++) {
-                bondsToRemove[j] = atomContainer.getBond(splittableBondIndices[j]);
+                bondsToRemove[j] = atomContainer.getBond(subset[j]);
             }
-//                List<IAtomContainer> parts = FragmentUtils.splitMolecule(molToSplit, bondToSplit);
             IAtomContainer[] parts = splitMoleculeBondsWithCopy(atomContainer, bondsToRemove);
             for (IAtomContainer partContainer : parts) {
                 AtomContainerManipulator.clearAtomConfigurations(partContainer);
@@ -216,9 +207,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 if (numberOfAtoms >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
                     fragMap.put(tmpSmiles, partContainer);
                 }
-                if (numberOfAtoms < minFragSize) {
-                    break;
-                }
             }
 
         }
@@ -227,25 +215,71 @@ public class ExhaustiveFragmenter implements IFragmenter {
     private void runUnsaturated(IAtomContainer atomContainer) throws CDKException {
 
         if (atomContainer.getBondCount() < 3) return;
-        IBond[] splitableBonds = getSplitableBonds(atomContainer);
-        if (splitableBonds.length == 0) return;
-        logger.debug("Got " + splitableBonds.length + " splittable bonds");
+        IBond[] splittableBonds = getSplitableBonds(atomContainer);
+        int splittableBondsLength = splittableBonds.length;
+        if (splittableBondsLength == 0) return;
+        logger.debug("Got " + splittableBondsLength + " splittable bonds");
 
-        String tmpSmiles;
-        for (IBond bond : splitableBonds) {
-            List<IAtomContainer> parts = FragmentUtils.splitMolecule(atomContainer, bond);
-            // make sure we don't add the same fragment twice
+        // If we want to check all unique combinations of splittings we calculate the power set of the splittable bonds.
+        // which is 2^n and without considering the empty set we can say it is 2^n - 1.
+        // example:
+        // if we have a set of splittable bonds here represented as numbers {1, 2, 3}, we can describe all unique
+        // subsets as follows:
+        // {1}
+        // {2}
+        // {3}
+        // {1,2}
+        // {1,3}
+        // {2,3}
+        // {1,2,3}
+        int numberOfIterations = (1 << splittableBondsLength) - 1;
+
+
+        int[] splittableBondIndices = new int[splittableBondsLength];
+        for (int i = 0; i < splittableBondsLength; i++) {
+            splittableBondIndices[i] = splittableBonds[i].getIndex();
+        }
+        for (int i = 1; i <= numberOfIterations; i ++){
+            int[] subset = generateSubset(i, splittableBondIndices);
+            int subsetSize = subset.length;
+            IBond[] bondsToRemove = new IBond[subsetSize];
+            for (int j = 0; j < subsetSize; j++) {
+                bondsToRemove[j] = atomContainer.getBond(subset[j]);
+            }
+            IAtomContainer[] parts = splitMoleculeBondsWithCopy(atomContainer, bondsToRemove);
             for (IAtomContainer partContainer : parts) {
-                tmpSmiles = smilesGenerator.create(partContainer);
-                int fragmentSize = partContainer.getAtomCount();
-                if (fragmentSize >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
+                Aromaticity.cdkLegacy().apply(partContainer);
+                String tmpSmiles = smilesGenerator.create(partContainer);
+                int numberOfAtoms = partContainer.getAtomCount();
+                if (numberOfAtoms >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
+                    System.out.println(tmpSmiles);
                     fragMap.put(tmpSmiles, partContainer);
-                    if (fragmentSize > minFragSize) {
-                        runUnsaturated(partContainer);
-                    }
                 }
             }
+
         }
+//        if (atomContainer.getBondCount() < 3) return;
+//        IBond[] splitableBonds = getSplitableBonds(atomContainer);
+//        if (splitableBonds.length == 0) return;
+//        logger.debug("Got " + splitableBonds.length + " splittable bonds");
+//
+//        String tmpSmiles;
+//        for (IBond bond : splitableBonds) {
+//            List<IAtomContainer> parts = FragmentUtils.splitMolecule(atomContainer, bond);
+//            // make sure we don't add the same fragment twice
+//            for (IAtomContainer partContainer : parts) {
+//                tmpSmiles = smilesGenerator.create(partContainer);
+//                int fragmentSize = partContainer.getAtomCount();
+//                if (fragmentSize >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
+//                    System.out.println(tmpSmiles);
+//                    fragMap.put(tmpSmiles, partContainer);
+//                    if (fragmentSize > minFragSize) {
+//                        runUnsaturated(partContainer);
+//                    }
+//                }
+//            }
+//        }
     }
 
     private IBond[] getSplitableBonds(IAtomContainer atomContainer) {
@@ -278,65 +312,50 @@ public class ExhaustiveFragmenter implements IFragmenter {
     }
 
     /**
-     * Generates all possible subsets (of all possible sample sizes, ranging from 1 to the length of nums)
-     * of the numbers given in nums, ignoring the order, so [1,2] and [2,1] are regarded as equal and only
-     * one of them is returned.
-     * The number of possible subsets is (2^n) - 1 with n = length of nums.
-     * Example output for nums = [1,2,3] (2^3 - 1 = 7):
-     * [1]
-     * [2]
-     * [3]
-     * [1,2]
-     * [1,3]
-     * [2,3]
-     * [1,2,3]
+     * Generates a subset of the numbers given in `nums`, determined by the binary representation of the provided `index`.
+     * Each bit in the binary value of the `index` represents whether the corresponding element in the `nums` array is included
+     * in the subset. The order of the elements does not matter (i.e., [1, 2] and [2, 1] are considered identical),
+     * and the empty set is excluded.
+     * <p>
+     * The total number of possible subsets is (2^n) - 1, where n is the length of the `nums` array. This excludes the empty set.
+     * The subsets are generated based on bit manipulation, and the order of subsets may vary depending on the internal bit shifts.
+     * <p>
+     * Example output for nums = [1, 2, 3] (2^3 - 1 = 7):
+     *   [1]
+     *   [2]
+     *   [3]
+     *   [1, 2]
+     *   [1, 3]
+     *   [2, 3]
+     *   [1, 2, 3]
+     * <p>
      * The empty set [] is not part of the output.
-     * The returned subsets will be ordered differently because they are generated based on bit shifts internally.
      *
-     * @param nums set of integers from which to generate all possible subsets, sets
-     *             containing the same number multiple times do not lead to an exception but maybe do not make much sense.
-     * @return all possible subsets.
-     * @throws ArithmeticException if the number of elements in the nums array is greater than 30. Because it is not
-     *         possible to create indexed data structures with more than 2^31 - 1 values.
+     * @param index The index, represented as an integer, where each bit corresponds to whether an element in `nums` should
+     *              be included in the subset. A bit value of `1` means the corresponding element is included, and `0` means it is not.
+     * @param nums  An array of integers from which to generate the subset. The presence of duplicate values in `nums` will not
+     *              result in an exception, but may lead to repeated values in the generated subsets.
+     * @return      An array containing the subset corresponding to the binary representation of the provided `index`.
      * @author Tom Weiß
      */
-    private static int[][] generateSubsets(int[] nums) throws ArithmeticException {
-        // calculate nr of different subsets (2^n including the empty set) by shifting the 0th bit of an
-        // integer with value 1 n positions to the left
-        // for cases where n > 32 an exception is thrown
-        int n = nums.length;
-        if (n > 31) {
-            throw new ArithmeticException("You attempted to make more subsets than an primitive integer can handle");
-        }
-        int numOfSubsets = 1 << n;
+    private static int[] generateSubset(int index, int[] nums) {
 
-        // collect all subsets by iterating from one (to disregard the empty set) to the number
-        // of possible subsets and check for each number which bits are on and replace this
-        // index by the respective number at the same index from the given nums int array
-        // Example:
-        // nums = [1, 2, 3]
-        // i    bit value   subset
-        // 1    0b001       [1]
-        // 2    0b010       [2]
-        // 3    0b011       [1,2]
-        // 4    0b100       [3]
-        // 5    0b101       [1,3]
-        // 6    0b110       [2,3]
-        // 7    0b111       [1,2,3]
-        int[][] result = new int[numOfSubsets - 1][];
-        for (int i = 1; i < numOfSubsets; i++) {
-            int[] subset = new int[Integer.bitCount(i)];
-            // keep track of the next index to add a number
-            int resultIndex = 0;
-            for (int j = 0; j < n; j++) {
-                if (((i >> j) & 1) == 1) {
-                    subset[resultIndex] = nums[j];
-                    resultIndex++;
-                }
+        // Create a new array to hold the subset, size based on the number of 1-bits in the index.
+        int[] subset = new int[Integer.bitCount(index)];
+        int subsetIndex = 0;
+
+        // Iterate through each bit in the binary representation of the index.
+        for (int j = 0; j < 32; j++) {
+            // Check if the current bit (at position 'j') is set to 1.
+            if (((index >> j) & 1) == 1) {
+                // If the bit is set, add the corresponding number from nums to the subset.
+                subset[subsetIndex] = nums[j];
+                subsetIndex++;
             }
-            result[i - 1] = subset;
         }
-        return result;
+
+        // Return the generated subset.
+        return subset;
     }
 
     private static IAtom copyAtom(IAtom originalAtom, IAtomContainer atomContainer) {
@@ -348,65 +367,70 @@ public class ExhaustiveFragmenter implements IFragmenter {
         return cpyAtom;
     }
 
-    private static IAtomContainer[] splitMoleculeBondsWithCopy(IAtomContainer mol, IBond[] bondsToSplit) {
+    private IAtomContainer[] splitMoleculeBondsWithCopy(IAtomContainer mol, IBond[] bondsToSplit) throws CDKException {
         boolean[] alreadyVisitedAtoms = new boolean[mol.getAtomCount()];
+        boolean[] visitedBonds = new boolean[mol.getBondCount()];
         // set all values of already visited to false
         Arrays.fill(alreadyVisitedAtoms, false);
+        Arrays.fill(visitedBonds, false);
         // map to keep track of the original atoms and the copies thereof
-        Map<IAtom, IAtom> origToCpyMap = new HashMap<>(mol.getAtomCount());
         int numberOfFragments = bondsToSplit.length + 1;
         IAtomContainer[] fragments = new IAtomContainer[numberOfFragments];
-        Set<List<Integer>> pairIdxToSplit = new HashSet<>(bondsToSplit.length);
+        Map<IAtom, List<IAtom>> atomsToSplit = new HashMap<>(bondsToSplit.length * 2);
         for (IBond bond : bondsToSplit) {
-            List<Integer> pair = new ArrayList<>(2);
-            pair.add(bond.getBegin().getIndex());
-            pair.add(bond.getBegin().getIndex());
-            pairIdxToSplit.add(pair);
+            IAtom beg = bond.getBegin();
+            IAtom end = bond.getEnd();
+            if (atomsToSplit.containsKey(beg)) {
+                atomsToSplit.get(beg).add(end);
+            } else {
+                List<IAtom> endList = new ArrayList<>();
+                endList.add(end);
+                atomsToSplit.put(beg, endList);
+            }
         }
+        Stack<IAtom> startingAtoms = new Stack<>();
+        startingAtoms.add(bondsToSplit[0].getBegin());
         for (int i = 0; i < numberOfFragments; i++) {
+            Map<IAtom, IAtom> origToCpyMap = new HashMap<>(mol.getAtomCount());
             // new container to hold a fragment
             IAtomContainer fragmentContainer = mol.getBuilder().newInstance(IAtomContainer.class);
             // a stack to make a DFS through the subgraph
             Stack<IAtom> atomStack = new Stack<>();
-            if (i == 0) {
-                atomStack.add(bondsToSplit[0].getBegin());
-                IAtom atom = atomStack.peek();
-                IAtom atomCpy = copyAtom(atomStack.peek(), fragmentContainer);
-                alreadyVisitedAtoms[atom.getIndex()] = true;
-                origToCpyMap.put(atom, atomCpy);
-            } else {
-                atomStack.add(bondsToSplit[i - 1].getEnd());
-                IAtom atom = atomStack.peek();
-                IAtom atomCpy = copyAtom(atom, fragmentContainer);
-                alreadyVisitedAtoms[atom.getIndex()] = true;
-                origToCpyMap.put(atom, atomCpy);
-            }
+            atomStack.add(startingAtoms.pop());
+            IAtom firstAtom = atomStack.peek();
+            IAtom atomCpy = copyAtom(firstAtom, fragmentContainer);
+            origToCpyMap.put(firstAtom, atomCpy);
             while (!atomStack.isEmpty()) {
                 IAtom atom = atomStack.pop();
-                IAtom cpyAtom = copyAtom(atom, fragmentContainer);
+                atomCpy = origToCpyMap.get(atom);
                 alreadyVisitedAtoms[atom.getIndex()] = true;
                 for (IAtom nbor: atom.neighbors()) {
-                    if (!alreadyVisitedAtoms[nbor.getIndex()]) {
-                        List<Integer> pair = new ArrayList<>(2);
-                        pair.add(atom.getIndex());
-                        pair.add(nbor.getIndex());
-                        if (!pairIdxToSplit.contains(pair)) {
-                            IAtom cpyNbor = copyAtom(nbor, fragmentContainer);
-                            fragmentContainer.newBond(cpyAtom, cpyNbor, mol.getBond(atom, nbor).getOrder());
+                    if (visitedBonds[mol.getBond(atom, nbor).getIndex()]) {
+                        continue;
+                    }
+                    if (!atomsToSplit.containsKey(atom) || !atomsToSplit.get(atom).contains(nbor)) {
+                        if (!alreadyVisitedAtoms[nbor.getIndex()]) {
+                            IAtom nborCpy = copyAtom(nbor, fragmentContainer);
+                            fragmentContainer.newBond(atomCpy, nborCpy, mol.getBond(atom, nbor).getOrder());
+                            visitedBonds[mol.getBond(atom, nbor).getIndex()] = true;
                             atomStack.add(nbor);
-                            origToCpyMap.put(nbor, cpyNbor);
+                            origToCpyMap.put(nbor, nborCpy);
                             alreadyVisitedAtoms[nbor.getIndex()] = true;
+                        } else {
+                            IAtom nborCpy = origToCpyMap.get(nbor);
+                            if (nborCpy == null) {
+                                continue;
+                            }
+                            fragmentContainer.newBond(
+                                    atomCpy,
+                                    nborCpy,
+                                    mol.getBond(atom, nbor).getOrder()
+                            );
+                            visitedBonds[mol.getBond(atom, nbor).getIndex()] = true;
+                            atomStack.remove(nbor);
                         }
                     } else {
-                        IAtom nborCpy = origToCpyMap.get(nbor);
-                        if (nborCpy == null || cpyAtom.getContainer() != nborCpy.getContainer()) {
-                            continue;
-                        }
-                        fragmentContainer.newBond(
-                                cpyAtom,
-                                origToCpyMap.get(nbor),
-                                mol.getBond(atom, nbor).getOrder()
-                        );
+                        startingAtoms.add(nbor);
                     }
                 }
             }
@@ -414,6 +438,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         }
         return fragments;
     }
+
 
     /**
      * Get the fragments generated as SMILES strings.
