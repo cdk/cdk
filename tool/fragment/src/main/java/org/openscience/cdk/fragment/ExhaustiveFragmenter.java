@@ -88,8 +88,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     private static final int DEFAULT_MIN_FRAG_SIZE = 6;
     private static final Saturation DEFAULT_SATURATION = Saturation.UNSATURATED_FRAGMENTS;
-    private static final int maxTreeDepth = 31;
 
+    int maxTreeDepth = 31;
     final Map<String, IAtomContainer> fragMap;
     final SmilesGenerator smilesGenerator;
     int minFragSize;
@@ -150,6 +150,15 @@ public class ExhaustiveFragmenter implements IFragmenter {
      */
     public void setSaturationSetting(Saturation saturationSetting) {
         this.saturationSetting = saturationSetting;
+    }
+
+    /**
+     * Set the maximum depth of the fragmentation tree. It has to be in the range of 0 < maxTreeDepth < 32
+     *
+     * @param maxTreeDepth
+     */
+    public void setMaxTreeDepth(int maxTreeDepth) {
+        this.maxTreeDepth = maxTreeDepth;
     }
 
     /**
