@@ -46,17 +46,19 @@ import java.util.Stack;
 /**
  * Generate fragments exhaustively.
  * <p>
- * This fragmentation scheme simply breaks single non-ring bonds. By default,
- * fragments smaller than 6 atoms (without implicit hydrogen) in size are not
+ * This fragmentation scheme simply breaks single non-ring, non-terminal bonds, non-terminal meaning that no bond to
+ * a single heavy atom is split.
+ * By default, fragments smaller than 6 atoms (without implicit hydrogen) in size are not
  * considered and the returned fragments are not saturated, but this can be changed by the user.
  * Side chains are retained.
  *
  * <p>Example Usage</p>
  *
  * <pre>{@code
- * ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter(); // per default this returns unsaturated fragments with a minimum size of 6
+ * // per default this fragmenter returns unsaturated fragments with a minimum size of 6
+ * ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter();
  * SmilesParser smiParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
- * IAtomContainer mol = smiParser.parseSmiles(c1ccccc1CC(N)C(=O)O);
+ * IAtomContainer mol = smiParser.parseSmiles(c1ccccc1C);
  * fragmenter.generateFragments(mol);
  * // if you want the SMILES representation of the fragments
  * String[] smilesFragments = fragmenter.getFragments();
@@ -153,7 +155,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
     }
 
     /**
-     * Set the maximum depth of the fragmentation tree. It has to be in the range of 0 < maxTreeDepth < 32
+     * Set the maximum number of simultaneously split bonds. It has to be in the range of 0 < maxTreeDepth < 32.
      *
      * @param maxTreeDepth
      */
