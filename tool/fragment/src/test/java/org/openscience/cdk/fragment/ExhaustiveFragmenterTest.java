@@ -194,9 +194,6 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterSaturated.generateFragments(mol);
         List<String> frags = Arrays.asList(fragmenterSaturated.getFragments());
         Assertions.assertNotNull(frags);
-        for (String f : frags) {
-            System.out.println(f);
-        }
         Assertions.assertEquals(25, frags.size());
 
         Assertions.assertNotNull(fragmenterSaturated.getFragmentsAsContainers());
