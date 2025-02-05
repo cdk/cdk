@@ -470,7 +470,7 @@ public class RingPlacer {
         logger.debug("placeSpiroRing: D=", degree);
 
         // recalculate the ringCentreVector
-        if (degree != 4) {
+        if (degree > 4) {
 
             int numPlaced = 0;
             for (IBond bond : mBonds) {
@@ -493,7 +493,7 @@ public class RingPlacer {
 
         double radius = getNativeRingRadius(ring, bondLength);
         Point2d ringCenter = new Point2d(sharedAtomsCenter);
-        if (degree == 4) {
+        if (degree <= 4) {
             ringCenterVector.normalize();
             ringCenterVector.scale(radius);
         } else {
@@ -516,7 +516,7 @@ public class RingPlacer {
 
         IBond currentBond = (IBond) rBonds.get(0);
 
-        Vector atomsToDraw = new Vector();
+        List<IAtom> atomsToDraw = new ArrayList<>();
         /*
          * Store all atoms to draw in consequtive order relative to the chosen
          * bond.
@@ -525,7 +525,7 @@ public class RingPlacer {
             currentBond = ring.getNextBond(currentBond, currentAtom);
             currentAtom = currentBond.getOther(currentAtom);
             if (!currentAtom.equals(startAtom))
-                atomsToDraw.addElement(currentAtom);
+                atomsToDraw.add(currentAtom);
         }
         logger.debug("currentAtom  " + currentAtom);
         logger.debug("startAtom  " + startAtom);

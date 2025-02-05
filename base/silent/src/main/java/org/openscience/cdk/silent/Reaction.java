@@ -108,6 +108,16 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     }
 
     /**
+     * Returns the number of agents in this reaction.
+     *
+     * @return The number of agents in this reaction
+     */
+    @Override
+    public int getAgentCount() {
+        return agents.getAtomContainerCount();
+    }
+
+    /**
      * Returns a MoleculeSet containing the reactants in this reaction.
      *
      * @return A MoleculeSet containing the reactants in this reaction
@@ -462,15 +472,13 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     @Override
     public String toString() {
-        StringBuilder description = new StringBuilder(64);
-        description.append("Reaction(");
-        description.append(getID());
-        description.append(", #M:").append(mappingCount);
-        description.append(", reactants=").append(reactants.toString());
-        description.append(", products=").append(products.toString());
-        description.append(", agents=").append(agents.toString());
-        description.append(')');
-        return description.toString();
+        return "Reaction(" +
+                getID() +
+                ", #M:" + mappingCount +
+                ", reactants=" + reactants.toString() +
+                ", products=" + products.toString() +
+                ", agents=" + agents.toString() +
+                ')';
     }
 
     /**

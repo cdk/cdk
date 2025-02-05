@@ -361,6 +361,31 @@ class SmartsPatternTest {
                     "N[Co@OH1](Cl)(Cl)(Cl)(Cl)N", 8, 2);
     }
 
+    // also implicit H! Cl[Pt@SP1H](F)Br
+    // C[Pt@SP2]([H])(F)Cl vs C[Pt@SP3](F)(Cl)[H] etc
+
+    @Test
+    void testSpVsSp() throws Exception {
+        assertMatch("C[Pt@SP2]([H])(F)Cl",
+                    "C[Pt@SP2]([H])(F)Cl", 1, 1);
+        assertMatch("C[Pt@SP2]([H])(F)Cl",
+                    "C[Pt@SP3](F)(Cl)[H]", 1, 1);
+        assertMatch("C[Pt@SP2]([H])(F)Cl",
+                    "*[Pt@OH8](C)([H])(F)(Cl)*", 1, 1);
+        assertMatch("C[Pt@SP2]([H])(F)Cl",
+                    "*[Pt@OH1](C)(F)([H])(Cl)*", 1, 1);
+        assertMatch("C[Pt@SP3](F)(Cl)[H]",
+                    "*[Pt@OH8](C)([H])(F)(Cl)*", 1, 1);
+        assertMatch("C[Pt@SP3](F)(Cl)[H]",
+                    "*[Pt@OH1](C)(F)([H])(Cl)*", 1, 1);
+    }
+
+    @Test
+    void testInsaturationOnTriple() throws Exception {
+        assertMatch("[Ci]~[Ci]O", "C#CO", 1, 1);
+        assertMatch("[Ci2]~[Ci2]O", "C#CO", 1, 1);
+    }
+
     IAtomContainer smi(String smi) throws Exception {
         return new SmilesParser(bldr).parseSmiles(smi);
     }

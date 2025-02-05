@@ -68,4 +68,39 @@ public abstract class PathElement {
      * @param coords coordinates (length = 6)
      */
     public abstract void points(double[] coords);
+
+    /**
+     * Load the provided array with the specified coordinates of this path
+     * element.
+     *
+     * @param coords coordinates (length = 6)
+     */
+    public void points(float[] coords) {
+        double[] dfCoords = new double[coords.length];
+        points(dfCoords);
+        for (int i = 0; i < coords.length; i++)
+            coords[i] = (float)dfCoords[i];
+    }
+
+    @Override
+    public String toString() {
+        double[] coords = new double[6];
+        points(coords);
+        switch (type) {
+            case MoveTo:
+                return String.format("MoveTo: [%.3f, %.3f]", coords[0], coords[1]);
+            case LineTo:
+                return String.format("LineTo: [%.3f, %.3f]", coords[0], coords[1]);
+            case QuadTo:
+                return String.format("QuadTo: [%.3f, %.3f, %.3f, %.3f, %.3f, %.3f]",
+                                     coords[0], coords[1], coords[2], coords[3],
+                                     coords[4], coords[5]);
+            case CubicTo:
+                return String.format("QuadTo: [%.3f, %.3f, %.3f, %.3f]",
+                                     coords[0], coords[1], coords[2], coords[3]);
+            case Close:
+                return "Close";
+        }
+        return "???";
+    }
 }

@@ -54,7 +54,10 @@ import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
+import org.openscience.cdk.stereo.Octahedral;
+import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.stereo.TrigonalBipyramidal;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
@@ -712,6 +715,7 @@ public class AtomContainerManipulator {
 
         // store a single explicit hydrogen of each original neighbor
         Map<IAtom, IAtom> hNeighbor = new HashMap<>(2*atomContainer.getAtomCount());
+        final int oldAtomCount = atomContainer.getAtomCount();
 
         for (IAtom atom : atomContainer.atoms()) {
             if (atom.getAtomicNumber() != IElement.H) {
@@ -726,8 +730,7 @@ public class AtomContainerManipulator {
                         newBonds.add(atom.getBuilder().newInstance(IBond.class, atom, hydrogen,
                                 Order.SINGLE));
 
-                        if (hNeighbor.get(atom) == null) hNeighbor.put(atom, hydrogen);
-
+                        hNeighbor.putIfAbsent(atom, hydrogen);
                     }
                     atom.setImplicitHydrogenCount(0);
                 }
@@ -740,24 +743,34 @@ public class AtomContainerManipulator {
 
         // update stereo elements with an implicit part
         List<IStereoElement> stereos = new ArrayList<>();
+        List<IAtom> explHatoms = new ArrayList<>();
         for (IStereoElement stereo : atomContainer.stereoElements()) {
             if (stereo instanceof ITetrahedralChirality) {
-                ITetrahedralChirality tc = (ITetrahedralChirality) stereo;
-
-                IAtom   focus    = tc.getFocus();
-                IAtom[] carriers = tc.getCarriers().toArray(new IAtom[4]);
-                IAtom   hydrogen = hNeighbor.get(focus);
-
-                // in sulfoxide - the implicit part of the tetrahedral centre
-                // is a lone pair
-
-                if (hydrogen != null) {
-                    replaceAtom(carriers, focus, hydrogen);
-                    TetrahedralChirality newStereo = new TetrahedralChirality(focus, carriers, tc.getStereo());
-                    newStereo.setGroupInfo(tc.getGroupInfo());
-                    stereos.add(newStereo);
+                @SuppressWarnings("unchecked")
+                IStereoElement<IAtom,IAtom> atomStereo = (IStereoElement<IAtom,IAtom>) stereo;
+                IAtom explH = hNeighbor.get(atomStereo.getFocus());
+                if (explH != null) {
+                    stereos.add(atomStereo.updateCarriers(atomStereo.getFocus(),
+                                                          explH));
                 } else {
-                    stereos.add(stereo);
+                    stereos.add(atomStereo);
+                }
+            } else if (stereo instanceof SquarePlanar ||
+                       stereo instanceof TrigonalBipyramidal ||
+                       stereo instanceof Octahedral) {
+
+                @SuppressWarnings("unchecked")
+                IStereoElement<IAtom,IAtom> atomStereo = (IStereoElement<IAtom,IAtom>) stereo;
+                if (hNeighbor.get(atomStereo.getFocus()) != null) {
+                    // update the carriers
+                    explHatoms.clear();
+                    for (IAtom atom : atomContainer.getConnectedAtomsList(atomStereo.getFocus())) {
+                        if (atom.getIndex() >= oldAtomCount)
+                            explHatoms.add(atom);
+                    }
+                    stereos.add(atomStereo.updateCarriers(atomStereo.getFocus(), explHatoms));
+                } else {
+                    stereos.add(atomStereo);
                 }
             } else if (stereo instanceof ExtendedTetrahedral) {
                 ExtendedTetrahedral tc = (ExtendedTetrahedral) stereo;
@@ -777,6 +790,7 @@ public class AtomContainerManipulator {
                     stereos.add(stereo);
                 }
             } else {
+                // may be broken but best we can do for now
                 stereos.add(stereo);
             }
         }
@@ -1199,6 +1213,9 @@ public class AtomContainerManipulator {
             } else if (se instanceof Atropisomeric) {
                 // can not have any H's
                 elements.add(se);
+            } else {
+                IAtom focus = (IAtom)se.getFocus();
+                elements.add(se.updateCarriers(hydrogens, focus));
             }
         }
 

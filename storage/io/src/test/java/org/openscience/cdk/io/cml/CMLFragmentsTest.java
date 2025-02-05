@@ -28,6 +28,7 @@ import javax.vecmath.Vector3d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
@@ -165,6 +166,21 @@ class CMLFragmentsTest extends CDKTestCase {
         IAtom atom2 = bond.getEnd();
         Assertions.assertEquals("a1", atom1.getID());
         Assertions.assertEquals("a2", atom2.getID());
+    }
+
+    @Test
+    void testBondOrders() throws Exception {
+        String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/><atom id='a3'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/><bond id='b2' atomRefs2='a1 a3' order='D'/></bondArray></molecule>";
+
+        IChemFile chemFile = parseCMLString(cmlString);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
+
+        Assertions.assertEquals(3, mol.getAtomCount());
+        Assertions.assertEquals(2, mol.getBondCount());
+        org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
+        Assertions.assertNull(bond.getOrder());
+        bond = mol.getBond(1);
+        Assertions.assertEquals(IBond.Order.DOUBLE, bond.getOrder());
     }
 
     @Test

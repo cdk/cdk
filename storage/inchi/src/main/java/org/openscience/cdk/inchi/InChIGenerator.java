@@ -66,7 +66,6 @@ import java.util.Map;
  *
  * <p><i>Spin multiplicities and some aspects of stereochemistry are not
  * currently handled completely.</i>
- *
  * <b>Example usage</b><br/>
  *
  * <code>// Generate factory - throws CDKException if native code does not load</code><br>
@@ -350,6 +349,7 @@ public class InChIGenerator {
                 InchiAtom at2 = atomMap.get(surroundingAtoms[2]);
                 InchiAtom at3 = atomMap.get(surroundingAtoms[3]);
                 InchiStereoParity p;
+
                 if (stereoType == Stereo.ANTI_CLOCKWISE) {
                     p = InchiStereoParity.ODD;
                 } else if (stereoType == Stereo.CLOCKWISE) {
@@ -508,7 +508,7 @@ public class InChIGenerator {
      * has failed. This returns the JNI INCHI enum and requires the optional
      * "cdk-jniinchi-support" module to be loaded (or the full JNI InChI lib
      * to be on the class path).
-     * @deprecated use getStatus
+     * @deprecated use {@link #getStatus()}
      */
     @Deprecated
     public INCHI_RET getReturnStatus() {
@@ -542,7 +542,7 @@ public class InChIGenerator {
     }
 
     /**
-     * Gets auxillary information.
+     * Gets auxiliary information.
      */
     public String getAuxInfo() {
         if (auxNone)

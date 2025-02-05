@@ -770,7 +770,14 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assertions.assertEquals(3, acetone.getAtomCount());
         Assertions.assertEquals(2, acetone.getBondCount());
         Assertions.assertEquals(0, acetone.getLonePairCount());
-        Assertions.assertFalse(acetone.stereoElements().iterator().hasNext());
+        Assertions.assertTrue(acetone.stereoElements().iterator().hasNext());
+        IStereoElement<?,?> se = acetone.stereoElements().iterator().next();
+        Assertions.assertEquals(se.getCarriers().get(0), c2);
+        Assertions.assertEquals(se.getCarriers().get(1), c1);
+        Assertions.assertEquals(se.getCarriers().get(2), c3);
+        Assertions.assertEquals(se.getCarriers().get(3), c1);
+        // Tetrahedral can't really have 2 implicit neighbours... but we can
+        // update nevertheless
     }
 
     @Test

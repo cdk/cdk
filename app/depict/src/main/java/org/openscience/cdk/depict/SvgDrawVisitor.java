@@ -40,6 +40,8 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -71,12 +73,17 @@ final class SvgDrawVisitor implements IDrawVisitor {
     private int             indentLvl     = 0;
     private AffineTransform transform     = null;
     private RendererModel   model         = null;
-    private final NumberFormat    decimalFormat = new DecimalFormat(".##", new DecimalFormatSymbols(Locale.ROOT));
+    private static final NumberFormat    decimalFormat = new DecimalFormat(".###",
+                                                                           new DecimalFormatSymbols(Locale.ROOT));
 
     private boolean defaultsWritten    = false;
     private Color   defaultStroke      = null;
     private Color   defaultFill        = null;
     private String  defaultStrokeWidth = null;
+
+    private static double round(double d) {
+        return Double.parseDouble(decimalFormat.format(d));
+    }
 
     /**
      * Create an SvgDrawVisitor with the specified width/height
@@ -289,30 +296,30 @@ final class SvgDrawVisitor implements IDrawVisitor {
                         sb.append("l");
                         appendRelativePoints(sb, points, xCurr, yCurr, 1);
                     }
-                    xCurr = points[0];
-                    yCurr = points[1];
+                    xCurr = round(points[0]);
+                    yCurr = round(points[1]);
                     break;
                 case MoveTo:
                     // We have Move as always absolute
                     sb.append("M");
                     transform(points, 1);
                     appendPoints(sb, points, 1);
-                    xCurr = points[0];
-                    yCurr = points[1];
+                    xCurr = round(points[0]);
+                    yCurr = round(points[1]);
                     break;
                 case QuadTo:
                     sb.append("q");
                     transform(points, 2);
                     appendRelativePoints(sb, points, xCurr, yCurr, 2);
-                    xCurr = points[2];
-                    yCurr = points[3];
+                    xCurr = round(points[2]);
+                    yCurr = round(points[3]);
                     break;
                 case CubicTo:
                     sb.append("c");
                     transform(points, 3);
                     appendRelativePoints(sb, points, xCurr, yCurr, 3);
-                    xCurr = points[4];
-                    yCurr = points[5];
+                    xCurr = round(points[4]);
+                    yCurr = round(points[5]);
                     break;
             }
         }
@@ -397,11 +404,12 @@ final class SvgDrawVisitor implements IDrawVisitor {
         appendIdent();
         double[] points = new double[]{elem.xCoord, elem.yCoord};
         transform(points, 1);
+        double height = scaled(elem.height);
         sb.append("<rect");
         sb.append(" x='").append(toStr(points[0])).append("'");
-        sb.append(" y='").append(toStr(points[1]-elem.height)).append("'");
+        sb.append(" y='").append(toStr(points[1]-height)).append("'");
         sb.append(" width='").append(toStr(scaled(elem.width))).append("'");
-        sb.append(" height='").append(toStr(scaled(elem.height))).append("'");
+        sb.append(" height='").append(toStr(height)).append("'");
         if (elem.filled) {
             sb.append(" fill='").append(toStr(elem.color)).append("'");
             sb.append(" stroke='none'");

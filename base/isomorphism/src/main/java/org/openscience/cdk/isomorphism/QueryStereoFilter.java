@@ -345,7 +345,7 @@ final class QueryStereoFilter implements Predicate<int[]> {
         int cfg = Octahedral.reorder(requiredOrdering, currentOrdering);
         if (cfg < 0)
             return false;
-        cfg |= 0x6100;
+        cfg |= IStereoElement.Octahedral;
         return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, cfg);
     }
 

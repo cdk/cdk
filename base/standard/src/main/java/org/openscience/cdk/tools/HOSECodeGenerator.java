@@ -24,6 +24,15 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
@@ -37,12 +46,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.InvPair;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Generates HOSE codes {@cdk.cite BRE78}.
@@ -111,25 +114,19 @@ public class HOSECodeGenerator implements java.io.Serializable {
 
     protected String            centerCode           = null;
 
-    private TreeNode             rootNode             = null;
-
     boolean                     debug                = false;
 
     private final IAtomContainer      acold                = null;
     private IRingSet            soar                 = null;
 
     /**
-     *  The rank order for the given element symbols.
+     *  The ranks for the given element and other symbols.
      */
-
-    private static final String[]       rankedSymbols        = {"C", "O", "N", "S", "P", "Si", "B", "F", "Cl", "Br", ";", "I",
-            "#", "&", ","                            };
-
-    /**
-     *  The ranking values to be used for the symbols above.
-     */
-    private static final int[]          symbolRankings       = {9000, 8900, 8800, 8700, 8600, 8500, 8400, 8300, 8200, 8100,
-            8000, 7900, 1200, 1100, 1000             };
+    private static final long RING_RANK = 1100l;
+    private Map<String, Long> rankedSymbols = Stream.of(new Object[][] {
+    	{"C",9000l},{"O",8900l},{"N",8800l},{"S",8700l},{"P",8600l},{"Si",8500l},{"B",8400l},{"F",8300l},
+    	{"Cl",8200l},{"Br",8100l},{";",8000l},{"I",7900l},{"#",1200l},{"&",RING_RANK},{",",1000l}
+    }).collect(Collectors.toMap(data -> (String) data[0], data -> (Long) data[1]));
 
     /**
      * The bond rankings to be used for the four bond order possibilities.
@@ -219,7 +216,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
             ac.getAtom(i).setFlag(IChemObject.VISITED, false);
         }
         root.setFlag(IChemObject.VISITED, true);
-        rootNode = new TreeNode(root.getSymbol(), null, root, 0, atomContainer.getConnectedBondsCount(root), 0);
         /*
          * All we need to observe is how the ranking of substituents in the
          * subsequent spheres of the root nodes influences the ranking of the
@@ -286,7 +282,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
             ac.getAtom(i).setFlag(IChemObject.VISITED, false);
         }
         root.setFlag(IChemObject.VISITED, true);
-        rootNode = new TreeNode(root.getSymbol(), null, root, 0, atomContainer.getConnectedBondsCount(root), 0);
         /*
          * All we need to observe is how the ranking of substituents in the
          * subsequent spheres of the root nodes influences the ranking of the
@@ -505,7 +500,10 @@ public class HOSECodeGenerator implements java.io.Serializable {
                 sortNodesByScore(spheres[f]);
             }
         }
-
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+            atomContainer.getAtom(i).setFlag(IChemObject.VISITED, false);
+        }
+        
         HOSECode.append(centerCode);
         for (int f = 0; f < maxSphere; f++) {
             sphere = f + 1;
@@ -570,15 +568,12 @@ public class HOSECodeGenerator implements java.io.Serializable {
      *@param  symbol  The element symbol for which the rank is to be determined
      *@return         The element rank
      */
-    private double getElementRank(String symbol) {
-        for (int f = 0; f < rankedSymbols.length; f++) {
-            if (rankedSymbols[f].equals(symbol)) {
-                return symbolRankings[f];
-            }
-        }
+    private long getElementRank(String symbol) {
+        if(rankedSymbols.containsKey(symbol))
+        	return rankedSymbols.get(symbol);
         IIsotope isotope = isotopeFac.getMajorIsotope(symbol);
         if (isotope.getMassNumber() != null) {
-            return ((double) 800000 - isotope.getMassNumber());
+            return ((long) 800000 - isotope.getMassNumber());
         }
         return 800000;
     }
@@ -606,7 +601,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         return sym;
     }
 
-    /**
+	/**
      *  Determines the ranking score for each node, allowing for a sorting of nodes
      *  within one sphere.
      *
@@ -615,14 +610,23 @@ public class HOSECodeGenerator implements java.io.Serializable {
      */
     private void calculateNodeScores(List<TreeNode> sphereNodes) throws CDKException {
         TreeNode treeNode;
+        List<TreeNode> visitedTreeNodes=new ArrayList<>();
         for (TreeNode sphereNode : sphereNodes) {
             treeNode = sphereNode;
-            treeNode.score += getElementRank(treeNode.symbol);
+            if ((flags&LEGACY_MODE) == 0 && treeNode.atom != null && treeNode.atom.getFlag(IChemObject.VISITED)) {
+            	treeNode.score += RING_RANK;
+            }else {
+            	treeNode.score += getElementRank(treeNode.symbol);
+            }
             if (treeNode.bondType <= 4) {
                 treeNode.score += bondRankings[(int) treeNode.bondType];
             } else {
                 throw new CDKException("Unknown bond type encountered in HOSECodeGenerator");
             }
+            if (treeNode.atom != null) visitedTreeNodes.add(treeNode);
+        }
+        for(TreeNode treeNode2 : visitedTreeNodes) {
+        	treeNode2.atom.setFlag(IChemObject.VISITED, true);
         }
     }
 

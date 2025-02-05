@@ -23,8 +23,10 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Representation of stereochemical configuration. The abstract configuration
@@ -358,4 +360,31 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
      */
     IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
 
+    /*
+     * Update the carriers replacing all occurrences of one item with another.
+     *
+     * @param remove the atom/bonds to remove
+     * @param add the atom/bond to replace it with
+     */
+    IStereoElement<F, C> updateCarriers(Set<C> remove, C rep);
+
+    /*
+     * Update the carriers replacing all occurrences of one item with another.
+     *
+     * @param remove the atom/bonds to remove
+     * @param add the atom/bond to replace it with
+     */
+    default IStereoElement<F, C> updateCarriers(C remove, C rep) {
+        return updateCarriers(Collections.singleton(remove), rep);
+    }
+
+    /*
+     * Update the carriers replacing all occurrences of one item with items
+     * on the provided iterable. Once the iterable is exhausted no more
+     * replacements are made.
+     *
+     * @param remove the atom/bond to remove
+     * @param add the atom/bonds to replace it with
+     */
+    IStereoElement<F,C> updateCarriers(C remove, Iterable<C> adds);
 }

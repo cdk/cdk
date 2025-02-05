@@ -108,6 +108,16 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     }
 
     /**
+     * Returns the number of agents in this reaction.
+     *
+     * @return The number of agents in this reaction
+     */
+    @Override
+    public int getAgentCount() {
+        return agents.getAtomContainerCount();
+    }
+
+    /**
      * Returns a MoleculeSet containing the reactants in this reaction.
      *
      * @return A MoleculeSet containing the reactants in this reaction

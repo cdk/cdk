@@ -133,16 +133,6 @@ public final class RdfileReader implements Closeable, Iterator<RdfileRecord> {
 
     /**
      * Creates a new RdfileReader instance with the given InputStream and IChemObjectBuilder.
-     *
-     * @param reader the Reader providing the RDfile data
-     * @param chemObjectBuilder the IChemObjectBuilder for creating CDK objects
-     */
-    public RdfileReader(Reader reader, IChemObjectBuilder chemObjectBuilder) {
-        this(reader, chemObjectBuilder, true);
-    }
-
-    /**
-     * Creates a new RdfileReader instance with the given InputStream and IChemObjectBuilder.
      * <p>
      * If {@code continueOnError} is {@code true} remaining records are processed when an error
      * is encountered; if {@code false} all remaining records in the file are skipped.
@@ -159,6 +149,8 @@ public final class RdfileReader implements Closeable, Iterator<RdfileRecord> {
             this.bufferedReader = new BufferedReader(reader);
         }
 
+        if (chemObjectBuilder == null)
+            throw new NullPointerException("A ChemObjectBuilder must be provided or available on the class path!");
         this.chemObjectBuilder = chemObjectBuilder;
         this.continueOnError = continueOnError;
     }

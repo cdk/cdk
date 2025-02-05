@@ -151,22 +151,22 @@ class ReactionManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    void testGetAtomCount_IReaction() throws Exception {
+    void testGetAtomCount_IReaction() {
         Assertions.assertEquals(19, ReactionManipulator.getAtomCount(reaction));
     }
 
     @Test
-    void testGetBondCount_IReaction() throws Exception {
+    void testGetBondCount_IReaction() {
         Assertions.assertEquals(18, ReactionManipulator.getBondCount(reaction));
     }
 
     @Test
-    void testGetAllAtomContainers_IReaction() throws Exception {
+    void testGetAllAtomContainers_IReaction() {
         Assertions.assertEquals(3, ReactionManipulator.getAllAtomContainers(reaction).size());
     }
 
     @Test
-    void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
+    void testSetAtomProperties_IReactionSet_Object_Object() {
         ReactionManipulator.setAtomProperties(reaction, "test", "ok");
         for (IAtomContainer container : ReactionManipulator.getAllAtomContainers(reaction)) {
             for (IAtom atom : container.atoms()) {
@@ -284,7 +284,7 @@ class ReactionManipulatorTest extends CDKTestCase {
         IAtomContainer mol = ReactionManipulator.toMolecule(reaction);
         assertThat(smigen.create(mol),
                 is("CCO.CC(=O)O.[H+].CCOC(=O)C.O"));
-        assertThat(smigen.createReactionSMILES(ReactionManipulator.toReaction(mol)),
+        assertThat(smigen.create(ReactionManipulator.toReaction(mol)),
                 is("CCO.CC(=O)O>[H+]>CCOC(=O)C.O"));
     }
 
@@ -298,7 +298,7 @@ class ReactionManipulatorTest extends CDKTestCase {
         IAtomContainer mol = ReactionManipulator.toMolecule(reaction);
         assertThat(smigen.create(mol),
                 is("[CH2]CO.CC(=O)O.[H+].CCOC(=O)C.O |^1:0|"));
-        assertThat(smigen.createReactionSMILES(ReactionManipulator.toReaction(mol)),
+        assertThat(smigen.create(ReactionManipulator.toReaction(mol)),
                 is("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0|"));
     }
 

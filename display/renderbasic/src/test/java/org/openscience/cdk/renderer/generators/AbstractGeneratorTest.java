@@ -80,7 +80,7 @@ abstract class AbstractGeneratorTest {
 
     <T> boolean containsParameterType(List<IGeneratorParameter<?>> list, Class<T> type) {
         for (IGeneratorParameter<?> item : list) {
-            if (item.getClass().getName().equals(type.getName())) return true;
+            if (item.getClass().isAssignableFrom(type)) return true;
         }
         return false;
     }

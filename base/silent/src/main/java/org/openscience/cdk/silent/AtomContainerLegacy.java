@@ -27,6 +27,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -40,12 +41,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 /**
  * Base class for all chemical objects that maintain a list of Atoms and
@@ -126,7 +125,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
     /**
      * Internal list of atom parities.
      */
-    protected Set<IStereoElement> stereoElements;
+    protected List<IStereoElement> stereoElements;
 
     /**
      * Constructs an empty AtomContainer.
@@ -152,7 +151,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         this.lonePairs = new ILonePair[this.lonePairCount];
         this.singleElectrons = new ISingleElectron[this.singleElectronCount];
 
-        stereoElements = new HashSet<>(atomCount / 2);
+        stereoElements = new ArrayList<>();
 
         for (IStereoElement element : container.stereoElements()) {
             addStereoElement(element);
@@ -191,7 +190,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         bonds = new IBond[bondCount];
         lonePairs = new ILonePair[lpCount];
         singleElectrons = new ISingleElectron[seCount];
-        stereoElements = new HashSet<>(atomCount / 2);
+        stereoElements = new ArrayList<>();
     }
 
     /**
@@ -207,7 +206,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
      */
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
-        this.stereoElements = new HashSet<>();
+        this.stereoElements = new ArrayList<>();
         this.stereoElements.addAll(elements);
     }
 
@@ -216,7 +215,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
      */
     @Override
     public Iterable<IStereoElement> stereoElements() {
-        return Collections.unmodifiableSet(stereoElements);
+        return Collections.unmodifiableList(stereoElements);
     }
 
     private boolean isStale(IAtom atom) {
@@ -970,6 +969,51 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
     }
 
     /**
+     * Update stereochemistry which either this bond is directly involved in
+     * or of which either end of the bond is involved.
+     *
+     * @param removedBond the removed bond
+     */
+    private void updateStereochemistry(IBond removedBond) {
+        if (removedBond.getAtomCount() != 2)
+            return; // too crazy, user is on their own
+        IAtom beg = removedBond.getBegin();
+        IAtom end = removedBond.getEnd();
+
+        List<IStereoElement<?,?>> invalidated = new ArrayList<>();
+        for (int i = 0; i < stereoElements.size(); i++) {
+            IStereoElement<?,?> se = stereoElements.get(i);
+            IChemObject focus = se.getFocus();
+            if (focus.equals(beg)) {
+                stereoElements.set(i, ((IStereoElement<IAtom,IAtom>)se).updateCarriers(end, beg));
+            } else if (focus.equals(end)) {
+                stereoElements.set(i, ((IStereoElement<IAtom,IAtom>)se).updateCarriers(beg, end));
+            } else if (removedBond.equals(focus)) {
+                invalidated.add(se);
+            } else if (se instanceof IDoubleBondStereochemistry) {
+                IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
+                List<IBond> carriers = db.getCarriers();
+                final IAtom common = db.getFocus().getConnectedAtom(removedBond);
+                if (common != null && common.getBondCount() > 1) {
+                    IBond otherBond = null;
+                    for (IBond bond : getConnectedBondsList(common)) {
+                        if (!bond.equals(focus)) {
+                            otherBond = bond;
+                            break;
+                        }
+                    }
+                    if (otherBond != null)
+                        stereoElements.set(i, ((IStereoElement<IBond,IBond>)se).updateCarriers(removedBond, otherBond));
+                } else {
+                    invalidated.add(se);
+                }
+            }
+        }
+        stereoElements.removeAll(invalidated);
+    }
+
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -980,6 +1024,7 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         }
         bonds[bondCount - 1] = null;
         bondCount--;
+        updateStereochemistry(bond);
         return bond;
     }
 

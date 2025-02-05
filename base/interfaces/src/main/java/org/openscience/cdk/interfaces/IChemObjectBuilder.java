@@ -79,4 +79,15 @@ public interface IChemObjectBuilder {
      */
     IReaction newReaction();
 
+    /**
+     * This function is used to find an IChemObject builder using reflection. It
+     * first tries to create a SilentChemObjectBuilder and failing that a
+     * DefaultChemObjectBuilder. It should be used sparingly since APIs should
+     * require a builder is passed in.
+     *
+     * @return the IChemObject builder
+     */
+    static IChemObjectBuilder find() {
+        return ChemObjectBuilderCache.INSTANCE.get();
+    }
 }
