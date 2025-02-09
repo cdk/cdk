@@ -31,17 +31,17 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author     egonw
  * @cdk.module test-standard
  */
-class FormatStringBufferTest extends CDKTestCase {
+class FormatStringBuilderTest extends CDKTestCase {
 
-    private FormatStringBuffer fsb;
+    private FormatStringBuilder fsb;
 
-    FormatStringBufferTest() {
+    FormatStringBuilderTest() {
         super();
     }
 
     @BeforeEach
     void setUp() {
-        fsb = new FormatStringBuffer("[%s]");
+        fsb = new FormatStringBuilder("[%s]");
     }
 
     @Test
