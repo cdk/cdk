@@ -548,6 +548,7 @@ public class FunctionalGroupsFinder {
                 cpyAtom.setIsAromatic(atom.isAromatic());
                 cpyAtom.setValency(atom.getValency());
                 cpyAtom.setAtomTypeName(atom.getAtomTypeName());
+                cpyAtom.setFormalCharge(atom.getFormalCharge());
                 amap.put(atom, cpyAtom);
             }
             // bonds
