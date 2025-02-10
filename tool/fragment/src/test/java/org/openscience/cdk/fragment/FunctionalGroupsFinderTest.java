@@ -805,12 +805,6 @@ class FunctionalGroupsFinderTest {
                                 + ":"
                                 + tmpExpectedAtom.getSymbol() + tmpExpectedAtom.getFormalCharge()
                                 + ")");
-                Assertions.assertEquals(tmpExpectedAtom.getCharge(), tmpActualAtom.getCharge(),
-                        "Groups #" + i + ": Atom charge does not match ("
-                                + tmpActualAtom.getSymbol() + tmpActualAtom.getCharge()
-                                + ":"
-                                + tmpExpectedAtom.getSymbol() + tmpExpectedAtom.getCharge()
-                                + ")");
             }
             Map<IBond, IBond> tmpBondMap = tmpExpFGinActFGmappings.toBondMap().iterator().next();
             for (Map.Entry<IBond, IBond> tmpMapEntry : tmpBondMap.entrySet()) {
