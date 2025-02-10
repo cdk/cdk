@@ -1,6 +1,6 @@
 /* Copyright (C) 2002  Antti S. Brax
  *
- *  FormatStringBuffer: printf style output formatter for Java
+ *  FormatStringBuilder: printf style output formatter for Java
  *  All rights reserved.
  *
  *  Downloaded from: http://www.cs.helsinki.fi/u/abrax/HACK/JAVA/PRINTF.html
@@ -60,7 +60,7 @@ import java.util.Locale;
  * @cdk.githash
  * @cdk.license BSD
  */
-public class FormatStringBuffer {
+public class FormatStringBuilder {
 
     // ==================================================================== //
 
@@ -111,43 +111,43 @@ public class FormatStringBuffer {
     // ==================================================================== //
 
     /** The format string. */
-    private String           format   = null;
+    private String format = null;
 
-    /** The buffer. */
-    private StringBuffer     buffer   = null;
+    /** The builder. */
+    private StringBuilder stringBuilder = null;
 
     /** The current index. */
-    private int              index    = 0;
+    private int index = 0;
 
     // ==================================================================== //
 
     /**
-     * Create a new <code>FormatStringBuffer</code>.
+     * Create a new <code>FormatStringBuilder</code>.
      *
      * @param format the format string.
      */
-    public FormatStringBuffer(String format) {
+    public FormatStringBuilder(String format) {
         reset(format);
     }
 
     /**
-     * Reset this <code>FormatStringBuffer</code>.
+     * Reset this <code>FormatStringBuilder</code>.
      *
      * @param format the format string.
      */
-    public FormatStringBuffer reset(String format) {
+    public FormatStringBuilder reset(String format) {
         reset();
         this.format = format;
         return this;
     }
 
     /**
-     * Reset this <code>FormatStringBuffer</code> with the format string
+     * Reset this <code>FormatStringBuilder</code> with the format string
      * given in the constructor or last call to <code>reset(String)</code>.
      * This is automatically called after <code>toString()</code>.
      */
-    public FormatStringBuffer reset() {
-        this.buffer = new StringBuffer();
+    public FormatStringBuilder reset() {
+        this.stringBuilder = new StringBuilder();
         this.index = 0;
         return this;
     }
@@ -165,7 +165,7 @@ public class FormatStringBuffer {
 
         while (index < format.length()) {
             if ((ch = format.charAt(index)) != '%') {
-                buffer.append(ch);
+                stringBuilder.append(ch);
                 index++;
                 continue;
             }
@@ -212,7 +212,7 @@ public class FormatStringBuffer {
             if (index >= format.length()) throw new IllegalArgumentException("Malformed format");
 
             // Get precision.
-            if ((ch = format.charAt(index)) == '.') {
+            if (format.charAt(index) == '.') {
 
                 if (++index >= format.length()) throw new IllegalArgumentException("Malformed format");
 
@@ -232,7 +232,7 @@ public class FormatStringBuffer {
                     fmt.type = STRING;
                     return fmt;
                 case '%':
-                    buffer.append('%');
+                    stringBuilder.append('%');
                     continue;
 
                     // Octal, hexadecimal and decimal.
@@ -268,9 +268,8 @@ public class FormatStringBuffer {
                     fmt.flags |= UPPER;
                     return fmt;
                 default:
-                    buffer.append('%');
-                    buffer.append(ch);
-                    continue;
+                    stringBuilder.append('%');
+                    stringBuilder.append(ch);
             }
         }
 
@@ -312,17 +311,18 @@ public class FormatStringBuffer {
     /**
      * Format a <code>char</code>.
      */
-    public FormatStringBuffer format(char ch) {
+    public FormatStringBuilder format(char ch) {
 
         Format fmt = getFormat();
 
-        if (fmt.type != CHAR) throw new IllegalArgumentException("Expected a char format");
+        if (fmt.type != CHAR)
+            throw new IllegalArgumentException("Expected a char format");
 
         if ((fmt.flags & LEFT) != LEFT) while (--fmt.fieldWidth > 0)
-            buffer.append(' ');
-        buffer.append(ch);
+            stringBuilder.append(' ');
+        stringBuilder.append(ch);
         while (--fmt.fieldWidth > 0)
-            buffer.append(' ');
+            stringBuilder.append(' ');
 
         return this;
     }
@@ -330,7 +330,7 @@ public class FormatStringBuffer {
     /**
      * Format a <code>float</code>.
      */
-    public FormatStringBuffer format(float flt) {
+    public FormatStringBuilder format(float flt) {
 
         return format((double) flt);
 
@@ -339,7 +339,7 @@ public class FormatStringBuffer {
     /**
      * Format a <code>double</code>.
      */
-    public FormatStringBuffer format(double dbl) {
+    public FormatStringBuilder format(double dbl) {
 
         Format fmt = getFormat();
 
@@ -367,13 +367,13 @@ public class FormatStringBuffer {
 
         int len = str.length();
         if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            stringBuilder.append(' ');
 
         for (int i = 0; i < len; ++i)
-            buffer.append(str.charAt(i));
+            stringBuilder.append(str.charAt(i));
 
         while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            stringBuilder.append(' ');
 
         return this;
     }
@@ -381,7 +381,7 @@ public class FormatStringBuffer {
     /**
      * Format a <code>float</code>.
      */
-    public FormatStringBuffer format(int i) {
+    public FormatStringBuilder format(int i) {
 
         return format((long) i);
 
@@ -390,7 +390,7 @@ public class FormatStringBuffer {
     /**
      * Format a <code>float</code>.
      */
-    public FormatStringBuffer format(long l) {
+    public FormatStringBuilder format(long l) {
 
         Format fmt = getFormat();
 
@@ -439,32 +439,32 @@ public class FormatStringBuffer {
         // Place the sign character first if zero padding.
         if ((fmt.flags & ZEROPAD) == ZEROPAD) {
             if (l < 0 && fmt.base == 10) {
-                buffer.append('-');
+                stringBuilder.append('-');
             } else if ((fmt.flags & PLUS) == PLUS && fmt.base == 10) {
-                buffer.append('+');
+                stringBuilder.append('+');
             }
-            buffer.append(prefix);
+            stringBuilder.append(prefix);
         }
 
         // Pad.
         if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--)
-            buffer.append(pad);
+            stringBuilder.append(pad);
 
         // Place the sign character now if not zero padding.
         if ((fmt.flags & ZEROPAD) != ZEROPAD) {
             if (l < 0 && fmt.base == 10) {
-                buffer.append('-');
+                stringBuilder.append('-');
             } else if ((fmt.flags & PLUS) == PLUS && fmt.base == 10) {
-                buffer.append('+');
+                stringBuilder.append('+');
             }
-            buffer.append(prefix);
+            stringBuilder.append(prefix);
         }
 
         for (int i = 0; i < len; ++i)
-            buffer.append(str.charAt(i));
+            stringBuilder.append(str.charAt(i));
 
         while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            stringBuilder.append(' ');
 
         return this;
     }
@@ -472,7 +472,7 @@ public class FormatStringBuffer {
     /**
      * Format a <code>String</code>.
      */
-    public FormatStringBuffer format(String str) {
+    public FormatStringBuilder format(String str) {
 
         if (str == null) str = "<NULL>";
 
@@ -484,13 +484,13 @@ public class FormatStringBuffer {
         if (fmt.precision != -1 && len > fmt.precision) len = fmt.precision;
 
         if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            stringBuilder.append(' ');
 
         for (int i = 0; i < len; ++i)
-            buffer.append(str.charAt(i));
+            stringBuilder.append(str.charAt(i));
 
         while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            stringBuilder.append(' ');
 
         return this;
     }
@@ -504,9 +504,9 @@ public class FormatStringBuffer {
     @Override
     public String toString() {
 
-        if (index < format.length()) buffer.append(format.substring(index));
+        if (index < format.length()) stringBuilder.append(format.substring(index));
 
-        String str = buffer.toString();
+        String str = stringBuilder.toString();
         this.reset();
 
         return str;
@@ -517,8 +517,7 @@ public class FormatStringBuffer {
     /**
      * A container class for several format parameters.
      */
-    private class Format {
-
+    private static class Format {
         public int flags      = 0;
         public int fieldWidth = -1;
         public int precision  = -1;

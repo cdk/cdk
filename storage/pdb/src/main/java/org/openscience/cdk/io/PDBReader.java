@@ -155,7 +155,7 @@ public class PDBReader extends DefaultChemObjectReader {
     }
 
     @Override
-    public void setReader(Reader input) throws CDKException {
+    public void setReader(Reader input) {
         if (input instanceof BufferedReader) {
             this._oInput = (BufferedReader) input;
         } else {
@@ -164,7 +164,7 @@ public class PDBReader extends DefaultChemObjectReader {
     }
 
     @Override
-    public void setReader(InputStream input) throws CDKException {
+    public void setReader(InputStream input) {
         setReader(new InputStreamReader(input));
     }
 
@@ -224,7 +224,7 @@ public class PDBReader extends DefaultChemObjectReader {
         PDBAtom oAtom;
         PDBPolymer oBP = new PDBPolymer();
         IAtomContainer molecularStructure = oFile.getBuilder().newInstance(IAtomContainer.class);
-        StringBuffer cResidue;
+        StringBuilder cResidue;
         String oObj;
         IMonomer oMonomer;
         String cRead = "";
@@ -261,7 +261,7 @@ public class PDBReader extends DefaultChemObjectReader {
 
                         if (isProteinStructure) {
                             // construct a string describing the residue
-                            cResidue = new StringBuffer(8);
+                            cResidue = new StringBuilder(8);
                             oObj = oAtom.getResName();
                             if (oObj != null) {
                                 cResidue = cResidue.append(oObj.trim());
@@ -278,7 +278,7 @@ public class PDBReader extends DefaultChemObjectReader {
 
                             // search for an existing strand or create a new one.
                             String strandName = oAtom.getChainID();
-                            if (strandName == null || strandName.length() == 0) {
+                            if (strandName == null || strandName.isEmpty()) {
                                 strandName = String.valueOf(chain);
                             }
                             oStrand = oBP.getStrand(strandName);
@@ -311,8 +311,7 @@ public class PDBReader extends DefaultChemObjectReader {
                         }
                         logger.debug("Added ATOM: ", oAtom);
 
-                        /** As HETATMs cannot be considered to either belong to a certain monomer or strand,
-                         * they are dealt with seperately.*/
+                        /* As HETATMs cannot be considered to either belong to a certain monomer or strand, they are dealt with seperately. */
                     } else if ("HETATM".equalsIgnoreCase(cCol)) {
                         // read an atom record
                         oAtom = readAtom(cRead, lineLength);
@@ -428,7 +427,7 @@ public class PDBReader extends DefaultChemObjectReader {
                                     } catch (NumberFormatException nfe) {
                                         atomToNumber = -1;
                                     }
-                                    if (atomFromNumber != -1 && atomToNumber != -1) {
+                                    if (atomToNumber != -1) {
                                         addBond(molecule, atomFromNumber, atomToNumber);
                                         logger.debug("Bonded " + atomFromNumber + " with " + atomToNumber);
                                     }
@@ -673,13 +672,13 @@ public class PDBReader extends DefaultChemObjectReader {
         }
         if (lineLength >= 59) {
             String frag = cLine.substring(54, Math.min(lineLength, 60)).trim();
-            if (frag.length() > 0) {
+            if (!frag.isEmpty()) {
                 oAtom.setOccupancy(Double.parseDouble(frag));
             }
         }
         if (lineLength >= 65) {
             String frag = cLine.substring(60, Math.min(lineLength, 66)).trim();
-            if (frag.length() > 0) {
+            if (!frag.isEmpty()) {
                 oAtom.setTempFactor(Double.parseDouble(frag));
             }
         }
@@ -713,11 +712,7 @@ public class PDBReader extends DefaultChemObjectReader {
          */
         String oxt = cLine.substring(13, 16).trim();
 
-        if (oxt.equals("OXT")) {
-            oAtom.setOxt(true);
-        } else {
-            oAtom.setOxt(false);
-        }
+        oAtom.setOxt(oxt.equals("OXT"));
         /* ********************************************************************************** */
 
         return oAtom;
@@ -764,7 +759,6 @@ public class PDBReader extends DefaultChemObjectReader {
                 }
                 hetResidues.add(typeKey.split("\\.")[0]);
             }
-            bufferedReader.close();
         } catch (IOException ioe) {
             logger.error(ioe.getMessage());
         }

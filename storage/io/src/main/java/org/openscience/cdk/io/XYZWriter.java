@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
-import org.openscience.cdk.tools.FormatStringBuffer;
+import org.openscience.cdk.tools.FormatStringBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -53,7 +53,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZWriter.class);
-    private final FormatStringBuffer  fsb;
+    private final FormatStringBuilder fsb;
 
     /**
     * Constructor.
@@ -61,7 +61,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     * @param out the stream to write the XYZ file to.
     */
     public XYZWriter(Writer out) {
-        fsb = new FormatStringBuffer("%-8.6f");
+        fsb = new FormatStringBuilder("%-8.6f");
         try {
             if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter) out;
@@ -136,13 +136,10 @@ public class XYZWriter extends DefaultChemObjectWriter {
     * writes a single frame in XYZ format to the Writer.
     * @param mol the Molecule to write
     */
-    public void writeMolecule(IAtomContainer mol) throws IOException {
+    public void writeMolecule(IAtomContainer mol) {
 
         String st;
-        boolean writecharge = true;
-
         try {
-
             String s1 = "" + mol.getAtomCount();
             writer.write(s1, 0, s1.length());
             writer.write('\n');
@@ -165,10 +162,9 @@ public class XYZWriter extends DefaultChemObjectWriter {
                     st = st + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0);
                 }
 
-                if (writecharge) {
-                    double ct = a.getCharge() == CDKConstants.UNSET ? 0.0 : a.getCharge();
-                    st = st + "\t" + ct;
-                }
+                // write charges
+                double ct = a.getCharge() == CDKConstants.UNSET ? 0.0 : a.getCharge();
+                st = st + "\t" + ct;
 
                 writer.write(st, 0, st.length());
                 writer.write('\n');
