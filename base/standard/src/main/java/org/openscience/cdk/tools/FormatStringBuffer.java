@@ -114,7 +114,7 @@ public class FormatStringBuffer {
     private String           format   = null;
 
     /** The buffer. */
-    private StringBuffer     buffer   = null;
+    private String           buffer   = null;
 
     /** The current index. */
     private int              index    = 0;
@@ -147,7 +147,7 @@ public class FormatStringBuffer {
      * This is automatically called after <code>toString()</code>.
      */
     public FormatStringBuffer reset() {
-        this.buffer = new StringBuffer();
+        this.buffer = "";
         this.index = 0;
         return this;
     }
@@ -165,7 +165,7 @@ public class FormatStringBuffer {
 
         while (index < format.length()) {
             if ((ch = format.charAt(index)) != '%') {
-                buffer.append(ch);
+                buffer += ch;
                 index++;
                 continue;
             }
@@ -232,7 +232,7 @@ public class FormatStringBuffer {
                     fmt.type = STRING;
                     return fmt;
                 case '%':
-                    buffer.append('%');
+                    buffer += '%';
                     continue;
 
                     // Octal, hexadecimal and decimal.
@@ -268,8 +268,7 @@ public class FormatStringBuffer {
                     fmt.flags |= UPPER;
                     return fmt;
                 default:
-                    buffer.append('%');
-                    buffer.append(ch);
+                    buffer += '%' + ch;
                     continue;
             }
         }
@@ -319,10 +318,10 @@ public class FormatStringBuffer {
         if (fmt.type != CHAR) throw new IllegalArgumentException("Expected a char format");
 
         if ((fmt.flags & LEFT) != LEFT) while (--fmt.fieldWidth > 0)
-            buffer.append(' ');
-        buffer.append(ch);
+            buffer += ' ';
+        buffer += ch;
         while (--fmt.fieldWidth > 0)
-            buffer.append(' ');
+            buffer += ' ';
 
         return this;
     }
@@ -367,13 +366,13 @@ public class FormatStringBuffer {
 
         int len = str.length();
         if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            buffer += ' ';
 
         for (int i = 0; i < len; ++i)
-            buffer.append(str.charAt(i));
+            buffer += str.charAt(i);
 
         while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            buffer += ' ';
 
         return this;
     }
@@ -439,32 +438,32 @@ public class FormatStringBuffer {
         // Place the sign character first if zero padding.
         if ((fmt.flags & ZEROPAD) == ZEROPAD) {
             if (l < 0 && fmt.base == 10) {
-                buffer.append('-');
+                buffer += '-';
             } else if ((fmt.flags & PLUS) == PLUS && fmt.base == 10) {
-                buffer.append('+');
+                buffer += '+';
             }
-            buffer.append(prefix);
+            buffer += prefix;
         }
 
         // Pad.
         if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--)
-            buffer.append(pad);
+            buffer += pad;
 
         // Place the sign character now if not zero padding.
         if ((fmt.flags & ZEROPAD) != ZEROPAD) {
             if (l < 0 && fmt.base == 10) {
-                buffer.append('-');
+                buffer += '-';
             } else if ((fmt.flags & PLUS) == PLUS && fmt.base == 10) {
-                buffer.append('+');
+                buffer += '+';
             }
-            buffer.append(prefix);
+            buffer += prefix;
         }
 
         for (int i = 0; i < len; ++i)
-            buffer.append(str.charAt(i));
+            buffer += str.charAt(i);
 
         while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            buffer += ' ';
 
         return this;
     }
@@ -484,13 +483,13 @@ public class FormatStringBuffer {
         if (fmt.precision != -1 && len > fmt.precision) len = fmt.precision;
 
         if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            buffer += ' ';
 
         for (int i = 0; i < len; ++i)
-            buffer.append(str.charAt(i));
+            buffer += str.charAt(i);
 
         while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+            buffer += ' ';
 
         return this;
     }
@@ -504,7 +503,7 @@ public class FormatStringBuffer {
     @Override
     public String toString() {
 
-        if (index < format.length()) buffer.append(format.substring(index));
+        if (index < format.length()) buffer += format.substring(index);
 
         String str = buffer.toString();
         this.reset();
