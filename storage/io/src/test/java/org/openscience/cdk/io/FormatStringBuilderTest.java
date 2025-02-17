@@ -20,7 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.io;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,19 +29,19 @@ import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author     egonw
- * @cdk.module test-standard
+ * @cdk.module test-io
  */
-class FormatStringBufferTest extends CDKTestCase {
+class FormatStringBuilderTest extends CDKTestCase {
 
-    private FormatStringBuffer fsb;
+    private FormatStringBuilder fsb;
 
-    FormatStringBufferTest() {
+    FormatStringBuilderTest() {
         super();
     }
 
     @BeforeEach
     void setUp() {
-        fsb = new FormatStringBuffer("[%s]");
+        fsb = new FormatStringBuilder("[%s]");
     }
 
     @Test
