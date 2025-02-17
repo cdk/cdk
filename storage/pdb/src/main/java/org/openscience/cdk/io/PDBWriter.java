@@ -45,7 +45,6 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.FormatStringBuilder;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**

@@ -32,7 +32,7 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.io;
 
 
 import java.text.DecimalFormat;
@@ -56,11 +56,11 @@ import java.util.Locale;
  * @author      Antti S. Brax (asb@iki.fi, base implementation)
  * @author      Fred Long (flong(AT)skcc.org, implemented 'e', 'E' and 'g')
  * @version     1.7
- * @cdk.module  standard
+ * @cdk.module  io
  * @cdk.githash
  * @cdk.license BSD
  */
-public class FormatStringBuilder {
+class FormatStringBuilder {
 
     // ==================================================================== //
 
@@ -126,7 +126,7 @@ public class FormatStringBuilder {
      *
      * @param format the format string.
      */
-    public FormatStringBuilder(String format) {
+    FormatStringBuilder(String format) {
         reset(format);
     }
 
@@ -135,7 +135,7 @@ public class FormatStringBuilder {
      *
      * @param format the format string.
      */
-    public FormatStringBuilder reset(String format) {
+    FormatStringBuilder reset(String format) {
         reset();
         this.format = format;
         return this;
@@ -146,7 +146,7 @@ public class FormatStringBuilder {
      * given in the constructor or last call to <code>reset(String)</code>.
      * This is automatically called after <code>toString()</code>.
      */
-    public FormatStringBuilder reset() {
+    FormatStringBuilder reset() {
         this.stringBuilder = new StringBuilder();
         this.index = 0;
         return this;
@@ -311,7 +311,7 @@ public class FormatStringBuilder {
     /**
      * Format a <code>char</code>.
      */
-    public FormatStringBuilder format(char ch) {
+    FormatStringBuilder format(char ch) {
 
         Format fmt = getFormat();
 
@@ -330,7 +330,7 @@ public class FormatStringBuilder {
     /**
      * Format a <code>float</code>.
      */
-    public FormatStringBuilder format(float flt) {
+    FormatStringBuilder format(float flt) {
 
         return format((double) flt);
 
@@ -339,7 +339,7 @@ public class FormatStringBuilder {
     /**
      * Format a <code>double</code>.
      */
-    public FormatStringBuilder format(double dbl) {
+    FormatStringBuilder format(double dbl) {
 
         Format fmt = getFormat();
 
@@ -381,7 +381,7 @@ public class FormatStringBuilder {
     /**
      * Format a <code>float</code>.
      */
-    public FormatStringBuilder format(int i) {
+    FormatStringBuilder format(int i) {
 
         return format((long) i);
 
@@ -390,7 +390,7 @@ public class FormatStringBuilder {
     /**
      * Format a <code>float</code>.
      */
-    public FormatStringBuilder format(long l) {
+    FormatStringBuilder format(long l) {
 
         Format fmt = getFormat();
 
@@ -472,7 +472,7 @@ public class FormatStringBuilder {
     /**
      * Format a <code>String</code>.
      */
-    public FormatStringBuilder format(String str) {
+    FormatStringBuilder format(String str) {
 
         if (str == null) str = "<NULL>";
 
