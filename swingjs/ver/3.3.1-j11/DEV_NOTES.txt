@@ -1,0 +1,10 @@
+This is sources/net.sf.j2s.java.core/dist/DEV_NOTES.txt
+
+_j2sclasslist.txt 
+
+the list of .js files concatenated into coreswingjs.js and minified to coreswingjs.z.js
+
+
+SwingJS-site.zip
+
+the full site directory for SwingJS including all files not in the test/ directory.

@@ -547,7 +547,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
      */
     @Override
     public Iterable<IAtom> atoms() {
-        return AtomIterator::new;
+			return AtomIterator::new;
     }
 
     /**

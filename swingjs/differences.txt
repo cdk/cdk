@@ -1,0 +1,1526 @@
+java2script/SwingJS Notes
+=========================
+
+updated 12/31/2020 -- full support for 64-bit long
+updated 12/6/2020 -- note about restrictions on long, including BitSet and Scanner
+updated 3/21/2020 -- adds note about HashMap, Hashtable, and HashSet iterator ordering
+updated 3/20/2020 -- adds note about interning, new String("xxx"), and "xxx"
+updated 2/26/2020 -- adds Graphics.setClip issue
+updated 12/22/19 -- additional issues
+updated 11/03/19 -- adds information about File.exists() and points to src/javajs/async
+updated 10/26/19 -- adds information about File.createTempFile()
+updated 8/16/19 -- minor typos and added summary paragraph
+updated 7/19/19 -- clarification that AWT and Swing classes are supported directly
+updated 5/13/19 -- Mandarin U+79D8 reserved character; Missing Math methods; int and long
+updated 5/10/19 -- adds a section on static issues in multi-(duplicate)-applet pages
+updated 1/4/19 -- nio
+updated 9/15/18 -- adds integer 1/0 == Infinity
+updated 7/24/18 -- most classes replaced with https://github.com/frohoff/jdk8u-jdk
+updated 6/5/17 -- reserved package name "window"
+updated 3/11/17 -- myClass.getField
+updated 3/7/17 -- overloading of JSplitPane.setDividerLocation
+updated 3/2/17 -- more indication of classes not implemented (KeyListener)
+
+---IMPORTANT CHARACTER SET NOTE---
+
+It is critical that all development work in Java2Script be done in UTF-8. This means:
+
+- making sure your Eclipse project is set up for UTF-8 (not the Eclipse default?)
+- making sure your server can serve up UTF-8 by default for any browser-loaded files
+- making sure you don't edit a Java2Script class file or one of the site .js files
+    using a non-UTF-8 editor. It may replace non-Latin characters with "?" or garbage.
+- making sure that your web pages are delivered with proper headings indicating HTML5 and UTF-8
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+Note that the DOCTYPE tag is critical for some browsers to switch into HTML5 mode. (MSIE?)
+
+
+In particular, the Mandarin character 秘 (mi; "secret") is used extensively throughout
+the SwingJS class files to distinguish j2s-specific fields and methods that must not 
+ever be shadowed or overridden by subclasses. For example, we see in java.lang.Thread.java:
+
+		public static JSThread 秘thisThread;
+
+----------------------------------
+
+
+
+=============================================================================
+SwingJS and OpenJDK 8+
+=============================================================================
+
+SwingJS implements a wide range of the Java language in JavaScript. The base
+version for this implementation is OpenJDK8. some classes are implemented using 
+older source code, and there are some missing methods. For the most part, this is 
+no real problem. You can add or modify any java class just be adding it as source
+in your project. Or (preferably) you can contact me, and I can get it into the 
+distribution. Or (even more preferably) you can do that via a patch submission. 
+
+=================
+DESIGN PHILOSOPHY
+=================
+
+The java2script/SwingJS design goal is to recreate a recognizable, easily debuggable
+equivalent in JavaScript for as much of Java as practical. This means, for example, 
+that one can call in JavaScript 
+
+  new java.util.Hashtable()
+  
+and for all practical purposes it will appear that Java is running.
+
+The goal of java2script/SwingJS is NOT to reproduce Java byte code processing in a 
+browser. We leave that task and its own issues to others. Here, instead, we have a 
+working JavaScript version of the Java classes along with runtime assistance in the
+j2sClazz.js library. This design has several advantages:
+
+ 1) It leads to much smaller downloads, since the class loader can dynamically load
+    code at the class level. 
+    
+ 2) It allow the browser to use its own optimizations and features, not to ignore those. 
+    This leads to huge performance gains and in many cases much simpler coding.
+ 
+ 3) It allows for in-browser debugging and analysis. 
+ 
+ 4) It allows for code switching between Java and JavaScript. Working Java code 
+    can be annotated (@j2sNative, @j2sAlias, @j2sIgnore) in a fashion that 
+    allows the code to run slightly differently in a Java than a JavaScript environment.
+    For example:
+    
+       int delayMS = /** @j2sNative 10 ||*/2;
+    
+    will read "var delayMS = 10 || 2;"  (i.e. 10) in JavaScript but read by the Java
+    compiler as "int delayMS = 2". 
+    
+ 5) Just generally, it allows for a much more integrated environment. JavaScript on
+    the page can call into any SwingJS program, and, likewise, any SwingJS code can 
+    access anything on the page.    
+
+
+Method and Field Disambiguation
+-------------------------------
+
+This is no problem. SwingJS has no problem with the overloading of methods, for example:
+
+  public void print(int b);
+  public void print(float b);
+
+JavaScript does not allow overloading of methods, and the common practice in
+Java of naming a field the same as a method -- isAllowed and isAllowed() -- is
+not possible in JavaScript. As a result, SwingJS implements "fully-qualified" 
+method names using "$" parameter type separation. Thus, these methods in SwingJS
+will be referred to as print$I and print$F. The rules for this encoding are
+relatively simple: 
+
+1. The seven primitive types in Java are encoded $I (int), $L (long), $F (float), 
+$D (double), $B (byte) $Z (boolean), and $H (short). 
+
+2. String and Object are encoded as $S and $O, respectively.
+
+3. "java_lang_" is dropped for all other classes in the java.lang package (as in Java).
+   For example:  $StringBuffer, not $java_lang_StringBuffer
+
+4. All other classes are encoded as 
+
+ "$" + Class.getName().replace(".","_")
+
+For example, in Java we see:
+
+  public void equals(Object o) {...}
+
+Whereas in SwingJS we have:
+
+  Clazz.newMeth(C$, 'equals$O', function (o) {...}
+
+And 
+
+ this.getContentPane().add(bar, "North");
+
+becomes
+
+ this.getContentPane$().add$java_awt_Component$O(bar, "North");
+
+5. Arrays are indicated with appended "A" for each level. So
+
+  setDataVector(Object[][] dataVector, Object[] columnIdentifiers)
+  
+becomes
+
+  setDataVector$OAA$OA(dataVector, columnIdentifiers)
+
+(It is recognized that this design does introduce a bit of ambiguity, in that
+ in principal there could be user class named XA and X in the same package,
+ and methods a(X[]) and a(XA) in the same class that cannot be distinguished.
+ The benefit of this simple system, however, triumphed over the unlikelyhood
+ of that scenario.) The transpiler could be set to flag this possibility.
+
+6. Constructors are prepended with "c$". So 
+
+  public JLabel(String text) {...}
+  
+becomes:
+
+  Clazz.newMeth(C$, 'c$$S', function (text) {...});
+
+Field disambiguation involves prepending. 
+
+In Java, a class and its subclass can both have the same field name, such as 
+
+ boolean visible;
+ 
+When this happens, it is called "shadowing", and though not recommended, Java allows
+it. The Java2Script transpiler will prepend such shadowing fields with "$" so that the
+subclass instance has both "visible" (for use in its methods inherited from its
+superclass) and "$visible" (for its own methods). Thus, we might see in Java:
+
+  this.visible = super.visible;
+  
+while in SwingJS we will see:
+
+  this.$visible=this.visible;
+
+since JavaScript does not have the "super" keyword.
+
+Parameterless methods such as toString() are appended with "$" to become toString$().
+The one exception to this rule is private methods, which are saved in (truly) private 
+array in the class (and are not accessible by reflection). Private parameterless 
+methods retain their simple Java name, since they cannot conflict with field names.
+
+This renaming of methods has a few consequences, which are discussed more fully below.
+See particularly the section on "qualified field and method names", where it is described
+how you can use packages or classes or interfaces with ".api.js" in them to represent JavaScript
+objects for which all method names are to be left unqualified, and how individual methods
+can have more than one name using @j2sAlias. 
+
+The swingjs.api.js package in particular contains a number of useful interfaces that
+you can import into your project for JavaScript-specific capabilities.
+
+
+Applet vs. Application
+----------------------
+
+One of the very cool aspects of SwingJS is that it doesn't particularly matter if a browser-based
+Java app is an "applet" or an "application". We don't need JNLP (Java Network Launch Protocol) 
+because now we can just start up any Java application in a browser just as easily as any applet.
+The associative array that passes information to the SwingJS applet (information that formerly
+might have been part of the APPLET tag, such as width, height, and codebase, always referred to 
+in our writing as "the Info array") allows the option to specify the JApplet/Applet "code" 
+class or the application "main" class. Either one will run just fine.
+
+
+Performance
+-----------
+
+Obviously, there are limitations. One is performance, but we have seen reproducible 
+performance at 1/6 - 1/3 the speed of Java. Achieving this performance may require
+some refactoring of the Java to make it more efficient in both Java and JavaScript. 
+"for" loops need to be more carefully crafted; use of "new" and "instanceof" need to be
+minimized in critical areas. Note that method overloading -- that is, the same method name
+with different parameters, such as read(int) and read(byte) -- is no longer any problem.   
+
+Threads
+-------
+
+Although there is only a single thread in JavaScript, meaning Thread.wait(), Thread.sleep(int) and 
+Thread.notify() cannot be reproduced, we have found that this is not a serious limitation. 
+For example, javax.swing.Timer() works perfectly in JavaScript. All it means is that threads 
+that use sleep(int) or notify() must be refactored to allow Timer-like callbacks. That is, 
+they must allow full exit and re-entry of Thread.run(), not the typical while/sleep motif. 
+
+The key is to create a state-based run() that can be exited and re-entered in JavaScript.
+
+The javajs.async package can be added to any Java program to provide Java+JavaScript asynchronous
+classes, including AsyncColorChooser, AsyncDialog, AsyncFileChooser, and AsyncSwingWorker. All
+of these classes work just as well in Java as in JavaScript. There is no need to run them 
+only when in JavaScript.
+
+Static fields
+-------------
+
+Final static primitive "constant" fields (String, boolean, int, etc.) such as 
+
+static final int TEST = 3;
+static final String MY_STRING = "my " + "string";
+
+are converted to their primitive form automatically by the Eclipse Java compiler 
+and do not appear in the JavaScript by their names. 
+
+Other static fields are properties of their class and can be used as expected.
+
+Note, however, that SwingJS runs all "Java" code on a page in a common "jvm" 
+(like older versions of Java). So, like the older Java schema, the JavaScript 
+equivalents of both applets and applications will share all of their static 
+fields and methods. This includes java.lang.System. 
+
+Basically, SwingJS implementations of Java run in a browser page-based sandbox 
+instead of an applet-specific one.
+
+In general, this is no problem. But if we are to implement pages with 
+multiple applets present, we must be sure to only have static references 
+that are "final" or specifically meant to be shared in a JavaScript 
+environment only (since they will not be shared in Java).
+
+A simple solution, if static non-constant references are needed, is to attach the 
+field to Thread.currentThread.threadGroup(), which is an applet-specific reference.
+Be sure, if you do this, that you use explicit setters and getters:
+
+For example, 
+
+private static String myvar;
+
+...
+
+public void setMyVar(String x) {
+  ThreadGroup g = Thread.currentThread().threadGroup();
+  /**
+   * @j2sNative g._myvar = x;
+   * 
+   */
+   {
+     myvar = x;
+   }
+}
+
+public String getMyVar() {
+  ThreadGroup g = Thread.currentThread().threadGroup();
+  /**
+   * @j2sNative return g._myvar || null;
+   * 
+   */
+   {
+     return myvar;
+   }
+}
+ 
+ in Java will get and set x the same in JavaScript and in Java. 
+ 
+ 
+A convenient way to do this in general is to supply a singleton class with
+explicitly private-only constructors and then refer to it in Java and in JavaScript
+instead of using static field, referring to myclass.getIntance().xxx instead of 
+myclass.xxx in Java (and JavaScript). 
+
+This was done extensively in the Jalview project. See jalview.bin.Instance.
+
+
+Helper Packages -- swingjs/ and javajs/
+---------------------------------------
+
+The SwingJS library is the swingjs/ package. There are interfaces that may be of assistance
+in swingjs/api, but other than that, it is not recommended that developers access classes in 
+this package. The "public" nature of their methods is really an internal necessity. Most access 
+to this package in working Java should be via the swingjs.api.JSUtilI interface.
+
+In addition to swingjs/, though, there are several useful classes in the javajs/ package
+that could be very useful. This package is a stand-alone package that can be 
+cloned in any Java project that also would be great to have in any JavaScript project
+-- SwingJS-related or not. Functionality ranges from reading and writing various file 
+formats, including PDF, BMP, PNG, GIF, JPG, JSON, ZIP, and CompoundDocument formats.
+
+A variety of highly efficient three- and four-dimensional point, vector, matrix, and 
+quaternion classes are included, as they were developed for JSmol and inherited from that
+project. 
+
+Of particular interest should be javajs/async/, which includes
+
+javajs.async.Async
+javajs.async.AsyncColorChooser
+javajs.async.AsyncDialog
+javajs.async.AsyncFileChooser
+
+See javajs.async.Async JavaDoc comments for a full description of 
+these useful classes.
+
+
+Modal Dialogs
+-------------
+
+Although true modal dialogs are not possible with only one thread, a functional equivalent -- 
+asynchronous modal dialogs -- is relatively easy to set up. All the JOptionPane dialogs will
+return PropertyChangeEvents to signal that they have been disposed of and containing the results. 
+See below and classes in the javajs.async package.
+
+
+Native calls
+------------
+
+Native calls in Java are calls to operating system methods that are not in Java. JavaScript
+has no access to these, of course, and they must all be replaced by JavaScript equivalents.
+Fortunately, they are not common, and those that are present in Java (for example, in calculating
+checksums in ZIP file creation) are at a low enough level that most developers do not utilize them
+or do not even have access to them. All native calls in Java classes have been replaced by 
+Java or JavaScript equivalents.
+
+
+Swing GUI Peers and UIClasses
+-----------------------------
+
+One of the biggest adaptations introduced in SwingJS is in the area of the graphical 
+user interface. Basically, what we have is a Java Swing "LookAndFeel" customized for HTML.
+
+The issue here is complex but workable. In Java there are two background concepts -- the 
+Component "peer" (one per "heavy-weight" component, such as a Frame) and the 
+component "uiClass" (one per component, such as BasicButtonUI or BasicTextFieldUI).
+
+Peers are native objects of the operating system. These are the virtual buttons and text areas
+that the user is interacting with at a very base level. They are chunks of low-level code that
+paint the screen to give the illusion that you really are pressing a button or typing text 
+ot the screen. Their events are being passed on to Java or the browser by the operating system. 
+
+UI classes provide a consistent "look and feel" for these native objects, rendering them onto 
+the native window canvas and handling all user-generated events. They paint the borders, 
+the backgrounds, the highlights, of every control you see in Java. There is one-to-one 
+correspondence of Swing classes and UI classes. Setting the Look and Feel for a project amounts 
+to selecting the directory from which to draw these UI classes. Java's UI class interfaces can
+be found in the javax.swing.plaf ("platform look and feel") package. Individual look and feel
+implementations are found in sun.plaf.basic, sun.plaf.metal, and other such specialized packages.
+
+Early on in the development of SwingJS, we decided not to fully reproduce the painfully detailed 
+bit-by-bit painting of controls as is done in Java. Instead, we felt it was wiser to utilize the standard
+HTML5 UI capabilities as much as possible, using DIV, and INPUT especially, with extensive use
+of CSS and sometimes jQuery (menus, and sliders, for example). Thus, we have created a new 
+set of UIs -- the "HTML5 Look and Feel". These classes can be found in swingjs.plaf. Besides being
+more adaptable, this approach allows far more versatility to SwingJS developers, allowing them
+to modify the GUI to suit their needs if desired.
+
+In SwingJS, since we have no access to native peers except through the browser DOM,
+it seemed logical to merge the peer and UI idea. So instead of having one peer per heavy-weight control and
+one UI class instance for each control type, we just have one UI class instance per control, and
+that UI class instance is what is being referred to when a "peer" is notified. 
+
+In some ways this is a throw back to when all of Swing's components were subclasses of
+specific AWT components such as Button and List. These "heavy-weight components" all had their 
+own individual native peers and thus automatically took on the look and feel provided by the OS. 
+Later Swing versions implemented full look and feel for all peers, leaving only JDialog, JFrame,
+and a few other classes to have native peers. But in SwingJS we have again a 1:1 map of component
+and UI class/peer instance.
+
+The origin of most issues (read "bugs") in relation to the GUI will probably be found in the
+swingjs.plaf JSxxxxUI.java code.
+
+  
+Swing-only Components -- no longer an issue
+-------------------------------------------
+
+Swing was introduced into Java well after the Java Abstract Window Toolkit (AWT) was well
+established. As such, its designers chose to allow AWT controls such as Button and List to be used 
+alongside their Swing counterparts JButton and JList. Reading the code, it is clear that this 
+design choice posed a huge headache for Swing class developers. 
+
+For SwingJS, we decided from the beginning NOT to allow this mixed-mode programming and 
+instead to require that all components be Swing components. However, this is not really an
+issue. We have reconfigured the class relationships a bit. In SwingJS, all AWT components
+are now subclasses of javax.swing.JComponent. While this might seem error prone, so far we have 
+found no problem with this arrangement. It's a little surprising to me that the original developers
+of Swing did not think of this.
+
+ 
+The a2s Adapter Package
+-----------------------
+
+Originally, we thought that we would restrict ourselves to JApplets only. That is, only
+Swing-based applets. But as we worked, we discovered that there are a lot of great 
+applets out there that are pre-Swing pure-AWT java.applet.Applet applets. Our problem was 
+that we also wanted it to be possible to quickly adapt these applets to JavaScript as well.
+ 
+The solution turned out to be simple: Write a package (a2s) that recreates the interface for 
+non-Swing components as subclasses of Swing components. Thus, a2s.Button subclasses javax.swing.JButton
+but also accepts all of the methods of java.awt.Button. This works amazingly well, with a few
+special adaptations to the core javax.swing to be "AWT-aware." 
+
+Then, to tie it all togeter, all AWT components such as java.awt.Button now subclass their respective
+a2s components, which in turn subclass JComponents. So no changes in code are necessary. We have
+successfully transpiled over 500 applets using this strategy. 
+
+Working with Files
+==================
+
+Simple String file names are not optimal for passing information about
+files read by SwingJS applications. That is because just peeking at a file 
+in SwingJS will load its entire byte[] data. 
+ 
+Optimally, all work with files should either use Path or File objects exclusively. 
+These objects, after a file is read or checked for existence, will already 
+contain the file byte[] data. The string name can be used alone, since SwingJS will
+cache the files itself and not reload them -- just as the browser normally does.
+
+SwingJS uses the following criteria to determine if File.exists() returns true:
+
+(1) if this File object has been used directly to read data, or 
+(2) if reading data using this File object is successful.
+
+Note that you cannot check to see if a file exists before input or if it 
+was actually written or if it already exists prior to writing in SwingJS.  
+
+Thus, you should check each use of file.exists() carefully, and if necessary, provide a J2sNative 
+block that gives an appropriate "OK" message, for example:
+
+(/** @j2sNative 1 ? false : */ outputfile.exits())
+
+or 
+
+(/** @j2sNative 1 ? true : */ inputfile.exits())
+
+Temporary files can be created in SwingJS. SwingJS will maintain a pseudo-filesystem for files 
+created with File.createTempFile(). This is useful in that closure of writing to a temporary file 
+does not generate a pseudo-download to the user's machine. Temporary files will be placed in the 
+"/TEMP/" directory, as seen from the running Java program. Any file written to this directory will
+simply be stored in memory; files written to any other directory, when closed, will appear to the 
+user as a download, often involving a "What do you want to do with this file" dialog. 
+
+
+See below for details relating to each of the subjects below:
+
+
+UNIMPLEMENTED CLASSES BY DESIGN
+===============================
+
+The SwingJS implementation of the following classes are present 
+in a way that gracefully bypasses their functionality:
+
+accessibility
+security
+serialization
+
+
+
+TODO LIST FOR UNIMPLEMENTED CLASSES
+===================================
+
+none as of 2020.12.31. Source code for classes and methods missing
+from Java 8 or from Java 9+ can be inserted by any developer along 
+with their running code source, and they should run.  
+
+
+MINOR ISSUES--required some rewriting/refactoring by Bob and Udo  
+================================================================
+
+Thread.currentThread() == dispatchThread
+
+
+MINOR ISSUES--requiring some rewriting/refactoring outside of SwingJS  
+=====================================================================
+
+See below for a full discussion.
+
+primitive type restrictions - int, long, and float
+HashMap, Hashtable, and HashSet iterator ordering
+interning, new String("xxx") vs "xxx"
+Names with "$" and "_"
+ArrayIndexOutOfBounds
+java.awt.Color
+native methods
+javax.swing.JFileDialog
+key focus
+LookAndFeel and UI Classes
+System.exit(0) does not stop all processes
+list cell renderers must be JComponents
+myClass.getField not implemented
+"window" and other reserved JavaScript names
+reserved field and method names
+qualified field and method names
+Component.getGraphics(), Graphics.dispose()
+Graphics.setClip()
+
+MAJOR ISSUES--for Bob and Udo within SwingJS
+============================================
+
+fonts
+OS-dependent classes
+AWT component peers
+some aspects of reflection
+
+MAJOR ISSUES--to be resolved by implementers
+============================================
+
+fonts
+threads
+modal dialogs
+image loading
+no format internationalization
+Graphics2D: missing winding rules
+text-related field implementation
+Formatter/Regex limitations
+
+======================================================================== 
+
+DISCUSS
+=======
+
+Table row/col sorter needs checking after removal of java.text.Collator references
+
+========================================================================== 
+
+//////////////////////////////////////////////////////////////////////////////
+
+UNIMPLEMENTED CLASSES
+=====================
+
+accessibility
+-------------
+
+All Accessibility handling has been commented out to save the download footprint.
+This removes the need for sun.misc.SharedSecrets as well. 
+Nothing says we could not implement accessibility. We just didn't.
+
+
+security
+--------
+
+All JavaScript security is handled by the browser natively. 
+Thus, Java security checking is no longer necessary, and 
+java.security.AccessController has been simplified to work without
+native security checking.
+
+Note that private methods in a class are REALLY private. 
+
+
+serialization
+-------------
+
+All serialization has been removed. It was never very useful for Swing anyway, 
+because one needs exactly the same Java version to save and restore serialized objects.
+
+
+keyboard accelerators and mnemonics
+-----------------------------------
+
+This work was completed in the spring of 2019. Note that in a browser, some 
+key strokes, particularly CTRL-keys, are not available. Bummer.
+
+
+MINOR ISSUES--required some rewriting/refactoring by Bob and Udo  
+================================================================
+
+
+Thread.currentThread() == dispatchThread
+----------------------------------------
+
+changed to JSToolkit.isDispatchThread()
+
+
+MINOR ISSUES--requiring some rewriting/refactoring outside of SwingJS  
+=====================================================================
+
+primitive restrictions - int, long, and float
+---------------------------------------------
+
+int
+
+For performance reasons, int addition and multiplication do not by default overflow to 
+negative values. Instead, they just get bigger. Java code that relies on overflow to 
+negative values should be surrounded by ()|0 -- an OR with integer 0:
+
+
+int bigI, bigJ;
+...
+
+bigI = (bigI + bigJ)|0;
+
+bigI = (bigI + 1)|0;   //instead of bigI++
+
+
+Thus, in Java, the following is true:
+
+  2000000000 + 2000000000 == -294967296
+
+But in SwingJS, that will be 4000000000. So, for example, the following
+strategy will fail in SwingJS:
+
+		int newLength = lineBuf.length * 2;
+		if (newLength < 0) {
+			newLength = Integer.MAX_VALUE;
+		}
+
+This is because, generally, "-1" in JavaScript is not 0xFFFFFFFF. The simple ()|0 takes
+caes of this:
+
+		int newLength = (lineBuf.length * 2)|0;
+		if (newLength < 0) {
+			newLength = Integer.MAX_VALUE;
+		}
+
+JavaScript does process bitwise operators & | ^ ~ properly for int values. There is no issue using
+these operations. 
+
+Note that int 1/0 in Java throws "java.lang.ArithmeticException: / by zero", but in JavaScript is just Infinity. 
+
+Importantly, the JavaScript Int32Array does behave properly. From the Firefox developer console:
+
+>> x = new Int32Array(1)
+<- Int32Array(1) [ 0 ]
+>> x[0] = 4000000000
+<- 4000000000
+>> x[0]
+<- -294967296
+
+Notice that, perhaps unexpectedly, the following two constructs produce 
+different results in JavaScript:
+
+x = new Int32Array(1);
+b = x[0] = 4000000000;
+
+(b will be 4000000000)
+
+and
+
+x = new Int32Array(1);
+x[0] = 4000000000;
+b = x[0];
+
+(b will be -294967296)
+
+
+SwingJS leverages array typing to handle all byte and short arithmetic so as
+to ensure that any byte or short operation in JavaScript does give the same 
+result in Java. 
+
+long
+
+Java's 64-bit long type is fully supported, starting with java2script 3.3.1 (2020.12.31)
+The transpiler handles all conversions to and from long appropriately. See the discussion
+at https://github.com/BobHanson/java2script/issues/202 for how this is done.
+
+float
+
+SwingJS does not distinguish between float and double. Everything is double.
+
+
+HashMap, Hashtable, and HashSet iterator ordering
+-------------------------------------------------
+
+In Java, iterators for HashMap, Hashtable, and HashSet do not guarantee any particular order. 
+From the HashMap documentation for Java 8:
+
+	This class makes no guarantees as to the order of the map; in particular, it does not 
+	guarantee that the order will remain constant over time.
+ 
+Likewise, for HashSet (because it is simply a convenience method for HashMap<Object,PRESENT>:
+
+	[HashSet] makes no guarantees as to the iteration order of the set.
+
+JavaScript's Map object is different. It is basically a LinkedHashMap, so it guarantees iteration
+in order of object addition.
+
+Starting with java2script 3.2.9.v1, these classes use the JavaScript Map object rather than hash codes
+whenever all keys are strictly of JavaScript typeof "string". If any key is introduced that is not a string, the
+implementation falls back to using hash codes, the same as Java. 
+
+The result is significantly faster performance (3-12 x faster) than originally, and up to 3 x faster
+performance in JavaScript than in Java itself. That is not a misprint. Faster than Java. 
+
+The JavaScript Map implementation is implemented UNLESS the constructor used is the one that
+specifies both initial capacity and load factor in their constructor. Thus, 
+
+new Hashtable()
+new HashMap()
+new HashMap(16)
+new HashSet()
+
+all use the JavaScript Map. But
+
+new Hashtable(11, 0.75f)
+new HashMap(16, 0.75f)
+new HashSet(16, 0.75f)
+
+do not. 
+
+This design allows for opting out of the JavaScript Map use in order to retain the exact behavior of 
+iterators in JavaScript as in Java.
+
+
+interning, new String("xxx") vs "xxx"
+-------------------------------------
+
+Note that the following are true in JavaScript:
+
+typeof new String("xxxx") == "object"
+typeof "xxxx" == "string"
+var s = "x";typeof ("xxx" + s) == "string"
+
+There is no equivalence to this behavior in Java, where a String is a String is a String.
+
+Be aware that SwingJS does not always create a JavaScript String object using JavaScript's 
+new String(...) constructor. It only does this for Java new String("xxxx") or new String(new String()). 
+
+In all other cases, new String(...) (in Java) results in a simple "xxxx" string in JavaScript. 
+That is, it will be JavaScript typeof "string", not typeof "object". 
+
+The reason for this design is that several classes in the Java core use toString() 
+methods that return new String(), and those classes that do that would cause a JavaScript error
+if implicitly stringified if new String() returned a JavaScript String object. 
+
+This is fine in JavaScript:
+
+test1 = function() { return { toString:function(){ return "OK" } } }
+"testing" + new test1()
+>> "testingOK"
+
+But for whatever reason in JavaScript:
+
+test2 = function() { return { toString:function(){ return new String("OK") } } }
+"testing" + new test2()
+>> Uncaught TypeError: Cannot convert object to primitive value
+
+The lesson here is never to use 
+
+  return new String("...");
+
+in a Java toString() method. In Java it will be fine; in JavaScript it will also be fine as long as
+that method is never called in JavaScript implicitly in the context of string concatenation.
+
+A note about interning. Consider the following six Java constructions, where we have a == "x";
+
+"xxx"
+"xx" + "x"
+new String("xxx").intern()
+
+new String("xxx")
+"xx" + a.toString()
+"xx" + a
+
+All six of these will return java.lang.String for .getClass().getName().
+However, the first three are String literals, while the last three are String objects. 
+Thus:
+        "xxx" == "xxx"
+        "xxx" == "xx" + "x"
+        "xxx" == new String("xxx").intern()
+
+but none of the other three are equivalent to "xxx" or each other:
+
+              "xxx" != new String("xxx")
+              "xxx" != "xx" + a.toString()
+              "xxx" != "xx" + a
+  new String("xxx") != new String("xxx") 
+           "xx" + a != new String("xxx") 
+
+etc.
+
+As in Java, in SwingJS, all of the following Java assertions pass as true:
+
+		assert("xxx" == "xx" + "x"); 
+		assert("xxx" == ("xx" + a).intern()); 
+		assert("xxx" === new String("xxx").intern()); 
+		
+and both of these do as well:
+
+		assert(new String("xxx") != "xxx"); 
+		assert(new String("xxx") != new String("xxx")); 
+
+But the following two fail to assert true in SwingJS:
+
+        assert("xxx" != "xx" + a);
+        assert("xxx" != "xx" + a.toString());
+
+because, in JavaScript, both of these right-side expressions evaluate to a simple "interned" string.
+
+In Java, however, these assertions are true because Java implicitly "boxes" String 
+concatentaion as a String object, not a literal. 
+
+Most of us know not to generally use == with Strings unless they are explicitly interned. 
+Where this problem may arise, though, is in IdentityHashMap, which compares objects using 
+System.identityHashCode(), which is not the same for different objects or their string literal equivalents.
+
+My recommendation, if you need to use IdentityHashMap with strings is to always use an explicit String.intern()
+for any keys -- unless you really want to keep every string as separate keys even if they are the same sequence, 
+in which case, use new String(). This will work in Java and in JavaScript.
+
+Be aware when working with strings that come from SwingJS and are being used by other JavaScript modules
+that those that are String objects will return "object" for the JavaScript typeof operator, not "string".
+
+The easy way to ensure this is no problem is to concatenate strings with "" to force immediate interning:
+
+  var x = aJavaObject.getString() + "";
+
+unless you are certain that the string is being returned is a raw JavaScript string.   
+
+
+Names with "$" and "_"
+----------------------
+
+For the most part, this should be no problem. 
+
+Note that the use of $ and _ in Java field names has always been discouraged:
+[https://docs.oracle.com/javase/tutorial/java/nutsandbolts/variables.html]
+
+	You may find some situations where auto-generated names will contain the dollar sign, 
+	but your variable names should always avoid using it. A similar convention 
+	exists for the underscore character; while it's technically legal to begin your 
+	variable's name with "_", this practice is discouraged.
+
+Some impacts of transpiling method names with full qualification:
+
+1) SwingJS will introduce fields that start with $ or _. These will not conflict
+   if the above convention is followed.
+   
+2) Fields that have the same Java name as a method are not an issue. 
+
+3) Fields that have a Java name with $ that matches a transpiled method name, 
+   such as toString$, will need to be refactored in Java to not have that name collision.
+   
+4) Fields in a subclass that have the same name as private fields in a superclass
+   represent a name collision, because the superclass method needs to call its private
+   field even if invoked from a subclass. The solution was to modify the subclass field
+   name using one or more prepended $.
+   
+5) Use of Class.getDeclaredMethods() reflection will return Method objects having the transpiled 
+   name, not the Java name. This could require some j2sNative adjustment 
+   to strip the $... parameters from the name if that is needed. 
+
+6) Use of Method.getParameterTypes() should work fine, provided class names
+   do not contain "_". This is because the transpiler converts "." to "_" when
+   creating the fully qualified JavaScript name.
+
+
+ArrayIndexOutOfBounds
+---------------------
+
+You cannot implicitly throw an ArrayIndexOutOfBoundsException in JavaScript.
+JavaScript will simply return "undefined", not throw an Exception. So:
+
+boolean notAGoodIdeaIsOutOfBounds(String[] sa, int i) {
+  try {
+     return (sa[i] == sa[i]);
+  } catch (ArrayIndexOutOfBoundsException e) {
+  	return false;
+  }
+}
+
+will work in Java but not in JavaScript. Code should not depend upon this sort 
+of trap anyway, if you ask me. 
+
+
+Throwable vs Error vs Exception
+-------------------------------
+
+True JavaScript errors are trapped as Throwable, whereas you can still trap
+Error and Exception as well. So if you want to be sure to catch any JavaScript
+error, use try{}catch (Throwable t){}, not try{}catch (Exception e){}. 
+
+java.awt.Color
+--------------
+
+ColorSpace: only "support" CS_sRGB.
+
+ TODO -- any volunteers??
+ 
+
+javax.swing.JFileDialog
+-----------------------
+
+HTML5 cannot expose a file reading directory structure. But you certainly 
+can still do file reading and writing. It just works a little differently.
+It's a simple modification:
+
+		b = new JButton("FileOpenDialog");
+		b.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				Test_Dialog.this.onDialogReturn(fc.showOpenDialog(Test_Dialog.this));
+				// Java will wait until the dialog is closed, then enter the onDialogReturn method.
+				// JavaScript will exit with NaN immediately, and then call back with its actual value
+				// asynchronously.
+			}
+
+		});
+	
+		public void onDialogReturn(int value) {
+			if (value != Math.floor(value))
+				return; // in JavaScript, this will be NaN, indicating the dialog has been opened
+			// If we are here, the dialog has closed, in both Java and JavaScript.
+			System.out.println("int value is " + value);
+		}
+
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		Object val = event.getNewValue();
+		String name = event.getPropertyName();
+		System.out.println(name);
+		switch (event.getSource().getClass().getName()) {
+		case "javax.swing.JOptionPane":
+			switch (name) {
+			case "inputValue":
+				onDialogReturn(val);
+				return;
+			case "value":
+				if (val instanceof Integer)
+					onDialogReturn(((Integer) val).intValue());
+				else
+					onDialogReturn(val);
+				return;
+			}
+			break;
+		case "javax.swing.ColorChooserDialog":
+			switch (name) {
+			case "SelectedColor":
+				onDialogReturn(val);
+				return;
+			}
+			break;
+		case "javax.swing.JFileChooser":
+			switch (name) {
+			case "SelectedFile":
+				File file = (File) val;
+				byte[] array = (val == null ? null : /** @j2sNative file.秘bytes || */
+						null);
+				onDialogReturn("fileName is '" + file.getName() + "'\n\n" + new String(array));
+				return;
+			}
+			break;
+		}
+		System.out.println(
+				event.getSource().getClass().getName() + " " + event.getPropertyName() + ": " + event.getNewValue());
+	}
+
+
+Developers are encouraged to create a separate class that handles general calls to JFileDialog. 
+An example class can be found in the SwingJS distribution as 
+
+/sources/net.sf.j2s.java.core/src/javajs/async/AsyncFileChooser.java.
+
+
+javax.swing.JOptionPane dialogs
+-------------------------------
+
+For a full discussion of modal dialogs, see the javajs.asyc.AsyncDialog.java discussion.
+
+For this action to work, the parent component must implement
+propertyChangeListener, and any call to JOptionPanel should allow for
+an asynchronous response, meaning that there is no actionable code following the
+call to the dialog opening. 
+
+In addition, for compatibility with the Java version, implementation should
+wrap the call to getConfirmDialog or getOptionDialog in a method call to
+handle the Java:
+
+onDialogReturn(JOptionPane.showConfirmDialog(parentFrame,
+messageOrMessagePanel, "title", JOptionPane.OK_CANCEL_OPTION));
+
+Then parentFrame.propertyChange(event) should also call onDialogReturn.
+
+This will then work in both Java and JavaScript.
+
+Note that there is an int and an Object version of onDialogReturn().
+
+
+In JavaScript:
+
+The initial return from JOptionPane.showConfirmDialog and showMessageDialog
+will be (SwingJS) JDialog.ASYNCHRONOUS_INTEGER (NaN), testable as an impossible 
+Java int value using ret != -(-ret) if the parent implements PropertyChangeListener, or -1
+(CLOSE_OPTION) if not.
+
+For showOptionDialog (which returns Object) or showInputDialog (which returns
+String), the initial return will be (SwingJS) JDialog.ASYNCHRONOUS_OBJECT, testable as
+((Object) ret) instanceof javax.swing.plaf.UIResource if the parent implements
+PropertyChangeListeneer, or null if not.
+
+The second return will be the desired return.
+
+In Java:
+
+The initial return will be the one and only modal final return.
+
+
+
+For full compatibility, The calling method must not continue beyond this call.
+
+All of the standard Java events associated with Components are also available.
+
+Certain fall back mechanisms are possible, where onReturn does not exist, but
+only for the following cases:
+
+
+For showMessageDialog, for WARNING_MESSAGE and ERROR_MESSAGE, a simple
+JavaScript alert() is used, returning 0 (OK_OPTION) or -1 (CLOSED_OPTION).
+
+For showInputDialog, if the message is a string, a simple JavaScript prompt()
+with input box is used, returning the entered string or null.
+
+For showConfirmDialog, a simple JavaScript confirm() is used, in which case:
+
+for YES_NO_OPTION: YES_OPTION or NO_OPTION
+
+for YES_NO_CANCEL_OPTION: YES_OPTION or CANCEL_OPTION
+
+for OK_CANCEL_OPTION or any other: OK_OPTION or CANCEL_OPTION
+
+Note that you should implement a response for CLOSED_OPTION for
+showConfirmDialog. For other dialogs, a null return indicates the dialog was
+closed, just as for Java.
+
+Developers are encouraged to create a separate class that handles general calls. 
+An example class can be found in the SwingJS distribution as src/javajs/async/AsyncDialog.java.
+Very simple modifications to the Java allows asynchronous operation using AsyncDialog. Here
+is a simple "do you want to close this frame" example, where you can see that what we have
+done is to set the reply into an ActionListener that is defined in the constructor of 
+the AsyncDisplay object:
+
+// Original:
+//
+//	private void promptQuit() {
+//		int sel = JOptionPane.showConfirmDialog(null, PROMPT_EXIT, NAME, JOptionPane.YES_NO_OPTION);
+//		switch (sel) {
+//		case JOptionPane.YES_OPTION:
+//			resultsTab.clean();
+//			seqs.dispose();
+//			if (fromMain) {
+//				System.exit(0);
+//			}
+//			break;
+//		}
+//	}
+
+	private void promptQuitAsync() {
+		new AsyncDialog(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			    int sel = ((AsyncDialog)e.getSource()).getOption();
+				switch (sel) {
+				case JOptionPane.YES_OPTION:
+					resultsTab.clean();
+					seqs.dispose();
+					if (fromMain) {
+						System.exit(0);
+					}
+					break;
+				}
+			}}).showConfirmDialog(null, PROMPT_EXIT, NAME, JOptionPane.YES_NO_OPTION);
+	}
+
+Very simple! 
+
+
+native methods
+--------------
+
+The J2S compiler ignores all static native method declarations.
+Anything of this nature needs to be implemented in JavaScript if it is needed,
+using j2sNative blocks:
+
+/**
+ * @j2sNative
+ *
+ *    var putYourJavaScriptCodeHere
+ *
+ */
+ 
+ Note that if you follow that directly with a {...} block, then 
+ only the javadoc code will run in JavaScript, and only the {...} code will run in Java.
+ 
+ 
+key Focus
+---------
+
+As of June, 2019, the keyboard focus manager is fully implemented. 
+The one catch is that JTextPane and JTextArea, which already consume
+VK_TAB in Java, cannot use CTRL-TAB to continue a tabbing cycle around
+the components in a window. Instead, CTRL-TAB is absorbed by the browser. 
+
+
+LookAndFeel and UI Classes
+--------------------------
+
+SwingJS implements the native browser look and feel as swingjs.plaf.HTML5LookAndFeel. 
+There are small differences between all look and feels -- MacOS, Windows, SwingJS.
+
+Expert developers know how to coerce changes in the UI by subclassing the UI for a 
+component. This probably will not work in SwingJS. 
+
+Note that LookAndFeel in Java usually determines canvas size in a Frame because 
+different operating systems (Mac OS vs Windows vs HTML5) will have 
+different edge sizes on their frames. If you want to ensure a component size, 
+use getContentPane().setPreferredSize().
+
+
+System.exit(0) does not stop all processes
+------------------------------------------
+
+Although System.ext(int) has been implemented in JavaScript, it just closes the 
+frames, stops all pending javax.swing.Timer objects in the queue, and runs any 
+threads added using Runtime.getRuntime().addShutdownHook(Thread).
+It may not stop all "threads." So don't rely on that.
+Applications are responsible for shutting down prior to executing System.exit(0). 
+
+
+myClass.getField not implemented
+--------------------------------
+
+java.lang.reflect.Field is implemented minimally. It is not
+certain that Field.getDeclaringClass() will work. If you just want a 
+value of a field, you can do this:
+
+/**
+ *@j2sNative
+ *
+ * return myClass[name]
+ */   
+
+But that is not a java.lang.reflection.Field object.
+
+
+"window" and other reserved JavaScript names
+--------------------------------------------
+
+No reserved top-level JavaScript name is allowed for a package name. So, for example, 
+one must rename packages such as "window" or "document" to names such as "win" or "doc".
+
+
+reserved field and method names
+-------------------------------
+
+In order to minimize the chance of added SwingJS field and method names colliding with ones 
+developers might use in subclassing Java classes, we have added U+79D8 (first character of Mandarin 
+"secret") to the characters already disrecommended by Java documentation ("$" and "_"). The only problem
+would be if you use that character followed by certain English words in certain classes. For example
+\u79D8canvas for JComponents (in java.awt.JSComponent) and \u79D8byte (in java.io.File).
+
+
+qualified field and method names
+--------------------------------
+
+Method names in SwingJS are fully qualified, meaning two methods with the same Java name but different
+parameters, such as write(int) and write(double), must not have the same name in JavaScript. (In this
+case, we will have write$I and write$D.) However, in certain cases it may be desirable to leave the
+method names unqualified. In particular, when an interface actually represents a JavaScript object, 
+the transpiler can leave a method name unqualified. 
+
+You can implement a simple name for a method using the @j2sAlias annoation in the javadoc for the 
+method involved. For example:
+
+
+/**
+ * @j2sAlias read
+ *
+ */
+public void read(byte[] buf, int pos, int len) {...}
+
+will allow the method to be accesible either as "read" or "read$BA$I$I" in JavaScript. 
+
+
+The default situation for this is a class name includes ".api.js" (case-sensitive). 
+This means that any method in any class in a package js within a package api, or any private interface js 
+that has an outer interface api, will have all-unqualified methods. An example of this is 
+swingjs.plaf.JSComboPopupList, which needs to communicate with a jQuery 
+object directly using the following interface:
+
+	private interface api {
+
+		interface js extends JQueryObject {
+
+			abstract js j2sCB(Object options);
+
+			abstract Object[] j2sCB(String method);
+
+			abstract Object[] j2sCB(String method, Object o);
+
+			abstract Object[] j2sCB(String method, int i);
+
+			abstract int j2sCB(String OPTION, String name);
+
+		}
+	}
+
+Notice that all these variants of j2sCB() will call the same method in JavaScript by design.
+
+
+Component.getGraphics(), Graphics.dispose()
+-------------------------------------------
+
+Use of component.getGraphics() is discouraged in Java and in SwingJS. 
+Specifically in SwingJS, any call to component.getGraphics() or 
+BufferedImage.createGraphics() or Graphics.create(...) should be matched with graphics.dispose(), 
+particularly when it is called outside the context of a paint(Graphics) call from the system. 
+
+If you see your graphics scrolling down the page with each repaint, 
+look for where you have used Component.getGraphics() and not Graphics.dispose().
+For example, this will definitely NOT work in SwingJS:
+
+  this.paint(getGraphics())
+  
+and really should not work in Java, either, as it is technically a resource memory leak.
+
+Instead, if you really do not want to use repaint(), use this:
+
+  Graphics g = getGraphics();
+  paint(g);
+  g.dispose();
+
+
+
+Graphics.setClip()
+------------------
+
+The HTML5 canvas.clip() method is permanent. You can only reset the clip using
+save/restore. This is different from Java, where you can temporarily change it using
+
+  Shape oldClip = Graphics.getClip();
+  Graphics.setClip(newClip);
+   ...
+  Graphics.setClip(oldClip); 
+
+If you need to do something like this, you must schedule the paints to not have overlapping clip needs.
+
+
+MAJOR ISSUES--for Bob and Udo within SwingJS
+============================================
+
+fonts
+-----
+
+Fonts and FontMetrics will all be handled in JavaScript. Font matching will 
+not be exact, and composite (drawn) fonts will not be supported. 
+
+SwingJS handles calls such as font.getFontMetrics(g).stringWidth("xxx") by 
+creating a <div> containing that text, placing it in an obscure location on 
+the page, and reading div.getBoundingClientRect(). This is a VERY precise
+value, but can be a pixel or two off from what Java reports for the same font.
+ 
+ 
+OS-dependent classes
+--------------------
+
+Static classes such as:
+
+   java.awt.Toolkit
+   java.awt.GraphicsEnvironment
+      
+which are created using Class.forName are implemented using classes in the swingjs package.
+
+sun.awt.AWTAccessor is not implemented. 
+
+   
+AWT component peers and component "ui" user interfaces
+------------------------------------------------------
+
+ComponentPeer is a class that represents a native AWT component.
+Components with such peers are called "heavy-weight" components.
+They are expected to do the dirty work of graphics drawing. 
+
+Java Swing implements peers only for JApplet, JDialog, JFrame, and JWindow. 
+References to such objects have been removed, but clearly there must be 
+some connection to similar DOM objects, even for "light-weight" components. 
+
+  
+MAJOR ISSUES--to be resolved by implementers
+============================================
+
+fonts
+-----
+
+Glyph/composite/outline fonts are not supported.
+   
+
+
+threads
+-------
+
+Thread locking and synchronization are not relevant to JavaScript.
+Thus, anything requiring "notify.." or "waitFor.." could be a serious issue.
+ 
+All threading must be "faked" in JavaScript. Specifically not available is:
+
+  Thread.sleep()
+  
+javax.swing.AbstractButton#doClick(pressTime) will not work, as it requires Thread.sleep();
+    
+However, java.lang.Thread itself is implemented and used extensively. 
+
+Methods thread.start() and thread.run() both work fine. 
+
+For simple applications that use Thread.sleep() just to have a delay, as in a frame rate, for 
+example, one can use javax.swing.Timer instead. That is fully implemented. 
+
+Likewise, java.util.Timer can be replaced with no loss of performance with javax.Swing.Timer.
+Note that java.util.TimerTask is implemented, but it can also be replaced by an implementation of Runnable.
+
+task = new TimerTask(){....};
+t = new java.util.Timer();
+t.schedule(task, 0, 1);
+
+becomes
+
+task = new TimerTask(){....}; // or task = new Runnable() {...}
+t = new javax.swing.Timer(1, new ActionListener() {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		task.run();
+	}
+};
+t.setInitialDelay(0); // not particularly necessary
+t.start();
+
+In addition, SwingJS provides swingjs.JSThread, which can be subclassed
+if desired. This class allows simple 
+
+  while(!interrupted()){
+  	wait()
+  	...
+  }  
+
+action through an asynchronous function run1(mode). For example:
+
+	protected void run1(int mode) {
+		try {
+			while (true)
+				switch (mode) {
+				case INIT:
+					// once-through stuff here
+					mode = LOOP;
+					break;
+				case LOOP:
+					if (!doDispatch || isInterrupted()) {
+						mode = DONE;
+					} else {
+						Runnable r = new Runnable() {
+							public void run() {
+								// put the loop code here
+							}
+						};
+						dispatchAndReturn(r);
+						if (isJS)
+							return;
+					}
+					break;
+				// add more cases as needed
+				case DONE:
+					// finish up here
+					if (isInterrupted())
+						return;
+					// or here
+					break;
+				}
+		} finally {
+			// stuff here to be executed after each loop in JS or at the end in Java
+		}
+	}
+
+
+image loading
+-------------
+- All image loading in SwingJS is synchronous. A MediaTracker call will immediately return "complete".
+  However, it still may take one system clock tick to fully load images. Thus, it is recommended that
+  images be preloaded in the static block of the applet if it is necessary that they be available in init().
+  This is only an issue if you are trying to access the pixel buffer of the image in JavaScript. 
+  
+- Applet.getImage(path, name) will return null if the image does not exist. 
+
+- BufferedImage: only "support" imageType RGB and ARGB
+
+  -BH: This is a temporary edit, just to get us started. Certainly GRAY will be needed
+
+
+BigInteger and BigDecimal
+-------------------------
+
+java.math.BigInteger and java.math.BigDecimal are fully supported. 
+
+
+no format internationalization
+------------------------------
+
+For now, just "en" for number and date formatters
+
+
+missing winding rules
+---------------------
+
+When filling a graphic, only nonzero winding rule is implemented in HTML5 Canvas2D.
+
+
+
+text-related field implementation
+---------------------------------
+
+Text fields are:
+
+JTextField   (JavaScript <input type="text">)
+JTextArea    (JavaScript <textarea>)
+JTextPane    (JavaScript <div>)
+JEditorPane  (JavaScript <div>)
+
+For the initial implementation, we don't implement infinite undo/redo, and the abstract 
+document model is much less elaborate. Only PlainDocument (in the form of JSPlainDocument)
+is implemented. The Document returned by JTextField.getDocument() is a javax.swing.text.Document.
+
+All scrolling is handled by HTML5. javax.swing.AutoScroller is not implemented.
+public static methods .stop, .isRunning, .processMouseDragged require true Java threading
+and so are not implmented. javax.swing.text.View and its subclasses are not implemented. 
+
+The JS document model does not allow two text fields to address the same underlying document. 
+
+JavaScript is slightly different from Java in that the field value is changed asynchronously after
+the keypressed event, so Java actions that are keyed to KEY_PRESSED may not pick up the new 
+key value even after SwingUtilities.invokeLater() is called. Thus, key pressed actions may need
+to be recorded after a key released event instead. 
+
+
+Formatter/Regex limitations
+---------------------------
+
+Some browsers cannot process Regex "look-behind" process such as (?<=\W)
+java.util.regex.Matcher and Pattern use JavaScript's RegExp object rather than
+the native Java object. These are not identical. Only flags /igm are supported.
+Matcher.start(groupID) is not supported.
+
+java.util.Formatter will function correctly for all standard %... patterns.
+
+In addition, JavaScript does not implement some of the more arcane POSIX {...} formats. 
+From java.util.regex.Pattern.java, we find the listing of conversions SwingJS does use:
+
+		"\\p{javaWhitespace}","\\s",
+		"\\p{javaDigit}","\\d",
+		"\\p{Lower}", "[a-z]",
+		"\\p{Upper}", "[A-Z]",
+		"\\p{ASCII}", "[\u0000-\u007F]",
+		"\\p{Alpha}", "[A-Za-z]",
+		"\\p{Digit}", "[0-9]",
+		"\\p{Alnum}", "[A-Za-z0-9]",
+		"\\p{Punct}", "[!\"#$%&'\\(\\)\\*\\+,-./:;<=>?@\\[\\\\\\]^_`{\\|}~]",
+		"\\p{Graph}", "[A-Za-z0-9]!\"#$%&'\\(\\)\\*\\+,-./:;<=>?@\\[\\\\\\]^_`{\\|}~]",
+		"\\p{Print}", "[A-Za-z0-9]!\"#$%&'\\(\\)\\*\\+,-./:;<=>?@\\[\\\\\\]^_`{\\|}~]",
+		"\\p{Blank}", "[ \t]",
+		"\\p{Cntrl}", "[\u0000-\u001F\u007F]",
+		"\\p{XDigit}", "[0-9a-fA-F]",
+		"\\p{Space}", "[ \t\n\u000B\f\r]",
+		"\\p{javaLowerCase}", "[a-z]",
+		"\\p{javaUpperCase}", "[A-Z]",
+		"\\p{Sc}", "[\u0024\u00A2\u00A3\u00A4\u00A5\u058F\u060B\u07FE\u07FF\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u20A0\u20A1\u20A2\u20A3\u20A4\u20A5\u20A6\u20A7\u20A8\u20A9\u20AA\u20AB\u20AC\u20AD\u20AE\u20AF\u20B0\u20B1\u20B2\u20B3\u20B4\u20B5\u20B6\u20B7\u20B8\u20B9\u20BA\u20BB\u20BC\u20BD\u20BE\u20BF\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]"
+
+Java's \Q \E quoting is handled appropriately.
+
+Additional Issues
+-----------------
+
+Method reflection is limited. Fields and methods do not retain public or default characteristics. 
+(This could be easily adapted, though.) Interfaces do not expose their methods, as the transpiler does not 
+actually transpile the interfaces themselves unless they contain default methods. 
+And method reflection only includes annotated methods.
+
+java.util.concurrent is not fully elaborated. This package is rewritten to not actually use the
+memory handling capabilities of concurrency, which JavaScript does not have access to.
+
+System.getProperties() just returns a minimal set of properties.
+
+
+Summary
+-------
+
+These are all the known limitations of SwingJS. We have not found any of these limitations
+to be show-stoppers. The primary issue for newcomers to SwingJS is having the source code.
+You must check that source code for all your library jar files is available or, if you
+choose, you will need to decompile those classes. We have used decompilation on some projects,
+and it works just fine. So, technically, all we really need are JAR/class files. But the 
+source is by far superior. It's generally prettier, and it has the license information that
+may or may not be present with the JAR or class files. Use class files at your own risk.
+
+Bob Hanson
+
+

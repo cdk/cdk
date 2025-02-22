@@ -1,0 +1,75 @@
+- Defines default valence and charge (range) and valence electrons for
+- several s- and p-block periodic elements. The values allow checking for
+- abnormal charge/valence on the defined element. A value of 'n/a' means it is
+- not checked. If a valence value is in specified parentheses then it is
+- considered fixed and valid for all charge states, if a value is in square
+- brackets it is only valid for neutral atoms
+
+- It should be noted that the model used is only for checking abnormal valence
+- and not adding implied hydrogens. The model follows a simple pattern which
+- leads to incorrect results (e.g. 5 valent carbon cation ion - [C+H5]) but 
+- matches observed warnings from the Daylight Depict, daylight.com/daycgi/depict 
+
+- period 1
+H     (0),1       -1,1     1	
+
+He    0           0,0      2
+
+- period 2
+Li    (0),[1]     0,1      1
+Be    n/a         n/a      2
+
+B     0,3         0,0      3
+C     [0],2,4     -1,1     4
+N     [0],3,(5)   -3,1     5
+O     [0],2       -2,1     6
+F     (0),(1)     -1,0     7
+Ne    0,0         0,0      8
+
+- period 3
+Na    (0),[1]     0,1      1
+Mg    0,2         0,2      2
+
+Al    n/a         n/a      3
+Si    n/a         n/a      4
+P     [0],3,5     -3,1     5
+S     [0],2,4,6   n/a      6 
+Cl    [0],1,3,5,7 n/a      7
+Ar    0           0,0      8
+
+- period 4 (excluding d-block)
+K     (0),[1]     0,1      1
+Ca    0,2         0,2      2
+
+Ga    n/a         n/a      3
+Ge    n/a         n/a      4
+As    [0],3,5     -3,1     5
+Se    [0],2,4,6   n/a      6
+Br    [0],1,3,5,7 n/a      7
+Kr    0           0,0      8
+
+- period 5 (excluding d-block)
+Rb    n/a         n/a      1
+Sr    0,2         0,2      2
+
+In    n/a         n/a      3
+Sn    n/a         n/a      4
+Sb    n/a         n/a  	   5
+Te    [0],2,4,6   n/a      6
+I     [0],1,3,5,7 n/a      7
+Xe    0           0,0      8
+
+- period 6 (excluding d-block and f-block)
+Cs    n/a         n/a      1
+Ba    0,2         0,2      2
+
+Tl    n/a         n/a      3
+Pb    n/a         n/a      4
+Bi    n/a         n/a      5
+Po    n/a         n/a      6
+At    [0],1,3,5,7 n/a      7
+Rn    0           0,0      8
+
+- period 7 (excluding d-block and f-block)
+Fr    n/a         n/a      1
+Ra    0,2         0,2      2

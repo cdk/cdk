@@ -39,7 +39,6 @@ import java.io.StringReader;
  * @cdk.githash
  */
 final class Slf4jLoggingTool implements ILoggingTool {
-
     private final Logger slf4jlogger;
 
     private int stackLength;

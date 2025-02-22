@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+ BH 2018.08.12
+
+ - requires tools/ant-contrib.jar
+  
+ - creates the site/ directory if it does not exist
+ - unzips swingjs/SwingJS-site.zip into site/
+ - copies non-java resources from html/ into site/
+ - copies non-java resources from resources/ into site/swingjs/j2s
+ 
+-->
+
+<project name="swingjs-project" default="tosite" basedir="."
+ xmlns:if="ant:if"
+    xmlns:unless="ant:unless">
+	
+  <target name="tosite">
+  	  	
+  	<!-- input directories -->
+  	
+  	<!-- location of ant-contrib.jar -->
+  	<property name="tools.dir" value = "tools" />
+
+ 	<!-- SwingjS_site zip file (could be varied if versioning is needed) -->
+  	<property name="swingjs.zip" value="swingjs/SwingJS-site.zip" />
+ 
+	<!-- output directories -->
+
+  	<property name="site.dir" value="site" />
+  	<property name="swingjs.dir" value="${site.dir}/swingjs" />
+  	<property name="j2s.dir" value="${swingjs.dir}/j2s" />
+  	<property name="html.dir" value="html/" />
+  	<!-- location of third-party jar contents as precompiled zipped .js files to copy to site/ -->
+  	<property name="libjs.dir" value="libjs" />
+ 
+  	 
+  	<!-- unzip SwingJS-site.zip 
+  	
+  	  we do this separately, as we want it done last 
+  	
+  	-->
+
+  	<echo> Unzipping ${swingjs.zip} into ${site.dir} </echo>
+  	<unzip src="${swingjs.zip}" dest="${site.dir}/" overwrite="true"/>  	
+
+<!--
+  	<echo> Unzipping ${libjs.dir} *.zip into ${site.dir} </echo>
+
+  		<unzip dest="${site.dir}">
+  		    <fileset dir="${libjs.dir}">
+  		        <include name="*.zip"/>
+  		    </fileset>
+  		</unzip>
+  	
+  	-->
+	<!-- transfer site-level resources -->
+
+  	<echo> Copying ${html.dir} files into ${site.dir} </echo>
+  	<copy failonerror="false" todir="${site.dir}">
+      <fileset dir="${html.dir}">
+      	<include name="**"/>
+  	</fileset>
+    </copy>
+
+ 	<!-- transfer resources TODO
+  	<echo> Copying ${resources.dir} files into ${j2s.dir} </echo>
+  	<copy failonerror="false" todir="${j2s.dir}">
+      <fileset dir="${resources.dir}">
+      	<include name="**/*"/>
+   	  </fileset>
+    </copy>
+  -->
+  
+</target>
+	
+
+</project>

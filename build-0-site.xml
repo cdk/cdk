@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+ BH 2018.08.12
+
+ - requires tools/ant-contrib.jar
+  
+ - creates the site/ directory if it does not exist
+ - unzips swingjs/SwingJS-site.zip into site/
+ - copies non-java resources from html/ into site/
+ - copies non-java resources from resources/ into site/swingjs/j2s
+ 
+-->
+
+<project name="swingjs-project" default="tosite" basedir="."
+ xmlns:if="ant:if"
+    xmlns:unless="ant:unless">
+	
+  <target name="tosite">
+  	  	
+  	<!-- input directories -->
+  	
+  	<!-- location of ant-contrib.jar -->
+  	<property name="tools.dir" value = "tools" />
+
+  	<property name="bin.dir" value="bin" />
+ 
+	<!-- output directories -->
+
+  	<property name="site.dir" value="site" />
+  	<property name="swingjs.dir" value="${site.dir}/swingjs" />
+  	<property name="j2s.dir" value="${swingjs.dir}/j2s" />
+  	<echo> Copying ${bin.dir} .txt, etc files into ${j2s.dir} </echo>
+  	<copy failonerror="false" todir="${j2s.dir}">
+      <fileset dir="${bin.dir}">
+      	<include name="**"/>
+      	<exclude name="**/*.class"/>
+  	</fileset>
+    </copy>
+
+  
+</target>
+	
+
+</project>
