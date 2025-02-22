@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SwingJS test _NAME_</title><meta charset="utf-8" />
+<script src="swingjs/swingjs2.js"></script>
+<script>
+if (!self.SwingJS)alert('swingjs2.js was not found. It needs to be in swingjs folder in the same directory as ' + document.location.href)
+Info = {
+  code: _CODE_,
+  main: _MAIN_,
+  core: "NONE",
+	width: 850,
+	height: 550,
+  readyFunction: null,
+	serverURL: 'https://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php',
+	j2sPath: 'swingjs/j2s',
+	console:'sysoutdiv',
+	allowjavascript: true
+}
+</script>
+</head>
+<body>
+<script>
+SwingJS.getApplet('testApplet', Info)
+getClassList = function(){J2S._saveFile('_j2sclasslist.txt', Clazz.ClassFilesLoaded.sort().join('\n'))}
+</script>
+<div style="position:absolute;left:900px;top:30px;width:600px;height:300px;">
+<div spellcheck="false" id="sysoutdiv" contentEditable="true" style="border:1px solid green;width:100%;height:95%;overflow:auto"></div>
+This is System.out. <a href="javascript:testApplet._clearConsole()">clear it</a>  <a href='javascript:J2S.getProfile()'>start/stop profiling</a><br>see <a href=___j2sflags.htm>___j2sflags.htm</a> for SwingJS URL command-line options<br><a href="javascript:getClassList()">get _j2sClassList.txt</a>
+</div>
+</body>
+</html>
