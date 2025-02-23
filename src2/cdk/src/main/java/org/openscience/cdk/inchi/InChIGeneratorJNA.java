@@ -278,7 +278,7 @@ public class InChIGeneratorJNA  extends InChIGenerator {
             if (count == 1) {
                 iatom.setRadical(InchiRadical.DOUBLET);
             } else if (count == 2) {
-                Enum spin = atom.getProperty(CDKConstants.SPIN_MULTIPLICITY);
+                Enum<?> spin = atom.getProperty(CDKConstants.SPIN_MULTIPLICITY);
                 if (spin != null) {
                     // cdk-ctab:SPIN_MULTIPLICITY not accessible by can access via Enum API although
                     // a little brittle
@@ -341,7 +341,7 @@ public class InChIGeneratorJNA  extends InChIGenerator {
         }
 
         // Process tetrahedral stereo elements
-        for (IStereoElement stereoElem : atomContainer.stereoElements()) {
+        for (IStereoElement<?,?> stereoElem : atomContainer.stereoElements()) {
             if (stereoElem instanceof ITetrahedralChirality) {
                 ITetrahedralChirality chirality = (ITetrahedralChirality) stereoElem;
                 IAtom[] surroundingAtoms = chirality.getLigands();

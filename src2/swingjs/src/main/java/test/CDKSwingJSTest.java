@@ -38,13 +38,13 @@ public class CDKSwingJSTest {
 			mol.getAtom(i).setImplicitHydrogenCount(2);
 		System.out.println(mol.toString());
 		try {
-//			InChIToStructure i2s = InChIGeneratorFactory.getInstance().getInChIToStructure(inchi, getBuilder(), "");
-//			mol = i2s.getAtomContainer();
-//			String inchi2 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
-//			System.out.println(inchi);
-//			System.out.println(inchi2);
-//			System.out.println(inchi.equals(inchi2));
-//
+			InChIToStructure i2s = InChIGeneratorFactory.getInstance().getInChIToStructure(inchi, getBuilder(), "");
+			mol = i2s.getAtomContainer();
+			String inchi2 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
+			System.out.println(inchi);
+			System.out.println(inchi2);
+			System.out.println(inchi.equals(inchi2));
+
 			
 			String smi = new SmilesGenerator(SmiFlavor.Isomeric).create(mol);
 			System.out.println(smi);
