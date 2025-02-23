@@ -10,16 +10,94 @@ Currently, cdk-SwingJS is not a Maven project. (Wouldn't it be interesting, thou
 
 The java2script transpiler needs all source code utilized during runtime in a browser. These have been downloaded with Maven and loaded into the project in this first round. Fortunately, CDK does not have very many dependencies. org.uk.javax.vecmath is easy to hard-wire into the project without Maven. 
 
-We shall see!
-
 Bob Hanson, 2025.02.22
 
+Update: Well, that was quite easy! Just a quick test: Java and JavaScript created identical results for the following short code run:
 
+		// N variant
+		long t0 = System.currentTimeMillis();
+		
+		String inchi = "InChI=1S/C41H45NO21/c43-13-27-32(51)34(53)37(56)40(61-27)59-25-11-19(45)10-21-20(25)12-26(30(42-21)17-4-7-22(46)23(47)9-17)60-41-38(63-39-36(55)31(50)24(48)14-58-39)35(54)33(52)28(62-41)15-57-29(49)8-3-16-1-5-18(44)6-2-16/h1-12,24,27-28,31-41,43-48,50-56H,13-15H2"
+				+ "/b8-3+/t24-,27-,28-,31+,32-,33-,34+,35+,36-,37-,38-,39+,40-,41-/m1/s1";
+		IAtomContainer mol = TestMoleculeFactory.makeTetrahydropyran();
+		mol.getAtom(0).setImplicitHydrogenCount(0);
+		for (int i = 1; i < 6; i++)
+			mol.getAtom(i).setImplicitHydrogenCount(2);
+		try {
+			mol = InChIGeneratorFactory
+					.getInstance()
+					.getInChIToStructure(inchi, getBuilder(), "")
+					.withCoordinates("2D")
+					.getAtomContainer();
+			String inchi2 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
+			System.out.println(inchi);
+			System.out.println(inchi2);
+			System.out.println(inchi.equals(inchi2));
+			String smi = new SmilesGenerator(SmiFlavor.Isomeric).create(mol);
+			System.out.println(smi);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println((System.currentTimeMillis() - t0) + " ms");
+
+Output from JavaScript:
+
+	InChI=1S/C41H45NO21/c43-13-27-32(51)34(53)37(56)40(61-27)59-25-11-19(45)10-21-20(25)12-26(30(42-21)17-4-7-22(46)23(47)9-17)60-41-38(63-39-36(55)31(50)24(48)14-58-39)35(54)33(52)28(62-41)15-57-29(49)8-3-16-1-5-18(44)6-2-16/h1-12,24,27-28,31-41,43-48,50-56H,13-15H2/b8-3+/t24-,27-,28-,31+,32-,33-,34+,35+,36-,37-,38-,39+,40-,41-/m1/s1
+	InChI=1S/C41H45NO21/c43-13-27-32(51)34(53)37(56)40(61-27)59-25-11-19(45)10-21-20(25)12-26(30(42-21)17-4-7-22(46)23(47)9-17)60-41-38(63-39-36(55)31(50)24(48)14-58-39)35(54)33(52)28(62-41)15-57-29(49)8-3-16-1-5-18(44)6-2-16/h1-12,24,27-28,31-41,43-48,50-56H,13-15H2/b8-3+/t24-,27-,28-,31+,32-,33-,34+,35+,36-,37-,38-,39+,40-,41-/m1/s1
+	true
+	C=1C=C(C=CC1\C(=C(\C(=O)OC[C@@]2([C@]([C@@]([C@]([C@](OC=3C=C4C(C=C(C=C4O[C@]5([C@@]([C@]([C@@]([C@@](CO)(O5)[H])(O)[H])(O)[H])(O)[H])[H])O)=NC3C=6C=CC(=C(C6)O)O)(O2)[H])(O[C@]7([C@@]([C@]([C@@](CO7)(O)[H])(O)[H])(O)[H])[H])[H])(O)[H])(O)[H])[H])/[H])\[H])O
+	1092 ms
+
+Both Java and JavaScript took just over 1000 ms for this test. JavaScript loaded 434 transpiled class files. 
+
+For this test, I did not include in the classpath all of the CDK. I just used enough to get this job done. The following CDK packages were reported loaded by JavaScript:
+
+
+	org/openscience/cdk/config
+	org/openscience/cdk/event
+	org/openscience/cdk/formula
+	org/openscience/cdk/geometry
+	org/openscience/cdk/graph
+	org/openscience/cdk/inchi
+	org/openscience/cdk/interfaces
+	org/openscience/cdk/io
+	org/openscience/cdk/layout
+	org/openscience/cdk/ringsearch
+	org/openscience/cdk/smiles
+	org/openscience/cdk/stereo
+	org/openscience/cdk/templates
+	org/openscience/cdk/tools
+
+In addition, just a few source files from dependencies were needed. Namely:
+
+	io/github/dan2097/jnainchi (2 classes)
+	javax/vecmath (5 classes)
+	uk/ac/ebi/beam (15 classes)
  
 
-Original README follows:
+Modifications required in the CDK were mostly isolated to the inchi package. This just required a few modifications of [InChIGeneratorFactory](https://github.com/BobHanson/cdk-SwingJS/blob/main/src2/cdk/src/main/java/org/openscience/cdk/inchi/InChIGeneratorFactory.java) in order to allow for JNA and JS subclasses for both [InChIGenerator](https://github.com/BobHanson/cdk-SwingJS/blob/main/src2/cdk/src/main/java/org/openscience/cdk/inchi/InChIGenerator.java) and [InChIToStructure](https://github.com/BobHanson/cdk-SwingJS/blob/main/src2/cdk/src/main/java/org/openscience/cdk/inchi/InChIToStructure.java). The original classes are still there; it's just that now they are abstract classes, and any operation that is platform-specific, such as referencing JNA-InChI objects, are made abstract.
+
+I took the liberty of a couple of additional tweaks as well:
+
+- adding InChIToStructure.withCoordinates("2D"|"3D") (because this seemed like a likely thing a user would do anyway, and I needed that for the WASM side, since it accepts only MOL file data for input)
+- adding MDLV2000Writer.setDate(dateString)  (because just adding the date for this quick use of the MOL file format required the loading of 49 class files in JavaScript just to print "022325141312". This seemed unnecessary)
+
+Neither of these was critical.
+
+Finally, there were two minor fixes I needed to in java2script/SwingJS. There was a mistake in the transpling of the Java 8 
+
+  AtomIterator::new
+
+syntax that was easily fixed, and there was also an omission of .hashCode() for number types such as Integer.TYPE. But, again, that was a quick fix. 
+
+In all, it took about 14 hours to get this job done. About 3 hours to get the forked project going and gather the various code dependencies just so it would run in Java with all the code being transpiled and get the JavaScript running. Then about 8 hours to do the refactoring, 2 hr to test and clean up the code, and another hour or so to write this all up.
+
+
+##Original README follows:
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk) [![build](https://github.com/cdk/cdk/actions/workflows/maven.yml/badge.svg)](https://github.com/cdk/cdk/actions/workflows/maven.yml) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=cdk&metric=bugs)](https://sonarcloud.io/summary/overall?id=cdk)
+
+
 
 
 # The Chemistry Development Kit (CDK)

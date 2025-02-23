@@ -83,7 +83,6 @@ import net.sf.jniinchi.INCHI_RET;
 public abstract class InChIToStructure {
 
 	protected String inchi;
-	private String coordType;
 
 	/**
 	 * Constructor. Generates CDK AtomContainer from InChI.
