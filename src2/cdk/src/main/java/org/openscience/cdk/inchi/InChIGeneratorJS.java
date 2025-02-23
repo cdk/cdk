@@ -83,7 +83,7 @@ public class InChIGeneratorJS  extends InChIGenerator {
 	private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
 		try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
 			
-			new MDLV2000Writer(bos).write(atomContainer);
+			new MDLV2000Writer(bos).setDate("").write(atomContainer);
 			String moldata = bos.toString();
 			System.out.println(moldata);
 			inchi = execute("inchiFromMolfile", moldata, soptions, "inchi");
