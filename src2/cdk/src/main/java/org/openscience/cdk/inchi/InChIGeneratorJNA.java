@@ -101,11 +101,6 @@ public class InChIGeneratorJNA  extends InChIGenerator {
 	InChIGeneratorJNA() {
 	}
 	
-    private static final InchiOptions DEFAULT_OPTIONS = new InchiOptions.InchiOptionsBuilder()
-                                                                        .withFlag(InchiFlag.AuxNone)
-                                                                        .withTimeoutMilliSeconds(5000)
-                                                                        .build();
-
     protected InchiOptions options;
 
     protected /*final*/ InchiInput input;
@@ -121,76 +116,14 @@ public class InChIGeneratorJNA  extends InChIGenerator {
      */
     protected IAtomContainer atomContainer;
 
-    protected InChIGenerator set(IAtomContainer atomContainer,
+    protected InChIGenerator generateInChI(IAtomContainer atomContainer,
                              InchiOptions options,
                              boolean ignoreAromaticBonds) throws CDKException {
         this.input = new InchiInput();
         this.options = options;
-        if (options == null)
-            this.options = DEFAULT_OPTIONS;
-        generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
         auxNone = this.options.getFlags().contains(InchiFlag.AuxNone);
+        generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
         return this;
-    }
-
-    /**
-     * <p>Constructor. Generates InChI from CDK AtomContainer.
-     *
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then calls the library.
-     *
-     * @param atomContainer       AtomContainer to generate InChI for.
-     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-     * @throws org.openscience.cdk.exception.CDKException if there is an
-     *                                                    error during InChI generation
-     */
-    protected InChIGenerator set(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
-        return set(atomContainer, DEFAULT_OPTIONS, ignoreAromaticBonds);
-    }
-
-    /**
-     * <p>Constructor. Generates InChI from CDK AtomContainer.
-     *
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then calls the library.
-     *
-     * @param atomContainer       AtomContainer to generate InChI for.
-     * @param optStr              Space or comma delimited string of options to pass to InChI library.
-     *                            Each option may optionally be preceded by a command line
-     *                            switch (/ or -).
-     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-     * @throws CDKException
-     */
-    protected InChIGenerator set(IAtomContainer atomContainer, String optStr, boolean ignoreAromaticBonds)
-            throws CDKException {
-        return set(atomContainer, InChIOptionParser.parseString(optStr), ignoreAromaticBonds);
-    }
-
-    private static InchiOptions convertJniToJnaOpts(List<INCHI_OPTION> jniOpts) {
-        InchiOptions.InchiOptionsBuilder builder = new InchiOptions.InchiOptionsBuilder();
-        for (INCHI_OPTION jniOpt : jniOpts) {
-            InchiFlag flag = JniInchiSupport.toJnaOption(jniOpt);
-            if (flag != null)
-                builder.withFlag(flag);
-        }
-        return builder.build();
-    }
-
-    /**
-     * <p>Constructor. Generates InChI from CDK AtomContainer.
-     *
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then calls the library.
-     *
-     * @param atomContainer       AtomContainer to generate InChI for.
-     * @param opts                List of INCHI_OPTION.
-     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-     * @throws CDKException
-     */
-    @Deprecated
-    protected InChIGenerator set(IAtomContainer atomContainer, List<INCHI_OPTION> opts, boolean ignoreAromaticBonds)
-            throws CDKException {
-        return set(atomContainer, convertJniToJnaOpts(opts), ignoreAromaticBonds);
     }
 
     /**

@@ -98,13 +98,15 @@ import java.util.Map;
  */
 public abstract class InChIGenerator {
 
-	abstract InChIGenerator set(IAtomContainer container, String options,
-            boolean ignoreAromaticBonds) throws CDKException;
-
-	abstract InChIGenerator set(IAtomContainer container, List<INCHI_OPTION> options,
-            boolean ignoreAromaticBonds) throws CDKException;
-
-	abstract InChIGenerator set(IAtomContainer container, InchiOptions options,
+	/**
+	 * Set the inchi 
+	 * @param container
+	 * @param options
+	 * @param ignoreAromaticBonds
+	 * @return
+	 * @throws CDKException
+	 */
+	abstract InChIGenerator generateInChI(IAtomContainer container, InchiOptions options,
             boolean ignoreAromaticBonds) throws CDKException;
 
     /**

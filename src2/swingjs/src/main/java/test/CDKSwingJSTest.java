@@ -1,13 +1,12 @@
 package test;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.inchi.InChIToStructure;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -18,10 +17,15 @@ import swingjs.SwingJSLogger;
 public class CDKSwingJSTest {
 	private static boolean isJS = /** @j2sNative true || */false;
 	public static void main(String[] args) {
-		if (isJS)
+		if (isJS) {
 			LoggingToolFactory.setLoggingToolClass(SwingJSLogger.class);
+			InChIGeneratorFactory.getInstance(() -> {
+				test0();				
+			});
+		} else {
+			test0();
+		}
 		
-	  test0();	
 	}
 	
 	private static IChemObjectBuilder getBuilder() {
@@ -36,10 +40,12 @@ public class CDKSwingJSTest {
 		mol.getAtom(0).setImplicitHydrogenCount(0);
 		for (int i = 1; i < 6; i++)
 			mol.getAtom(i).setImplicitHydrogenCount(2);
-		System.out.println(mol.toString());
 		try {
-			InChIToStructure i2s = InChIGeneratorFactory.getInstance().getInChIToStructure(inchi, getBuilder(), "");
-			mol = i2s.getAtomContainer();
+			mol = InChIGeneratorFactory
+					.getInstance()
+					.getInChIToStructure(inchi, getBuilder(), "")
+					.withCoordinates("2D")
+					.getAtomContainer();
 			String inchi2 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
 			System.out.println(inchi);
 			System.out.println(inchi2);
@@ -50,8 +56,7 @@ public class CDKSwingJSTest {
 			System.out.println(smi);
 			//C=1C=C(C=CC1\C(\[H])=C(/[H])\C(=O)OC[C@]2([H])[C@]([H])([C@@]([H])([C@]([H])([C@]([H])(OC=3C=C4C(C=C(C=C4O[C@]5([C@]([C@@]([C@]([C@](CO)([H])O5)([H])O)([H])O)([H])O)[H])O)=NC3C=6C=CC(=C(C6)O)O)O2)O[C@]7([C@]([C@@]([C@](CO7)([H])O)([H])O)([H])O)[H])O)O)O
 
-		} catch (CDKException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
@@ -37,13 +38,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 import io.github.dan2097.jnainchi.InchiOptions;
 import io.github.dan2097.jnainchi.InchiStatus;
-import io.github.dan2097.jnainchi.JnaInchi;
 import net.sf.jniinchi.INCHI_RET;
 
 /**
+ * Modified by Bob Hanson 2025.02.23 to allow both Java and JavaScript platform calls.
+ * Also adds the ability to return 2D or 3D coordinates
  * <p>
- * This class generates a CDK IAtomContainer from an InChI string. It places
- * calls to a JNI wrapper for the InChI C++ library.
+ * This class generates a CDK IAtomContainer from an InChI string.
  *
  * <p>
  * The generated IAtomContainer will have all 2D and 3D coordinates set to 0.0,
@@ -82,54 +83,46 @@ import net.sf.jniinchi.INCHI_RET;
 public abstract class InChIToStructure {
 
 	protected String inchi;
-	
+	private String coordType;
 
 	/**
 	 * Constructor. Generates CDK AtomContainer from InChI.
 	 * 
-	 * @param inchi
-	 * @throws CDKException
-	 */
-	protected InChIToStructure set(String inchi, IChemObjectBuilder builder) throws CDKException {
-		return set(inchi, builder, new InchiOptions.InchiOptionsBuilder().build());
-	}
-
-	/**
-	 * Constructor. Generates CMLMolecule from InChI.
+	 * Note that this comes via a platform subclass
 	 * 
 	 * @param inchi
-	 * @param options
+	 * @param setDimension 
 	 * @throws CDKException
 	 */
-	protected InChIToStructure set(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
-		return set(inchi, builder, InChIOptionParser.parseString(options));
-	}
-
-	/**
-	 * Constructor. Generates CMLMolecule from InChI.
-	 * 
-	 * @param inchi
-	 * @param options
-	 * @throws CDKException
-	 */
-	protected InChIToStructure set(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
-		return set(inchi, builder, InChIOptionParser.parseStrings(options));
-	}
-
-	/**
-	 * Constructor. Generates CDK AtomContainer from InChI.
-	 * 
-	 * @param inchi
-	 * @throws CDKException
-	 */
-	protected InChIToStructure set(String inchi, IChemObjectBuilder builder, InchiOptions options) throws CDKException {
+	protected InChIToStructure getStructure(String inchi, IChemObjectBuilder builder, InchiOptions options) throws CDKException {
 		this.inchi = inchi;
 		if (inchi == null)
 			throw new IllegalArgumentException("Null InChI string provided");
 		if (options == null)
 			throw new IllegalArgumentException("Null options provided");
-		initializeInchiModel(inchi);
 		generateAtomContainerFromInchi(builder);
+		return this;
+	}
+
+	/**
+	 * Generate 2D or 3D coordinates for the returned molecule.
+	 * 
+	 * @param coordType  "2D" or "3D"
+	 * @return
+	 * @throws CDKException
+	 */
+	public InChIToStructure withCoordinates(String coordType) throws CDKException {
+		if (coordType != null) {
+			switch (coordType.toUpperCase()) {
+			case "2D":
+				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+				sdg.generateCoordinates(molecule);
+				break;
+			case "3D":
+				// TODO ??
+				break;
+			}
+		}
 		return this;
 	}
 
@@ -223,7 +216,6 @@ public abstract class InChIToStructure {
 	 */
 	private void generateAtomContainerFromInchi(IChemObjectBuilder builder) throws CDKException {
 
-		
 		// molecule = new AtomContainer();
 		molecule = builder.newInstance(IAtomContainer.class);
 
@@ -301,7 +293,7 @@ public abstract class InChIToStructure {
 			default:
 				throw new CDKException("Unknown bond type: " + type);
 			}
-			
+
 			switch (getInchIBondStereo()) {
 			case "NONE":
 				cBo.setStereo(IBond.Stereo.NONE);
@@ -333,15 +325,14 @@ public abstract class InChIToStructure {
 		for (int i = 0; i < nStereo; i++) {
 			setStereo0D(i);
 			int[] neighbours = getNeighbors();
-			String type = getStereoType(); 
+			String type = getStereoType();
 			switch (type) {
 			case "TETRAHEDRAL":
-			case "ALLENE": 
+			case "ALLENE":
 				int central = getCenterAtom();
 				IAtom focus = inchi2cdkAtom.get(central);
-				IAtom[] neighbors = new IAtom[] { inchi2cdkAtom.get(neighbours[0]),
-						inchi2cdkAtom.get(neighbours[1]), inchi2cdkAtom.get(neighbours[2]),
-						inchi2cdkAtom.get(neighbours[3]) };
+				IAtom[] neighbors = new IAtom[] { inchi2cdkAtom.get(neighbours[0]), inchi2cdkAtom.get(neighbours[1]),
+						inchi2cdkAtom.get(neighbours[2]), inchi2cdkAtom.get(neighbours[3]) };
 				ITetrahedralChirality.Stereo stereo;
 
 				// as per JNI InChI doc even is clockwise and odd is
@@ -358,7 +349,7 @@ public abstract class InChIToStructure {
 					continue;
 				}
 
-				IStereoElement<?,?> stereoElement = null;
+				IStereoElement<?, ?> stereoElement = null;
 				switch (type) {
 				case "TETRAHEDRAL":
 					stereoElement = builder.newInstance(ITetrahedralChirality.class, focus, neighbors, stereo);
@@ -435,9 +426,7 @@ public abstract class InChIToStructure {
 						flip(stereoBond);
 				}
 
-				int config = getParity().equals("EVEN") 
-						? IStereoElement.OPPOSITE
-						: IStereoElement.TOGETHER;
+				int config = getParity().equals("EVEN") ? IStereoElement.OPPOSITE : IStereoElement.TOGETHER;
 
 				if (extended) {
 					molecule.addStereoElement(new ExtendedCisTrans(stereoBond,
@@ -493,7 +482,7 @@ public abstract class InChIToStructure {
 
 	abstract void initializeInchiModel(String inchi);
 
-	// InChIStructureProvider Setters
+	// for-loop setters
 	abstract void setAtom(int i);
 
 	abstract void setBond(int i);
@@ -520,41 +509,34 @@ public abstract class InChIToStructure {
 
 	abstract int getImplicitH();
 
-	  /**
-	   * from inchi_api.h
-	   * 
-	   * #define ISOTOPIC_SHIFT_FLAG 10000
-	   * 
-	   * add to isotopic mass if isotopic_mass = (isotopic mass - average atomic
-	   * mass)
-	   * 
-	   * AT_NUM isotopic_mass;
-	   * 
-	   * 0 => non-isotopic; isotopic mass or ISOTOPIC_SHIFT_FLAG + mass - (average
-	   * atomic mass)
-	   * 
-	   * @return inchi's value of average mass
-	   */
-	  abstract int getIsotopicMass();
-	  
-	  abstract int getImplicitDeuterium();
+	abstract int getIsotopicMass();
 
-	  abstract int getImplicitTritium();
-	  
-	  abstract String getRadical();
+	abstract int getImplicitDeuterium();
 
-	  //Bond Methods
-	  abstract int getIndexOriginAtom();
-	  abstract int getIndexTargetAtom();
-	  abstract String getInchiBondType();
-	  abstract String getInchIBondStereo();
+	abstract int getImplicitTritium();
 
-	  
-	  //Stereo Methods
-	  abstract String getParity();
-	  abstract String getStereoType();
-	  abstract int getCenterAtom();
-	  abstract int[] getNeighbors();
+	abstract String getRadical();
 
+	// Bond Methods
+	abstract int getIndexOriginAtom();
+
+	abstract int getIndexTargetAtom();
+
+	abstract String getInchiBondType();
+
+	abstract String getInchIBondStereo();
+
+	// Stereo Methods
+	abstract String getParity();
+
+	abstract String getStereoType();
+
+	abstract int getCenterAtom();
+
+	abstract int[] getNeighbors();
+
+	protected static String uc(Object o) {
+		return o.toString().toUpperCase();
+	}
 
 }

@@ -1512,33 +1512,33 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         sb.append("AtomContainer(");
         sb.append(this.hashCode());
         if (getAtomCount() > 0) {
-            sb.append(", #A:").append(getAtomCount());
+            sb.append("\n, #A:").append(getAtomCount());
             for (int i = 0; i < getAtomCount(); i++) {
-                sb.append(", ").append(getAtom(i).toString());
+                sb.append("\n, ").append(getAtom(i).toString());
             }
         }
         if (getBondCount() > 0) {
-            sb.append(", #B:").append(getBondCount());
+            sb.append("\n, #B:").append(getBondCount());
             for (int i = 0; i < getBondCount(); i++) {
-                sb.append(", ").append(getBond(i).toString());
+                sb.append("\n, ").append(getBond(i).toString());
             }
         }
         if (getLonePairCount() > 0) {
-            sb.append(", #LP:").append(getLonePairCount());
+            sb.append("\n, #LP:").append(getLonePairCount());
             for (int i = 0; i < getLonePairCount(); i++) {
-                sb.append(", ").append(getLonePair(i).toString());
+                sb.append("\n, ").append(getLonePair(i).toString());
             }
         }
         if (getSingleElectronCount() > 0) {
             sb.append(", #SE:").append(getSingleElectronCount());
             for (int i = 0; i < getSingleElectronCount(); i++) {
-                sb.append(", ").append(getSingleElectron(i).toString());
+                sb.append("\n, ").append(getSingleElectron(i).toString());
             }
         }
         if (stereo.size() > 0) {
             sb.append(", ST:[#").append(stereo.size());
             for (IStereoElement elements : stereo) {
-                sb.append(", ").append(elements.toString());
+                sb.append("\n, ").append(elements.toString());
             }
             sb.append(']');
         }

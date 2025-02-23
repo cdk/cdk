@@ -20,7 +20,6 @@ package org.openscience.cdk.inchi;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
@@ -29,7 +28,6 @@ import org.openscience.cdk.io.MDLV2000Writer;
 
 import io.github.dan2097.jnainchi.InchiOptions;
 import io.github.dan2097.jnainchi.InchiStatus;
-import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 
 /**
@@ -53,31 +51,6 @@ import net.sf.jniinchi.INCHI_RET;
  */
 public class InChIGeneratorJS  extends InChIGenerator {
 
-// not relevant in WASM
-//    private static final InchiOptions DEFAULT_OPTIONS = new InchiOptions.InchiOptionsBuilder()
-//                                                                        .withFlag(InchiFlag.AuxNone)
-//                                                                        .withTimeoutMilliSeconds(5000)                                                                        .build();
-	static {
-		try {
-			/**
-			 * Import inchi-web-SwingJS.js
-			 * 
-			 * @j2sNative 
-			 * 
-			 * var j2sPath = J2S._applets.master._j2sFullPath; 
-			 * J2S.inchiPath = J2S._applets.master._j2sFullPath + "/_ES6"; 
-			 * $.getScript(J2S.inchiPath +   "/inchi-web-SwingJS.js");
-			 */
-			{
-			}
-		} catch (Throwable t) {
-			//
-		}
-
-	}
-
-    protected InchiOptions options;
-
 	private String soptions;
 
 	/**
@@ -89,7 +62,7 @@ public class InChIGeneratorJS  extends InChIGenerator {
 
 	private String inchi;
     
-    protected InChIGenerator set(IAtomContainer atomContainer,
+    protected InChIGenerator generateInChI(IAtomContainer atomContainer,
                              InchiOptions options,
                              boolean ignoreAromaticBonds) throws CDKException {
     	soptions = (options == null ? "" : options.toString());
@@ -97,87 +70,28 @@ public class InChIGeneratorJS  extends InChIGenerator {
         return this;
     }
 
-    /**
-     * <p>Constructor. Generates InChI from CDK AtomContainer.
-     *
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then calls the library.
-     *
-     * @param atomContainer       AtomContainer to generate InChI for.
-     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-     * @throws org.openscience.cdk.exception.CDKException if there is an
-     *                                                    error during InChI generation
-     */
-    protected InChIGenerator set(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
-    	return set(atomContainer, "", ignoreAromaticBonds);
-    }
-
-    /**
-     * <p>Constructor. Generates InChI from CDK AtomContainer.
-     *
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then calls the library.
-     *
-     * @param atomContainer       AtomContainer to generate InChI for.
-     * @param optStr              Space or comma delimited string of options to pass to InChI library.
-     *                            Each option may optionally be preceded by a command line
-     *                            switch (/ or -).
-     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-     * @throws CDKException
-     */
-    protected InChIGenerator set(IAtomContainer atomContainer, String optStr, boolean ignoreAromaticBonds)
-            throws CDKException {
-    	return set(atomContainer, (optStr == null || optStr.length() == 0 ? null : InChIOptionParser.parseString(optStr)), ignoreAromaticBonds);
-    }
-
-//    private static InchiOptions convertJniToJnaOpts(List<INCHI_OPTION> jniOpts) {
-//        InchiOptions.InchiOptionsBuilder builder = new InchiOptions.InchiOptionsBuilder();
-//        for (INCHI_OPTION jniOpt : jniOpts) {
-//            InchiFlag flag = JniInchiSupport.toJnaOption(jniOpt);
-//            if (flag != null)
-//                builder.withFlag(flag);
-//        }
-//        return builder.build();
-//    }
-//
-    /**
-     * <p>Constructor. Generates InChI from CDK AtomContainer.
-     *
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then calls the library.
-     *
-     * @param atomContainer       AtomContainer to generate InChI for.
-     * @param opts                List of INCHI_OPTION.
-     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-     * @throws CDKException
-     */
-    @Deprecated
-    protected InChIGenerator set(IAtomContainer atomContainer, List<INCHI_OPTION> opts, boolean ignoreAromaticBonds)
-            throws CDKException {
-    	throw new CDKException("JNI-Interface is deprecated and not implemented in JavaScript");
-//    	return set(atomContainer, convertJniToJnaOpts(opts), ignoreAromaticBonds);
-    }
-
-    /**
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then places call for the library to generate
-     * the InChI.
-     *
-     * @param atomContainer AtomContainer to generate InChI for.
-     * @param ignore Ignore aromatic bonds
-     * @throws CDKException
-     */
-    @SuppressWarnings("resource")
+	/**
+	 * <p>
+	 * Reads atoms, bonds etc from atom container and converts to format InChI
+	 * library requires, then places call for the library to generate the InChI.
+	 *
+	 * @param atomContainer AtomContainer to generate InChI for.
+	 * @param ignore        Ignore aromatic bonds
+	 * @throws CDKException
+	 */
+	@SuppressWarnings("resource")
 	private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
-    	try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-    	new MDLV2000Writer(bos).write(atomContainer);
-    	String moldata = bos.toString();
-		inchi = execute("inchiFromMolfile", moldata, soptions, "inchi");
-    	} catch (IOException e) {
+		try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+			
+			new MDLV2000Writer(bos).write(atomContainer);
+			String moldata = bos.toString();
+			System.out.println(moldata);
+			inchi = execute("inchiFromMolfile", moldata, soptions, "inchi");
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
 
 	/**
 	 * Execute J2S[method](data, optoins) to return a JSON structure, and
@@ -210,7 +124,7 @@ public class InChIGeneratorJS  extends InChIGenerator {
 	
 	String getJSOutput(String key) {
     	Map<String, Object> output = this.output;
-        return (output == null ? null : /** @j2sNative output[key || */"");
+        return (output == null ? null : /** @j2sNative output[key] || */"");
 	}
 
     /**

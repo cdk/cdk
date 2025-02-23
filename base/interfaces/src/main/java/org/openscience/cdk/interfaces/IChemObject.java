@@ -413,5 +413,10 @@ public interface IChemObject extends ICDKObject {
      * @throws CloneNotSupportedException if the IChemObject cannot be cloned
      */
     Object clone() throws CloneNotSupportedException;
+    
+    default String hashCode3() {
+    	String s = "0000" + hashCode();
+    	return s.substring(s.length() - 4);
+    }
 
 }
