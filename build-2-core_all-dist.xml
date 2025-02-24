@@ -1,0 +1,55 @@
+<project name="Build Tracker core using SwingJS branch " default="toJs" basedir=".">
+ 
+   <property name="site.dir" value="site" />
+   <property name="site.path" value="site/swingjs" />
+   <property name="j2s.dir" value="${site.path}/swingjs/j2s" />
+   <property name="dist.dir" value="dist" />
+
+   <target name="toJs" id="toJs">
+  			
+   	<!-- make core files -->
+
+   	<echo>creating and compressing core files - warnings are OK; "does not exist" is trouble</echo>
+   	<echo>reading core class list from file coreclasses</echo>   	
+   	<loadresource property="coreclasses">
+       <file file="j2sclasslist.txt"/>
+    </loadresource>
+ 
+    <antcall target="call-core">
+        <param name="call-core.name" value="_cdk" />
+        <param name="call-core.list" value="
+         	${coreclasses}
+        	" />
+    </antcall>
+  </target>
+
+
+	  <target name="call-core" id="call-core">
+	   	<echo>......Creating core${call-core.name}.js</echo>
+	   	<concat destfile="${site.path}/js/core/tmp.js">
+	   		<filelist dir="${site.path}/j2s" files="${call-core.list}" />
+	   	</concat> 
+
+	  	<replace dir="${site.path}/js/core" includes="tmp.js" token="Clazz." value="Clazz_"/>
+	  	<replace dir="${site.path}/js/core" includes="tmp.js" token="Clazz__" value="Clazz._"/>
+	   	<echo>......Generating ${site.path}/j2s/core/core${call-core.name}.js</echo> 	
+	   	<concat destfile="${site.path}/j2s/core/core${call-core.name}.js"><filelist dir="${site.path}/js" files="
+	   		core/coretop2.js
+	   		core/tmp.js
+	   		core/corebottom2.js
+	   		" />
+	   	</concat>
+	   	<echo>......Generating ${site.path}/j2s/core/core${call-core.name}.z.js</echo> 	
+	   	<java jar="swingjs/tools/closure_compiler.jar" fork="true" dir="${site.path}/j2s/core" failonerror="false">
+	   		<arg line="--js core${call-core.name}.js --js_output_file core${call-core.name}.z.js" />
+	    </java>
+	 	<delete quiet="true" file="${site.path}/js/core/tmp.js" />
+	  	
+        <zip basedir="${site.dir}" 
+        	 includes="**/*"
+       	     destfile="${dist.dir}/${project}.zip" 
+        />
+
+	  </target>
+	
+</project>
