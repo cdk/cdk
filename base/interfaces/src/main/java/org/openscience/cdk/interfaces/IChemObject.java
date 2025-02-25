@@ -413,5 +413,5 @@ public interface IChemObject extends ICDKObject {
      * @throws CloneNotSupportedException if the IChemObject cannot be cloned
      */
     Object clone() throws CloneNotSupportedException;
-    
+
 }

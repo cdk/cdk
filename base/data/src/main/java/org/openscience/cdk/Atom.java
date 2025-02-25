@@ -526,7 +526,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     @Override
     public String toString() {
         StringBuilder stringContent = new StringBuilder(64);
-        stringContent.append("Atom(").append(this.hashCode());
+        stringContent.append("Atom(").append(hashCode());
         if (getSymbol() != null) {
             stringContent.append(", S:").append(getSymbol());
         }
