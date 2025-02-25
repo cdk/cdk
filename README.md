@@ -1,3 +1,13 @@
+This project was started Feb 22, 2025.
+
+## Demo Pages
+
+[CDK with no depict, headless](https://chemapps.stolaf.edu/inchi/site/test_CDK_SwingJSTest_core-nodepict.html) First demonstration of CDK in JavaScript. Carries out InChI-to-structure-to-inchi and inchi-to-struture-to-SMILES. 2025.02.24
+
+[CDK with depict, headless](https://chemapps.stolaf.edu/inchi/site/test_CDK_SwingJSTest_core.html) First demonstration of CDK rendering classes in JavaScript, all of the above, plus creating a PNG image from an InChI. 2025.02.23
+
+## Process
+
 The cdk-SwingJS project allows minimially optimized CDK Java code to be used for both Java and JavaScript. JavaScript "class" files are created along with the standard Java class files using the java2script Eclipse plug-in transpiler; the JavaScript is then run in a browser using the SwingJS runtime library developed at St Olaf College.[ref](https://github.com/BobHanson/java2script). 
 
 CDK-SwingJS can be utilized by any Web-based JavaScript application, whether it be node-based or just simple JavaScript on a web page -- similarly to what has been used for Jmol [Jmol-SwingJS](https://github.com/BobHanson/Jmol-SwingJS), JME [JME-SwingJS](https://github.com/BobHanson/JME-SwingJS), and OpenChemLib [OCL-SwingJS](https://github.com/BobHanson/OCL-SwingJS). 
@@ -12,7 +22,39 @@ The java2script transpiler needs all source code utilized during runtime in a br
 
 Bob Hanson, 2025.02.22
 
-Update: Well, that was quite easy! Just a quick test: Java and JavaScript created identical results for the following short code run:
+## Update 2025.02.24: 
+
+Now have depict working to produce PNG files created from InChI-to-structure-to-InChI-to-structure-to-PNG
+
+![testcdk(26)](https://github.com/user-attachments/assets/62b1a19a-9f4d-4fe5-a5b1-729ceef061ea)
+
+	public static void getImageFromInChI(String inchi) {
+		try {
+			IAtomContainer mol = InChIGeneratorFactory.getInstance()
+   					.getInChIToStructure(inchi, getBuilder(), "")
+					.withCoordinates("2D")
+					.getAtomContainer();
+			DepictionGenerator dg = new DepictionGenerator().withSize(600,600);
+			BufferedImage image = dg.depict(mol).toImg();
+			FileOutputStream bos = new FileOutputStream("c:/temp/testcdk.png");
+			ImageIO.write(image, "PNG", bos);
+			bos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+
+The FileOutputStream works just fine in JavaScript. It just sends the file to the downloads directory.
+
+This required only a few very minor tweaks in TextOutput, GeneralPath, and AWTDrawVisitor
+
+Noting that this added [120 classes](https://github.com/BobHanson/cdk-SwingJS/blob/main/j2sclasslist.txt)!
+
+## Update 2025.02.23
+
+Well, that was relatively easy! 
+
+Just a quick test: Java and JavaScript created identical results for the following short code run:
 
 		// N variant
 		long t0 = System.currentTimeMillis();
