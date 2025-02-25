@@ -49,7 +49,7 @@ import net.sf.jniinchi.INCHI_RET;
  * 
  * 
  */
-public class InChIGeneratorJS  extends InChIGenerator {
+public class InChIGeneratorJS implements InChIGenerator {
 
 	private String soptions;
 
@@ -62,7 +62,8 @@ public class InChIGeneratorJS  extends InChIGenerator {
 
 	private String inchi;
     
-    protected InChIGenerator generateInChI(IAtomContainer atomContainer,
+    @Override
+	public InChIGenerator generateInChI(IAtomContainer atomContainer,
                              InchiOptions options,
                              boolean ignoreAromaticBonds) throws CDKException {
     	soptions = (options == null ? "" : options.toString());
@@ -138,7 +139,8 @@ public class InChIGeneratorJS  extends InChIGenerator {
      * to be on the class path).
      * @deprecated use {@link #getStatus()}
      */
-    @Deprecated
+    @Override
+	@Deprecated
     public INCHI_RET getReturnStatus() {
     	return null;
 //        return JniInchiSupport.toJniStatus(output.getStatus());
@@ -148,7 +150,8 @@ public class InChIGeneratorJS  extends InChIGenerator {
      * Access the status of the InChI output.
      * @return the status
      */
-    public InchiStatus getStatus() {
+    @Override
+	public InchiStatus getStatus() {
     	switch (retCode) {
     	case 0:
     		return InchiStatus.SUCCESS;
@@ -162,14 +165,16 @@ public class InChIGeneratorJS  extends InChIGenerator {
     /**
      * Gets generated InChI string.
      */
-    public String getInchi() {
+    @Override
+	public String getInchi() {
     	return inchi;
     }
 
     /**
      * Gets generated InChIKey string.
      */
-    public String getInchiKey() throws CDKException {
+    @Override
+	public String getInchiKey() throws CDKException {
     	String key = execute("inchikeyFromInchi", inchi, soptions, "inchikey");
     	if (retCode == 0)
     		return key;
@@ -179,21 +184,24 @@ public class InChIGeneratorJS  extends InChIGenerator {
     /**
      * Gets auxiliary information.
      */
-    public String getAuxInfo() {
+    @Override
+	public String getAuxInfo() {
     	return getJSOutput("auxinfo");
     }
 
     /**
      * Gets generated (error/warning) messages.
      */
-    public String getMessage() {
+    @Override
+	public String getMessage() {
     	return getJSOutput("message");
     }
 
     /**
      * Gets generated log.
      */
-    public String getLog() {
+    @Override
+	public String getLog() {
     	return getJSOutput("log");
     }
 }

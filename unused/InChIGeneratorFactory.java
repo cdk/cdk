@@ -22,6 +22,7 @@ package org.openscience.cdk.inchi;
 
 import java.util.List;
 
+import _ES6.InChIWeb;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -87,35 +88,11 @@ public class InChIGeneratorFactory {
 	 * do not set this final, as the java2script transpiler needs to leave the
 	 * unevaluated javadoc.
 	 */
-	private /*nonfinal*/ static boolean isJS = /** @j2sNative true || */Boolean.FALSE.booleanValue();
+	private /*nonfinal*/ static boolean isJS = (/** @j2sNative true || */false);
 	
 	static {
 		if (isJS)
-			importWASM();
-	}
-
-	/**
-	 * JavaScript only
-	 * 
-	 * Load inchi-web.wasm asynchronously.
-	 * 
-	 */
-    private static void importWASM() {
-		try {
-			/**
-			 * Import inchi-web-SwingJS.js
-			 * 
-			 * @j2sNative 
-			 * 
-			 * var j2sPath = J2S._applets.master._j2sFullPath; 
-			 * J2S.inchiPath = J2S._applets.master._j2sFullPath + "/_ES6"; 
-			 * $.getScript(J2S.inchiPath +   "/inchi-web-SwingJS.js");
-			 */
-			{
-			}
-		} catch (Throwable t) {
-			//
-		}
+			InChIWeb.importWASM();
 	}
 
     /**

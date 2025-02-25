@@ -96,9 +96,10 @@ import java.util.Map;
  * @cdk.module inchi
  * @cdk.githash
  */
-public class InChIGeneratorJNA  extends InChIGenerator {
+public class InChIGeneratorJNA  implements InChIGenerator {
 
 	InChIGeneratorJNA() {
+		// not public
 	}
 	
     protected InchiOptions options;
@@ -116,7 +117,8 @@ public class InChIGeneratorJNA  extends InChIGenerator {
      */
     protected IAtomContainer atomContainer;
 
-    protected InChIGenerator generateInChI(IAtomContainer atomContainer,
+    @Override
+	public InChIGenerator generateInChI(IAtomContainer atomContainer,
                              InchiOptions options,
                              boolean ignoreAromaticBonds) throws CDKException {
         this.input = new InchiInput();
