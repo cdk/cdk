@@ -25,12 +25,15 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
@@ -43,6 +46,10 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
+import org.openscience.cdk.renderer.elements.path.Close;
+import org.openscience.cdk.renderer.elements.path.LineTo;
+import org.openscience.cdk.renderer.elements.path.MoveTo;
+import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
@@ -50,15 +57,19 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 
+import javax.lang.model.element.Element;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +195,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         OuterGlow,
 
         /**
+         * An outer glow is placed in the background behind the depiction.
+         *
+         * @see StandardGenerator.OuterGlowWidth
+         */
+        OuterGlowFillRings,
+
+        /**
          * Same as outer glow but puts a white edge around element symbols.
          * This is useful if color atoms are used in combination with an
          * outer glow highlight.
@@ -268,6 +286,57 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         ElementGroup middleLayer = new ElementGroup();
         ElementGroup frontLayer = new ElementGroup();
 
+
+        if (style == HighlightStyle.OuterGlowFillRings) {
+            Cycles cycles = Cycles.mcb(container); // MCB/SSSR normally harmful but perfect here
+            for (IAtomContainer ring : cycles.toRingSet()) {
+                if (ring.getAtomCount() > 8)
+                    continue;
+
+                Color highlight = null;
+
+
+                if (false) {
+                    Map<Color, Integer> colorCount = new HashMap<>();
+                    for (IAtom atom : ring.atoms()) {
+                        Color color = getHighlightColor(atom, parameters);
+                        if (color != null) {
+                            Integer count = colorCount.computeIfAbsent(color, k -> 0);
+                            colorCount.put(color, count + 1);
+                        }
+                    }
+
+                    for (Map.Entry<Color, Integer> e : colorCount.entrySet()) {
+                        if (e.getValue() >= (ring.getAtomCount() / 2))
+                            highlight = e.getKey();
+                    }
+                } else {
+                    for (IBond bond : ring.bonds()) {
+                        Color color = getHighlightColor(bond, parameters);
+                        if (color == null)
+                            continue;
+                        if (highlight == null) {
+                            highlight = color;
+                        } else if (!highlight.equals(color)) {
+                            highlight = null;
+                            break;
+                        }
+                    }
+                }
+
+                if (highlight == null)
+                    continue;
+
+                List<PathElement> path = new ArrayList<>();
+                path.add(new MoveTo(ring.getAtom(0).getPoint2d()));
+                for (int j = 1; j < ring.getAtomCount(); j++)
+                    path.add(new LineTo(ring.getAtom(j).getPoint2d()));
+                path.add(new Close());
+                backLayer.add(MarkedElement.markup(new GeneralPath(path, highlight),
+                                                   "outerflow"));
+            }
+        }
+
         // bond elements can simply be added to the element group
         for (int i = 0; i < container.getBondCount(); i++) {
 
@@ -277,9 +346,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
 
             Color highlight = getHighlightColor(bond, parameters);
-            if (highlight != null && (style == HighlightStyle.OuterGlow || style == HighlightStyle.OuterGlowWhiteEdge)) {
+            if (highlight != null && isOuterglow(style)) {
                 backLayer.add(MarkedElement.markup(outerGlow(bondElements[i], highlight, glowWidth, stroke), "outerglow"));
             }
+
             if (highlight != null && style == HighlightStyle.Colored) {
                 frontLayer.add(MarkedElement.markupBond(recolor(bondElements[i], highlight), bond));
             } else {
@@ -302,13 +372,24 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             Color color = getColorOfAtom(symbolRemap, coloring, foreground, style, atom, highlight);
 
             if (symbols[i] == null) {
+
+                // do not highlight if one of our bonds is the same colour
+                for (IBond bond : atom.bonds()) {
+                    Color bondHighlight = getHighlightColor(bond, parameters);
+                    if (bondHighlight != null && bondHighlight.equals(highlight)) {
+                        highlight = null;
+                        break;
+                    }
+                }
+
                 // we add a 'ball' around atoms with no symbols (e.g. carbons)
-                if (highlight != null && (style == HighlightStyle.OuterGlow || style == HighlightStyle.OuterGlowWhiteEdge)) {
+                if (highlight != null && isOuterglow(style)) {
                 	double glowWidthExt = glowWidth;
                 	if (style == HighlightStyle.OuterGlowWhiteEdge && highlight.equals(Color.WHITE)) {
                 		glowWidthExt *= 1.75;
                 	}
-                    backLayer.add(MarkedElement.markup(new OvalElement(atom.getPoint2d().x, atom.getPoint2d().y,1.75 * glowWidthExt * stroke, true, highlight),
+                    backLayer.add(MarkedElement.markup(new OvalElement(atom.getPoint2d().x,
+                                                                       atom.getPoint2d().y,1.75 * glowWidthExt * stroke, true, highlight),
                                                        "outerglow"));
                 }
                 continue;
@@ -327,7 +408,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 annotations.add(MarkedElement.markup(GeneralPath.shapeOf(shape, annotationColor), "annotation"));
             }
 
-            if (highlight != null && (style == HighlightStyle.OuterGlow || style == HighlightStyle.OuterGlowWhiteEdge)) {
+            if (highlight != null && isOuterglow(style)) {
             	double glowWidthExt = glowWidth;
             	if (style == HighlightStyle.OuterGlowWhiteEdge && highlight.equals(Color.WHITE)) {
             		glowWidthExt *= 1.75;
@@ -402,6 +483,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
 
         return MarkedElement.markupMol(group, container);
+    }
+
+    private static boolean isOuterglow(HighlightStyle style) {
+        return style == HighlightStyle.OuterGlow ||
+                style == HighlightStyle.OuterGlowFillRings ||
+                style == HighlightStyle.OuterGlowWhiteEdge;
     }
 
     /**
