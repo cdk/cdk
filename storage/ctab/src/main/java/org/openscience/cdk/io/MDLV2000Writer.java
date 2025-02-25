@@ -230,6 +230,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private Set<String> acceptedSdTags = null;
 
     private BufferedWriter writer;
+	private String date;
 
     /**
      * A list of properties used by CDK algorithms which should not be
@@ -389,6 +390,22 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             return progname;
     }
 
+	/**
+	 * Option to specify a customized date (or whatever).
+	 * 
+	 * Avoiding creating the date saves the loading of 49 date-related js files.
+	 * 
+	 * @author Bob Hanson
+	 * @param date
+	 */
+    public MDLV2000Writer setDate(String date) {
+    	if (date != null) {
+    		date = "0000000000" + date;
+    		date = date.substring(date.length() - 10);
+    	}
+    	this.date = date;
+    	return this;
+    }
     /**
      * Writes a Molecule to an OutputStream in MDL sdf format.
      *
@@ -419,7 +436,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
          */
         writer.write("  ");
         writer.write(getProgName());
-        writer.write(new SimpleDateFormat("MMddyyHHmm").format(System.currentTimeMillis()));
+        writer.write(date == null ? new SimpleDateFormat("MMddyyHHmm").format(System.currentTimeMillis()) : date);
         if (dim != 0) {
             writer.write(Integer.toString(dim));
             writer.write('D');
