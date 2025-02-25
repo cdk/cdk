@@ -96,7 +96,7 @@ import java.util.Map;
  * @cdk.module inchi
  * @cdk.githash
  */
-public abstract class InChIGenerator {
+public interface InChIGenerator {
 
 	/**
 	 * Set the inchi 
@@ -106,7 +106,7 @@ public abstract class InChIGenerator {
 	 * @return
 	 * @throws CDKException
 	 */
-	abstract InChIGenerator generateInChI(IAtomContainer container, InchiOptions options,
+	InChIGenerator generateInChI(IAtomContainer container, InchiOptions options,
             boolean ignoreAromaticBonds) throws CDKException;
 
     /**
@@ -118,37 +118,37 @@ public abstract class InChIGenerator {
      * @deprecated use {@link #getStatus()}
      */
 	@Deprecated
-    abstract public INCHI_RET getReturnStatus();
+    public INCHI_RET getReturnStatus();
 
     /**
      * Access the status of the InChI output.
      * @return the status
      */
-    abstract public InchiStatus getStatus();
+    public InchiStatus getStatus();
 
     /**
      * Gets generated InChI string.
      */
-    abstract public String getInchi();
+    public String getInchi();
     
     /**
      * Gets generated InChIKey string.
      */
-    abstract public String getInchiKey() throws CDKException;
+    public String getInchiKey() throws CDKException;
 
     /**
      * Gets auxiliary information.
      */
-    abstract public String getAuxInfo();
+    public String getAuxInfo();
 
     /**
      * Gets generated (error/warning) messages.
      */
-    abstract public String getMessage();
+    public String getMessage();
 
     /**
      * Gets generated log.
      */
-    abstract public String getLog();
+    public String getLog();
 
 }
