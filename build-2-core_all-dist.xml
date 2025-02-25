@@ -1,9 +1,10 @@
 <project name="Build Tracker core using SwingJS branch " default="toJs" basedir=".">
  
+   <property name="project" value="cdk-SwingJS" />
    <property name="site.dir" value="site" />
    <property name="site.path" value="site/swingjs" />
    <property name="j2s.dir" value="${site.path}/swingjs/j2s" />
-   <property name="dist.dir" value="dist" />
+   <property name="dist.dir" value="dist-swingjs" />
 
    <target name="toJs" id="toJs">
   			
@@ -11,16 +12,34 @@
 
    	<echo>creating and compressing core files - warnings are OK; "does not exist" is trouble</echo>
    	<echo>reading core class list from file coreclasses</echo>   	
+
    	<loadresource property="coreclasses">
        <file file="j2sclasslist.txt"/>
     </loadresource>
- 
+
+   	<loadresource property="coreclasses-nodepict">
+       <file file="j2sclasslist-nodepict.txt"/>
+    </loadresource>
+
     <antcall target="call-core">
         <param name="call-core.name" value="_cdk" />
         <param name="call-core.list" value="
          	${coreclasses}
         	" />
     </antcall>
+    <antcall target="call-core">
+        <param name="call-core.name" value="_cdk-nodepict" />
+        <param name="call-core.list" value="
+         	${coreclasses-nodepict}
+        	" />
+    </antcall>
+   	
+    <zip basedir="${site.dir}" 
+    	 includes="**/*"
+   	     destfile="${dist.dir}/${project}.zip" 
+    />
+
+
   </target>
 
 
@@ -45,11 +64,6 @@
 	    </java>
 	 	<delete quiet="true" file="${site.path}/js/core/tmp.js" />
 	  	
-        <zip basedir="${site.dir}" 
-        	 includes="**/*"
-       	     destfile="${dist.dir}/${project}.zip" 
-        />
-
 	  </target>
 	
 </project>
