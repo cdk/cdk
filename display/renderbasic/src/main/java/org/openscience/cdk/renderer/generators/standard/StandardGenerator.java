@@ -317,8 +317,6 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             for (Shape shape : symbols[i].getOutlines()) {
                 GeneralPath path = GeneralPath.shapeOf(shape, color);
                 symbolElements.add(path);
-                if (shape instanceof TextOutline.TextShape)
-                	path.textOutline = ((TextOutline.TextShape) shape).textOutline;
             }
 
             // add the annotations of the symbol to the annotations ElementGroup

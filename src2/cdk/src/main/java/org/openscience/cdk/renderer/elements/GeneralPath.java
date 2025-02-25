@@ -160,7 +160,10 @@ public class GeneralPath implements IRenderingElement {
             }
             pathIt.next();
         }
-        return new GeneralPath(elements, color, pathIt.getWindingRule(), 0d, true);
+        GeneralPath path = new GeneralPath(elements, color, pathIt.getWindingRule(), 0d, true);
+        if (shape instanceof TextOutline.TextShape)
+        	path.textOutline = ((TextOutline.TextShape) shape).textOutline;
+        return path;
     }
 
     /**

@@ -140,7 +140,7 @@ final public class TextOutline {
     public static class TextShape implements Shape {
 
     	private Shape outline;
-		TextOutline textOutline;
+		public TextOutline textOutline;
 
 		TextShape(Shape outline, TextOutline to) {
     		this.outline = outline;
