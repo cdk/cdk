@@ -48,6 +48,8 @@ The FileOutputStream works just fine in JavaScript. It just sends the file to th
 
 This required only a few very minor tweaks in TextOutput, GeneralPath, and AWTDrawVisitor
 
+Noting that this added 120 classes!
+
 ## Update 2025.02.23
 
 Well, that was relatively easy! 
