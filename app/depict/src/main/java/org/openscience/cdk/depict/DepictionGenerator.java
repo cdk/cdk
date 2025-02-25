@@ -147,6 +147,13 @@ public final class DepictionGenerator {
             new Color(0x232C16), // Dark Olive Green (sub-optimal for defective color vision)
     };
 
+    Color[] PASTAL = new Color[]{new Color(211, 228, 255),
+                                 new Color(222, 255, 214),
+                                 new Color(255, 191, 191),
+                                 new Color(248, 211, 255),
+                                 new Color(255, 225, 154),
+                                 new Color(227, 227, 227)};
+
     /**
      * Magic value for indicating automatic parameters. These can
      * be overridden by a caller.
@@ -523,10 +530,6 @@ public final class DepictionGenerator {
         // generate a 'plus' element
         Bounds plus = copy.generatePlusSymbol(scale, fgcol);
 
-        // remove current highlight buffer
-        for (IChemObject obj : mappingHighlight.keySet())
-            obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
-
         // reset the coordinates to how they were before we invoked depict
         for (LayoutBackup backup : layoutBackups)
             backup.reset();
@@ -559,7 +562,12 @@ public final class DepictionGenerator {
     }
 
     private Map<IChemObject, Color> makeHighlightAtomMap(IReaction reaction) {
-        return makeHighlightAtomMap(reaction.getReactants().atomContainers(),
+        List<IAtomContainer> reactants = new ArrayList<>();
+        for (IAtomContainer mol : reaction.getReactants())
+            reactants.add(mol);
+        for (IAtomContainer mol : reaction.getAgents())
+            reactants.add(mol);
+        return makeHighlightAtomMap(reactants,
                                     reaction.getProducts().atomContainers());
     }
 
@@ -580,26 +588,46 @@ public final class DepictionGenerator {
             for (IAtom atom : mol.atoms())
                 reactantMapIdxs.add(accessAtomMap(atom));
         }
+
         for (IAtomContainer mol : products) {
             for (IAtom atom : mol.atoms())
                 productMapIdxs.add(accessAtomMap(atom));
         }
 
+        Set<Color> seen = new HashSet<>();
+
+        for (IAtomContainer r : reactants) {
+            for (IAtom atom : r.atoms()) {
+                Color c = atom.<Color>getProperty(StandardGenerator.HIGHLIGHT_COLOR);
+                if (c != null) seen.add(c);
+            }
+        }
+
+
         Map<IChemObject, Color> colorMap = new HashMap<>();
         Map<Integer, Color> mapToColor = new HashMap<>();
         Map<Integer, IAtom> amap = new TreeMap<>();
         int colorIdx = -1;
+
+        while (colorIdx+1 < atomMapColors.length &&
+               seen.contains(atomMapColors[colorIdx+1])) {
+            colorIdx++;
+        }
+
         for (IAtomContainer mol : reactants) {
             int prevPalletIdx = colorIdx;
             for (IAtom atom : mol.atoms()) {
                 int mapidx = accessAtomMap(atom);
                 if (mapidx > 0 && productMapIdxs.contains(mapidx)) {
-                    if (prevPalletIdx == colorIdx) {
-                        colorIdx++; // select next color
-                        if (colorIdx >= atomMapColors.length)
-                            throw new IllegalArgumentException("Not enough colors to highlight atom mapping, please provide mode");
+                    Color color = atom.getProperty(StandardGenerator.HIGHLIGHT_COLOR);
+                    if (color == null) {
+                        if (prevPalletIdx == colorIdx) {
+                            colorIdx++; // select next color
+                            if (colorIdx >= atomMapColors.length)
+                                throw new IllegalArgumentException("Not enough colors to highlight atom mapping, please provide mode");
+                        }
+                        color = atomMapColors[colorIdx];
                     }
-                    Color color = atomMapColors[colorIdx];
                     colorMap.put(atom, color);
                     mapToColor.put(mapidx, color);
                     amap.put(mapidx, atom);
@@ -624,6 +652,10 @@ public final class DepictionGenerator {
                     colorMap.put(atom, mapToColor.get(mapidx));
                 }
             }
+
+            boolean makeBreak = false;
+            List<IBond> bondChanged = new ArrayList<>();
+
             for (IBond pBnd : mol.bonds()) {
                 IAtom pBeg = pBnd.getBegin();
                 IAtom pEnd = pBnd.getEnd();
@@ -634,14 +666,24 @@ public final class DepictionGenerator {
                     IAtom rEnd = amap.get(accessAtomMap(pEnd));
                     if (rBeg != null && rEnd != null) {
                         IBond rBnd = rBeg.getBond(rEnd);
-                        if (rBnd != null &&
-                                ((pBnd.isAromatic() && rBnd.isAromatic()) ||
+                        if (rBnd == null) {
+                            colorMap.remove(rBnd);
+                            makeBreak = true;
+                        } else if (((pBnd.isAromatic() || rBnd.isAromatic()) ||
                                         rBnd.getOrder() == pBnd.getOrder())) {
                             colorMap.put(pBnd, c1);
                         } else {
-                            colorMap.remove(rBnd);
+                            colorMap.put(pBnd, c1);
+                            bondChanged.add(rBnd);
+                            bondChanged.add(pBnd);
                         }
                     }
+                }
+            }
+
+            if (!makeBreak) {
+                for (IBond bond : bondChanged) {
+                    colorMap.remove(bond);
                 }
             }
         }
@@ -854,7 +896,7 @@ public final class DepictionGenerator {
      */
     public DepictionGenerator withOuterGlowHighlight(double width) {
         return withParam(StandardGenerator.Highlighting.class,
-                         StandardGenerator.HighlightStyle.OuterGlow)
+                         StandardGenerator.HighlightStyle.OuterGlowFillRings)
                 .withParam(StandardGenerator.OuterGlowWidth.class,
                            width);
     }
@@ -933,7 +975,7 @@ public final class DepictionGenerator {
      * @see #withAtomMapHighlight()
      */
     public DepictionGenerator withAtomMapHighlight() {
-        return withAtomMapHighlight(KELLY_MAX_CONTRAST);
+        return withAtomMapHighlight(PASTAL);
     }
 
     /**
