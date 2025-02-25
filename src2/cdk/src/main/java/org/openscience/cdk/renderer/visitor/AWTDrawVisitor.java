@@ -41,6 +41,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.ArrowHeadWidth;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasing;
+import org.openscience.cdk.renderer.generators.standard.TextOutline;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -452,23 +453,39 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
     }
 
-    private void visit(GeneralPath path) {
-        this.graphics.setColor(path.color);
-        Path2D cpy = new Path2D.Double();
-        cpy.append(getPathIterator(path, transform), false);
+    private static boolean isJS = (/** @j2sNative true || */false);
 
-        if (path.fill) {
-            this.graphics.fill(cpy);
-        } else {
-            Stroke stroke = this.graphics.getStroke();
-            this.graphics.setStroke(new BasicStroke((float) (path.stroke * transform.getScaleX()),
-                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            this.graphics.draw(cpy);
-            this.graphics.setStroke(stroke);
-        }
-    }
+	private void visit(GeneralPath path) {
+		this.graphics.setColor(path.color);
+		Path2D cpy = new Path2D.Double();
+		cpy.append(getPathIterator(path, transform), false);
+		if (isJS && path.textOutline != null) {
+			paintText(cpy, path.textOutline);
+		} else {
+			if (path.fill) {
+				this.graphics.fill(cpy);
+			} else {
+				Stroke stroke = this.graphics.getStroke();
+				this.graphics.setStroke(new BasicStroke((float) (path.stroke * transform.getScaleX()),
+						BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+				this.graphics.draw(cpy);
+				this.graphics.setStroke(stroke);
+			}
+		}
+	}
 
-    private static PathIterator getPathIterator(final GeneralPath path, final AffineTransform transform) {
+    private void paintText(Path2D cpy, TextOutline textOutline) {
+    	float x = cpy.getBounds().x;
+    	float y = cpy.getBounds().y + cpy.getBounds().height;
+    	Font font = textOutline.glyphs.getFont();
+    	float fs = Math.round(font.getSize() * (float) textOutline.transform.getScaleX() * (float) transform.getScaleX() * 10)/10f;
+    	font = font.deriveFont(fs);
+    	this.graphics.setFont(font);
+    	this.graphics.drawString(textOutline.text, (int)x, (int)y);        	
+	
+	}
+
+	private static PathIterator getPathIterator(final GeneralPath path, final AffineTransform transform) {
         return new PathIterator() {
 
             int index;

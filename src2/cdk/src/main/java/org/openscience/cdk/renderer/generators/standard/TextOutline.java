@@ -25,10 +25,12 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -39,18 +41,18 @@ import java.awt.geom.Rectangle2D;
  *
  * @author John May
  */
-final class TextOutline {
-
+final public class TextOutline {
+	
     public static final FontRenderContext FONT_RENDER_CONTEXT = new FontRenderContext(new AffineTransform(), true, true);
     /**
      * The original text.
      */
-    private final String          text;
+    public final String          text;
 
     /**
      * The original glyphs.
      */
-    private final GlyphVector     glyphs;
+    public final GlyphVector     glyphs;
 
     /**
      * The outline of the text (untransformed).
@@ -60,7 +62,7 @@ final class TextOutline {
     /**
      * Transform applied to outline.
      */
-    private final AffineTransform transform;
+    public final AffineTransform transform;
 
     /**
      * Create an outline of text in provided font.
@@ -68,7 +70,7 @@ final class TextOutline {
      * @param text the text to create an outline of
      * @param font the font style, size, and shape that defines the outline
      */
-    TextOutline(final String text, final Font font) {
+    public TextOutline(final String text, final Font font) {
         this(text, font.createGlyphVector(new FontRenderContext(new AffineTransform(), true, true), text));
     }
 
@@ -82,22 +84,51 @@ final class TextOutline {
         this(text, glyphs, glyphs.getOutline(), new AffineTransform());
     }
 
-    /**
-     * Internal constructor, requires all attributes.
-     *
-     * @param text the text
-     * @param glyphs glyphs of the text
-     * @param outline the outline of the glyphs
-     * @param transform the transform
-     */
-    private TextOutline(String text, GlyphVector glyphs, Shape outline, AffineTransform transform) {
-        this.text = text;
-        this.glyphs = glyphs;
-        this.outline = outline;
-        this.transform = transform;
-    }
+	/**
+	 * Internal constructor, requires all attributes.
+	 *
+	 * @param text      the text
+	 * @param glyphs    glyphs of the text
+	 * @param outline   the outline of the glyphs
+	 * @param transform the transform
+	 */
+	private TextOutline(String text, GlyphVector glyphs, Shape outline, AffineTransform transform) {
+		this.text = text;
+		this.glyphs = glyphs;
 
-    /**
+//// BH testing
+//
+//StandardGlyphVector g = (StandardGlyphVector) glyphs;
+//// For each glyph return posx, posy, advx, advy, visx, visy, visw, vish.
+//if (text.length() > 0) {
+//	LineMetrics m = g.getFont().getLineMetrics(text, FONT_RENDER_CONTEXT);
+//	System.out.println(g.getFont() + "a=" + m.getAscent() + " d=" + m.getDescent() + " h=" + m.getHeight() + "\n");
+//	System.out.println(text + " outB " + glyphs.getOutline().getBounds2D()); 
+//	System.out.println(text + " outBB " + glyphs.getOutline().getBounds2D().getBounds2D()); // same
+//	System.out.println(text + " visB " + glyphs.getVisualBounds()); // also same
+//	System.out.println(text + " logB " + glyphs.getLogicalBounds());
+//	System.out.println(text + " pos " + Arrays.toString(glyphs.getGlyphPositions(0, text.length(), null)));
+//
+//
+//	
+//	
+//	
+//	// these next two are identical
+//	System.out.println("TextOutline " + text + " L " + str(g.getLogicalBounds()));
+//	Rectangle2D b = g.getFont().getStringBounds(text, FONT_RENDER_CONTEXT);
+//	System.out.println("TextOutline " + text + " F " + str(b));
+//}
+		
+		
+		
+		this.outline = outline;
+		this.transform = transform;
+	}
+
+//    private String str(Rectangle2D b) {
+//    	return "[" + b.getX() + ", " + b.getX() + ", " + b.getWidth()  + ", " + b.getHeight() + "]";
+//    }
+	/**
      * The text which the outline displays.
      * @return the text
      */
@@ -105,13 +136,74 @@ final class TextOutline {
         return text;
     }
 
+    
+    public static class TextShape implements Shape {
+
+    	private Shape outline;
+		TextOutline textOutline;
+
+		TextShape(Shape outline, TextOutline to) {
+    		this.outline = outline;
+    		this.textOutline = to;
+    	}
+		@Override
+		public Rectangle getBounds() {
+			return outline.getBounds();
+		}
+
+		@Override
+		public Rectangle2D getBounds2D() {
+			return outline.getBounds2D();
+		}
+
+		@Override
+		public boolean contains(double x, double y) {
+			return outline.contains(x, y);
+		}
+
+		@Override
+		public boolean contains(Point2D p) {
+			return outline.contains(p);
+		}
+
+		@Override
+		public boolean intersects(double x, double y, double w, double h) {
+			return outline.intersects(x, y, w, h);
+		}
+
+		@Override
+		public boolean intersects(Rectangle2D r) {
+			return outline.intersects(r);
+		}
+
+		@Override
+		public boolean contains(double x, double y, double w, double h) {
+			return outline.contains(x, y, w, h);
+		}
+
+		@Override
+		public boolean contains(Rectangle2D r) {
+			return outline.contains(r);
+		}
+
+		@Override
+		public PathIterator getPathIterator(AffineTransform at) {
+			return outline.getPathIterator(at);
+		}
+
+		@Override
+		public PathIterator getPathIterator(AffineTransform at, double flatness) {
+			return outline.getPathIterator(at, flatness);
+		}
+    	
+    }
     /**
      * Access the transformed outline of the text.
      *
      * @return transformed outline
      */
     Shape getOutline() {
-        return transform.createTransformedShape(outline);
+        return new TextShape(transform.createTransformedShape(outline), this);
     }
 
     /**
@@ -194,6 +286,8 @@ final class TextOutline {
         if (text.length() == 1) return getCenter();
 
         final Shape glyph = glyphs.getGlyphOutline(index);
+        
+        
         final Rectangle2D glyphBounds = transformedBounds(glyph);
 
         return new Point2D.Double(glyphBounds.getCenterX(), glyphBounds.getCenterY());

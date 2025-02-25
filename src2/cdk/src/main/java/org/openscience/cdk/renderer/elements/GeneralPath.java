@@ -40,6 +40,7 @@ import org.openscience.cdk.renderer.elements.path.LineTo;
 import org.openscience.cdk.renderer.elements.path.MoveTo;
 import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.renderer.elements.path.QuadTo;
+import org.openscience.cdk.renderer.generators.standard.TextOutline;
 
 /**
  * A path of rendering elements from the elements.path package.
@@ -64,6 +65,8 @@ public class GeneralPath implements IRenderingElement {
 
     /** Winding rule for determining path interior. */
     public final int               winding;
+
+	public TextOutline textOutline;
 
     /**
      * @see PathIterator#WIND_EVEN_ODD
