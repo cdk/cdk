@@ -48,7 +48,7 @@ The FileOutputStream works just fine in JavaScript. It just sends the file to th
 
 This required only a few very minor tweaks in TextOutput, GeneralPath, and AWTDrawVisitor
 
-Noting that this added 120 classes!
+Noting that this added [120 classes](https://github.com/BobHanson/cdk-SwingJS/blob/main/j2sclasslist.txt)!
 
 ## Update 2025.02.23
 
