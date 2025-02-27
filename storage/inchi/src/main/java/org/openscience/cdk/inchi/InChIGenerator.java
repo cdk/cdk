@@ -37,7 +37,7 @@ import net.sf.jniinchi.INCHI_RET;
  * their respective classes, which implement IInChIGeneratorImpl. 
  * 
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
- * a CDK IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
+ * a CDK IAtomContainer. It places calls to a JNA wrapper for the InChI C++ library.
  *
  * <p>If the atom container has 3D coordinates for all of its atoms then they
  * will be used, otherwise 2D coordinates will be used if available.

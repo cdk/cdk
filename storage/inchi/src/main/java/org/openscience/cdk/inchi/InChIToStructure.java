@@ -204,7 +204,7 @@ import net.sf.jniinchi.INCHI_RET;
 	// magic number - indicates isotope mass is relative
 	private static final int ISOTOPIC_SHIFT_FLAG = 10000;
 	/**
-	 * JNI-Inchi uses the magic number {#link ISOTOPIC_SHIFT_FLAG} plus the
+	 * JNA-Inchi uses the magic number {#link ISOTOPIC_SHIFT_FLAG} plus the
 	 * (possibly negative) relative mass. So any isotope value coming back from
 	 * jni-inchi greater than this threshold value should be treated as a relative
 	 * mass.
@@ -369,8 +369,8 @@ import net.sf.jniinchi.INCHI_RET;
 						inchi2cdkAtom.get(neighbours[2]), inchi2cdkAtom.get(neighbours[3]) };
 				ITetrahedralChirality.Stereo stereo;
 
-				// as per JNI InChI doc even is clockwise and odd is
-				// anti-clockwise
+				// as per JNI InChI doc (and same for JNA-InChI),
+				// even is clockwise and odd is anti-clockwise
 				switch (i2sImpl.getParity()) {
 				case "ODD":
 					stereo = ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
@@ -432,7 +432,7 @@ import net.sf.jniinchi.INCHI_RET;
 			case "DOUBLEBOND":
 				boolean extended = false;
 
-				// from JNI InChI doc
+				// from JNI InChI doc and same for JNA-InChI
 				// neighbor[4] : {#X,#A,#B,#Y} in this order
 				// X central_atom : NO_ATOM
 				// \ X Y type : INCHI_StereoType_DoubleBond

@@ -116,17 +116,20 @@ class InChIGeneratorJS implements IInChIGeneratorImpl {
         return (output == null ? null : /** @j2sNative output[key] || */"");
 	}
 
-    /**
-     * 
-     * JNI-InChI interface is supported in JavaScript
-     * 
-     * Gets return status from InChI process.  OKAY and WARNING indicate
-     * InChI has been generated, in all other cases InChI generation
-     * has failed. This returns the JNI INCHI enum and requires the optional
-     * "cdk-jniinchi-support" module to be loaded (or the full JNI InChI lib
-     * to be on the class path).
-     * @deprecated use {@link #getStatus()}
-     */
+	/**
+	 * 
+	 * This method is only here to allow backward compatibility with the JNI
+	 * interface. The JNI-InChI interface is not supported in JavaScript, and the
+	 * WASM interface via inchi-web.js does not support returning this sort of
+	 * information anyway.
+	 * 
+	 * Gets return status from InChI process. OKAY and WARNING indicate InChI has
+	 * been generated, in all other cases InChI generation has failed. This returns
+	 * the JNI INCHI enum and requires the optional "cdk-jniinchi-support" module to
+	 * be loaded (or the full JNI InChI lib to be on the class path).
+	 * 
+	 * @deprecated use {@link #getStatus()}
+	 */
     @Override
 	@Deprecated
     public INCHI_RET getReturnStatus() {

@@ -52,7 +52,7 @@ import _ES6.InChIWeb;
  * <p>
  * Factory providing access to {@link InChIGenerator} and
  * {@link InChIToStructure}. See those classes for examples of use. These
- * methods make use of the JNI-InChI library.
+ * methods make use of the JNA-InChI library.
  *
  * <p>
  * The {@link InChIGeneratorFactory} is a singleton class, which means that
@@ -70,8 +70,8 @@ import _ES6.InChIWeb;
  * method (when the instance is created) a {@link CDKException} will be thrown.
  * The most common problem is that the native code is not in the * the correct
  * location. Java searches the locations in the PATH environmental variable,
- * under Windows, and LD_LIBRARY_PATH under Linux, so the JNI-InChI native
- * libraries must be in one of these locations. If the JNI-InChI jar file is
+ * under Windows, and LD_LIBRARY_PATH under Linux, so the JNA-InChI native
+ * libraries must be in one of these locations. If the JNA-InChI jar file is
  * being used and either the current working directory, or '.' are contained in
  * PATH of LD_LIBRARY_PATH then the native code should be placed automatically.
  * If the native files are in the correct location but fail to load, then they
