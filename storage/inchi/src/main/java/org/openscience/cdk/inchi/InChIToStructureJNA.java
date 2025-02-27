@@ -45,7 +45,7 @@ import net.sf.jniinchi.INCHI_RET;
  * @cdk.module inchi
  * @cdk.githash
  */
-public class InChIToStructure extends InChIToStructureAbs {
+public class InChIToStructureJNA extends InChIToStructure {
 
 	private InchiInputFromInchiOutput output;
 	private Map<InchiAtom, Integer> map;
@@ -56,15 +56,15 @@ public class InChIToStructure extends InChIToStructureAbs {
 	private List<InchiStereo> stereos;
 	private InchiStereo thisStereo;
 
-	public InChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
+	public InChIToStructureJNA(String inchi, IChemObjectBuilder builder) throws CDKException {
 		super(inchi, builder);
 	}
 
-	public InChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
+	public InChIToStructureJNA(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
 		super(inchi, builder, options);
 	}
 
-	public InChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
+	public InChIToStructureJNA(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
 		super(inchi, builder, options);
 	}
 

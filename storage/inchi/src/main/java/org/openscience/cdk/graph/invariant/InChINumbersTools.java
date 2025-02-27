@@ -21,7 +21,7 @@ package org.openscience.cdk.graph.invariant;
 import io.github.dan2097.jnainchi.InchiFlag;
 import io.github.dan2097.jnainchi.InchiStatus;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.inchi.InChIGeneratorAbs;
+import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -237,7 +237,7 @@ public class InChINumbersTools {
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
         boolean org = factory.getIgnoreAromaticBonds();
         factory.setIgnoreAromaticBonds(true);
-        InChIGeneratorAbs gen = factory.getInChIGenerator(container, flags);
+        InChIGenerator gen = factory.getInChIGenerator(container, flags);
         factory.setIgnoreAromaticBonds(org); // an option on the singleton so we should reset for others
         if (gen.getStatus() == InchiStatus.ERROR)
             throw new CDKException("Could not generate InChI Numbers: " + gen.getMessage());

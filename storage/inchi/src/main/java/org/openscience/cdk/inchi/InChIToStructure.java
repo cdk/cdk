@@ -79,7 +79,7 @@ import net.sf.jniinchi.INCHI_RET;
  * @cdk.module inchi
  * @cdk.githash
  */
-public abstract class InChIToStructureAbs {
+public abstract class InChIToStructure {
 
 	protected String inchi;
 
@@ -88,7 +88,7 @@ public abstract class InChIToStructureAbs {
      * @param inchi
      * @throws CDKException
      */
-    protected InChIToStructureAbs(String inchi, IChemObjectBuilder builder) throws CDKException {
+    protected InChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
         this(inchi, builder, new InchiOptions.InchiOptionsBuilder().build());
     }
 
@@ -98,7 +98,7 @@ public abstract class InChIToStructureAbs {
      * @param options
      * @throws CDKException
      */
-    protected InChIToStructureAbs(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
+    protected InChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
         this(inchi, builder, InChIOptionParser.parseString(options));
     }
 
@@ -108,7 +108,7 @@ public abstract class InChIToStructureAbs {
      * @param options
      * @throws CDKException
      */
-    protected InChIToStructureAbs(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
+    protected InChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
         this(inchi, builder, InChIOptionParser.parseStrings(options));
     }
 
@@ -123,7 +123,7 @@ public abstract class InChIToStructureAbs {
 	 * @param setDimension 
 	 * @throws CDKException
 	 */
-	protected InChIToStructureAbs(String inchi, IChemObjectBuilder builder, InchiOptions options) throws CDKException {
+	protected InChIToStructure(String inchi, IChemObjectBuilder builder, InchiOptions options) throws CDKException {
 		if (inchi == null)
 			throw new IllegalArgumentException("Null InChI string provided");
 		if (options == null)
@@ -183,7 +183,7 @@ public abstract class InChIToStructureAbs {
 	 */
 	private static final int ISOTOPIC_SHIFT_THRESHOLD = ISOTOPIC_SHIFT_FLAG - 100;
 
-	private ILoggingTool logger = LoggingToolFactory.createLoggingTool(InChIToStructureAbs.class);
+	private ILoggingTool logger = LoggingToolFactory.createLoggingTool(InChIToStructure.class);
 
 	/** InChI mass values by atomic numbers - INCHI_BASE/src/util.c */
 	private static final int[] defaultElemMass = new int[] { 0, 1, 4, 7, 9, 11, 12, 14, // H He Li Be B C N

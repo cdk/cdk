@@ -41,8 +41,8 @@ import net.sf.jniinchi.INCHI_OPTION;
  * Timer event (but not Thread.sleep(), which is not supported in JavaScript).
  * 
  * <p>
- * Factory providing access to {@link InChIGeneratorAbs} and
- * {@link InChIToStructureAbs}. See those classes for examples of use. These
+ * Factory providing access to {@link InChIGenerator} and
+ * {@link InChIToStructure}. See those classes for examples of use. These
  * methods make use of the JNA-InChI library.
  * 
  * The two WASM-related files are in the _ES6/ folder. 
@@ -212,8 +212,8 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container) throws CDKException {
-        return (isJS ? new InChIGeneratorJS(container, ignoreAromaticBonds): new InChIGenerator(container, ignoreAromaticBonds));
+    public InChIGenerator getInChIGenerator(IAtomContainer container) throws CDKException {
+        return (isJS ? new InChIGeneratorJS(container, ignoreAromaticBonds): new InChIGeneratorJNA(container, ignoreAromaticBonds));
     }
 
     /**
@@ -224,8 +224,8 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container, String options) throws CDKException {
-        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGenerator(container, options, ignoreAromaticBonds));
+    public InChIGenerator getInChIGenerator(IAtomContainer container, String options) throws CDKException {
+        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGeneratorJNA(container, options, ignoreAromaticBonds));
     }
 
     /**
@@ -238,9 +238,9 @@ public class InChIGeneratorFactory {
      * @deprecated use {@link #getInChIGenerator(org.openscience.cdk.interfaces.IAtomContainer, io.github.dan2097.jnainchi.InchiOptions)}
      */
     @Deprecated
-    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container, List<INCHI_OPTION> options) throws CDKException {
+    public InChIGenerator getInChIGenerator(IAtomContainer container, List<INCHI_OPTION> options) throws CDKException {
         if (options == null) throw new IllegalArgumentException("Null options");
-        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGenerator(container, options, ignoreAromaticBonds));
+        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGeneratorJNA(container, options, ignoreAromaticBonds));
     }
 
     /**
@@ -254,7 +254,7 @@ public class InChIGeneratorFactory {
      * @throws CDKException something went wrong
      * @see #getInChIGenerator(org.openscience.cdk.interfaces.IAtomContainer, io.github.dan2097.jnainchi.InchiOptions)
      */
-    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container, InchiFlag ... flags) throws CDKException {
+    public InChIGenerator getInChIGenerator(IAtomContainer container, InchiFlag ... flags) throws CDKException {
         if (flags == null) throw new IllegalArgumentException("Null flags");
         InchiOptions options = new InchiOptions.InchiOptionsBuilder()
                                                .withFlag(flags)
@@ -269,9 +269,9 @@ public class InChIGeneratorFactory {
      * @return the InChI generator
      * @throws CDKException something went wrong
      */
-    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container, InchiOptions options) throws CDKException {
+    public InChIGenerator getInChIGenerator(IAtomContainer container, InchiOptions options) throws CDKException {
         if (options == null) throw new IllegalArgumentException("Null flags");
-        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGenerator(container, options, ignoreAromaticBonds));
+        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGeneratorJNA(container, options, ignoreAromaticBonds));
     }
 
     /**
@@ -282,8 +282,8 @@ public class InChIGeneratorFactory {
      * @return the InChI structure generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIToStructureAbs getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
-		return (isJS ? new InChIToStructureJS(inchi, builder) : new InChIToStructure(inchi, builder));
+    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
+		return (isJS ? new InChIToStructureJS(inchi, builder) : new InChIToStructureJNA(inchi, builder));
     }
 
     /**
@@ -295,9 +295,9 @@ public class InChIGeneratorFactory {
      * @return the InChI structure generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIToStructureAbs getInChIToStructure(String inchi, IChemObjectBuilder builder, String options)
+    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, String options)
             throws CDKException {
-		return (isJS ? new InChIToStructureJS(inchi, builder, options) : new InChIToStructure(inchi, builder, options));
+		return (isJS ? new InChIToStructureJS(inchi, builder, options) : new InChIToStructureJNA(inchi, builder, options));
     }
 
     /**
@@ -309,8 +309,8 @@ public class InChIGeneratorFactory {
      * @return the InChI structure generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIToStructureAbs getInChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options)
+    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options)
             throws CDKException {
-		return (isJS ? new InChIToStructureJS(inchi, builder, options) : new InChIToStructure(inchi, builder, options));
+		return (isJS ? new InChIToStructureJS(inchi, builder, options) : new InChIToStructureJNA(inchi, builder, options));
     }
 }

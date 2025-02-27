@@ -48,7 +48,7 @@ import net.sf.jniinchi.INCHI_RET;
  * 
  * 
  */
-public class InChIGeneratorJS extends InChIGeneratorAbs {
+public class InChIGeneratorJS extends InChIGenerator {
 
 	private String soptions;
 

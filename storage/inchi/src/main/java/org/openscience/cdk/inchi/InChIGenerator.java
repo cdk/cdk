@@ -68,7 +68,7 @@ import net.sf.jniinchi.INCHI_RET;
  * @cdk.module inchi
  * @cdk.githash
  */
-public abstract class InChIGeneratorAbs {
+public abstract class InChIGenerator {
 
     private static InchiOptions DEFAULT_OPTIONS;
 
@@ -94,7 +94,7 @@ public abstract class InChIGeneratorAbs {
      */
     protected IAtomContainer atomContainer;
     
-	protected InChIGeneratorAbs(IAtomContainer atomContainer,
+	protected InChIGenerator(IAtomContainer atomContainer,
 			                 InchiOptions options,
 			                 boolean ignoreAromaticBonds) throws CDKException {
         this.atomContainer = atomContainer;
@@ -114,7 +114,7 @@ public abstract class InChIGeneratorAbs {
      * @throws org.openscience.cdk.exception.CDKException if there is an
      *                                                    error during InChI generation
      */
-    protected InChIGeneratorAbs(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
+    protected InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
         this(atomContainer, getDefaultOptions(), ignoreAromaticBonds);
     }
 
@@ -131,7 +131,7 @@ public abstract class InChIGeneratorAbs {
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws CDKException
      */
-    protected InChIGeneratorAbs(IAtomContainer atomContainer, String optStr, boolean ignoreAromaticBonds)
+    protected InChIGenerator(IAtomContainer atomContainer, String optStr, boolean ignoreAromaticBonds)
     		throws CDKException {
     	this(atomContainer, InChIOptionParser.parseString(optStr), ignoreAromaticBonds);
 	}
@@ -158,7 +158,7 @@ public abstract class InChIGeneratorAbs {
      * @throws CDKException
      */
     @Deprecated
-    protected InChIGeneratorAbs(IAtomContainer atomContainer, List<INCHI_OPTION> opts, boolean ignoreAromaticBonds)
+    protected InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> opts, boolean ignoreAromaticBonds)
             throws CDKException {
         this(atomContainer, convertJniToJnaOpts(opts), ignoreAromaticBonds);
     }

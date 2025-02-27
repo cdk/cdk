@@ -35,7 +35,7 @@ import net.sf.jniinchi.INCHI_RET;
  * @cdk.module inchi
  * @cdk.githash
  */
-public class InChIToStructureJS extends InChIToStructureAbs {
+public class InChIToStructureJS extends InChIToStructure {
 
 	private int retCode;
 	
