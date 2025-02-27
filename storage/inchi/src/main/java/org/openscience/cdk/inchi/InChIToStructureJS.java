@@ -31,146 +31,149 @@ import net.sf.jniinchi.INCHI_RET;
  * @cdk.module inchi
  * @cdk.githash
  */
-public class InChIToStructureJS extends InChIToStructure {
+class InChIToStructureJS implements IInChIToStructure {
 
 	private int retCode;
-	
-  //all javascript maps and arrays, only accessible through j2sNative.
-  	Object[] atoms, bonds, stereo;
-  	private Object thisAtom;
-  	private Object thisBond;
-  	private Object thisStereo;
+
+	// all javascript maps and arrays, only accessible through j2sNative.
+	Object[] atoms, bonds, stereo;
+	private Object thisAtom;
+	private Object thisBond;
+	private Object thisStereo;
 	private Map<String, Object> output;
 
-  	@Override
-  	public void initializeInchiModel(String inchi) {
-  		/**
-  		 * @j2sNative 
-  		 * 
-  		 * this.output = J2S.modelFromInchi(inchi);
-  		 * 
-  		 * var json = JSON.parse(this.output.model); 
-  		 * this.atoms = (json.atoms || []); 
-  		 * this.bonds = (json.bonds || []); 
-  		 * this.stereo = (json.stereo || []);
-  		 */
-  	}
-
-  	/// Atoms ///
-
-  	@Override
-  	public int getNumAtoms() {
-  		return this.atoms.length;
-  	}
-
-  	@Override
-  	public void setAtom(int i) {
-  	    thisAtom = atoms[i];
-  	}
-
- 	@Override
-  	public String getElementType() {
-  		return getString(thisAtom, "elname", "");
-  	}
-
-  	@Override
-  	public double getX() {
-  		return getDouble(thisAtom, "x", 0);
-  	}
-
-  	@Override
-  	public double getY() {
-  		return getDouble(thisAtom, "y", 0);
-  	}
-
-  	@Override
-  	public double getZ() {
-  		return getDouble(thisAtom, "z", 0);
-  	}
-
-  	@Override
-  	public int getCharge() {
-  		return getInt(thisAtom, "charge", 0);
-  	}
-
-  	@Override
-  	public int getImplicitH() {
-  		return getInt(thisAtom, "implicitH", 0);
-  	}
-
-  	@Override
-  	public int getIsotopicMass() {
-  		return getInt(thisAtom, "isotopicMass", 0);
-  	}
-
-	@Override
-	int getImplicitDeuterium() {
-  		return getInt(thisAtom, "implicitDeuterium", 0);
+	InChIToStructureJS() {
 	}
 
 	@Override
-	int getImplicitTritium() {
-  		return getInt(thisAtom, "implicitTritium", 0);
+	public void initializeInchiModel(String inchi) {
+		/**
+		 * @j2sNative
+		 * 
+		 * 			this.output = J2S.modelFromInchi(inchi);
+		 * 
+		 *            var json = JSON.parse(this.output.model); 
+		 *            this.atoms = (json.atoms || []); 
+		 *            this.bonds = (json.bonds || []); 
+		 *            this.stereo = (json.stereo || []);
+		 */
+	}
+
+	/// Atoms ///
+
+	@Override
+	public int getNumAtoms() {
+		return this.atoms.length;
 	}
 
 	@Override
-	String getRadical() {
+	public void setAtom(int i) {
+		thisAtom = atoms[i];
+	}
+
+	@Override
+	public String getElementType() {
+		return getString(thisAtom, "elname", "");
+	}
+
+	@Override
+	public double getX() {
+		return getDouble(thisAtom, "x", 0);
+	}
+
+	@Override
+	public double getY() {
+		return getDouble(thisAtom, "y", 0);
+	}
+
+	@Override
+	public double getZ() {
+		return getDouble(thisAtom, "z", 0);
+	}
+
+	@Override
+	public int getCharge() {
+		return getInt(thisAtom, "charge", 0);
+	}
+
+	@Override
+	public int getImplicitH() {
+		return getInt(thisAtom, "implicitH", 0);
+	}
+
+	@Override
+	public int getIsotopicMass() {
+		return getInt(thisAtom, "isotopicMass", 0);
+	}
+
+	@Override
+	public int getImplicitDeuterium() {
+		return getInt(thisAtom, "implicitDeuterium", 0);
+	}
+
+	@Override
+	public int getImplicitTritium() {
+		return getInt(thisAtom, "implicitTritium", 0);
+	}
+
+	@Override
+	public String getRadical() {
 		return uc(getString(thisAtom, "radical", "NONE"));
 	}
 
-  	/// Bonds ///
-
-  	@Override
-  	public int getNumBonds() {
-  		return bonds.length;  
-  	}
-
-  	@Override
-  	public void setBond(int i) {
-  		thisBond = bonds[i];
-  	}
-
-  	@Override
-  	public int getIndexOriginAtom() {
-  		return getInt(thisBond, "originAtom", 0);
-  	}
-
-  	@Override
-  	public int getIndexTargetAtom() {
-  		return getInt(thisBond, "targetAtom", 0);
-  	}
-
-  	@Override
-  	public String getInchiBondType() {
-  		return uc(getString(thisBond, "type", "SINGLE"));
-  	}
-
-  	/// Stereo ///
-
-  	@Override
-  	public int getNumStereo0D() {
-  		return stereo.length;
-  	}
+	/// Bonds ///
 
 	@Override
-  	public void setStereo0D(int i) {
+	public int getNumBonds() {
+		return bonds.length;
+	}
+
+	@Override
+	public void setBond(int i) {
+		thisBond = bonds[i];
+	}
+
+	@Override
+	public int getIndexOriginAtom() {
+		return getInt(thisBond, "originAtom", 0);
+	}
+
+	@Override
+	public int getIndexTargetAtom() {
+		return getInt(thisBond, "targetAtom", 0);
+	}
+
+	@Override
+	public String getInchiBondType() {
+		return uc(getString(thisBond, "type", "SINGLE"));
+	}
+
+	/// Stereo ///
+
+	@Override
+	public int getNumStereo0D() {
+		return stereo.length;
+	}
+
+	@Override
+	public void setStereo0D(int i) {
 		thisStereo = stereo[i];
-  	}
+	}
 
-  	@Override
-  	public String getParity() {
-  		return uc(getString(thisStereo, "parity", ""));
-  	}
+	@Override
+	public String getParity() {
+		return uc(getString(thisStereo, "parity", ""));
+	}
 
-  	@Override
-  	public String getStereoType() {
-  		return uc(getString(thisStereo, "type", "NONE"));
-  	}
+	@Override
+	public String getStereoType() {
+		return uc(getString(thisStereo, "type", "NONE"));
+	}
 
-  	@Override
-  	public int getCenterAtom() {
-  		return getInt(thisStereo, "centralAtom", -1);
-  	}
+	@Override
+	public int getCenterAtom() {
+		return getInt(thisStereo, "centralAtom", -1);
+	}
 
 	@Override
 	public int[] getNeighbors() {
@@ -194,7 +197,7 @@ public class InChIToStructureJS extends InChIToStructure {
 	}
 
 	@Override
-	String getInchIBondStereo() {
+	public String getInchIBondStereo() {
 		return uc(getString(thisBond, "stereo", "NONE"));
 	}
 
@@ -209,20 +212,22 @@ public class InChIToStructureJS extends InChIToStructure {
 	}
 
 	@Override
-    /**
-     * Access the status of the InChI output.
-     * @return the status
-     */
-    public InchiStatus getStatus() {
-    	switch (retCode) {
-    	case 0:
-    		return InchiStatus.SUCCESS;
-    	case -1:
-    		return InchiStatus.ERROR;
-    	default:	
-    		return InchiStatus.WARNING;   	
-    	}
-    }
+	public
+	/**
+	 * Access the status of the InChI output.
+	 * 
+	 * @return the status
+	 */
+	InchiStatus getStatus() {
+		switch (retCode) {
+		case 0:
+			return InchiStatus.SUCCESS;
+		case -1:
+			return InchiStatus.ERROR;
+		default:
+			return InchiStatus.WARNING;
+		}
+	}
 
 	@Override
 	public long[][] getWarningFlags() {
@@ -231,12 +236,9 @@ public class InChIToStructureJS extends InChIToStructure {
 	}
 
 	@Override
-	@Deprecated
-	public INCHI_RET getReturnStatus() {
+	public @Deprecated INCHI_RET getReturnStatus() {
 		// Not implmemented in JavaScript
 		return null;
 	}
-
-
 
 }

@@ -18,13 +18,10 @@
  */
 package org.openscience.cdk.inchi;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.MDLV2000Writer;
 
 import io.github.dan2097.jnainchi.InchiOptions;
 import io.github.dan2097.jnainchi.InchiStatus;
@@ -49,7 +46,7 @@ import net.sf.jniinchi.INCHI_RET;
  * 
  * 
  */
-public class InChIGeneratorJS implements InChIGenerator {
+class InChIGeneratorJS implements IInChIGeneratorImpl {
 
 	private String soptions;
 
@@ -61,15 +58,10 @@ public class InChIGeneratorJS implements InChIGenerator {
 	private int retCode;
 
 	private String inchi;
-    
-    @Override
-	public InChIGenerator generateInChI(IAtomContainer atomContainer,
-                             InchiOptions options,
-                             boolean ignoreAromaticBonds) throws CDKException {
-    	soptions = (options == null ? "" : options.toString());
-        generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-        return this;
-    }
+
+	InChIGeneratorJS() {
+		// package private
+	}
 
 	/**
 	 * <p>
@@ -80,18 +72,14 @@ public class InChIGeneratorJS implements InChIGenerator {
 	 * @param ignore        Ignore aromatic bonds
 	 * @throws CDKException
 	 */
+	@Override
 	@SuppressWarnings("resource")
-	private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
-		try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-			
-			new MDLV2000Writer(bos).setDate("").write(atomContainer);
-			String moldata = bos.toString();
-			System.out.println(moldata);
-			inchi = execute("inchiFromMolfile", moldata, soptions, "inchi");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public
+	void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, InchiOptions options, boolean ignore) throws CDKException {
+		soptions = (options == null ? "" : options.toString());
+		String moldata = new InChIInputMOL().write(atomContainer);
+		System.out.println(moldata);
+		inchi = execute("inchiFromMolfile", moldata, soptions, "inchi");
 	}
 
 	/**
@@ -128,17 +116,20 @@ public class InChIGeneratorJS implements InChIGenerator {
         return (output == null ? null : /** @j2sNative output[key] || */"");
 	}
 
-    /**
-     * 
-     * JNI-InChI interface is supported in JavaScript
-     * 
-     * Gets return status from InChI process.  OKAY and WARNING indicate
-     * InChI has been generated, in all other cases InChI generation
-     * has failed. This returns the JNI INCHI enum and requires the optional
-     * "cdk-jniinchi-support" module to be loaded (or the full JNI InChI lib
-     * to be on the class path).
-     * @deprecated use {@link #getStatus()}
-     */
+	/**
+	 * 
+	 * This method is only here to allow backward compatibility with the JNI
+	 * interface. The JNI-InChI interface is not supported in JavaScript, and the
+	 * WASM interface via inchi-web.js does not support returning this sort of
+	 * information anyway.
+	 * 
+	 * Gets return status from InChI process. OKAY and WARNING indicate InChI has
+	 * been generated, in all other cases InChI generation has failed. This returns
+	 * the JNI INCHI enum and requires the optional "cdk-jniinchi-support" module to
+	 * be loaded (or the full JNI InChI lib to be on the class path).
+	 * 
+	 * @deprecated use {@link #getStatus()}
+	 */
     @Override
 	@Deprecated
     public INCHI_RET getReturnStatus() {
@@ -204,4 +195,5 @@ public class InChIGeneratorJS implements InChIGenerator {
 	public String getLog() {
     	return getJSOutput("log");
     }
+
 }

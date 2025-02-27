@@ -26,5 +26,25 @@ public class InChIWeb {
 		}
 	}
 
+	public static void initAndRun(Runnable r) {
+		/**
+		 * @j2sNative
+		 *    
+		 *    if (!J2S) {
+		 *      alert("J2S has not been installed");
+		 *      System.exit(0);
+		 *    }
+		 *   var t = [];
+		 *   t[0] = setInterval(
+		 *      function(){
+		 *       if (J2S.inchiWasmLoaded && J2S.inchiWasmLoaded()) {
+		 *        clearInterval(t[0]);
+		 *        System.out.println("InChI WASM initialized successfully");
+		 *        r.run$();
+		 *       }
+		 *      }, 50);
+		 */
+	}
+
 	
 }

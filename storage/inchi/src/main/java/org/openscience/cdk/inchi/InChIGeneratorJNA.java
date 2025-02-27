@@ -18,23 +18,15 @@
  */
 package org.openscience.cdk.inchi;
 
-import io.github.dan2097.jnainchi.InchiStatus;
-import net.sf.jniinchi.INCHI_OPTION;
-import net.sf.jniinchi.INCHI_RET;
-import io.github.dan2097.jnainchi.InchiAtom;
-import io.github.dan2097.jnainchi.InchiBond;
-import io.github.dan2097.jnainchi.InchiBondStereo;
-import io.github.dan2097.jnainchi.InchiBondType;
-import io.github.dan2097.jnainchi.InchiFlag;
-import io.github.dan2097.jnainchi.InchiInput;
-import io.github.dan2097.jnainchi.InchiKeyOutput;
-import io.github.dan2097.jnainchi.InchiKeyStatus;
-import io.github.dan2097.jnainchi.InchiOptions;
-import io.github.dan2097.jnainchi.InchiOutput;
-import io.github.dan2097.jnainchi.InchiRadical;
-import io.github.dan2097.jnainchi.InchiStereo;
-import io.github.dan2097.jnainchi.InchiStereoParity;
-import io.github.dan2097.jnainchi.JnaInchi;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -49,17 +41,26 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import io.github.dan2097.jnainchi.InchiAtom;
+import io.github.dan2097.jnainchi.InchiBond;
+import io.github.dan2097.jnainchi.InchiBondStereo;
+import io.github.dan2097.jnainchi.InchiBondType;
+import io.github.dan2097.jnainchi.InchiFlag;
+import io.github.dan2097.jnainchi.InchiInput;
+import io.github.dan2097.jnainchi.InchiKeyOutput;
+import io.github.dan2097.jnainchi.InchiKeyStatus;
+import io.github.dan2097.jnainchi.InchiOptions;
+import io.github.dan2097.jnainchi.InchiOutput;
+import io.github.dan2097.jnainchi.InchiRadical;
+import io.github.dan2097.jnainchi.InchiStatus;
+import io.github.dan2097.jnainchi.InchiStereo;
+import io.github.dan2097.jnainchi.InchiStereoParity;
+import io.github.dan2097.jnainchi.JnaInchi;
+import net.sf.jniinchi.INCHI_RET;
 
 /**
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
- * a CDK IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
+ * a CDK IAtomContainer. It places calls to a JNA interface for the InChI C++ library.
  *
  * <p>If the atom container has 3D coordinates for all of its atoms then they
  * will be used, otherwise 2D coordinates will be used if available.
@@ -96,37 +97,24 @@ import java.util.Map;
  * @cdk.module inchi
  * @cdk.githash
  */
-public class InChIGeneratorJNA  implements InChIGenerator {
+public class InChIGeneratorJNA  implements IInChIGeneratorImpl {
 
 	InChIGeneratorJNA() {
 		// not public
 	}
 	
-    protected InchiOptions options;
+    private /*final*/ InchiInput input;
 
-    protected /*final*/ InchiInput input;
-
-    protected InchiOutput output;
-
-    private /*final*/ boolean auxNone;
+    private InchiOutput output;
 
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(InChIGenerator.class);
 
     /**
+     * (not referenced)
+     * 
      * AtomContainer instance refers to.
      */
-    protected IAtomContainer atomContainer;
-
-    @Override
-	public InChIGenerator generateInChI(IAtomContainer atomContainer,
-                             InchiOptions options,
-                             boolean ignoreAromaticBonds) throws CDKException {
-        this.input = new InchiInput();
-        this.options = options;
-        auxNone = this.options.getFlags().contains(InchiFlag.AuxNone);
-        generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-        return this;
-    }
+    private IAtomContainer atomContainer;
 
     /**
      * <p>Reads atoms, bonds etc from atom container and converts to format
@@ -134,12 +122,14 @@ public class InChIGeneratorJNA  implements InChIGenerator {
      * the InChI.
      *
      * @param atomContainer AtomContainer to generate InChI for.
-     * @param ignore Ignore aromatic bonds
+     * @param ignoreAromaticBonds Ignore aromatic bonds
      * @throws CDKException
      */
-    private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
+    @Override
+    public void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, 
+    		InchiOptions options, boolean ignoreAromaticBonds) throws CDKException {
         this.atomContainer = atomContainer;
-
+        this.input = new InchiInput();
         Iterator<IAtom> atoms = atomContainer.atoms().iterator();
 
         // Check for 3d coordinates
@@ -188,7 +178,7 @@ public class InChIGeneratorJNA  implements InChIGenerator {
             atomMap.put(atom, iatom);
 
             // Check if charged
-            int charge = atom.getFormalCharge();
+            int charge = atom.getFormalCharge().intValue();
             if (charge != 0) {
                 iatom.setCharge(charge);
             }
@@ -196,7 +186,7 @@ public class InChIGeneratorJNA  implements InChIGenerator {
             // Check whether isotopic
             Integer isotopeNumber = atom.getMassNumber();
             if (isotopeNumber != null) {
-                iatom.setIsotopicMass(isotopeNumber);
+                iatom.setIsotopicMass(isotopeNumber.intValue());
             }
 
             // Check for implicit hydrogens
@@ -206,7 +196,7 @@ public class InChIGeneratorJNA  implements InChIGenerator {
             Integer implicitH = atom.getImplicitHydrogenCount();
 
             // set implicit hydrogen count, -1 tells the inchi to determine it
-            iatom.setImplicitHydrogen(implicitH != null ? implicitH : -1);
+            iatom.setImplicitHydrogen(implicitH != null ? implicitH.intValue() : -1);
 
             // Check if radical
             int count = atomContainer.getConnectedSingleElectronsCount(atom);
@@ -238,7 +228,7 @@ public class InChIGeneratorJNA  implements InChIGenerator {
             // Get bond order
             InchiBondType order;
             Order bo = bond.getOrder();
-            if (!ignore && bond.isAromatic()) {
+            if (!ignoreAromaticBonds && bond.isAromatic()) {
                 order = InchiBondType.ALTERN;
             } else if (bo == Order.SINGLE) {
                 order = InchiBondType.SINGLE;
@@ -488,8 +478,6 @@ public class InChIGeneratorJNA  implements InChIGenerator {
      */
     @Override
     public String getAuxInfo() {
-        if (auxNone)
-            LOGGER.warn("AuxInfo requested but AuxNone option is set (default).");
         return output.getAuxInfo();
     }
 
@@ -508,5 +496,4 @@ public class InChIGeneratorJNA  implements InChIGenerator {
     public String getLog() {
         return output.getLog();
     }
-
 }

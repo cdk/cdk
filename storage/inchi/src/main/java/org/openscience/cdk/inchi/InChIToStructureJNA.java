@@ -33,19 +33,19 @@ import net.sf.jniinchi.INCHI_RET;
 
 /**
  * <p>
- * This Java-specific class generates a CDK IAtomContainer from an InChI string. 
+ * This Java-specific class generates a CDK IAtomContainer from an InChI string.
  * 
- * It places calls to a JNA wrapper for the InChI C++ library to 
- * fulfill requests for model data made by its superclass InChIToStructure.
+ * It places calls to a JNA wrapper for the InChI C++ library to fulfill
+ * requests for model data made by its superclass InChIToStructure.
  * 
  * @author Bob Hanson
  * @cdk.module inchi
  * @cdk.githash
  */
-public class InChIToStructureJNA extends InChIToStructure {
+public class InChIToStructureJNA implements IInChIToStructure {
 
 	private InchiInputFromInchiOutput output;
-	private Map<InchiAtom, Integer> map = new Hashtable<InchiAtom, Integer>();
+	private Map<InchiAtom, Integer> map;
 	private List<InchiAtom> atoms;
 	private InchiAtom thisAtom;
 	private List<InchiBond> bonds;
@@ -53,94 +53,99 @@ public class InChIToStructureJNA extends InChIToStructure {
 	private List<InchiStereo> stereos;
 	private InchiStereo thisStereo;
 
+	InChIToStructureJNA() {
+		// not public
+	}
+
 	@Override
-	void initializeInchiModel(String inchi) {
+	public void initializeInchiModel(String inchi) {
 		output = JnaInchi.getInchiInputFromInchi(inchi);
 		InchiInput input = output.getInchiInput();
 		atoms = input.getAtoms();
 		bonds = input.getBonds();
 		stereos = input.getStereos();
+		map = new Hashtable<InchiAtom, Integer>();
 		for (int i = getNumAtoms(); --i >= 0;)
 			map.put(input.getAtom(i), Integer.valueOf(i));
 	}
 
 	@Override
-	void setAtom(int i) {
+	public void setAtom(int i) {
 		thisAtom = atoms.get(i);
 	}
 
 	@Override
-	void setBond(int i) {
+	public void setBond(int i) {
 		thisBond = bonds.get(i);
 	}
 
 	@Override
-	void setStereo0D(int i) {
+	public void setStereo0D(int i) {
 		thisStereo = stereos.get(i);
 	}
 
 	@Override
-	int getNumAtoms() {
+	public int getNumAtoms() {
 		return atoms.size();
 	}
 
 	@Override
-	int getNumBonds() {
+	public int getNumBonds() {
 		return bonds.size();
 	}
 
 	@Override
-	int getNumStereo0D() {
+	public int getNumStereo0D() {
 		return stereos.size();
 	}
 
 	@Override
-	String getElementType() {
+	public String getElementType() {
 		return thisAtom.getElName();
 	}
 
 	@Override
-	double getX() {
+	public double getX() {
 		return thisAtom.getX();
 	}
 
 	@Override
-	double getY() {
+	public double getY() {
 		return thisAtom.getY();
 	}
 
 	@Override
-	double getZ() {
+	public double getZ() {
 		return thisAtom.getZ();
 	}
 
 	@Override
-	int getCharge() {
+	public int getCharge() {
 		return thisAtom.getCharge();
 	}
 
 	@Override
-	int getImplicitH() {
+	public int getImplicitH() {
 		return thisAtom.getImplicitHydrogen();
 	}
 
 	@Override
-	int getIsotopicMass() {
+	public int getIsotopicMass() {
 		return thisAtom.getIsotopicMass();
 	}
 
 	@Override
-	int getImplicitDeuterium() {
+	public int getImplicitDeuterium() {
 		return thisAtom.getImplicitDeuterium();
 	}
 
 	@Override
-	int getImplicitTritium() {
+	public int getImplicitTritium() {
 		return thisAtom.getImplicitTritium();
 	}
 
 	@Override
-	String getRadical() {
+	public String getRadical() {
 		return uc(thisAtom.getRadical().name());
 	}
 
@@ -160,7 +165,7 @@ public class InChIToStructureJNA extends InChIToStructure {
 	}
 
 	@Override
-	String getInchIBondStereo() {
+	public String getInchIBondStereo() {
 		return uc(thisBond.getStereo().name());
 	}
 
