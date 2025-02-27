@@ -22,31 +22,37 @@ package org.openscience.cdk.inchi;
 
 import java.util.List;
 
-import _ES6.InChIWeb;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
 import io.github.dan2097.jnainchi.InchiFlag;
 import io.github.dan2097.jnainchi.InchiOptions;
 import net.sf.jniinchi.INCHI_OPTION;
 
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import _ES6.InChIWeb;
+
 /**
  *
  * This class modified by Bob Hanson to allow for dual platform JNA-InChI/Java
- * and INCHI-WEB WASM/JavaScript access. n
+ * and INCHI-WEB WASM/JavaScript access. All nonprivate signatures are the same
+ * as ever; the only think changed is some JavaScript initialization business to
+ * load the WASM and an optional asynchronous implementation for JavaScript.
+ * This is useful because the WASM load is asynchronous, and if it is not loaded
+ * with a callback, it may not have been initialized prior to use.
+ * <p>
  * 
- * Note that JavaScript initialization of the WASM is asychonous. Be sure to
- * leave a time out or access InChiGeneratorFactory.getInstance() prior to a
- * Timer event (but not Thread.sleep(), which is not supported in JavaScript).
+ * Note: The WASM interface is in the _ES6 folder because it may be shared with other
+ * SwingJS implementations of InChI WASM such as Jmol, openChemLib, and JME.
+ * <p>
+ * Class structure is that InChIGeneratorFactory, InChIGenerator, and InChIToStructure
+ * are all basically unchanged. However InChIGenerator and InChIToStructure farm their
+ * platform-specific calls to instances of their package-private JNA and JS auxiliary classes.
  * 
  * <p>
  * Factory providing access to {@link InChIGenerator} and
  * {@link InChIToStructure}. See those classes for examples of use. These
- * methods make use of the JNA-InChI library.
- * 
- * The two WASM-related files are in the _ES6/ folder. 
- * Do not try to compress these files with Google Closure Compiler.
+ * methods make use of the JNI-InChI library.
  *
  * <p>
  * The {@link InChIGeneratorFactory} is a singleton class, which means that
@@ -60,7 +66,7 @@ import net.sf.jniinchi.INCHI_OPTION;
  * <p>
  * InChI/Structure interconversion is implemented in this way so that we can
  * check whether or not the native code required is available. If the native
- * code cannot be loaded during the first call to  <code>getInstance</code>
+ * code cannot be loaded during the first call to <code>getInstance</code>
  * method (when the instance is created) a {@link CDKException} will be thrown.
  * The most common problem is that the native code is not in the * the correct
  * location. Java searches the locations in the PATH environmental variable,
@@ -88,11 +94,30 @@ public class InChIGeneratorFactory {
 	 * do not set this final, as the java2script transpiler needs to leave the
 	 * unevaluated javadoc.
 	 */
-	private /*nonfinal*/ static boolean isJS = (/** @j2sNative true || */false);
+	/*package nonfinal*/ static boolean isJS = (/** @j2sNative true || */false);
 	
 	static {
 		if (isJS)
 			InChIWeb.importWASM();
+	}
+
+    /**
+     * This method allows for asynchronous JavaScript initialization of the WASM module.
+     * 
+     * @param r
+     * @return
+     * @throws CDKException 
+     */
+    public static InChIGeneratorFactory getInstance(Runnable r) throws CDKException {
+        synchronized (InChIGeneratorFactory.class) {
+            if (INSTANCE == null) {
+                INSTANCE = new InChIGeneratorFactory();
+            }
+            if (r != null) {
+            	INSTANCE.initAndRun(r);
+            }
+            return INSTANCE;
+        }
 	}
 
     /**
@@ -102,28 +127,13 @@ public class InChIGeneratorFactory {
      * @param r Runnable to run.
      */
 	private void initAndRun(Runnable r) {
-		/**
-		 * @j2sNative
-		 *    
-		 *    if (!J2S) {
-		 *      alert("J2S has not been installed");
-		 *      System.exit(0);
-		 *    }
-		 *   var t = [];
-		 *   t[0] = setInterval(
-		 *      function(){
-		 *       if (J2S.inchiWasmLoaded && J2S.inchiWasmLoaded()) {
-		 *        clearInterval(t[0]);
-		 *        System.out.println("InChI WASM initialized successfully");
-		 *        r.run$();
-		 *       }
-		 *      }, 50);
-		 */
-		{
-			r.run();
+		InChIWeb.initAndRun(r);
+		if (InChIGeneratorFactory.isJS) {
+			
+		} else {
+			r.run();			
 		}
 	}
-
     private static InChIGeneratorFactory INSTANCE;
 
     /**
@@ -142,33 +152,17 @@ public class InChIGeneratorFactory {
     }
 
     /**
-     * 
      * Gives the one <code>InChIGeneratorFactory</code> instance,
      * if needed also creates it.
      *
-     * @return the one <code>InChIGeneratorFactory</code> instance
-     */
-    public static InChIGeneratorFactory getInstance() throws CDKException {
-    	return getInstance(null);
-    }
-    
-    /**
-     * Gives the one <code>InChIGeneratorFactory</code> instance,
-     * if needed also creates it.
-     * This method allows for asynchronous JavaScript initialization of the WASM module.
-     *
-     * @param r
      * @return the one <code>InChIGeneratorFactory</code> instance
      * @throws CDKException if unable to load native code when attempting
      *                      to create the factory
      */
-    public static InChIGeneratorFactory getInstance(Runnable r) throws CDKException {
+    public static InChIGeneratorFactory getInstance() throws CDKException {
         synchronized (InChIGeneratorFactory.class) {
             if (INSTANCE == null) {
                 INSTANCE = new InChIGeneratorFactory();
-            }
-            if (r != null) {
-            	INSTANCE.initAndRun(r);
             }
             return INSTANCE;
         }
@@ -213,7 +207,7 @@ public class InChIGeneratorFactory {
      * @throws CDKException if the generator cannot be instantiated
      */
     public InChIGenerator getInChIGenerator(IAtomContainer container) throws CDKException {
-        return (isJS ? new InChIGeneratorJS(container, ignoreAromaticBonds): new InChIGeneratorJNA(container, ignoreAromaticBonds));
+        return (new InChIGenerator(container, ignoreAromaticBonds));
     }
 
     /**
@@ -225,7 +219,7 @@ public class InChIGeneratorFactory {
      * @throws CDKException if the generator cannot be instantiated
      */
     public InChIGenerator getInChIGenerator(IAtomContainer container, String options) throws CDKException {
-        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGeneratorJNA(container, options, ignoreAromaticBonds));
+        return (new InChIGenerator(container, options, ignoreAromaticBonds));
     }
 
     /**
@@ -240,7 +234,7 @@ public class InChIGeneratorFactory {
     @Deprecated
     public InChIGenerator getInChIGenerator(IAtomContainer container, List<INCHI_OPTION> options) throws CDKException {
         if (options == null) throw new IllegalArgumentException("Null options");
-        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGeneratorJNA(container, options, ignoreAromaticBonds));
+        return (new InChIGenerator(container, options, ignoreAromaticBonds));
     }
 
     /**
@@ -271,7 +265,7 @@ public class InChIGeneratorFactory {
      */
     public InChIGenerator getInChIGenerator(IAtomContainer container, InchiOptions options) throws CDKException {
         if (options == null) throw new IllegalArgumentException("Null flags");
-        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGeneratorJNA(container, options, ignoreAromaticBonds));
+        return (new InChIGenerator(container, options, ignoreAromaticBonds));
     }
 
     /**
@@ -283,7 +277,7 @@ public class InChIGeneratorFactory {
      * @throws CDKException if the generator cannot be instantiated
      */
     public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
-		return (isJS ? new InChIToStructureJS(inchi, builder) : new InChIToStructureJNA(inchi, builder));
+        return (new InChIToStructure(inchi, builder));
     }
 
     /**
@@ -297,7 +291,7 @@ public class InChIGeneratorFactory {
      */
     public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, String options)
             throws CDKException {
-		return (isJS ? new InChIToStructureJS(inchi, builder, options) : new InChIToStructureJNA(inchi, builder, options));
+        return (new InChIToStructure(inchi, builder, options));
     }
 
     /**
@@ -311,6 +305,6 @@ public class InChIGeneratorFactory {
      */
     public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options)
             throws CDKException {
-		return (isJS ? new InChIToStructureJS(inchi, builder, options) : new InChIToStructureJNA(inchi, builder, options));
+        return (new InChIToStructure(inchi, builder, options));
     }
 }

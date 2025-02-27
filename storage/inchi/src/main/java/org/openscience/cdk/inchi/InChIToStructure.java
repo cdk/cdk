@@ -3,16 +3,16 @@
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General abstract public License
+ * modify it under the terms of the GNU Lesser General public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General abstract public License for more details.
+ * GNU Lesser General public License for more details.
  *
- * You should have received a copy of the GNU Lesser General abstract public License
+ * You should have received a copy of the GNU Lesser General public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
@@ -79,16 +79,23 @@ import net.sf.jniinchi.INCHI_RET;
  * @cdk.module inchi
  * @cdk.githash
  */
-public abstract class InChIToStructure {
+/* not really public */ public class InChIToStructure  {
 
-	protected String inchi;
+	private String inchi;
 
+	private IInChIToStructure i2sImpl;
+
+	/**
+	 *  unused for InChIToStructure
+	 * 
+	 */
+	private InchiOptions options;
     /**
      * Constructor. Generates CDK AtomContainer from InChI.
      * @param inchi
      * @throws CDKException
      */
-    protected InChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
+    InChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
         this(inchi, builder, new InchiOptions.InchiOptionsBuilder().build());
     }
 
@@ -98,7 +105,7 @@ public abstract class InChIToStructure {
      * @param options
      * @throws CDKException
      */
-    protected InChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
+    InChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
         this(inchi, builder, InChIOptionParser.parseString(options));
     }
 
@@ -108,7 +115,7 @@ public abstract class InChIToStructure {
      * @param options
      * @throws CDKException
      */
-    protected InChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
+    InChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
         this(inchi, builder, InChIOptionParser.parseStrings(options));
     }
 
@@ -123,15 +130,26 @@ public abstract class InChIToStructure {
 	 * @param setDimension 
 	 * @throws CDKException
 	 */
-	protected InChIToStructure(String inchi, IChemObjectBuilder builder, InchiOptions options) throws CDKException {
+	InChIToStructure(String inchi, IChemObjectBuilder builder, InchiOptions options) throws CDKException {
 		if (inchi == null)
 			throw new IllegalArgumentException("Null InChI string provided");
 		if (options == null)
 			throw new IllegalArgumentException("Null options provided");
+		this.options = options;
 		this.inchi = inchi;
+		i2sImpl = (InChIGeneratorFactory.isJS ? new InChIToStructureJS() : new InChIToStructureJNA());
 		generateAtomContainerFromInchi(builder);
 	}
 	
+	/**
+	 * Returns generated molecule.
+	 * 
+	 * @return An AtomContainer object
+	 */
+	public IAtomContainer getAtomContainer() {
+		return (molecule);
+	}
+
 	/**
 	 * Gets return status from InChI process. OKAY and WARNING indicate InChI has
 	 * been generated, in all other cases InChI generation has failed. This returns
@@ -141,24 +159,32 @@ public abstract class InChIToStructure {
 	 * @deprecated use getStatus
 	 */
 	@Deprecated
-	abstract public INCHI_RET getReturnStatus();
+	public INCHI_RET getReturnStatus() {
+		return i2sImpl.getReturnStatus();
+	}
 
 	/**
 	 * Access the status of the InChI output.
 	 * 
 	 * @return the status
 	 */
-	abstract public InchiStatus getStatus();
+	public InchiStatus getStatus(){
+		return i2sImpl.getStatus();
+	};
 
 	/**
 	 * Gets generated (error/warning) messages.
 	 */
-	abstract public String getMessage();
+	public String getMessage(){
+		return i2sImpl.getMessage();
+	}
 
 	/**
 	 * Gets generated log.
 	 */
-	abstract public String getLog();
+	public String getLog() {
+		return i2sImpl.getLog();
+	}
 
 	/**
 	 * <p>
@@ -171,7 +197,9 @@ public abstract class InChIToStructure {
 	 * y=1 =&gt; Main layer or Mobile-H <br>
 	 * y=0 =&gt; Fixed-H layer
 	 */
-	abstract public long[][] getWarningFlags();
+	public long[][] getWarningFlags() {
+		return i2sImpl.getWarningFlags();
+	}
 
 	// magic number - indicates isotope mass is relative
 	private static final int ISOTOPIC_SHIFT_FLAG = 10000;
@@ -220,20 +248,20 @@ public abstract class InChIToStructure {
 	 *
 	 * @throws CDKException
 	 */
-	private void generateAtomContainerFromInchi(IChemObjectBuilder builder) throws CDKException {
+	void generateAtomContainerFromInchi(IChemObjectBuilder builder) throws CDKException {
 
 		// molecule = new AtomContainer();
 		molecule = builder.newInstance(IAtomContainer.class);
 
-		initializeInchiModel(inchi);
-		int natoms = getNumAtoms();
+		i2sImpl.initializeInchiModel(inchi);
+		int natoms = i2sImpl.getNumAtoms();
 		inchi2cdkAtom = new ArrayList<>();
 		for (int i = 0; i < natoms; i++) {
-			setAtom(i);
+			i2sImpl.setAtom(i);
 			IAtom cAt = builder.newInstance(IAtom.class);
 			inchi2cdkAtom.add(cAt);
 			cAt.setID("a" + i);
-			int elem = Elements.ofString(getElementType()).number();
+			int elem = Elements.ofString(i2sImpl.getElementType()).number();
 			cAt.setAtomicNumber(Integer.valueOf(elem));
 
 			// Ignore coordinates - all zero - unless aux info was given... but
@@ -241,9 +269,9 @@ public abstract class InChIToStructure {
 
 			// InChI does not have unset properties so we set charge,
 			// hydrogen count (implicit) and isotopic mass
-			cAt.setFormalCharge(Integer.valueOf(getCharge()));
-			cAt.setImplicitHydrogenCount(Integer.valueOf(getImplicitH()));
-			int isotopicMass = getIsotopicMass();
+			cAt.setFormalCharge(Integer.valueOf(i2sImpl.getCharge()));
+			cAt.setImplicitHydrogenCount(Integer.valueOf(i2sImpl.getImplicitH()));
+			int isotopicMass = i2sImpl.getIsotopicMass();
 			if (isotopicMass != 0) {
 				if (isotopicMass > ISOTOPIC_SHIFT_THRESHOLD) {
 					int delta = isotopicMass - ISOTOPIC_SHIFT_FLAG;
@@ -258,10 +286,10 @@ public abstract class InChIToStructure {
 
 			molecule.addAtom(cAt);
 			cAt = molecule.getAtom(molecule.getAtomCount() - 1);
-			addHydrogenIsotopes(builder, cAt, 2, getImplicitDeuterium());
-			addHydrogenIsotopes(builder, cAt, 3, getImplicitTritium());
+			addHydrogenIsotopes(builder, cAt, 2, i2sImpl.getImplicitDeuterium());
+			addHydrogenIsotopes(builder, cAt, 3, i2sImpl.getImplicitTritium());
 
-			String radical = getRadical();
+			String radical = i2sImpl.getRadical();
 			switch (radical) {
 			case "DOUBLET":
 				molecule.addSingleElectron(molecule.indexOf(cAt));
@@ -274,15 +302,15 @@ public abstract class InChIToStructure {
 				break;
 			}
 		}
-		int nBonds = getNumBonds();
+		int nBonds = i2sImpl.getNumBonds();
 		for (int i = 0; i < nBonds; i++) {
-			setBond(i);
+			i2sImpl.setBond(i);
 			IBond cBo = builder.newInstance(IBond.class);
-			IAtom atO = inchi2cdkAtom.get(getIndexOriginAtom());
-			IAtom atT = inchi2cdkAtom.get(getIndexTargetAtom());
+			IAtom atO = inchi2cdkAtom.get(i2sImpl.getIndexOriginAtom());
+			IAtom atT = inchi2cdkAtom.get(i2sImpl.getIndexTargetAtom());
 			cBo.setAtoms(new IAtom[] { atO, atT });
 
-			String type = getInchiBondType();
+			String type = i2sImpl.getInchiBondType();
 			switch (type) {
 			case "SINGLE":
 				cBo.setOrder(IBond.Order.SINGLE);
@@ -300,7 +328,7 @@ public abstract class InChIToStructure {
 				throw new CDKException("Unknown bond type: " + type);
 			}
 
-			switch (getInchIBondStereo()) {
+			switch (i2sImpl.getInchIBondStereo()) {
 			case "NONE":
 				cBo.setStereo(IBond.Stereo.NONE);
 				break;
@@ -327,15 +355,15 @@ public abstract class InChIToStructure {
 			molecule.addBond(cBo);
 		}
 
-		int nStereo = getNumStereo0D();
+		int nStereo = i2sImpl.getNumStereo0D();
 		for (int i = 0; i < nStereo; i++) {
-			setStereo0D(i);
-			int[] neighbours = getNeighbors();
-			String type = getStereoType();
+			i2sImpl.setStereo0D(i);
+			int[] neighbours = i2sImpl.getNeighbors();
+			String type = i2sImpl.getStereoType();
 			switch (type) {
 			case "TETRAHEDRAL":
 			case "ALLENE":
-				int central = getCenterAtom();
+				int central = i2sImpl.getCenterAtom();
 				IAtom focus = inchi2cdkAtom.get(central);
 				IAtom[] neighbors = new IAtom[] { inchi2cdkAtom.get(neighbours[0]), inchi2cdkAtom.get(neighbours[1]),
 						inchi2cdkAtom.get(neighbours[2]), inchi2cdkAtom.get(neighbours[3]) };
@@ -343,7 +371,7 @@ public abstract class InChIToStructure {
 
 				// as per JNI InChI doc even is clockwise and odd is
 				// anti-clockwise
-				switch (getParity()) {
+				switch (i2sImpl.getParity()) {
 				case "ODD":
 					stereo = ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
 					break;
@@ -432,7 +460,7 @@ public abstract class InChIToStructure {
 						flip(stereoBond);
 				}
 
-				int config = getParity().equals("EVEN") ? IStereoElement.OPPOSITE : IStereoElement.TOGETHER;
+				int config = i2sImpl.getParity().equals("EVEN") ? IStereoElement.OPPOSITE : IStereoElement.TOGETHER;
 
 				if (extended) {
 					molecule.addStereoElement(new ExtendedCisTrans(stereoBond,
@@ -475,74 +503,6 @@ public abstract class InChIToStructure {
 			return bond.getOther(atom);
 		}
 		return atom;
-	}
-
-	/**
-	 * Returns generated molecule.
-	 * 
-	 * @return An AtomContainer object
-	 */
-	public IAtomContainer getAtomContainer() {
-		return (molecule);
-	}
-
-	abstract void initializeInchiModel(String inchi);
-
-	// for-loop setters
-	abstract void setAtom(int i);
-
-	abstract void setBond(int i);
-
-	abstract void setStereo0D(int i);
-
-	// general counts
-	abstract int getNumAtoms();
-
-	abstract int getNumBonds();
-
-	abstract int getNumStereo0D();
-
-	// Atom Methods
-	abstract String getElementType();
-
-	abstract double getX();
-
-	abstract double getY();
-
-	abstract double getZ();
-
-	abstract int getCharge();
-
-	abstract int getImplicitH();
-
-	abstract int getIsotopicMass();
-
-	abstract int getImplicitDeuterium();
-
-	abstract int getImplicitTritium();
-
-	abstract String getRadical();
-
-	// Bond Methods
-	abstract int getIndexOriginAtom();
-
-	abstract int getIndexTargetAtom();
-
-	abstract String getInchiBondType();
-
-	abstract String getInchIBondStereo();
-
-	// Stereo Methods
-	abstract String getParity();
-
-	abstract String getStereoType();
-
-	abstract int getCenterAtom();
-
-	abstract int[] getNeighbors();
-
-	protected static String uc(Object o) {
-		return o.toString().toUpperCase();
 	}
 
 }

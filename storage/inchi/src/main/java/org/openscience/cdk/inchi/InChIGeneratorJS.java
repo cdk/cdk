@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.inchi;
 
-import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
@@ -26,7 +25,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 import io.github.dan2097.jnainchi.InchiOptions;
 import io.github.dan2097.jnainchi.InchiStatus;
-import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 
 /**
@@ -48,7 +46,7 @@ import net.sf.jniinchi.INCHI_RET;
  * 
  * 
  */
-public class InChIGeneratorJS extends InChIGenerator {
+class InChIGeneratorJS implements IInChIGeneratorImpl {
 
 	private String soptions;
 
@@ -60,31 +58,9 @@ public class InChIGeneratorJS extends InChIGenerator {
 	private int retCode;
 
 	private String inchi;
-    	
-	protected InChIGeneratorJS(IAtomContainer container, boolean ignoreAromaticBonds) throws CDKException {
-		super(container, ignoreAromaticBonds);
-	}
 
-	protected InChIGeneratorJS(IAtomContainer container, InchiOptions options, boolean ignoreAromaticBonds) throws CDKException {
-		super(container, options, ignoreAromaticBonds);
-	}
-
-	/**
-	 * BH added
-	 * 
-	 * @param container
-	 * @param options
-	 * @param ignoreAromaticBonds
-	 * @throws CDKException 
-	 * @author Bob Hanson
-	 */
-    protected InChIGeneratorJS(IAtomContainer container, String options, boolean ignoreAromaticBonds) throws CDKException {
-		super(container, options, ignoreAromaticBonds);
-	}
-
-	@SuppressWarnings("deprecation")
-	protected InChIGeneratorJS(IAtomContainer container, List<INCHI_OPTION> options, boolean ignoreAromaticBonds) throws CDKException {
-		super(container, options, ignoreAromaticBonds);
+	InChIGeneratorJS() {
+		// package private
 	}
 
 	/**
@@ -98,7 +74,8 @@ public class InChIGeneratorJS extends InChIGenerator {
 	 */
 	@Override
 	@SuppressWarnings("resource")
-	protected void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
+	public
+	void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, InchiOptions options, boolean ignore) throws CDKException {
 		soptions = (options == null ? "" : options.toString());
 		String moldata = new InChIInputMOL().write(atomContainer);
 		System.out.println(moldata);

@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import io.github.dan2097.jnainchi.InchiFlag;
 import io.github.dan2097.jnainchi.InchiOptions;
@@ -30,6 +32,10 @@ import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 
 /**
+ * 
+ * Modified by Bob Hanson to shunt Java and JavaScript implementations to 
+ * their respective classes, which implement IInChIGeneratorImpl. 
+ * 
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
  * a CDK IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
  *
@@ -68,7 +74,7 @@ import net.sf.jniinchi.INCHI_RET;
  * @cdk.module inchi
  * @cdk.githash
  */
-public abstract class InChIGenerator {
+public class InChIGenerator {
 
     private static InchiOptions DEFAULT_OPTIONS;
 
@@ -83,24 +89,35 @@ public abstract class InChIGenerator {
 		return DEFAULT_OPTIONS;
 	}
     
-	protected final InchiOptions options;
-	
-	protected final boolean auxNone;
-
     /**
-     * (never referenced)
+     * for testing only
      * 
      * AtomContainer instance refers to.
      */
-    protected IAtomContainer atomContainer;
+    public IAtomContainer atomContainer;
+
+	private IInChIGeneratorImpl igImpl;
+
+	public InchiOptions options; // used for testing
+
+	private boolean auxNone;
     
-	protected InChIGenerator(IAtomContainer atomContainer,
+    private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(InChIGenerator.class);
+
+    InChIGenerator(IAtomContainer atomContainer,
 			                 InchiOptions options,
-			                 boolean ignoreAromaticBonds) throws CDKException {
-        this.atomContainer = atomContainer;
-		this.options = (options == null ? getDefaultOptions() : options);
-		generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-		auxNone = this.options.getFlags().contains(InchiFlag.AuxNone);
+			                 boolean ignoreAromaticBonds) throws CDKException {		
+    	if (options == null) {
+    		// this was required to pass InChIGeneratorFactoryTest line 96
+    		//         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, (String) null);
+        		options = getDefaultOptions();
+    	}
+		this.options = options; // for testing only
+		System.out.println("InChIGen options are " + options); 
+		this.atomContainer = atomContainer; // for testing only
+		igImpl = (InChIGeneratorFactory.isJS ? new InChIGeneratorJS() : new InChIGeneratorJNA());
+		igImpl.generateInchiFromCDKAtomContainer(atomContainer, options, ignoreAromaticBonds);
+        auxNone = options.getFlags().contains(InchiFlag.AuxNone);
 	}
 
 	/**
@@ -114,7 +131,7 @@ public abstract class InChIGenerator {
      * @throws org.openscience.cdk.exception.CDKException if there is an
      *                                                    error during InChI generation
      */
-    protected InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
+    InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
         this(atomContainer, getDefaultOptions(), ignoreAromaticBonds);
     }
 
@@ -131,7 +148,7 @@ public abstract class InChIGenerator {
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws CDKException
      */
-    protected InChIGenerator(IAtomContainer atomContainer, String optStr, boolean ignoreAromaticBonds)
+    InChIGenerator(IAtomContainer atomContainer, String optStr, boolean ignoreAromaticBonds)
     		throws CDKException {
     	this(atomContainer, InChIOptionParser.parseString(optStr), ignoreAromaticBonds);
 	}
@@ -157,13 +174,10 @@ public abstract class InChIGenerator {
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws CDKException
      */
-    @Deprecated
-    protected InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> opts, boolean ignoreAromaticBonds)
+    InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> opts, boolean ignoreAromaticBonds)
             throws CDKException {
         this(atomContainer, convertJniToJnaOpts(opts), ignoreAromaticBonds);
     }
-
-	abstract protected void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException;
 
     /**
      * Gets return status from InChI process.  OKAY and WARNING indicate
@@ -174,38 +188,54 @@ public abstract class InChIGenerator {
      * @deprecated use {@link #getStatus()}
      */
 	@Deprecated
-    public abstract INCHI_RET getReturnStatus();
+    public INCHI_RET getReturnStatus() {
+		return igImpl.getReturnStatus();
+	}
 
     /**
      * Access the status of the InChI output.
      * @return the status
      */
-    public abstract InchiStatus getStatus();
+    public InchiStatus getStatus() {
+    	return igImpl.getStatus();
+    }
 
     /**
      * Gets generated InChI string.
      */
-    public abstract String getInchi();
+    public String getInchi() {
+    	return igImpl.getInchi();
+    }
     
     /**
      * Gets generated InChIKey string.
      */
-    public abstract String getInchiKey() throws CDKException;
+    public String getInchiKey() throws CDKException {
+    	return igImpl.getInchiKey();
+    }
 
     /**
      * Gets auxiliary information.
      */
-    public abstract String getAuxInfo();
+    public String getAuxInfo() {
+        if (auxNone)
+            LOGGER.warn("AuxInfo requested but AuxNone option is set (default).");
+    	return igImpl.getAuxInfo();
+    }
 
     /**
      * Gets generated (error/warning) messages.
      */
-    public abstract String getMessage();
+    public String getMessage() {
+		return igImpl.getMessage();
+	}
 
     /**
      * Gets generated log.
      */
-    public abstract String getLog();
+    public String getLog() {
+		return igImpl.getLog();
+	};
 
 
 }
