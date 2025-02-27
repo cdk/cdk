@@ -32,7 +32,7 @@ import io.github.dan2097.jnainchi.InchiOptions;
 import net.sf.jniinchi.INCHI_OPTION;
 
 /**
- * 
+ *
  * This class modified by Bob Hanson to allow for dual platform JNA-InChI/Java
  * and INCHI-WEB WASM/JavaScript access. n
  * 
@@ -41,8 +41,8 @@ import net.sf.jniinchi.INCHI_OPTION;
  * Timer event (but not Thread.sleep(), which is not supported in JavaScript).
  * 
  * <p>
- * Factory providing access to {@link InChIGenerator} and
- * {@link InChIToStructure}. See those classes for examples of use. These
+ * Factory providing access to {@link InChIGeneratorAbs} and
+ * {@link InChIToStructureAbs}. See those classes for examples of use. These
  * methods make use of the JNA-InChI library.
  * 
  * The two WASM-related files are in the _ES6/ folder. 
@@ -60,7 +60,7 @@ import net.sf.jniinchi.INCHI_OPTION;
  * <p>
  * InChI/Structure interconversion is implemented in this way so that we can
  * check whether or not the native code required is available. If the native
- * code cannot be loaded during the first call to <code>getInstance</code>
+ * code cannot be loaded during the first call to  <code>getInstance</code>
  * method (when the instance is created) a {@link CDKException} will be thrown.
  * The most common problem is that the native code is not in the * the correct
  * location. Java searches the locations in the PATH environmental variable,
@@ -124,64 +124,45 @@ public class InChIGeneratorFactory {
 		}
 	}
 
-	/**
-	 * These private methods select between JavaScript-WASM and JNA-InChI interface
-	 * 
-	 * @return the appropriate interface
-	 */
-	private static InChIGenerator getInChIGeneratorImpl() {
-		return (isJS ? new InChIGeneratorJS() : new InChIGeneratorJNA());
-	}
-
-	private static InChIToStructure getInChIToStructureImpl() {
-		return (isJS ? new InChIToStructureJS() : new InChIToStructureJNA());
-	}
-
     private static InChIGeneratorFactory INSTANCE;
 
     /**
      * If the CDK aromaticity flag should be ignored and the bonds treated solely as single and double bonds.
      */
-    @Deprecated
     private boolean ignoreAromaticBonds = true;
 
-    private static InchiOptions DEFAULT_OPTIONS;
-
-    private static InchiOptions getDefaultOptions() {
-    	// lazy definition, only if needed
-		if (DEFAULT_OPTIONS == null) {
-			DEFAULT_OPTIONS = new InchiOptions.InchiOptionsBuilder()
-		            .withFlag(InchiFlag.AuxNone)
-		            .withTimeoutMilliSeconds(5000)
-		            .build();
-		}
-		return DEFAULT_OPTIONS;
-	}
-
-    
     /**
-     * <p>private constructor for InChIGeneratorFactory. 
+     * <p>Constructor for InChIGeneratorFactory. Ensures that native code
+     * required for InChI/Structure interconversion is available, otherwise
+     * throws CDKException.
+     *
+     * @throws CDKException if unable to load native code
      */
-    private InChIGeneratorFactory() {
+    private InChIGeneratorFactory() throws CDKException {
     }
 
     /**
+     * 
      * Gives the one <code>InChIGeneratorFactory</code> instance,
      * if needed also creates it.
      *
      * @return the one <code>InChIGeneratorFactory</code> instance
      */
-    public static InChIGeneratorFactory getInstance() {
+    public static InChIGeneratorFactory getInstance() throws CDKException {
     	return getInstance(null);
     }
     
     /**
+     * Gives the one <code>InChIGeneratorFactory</code> instance,
+     * if needed also creates it.
      * This method allows for asynchronous JavaScript initialization of the WASM module.
-     * 
+     *
      * @param r
-     * @return
+     * @return the one <code>InChIGeneratorFactory</code> instance
+     * @throws CDKException if unable to load native code when attempting
+     *                      to create the factory
      */
-    public static InChIGeneratorFactory getInstance(Runnable r) {
+    public static InChIGeneratorFactory getInstance(Runnable r) throws CDKException {
         synchronized (InChIGeneratorFactory.class) {
             if (INSTANCE == null) {
                 INSTANCE = new InChIGeneratorFactory();
@@ -191,9 +172,9 @@ public class InChIGeneratorFactory {
             }
             return INSTANCE;
         }
-	}
+    }
 
-	/**
+    /**
      * Sets whether aromatic bonds should be treated as single and double bonds for the InChI generation. The bond type
      * INCHI_BOND_TYPE.ALTERN is considered special in contrast to single, double, and triple bonds,
      * and is not bulletproof. If the molecule has clearly defined single and double bonds,
@@ -231,8 +212,8 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIGenerator getInChIGenerator(IAtomContainer container) throws CDKException {
-        return getInChIGenerator(container, getDefaultOptions());
+    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container) throws CDKException {
+        return (isJS ? new InChIGeneratorJS(container, ignoreAromaticBonds): new InChIGenerator(container, ignoreAromaticBonds));
     }
 
     /**
@@ -243,84 +224,69 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIGenerator getInChIGenerator(IAtomContainer container, String options) throws CDKException {
-        return getInChIGenerator(container, InChIOptionParser.parseString(options));
+    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container, String options) throws CDKException {
+        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGenerator(container, options, ignoreAromaticBonds));
     }
 
-	/**
-	 * Get an InChI generator providing flags to customise the generation. If you
-	 * need to provide a timeout the method that accepts an
-	 * {@link io.github.dan2097.jnainchi.InchiOptions} should be used.
-	 * 
-	 * @param container the molecule
-	 * @param flags     the option flags
-	 * @return the InChI generator
-	 * @throws CDKException something went wrong
-	 * @see #getInChIGenerator(org.openscience.cdk.interfaces.IAtomContainer,
-	 *      io.github.dan2097.jnainchi.InchiOptions)
-	 */
-	public InChIGenerator getInChIGenerator(IAtomContainer container, InchiFlag... flags) throws CDKException {
-		// BH why this ? if (flags == null) throw new IllegalArgumentException("Null flags");
-		InchiOptions options = (flags == null ? getDefaultOptions() : new InchiOptions.InchiOptionsBuilder().withFlag(flags).build());
-		return getInChIGenerator(container, options);
-	}
+    /**
+     * Gets InChI generator for CDK IAtomContainer.
+     *
+     * @param container AtomContainer to generate InChI for.
+     * @param options   List of options (net.sf.jniinchi.INCHI_OPTION) for InChI generation.
+     * @return the InChI generator object
+     * @throws CDKException if the generator cannot be instantiated
+     * @deprecated use {@link #getInChIGenerator(org.openscience.cdk.interfaces.IAtomContainer, io.github.dan2097.jnainchi.InchiOptions)}
+     */
+    @Deprecated
+    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container, List<INCHI_OPTION> options) throws CDKException {
+        if (options == null) throw new IllegalArgumentException("Null options");
+        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGenerator(container, options, ignoreAromaticBonds));
+    }
 
-	/**
-	 * Get an InChI generator providing options in the form of a precompiled
-	 * InchiOptions object or default options.
-	 * 
-	 * All public methods go through here.
-	 * 
-	 * @param container the molecule
-	 * @param options   the inchi option flags or null for default options
-	 * @return the InChI generator
-	 * @throws CDKException something went wrong
-	 */
-	public InChIGenerator getInChIGenerator(IAtomContainer container, InchiOptions options) throws CDKException {
-		if (options == null)
-			options = DEFAULT_OPTIONS;
-			// BH why this? throw new IllegalArgumentException("Null flags");
-		return getInChIGeneratorImpl().generateInChI(container, options, ignoreAromaticBonds);
-	}
+    /**
+     * Get an InChI generator providing flags to customise the generation. If you
+     * need to provide a timeout the method that accepts an {@link io.github.dan2097.jnainchi.InchiOptions}
+     * should be used.
+     * 
+     * @param container the molecule
+     * @param flags the option flags
+     * @return the InChI generator
+     * @throws CDKException something went wrong
+     * @see #getInChIGenerator(org.openscience.cdk.interfaces.IAtomContainer, io.github.dan2097.jnainchi.InchiOptions)
+     */
+    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container, InchiFlag ... flags) throws CDKException {
+        if (flags == null) throw new IllegalArgumentException("Null flags");
+        InchiOptions options = new InchiOptions.InchiOptionsBuilder()
+                                               .withFlag(flags)
+                                               .build();
+        return getInChIGenerator(container, options);
+    }
 
+    /**
+     * Get an InChI generator providing flags to customise the generation.
+     * @param container the molecule
+     * @param options the inchi option flags
+     * @return the InChI generator
+     * @throws CDKException something went wrong
+     */
+    public InChIGeneratorAbs getInChIGenerator(IAtomContainer container, InchiOptions options) throws CDKException {
+        if (options == null) throw new IllegalArgumentException("Null flags");
+        return (isJS ? new InChIGeneratorJS(container, options, ignoreAromaticBonds) : new InChIGenerator(container, options, ignoreAromaticBonds));
+    }
 
-	/**
-	 * Gets an InChI generator for CDK IAtomContainer using converted JNI-InChI options.
-	 *
-	 * @param container AtomContainer to generate InChI for.
-	 * @param jniOptions   List of options (net.sf.jniinchi.INCHI_OPTION) for InChI
-	 *                  generation.
-	 * @return the InChI generator object
-	 * @throws CDKException if the generator cannot be instantiated
-	 * @deprecated use
-	 *             {@link #getInChIGenerator(org.openscience.cdk.interfaces.IAtomContainer, io.github.dan2097.jnainchi.InchiOptions)}
-	 */
-	@Deprecated
-	public InChIGenerator getInChIGenerator(IAtomContainer container, List<INCHI_OPTION> jniOptions) throws CDKException {
-		if (jniOptions == null)
-			throw new IllegalArgumentException("Null options");
-        InchiOptions.InchiOptionsBuilder builder = new InchiOptions.InchiOptionsBuilder();
-        for (INCHI_OPTION jniOpt : jniOptions) {
-            InchiFlag flag = JniInchiSupport.toJnaOption(jniOpt);
-            if (flag != null)
-                builder.withFlag(flag);
-        }
-		return getInChIGenerator(container, builder.build());
-	}
-
-	/**
-     * Gets structure generator for an InChI string using default options.
+    /**
+     * Gets structure generator for an InChI string.
      *
      * @param inchi   InChI to generate structure from.
      * @param builder the builder to use
      * @return the InChI structure generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
-        return getInChIToStructure(inchi, builder, getDefaultOptions());
+    public InChIToStructureAbs getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
+		return (isJS ? new InChIToStructureJS(inchi, builder) : new InChIToStructure(inchi, builder));
     }
 
-	/**
+    /**
      * <p>Gets structure generator for an InChI string.
      *
      * @param inchi   InChI to generate structure from.
@@ -329,12 +295,12 @@ public class InChIGeneratorFactory {
      * @return the InChI structure generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, String options)
+    public InChIToStructureAbs getInChIToStructure(String inchi, IChemObjectBuilder builder, String options)
             throws CDKException {
-        return getInChIToStructure(inchi, builder, InChIOptionParser.parseString(options));
+		return (isJS ? new InChIToStructureJS(inchi, builder, options) : new InChIToStructure(inchi, builder, options));
     }
 
-	/**
+    /**
      * <p>Gets structure generator for an InChI string.
      *
      * @param inchi   InChI to generate structure from.
@@ -343,23 +309,8 @@ public class InChIGeneratorFactory {
      * @return the InChI structure generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options)
+    public InChIToStructureAbs getInChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options)
             throws CDKException {
-        return getInChIToStructure(inchi, builder, InChIOptionParser.parseStrings(options));
+		return (isJS ? new InChIToStructureJS(inchi, builder, options) : new InChIToStructure(inchi, builder, options));
     }
-    
-    /**
-     * All public methods go through here.
-     * 
-     * @param inchi   InChI to generate structure from.
-     * @param options precompiled InchiOptions for structure generation.
-     * @param builder the builder to employ
-     * @return the InChI structure generator object
-     * @throws CDKException if the generator cannot be instantiated
-     */
-    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, InchiOptions options)
-            throws CDKException {
-        return getInChIToStructureImpl().getStructure(inchi, builder, options);
-    }
-
 }

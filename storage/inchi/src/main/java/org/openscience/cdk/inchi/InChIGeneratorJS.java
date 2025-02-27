@@ -18,16 +18,15 @@
  */
 package org.openscience.cdk.inchi;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.MDLV2000Writer;
 
 import io.github.dan2097.jnainchi.InchiOptions;
 import io.github.dan2097.jnainchi.InchiStatus;
+import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 
 /**
@@ -49,7 +48,7 @@ import net.sf.jniinchi.INCHI_RET;
  * 
  * 
  */
-public class InChIGeneratorJS implements InChIGenerator {
+public class InChIGeneratorJS extends InChIGeneratorAbs {
 
 	private String soptions;
 
@@ -61,15 +60,32 @@ public class InChIGeneratorJS implements InChIGenerator {
 	private int retCode;
 
 	private String inchi;
-    
-    @Override
-	public InChIGenerator generateInChI(IAtomContainer atomContainer,
-                             InchiOptions options,
-                             boolean ignoreAromaticBonds) throws CDKException {
-    	soptions = (options == null ? "" : options.toString());
-        generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-        return this;
-    }
+    	
+	protected InChIGeneratorJS(IAtomContainer container, boolean ignoreAromaticBonds) throws CDKException {
+		super(container, ignoreAromaticBonds);
+	}
+
+	protected InChIGeneratorJS(IAtomContainer container, InchiOptions options, boolean ignoreAromaticBonds) throws CDKException {
+		super(container, options, ignoreAromaticBonds);
+	}
+
+	/**
+	 * BH added
+	 * 
+	 * @param container
+	 * @param options
+	 * @param ignoreAromaticBonds
+	 * @throws CDKException 
+	 * @author Bob Hanson
+	 */
+    protected InChIGeneratorJS(IAtomContainer container, String options, boolean ignoreAromaticBonds) throws CDKException {
+		super(container, options, ignoreAromaticBonds);
+	}
+
+	@SuppressWarnings("deprecation")
+	protected InChIGeneratorJS(IAtomContainer container, List<INCHI_OPTION> options, boolean ignoreAromaticBonds) throws CDKException {
+		super(container, options, ignoreAromaticBonds);
+	}
 
 	/**
 	 * <p>
@@ -80,18 +96,13 @@ public class InChIGeneratorJS implements InChIGenerator {
 	 * @param ignore        Ignore aromatic bonds
 	 * @throws CDKException
 	 */
+	@Override
 	@SuppressWarnings("resource")
-	private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
-		try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-			
-			new MDLV2000Writer(bos).setDate("").write(atomContainer);
-			String moldata = bos.toString();
-			System.out.println(moldata);
-			inchi = execute("inchiFromMolfile", moldata, soptions, "inchi");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	protected void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
+		soptions = (options == null ? "" : options.toString());
+		String moldata = new InChIInputMOL().write(atomContainer);
+		System.out.println(moldata);
+		inchi = execute("inchiFromMolfile", moldata, soptions, "inchi");
 	}
 
 	/**
@@ -204,4 +215,5 @@ public class InChIGeneratorJS implements InChIGenerator {
 	public String getLog() {
     	return getJSOutput("log");
     }
+
 }

@@ -18,7 +18,11 @@
  */
 package org.openscience.cdk.inchi;
 
+import java.util.List;
 import java.util.Map;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 import io.github.dan2097.jnainchi.InchiStatus;
 import net.sf.jniinchi.INCHI_RET;
@@ -31,7 +35,7 @@ import net.sf.jniinchi.INCHI_RET;
  * @cdk.module inchi
  * @cdk.githash
  */
-public class InChIToStructureJS extends InChIToStructure {
+public class InChIToStructureJS extends InChIToStructureAbs {
 
 	private int retCode;
 	
@@ -42,7 +46,19 @@ public class InChIToStructureJS extends InChIToStructure {
   	private Object thisStereo;
 	private Map<String, Object> output;
 
-  	@Override
+  	public InChIToStructureJS(String inchi, IChemObjectBuilder builder) throws CDKException {
+  		super(inchi, builder);
+	}
+
+	public InChIToStructureJS(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
+  		super(inchi, builder, options);
+	}
+
+	public InChIToStructureJS(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
+  		super(inchi, builder, options);
+	}
+
+	@Override
   	public void initializeInchiModel(String inchi) {
   		/**
   		 * @j2sNative 
