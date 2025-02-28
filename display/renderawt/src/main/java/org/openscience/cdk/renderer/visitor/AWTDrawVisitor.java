@@ -180,18 +180,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         Stroke savedStroke = this.graphics.getStroke();
 
         // scale the stroke by zoom + scale (both included in the AffineTransform)
-        float width = (float) (line.width * transform.getScaleX());
-        if (width < minStroke) width = minStroke;
-
-        int key = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
-
-        if (strokeCache && strokeMap.containsKey(key)) {
-            this.graphics.setStroke(strokeMap.get(key));
-        } else {
-            BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-            this.graphics.setStroke(stroke);
-            strokeMap.put(key, stroke);
-        }
+        setStroke(line.width * transform.getScaleX(), true);
 
         double[] coordinates = new double[]{line.firstPointX, line.firstPointY, line.secondPointX, line.secondPointY};
 
@@ -207,7 +196,35 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         graphics.setStroke(savedStroke);
     }
 
-    private void visit(OvalElement oval) {
+	/**
+	 * 
+	 * optionally store 2.25, 2.5, 2.75 etc to separate keys
+	 * 
+	 * @param w
+	 * @param rounded true for rounded stroke; false for square
+	 * @return
+	 */
+    private void setStroke(double w, boolean rounded) {
+    	float width = (float) w;
+        if (width < minStroke) 
+        	width = minStroke;
+        Integer key = (strokeCache ? Integer.valueOf((int) (width * 4) * (rounded ? 1 : -1)) : null);
+        BasicStroke stroke = (strokeCache ? strokeMap.get(key) : null);
+        if (stroke == null) {
+        	// TODO: John, please check.
+        	// There was a second bug here in that both straight and 
+        	// rounded were being stored with the same key.
+        	
+        	// Arrow uses the default BasicStroke(width), which I make explicit here
+            stroke = (rounded ? new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) 
+            		: new BasicStroke(width, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER));
+            if (strokeCache)
+            	strokeMap.put(key, stroke);
+        }
+        this.graphics.setStroke(stroke);
+	}
+
+	private void visit(OvalElement oval) {
         this.graphics.setColor(oval.color);
         int radius = scaleX(oval.radius);
         int diameter = scaleX(oval.radius * 2);
@@ -219,19 +236,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             Stroke savedStroke = this.graphics.getStroke();
 
             // scale the stroke by zoom + scale (both included in the AffineTransform)
-            float width = (float) (oval.stroke * transform.getScaleX());
-            if (width < minStroke) width = minStroke;
-
-            int key = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
-
-            if (strokeCache && strokeMap.containsKey(key)) {
-                this.graphics.setStroke(strokeMap.get(key));
-            } else {
-                BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-                this.graphics.setStroke(stroke);
-                strokeMap.put(key, stroke);
-            }
-
+            setStroke(oval.stroke * transform.getScaleX(), true);
             this.graphics.drawOval(transformX(oval.xCoord) - radius, transformY(oval.yCoord) - radius, diameter,
                     diameter);
         }
@@ -537,16 +542,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     private void visit(ArrowElement line) {
         double scale = rendererModel.getParameter(Scale.class).getValue();
-        Stroke savedStroke = graphics.getStroke();
-
-        int w = (int) (line.width * scale);
-        if (strokeMap.containsKey(w)) {
-            graphics.setStroke(strokeMap.get(w));
-        } else {
-            BasicStroke stroke = new BasicStroke(w);
-            graphics.setStroke(stroke);
-            strokeMap.put(w, stroke);
-        }
+        Stroke savedStroke = graphics.getStroke();        
+        setStroke((int) line.width * scale, false);
 
         graphics.setColor(line.color);
         int[] a = this.transformPoint(line.startX, line.startY);
