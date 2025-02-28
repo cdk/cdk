@@ -49,12 +49,12 @@ final public class TextOutline {
     /**
      * The original text.
      */
-    public final String          text;
+    private final String          text;
 
     /**
      * The original glyphs.
      */
-    public final GlyphVector     glyphs;
+    private final GlyphVector     glyphs;
 
     /**
      * The outline of the text (untransformed).
@@ -101,6 +101,14 @@ final public class TextOutline {
 		this.transform = transform;
 	}
 	
+    /**
+     * The text which the outline displays.
+     * @return the text
+     */
+    String text() {
+        return text;
+    }
+
     /**
      * Access the transformed outline of the text.
      *
@@ -289,7 +297,7 @@ final public class TextOutline {
 	 * @author Bob Hanson
 	 *
 	 */
-    private static class TextString implements Shape, ITextString {
+    public static class TextString implements Shape, ITextString {
 
 		/**
 		 * the wrapped outline shape of this TextOutline; in Java the actual strokes

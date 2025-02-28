@@ -518,7 +518,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
 		sb.append("</text>\n");
 	}
     private void appendText(String text, double px, double py, Color color) {
-        sb.append("<text");
+        sb.append("<text ");
         sb.append(" x='").append(toStr(px)).append("'");
         sb.append(" y='").append(toStr(py)).append("'");
         sb.append(" fill='").append(toStr(color)).append("'");
