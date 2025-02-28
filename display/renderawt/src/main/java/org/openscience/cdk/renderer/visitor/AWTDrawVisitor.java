@@ -72,6 +72,9 @@ import java.util.Map;
  */
 public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
+    private static BasicStroke basicStroke1Square = new BasicStroke(1);
+    private static BasicStroke basicStroke1Rounded = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+
     /**
      * The font manager cannot be set by the constructor as it needs to
      * be managed by the Renderer.
@@ -320,9 +323,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         int[] yCoords = new int[]{pointB[1], pointC[1], pointA[1]};
         this.graphics.fillPolygon(xCoords, yCoords, 3);
     }
-
-    private static BasicStroke basicStroke1Square = new BasicStroke(1);
-    private static BasicStroke basicStroke1Rounded = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
     private void drawDashedWedge(Point2d vertexA, Point2d vertexB, Point2d vertexC) {
         // store the current stroke

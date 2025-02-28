@@ -87,9 +87,9 @@ final public class TextOutline {
     /**
      * Internal constructor, requires all attributes.
      *
-     * @param text      the text
-     * @param glyphs    glyphs of the text
-     * @param outline   the outline of the glyphs
+     * @param text the text
+     * @param glyphs glyphs of the text
+     * @param outline the outline of the glyphs
      * @param transform the transform
      */
     private TextOutline(String text, GlyphVector glyphs, Shape outline, AffineTransform transform) {
@@ -98,7 +98,7 @@ final public class TextOutline {
         this.outline = outline;
         this.transform = transform;
     }
-    
+
     /**
      * The text which the outline displays.
      * @return the text
@@ -202,6 +202,7 @@ final public class TextOutline {
 
         final Shape glyph = glyphs.getGlyphOutline(index);
         final Rectangle2D glyphBounds = transformedBounds(glyph);
+
         return new Point2D.Double(glyphBounds.getCenterX(), glyphBounds.getCenterY());
     }
 
