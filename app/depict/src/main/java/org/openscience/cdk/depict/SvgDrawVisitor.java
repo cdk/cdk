@@ -285,49 +285,49 @@ final class SvgDrawVisitor implements IDrawVisitor {
         for (PathElement pelem : elem.elements) {
             pelem.points(points);
             switch (pelem.type) {
-	            case Close:
-	                sb.append("z");
-	                xCurr = yCurr = 0;
-	                break;
-	            case LineTo:
-	                transform(points, 1);
-	                double dx = points[0] - xCurr;
-	                double dy = points[1] - yCurr;
-	                // horizontal and vertical lines can be even more compact
-	                if (Math.abs(dx) < 0.01) {
-	                    sb.append("v").append(toStr(dy));
-	                } else if ((Math.abs(dy) < 0.01)) {
-	                    sb.append("h").append(toStr(dx));
-	                } else {
-	                    sb.append("l");
-	                    appendRelativePoints(sb, points, xCurr, yCurr, 1);
-	                }
-	                xCurr = round(points[0]);
-	                yCurr = round(points[1]);
-	                break;
-	            case MoveTo:
-	                // We have Move as always absolute
-	                sb.append("M");
-	                transform(points, 1);
-	                appendPoints(sb, points, 1);
-	                xCurr = round(points[0]);
-	                yCurr = round(points[1]);
-	                break;
-	            case QuadTo:
-	                sb.append("q");
-	                transform(points, 2);
-	                appendRelativePoints(sb, points, xCurr, yCurr, 2);
-	                xCurr = round(points[2]);
-	                yCurr = round(points[3]);
-	                break;
-	            case CubicTo:
-	                sb.append("c");
-	                transform(points, 3);
-	                appendRelativePoints(sb, points, xCurr, yCurr, 3);
-	                xCurr = round(points[4]);
-	                yCurr = round(points[5]);
-	                break;
-	            }
+                case Close:
+                    sb.append("z");
+                    xCurr = yCurr = 0;
+                    break;
+                case LineTo:
+                    transform(points, 1);
+                    double dx = points[0] - xCurr;
+                    double dy = points[1] - yCurr;
+                    // horizontal and vertical lines can be even more compact
+                    if (Math.abs(dx) < 0.01) {
+                        sb.append("v").append(toStr(dy));
+                    } else if ((Math.abs(dy) < 0.01)) {
+                        sb.append("h").append(toStr(dx));
+                    } else {
+                        sb.append("l");
+                        appendRelativePoints(sb, points, xCurr, yCurr, 1);
+                    }
+                    xCurr = round(points[0]);
+                    yCurr = round(points[1]);
+                    break;
+                case MoveTo:
+                    // We have Move as always absolute
+                    sb.append("M");
+                    transform(points, 1);
+                    appendPoints(sb, points, 1);
+                    xCurr = round(points[0]);
+                    yCurr = round(points[1]);
+                    break;
+                case QuadTo:
+                    sb.append("q");
+                    transform(points, 2);
+                    appendRelativePoints(sb, points, xCurr, yCurr, 2);
+                    xCurr = round(points[2]);
+                    yCurr = round(points[3]);
+                    break;
+                case CubicTo:
+                    sb.append("c");
+                    transform(points, 3);
+                    appendRelativePoints(sb, points, xCurr, yCurr, 3);
+                    xCurr = round(points[4]);
+                    yCurr = round(points[5]);
+                    break;
+            }
         }
         sb.append("'");
         if (elem.fill) {
