@@ -132,7 +132,7 @@ public class InChIGenerator {
      * @throws org.openscience.cdk.exception.CDKException if there is an
      *                                                    error during InChI generation
      */
-    InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
+    protected InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
         this(atomContainer, getDefaultOptions(), ignoreAromaticBonds);
     }
 
