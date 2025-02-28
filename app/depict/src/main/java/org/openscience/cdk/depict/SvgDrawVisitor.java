@@ -23,6 +23,25 @@
 
 package org.openscience.cdk.depict;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.vecmath.Point2d;
+
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -37,22 +56,6 @@ import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
-
-import java.awt.Color;
-import java.awt.geom.AffineTransform;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * Internal - An SvgDrawVisitor, currently only certain elements are supported
@@ -268,75 +271,92 @@ final class SvgDrawVisitor implements IDrawVisitor {
         visit(null, null, elem);
     }
 
-    private void visit(String id, String cls, GeneralPath elem) {
-        appendIdent();
-        sb.append("<path");
-        if (id != null) sb.append(" id='").append(id).append("'");
-        if (cls != null) sb.append(" class='").append(cls).append("'");
-        sb.append(" d='");
-        double[] points = new double[6];
-        double xCurr = 0, yCurr = 0;
-        for (PathElement pelem : elem.elements) {
-            pelem.points(points);
-            switch (pelem.type) {
-                case Close:
-                    sb.append("z");
-                    xCurr = yCurr = 0;
-                    break;
-                case LineTo:
-                    transform(points, 1);
-                    double dx = points[0] - xCurr;
-                    double dy = points[1] - yCurr;
-                    // horizontal and vertical lines can be even more compact
-                    if (Math.abs(dx) < 0.01) {
-                        sb.append("v").append(toStr(dy));
-                    } else if ((Math.abs(dy) < 0.01)) {
-                        sb.append("h").append(toStr(dx));
-                    } else {
-                        sb.append("l");
-                        appendRelativePoints(sb, points, xCurr, yCurr, 1);
-                    }
-                    xCurr = round(points[0]);
-                    yCurr = round(points[1]);
-                    break;
-                case MoveTo:
-                    // We have Move as always absolute
-                    sb.append("M");
-                    transform(points, 1);
-                    appendPoints(sb, points, 1);
-                    xCurr = round(points[0]);
-                    yCurr = round(points[1]);
-                    break;
-                case QuadTo:
-                    sb.append("q");
-                    transform(points, 2);
-                    appendRelativePoints(sb, points, xCurr, yCurr, 2);
-                    xCurr = round(points[2]);
-                    yCurr = round(points[3]);
-                    break;
-                case CubicTo:
-                    sb.append("c");
-                    transform(points, 3);
-                    appendRelativePoints(sb, points, xCurr, yCurr, 3);
-                    xCurr = round(points[4]);
-                    yCurr = round(points[5]);
-                    break;
-            }
-        }
-        sb.append("'");
-        if (elem.fill) {
-            sb.append(" stroke='none'");
-            if (defaultFill == null || !defaultFill.equals(elem.color))
-                sb.append(" fill='").append(toStr(elem.color)).append("'");
-        } else {
-            sb.append(" fill='none'");
-            sb.append(" stroke='").append(toStr(elem.color)).append("'");
-            sb.append(" stroke-width='").append(toStr(scaled(elem.stroke))).append("'");
-        }
-        sb.append("/>\n");
-    }
+	private void visit(String id, String cls, GeneralPath elem) {
+		appendIdent();
+		boolean testJava = false;
+		if (elem.textString != null && /** @j2sNative true || */ testJava) {
+			drawTextString(elem);
+			return;
+		}
+		sb.append("<path");
+		if (id != null)
+			sb.append(" id='").append(id).append("'");
+		if (cls != null)
+			sb.append(" class='").append(cls).append("'");
+		sb.append(" d='");
+		double[] points = new double[6];
+		double xCurr = 0, yCurr = 0;
+		for (PathElement pelem : elem.elements) {
+			pelem.points(points);
+			switch (pelem.type) {
+			case Close:
+				sb.append("z");
+				xCurr = yCurr = 0;
+				break;
+			case LineTo:
+				transform(points, 1);
+				double dx = points[0] - xCurr;
+				double dy = points[1] - yCurr;
+				// horizontal and vertical lines can be even more compact
+				if (Math.abs(dx) < 0.01) {
+					sb.append("v").append(toStr(dy));
+				} else if ((Math.abs(dy) < 0.01)) {
+					sb.append("h").append(toStr(dx));
+				} else {
+					sb.append("l");
+					appendRelativePoints(sb, points, xCurr, yCurr, 1);
+				}
+				xCurr = round(points[0]);
+				yCurr = round(points[1]);
+				break;
+			case MoveTo:
+				// We have Move as always absolute
+				sb.append("M");
+				transform(points, 1);
+				appendPoints(sb, points, 1);
+				xCurr = round(points[0]);
+				yCurr = round(points[1]);
+				break;
+			case QuadTo:
+				sb.append("q");
+				transform(points, 2);
+				appendRelativePoints(sb, points, xCurr, yCurr, 2);
+				xCurr = round(points[2]);
+				yCurr = round(points[3]);
+				break;
+			case CubicTo:
+				sb.append("c");
+				transform(points, 3);
+				appendRelativePoints(sb, points, xCurr, yCurr, 3);
+				xCurr = round(points[4]);
+				yCurr = round(points[5]);
+				break;
+			}
+		}
+		sb.append("'");
+		if (elem.fill) {
+			sb.append(" stroke='none'");
+			if (defaultFill == null || !defaultFill.equals(elem.color))
+				sb.append(" fill='").append(toStr(elem.color)).append("'");
+		} else {
+			sb.append(" fill='none'");
+			sb.append(" stroke='").append(toStr(elem.color)).append("'");
+			sb.append(" stroke-width='").append(toStr(scaled(elem.stroke))).append("'");
+		}
+		sb.append("/>\n");
+	}
 
-    private void visit(LineElement elem) {
+    private void drawTextString(GeneralPath elem) {
+		Bounds b = new Bounds(elem, transform);
+		elem.textString.setScale(transform);
+		Point2d dxy = elem.textString.getTextPosition(b.minX, b.minY);
+		appendTextFont(elem.textString.getText(), 
+				dxy.x, dxy.y, 
+				elem.color,
+				elem.textString.getFont(), 0);
+	}
+
+	private void visit(LineElement elem) {
         visit(null, null, elem);
     }
 
@@ -466,18 +486,63 @@ final class SvgDrawVisitor implements IDrawVisitor {
         appendIdent();
         double[] points = new double[]{elem.xCoord, elem.yCoord};
         transform(points, 1);
-        sb.append("<text ");
-        sb.append(" x='").append(toStr(points[0])).append("'");
-        sb.append(" y='").append(toStr(points[1])).append("'");
-        sb.append(" fill='").append(toStr(elem.color)).append("'");
+        appendText(elem.text, points[0], points[1], elem.color);
+    }
+
+	private void appendTextFont(String text, double px, double py, Color color, Font font, double stroke) {
+		sb.append("<text");
+		if (font != null) {
+			int fstyle = font.getStyle();
+			String style = null;
+			String weight = null;
+			if ((fstyle & Font.BOLD) != 0) {
+				weight = "bold";
+			}
+			if ((fstyle & Font.ITALIC) != 0) {
+				style = "italic";
+			}
+			sb.append(" font-family='").append(getCSSFontFamilyName(font.getFamily()));
+			if (weight != null)
+				sb.append("' font-weight='").append(weight);
+			if (style != null)
+				sb.append("' font-style='").append(style);
+			sb.append("' stroke-width='").append(toStr(scaled(stroke)));
+			sb.append("' font-size='").append(font.getSize2D()).append("'");
+		}
+		sb.append(" x='").append(toStr(px)).append("'");
+		sb.append(" y='").append(toStr(py)).append("'");
+		sb.append(" fill='").append(toStr(color)).append("'");
+		// todo need font manager for scaling...
+		sb.append(">");
+		appendEscaped(sb, text);
+		sb.append("</text>\n");
+	}
+    private void appendText(String text, double px, double py, Color color) {
+        sb.append("<text");
+        sb.append(" x='").append(toStr(px)).append("'");
+        sb.append(" y='").append(toStr(py)).append("'");
+        sb.append(" fill='").append(toStr(color)).append("'");
         sb.append(" text-anchor='middle'");
         // todo need font manager for scaling...
         sb.append(">");
-        appendEscaped(sb, elem.text);
+        appendEscaped(sb, text);
         sb.append("</text>\n");
-    }
+	}
 
-    @Override
+	public static String getCSSFontFamilyName(String family) {
+		family = family.toLowerCase();
+		if (family.equals("sansserif") 
+				|| family.equals("helvetica") 
+				|| family.equals("dialog")
+				|| family.equals("dialoginput"))
+			family = "Arial";
+		else if (family.equals("monospaced"))
+			family = "monospace";
+		return family;
+	}
+
+
+	@Override
     public void visit(final IRenderingElement root) {
 
         if (!defaultsWritten) {

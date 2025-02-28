@@ -28,6 +28,8 @@ package org.openscience.cdk.renderer.elements;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Vector2d;
+
+import java.awt.geom.AffineTransform;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -57,6 +59,8 @@ public final class Bounds implements IRenderingElement {
      * Know which elements are within this bound box.
      */
     private final ElementGroup elements = new ElementGroup();
+
+	private AffineTransform transform;
 
     /**
      * Specify the min/max coordinates of the bounding box.
@@ -89,7 +93,13 @@ public final class Bounds implements IRenderingElement {
         add(element);
     }
 
-    /**
+    public Bounds(GeneralPath elem, AffineTransform transform) {
+    	this();
+    	this.transform = transform;
+    	add(elem);
+	}
+
+	/**
      * Add the specified element bounds.
      */
     public void add(IRenderingElement element) {
@@ -131,6 +141,8 @@ public final class Bounds implements IRenderingElement {
         double[] points = new double[6];
         for (org.openscience.cdk.renderer.elements.path.PathElement element : path.elements) {
             element.points(points);
+            if (transform != null)
+            	transform.transform(points, 0, points, 0, 3);
             switch (element.type()) {
                 case MoveTo:
                 case LineTo:
