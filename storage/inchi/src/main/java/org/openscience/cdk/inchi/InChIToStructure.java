@@ -236,8 +236,9 @@ public class InChIToStructure  {
             switch (radical) {
             case "DOUBLET":
                 molecule.addSingleElectron(molecule.indexOf(cAt));
-            } else if (radical == InchiRadical.SINGLET ||
-                       radical == InchiRadical.TRIPLET) {
+                break;
+            case "SINGLET":
+            case "TRIPLET":
                 // Information loss - we should make MDL SPIN_MULTIPLICITY avaliable to this API
                 molecule.addSingleElectron(molecule.indexOf(cAt));
                 molecule.addSingleElectron(molecule.indexOf(cAt));
