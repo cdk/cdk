@@ -56,6 +56,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.HashMap;
@@ -454,9 +455,12 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     private void visit(GeneralPath path) {
         this.graphics.setColor(path.color);
+        if (path.textString != null) {
+            drawTextString(path);
+            return;
+        }
         Path2D cpy = new Path2D.Double();
         cpy.append(getPathIterator(path, transform), false);
-
         if (path.fill) {
             this.graphics.fill(cpy);
         } else {
@@ -465,8 +469,17 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             this.graphics.draw(cpy);
             this.graphics.setStroke(stroke);
-        }
+        }        
     }
+
+    private void drawTextString(GeneralPath path) {
+        Bounds b = new Bounds(path, transform);
+        path.textString.setScale(transform);
+        Point2D dxy = path.textString.getTextPosition(b.minX, b.minY);
+        graphics.setFont(path.textString.getFont());
+        graphics.drawString(path.textString.getText(), Math.round((float)dxy.getX()), Math.round((float)dxy.getY()));
+    }
+
 
     private static PathIterator getPathIterator(final GeneralPath path, final AffineTransform transform) {
         return new PathIterator() {
