@@ -30,10 +30,29 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
+import _ES6.InChIWeb;
+
 /**
- * <p>Factory providing access to {@link InChIGenerator} and {@link InChIToStructure}.
- * See those classes for examples of use. These methods make use of the
- * JNI-InChI library.
+ *
+ * This class modified by Bob Hanson to allow for dual platform JNA-InChI/Java
+ * and INCHI-WEB WASM/JavaScript access. All nonprivate signatures are the same
+ * as ever; the only think changed is some JavaScript initialization business to
+ * load the WASM and an optional asynchronous implementation for JavaScript.
+ * This is useful because the WASM load is asynchronous, and if it is not loaded
+ * with a callback, it may not have been initialized prior to use.
+ * <p>
+ * 
+ * Note: The WASM interface is in the _ES6 folder because it may be shared with other
+ * SwingJS implementations of InChI WASM such as Jmol, openChemLib, and JME.
+ * <p>
+ * Class structure is that InChIGeneratorFactory, InChIGenerator, and InChIToStructure
+ * are all basically unchanged. However InChIGenerator and InChIToStructure farm their
+ * platform-specific calls to instances of their package-private JNA and JS auxiliary classes.
+ * 
+ * <p>
+ * Factory providing access to {@link InChIGenerator} and
+ * {@link InChIToStructure}. See those classes for examples of use. These
+ * methods make use of the JNA-InChI library.
  *
  * <p>The {@link InChIGeneratorFactory} is a singleton class, which means that there
  * exists only one instance of the class. An instance of this class is obtained
@@ -44,7 +63,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * <p>InChI/Structure interconversion is implemented in this way so that we can
  * check whether or not the native code required is available. If the native
- * code cannot be loaded during the first call to  <code>getInstance</code>
+ * code cannot be loaded during the first call to <code>getInstance</code>
  * method (when the instance is created) a {@link CDKException} will be thrown. The
  * most common problem is that the native code is not in the * the correct
  * location. Java searches the locations in the PATH environmental
@@ -65,6 +84,53 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class InChIGeneratorFactory {
 
+    /**
+     * SwinJS code to allow platform switching; note that JavaScript is detected
+     * using a JavaDoc at.j2sNative tag;
+     * 
+     * do not set this final, as the java2script transpiler needs to leave the
+     * unevaluated javadoc.
+     */
+    /*package nonfinal*/ static boolean isJS = (/** @j2sNative true || */false);
+    
+    static {
+        if (isJS)
+            InChIWeb.importWASM();
+    }
+
+    /**
+     * This method allows for asynchronous JavaScript initialization of the WASM module.
+     * 
+     * @param r
+     * @return
+     * @throws CDKException 
+     */
+    public static InChIGeneratorFactory getInstance(Runnable r) throws CDKException {
+        synchronized (InChIGeneratorFactory.class) {
+            if (INSTANCE == null) {
+                INSTANCE = new InChIGeneratorFactory();
+            }
+            if (r != null) {
+                INSTANCE.initAndRun(r);
+            }
+            return INSTANCE;
+        }
+    }
+
+    /**
+     * Run the method immediately in Java or only after 
+     * ensuring that JavaScript has initialized. 
+     * 
+     * @param r Runnable to run.
+     */
+    private void initAndRun(Runnable r) {
+        InChIWeb.initAndRun(r);
+        if (InChIGeneratorFactory.isJS) {
+            
+        } else {
+            r.run();            
+        }
+    }
     private static InChIGeneratorFactory INSTANCE;
 
     /**
