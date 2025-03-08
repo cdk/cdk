@@ -1795,12 +1795,6 @@ public final class Smarts {
         private IAtom[] insertImplicitRefs(IAtom atom, Smarts.LocalNbrs nbrinfo, IAtom[] input, int degree, int required) {
             if (degree == required)
                 return Arrays.<IAtom>copyOf(input, degree);
-            if (degree == 3 && required == 4) {
-                input[degree++] = atom;
-                if (nbrinfo.isFirst)
-                    swap((Object[])input, 2, 3);
-                return Arrays.<IAtom>copyOf(input, degree);
-            }
             IAtom[] output = new IAtom[required];
             int extra = required - degree;
             int srcIdx = 0;
