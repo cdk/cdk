@@ -120,13 +120,7 @@ final class AromaticTypeModel extends ElectronDonation {
 
     @SuppressWarnings("unchecked")
     static final List<Map.Entry<AromaticType, Integer>> CDK_2x
-            = extend(DAYLIGHT,
-                     entry(B2, 1),
-                     entry(B3, 0),
-                     entry(S3_OXIDE, -1), // Sp3 => not aromatic
-                     entry(Se3_OXIDE, -1), // Sp3 => not aromatic
-                     entry(As2, 1),
-                     entry(As3_PLUS, 1),
+            = extend(OPEN_SMILES,
                      entry(Te2, 2),
                      entry(Te2_PLUS, 1));
 
