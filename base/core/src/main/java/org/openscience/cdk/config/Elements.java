@@ -559,7 +559,7 @@ public enum Elements {
 
     /**
      * Utility method to determine if an atomic number represents a metalloid element (B, Si, Ge, As, Sb, Te, or At).
-     * All other atomic numbers (integers), including those <= 0, will return false.
+     * All other atomic numbers (integers), including those smaller or equal to 0, will return false.
      *
      * @param atno atomic number
      * @return the atomic number is a metalloid (or not)

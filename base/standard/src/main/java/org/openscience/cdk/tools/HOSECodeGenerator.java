@@ -146,7 +146,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
     /**
      * Constructor for the HOSECodeGenerator.
      *
-     * <h1>Important!</h1>
+     * <b>Important!</b>
      * A critical bug was discovered in
      * the implementation (see <a href="https://github.com/cdk/cdk/pull/828">PR
      * 828</a>) which gave the wrong nesting in "some" cases. Fixing this
@@ -168,13 +168,13 @@ public class HOSECodeGenerator implements java.io.Serializable {
     /**
      * Constructor for the HOSECodeGenerator.
      *
-     * <h1>Important!</h1>
+     * <b>Important!</b>
      * A critical bug was discovered in
      * the implementation (see <a href="https://github.com/cdk/cdk/pull/828">PR
      * 828</a>) which gave the wrong nesting in "some" cases. Fixing this
      * behaviour invalidates any ML/AI models trained on the incorrect values.
      * If you have a model built with the old algorithm that can not be
-     * retrained set {@cdoe new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE)}.
+     * retrained set {@code new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE)}.
      *
      * @see <a href="https://github.com/cdk/cdk/pull/828">PR 828</a>
      */

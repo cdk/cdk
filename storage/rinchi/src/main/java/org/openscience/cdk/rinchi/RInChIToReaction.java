@@ -34,12 +34,12 @@ import org.openscience.cdk.interfaces.IReaction;
  * <a href="https://github.com/IUPAC-InChI/InChI">InChI C++ library</a>.
  * Consequently, any limitation of {@link InChIToStructure} also impacts on the conversion implemented in
  * this class.
+ * </p>
  * <p>
  * Please note that there are no exceptions thrown if an issue is encountered during processing. Instead,
  * a {@link Status} can be retrieved with {@link #getStatus()} that should be assessed. If the status is
  * not {@link Status#SUCCESS} emitted messages can be accessed with {@link #getMessages()}. These
  * messages should capture relevant information about what exactly went wrong.
- * </p>
  * </p>
  * Given a RInChI string a CDK reaction object can be produced as follows:
  * <pre>
