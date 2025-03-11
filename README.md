@@ -55,7 +55,7 @@ everything, note it is much more efficient to use include the modules you need:
 
 If you are a Python user, the Cinfony project provides access via [Jython](http://www.redbrick.dcu.ie/~noel/CDKJython.html).
 Noel O'Boyle's [Cinfony](http://cinfony.github.io/) provides a wrapper around the CDK and over toolkits exposing core
-functionality as a consistent API. `ScyJava` can also be used, as explain in [ChemPyFormatics](https://egonw.github.io/chempyformatics/).
+functionality as a consistent API. `ScyJava` can also be used, as explain in [ChemPyFormatics](https://cdk.github.io/chempyformatics/).
 
 Further details on building the project in integrated development environments (IDEs) are available on the wiki:
  * [Building the CDK](https://github.com/cdk/cdk/wiki/Building-CDK)
