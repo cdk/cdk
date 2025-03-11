@@ -27,6 +27,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.openscience.cdk.config.OWLBasedAtomTypeConfigurator;
@@ -72,7 +73,7 @@ public class OWLAtomTypeReader {
                 parser = saxParser.getXMLReader();
                 logger.info("Using JAXP/SAX XML parser.");
                 success = true;
-            } catch (ParserConfigurationException | SAXException exception) {
+            } catch (ParserConfigurationException | SAXException | FactoryConfigurationError exception) {
                 logger.warn("Could not instantiate JAXP/SAX XML reader!");
                 logger.debug(exception);
             }
