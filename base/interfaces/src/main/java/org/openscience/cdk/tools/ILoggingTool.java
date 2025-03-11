@@ -54,13 +54,11 @@ package org.openscience.cdk.tools;
  *      that lead to a situation where this program can no longer function
  *      (rare in Java).
  * </dl>
- * </p>
  * <p>
  * Logging library might implement less logging levels than the six levels
  * defined here. This may result in logging levels being merged.
  * For example, slf4j has five logging levels. Logging level fatal is not supported
  * so that calls to error and fatal are both logged with slf4j logging level error.
- * </p>
  * <p>
  * Consider that debugging will not always be turned on. Therefore, it is
  * better not to concatenate string in the logger.debug() call, but have the
@@ -74,7 +72,6 @@ package org.openscience.cdk.tools;
  * logger.debug("The String X has this value: " + someString);
  * logger.debug("The int Y has this value: " + y);
  * </pre>
- * </p>
  * <p>
  * For logging calls that require even more computation you can use the
  * <code>isDebugEnabled()</code> method:
@@ -84,13 +81,11 @@ package org.openscience.cdk.tools;
  *     calculatePrime(1056389822));
  * }
  * </pre>
- * </p>
  * <p>
  * In addition to the methods specific in the interface, implementations
  * must also implement the static method {@code create(Class<?>)} which
  * is called by {@link LoggingToolFactory} to instantiate the
  * implementation.
- * </p>
  *
  * @cdk.module  interfaces
  * @cdk.githash

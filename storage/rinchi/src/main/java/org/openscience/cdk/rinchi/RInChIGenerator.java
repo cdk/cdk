@@ -43,7 +43,6 @@ import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
  * (auxinfo) for the individual reaction components using the JNA wrapper for the InChI C++ library. The pieces are
  * then assembled into a RInChI string and reaction auxiliary information (rauxinfo) string. Computation of the
  * three different RInChI keys Long-RInChIKey, Short-RInChIKey and Web-RInChIKey are implemented in Java.
- * </p>
  * <p>
  * Consequently, any limitation of the {@link InChIGenerator} also impacts on the computation of the RInChI. In
  * addition, this RInChI implementation has the following limitations:
@@ -57,13 +56,12 @@ import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
  *         these are interpreted by the CDK as products. The RInChI software strictly adheres to the ‘count line’.
  *     </li>
  * </ul>
- * </p>
  * <p>
  * Please note that there are no exceptions thrown if an issue is encountered during processing. Instead,
  * a {@link Status} can be retrieved with {@link #getStatus()} that should be assessed. If the status is
  * not {@link Status#SUCCESS} emitted messages can be accessed with {@link #getMessages()}. These
  * messages should capture relevant information about what exactly went wrong.
- * </p>
+ * <p>
  * Given an IReaction, RInChI, RAuxInfo, Long-RInChIKey, Short-RInChIKey and Web-RInChIKey can be generated
  * using default options:
  * <pre>
@@ -87,7 +85,6 @@ import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
  *     RInChIOptions rinchiOptions = RInChIOptions.RInChIOptions.builder().forceEquilibrium().build();
  *     RInChIGenerator generator = new RInChIGenerator(rinchiOptions).generate(reaction);
  * </pre>
- * </p>
  * See:
  * <ul>
  * <li><a href="https://github.com/dan2097/jna-inchi">https://github.com/dan2097/jna-inchi</a></li>

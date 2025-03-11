@@ -73,7 +73,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  *
  *
- * @author MehmetAzizYirik <mehmetazizyirik@outlook.com>
+ * @author MehmetAzizYirik &lt;mehmetazizyirik@outlook.com&gt;
  * 		   ORCID: 0000-0001-7520-7215
  * @cdk.module structgen
  */
