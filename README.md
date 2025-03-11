@@ -3,7 +3,7 @@
 
 # The Chemistry Development Kit (CDK)
  
-Copyright &copy; 1997-2024 The CDK Development Team
+Copyright &copy; 1997-2025 The CDK Development Team
 
 License: LGPL v2, see LICENSE.txt
 
