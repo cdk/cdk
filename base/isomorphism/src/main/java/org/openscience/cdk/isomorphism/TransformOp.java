@@ -31,7 +31,8 @@ import java.util.Objects;
  * type and then up to 4 additional integer parameters name a, b, c, d.
  * <br/>
  * What these parameters mean depend on the type and summarised below:
- * <table summary="OpCode parameter types">
+ * <table>
+ *     <caption>OpCode parameter types</caption>
  *     <thead>
  *       <tr><th>Type</th><th>Param a</th><th>Param b</th><th>Param c</th><th>Param d</th></tr>
  *     </thead>

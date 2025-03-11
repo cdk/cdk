@@ -465,7 +465,7 @@ public final class Cycles {
      * that {@link #markRingAtomsAndBonds(IAtomContainer)} has been called
      * first to set the {@link IAtom#isInRing()} status of each atom/bond. If
      * you need to check every atom in a molecule use
-     * {@link @see #smallRingSizes(IAtomContainer, int[])}.
+     * {@link #smallRingSizes(IAtomContainer, int[])}.
      *
      * @param atom the atom
      * @param max the max ring size

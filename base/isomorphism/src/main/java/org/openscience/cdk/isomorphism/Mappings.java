@@ -291,7 +291,7 @@ public final class Mappings implements Iterable<int[]> {
      * example suppose we had the query {@code C~O} and matched against a
      * carboxylic acid {@code *C(O)=O}, there are <b>2</b> unique matches but
      * only <b>1</b> exclusive match. If we had two -CO2 groups
-     * ({@code c1ccc(C(O)=O)cc1C(O)=O} there are {@cdoe 4} unique matches and
+     * ({@code c1ccc(C(O)=O)cc1C(O)=O} there are {@code 4} unique matches and
      * {@code 2} exclusive matches.
      * The exclusive atom mappings are therefore a subset of the unique atom
      * matches.

@@ -28,8 +28,8 @@ import java.util.Map;
 /**
  * The RdfileRecord class represents a single record of an RD file.
  * <br><br>
- * <ul>
  * Publicly accessible are
+ * <ul>
  * <li>the record's {@link #getInternalRegistryNumber() internal} or
  * {@link #getExternalRegistryNumber() external} registry number,</li>
  * <li>methods to asses whether the record is a {@link #isRxnFile() reaction}

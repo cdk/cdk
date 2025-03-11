@@ -66,7 +66,7 @@ import java.util.regex.Pattern;
  * <li>7 double or aromatic</li>
  * <li>8 any</li>
  * </ul>
- * <b>Limitations:<b/>
+ * <b>Limitations:</b>
  * <br>
  * Atoms: The only properties read in the atom block are atom index, atom type,
  * atom coordinates, atom-atom mapping, atom charge ({@code CHG}), atom radical
