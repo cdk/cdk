@@ -118,7 +118,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * }</pre></blockquote>
  *
  * @author John Mayfield
- * @cdk.module standard
  * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's
  *      rule</a>

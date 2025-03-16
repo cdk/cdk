@@ -41,7 +41,6 @@ import org.openscience.cdk.io.setting.OptionIOSetting;
  * <p>This listener can also be used to list all the questions a ChemObjectWriter
  * has, by using a dummy StringWriter, and a <code>null</code> Reader.
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;

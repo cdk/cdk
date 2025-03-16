@@ -33,7 +33,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * @author maclean
- * @cdk.module group
  */
 class BondRefinableTest {
     

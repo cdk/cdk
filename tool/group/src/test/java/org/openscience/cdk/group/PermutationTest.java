@@ -30,7 +30,6 @@ import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author maclean
- * @cdk.module test-group
  *
  */
 class PermutationTest extends CDKTestCase {

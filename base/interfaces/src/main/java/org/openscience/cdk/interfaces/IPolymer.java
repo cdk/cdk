@@ -27,7 +27,6 @@ import java.util.Collection;
 /**
  * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
  *
- * @cdk.module  interfaces
  * @cdk.githash
  *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;

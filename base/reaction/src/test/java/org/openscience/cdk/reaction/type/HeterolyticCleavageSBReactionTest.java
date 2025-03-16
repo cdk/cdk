@@ -54,7 +54,6 @@ import java.util.List;
  * Generalized Reaction: A-B => |[A-] +[B+] // [A+] + |[B-]. Depending on the bond order
  * the bond will be removed or simply the order decreased.
  *
- * @cdk.module test-reaction
  */
 public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 

@@ -48,7 +48,6 @@ import javax.xml.parsers.SAXParserFactory;
  * @cdk.githash
  * @cdk.created    2003-08-23
  * @cdk.keyword    dictionary
- * @cdk.module     dict
  */
 public class Dictionary {
 

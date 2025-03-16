@@ -63,7 +63,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * @cdk.module test-standard
  */
 class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 

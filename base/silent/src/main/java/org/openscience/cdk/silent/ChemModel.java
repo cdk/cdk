@@ -34,7 +34,6 @@ import java.io.Serializable;
  * the other lower level concepts like rings, sequences,
  * fragments, etc.
  *
- * @cdk.module  silent
  * @cdk.githash
  */
 public class ChemModel extends ChemObject implements Serializable, IChemModel, IChemObjectListener, Cloneable {

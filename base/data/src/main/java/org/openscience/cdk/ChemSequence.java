@@ -33,7 +33,6 @@ import java.util.NoSuchElementException;
  * store the course of a reaction. Each state of the reaction would be
  * stored in one ChemModel.
  *
- * @cdk.module data
  * @cdk.githash
  *
  * @cdk.keyword animation

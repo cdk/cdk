@@ -45,7 +45,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * </isotopeList>
  * }</pre>
  *
- * @cdk.module  extra
  * @cdk.githash
  */
 public class IsotopeHandler extends DefaultHandler {

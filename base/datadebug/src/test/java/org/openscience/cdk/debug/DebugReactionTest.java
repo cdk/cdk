@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IReaction;
 /**
  * Checks the functionality of the {@link DebugReaction}.
  *
- * @cdk.module test-datadebug
  */
 class DebugReactionTest extends AbstractReactionTest {
 

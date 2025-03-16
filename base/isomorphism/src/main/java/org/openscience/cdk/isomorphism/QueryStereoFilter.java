@@ -61,7 +61,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * Note: This class is internal and will be private in future.
  *
  * @author John May
- * @cdk.module smarts
  * @cdk.githash
  */
 final class QueryStereoFilter implements Predicate<int[]> {

@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * Match an atom with the defined degree. The degree is also referred to as the
  * explicit connectivity and is encoded in smarts using {@code D<NUMBER>}.
  *
- * @cdk.module smarts
  * @cdk.keyword SMARTS
  * @cdk.githash
  */

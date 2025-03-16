@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @cdk.module standard
  * @cdk.githash
  *
  * @see ChemModelManipulator

@@ -43,7 +43,6 @@ import java.util.NoSuchElementException;
  * and is not intended to represent reaction trajectories. Such can better
  * be represented with a ChemSequence.
  *
- * @cdk.module  silent
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;elw38@cam.ac.uk&gt;

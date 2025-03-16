@@ -24,7 +24,6 @@ import org.openscience.cdk.IImplementationSpecification;
  * Class that is used to distribute reactions specifications.
  *
  * @author      Miguel Rojas
- * @cdk.module  reaction
  * @cdk.githash
  */
 public class ReactionSpecification implements IImplementationSpecification {

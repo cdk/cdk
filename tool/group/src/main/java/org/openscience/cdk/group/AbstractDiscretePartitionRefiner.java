@@ -31,7 +31,6 @@ import java.util.Set;
  * used during the refinement to guide the splitting of partition blocks.
  *
  * @author maclean
- * @cdk.module group
  */
 abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefiner {
 

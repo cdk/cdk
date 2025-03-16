@@ -60,7 +60,6 @@ import java.util.Set;
  *
  * @author chhoppe from EUROSCREEN
  * @cdk.created 2006-1-03
- * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:largestChain
  */

@@ -62,7 +62,6 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQueryCompiler;
 
 /**
  * This class creates an template for MCS/substructure query.
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent

@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * Smallest Rings (SSSR) is used then changing the order of atoms
  * <i>may</i> change which atoms match in a pattern.
  *
- * @cdk.module smarts
  * @cdk.keyword SMARTS
  * @cdk.githash
  */

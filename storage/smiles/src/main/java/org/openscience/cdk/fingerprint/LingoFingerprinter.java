@@ -46,7 +46,6 @@ import static org.openscience.cdk.graph.Cycles.relevant;
  * to single letters (ala OpenEye).
  *
  * @author Rajarshi Guha
- * @cdk.module smiles
  * @cdk.keyword fingerprint
  * @cdk.keyword hologram
  * @cdk.githash

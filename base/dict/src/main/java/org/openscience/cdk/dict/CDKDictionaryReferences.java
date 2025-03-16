@@ -45,7 +45,6 @@ import org.openscience.cdk.interfaces.IReaction;
  * @cdk.githash
  * @cdk.created    2003-08-06
  * @cdk.keyword    dictionary, implicit CDK references
- * @cdk.module     dict
  */
 public class CDKDictionaryReferences {
 

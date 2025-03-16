@@ -45,7 +45,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * input.
  *
  * @author John May
- * @cdk.module test-smarts
  */
 abstract class SubstructureTest {
 

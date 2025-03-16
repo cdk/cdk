@@ -28,7 +28,6 @@ import java.io.Serializable;
  * A LonePair is an orbital primarily located with one Atom, containing
  * two electrons.
  *
- * @cdk.module  silent
  * @cdk.githash
  *
  * @cdk.keyword orbital

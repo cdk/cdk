@@ -49,7 +49,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-05-03
- * @cdk.module  qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:effectivePolarizability
  * @see Polarizability

@@ -39,7 +39,6 @@ package org.openscience.cdk.tools;
  * >Blue Obelisk Data Features Ontology</a>.
  *
  * @author Egon Willighagen &lt;ewilligh@uni-koeln.de&gt;
- * @cdk.module annotation
  * @cdk.githash
  **/
 public class DataFeatures {

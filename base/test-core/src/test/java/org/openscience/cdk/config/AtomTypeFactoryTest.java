@@ -40,7 +40,6 @@ import java.io.InputStream;
 /**
  * Checks the functionality of the AtomTypeFactory.
  *
- * @cdk.module test-core
  */
 class AtomTypeFactoryTest extends CDKTestCase {
 

@@ -30,7 +30,6 @@ import static org.mockito.Mockito.mock;
 /**
  * Checks the functionality of the IsomorphismTester
  *
- * @cdk.module test-smarts
  */
 class AnyOrderQueryBondTest extends CDKTestCase {
 

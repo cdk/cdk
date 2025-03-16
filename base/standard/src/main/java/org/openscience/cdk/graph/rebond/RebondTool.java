@@ -42,7 +42,6 @@ import java.util.Iterator;
  *
  * @author      Miguel Howard
  * @cdk.created 2003-05-23
- * @cdk.module  standard
  * @cdk.githash
  *
  * @see org.openscience.cdk.graph.rebond.Bspt

@@ -27,7 +27,6 @@ import java.util.Map;
 /**
  * SAX Handler for the {@link OWLAtomTypeMappingReader}.
  *
- * @cdk.module  atomtype
  * @cdk.githash
  */
 public class OWLAtomTypeMappingHandler extends DefaultHandler {

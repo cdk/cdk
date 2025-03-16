@@ -41,7 +41,6 @@ import java.util.List;
  * }</pre>
  *
  * @author steinbeck
- * @cdk.module interfaces
  * @cdk.githash
  * @cdk.created 2000-10-02
  */

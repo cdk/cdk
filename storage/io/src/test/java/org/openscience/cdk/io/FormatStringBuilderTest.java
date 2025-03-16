@@ -29,7 +29,6 @@ import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author     egonw
- * @cdk.module test-io
  */
 class FormatStringBuilderTest extends CDKTestCase {
 

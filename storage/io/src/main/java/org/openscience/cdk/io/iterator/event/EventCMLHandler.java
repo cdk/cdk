@@ -41,7 +41,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * <p>The CDO only takes care about atoms, bonds and molecules.
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;

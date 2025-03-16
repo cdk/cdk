@@ -28,7 +28,6 @@ import java.util.Collection;
  * A PDBPolymer is a subclass of a BioPolymer which is supposed to store
  * additional informations about the BioPolymer which are connected to BioPolymers.
  *
- * @cdk.module  interfaces
  * @cdk.githash
  *
  * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;

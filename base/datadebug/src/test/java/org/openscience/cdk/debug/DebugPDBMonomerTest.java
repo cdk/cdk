@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IPDBMonomer;
 /**
  * Checks the functionality of the {@link DebugPDBMonomer}.
  *
- * @cdk.module test-datadebug
  */
 class DebugPDBMonomerTest extends AbstractPDBMonomerTest {
 

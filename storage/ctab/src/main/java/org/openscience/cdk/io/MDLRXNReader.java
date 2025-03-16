@@ -52,7 +52,6 @@ import java.util.StringTokenizer;
 /**
  * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
  *
- * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
  *

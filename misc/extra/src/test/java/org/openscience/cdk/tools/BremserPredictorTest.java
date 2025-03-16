@@ -37,7 +37,6 @@ import org.openscience.cdk.io.MDLV2000Reader;
 /**
  * Tests the HOSECode genertor.
  *
- * @cdk.module test-extra
  *
  * @author     steinbeck
  * @cdk.created    2002-11-16

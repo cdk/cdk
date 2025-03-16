@@ -52,7 +52,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module core
  * @cdk.githash
  */
 final class BitMatrix {

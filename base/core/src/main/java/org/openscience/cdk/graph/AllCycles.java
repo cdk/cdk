@@ -67,7 +67,6 @@ import java.util.List;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module core
  * @cdk.githash
  * @see RegularPathGraph
  * @see JumboPathGraph

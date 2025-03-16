@@ -42,7 +42,6 @@ import java.util.TreeSet;
  * in the partition to refine. These blocks are popped off the queue, and
  *
  * @author maclean
- * @cdk.module group
  */
 class EquitablePartitionRefiner {
     

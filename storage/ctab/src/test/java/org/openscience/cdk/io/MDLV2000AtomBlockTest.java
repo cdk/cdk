@@ -39,7 +39,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * @author John May
- * @cdk.module test-io
  */
 class MDLV2000AtomBlockTest {
 

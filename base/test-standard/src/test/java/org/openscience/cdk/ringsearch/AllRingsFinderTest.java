@@ -47,7 +47,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.ringsearch.AllRingsFinder.Threshold.PubChem_994;
 
 /**
- * @cdk.module test-standard
  */
 class AllRingsFinderTest extends CDKTestCase {
 

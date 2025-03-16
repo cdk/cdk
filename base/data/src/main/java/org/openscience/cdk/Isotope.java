@@ -53,7 +53,6 @@ import java.io.Serializable;
  *   if.configure(isotope);
  * </pre>
  *
- * @cdk.module data
  * @cdk.githash
  *
  * @author     steinbeck

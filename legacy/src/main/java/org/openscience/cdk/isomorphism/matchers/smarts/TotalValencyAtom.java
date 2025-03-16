@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * This matcher checks the valence of the Atom. The valence is the number of
  * bonds formed by an atom (including bonds to implicit hydrogens).
  *
- * @cdk.module  smarts
  * @cdk.keyword SMARTS
  * @cdk.githash
  */

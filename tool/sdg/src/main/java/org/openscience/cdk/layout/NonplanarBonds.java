@@ -84,7 +84,6 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN_INVERTED;
  * Unspecified bonds are also marked.
  *
  * @author John May
- * @cdk.module sdg
  */
 final class NonplanarBonds {
 

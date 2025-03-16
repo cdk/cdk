@@ -39,7 +39,6 @@ import java.util.Objects;
  *
  * @author Rajarshi Guha
  * @cdk.created 2005-05-09
- * @cdk.module  qsarmolecular
  * @cdk.githash
  */
 public class NeighborList {

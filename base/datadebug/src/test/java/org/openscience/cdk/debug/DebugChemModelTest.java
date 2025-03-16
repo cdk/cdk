@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemModel;
 /**
  * Checks the functionality of the {@link DebugChemModel}.
  *
- * @cdk.module test-datadebug
  */
 class DebugChemModelTest extends AbstractChemModelTest {
 

@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *  Class defining an set object of MolecularFormulas. It maintains
  *   a list of list IMolecularFormula.<p>
  *
- * @cdk.module  data
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula

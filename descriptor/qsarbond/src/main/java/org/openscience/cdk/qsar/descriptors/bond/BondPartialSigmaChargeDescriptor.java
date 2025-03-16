@@ -47,7 +47,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-05-08
- * @cdk.module  qsarbond
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
  *

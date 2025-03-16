@@ -38,7 +38,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * @cdk.module test-cip
  */
 class AtomicNumberRuleTest extends CDKTestCase {
 

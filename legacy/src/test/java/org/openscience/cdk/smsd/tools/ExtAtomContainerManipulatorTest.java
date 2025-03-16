@@ -38,7 +38,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
- * @cdk.module test-smsd
  * @author Asad
  */
 class ExtAtomContainerManipulatorTest {

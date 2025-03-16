@@ -15,7 +15,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * take advantage of the functionality that abstract class provides.
  *
  * @cdk.githash
- * @cdk.module test-core
  */
 public interface IAtomTypeTest {
 

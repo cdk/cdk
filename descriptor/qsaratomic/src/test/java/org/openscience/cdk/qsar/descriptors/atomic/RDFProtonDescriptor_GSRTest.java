@@ -22,7 +22,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- * @cdk.module test-qsaratomic
  */
 class RDFProtonDescriptor_GSRTest extends AtomicDescriptorTest {
 

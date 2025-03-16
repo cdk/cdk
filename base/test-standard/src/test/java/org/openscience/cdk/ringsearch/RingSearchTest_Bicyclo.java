@@ -37,7 +37,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * system) is found correctly.
  *
  * @author John May
- * @cdk.module test-standard
  */
 final class RingSearchTest_Bicyclo {
 

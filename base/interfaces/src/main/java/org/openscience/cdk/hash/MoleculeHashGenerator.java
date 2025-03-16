@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *     remain unaltered over time.
  * </p>
  * @author John May
- * @cdk.module interfaces
  * @cdk.githash
  */
 public interface MoleculeHashGenerator {

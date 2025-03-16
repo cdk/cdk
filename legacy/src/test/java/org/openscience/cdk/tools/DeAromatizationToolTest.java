@@ -34,7 +34,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Tests the DeAromatizationTool.
  *
- * @cdk.module test-extra
  */
 class DeAromatizationToolTest extends CDKTestCase {
 

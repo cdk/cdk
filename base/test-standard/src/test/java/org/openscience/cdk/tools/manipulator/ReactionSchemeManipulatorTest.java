@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
- * @cdk.module test-standard
  */
 class ReactionSchemeManipulatorTest extends CDKTestCase {
 

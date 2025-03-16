@@ -49,7 +49,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * TestCase for the {@link InChIToStructure} class.
  *
- * @cdk.module test-inchi
  */
 class InChIToStructureTest extends CDKTestCase {
 

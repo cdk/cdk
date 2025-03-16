@@ -22,7 +22,6 @@ package org.openscience.cdk.renderer.font;
  * An interface for managing the drawing of fonts at different zoom levels.
  *
  * @author maclean
- * @cdk.module render
  * @cdk.githash
  */
 public interface IFontManager {

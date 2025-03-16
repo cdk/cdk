@@ -42,7 +42,6 @@ import java.util.Objects;
  *
  * @author       steinbeck
  * @cdk.created  2001-08-08
- * @cdk.module   data
  * @cdk.githash
  * @cdk.keyword  atom, type
  */

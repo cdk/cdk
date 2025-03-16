@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.AbstractLonePairTest;
  *
  * @see org.openscience.cdk.LonePair
  *
- * @cdk.module test-data
  */
 class LonePairTest extends AbstractLonePairTest {
 

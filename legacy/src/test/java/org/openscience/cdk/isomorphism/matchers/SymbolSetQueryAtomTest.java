@@ -29,7 +29,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 /**
  * Checks the functionality of the IsomorphismTester
  *
- * @cdk.module test-isomorphism
  */
 class SymbolSetQueryAtomTest extends CDKTestCase {
 

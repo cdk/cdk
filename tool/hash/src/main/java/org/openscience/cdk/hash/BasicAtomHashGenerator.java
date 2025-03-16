@@ -60,7 +60,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module hash
  * @see SeedGenerator
  * @see <a href="http://mathworld.wolfram.com/GraphDiameter.html">Graph
  *      Diameter</a>

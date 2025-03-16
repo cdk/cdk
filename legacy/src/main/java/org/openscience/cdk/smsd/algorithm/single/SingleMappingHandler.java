@@ -42,7 +42,6 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 /**
  * This is a handler class for single atom mapping
  * ({@link org.openscience.cdk.smsd.algorithm.single.SingleMapping}).
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public

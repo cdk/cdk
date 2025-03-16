@@ -43,7 +43,6 @@ import static java.util.Arrays.copyOf;
  * algorithms.
  *
  * @author John May
- * @cdk.module core
  * @see RelevantCycles
  */
 final class InitialCycles {

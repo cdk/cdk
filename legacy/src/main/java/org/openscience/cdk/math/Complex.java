@@ -28,7 +28,6 @@ package org.openscience.cdk.math;
 /**
  * This class handles complex values.
  *
- * @cdk.module qm
  */
 public class Complex {
 

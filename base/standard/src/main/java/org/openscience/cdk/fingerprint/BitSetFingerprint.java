@@ -27,7 +27,6 @@ import java.util.BitSet;
 
 /**
  * @author jonalv
- * @cdk.module     standard
  * @cdk.githash
  */
 public class BitSetFingerprint implements IBitFingerprint {

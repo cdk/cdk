@@ -46,7 +46,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * This descriptor returns a single double value, labeled as "FMF"
  *
  * @author Rajarshi Guha
- * @cdk.module qsarmolecular
  * @cdk.dictref qsar-descriptors:FMF
  * @cdk.githash
  * @see org.openscience.cdk.fragment.MurckoFragmenter

@@ -51,7 +51,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Tests for IReactionProcess implementations.
  *
- * @cdk.module test-reaction
  */
 public abstract class ReactionProcessTest extends CDKTestCase {
 

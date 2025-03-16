@@ -45,7 +45,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import signature.AbstractVertexSignature;
 
 /**
- * @cdk.module test-signature
  * @author maclean
  *
  */

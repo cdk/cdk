@@ -109,7 +109,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * C[C@@H](O)[CH:1]](C)[C@@H](C)O}
  *
  * @author John May
- * @cdk.module standard
  * @cdk.githash
  */
 public final class Stereocenters {

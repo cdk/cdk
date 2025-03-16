@@ -31,7 +31,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 /**
- * @cdk.module test-extra
  */
 class ZMatrixReaderTest extends ChemObjectIOTest {
 

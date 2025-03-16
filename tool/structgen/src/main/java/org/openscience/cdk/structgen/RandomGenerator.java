@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @cdk.githash
  * @cdk.keyword structure generator
- * @cdk.module structgen
  */
 public class RandomGenerator {
 

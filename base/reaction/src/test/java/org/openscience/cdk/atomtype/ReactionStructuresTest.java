@@ -40,7 +40,6 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @cdk.module test-reaction
  */
 class ReactionStructuresTest extends CDKTestCase {
 

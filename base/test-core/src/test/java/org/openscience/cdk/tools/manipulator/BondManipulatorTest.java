@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.silent.Atom;
 
 /**
- * @cdk.module test-core
  */
 class BondManipulatorTest extends CDKTestCase {
 

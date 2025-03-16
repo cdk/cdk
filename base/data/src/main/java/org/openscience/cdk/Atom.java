@@ -52,7 +52,6 @@ import java.util.Objects;
  * <p>More examples about using this class can be found in the
  * Junit test for this class.
  *
- * @cdk.module data
  * @cdk.githash
  *
  * @author     steinbeck

@@ -27,7 +27,6 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
 /**
  * Tests for TautomerizationMechanism implementations.
  *
- * @cdk.module test-reaction
  */
 class TautomerizationMechanismTest extends ReactionMechanismTest {
 

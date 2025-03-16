@@ -46,7 +46,6 @@ import org.openscience.cdk.protein.data.PDBPolymer;
 /**
  * TestCase for the {@link PDBAtomCustomizer} class.
  *
- * @cdk.module test-pdbcml
  */
 class PDBAtomCustomizerTest extends CDKTestCase {
 

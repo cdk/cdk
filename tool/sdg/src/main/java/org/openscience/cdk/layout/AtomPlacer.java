@@ -57,7 +57,6 @@ import java.util.stream.StreamSupport;
  *
  *@author      steinbeck
  *@cdk.created 2003-08-29
- *@cdk.module  sdg
  * @cdk.githash
  */
 public class AtomPlacer {

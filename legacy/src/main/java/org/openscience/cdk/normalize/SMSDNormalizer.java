@@ -61,7 +61,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 /**
  * This class containes set of modules required to clean a molecule
  * before subjecting it for MCS search. eg. aromatizeMolecule
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public

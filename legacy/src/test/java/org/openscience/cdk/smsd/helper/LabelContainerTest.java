@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Test;
  * Unit testing for the {@link LabelContainer} class.
  *
  * @author     Syed Asad Rahman
- * @cdk.module test-smsd
  */
 class LabelContainerTest {
 

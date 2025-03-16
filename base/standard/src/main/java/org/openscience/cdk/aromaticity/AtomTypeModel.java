@@ -50,7 +50,6 @@ import static org.openscience.cdk.interfaces.IAtomType.Hybridization;
  * C=C1C(=C)C(=C)C(=C)C(=C)C1=C}) being considered aromatic.
  *
  * @author John May
- * @cdk.module standard
  */
 // mores tests in - org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest
 final class AtomTypeModel extends ElectronDonation {

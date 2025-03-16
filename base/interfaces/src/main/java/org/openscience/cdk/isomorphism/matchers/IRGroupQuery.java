@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IChemObject;
  * Interface definition for Rgroup query classes. These must provide a root
  * structure, root attachment points and Rgroup definitions.
  *
- * @cdk.module  isomorphism
  * @cdk.githash
  * @cdk.keyword Rgroup
  * @cdk.keyword R group

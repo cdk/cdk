@@ -34,7 +34,6 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 /**
  * Checks the functionality of the {@link DebugPDBAtom}.
  *
- * @cdk.module test-datadebug
  */
 class DebugPDBAtomTest extends AbstractPDBAtomTest {
 

@@ -59,7 +59,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 /**
  * Class that ranks MCS final solution according to the chemical rules.
  *
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent

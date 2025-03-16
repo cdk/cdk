@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 import java.util.List;
 
 /**
- * @cdk.module ioformats
  * @cdk.githash
  */
 public class PubChemSubstanceXMLFormat extends AbstractResourceFormat implements IChemFormatMatcher {

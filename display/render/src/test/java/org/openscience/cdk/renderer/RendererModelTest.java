@@ -48,7 +48,6 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * @cdk.module test-render
  */
 class RendererModelTest {
 

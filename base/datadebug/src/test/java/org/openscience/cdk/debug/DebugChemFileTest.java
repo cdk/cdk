@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 /**
  * Checks the functionality of the {@link DebugChemFile}.
  *
- * @cdk.module test-datadebug
  */
 class DebugChemFileTest extends AbstractChemFileTest {
 

@@ -42,7 +42,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
  * like the MDL molfile <code>Group</code> concept.
  *
- * @cdk.module datadebug
  * @cdk.githash
  *
  * @author egonw

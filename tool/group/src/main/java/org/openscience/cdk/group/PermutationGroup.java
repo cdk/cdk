@@ -69,7 +69,6 @@ import java.util.List;
  * </p>
  *
  * @author maclean
- * @cdk.module group
  *
  */
 public class PermutationGroup {

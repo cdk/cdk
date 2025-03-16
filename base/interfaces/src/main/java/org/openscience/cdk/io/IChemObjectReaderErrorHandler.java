@@ -30,7 +30,6 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
  * cannot be ignored, as the parser is not able to continue reading the file.
  * The user should immediately halt reading the file.
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;

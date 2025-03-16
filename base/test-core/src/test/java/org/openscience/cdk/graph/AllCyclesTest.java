@@ -11,7 +11,6 @@ import static org.openscience.cdk.graph.RegularPathGraphTest.completeGraphOfSize
 
 /**
  * @author John May
- * @cdk.module test-core
  */
 class AllCyclesTest {
 

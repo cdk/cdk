@@ -30,7 +30,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the {@link OWLAtomTypeMappingReader}.
  *
- * @cdk.module test-atomtype
  */
 class OWLAtomTypeMappingReaderTest extends CDKTestCase {
 

@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
  * Checks the functionality of the MolecularFormula.
  *
- * @cdk.module test-data
  *
  * @see MolecularFormula
  */

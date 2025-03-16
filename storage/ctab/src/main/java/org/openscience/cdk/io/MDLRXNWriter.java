@@ -62,7 +62,6 @@ import java.util.Set;
  *
  * See {@cdk.cite DAL92}.
  *
- * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
  *

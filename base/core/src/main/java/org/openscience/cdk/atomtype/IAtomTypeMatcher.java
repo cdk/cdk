@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IAtomType;
  *
  * @author      mfe4
  * @cdk.created 2004-12-02
- * @cdk.module  core
  * @cdk.githash
  *
  * @see         IAtomTypeGuesser

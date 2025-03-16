@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IMonomer;
 /**
  * Checks the functionality of the {@link DebugMonomer}.
  *
- * @cdk.module test-datadebug
  */
 class DebugMonomerTest extends AbstractMonomerTest {
 

@@ -41,7 +41,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * Generate the symbols for radicals.
  *
  * @author maclean
- * @cdk.module renderextra
  * @cdk.githash
  */
 public class RadicalGenerator implements IGenerator<IAtomContainer> {

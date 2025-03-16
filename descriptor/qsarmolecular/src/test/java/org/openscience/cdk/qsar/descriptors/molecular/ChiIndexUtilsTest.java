@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * @cdk.module test-qsarmolecular
  */
 class ChiIndexUtilsTest extends CDKTestCase {
 

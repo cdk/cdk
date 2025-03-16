@@ -49,7 +49,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Checks the functionality of the ConjugatedPiSystemsCalculator.
  *
- * @cdk.module test-reaction
  */
 class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 

@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IRingSet;
  * with the following elements: H, C, N, O, F, Cl, Br, I,
  * P, S, As, B, Si, Se, and Te.
  *
- * @cdk.module   standard
  * @cdk.keyword  volume, molecular
  * @cdk.githash
  */

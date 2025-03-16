@@ -44,7 +44,6 @@ import org.xml.sax.XMLReader;
  *
  * @see org.openscience.cdk.config.CDKBasedAtomTypeConfigurator
  *
- * @cdk.module core
  * @cdk.githash
  */
 public class AtomTypeReader {

@@ -25,7 +25,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Tests for ParameterReact implementations.
  *
- * @cdk.module test-reaction
  */
 class ParameterReactTest extends CDKTestCase {
 

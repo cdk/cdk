@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IRingSet;
  * the other lower level concepts like rings, sequences,
  * fragments, etc.
  *
- * @cdk.module data
  * @cdk.githash
  */
 public class ChemModel extends ChemObject implements Serializable, IChemModel, IChemObjectListener, Cloneable {

@@ -32,7 +32,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * AtomType resource that reads the atom type configuration from an OWL file.
  *
- * @cdk.module  core
  * @cdk.githash
  */
 public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {

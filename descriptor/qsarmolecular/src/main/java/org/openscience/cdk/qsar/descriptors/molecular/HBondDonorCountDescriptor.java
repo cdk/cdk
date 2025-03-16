@@ -61,7 +61,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *
  * @author      ulif
  * @cdk.created 2005-22-07
- * @cdk.module  qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:hBondDonors
  */

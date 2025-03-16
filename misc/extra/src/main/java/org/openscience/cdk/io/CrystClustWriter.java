@@ -44,7 +44,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author Egon Willighagen
  * @cdk.created 2004-01-01
  *
- * @cdk.module extra
  * @cdk.githash
  * @cdk.iooptions
  */

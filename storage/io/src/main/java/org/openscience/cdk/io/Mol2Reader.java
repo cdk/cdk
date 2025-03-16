@@ -60,7 +60,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * See the specs <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
  *
  * @author Egon Willighagen
- * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
  * @cdk.created 2003-08-21

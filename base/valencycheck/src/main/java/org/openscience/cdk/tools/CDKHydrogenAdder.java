@@ -67,7 +67,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  * </pre>
  *
  * @author     egonw
- * @cdk.module valencycheck
  * @cdk.githash
  */
 public class CDKHydrogenAdder {

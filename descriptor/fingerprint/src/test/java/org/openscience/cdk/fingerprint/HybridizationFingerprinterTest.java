@@ -36,7 +36,6 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * @cdk.module test-standard
  */
 class HybridizationFingerprinterTest extends AbstractFingerprinterTest {
 

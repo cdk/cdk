@@ -42,7 +42,6 @@ import java.util.*;
  * {@link IMolecularFormula}'s. For example:
  *
  *
- * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.githash

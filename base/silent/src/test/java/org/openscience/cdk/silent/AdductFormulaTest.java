@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
  * Checks the functionality of the {@link AdductFormula}.
  *
- * @cdk.module test-silent
  */
 class AdductFormulaTest extends AbstractAdductFormulaTest {
 

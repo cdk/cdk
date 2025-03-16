@@ -55,7 +55,6 @@ import java.util.List;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-05-18
- * @cdk.module  qsarbond
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:bondPartialTCharge
  *

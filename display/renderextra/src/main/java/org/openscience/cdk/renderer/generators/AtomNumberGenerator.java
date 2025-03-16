@@ -45,7 +45,6 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * for the atoms.
  *
  * @author      maclean
- * @cdk.module  renderextra
  * @cdk.githash
  */
 public class AtomNumberGenerator implements IGenerator<IAtomContainer> {

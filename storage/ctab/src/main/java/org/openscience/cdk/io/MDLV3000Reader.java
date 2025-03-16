@@ -77,7 +77,6 @@ import java.util.regex.Pattern;
  * 9 (coordination) or 10 (hydrogen) are encountered.
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
- * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
  * @cdk.created 2006

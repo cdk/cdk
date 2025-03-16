@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @cdk.created  2005-11-18
  * @cdk.keyword  dictionary
- * @cdk.module   dict
  *
  */
 public class OWLFile extends Dictionary {

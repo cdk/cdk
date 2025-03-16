@@ -47,7 +47,6 @@ import java.util.List;
 /**
  * TestSuite that runs a test for the RadicalSiteRrBetaReaction.
  *
- * @cdk.module test-reaction
  */
 public class RadicalSiteRrBetaReactionTest extends ReactionProcessTest {
 

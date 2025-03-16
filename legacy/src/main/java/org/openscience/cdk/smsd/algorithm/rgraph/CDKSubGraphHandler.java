@@ -43,7 +43,6 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 /**
  * This class acts as a handler class for {@link CDKMCS} algorithm.
  *
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public

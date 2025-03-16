@@ -70,7 +70,6 @@ import org.xmlcml.cml.element.CMLSubstance;
 import org.xmlcml.cml.element.CMLSubstanceList;
 
 /**
- * @cdk.module       libiocml
  * @cdk.githash
  * @cdk.keyword      CML
  * @cdk.keyword      class convertor

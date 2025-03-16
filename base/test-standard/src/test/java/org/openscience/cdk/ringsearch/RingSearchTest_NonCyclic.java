@@ -34,7 +34,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * ring search unit tests for a branched aliphatic compounds
  *
  * @author John May
- * @cdk.module test-standard
  */
 final class RingSearchTest_NonCyclic {
 

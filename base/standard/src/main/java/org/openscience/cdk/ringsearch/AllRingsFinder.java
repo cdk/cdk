@@ -62,7 +62,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *
  * @author steinbeck
  * @author johnmay
- * @cdk.module standard
  * @cdk.githash
  * @cdk.keyword rings
  * @cdk.keyword all rings

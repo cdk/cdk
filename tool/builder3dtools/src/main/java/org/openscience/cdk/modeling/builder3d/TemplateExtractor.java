@@ -58,7 +58,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * Helper class that help setup a template library of CDK's Builder3D.
  *
  * @author      Christian Hoppe
- * @cdk.module  builder3dtools
  * @cdk.githash
  */
 public class TemplateExtractor {

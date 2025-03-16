@@ -50,7 +50,6 @@ import org.openscience.cdk.io.formats.MOPAC7Format;
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.githash
- * @cdk.module  io
  */
 public class Mopac7Reader extends DefaultChemObjectReader {
 

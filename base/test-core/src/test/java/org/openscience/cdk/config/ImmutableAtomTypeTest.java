@@ -28,7 +28,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * Checks the functionality of the {@link ImmutableAtomType}.
  *
- * @cdk.module test-core
  */
 class ImmutableAtomTypeTest extends CDKTestCase {
 

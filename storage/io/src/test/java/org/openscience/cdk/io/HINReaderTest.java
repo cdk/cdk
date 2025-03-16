@@ -44,7 +44,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * TestCase for the reading HIN mol files using one test file.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.HINReader
  */

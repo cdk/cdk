@@ -29,7 +29,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the dictionary reaction-processes class.
  *
- * @cdk.module test-dict
  *
  * @see org.openscience.cdk.dict.DictionaryDatabase
  */

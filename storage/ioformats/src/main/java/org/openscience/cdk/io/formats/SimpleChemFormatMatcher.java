@@ -31,7 +31,6 @@ import java.util.List;
  * per-line implementation.
  *
  * @author John May
- * @cdk.module ioformats
  */
 abstract class SimpleChemFormatMatcher extends AbstractResourceFormat implements IChemFormatMatcher {
 

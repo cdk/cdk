@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Test class for {@link org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter}
- * @cdk.module test-standard
  */
 class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
 

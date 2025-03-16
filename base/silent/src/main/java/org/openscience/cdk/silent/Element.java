@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IElement;
  *   Element e2 = if.getElement(12);
  * </pre>
  *
- * @cdk.module  silent
  * @cdk.githash
  *
  * @cdk.keyword element

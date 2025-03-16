@@ -42,7 +42,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author Luis F. de Figueiredo
  * @cdk.created 2003-09-24
  * @cdk.dictref blue-obelisk:perceiveGraphSymmetry
- * @cdk.module extra
  */
 public class EquivalentClassPartitioner {
 

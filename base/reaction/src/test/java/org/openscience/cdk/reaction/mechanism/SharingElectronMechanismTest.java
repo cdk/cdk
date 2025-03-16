@@ -27,7 +27,6 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
 /**
  * Tests for SharingElectronMechanism implementations.
  *
- * @cdk.module test-reaction
  */
 class SharingElectronMechanismTest extends ReactionMechanismTest {
 

@@ -10,7 +10,6 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 
 /**
- * @cdk.module test-qsarmolecular
  */
 
 class AutocorrelationDescriptorPolarizabilityTest extends MolecularDescriptorTest {

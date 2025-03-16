@@ -24,7 +24,6 @@ package org.openscience.cdk.math;
 
 
 /**
- * @cdk.module standard
  * @cdk.githash
  *
  * @author Oliver Horlacher &lt;oliver.horlacher@therastrat.com&gt;

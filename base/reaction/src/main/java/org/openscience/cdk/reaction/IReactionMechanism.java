@@ -30,7 +30,6 @@ import java.util.ArrayList;
  * Classes that implement this interface are reaction mechanisms.
  *
  * @author      Miguel Rojas
- * @cdk.module  reaction
  * @cdk.githash
  */
 public interface IReactionMechanism {

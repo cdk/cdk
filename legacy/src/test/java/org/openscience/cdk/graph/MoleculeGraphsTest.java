@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
- * @cdk.module test-standard
  */
 class MoleculeGraphsTest extends CDKTestCase {
 

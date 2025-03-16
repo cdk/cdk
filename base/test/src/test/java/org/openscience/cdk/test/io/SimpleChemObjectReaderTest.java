@@ -10,7 +10,6 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 /**
  * TestCase for CDK IO classes.
  *
- * @cdk.module test-io
  */
 public abstract class SimpleChemObjectReaderTest extends ChemObjectReaderTest {
 

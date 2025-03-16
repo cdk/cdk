@@ -221,7 +221,6 @@ import java.util.TreeSet;
  * </table>
  *
  * @author John May
- * @cdk.module core
  * @cdk.keyword ESSSR
  * @cdk.keyword ring
  * @cdk.keyword cycle

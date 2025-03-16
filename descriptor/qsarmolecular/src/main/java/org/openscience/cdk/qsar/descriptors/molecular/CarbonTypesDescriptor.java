@@ -64,7 +64,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @author Rajarshi Guha
  * @cdk.created 2007-09-28
- * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:carbonTypes
  * @cdk.keyword topological bond order ctypes

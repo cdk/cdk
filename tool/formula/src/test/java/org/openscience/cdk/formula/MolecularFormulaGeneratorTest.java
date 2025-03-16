@@ -36,7 +36,6 @@ import java.time.Duration;
 /**
  * Checks the functionality of the MolecularFormulaGenerator.
  *
- * @cdk.module test-formula
  */
 class MolecularFormulaGeneratorTest extends CDKTestCase {
 

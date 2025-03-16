@@ -29,7 +29,6 @@ import java.util.Map;
  * A BioPolymer is a subclass of a Polymer which is supposed to store
  * additional informations about the Polymer which are connected to BioPolymers.
  *
- * @cdk.module  interfaces
  * @cdk.githash
  *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;

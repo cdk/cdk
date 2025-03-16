@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IBond;
  * Concept of a ligand in CIP terms, reflecting a side chain of a central atom that can
  * have precedence over another.
  *
- * @cdk.module cip
  * @cdk.githash
  */
 public class Ligand implements ILigand {

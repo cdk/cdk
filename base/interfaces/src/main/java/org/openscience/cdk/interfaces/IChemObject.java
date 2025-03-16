@@ -27,7 +27,6 @@ import java.util.Map;
  *
  * @author        egonw
  * @cdk.githash
- * @cdk.module    interfaces
  */
 public interface IChemObject extends ICDKObject {
 

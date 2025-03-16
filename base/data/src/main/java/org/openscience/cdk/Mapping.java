@@ -31,7 +31,6 @@ import java.util.NoSuchElementException;
  * An example of such a mapping, is the mapping between corresponding atoms
  * in a Reaction.
  *
- * @cdk.module data
  * @cdk.githash
  *
  * @cdk.keyword reaction, atom mapping

@@ -43,7 +43,6 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * IDoubleBondStereochemistry} stereo elements.
  *
  * @author John May
- * @cdk.module hash
  */
 public final class DoubleBondElementEncoderFactory implements StereoEncoderFactory {
 

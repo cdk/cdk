@@ -36,7 +36,6 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  * Allows processing of IOSetting quesions which are passed to the user
  * by using Swing dialogs.
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;

@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 /**
  * Checks the functionality of the {@link DebugAminoAcid}.
  *
- * @cdk.module test-datadebug
  */
 class DebugAminoAcidTest extends AbstractAminoAcidTest {
 

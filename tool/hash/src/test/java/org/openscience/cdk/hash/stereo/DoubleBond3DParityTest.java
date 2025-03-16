@@ -31,7 +31,6 @@ import javax.vecmath.Point3d;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class DoubleBond3DParityTest {
 

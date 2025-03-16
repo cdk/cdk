@@ -53,7 +53,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
- * @cdk.module  qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
  */

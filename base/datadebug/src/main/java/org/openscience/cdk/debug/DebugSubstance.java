@@ -34,7 +34,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Debugging data class.
  *
  * @author     egonw
- * @cdk.module datadebug
  * @cdk.githash
  */
 public class DebugSubstance extends AtomContainerSet implements ISubstance {

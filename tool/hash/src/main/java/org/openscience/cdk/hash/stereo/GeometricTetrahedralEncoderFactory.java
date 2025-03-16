@@ -46,7 +46,6 @@ import java.util.Map;
  * required atoms have 3D coordinates then a new 3D encoder is created.
  *
  * @author John May
- * @cdk.module hash
  * @cdk.githash
  */
 public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory {

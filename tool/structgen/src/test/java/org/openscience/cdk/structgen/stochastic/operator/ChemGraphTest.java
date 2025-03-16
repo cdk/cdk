@@ -21,7 +21,6 @@ package org.openscience.cdk.structgen.stochastic.operator;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-structgen
  */
 class ChemGraphTest extends CDKTestCase {
 

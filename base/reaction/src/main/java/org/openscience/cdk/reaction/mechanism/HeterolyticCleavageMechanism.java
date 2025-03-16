@@ -42,7 +42,6 @@ import java.util.ArrayList;
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
- * @cdk.module     reaction
  * @cdk.githash
  */
 public class HeterolyticCleavageMechanism implements IReactionMechanism {

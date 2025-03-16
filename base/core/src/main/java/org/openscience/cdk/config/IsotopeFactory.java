@@ -34,7 +34,6 @@ import java.util.List;
  * {@link Isotopes} extends this class and is to be used to get isotope
  * information.
  *
- * @cdk.module core
  * @cdk.githash
  *
  * @author         steinbeck

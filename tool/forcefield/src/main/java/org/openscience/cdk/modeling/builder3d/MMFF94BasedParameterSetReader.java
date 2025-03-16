@@ -48,7 +48,6 @@ import java.util.Vector;
  *
  * @author chhoppe
  * @cdk.created 2004-09-07
- * @cdk.module forcefield
  * @cdk.githash
  * @cdk.keyword atom type, mmff94
  */

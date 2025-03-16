@@ -32,7 +32,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 /**
  * TestSuite that runs unit tests.
  *
- * @cdk.module test-qsarmolecular
  * @see MannholdLogPDescriptor
  */
 class MannholdLogPDescriptorTest extends MolecularDescriptorTest {

@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * @cdk.module test-io
  */
 class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
 

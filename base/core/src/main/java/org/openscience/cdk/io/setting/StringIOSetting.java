@@ -23,7 +23,6 @@ import org.openscience.cdk.exception.CDKException;
 /**
  * An class for a reader setting which must be of type String.
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;

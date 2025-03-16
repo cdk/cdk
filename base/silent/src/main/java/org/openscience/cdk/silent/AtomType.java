@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IElement;
  *
  * @author       steinbeck
  * @cdk.created  2001-08-08
- * @cdk.module   silent
  * @cdk.githash
  * @cdk.keyword  atom, type
  */

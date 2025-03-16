@@ -27,7 +27,6 @@ package org.openscience.cdk.exception;
  * Exception that is thrown when a Bond is requested or required that
  * does not exist in the relevant environment.
  *
- * @cdk.module core
  * @cdk.githash
  */
 public class NoSuchBondException extends RuntimeException {

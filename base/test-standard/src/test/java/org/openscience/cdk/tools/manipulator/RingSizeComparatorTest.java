@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
- * @cdk.module test-standard
  */
 class RingSizeComparatorTest extends CDKTestCase {
 

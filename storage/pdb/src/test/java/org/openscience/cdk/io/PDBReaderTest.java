@@ -54,7 +54,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * TestCase for the PDBReader class.
  *
- * @cdk.module test-pdb
  *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;

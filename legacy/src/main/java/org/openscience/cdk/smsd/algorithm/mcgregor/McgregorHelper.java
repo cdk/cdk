@@ -30,7 +30,6 @@ import java.util.List;
  *
  * The second part of the program extents the mapping by the McGregor algorithm in case,
  * that not all atoms of molecule A and molecule B are mapped by the clique approach.
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent

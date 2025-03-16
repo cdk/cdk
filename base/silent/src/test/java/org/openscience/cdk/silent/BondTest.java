@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * Checks the functionality of the {@link Bond}.
  *
- * @cdk.module test-silent
  */
 class BondTest extends AbstractBondTest {
 

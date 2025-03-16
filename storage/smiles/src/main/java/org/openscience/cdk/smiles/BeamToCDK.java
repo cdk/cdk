@@ -69,7 +69,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module smiles
  * @see <a href="http://johnmay.github.io/beam">Beam SMILES Toolkit</a>
  */
 final class BeamToCDK {

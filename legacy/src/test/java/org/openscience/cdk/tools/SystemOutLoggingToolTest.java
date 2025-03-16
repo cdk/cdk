@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 
 /**
- * @cdk.module test-core
  */
 class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 

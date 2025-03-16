@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IPolymer;
 /**
  * Checks the functionality of the {@link Polymer}.
  *
- * @cdk.module test-silent
  */
 class PolymerTest extends AbstractPolymerTest {
 

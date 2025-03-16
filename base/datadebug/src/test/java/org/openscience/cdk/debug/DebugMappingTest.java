@@ -30,7 +30,6 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 /**
  * Checks the functionality of the {@link DebugMapping}.
  *
- * @cdk.module test-datadebug
  */
 class DebugMappingTest extends AbstractMappingTest {
 

@@ -85,7 +85,6 @@ import signature.SymmetryClass;
  * - which is just a convenience method equivalent to calling the constructor of
  * an AtomSignature class.
  *
- * @cdk.module signature
  * @author maclean
  * @cdk.githash
  */

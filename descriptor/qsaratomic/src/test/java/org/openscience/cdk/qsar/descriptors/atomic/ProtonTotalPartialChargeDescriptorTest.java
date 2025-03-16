@@ -28,7 +28,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * @cdk.module test-qsaratomic
  */
 class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest {
 

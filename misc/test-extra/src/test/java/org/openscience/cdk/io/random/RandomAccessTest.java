@@ -39,7 +39,6 @@ import java.io.InputStream;
  * Test for {@link RandomAccessSDFReader}.
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
- * @cdk.module test-extra
  */
 class RandomAccessTest extends CDKTestCase {
 

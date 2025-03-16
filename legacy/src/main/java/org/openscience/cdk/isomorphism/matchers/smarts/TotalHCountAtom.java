@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * SMARTS query atom for matching the total hydrogen count. This count is
  * specified in SMARTS using {@code H<NUMBER>}.
  *
- * @cdk.module  smarts
  * @cdk.keyword SMARTS
  * @cdk.githash
  */

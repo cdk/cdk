@@ -27,7 +27,6 @@ import java.util.Iterator;
  * Super class for <b>all</b> CDK TestCase implementations that ensures that
  * the LoggingTool is configured. This is the JUnit4 version of CDKTestCase.
  *
- * @cdk.module test
  *
  * @see        CDKTestCase
  */

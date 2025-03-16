@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * JOELib {@cdk.cite WEGNER2006}.
  *
  * @author      egonw
- * @cdk.module  qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:acidicGroupCount
  */

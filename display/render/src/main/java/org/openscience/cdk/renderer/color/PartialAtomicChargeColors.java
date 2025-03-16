@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * uncharged atoms are colored white, positively charged
  * atoms are blue, and negatively charge atoms are red.
  *
- * @cdk.module  render
  * @cdk.githash
  * @cdk.keyword atom coloring, partial charges
  */

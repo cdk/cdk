@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * A AminoAcid is Monomer which stores additional amino acid specific
  * informations, like the N-terminus atom.
  *
- * @cdk.module data
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;e.willighagen@science.ru.nl&gt;

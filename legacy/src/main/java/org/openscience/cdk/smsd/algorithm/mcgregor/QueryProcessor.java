@@ -30,7 +30,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
  * Class to handle mappings of query molecule.
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent

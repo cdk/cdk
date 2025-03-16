@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IElement;
 /**
  * Checks the functionality of the {@link DebugAtom}.
  *
- * @cdk.module test-datadebug
  */
 class DebugAtomTest extends AbstractAtomTest {
 

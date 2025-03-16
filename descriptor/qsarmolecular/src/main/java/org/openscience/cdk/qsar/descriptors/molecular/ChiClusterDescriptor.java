@@ -69,7 +69,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-11-13
- * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:chiCluster
  * @cdk.keyword chi cluster index

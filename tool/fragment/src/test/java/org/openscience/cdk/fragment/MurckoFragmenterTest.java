@@ -46,7 +46,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Test Murcko fragmenter.
  *
- * @cdk.module test-fragment
  */
 class MurckoFragmenterTest extends CDKTestCase {
 

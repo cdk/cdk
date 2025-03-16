@@ -57,7 +57,6 @@ import java.util.regex.Pattern;
  * Reads an frames from a PMP formated input.
  * Both compilation and use of this class requires Java 1.4.
  *
- * @cdk.module  io
  * @cdk.githash
  * @cdk.iooptions
  *

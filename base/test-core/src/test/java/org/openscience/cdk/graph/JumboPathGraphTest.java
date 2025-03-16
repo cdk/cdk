@@ -36,7 +36,6 @@ import static org.openscience.cdk.graph.JumboPathGraph.PathEdge;
 import static org.openscience.cdk.graph.JumboPathGraph.ReducedEdge;
 import static org.openscience.cdk.graph.JumboPathGraph.SimpleEdge;
 
-/** @cdk.module test-core */
 class JumboPathGraphTest {
 
     @Test

@@ -27,7 +27,6 @@ import org.openscience.cdk.test.interfaces.AbstractReactionSchemeTest;
 /**
  * Checks the functionality of the {@link ReactionScheme}.
  *
- * @cdk.module test-silent
  */
 class ReactionSchemeTest extends AbstractReactionSchemeTest {
 

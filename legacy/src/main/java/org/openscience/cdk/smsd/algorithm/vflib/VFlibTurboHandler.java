@@ -58,7 +58,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * This class should only be used to report if a query
  * graph is a substructure of the target graph.
  *
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent

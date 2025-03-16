@@ -36,7 +36,6 @@ import java.util.Arrays;
  * is meant to identify and the atoms of a molecule that correspond to the SMARTS pattern.
  *
  * @author Rajarshi Guha
- * @cdk.module pcore
  * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism

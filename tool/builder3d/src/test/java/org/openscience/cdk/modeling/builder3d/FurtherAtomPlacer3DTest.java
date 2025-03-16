@@ -40,7 +40,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  * Tests not-yet-tested functionalities of {@link AtomPlacer3D}.
  *
  * @author danielszisz
- * @cdk.module test-builder3d
  * @created 04/10/2012
  * @version 04/22/2012
  */

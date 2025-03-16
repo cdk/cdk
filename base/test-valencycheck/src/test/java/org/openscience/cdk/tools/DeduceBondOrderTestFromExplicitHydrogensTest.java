@@ -37,7 +37,6 @@ import org.openscience.cdk.interfaces.IBond.Order;
  * hydrogen counts.
  *
  * @author      egonw
- * @cdk.module  test-valencycheck
  * @cdk.created 2006-08-16
  */
 class DeduceBondOrderTestFromExplicitHydrogensTest extends CDKTestCase {

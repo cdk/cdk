@@ -14,7 +14,6 @@ import java.util.Arrays;
  * }</pre></blockquote>
  *
  * @author John May
- * @cdk.module core
  * @cdk.githash
  */
 public final class ConnectedComponents {

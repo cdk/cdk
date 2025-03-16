@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 /**
  * Subclass of {@link Ligand} to which no further recursion must be applied.
  *
- * @cdk.module cip
  * @cdk.githash
  */
 public class ImplicitHydrogenLigand extends TerminalLigand {

@@ -55,7 +55,6 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Writes MDL SD files ({@cdk.cite DAL92}). A MDL SD file contains one or more molecules,
  * complemented by properties.
  *
- * @cdk.module  io
  * @cdk.githash
  * @cdk.iooptions
  * @cdk.keyword file format, MDL SD file

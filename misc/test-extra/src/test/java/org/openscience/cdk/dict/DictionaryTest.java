@@ -25,7 +25,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the DefaultHanlder class.
  *
- * @cdk.module test-extra
  *
  * @see org.openscience.cdk.dict.DefaultHanlder
  */

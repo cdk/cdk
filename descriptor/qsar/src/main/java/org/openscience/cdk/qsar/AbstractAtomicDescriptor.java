@@ -31,7 +31,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * which in turn need to be cached for all atoms, so that they can be
  * retrieved one by one.
  *
- * @cdk.module qsar
  * @cdk.githash
  */
 public abstract class AbstractAtomicDescriptor extends AbstractDescriptor implements IAtomicDescriptor {

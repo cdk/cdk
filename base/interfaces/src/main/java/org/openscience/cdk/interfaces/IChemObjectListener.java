@@ -27,7 +27,6 @@ package org.openscience.cdk.interfaces;
  * such that they react appropriately to changes in the object they
  * are interested in.
  *
- * @cdk.module interfaces
  * @cdk.githash
  */
 public interface IChemObjectListener {

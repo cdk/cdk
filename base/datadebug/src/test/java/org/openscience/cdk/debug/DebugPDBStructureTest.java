@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractPDBStructureTest;
 /**
  * Checks the functionality of the {@link DebugPDBStructure}.
  *
- * @cdk.module test-datadebug
  */
 class DebugPDBStructureTest extends AbstractPDBStructureTest {
 

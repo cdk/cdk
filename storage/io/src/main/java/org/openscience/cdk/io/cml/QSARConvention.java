@@ -41,7 +41,6 @@ import org.xml.sax.Attributes;
 /**
  * This is an implementation for the CDK convention.
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @author egonw

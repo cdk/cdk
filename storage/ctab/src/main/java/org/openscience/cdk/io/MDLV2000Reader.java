@@ -115,7 +115,6 @@ import static org.openscience.cdk.io.MDLV2000Writer.SPIN_MULTIPLICITY;
  *
  * @author steinbeck
  * @author Egon Willighagen
- * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
  * @cdk.created 2000-10-02

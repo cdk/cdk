@@ -43,7 +43,6 @@ import java.time.Duration;
  *
  * @author         Rajarshi Guha
  * @cdk.created    2006-09-18
- * @cdk.module     test-smiles
  */
 class FixBondOrdersToolTest extends CDKTestCase {
 

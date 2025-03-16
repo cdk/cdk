@@ -88,7 +88,6 @@ import java.util.Set;
  * @cdk.created    2002-02-24
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
- * @cdk.module     standard
  * @cdk.githash
  */
 public class Fingerprinter extends AbstractFingerprinter implements IFingerprinter {

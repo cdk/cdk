@@ -34,7 +34,6 @@ import org.openscience.cdk.math.Vector;
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-07-22
- * @cdk.module  qm
  */
 public class AngularMomentum {
 

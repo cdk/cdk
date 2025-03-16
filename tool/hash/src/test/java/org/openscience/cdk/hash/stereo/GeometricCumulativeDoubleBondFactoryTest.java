@@ -49,7 +49,6 @@ import org.junit.jupiter.api.Test;
  * allene and cumulene.
  *
  * @author John May
- * @cdk.module test-hash
  */
 class GeometricCumulativeDoubleBondFactoryTest {
 

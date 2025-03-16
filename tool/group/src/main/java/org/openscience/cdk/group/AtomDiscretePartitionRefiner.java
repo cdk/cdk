@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * An {@link AtomContainerDiscretePartitionRefiner} for atoms.
  * 
  * @author maclean
- * @cdk.module group
  */
 class AtomDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefinerImpl {
     

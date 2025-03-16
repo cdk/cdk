@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * SMARTSAtomInvariants}. The ring connectivity is encoded in smarts using
  * {@code x<NUMBER>}.
  *
- * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

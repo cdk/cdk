@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * @cdk.module test-diff
  */
 class DoubleDifferenceTest {
 

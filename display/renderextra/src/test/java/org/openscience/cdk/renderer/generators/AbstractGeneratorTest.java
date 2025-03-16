@@ -43,7 +43,6 @@ import java.util.List;
  * Base class for test classes that test {@link IAtomContainerGenerator}s.
  *
  * @author     maclean
- * @cdk.module test-renderbasic
  */
 abstract class AbstractGeneratorTest {
 

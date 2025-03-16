@@ -37,7 +37,6 @@ import org.openscience.cdk.interfaces.IStrand;
  * regular PDB mix of protein or protein complexes, ligands, water molecules
  * and other species.
  *
- * @cdk.module  silent
  * @cdk.githash
  *
  * @author      Egon Willighagen

@@ -38,7 +38,6 @@ import java.util.Map;
  *
  * @author egonw
  * @author john may
- * @cdk.module core
  * @cdk.githash
  */
 public enum Elements {

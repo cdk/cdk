@@ -41,7 +41,6 @@ import java.util.Objects;
  *   Element e2 = if.getElement(12);
  * </pre>
  *
- * @cdk.module data
  * @cdk.githash
  *
  * @cdk.keyword element

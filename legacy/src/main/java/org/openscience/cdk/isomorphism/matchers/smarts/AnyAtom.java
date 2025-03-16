@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This matcher any Atom including explicit hydrogens.
  *
- * @cdk.module  smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

@@ -34,7 +34,6 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * SAX Handler for the {@link OWLAtomTypeReader}.
  *
- * @cdk.module  core
  * @cdk.githash
  */
 public class OWLAtomTypeHandler extends DefaultHandler {

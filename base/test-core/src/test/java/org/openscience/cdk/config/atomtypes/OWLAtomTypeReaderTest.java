@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtomType;
 /**
  * Checks the functionality of the AtomTypeReader.
  *
- * @cdk.module test-core
  */
 class OWLAtomTypeReaderTest extends CDKTestCase {
 

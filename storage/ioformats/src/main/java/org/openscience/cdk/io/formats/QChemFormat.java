@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.q-chem.com/">here</a>.
  *
- * @cdk.module ioformats
  * @cdk.githash
  */
 public class QChemFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {

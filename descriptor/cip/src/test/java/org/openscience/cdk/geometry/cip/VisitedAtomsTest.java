@@ -28,7 +28,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * @cdk.module test-cip
  */
 class VisitedAtomsTest {
 

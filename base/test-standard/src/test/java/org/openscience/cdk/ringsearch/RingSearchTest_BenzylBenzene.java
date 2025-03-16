@@ -39,7 +39,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * benzylbenzene ring search unit tests
  *
  * @author John May
- * @cdk.module test-standard
  * */
 final class RingSearchTest_BenzylBenzene {
 

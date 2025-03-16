@@ -25,7 +25,6 @@ import java.util.Iterator;
  * A set of AtomContainers.
  *
  * @author     egonw
- * @cdk.module interfaces
  * @cdk.githash
  */
 public interface IAtomContainerSet

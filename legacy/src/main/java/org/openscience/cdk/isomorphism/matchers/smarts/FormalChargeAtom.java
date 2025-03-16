@@ -26,7 +26,6 @@ import java.util.Objects;
 /**
  * This matcher checks the formal charge of the Atom.
  *
- * @cdk.module  smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

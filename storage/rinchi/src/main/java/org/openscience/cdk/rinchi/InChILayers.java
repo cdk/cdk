@@ -33,7 +33,6 @@ import java.util.List;
  * and generate various hash formats based on the layers contained.</p>
  *
  * @author Felix Bänsch
- * @cdk.module rinchi
  */
 final class InChILayers {
 

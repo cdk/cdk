@@ -21,7 +21,6 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
  * <br>This test class complies the <a href="http://www.hacknot.info/hacknot/action/showEntry?eid=17">
  * JUnit by Contract</a> article published on Hacknot.
  *
- * @cdk.module test-extra
  *
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  */

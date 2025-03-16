@@ -41,7 +41,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @cdk.module test-signature
  */
 class SignatureFingerprintTanimotoTest extends CDKTestCase {
 

@@ -57,7 +57,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
 
 /**
  * @author John May
- * @cdk.module test-smiles
  */
 class BeamToCDKTest {
 

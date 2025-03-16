@@ -36,7 +36,6 @@ import java.util.TreeSet;
  * @cdk.githash
  * @cdk.keyword lingo
  * @cdk.keyword similarity, tanimoto
- * @cdk.module fingerprint
  */
 public class LingoSimilarity {
 

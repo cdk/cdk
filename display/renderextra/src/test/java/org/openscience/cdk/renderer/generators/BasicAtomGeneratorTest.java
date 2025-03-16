@@ -51,7 +51,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @cdk.module test-renderbasic
  */
 public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 

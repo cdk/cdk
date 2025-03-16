@@ -47,7 +47,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Checks the functionality of the AtomContainer.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 

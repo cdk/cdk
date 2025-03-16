@@ -37,7 +37,6 @@ package org.openscience.cdk.smsd.interfaces;
  * <lI>5: TurboSubStructure
  * </OL>
  *
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent

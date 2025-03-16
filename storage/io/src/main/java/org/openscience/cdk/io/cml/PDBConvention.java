@@ -65,7 +65,6 @@ import org.xml.sax.Attributes;
  *     (of which version 1999 produces invalid CML 1.0)</li>
  * </ul>
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;

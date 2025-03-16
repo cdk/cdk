@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.keyword    saturation
  * @cdk.keyword    atom, valency
- * @cdk.module     standard
  */
 public class LonePairElectronChecker {
 

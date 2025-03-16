@@ -27,7 +27,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the IsotopeFactory
  *
- * @cdk.module test-core
  */
 class AtomTypeHandlerTest extends CDKTestCase {
 

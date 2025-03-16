@@ -36,7 +36,6 @@ import org.openscience.cdk.renderer.elements.TextElement;
  * Generate the arrow for a reaction.
  *
  * @author maclean
- * @cdk.module renderextra
  * @cdk.githash
  */
 public class ReactionPlusGenerator implements IGenerator<IReaction> {

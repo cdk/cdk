@@ -23,7 +23,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This smarts atom matches aliphatic atom with element symbol specified.
  *
- * @cdk.module  smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

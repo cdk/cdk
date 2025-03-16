@@ -15,7 +15,6 @@ import org.openscience.cdk.interfaces.ILonePair;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IAtomContainer} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
 

@@ -31,7 +31,6 @@ import java.util.Objects;
 /**
  * This matches an atom using the atomic number.
  *
- * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

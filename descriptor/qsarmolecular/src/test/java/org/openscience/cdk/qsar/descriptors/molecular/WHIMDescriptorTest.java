@@ -24,7 +24,6 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
  */
 
 class WHIMDescriptorTest extends MolecularDescriptorTest {

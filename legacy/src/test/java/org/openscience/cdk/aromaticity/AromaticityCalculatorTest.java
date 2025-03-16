@@ -29,7 +29,6 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * @cdk.module test-standard
  */
 class AromaticityCalculatorTest extends CDKTestCase {
 

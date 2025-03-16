@@ -40,7 +40,6 @@ import java.util.function.Predicate;
  * }</pre></blockquote>
  *
  * @author John May
- * @cdk.module isomorphism
  */
 final class UniqueBondMatches implements Predicate<int[]> {
 

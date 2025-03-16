@@ -38,7 +38,6 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
- * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 class FinalMappingsTest {

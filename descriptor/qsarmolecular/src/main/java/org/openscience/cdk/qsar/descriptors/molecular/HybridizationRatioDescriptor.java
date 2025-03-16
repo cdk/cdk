@@ -44,7 +44,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * , which usually have a high value of the sp3 to sp2 ratio.
  *
  * @author Rajarshi Guha
- * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:hybratio
  */

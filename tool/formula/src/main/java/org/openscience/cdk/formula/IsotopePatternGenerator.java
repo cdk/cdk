@@ -34,7 +34,6 @@ import java.util.List;
 /**
  * Generates all Combinatorial chemical isotopes given a structure.
  *
- * @cdk.module  formula
  * @author      Miguel Rojas Cherto
  * @cdk.created 2007-11-20
  * @cdk.githash

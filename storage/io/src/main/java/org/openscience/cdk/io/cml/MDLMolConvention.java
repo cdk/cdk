@@ -30,7 +30,6 @@ import org.xml.sax.Attributes;
 /**
  * Implementation of the MDLMol Covention for CML.
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;

@@ -46,7 +46,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * in data/cmltest as found in the Jmol distribution
  * (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
  *
- * @cdk.module test-io
  */
 class JmolTest extends CDKTestCase {
 

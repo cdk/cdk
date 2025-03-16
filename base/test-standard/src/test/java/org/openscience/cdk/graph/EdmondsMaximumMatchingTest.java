@@ -42,7 +42,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * indicies we know must be adjacent to a pi bond.
  *
  * @author John May
- * @cdk.module test-standard
  */
 final class EdmondsMaximumMatchingTest {
 

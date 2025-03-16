@@ -46,7 +46,6 @@ import java.util.BitSet;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * @cdk.module test-standard
  */
 abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterTest {
 

@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IPDBMonomer;
  * Represents the idea of an monomer as used in PDB files. It contains extra fields
  * normally associated with atoms in such files.
  *
- * @cdk.module  silent
  * @cdk.githash
  *
  * @see  PDBAtom

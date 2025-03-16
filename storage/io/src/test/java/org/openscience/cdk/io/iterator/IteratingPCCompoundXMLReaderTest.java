@@ -35,7 +35,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * @cdk.module test-io
  */
 class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
 

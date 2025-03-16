@@ -40,7 +40,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * TestCase for the reading INChI plain text files.
  *
- * @cdk.module test-extra
  *
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+

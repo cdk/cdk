@@ -34,7 +34,6 @@ import java.util.Arrays;
  * subclasses to implement.
  *
  * @author John May
- * @cdk.module isomorphism
  */
 abstract class AbstractVFState extends State {
 

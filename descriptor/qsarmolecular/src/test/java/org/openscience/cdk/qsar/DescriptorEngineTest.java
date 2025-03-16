@@ -26,7 +26,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *
- * @cdk.module test-qsarmolecular
  */
 class DescriptorEngineTest extends CDKTestCase {
 

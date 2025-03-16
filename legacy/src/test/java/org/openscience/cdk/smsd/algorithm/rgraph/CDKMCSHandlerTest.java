@@ -45,7 +45,6 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  * Unit testing for the {@link CDKMCSHandler} class.
  * @author     Syed Asad Rahman
  * @author     egonw
- * @cdk.module test-smsd
  */
 public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 

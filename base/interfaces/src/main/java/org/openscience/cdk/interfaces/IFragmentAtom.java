@@ -26,7 +26,6 @@ package org.openscience.cdk.interfaces;
  * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
  * like the MDL molfile <code>Group</code> concept.
  *
- * @cdk.module interfaces
  * @cdk.githash
  *
  * @author egonw

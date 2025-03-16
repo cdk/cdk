@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * <code>IQueryBond</code> that matches IBond object only based on bond order, and
  * disregarding any aromaticity flag.
  *
- * @cdk.module  isomorphism
  * @cdk.githash
  * @deprecated Use {@code new QueryBond(beg, end, ORDER, bord)}
  */

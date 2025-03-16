@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
 /**
  * Checks the functionality of the FragmentAtom.
  *
- * @cdk.module test-data
  */
 class FragmentAtomTest extends AbstractFragmentAtomTest {
 

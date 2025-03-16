@@ -48,7 +48,6 @@ import java.util.List;
  * TestSuite that runs a test for the TautomerizationReactionTest.
  * Generalized Reaction: X=Y-Z-H => X(H)-Y=Z.
  *
- * @cdk.module test-reaction
  */
 public class TautomerizationReactionTest extends ReactionProcessTest {
 

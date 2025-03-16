@@ -50,7 +50,6 @@ import org.openscience.cdk.io.formats.ZMatrixFormat;
  * handle Z matrices where values are given via a stringID for which the value
  * is given later.
  *
- * @cdk.module extra
  * @cdk.githash
  * @cdk.iooptions
  *

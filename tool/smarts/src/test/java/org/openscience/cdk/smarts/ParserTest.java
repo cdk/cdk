@@ -34,7 +34,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * JUnit test routines for the SMARTS parser.
  *
  * @author Egon Willighagen
- * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
 class ParserTest extends CDKTestCase {

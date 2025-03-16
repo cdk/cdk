@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * Rendering element that shows the {@link IAtom} mass number information.
  *
- * @cdk.module renderextra
  * @cdk.githash
  */
 public class AtomMassSymbolElement extends AtomSymbolElement {

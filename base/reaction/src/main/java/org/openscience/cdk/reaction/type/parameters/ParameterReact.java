@@ -23,7 +23,6 @@ package org.openscience.cdk.reaction.type.parameters;
  * Class which defines the allowed parameters of a reaction.
  *
  * @author      miguelrojasch
- * @cdk.module  reaction
  * @cdk.githash
  */
 public class ParameterReact implements IParameterReact {

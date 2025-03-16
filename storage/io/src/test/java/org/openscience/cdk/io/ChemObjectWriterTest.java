@@ -38,7 +38,6 @@ import java.io.StringWriter;
 /**
  * TestCase for {@link IChemObjectWriter} implementations.
  *
- * @cdk.module test-io
  */
 abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.ChemObjectIOTest {
 

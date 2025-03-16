@@ -56,7 +56,6 @@ import java.util.Locale;
  * @author      Antti S. Brax (asb@iki.fi, base implementation)
  * @author      Fred Long (flong(AT)skcc.org, implemented 'e', 'E' and 'g')
  * @version     1.7
- * @cdk.module  io
  * @cdk.githash
  * @cdk.license BSD
  */

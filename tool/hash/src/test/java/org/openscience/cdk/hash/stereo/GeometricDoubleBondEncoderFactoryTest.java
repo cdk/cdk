@@ -47,7 +47,6 @@ import static org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory.
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class GeometricDoubleBondEncoderFactoryTest {
 

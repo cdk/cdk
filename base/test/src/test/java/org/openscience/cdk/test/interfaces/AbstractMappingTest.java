@@ -16,7 +16,6 @@ import org.openscience.cdk.interfaces.IMapping;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IMapping} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractMappingTest extends AbstractChemObjectTest {
 

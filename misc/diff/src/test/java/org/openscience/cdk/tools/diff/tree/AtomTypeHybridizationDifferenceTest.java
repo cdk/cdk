@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
- * @cdk.module test-diff
  */
 class AtomTypeHybridizationDifferenceTest {
 

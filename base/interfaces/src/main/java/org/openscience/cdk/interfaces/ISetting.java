@@ -29,7 +29,6 @@ package org.openscience.cdk.interfaces;
  * added and retrieved with.
  *
  * @author      johnmay
- * @cdk.module  interfaces
  * @cdk.created 20.03.2012
  * @see         org.openscience.cdk.io.setting.SettingManager
  * @cdk.githash

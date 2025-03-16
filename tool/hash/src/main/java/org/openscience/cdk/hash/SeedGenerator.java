@@ -47,7 +47,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module hash
  * @cdk.githash
  * @see BasicAtomHashGenerator
  * @see ConjugatedAtomEncoder

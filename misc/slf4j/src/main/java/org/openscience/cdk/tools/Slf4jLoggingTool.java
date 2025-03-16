@@ -35,7 +35,6 @@ import java.io.StringReader;
  * <br/>
  * See interface {@link ILoggingTool} for more details.
  *
- * @cdk.module cdk-slf4j
  * @cdk.githash
  */
 final class Slf4jLoggingTool implements ILoggingTool {

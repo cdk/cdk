@@ -53,7 +53,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Checks the functionality of the ConnectivityChecker
  *
  * @author steinbeck
- * @cdk.module test-standard
  * @cdk.created 2001-07-24
  */
 class ConnectivityCheckerTest extends CDKTestCase {

@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * XML version of the PDB format.
  * See <a href="http://pdbml.rcsb.org/">here</a>.
  *
- * @cdk.module ioformats
  * @cdk.githash
  */
 public class PDBMLFormat extends AbstractResourceFormat implements IChemFormat {

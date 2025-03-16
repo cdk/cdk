@@ -39,7 +39,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomDiff;
 
 /**
- * @cdk.module test-libiocml
  */
 class CDKRoundTripTest extends CDKTestCase {
 

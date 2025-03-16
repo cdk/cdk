@@ -52,7 +52,6 @@ import java.util.Vector;
  * They can be used for Automated Structure Diagram Generation or in the interactive
  * buildup of ringsystems by the user.
  *
- * @cdk.module sdg
  * @cdk.githash
  **/
 public class RingPlacer {

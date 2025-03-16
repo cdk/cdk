@@ -16,7 +16,6 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class BasicAtomHashGeneratorTest {
 

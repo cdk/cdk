@@ -47,7 +47,6 @@ import java.util.List;
  * TestSuite that runs a test for the RearrangementCationReactionTest.
  * Generalized Reaction: [A+]-B=C => A=B-[c+].
  *
- * @cdk.module test-reaction
  */
 public class RearrangementCationReactionTest extends ReactionProcessTest {
 

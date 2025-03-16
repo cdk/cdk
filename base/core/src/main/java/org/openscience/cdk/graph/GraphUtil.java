@@ -38,7 +38,6 @@ import static java.util.Arrays.copyOf;
  * future with a <i>Graph</i> data type.
  *
  * @author John May
- * @cdk.module core
  * @cdk.githash
  * @see ShortestPaths
  * @see org.openscience.cdk.ringsearch.RingSearch

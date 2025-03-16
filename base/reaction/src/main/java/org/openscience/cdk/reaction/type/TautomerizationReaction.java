@@ -68,7 +68,6 @@ import java.util.ArrayList;
  * @author         Miguel Rojas
  *
  * @cdk.created    2008-02-11
- * @cdk.module     reaction
  * @cdk.githash
  *
  * @see TautomerizationMechanism

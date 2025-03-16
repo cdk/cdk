@@ -50,7 +50,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *
  * @author       Miguel Rojas
  * @cdk.created  2008-5-15
- * @cdk.module   ionpot
  *
  * @see org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptor
  * @see org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptor

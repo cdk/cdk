@@ -23,7 +23,6 @@ package org.openscience.cdk.interfaces;
  * the other lower level concepts like rings, sequences,
  * fragments, etc.
  *
- * @cdk.module interfaces
  * @cdk.githash
  */
 public interface IChemModel extends IChemObject {

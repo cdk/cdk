@@ -44,7 +44,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * Checks the functionality of the MassToFormulaTool.
  *
- * @cdk.module test-formula
  */
 @Deprecated
 class MassToFormulaToolTest extends CDKTestCase {

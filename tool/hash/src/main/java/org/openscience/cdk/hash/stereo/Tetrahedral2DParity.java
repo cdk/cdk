@@ -38,7 +38,6 @@ import javax.vecmath.Point2d;
  * centre with no elevation {@cdk.cite Cieplak2001}.
  *
  * @author John May
- * @cdk.module hash
  * @see <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak,
  *      T and Wisniewski, J.L. 2001</a>
  * @cdk.githash

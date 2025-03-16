@@ -56,7 +56,6 @@ import org.openscience.cdk.smiles.InvPair;
  * @cdk.githash
  * @cdk.keyword    HOSE code, spherical atom search
  * @cdk.created    2002-05-10
- * @cdk.module     standard
  */
 public class HOSECodeGenerator implements java.io.Serializable {
 

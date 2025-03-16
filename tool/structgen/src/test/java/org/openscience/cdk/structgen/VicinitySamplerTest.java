@@ -37,7 +37,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
- * @cdk.module test-structgen
  */
 class VicinitySamplerTest extends CDKTestCase {
 

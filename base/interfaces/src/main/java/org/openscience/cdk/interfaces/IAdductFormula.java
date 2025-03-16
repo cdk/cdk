@@ -27,7 +27,6 @@ package org.openscience.cdk.interfaces;
  *   <li><code>[C2H4O2+Na]+</code></li>
  * </ul>
  *
- * @cdk.module  interfaces
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula

@@ -26,7 +26,6 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * @cdk.module     test-standard
  */
 class InvPairTest extends CDKTestCase {
 

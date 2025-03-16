@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @cdk.module standard
  * @cdk.githash
  */
 public class IntegerArrayResult extends IntegerArrayResultType {

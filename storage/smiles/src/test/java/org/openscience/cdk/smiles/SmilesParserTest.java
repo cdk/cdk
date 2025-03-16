@@ -71,7 +71,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Please see the test.gui package for visual feedback on tests.
  *
  * @author         steinbeck
- * @cdk.module     test-smiles
  * @cdk.created    2003-09-19
  *
  * @see org.openscience.cdk.gui.smiles.SmilesParserTest

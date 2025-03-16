@@ -37,7 +37,6 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @see AtomTypeReader
  *
- * @cdk.module core
  * @cdk.githash
  */
 public class AtomTypeHandler extends DefaultHandler {

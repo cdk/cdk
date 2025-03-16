@@ -50,7 +50,6 @@ import java.util.List;
  * TestSuite that runs a test for the AdductionProtonLPReactionTest.
  * Generalized Reaction: [X-] + [H+] => X -H.
  *
- * @cdk.module test-reaction
  */
 public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 

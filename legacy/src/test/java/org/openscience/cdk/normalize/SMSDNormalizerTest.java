@@ -38,7 +38,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
- * @cdk.module test-smsd
  */
 class SMSDNormalizerTest {
 

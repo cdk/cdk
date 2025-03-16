@@ -33,7 +33,6 @@ import java.util.List;
  * @cdk.githash
  * @cdk.created  2003-08-23
  * @cdk.keyword  dictionary
- * @cdk.module   dict
  *
  * @see          Dictionary
  */

@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractReactionSchemeTest;
 /**
  * Checks the functionality of the MolecularFormulaSet class.
  *
- * @cdk.module test-data
  *
  * @see ReactionScheme
  */

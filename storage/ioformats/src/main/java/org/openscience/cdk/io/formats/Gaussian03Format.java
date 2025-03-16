@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.gaussian.com/g_ur/m_input.htm">here</a>.
  *
- * @cdk.module ioformats
  * @cdk.githash
  */
 public class Gaussian03Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {

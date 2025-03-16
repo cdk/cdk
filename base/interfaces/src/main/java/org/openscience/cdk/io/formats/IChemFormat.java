@@ -25,7 +25,6 @@ package org.openscience.cdk.io.formats;
 /**
  * This class is the interface that all ChemFormat's should implement.
  *
- * @cdk.module ioformats
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;

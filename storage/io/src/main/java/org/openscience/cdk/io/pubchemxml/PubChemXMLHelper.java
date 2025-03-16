@@ -48,7 +48,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 /**
  * Helper class to parse PubChem XML documents.
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;

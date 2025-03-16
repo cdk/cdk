@@ -56,7 +56,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @author      Miguel Rojas
  *
- * @cdk.module  charges
  * @cdk.githash
  * @cdk.created 2006-05-14
  * @cdk.keyword partial atomic charges

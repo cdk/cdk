@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This matcher checks the number of implicit hydrogens of the Atom.
  *
- * @cdk.module  smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

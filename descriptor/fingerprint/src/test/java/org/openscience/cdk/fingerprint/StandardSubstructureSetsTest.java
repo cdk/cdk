@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-fingerprint
  */
 class StandardSubstructureSetsTest extends CDKTestCase {
 

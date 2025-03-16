@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * @cdk.module isomorphism
  * @cdk.githash
  */
 @Deprecated

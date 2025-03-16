@@ -30,7 +30,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * @cdk.module test-diff
  */
 class BondDiffTest {
 

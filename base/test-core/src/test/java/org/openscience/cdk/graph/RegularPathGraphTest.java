@@ -36,7 +36,6 @@ import static org.openscience.cdk.graph.RegularPathGraph.PathEdge;
 import static org.openscience.cdk.graph.RegularPathGraph.ReducedEdge;
 import static org.openscience.cdk.graph.RegularPathGraph.SimpleEdge;
 
-/** @cdk.module test-core */
 class RegularPathGraphTest {
 
     @Test

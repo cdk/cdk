@@ -42,7 +42,6 @@ import java.util.Set;
 *
 * @author         cho
 * @cdk.created    2005-18-07
-* @cdk.module     extra
  * @cdk.githash
 */
 

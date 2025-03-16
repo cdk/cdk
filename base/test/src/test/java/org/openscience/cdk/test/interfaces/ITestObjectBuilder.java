@@ -12,7 +12,6 @@ import org.openscience.cdk.interfaces.IChemObject;
  * unit testing for the module <code>data</code>, <code>datadebug</code> and
  * <code>nonotify</code>.
  *
- * @cdk.module  test-interfaces
  */
 public interface ITestObjectBuilder {
 

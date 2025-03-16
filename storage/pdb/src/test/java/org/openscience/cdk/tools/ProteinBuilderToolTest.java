@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
- * @cdk.module test-pdb
  */
 class ProteinBuilderToolTest extends CDKTestCase {
 

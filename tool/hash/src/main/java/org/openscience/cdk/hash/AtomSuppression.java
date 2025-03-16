@@ -36,7 +36,6 @@ import java.util.BitSet;
  * when computing the hash codes for the molecule or its atoms.
  *
  * @author John May
- * @cdk.module hash
  */
 abstract class AtomSuppression {
 

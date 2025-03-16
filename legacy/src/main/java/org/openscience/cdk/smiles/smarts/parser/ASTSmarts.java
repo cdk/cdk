@@ -24,7 +24,6 @@ package org.openscience.cdk.smiles.smarts.parser;
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
- * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */

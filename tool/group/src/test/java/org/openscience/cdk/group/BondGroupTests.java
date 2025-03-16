@@ -34,7 +34,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * @author maclean
- * @cdk.module test-group
  */
 class BondGroupTests extends CDKTestCase {
 

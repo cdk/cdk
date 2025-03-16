@@ -57,7 +57,6 @@ import org.openscience.cdk.tools.manipulator.SgroupManipulator;
  * </pre>
  *
  * @author steinbeck
- * @cdk.module data
  * @cdk.githash
  * @cdk.created 2000-10-02
  */

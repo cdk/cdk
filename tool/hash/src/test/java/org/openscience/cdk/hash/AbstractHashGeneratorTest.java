@@ -38,7 +38,6 @@ import static org.mockito.Mockito.verify;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class AbstractHashGeneratorTest {
 

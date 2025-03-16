@@ -23,7 +23,6 @@ package org.openscience.cdk.interfaces;
  * A LonePair is an orbital primarily located with one Atom, containing
  * two electrons.
  *
- * @cdk.module interfaces
  * @cdk.githash
  *
  * @cdk.keyword orbital

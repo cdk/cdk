@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * @author John May
- * @cdk.module test-fingerprint
  */
 class SimpleAtomCanonicalizerTest {
 

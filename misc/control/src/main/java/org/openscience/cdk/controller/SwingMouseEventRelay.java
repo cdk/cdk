@@ -27,7 +27,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
- * @cdk.module control
  */
 public class SwingMouseEventRelay implements MouseMotionListener, MouseListener {
 

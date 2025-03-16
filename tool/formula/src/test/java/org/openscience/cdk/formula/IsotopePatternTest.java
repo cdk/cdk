@@ -7,7 +7,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Class testing the IsotopePattern class.
  *
- * @cdk.module test-formula
  */
 class IsotopePatternTest extends CDKTestCase {
 

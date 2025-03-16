@@ -25,7 +25,6 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @author Miguel Rojas
  *
- * @cdk.module ioformats
  * @cdk.githash
  */
 public class SMARTSFormat extends AbstractResourceFormat implements IChemFormat {

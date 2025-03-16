@@ -28,7 +28,6 @@ import org.openscience.cdk.exception.CDKException;
 /**
  * Exception that is thrown by descriptor routines when a problem has occurred.
  *
- * @cdk.module qsar
  * @cdk.githash
  */
 public class DescriptorException extends CDKException {

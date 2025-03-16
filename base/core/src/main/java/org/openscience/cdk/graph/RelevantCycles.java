@@ -73,7 +73,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module core
  * @cdk.keyword relevant cycles
  * @cdk.keyword relevant rings
  * @cdk.keyword R(G)

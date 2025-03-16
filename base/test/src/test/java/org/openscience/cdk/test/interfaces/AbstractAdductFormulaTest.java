@@ -18,7 +18,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IAdductFormula} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormulaSetTest {
 

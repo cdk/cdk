@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.AbstractSingleElectronTest;
  *
  * @see org.openscience.cdk.SingleElectron
  *
- * @cdk.module test-data
  */
 class SingleElectronTest extends AbstractSingleElectronTest {
 

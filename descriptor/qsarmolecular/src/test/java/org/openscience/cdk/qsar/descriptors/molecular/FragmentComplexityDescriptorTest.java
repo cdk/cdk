@@ -15,7 +15,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  * @author      chhoppe from EUROSCREEN
- * @cdk.module  test-qsarmolecular
  */
 class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
 

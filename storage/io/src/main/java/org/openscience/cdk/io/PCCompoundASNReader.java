@@ -51,7 +51,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * bits are supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2. Additionally,
  * it extracts the InChI and canonical SMILES properties.
  *
- * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
  *

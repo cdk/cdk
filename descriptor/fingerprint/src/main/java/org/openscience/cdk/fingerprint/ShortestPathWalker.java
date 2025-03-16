@@ -42,7 +42,6 @@ import org.openscience.cdk.interfaces.IChemObject;
  * @author John May (2013)
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.module fingerprint
  * @cdk.githash
  *
  */

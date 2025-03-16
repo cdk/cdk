@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
- * @cdk.module standard
  * @cdk.githash
  */
 public class RingManipulator {

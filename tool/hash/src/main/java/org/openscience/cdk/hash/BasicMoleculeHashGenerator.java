@@ -43,7 +43,6 @@ import java.util.Arrays;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module hash
  * @see AtomHashGenerator
  * @see BasicAtomHashGenerator
  * @cdk.githash

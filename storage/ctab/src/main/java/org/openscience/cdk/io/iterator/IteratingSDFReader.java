@@ -70,7 +70,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * }
  * </pre>
  *
- * @cdk.module io
  * @cdk.githash
  *
  * @see org.openscience.cdk.io.MDLV2000Reader

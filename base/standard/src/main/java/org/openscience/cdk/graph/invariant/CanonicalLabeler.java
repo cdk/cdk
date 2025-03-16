@@ -39,7 +39,6 @@ import java.util.List;
  * The Collections.sort() method uses a merge sort which is
  * stable and runs in n log(n).
  *
- * @cdk.module standard
  * @cdk.githash
  *
  * @author Oliver Horlacher &lt;oliver.horlacher@therastrat.com&gt;

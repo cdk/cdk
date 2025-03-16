@@ -56,7 +56,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.githash
- * @cdk.module  io
  */
 public class Mopac7Writer extends DefaultChemObjectWriter {
 

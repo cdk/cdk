@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * Class with convenience methods that provide methods to manipulate
  * MolecularFormulaRange's.
  *
- * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.githash

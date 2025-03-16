@@ -26,7 +26,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Tests for IReactionProcess implementations.
  *
- * @cdk.module test-reaction
  */
 public abstract class ReactionMechanismTest extends CDKTestCase {
 

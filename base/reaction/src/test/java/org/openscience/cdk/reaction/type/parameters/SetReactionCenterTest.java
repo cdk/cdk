@@ -25,7 +25,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Tests for SetReactionCenter implementations.
  *
- * @cdk.module test-reaction
  */
 class SetReactionCenterTest extends CDKTestCase {
 

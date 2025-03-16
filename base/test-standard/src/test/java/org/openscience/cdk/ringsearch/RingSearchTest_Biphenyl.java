@@ -36,7 +36,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * biphenyl ring search unit tests
  *
  * @author John May
- * @cdk.module test-standard
  */
 final class RingSearchTest_Biphenyl {
 

@@ -33,7 +33,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * Checks the functionality of the MolecularFormulaSetManipulator.
  *
- * @cdk.module test-formula
  */
 class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 

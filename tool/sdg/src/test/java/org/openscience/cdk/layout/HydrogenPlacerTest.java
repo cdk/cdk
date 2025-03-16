@@ -37,7 +37,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import javax.vecmath.Point2d;
 import java.io.InputStream;
 
-/** @cdk.module test-sdg */
 class HydrogenPlacerTest extends CDKTestCase {
 
     public boolean       standAlone = false;

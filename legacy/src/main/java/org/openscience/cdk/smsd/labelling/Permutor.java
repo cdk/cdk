@@ -3,7 +3,6 @@ package org.openscience.cdk.smsd.labelling;
 import java.util.Random;
 
 /**
- * @cdk.module smsd
  * @cdk.githash
  */
 

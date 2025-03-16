@@ -47,7 +47,6 @@ import java.util.List;
 /**
  * TestSuite that runs a test for the RadicalSiteRrDeltaReaction.
  *
- * @cdk.module test-reaction
  */
 public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
 

@@ -14,7 +14,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Tests the functionality of {@link org.openscience.cdk.interfaces.ICDKObject} implementations.
  *
- * @cdk.module  test-interfaces
  * @cdk.created 2010-10-22
  */
 public abstract class AbstractCDKObjectTest extends CDKTestCase {

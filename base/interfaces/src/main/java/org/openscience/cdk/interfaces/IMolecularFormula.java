@@ -32,7 +32,6 @@ import java.util.Map;
  *   <li><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></li>
  * </ul>
  *
- * @cdk.module  interfaces
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula

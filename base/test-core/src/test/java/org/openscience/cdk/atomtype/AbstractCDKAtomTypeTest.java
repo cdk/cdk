@@ -28,7 +28,6 @@ import org.openscience.cdk.test.atomtype.AbstractAtomTypeTest;
  * It keeps track of the atom types which have been tested, to ensure
  * that all atom types are tested.
  *
- * @cdk.module test-core
  * @cdk.bug    1890702
  */
 abstract class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {

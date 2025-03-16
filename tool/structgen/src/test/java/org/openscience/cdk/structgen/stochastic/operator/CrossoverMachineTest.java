@@ -35,7 +35,6 @@ import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * @cdk.module test-structgen
  */
 @Tag("SlowTest")
 // structgen is slow... a single method here currently takes ~6 seconds

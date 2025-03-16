@@ -33,7 +33,6 @@ import java.util.List;
  * C.A.G.E.S. book {@cdk.cite Kreher98}.
  *
  * @author maclean
- * @cdk.module group
  *
  */
 public final class Permutation {

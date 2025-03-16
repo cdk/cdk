@@ -55,7 +55,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * JUnit test routines for the SMARTS substructure search.
  *
  * @author Dazhi Jiao
- * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
 class SMARTSSearchTest extends CDKTestCase {

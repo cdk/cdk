@@ -30,7 +30,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Debugging data class.
  *
  * @author     Miguel Rojas
- * @cdk.module datadebug
  * @cdk.githash
  */
 public class DebugPDBPolymer extends PDBPolymer implements IBioPolymer {

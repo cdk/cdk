@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-reaction
  */
 class ReactionSpecificationTest extends CDKTestCase {
 

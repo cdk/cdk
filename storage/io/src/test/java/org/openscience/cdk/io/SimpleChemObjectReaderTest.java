@@ -32,7 +32,6 @@ import java.io.InputStream;
 /**
  * TestCase for CDK IO classes.
  *
- * @cdk.module test-io
  */
 abstract class SimpleChemObjectReaderTest extends org.openscience.cdk.test.io.ChemObjectReaderTest {
 

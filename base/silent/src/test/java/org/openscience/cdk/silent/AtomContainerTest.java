@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.ILonePair;
 /**
  * Checks the functionality of the {@link AtomContainer}.
  *
- * @cdk.module test-silent
  */
 class AtomContainerTest extends AbstractAtomContainerTest {
 

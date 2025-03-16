@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * queries using the UniversalIsomorphismTester.
  *
  * @author      egonw
- * @cdk.module  interfaces
  * @cdk.githash
  * @see         org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */

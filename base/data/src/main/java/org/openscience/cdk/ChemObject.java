@@ -45,7 +45,6 @@ import java.util.Objects;
  *
  *@author        steinbeck
  * @cdk.githash
- *@cdk.module    data
  */
 public class ChemObject implements Serializable, IChemObject, Cloneable {
 

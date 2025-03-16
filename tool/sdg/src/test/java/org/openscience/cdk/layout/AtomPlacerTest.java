@@ -43,7 +43,6 @@ import static org.hamcrest.Matchers.closeTo;
 
 /**
  * @author maclean
- * @cdk.module test-sdg
  */
 class AtomPlacerTest extends CDKTestCase {
 

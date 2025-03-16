@@ -29,7 +29,6 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * @cdk.module test-standard
  */
 class DescriptorValueTest extends CDKTestCase {
 

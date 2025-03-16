@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IMonomer;
  * A Monomer is an AtomContainer which stores additional monomer specific
  * informations for a group of Atoms.
  *
- * @cdk.module  silent
  * @cdk.githash
  *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;

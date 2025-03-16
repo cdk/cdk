@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IReactionScheme;
 /**
  * Checks the functionality of the {@link DebugReactionScheme}.
  *
- * @cdk.module test-datadebug
  */
 class DebugReactionSchemeTest extends AbstractReactionSchemeTest {
 

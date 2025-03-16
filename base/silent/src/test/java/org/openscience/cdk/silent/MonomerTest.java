@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractMonomerTest;
 /**
  * Checks the functionality of the {@link Monomer}.
  *
- * @cdk.module test-silent
  */
 class MonomerTest extends AbstractMonomerTest {
 

@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-standard
  */
 class AtomContainerPermutorTest extends CDKTestCase {
 

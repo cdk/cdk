@@ -47,7 +47,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2003-09-4
  * @cdk.keyword layout
  * @cdk.keyword 2D-coordinates
- * @cdk.module  sdg
  * @cdk.githash
  * @deprecated does not resolve overlaps correctly
  */

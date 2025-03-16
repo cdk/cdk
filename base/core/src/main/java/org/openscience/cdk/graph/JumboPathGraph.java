@@ -40,7 +40,6 @@ import java.util.Objects;
  *
  * @author John May
  * @author Till Schäfer (predefined vertex ordering)
- * @cdk.module core
  * @cdk.githash
  * @see org.openscience.cdk.ringsearch.RingSearch
  * @see org.openscience.cdk.graph.GraphUtil

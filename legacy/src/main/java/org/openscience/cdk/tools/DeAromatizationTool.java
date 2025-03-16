@@ -48,7 +48,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *
  * @author         seb
  * @cdk.created    13. April 2005
- * @cdk.module     extra
  * @cdk.githash
  * @cdk.keyword    aromatic ring, bond order adjustment
  * @deprecated the newer {@link org.openscience.cdk.aromaticity.Kekulization} provides a faster, more generic and

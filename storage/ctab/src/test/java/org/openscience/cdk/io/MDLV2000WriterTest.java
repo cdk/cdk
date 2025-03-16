@@ -69,7 +69,6 @@ import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 /**
  * TestCase for the writer MDL mol files using one test file.
  *
- * @cdk.module test-io
  * @see org.openscience.cdk.io.MDLV2000Writer
  */
 class MDLV2000WriterTest extends ChemObjectIOTest {

@@ -26,7 +26,6 @@ import org.openscience.cdk.test.CDKTestCase;
 import java.util.Random;
 
 /**
- * @cdk.module test-standard
  */
 class RandomNumbersToolTest extends CDKTestCase {
 

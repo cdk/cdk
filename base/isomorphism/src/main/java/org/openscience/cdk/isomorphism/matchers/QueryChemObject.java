@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
- * @cdk.module  isomorphism
  * @cdk.githash
  */
 public class QueryChemObject implements IChemObject {

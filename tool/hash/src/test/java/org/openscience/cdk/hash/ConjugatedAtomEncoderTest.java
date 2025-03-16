@@ -43,7 +43,6 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class ConjugatedAtomEncoderTest {
 

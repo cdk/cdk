@@ -43,7 +43,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test for fractional PSA descriptor.
  *
- * @cdk.module test-qsarmolecular
  */
 
 class FractionalPSADescriptorTest extends MolecularDescriptorTest {

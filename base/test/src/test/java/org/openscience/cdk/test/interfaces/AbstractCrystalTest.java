@@ -17,7 +17,6 @@ import org.openscience.cdk.interfaces.ICrystal;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.ICrystal} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 

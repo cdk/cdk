@@ -33,7 +33,6 @@ import static org.hamcrest.CoreMatchers.is;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class Tetrahedral2DParityTest {
 

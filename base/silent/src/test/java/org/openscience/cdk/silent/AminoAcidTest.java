@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 /**
  * Checks the functionality of the {@link AminoAcid}.
  *
- * @cdk.module test-silent
  */
 class AminoAcidTest extends AbstractAminoAcidTest {
 

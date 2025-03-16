@@ -42,7 +42,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  * The Round Robin algorithm was originally developed for the SIRIUS 3 software. The full enumeration algorithm was
  * originally developed for a MZmine 2 framework module, published in Pluskal et al. {@cdk.cite Pluskal2012}.
  *
- * @cdk.module formula
  * @author Tomas Pluskal, Kai Dührkop, Marcus Ludwig
  * @cdk.created 2014-12-28
  * @cdk.githash

@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * org.openscience.cdk.interfaces.IRing}.
  *
  * @author John May
- * @cdk.module core
  * @cdk.githash
  */
 public interface CycleFinder {

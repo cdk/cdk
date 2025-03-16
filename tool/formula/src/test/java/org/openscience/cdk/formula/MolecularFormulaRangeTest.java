@@ -31,7 +31,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * Checks the functionality of the MolecularFormulaRange.
  *
- * @cdk.module test-formula
  *
  * @see MolecularFormula
  */

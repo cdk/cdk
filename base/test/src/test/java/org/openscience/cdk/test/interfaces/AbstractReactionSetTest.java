@@ -17,7 +17,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IReactionSet} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
 

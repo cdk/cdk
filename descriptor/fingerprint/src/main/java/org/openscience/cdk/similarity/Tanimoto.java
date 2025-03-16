@@ -60,7 +60,6 @@ import java.util.TreeSet;
  *@cdk.created    2005-10-19
  *@cdk.keyword    jaccard
  *@cdk.keyword    similarity, tanimoto
- * @cdk.module fingerprint
  */
 // see also SignatureFingerprintTanimotoTest
 public class Tanimoto {

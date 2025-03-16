@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemSequence;
 /**
  * Checks the functionality of the {@link DebugChemSequence}.
  *
- * @cdk.module test-datadebug
  */
 class DebugChemSequenceTest extends AbstractChemSequenceTest {
 

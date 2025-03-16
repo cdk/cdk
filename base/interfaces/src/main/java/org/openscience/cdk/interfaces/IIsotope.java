@@ -21,7 +21,6 @@ package org.openscience.cdk.interfaces;
 /**
  * Used to store and retrieve data of a particular isotope.
  *
- * @cdk.module interfaces
  * @cdk.githash
  *
  * @author      egonw

@@ -22,7 +22,6 @@ package org.openscience.cdk.qsar.result;
 /**
  * IDescriptorResult type for integers.
  *
- * @cdk.module standard
  * @cdk.githash
  */
 public class IntegerArrayResultType implements IDescriptorResult {

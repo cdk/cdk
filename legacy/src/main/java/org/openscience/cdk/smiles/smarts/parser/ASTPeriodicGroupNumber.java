@@ -11,7 +11,6 @@ package org.openscience.cdk.smiles.smarts.parser;
  *
  * @author Rajarshi Guha
  * @cdk.created 2008-10-13
- * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */

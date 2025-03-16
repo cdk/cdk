@@ -57,7 +57,6 @@ import java.util.List;
  * is interrupted, the boolean is reset to false.
  *
  * @author Todd Martin
- * @cdk.module smiles
  * @cdk.githash
  * @cdk.keyword bond order
  *

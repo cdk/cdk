@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 /**
  * Checks the functionality of the {@link DebugSingleElectron}.
  *
- * @cdk.module test-datadebug
  */
 class DebugSingleElectronTest extends AbstractSingleElectronTest {
 

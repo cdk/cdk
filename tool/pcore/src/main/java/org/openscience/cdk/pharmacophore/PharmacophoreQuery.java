@@ -34,7 +34,6 @@ import java.util.List;
  * be represented as atom or bond analogs.
  *
  * @author Rajarshi Guha
- * @cdk.module pcore
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @cdk.githash

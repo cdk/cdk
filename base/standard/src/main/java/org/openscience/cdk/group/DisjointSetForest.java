@@ -30,7 +30,6 @@ import java.util.Arrays;
  * code due to Derrick Stolee.
  *
  * @author maclean
- * @cdk.module standard
  * @cdk.keyword union-find
  */
 public class DisjointSetForest {

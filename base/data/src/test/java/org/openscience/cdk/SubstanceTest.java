@@ -24,7 +24,6 @@ import org.openscience.cdk.test.interfaces.AbstractSubstanceTest;
 /**
  * Checks the functionality of the {@link Substance} class.
  *
- * @cdk.module test-data
  */
 class SubstanceTest extends AbstractSubstanceTest {
 

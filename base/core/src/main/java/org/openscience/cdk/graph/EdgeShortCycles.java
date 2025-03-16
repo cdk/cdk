@@ -32,7 +32,6 @@ import java.util.List;
  * each cycle does not need to be verified.
  *
  * @author John May
- * @cdk.module core
  */
 final class EdgeShortCycles {
 

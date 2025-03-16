@@ -31,7 +31,6 @@ import java.util.Locale;
  * It is <b>strongly recommended to not use this class directly</b>.
  * </p>
  *
- * @cdk.module core
  * @cdk.githash
  */
 final class StdErrLogger implements ILoggingTool {

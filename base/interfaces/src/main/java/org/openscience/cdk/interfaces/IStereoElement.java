@@ -113,7 +113,6 @@ import java.util.Set;
  * int num_act = grpconfig >>> IStereoElement.GRP_NUM_SHIFT;
  * }</pre>
  *
- * @cdk.module interfaces
  * @cdk.githash
  *
  * @author      Egon Willighagen

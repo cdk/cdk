@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IAtomType;
  * good distribution.
  *
  * @author John May
- * @cdk.module hash
  * @see ConjugatedAtomEncoder
  * @see <a href="http://www.bigprimes.net/archive/prime/">Prime numbers
  *      archive</a>

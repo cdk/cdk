@@ -34,7 +34,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Simple tests for exact and non exact matching.
  *
  * @author John May
- * @cdk.module test-isomorphism
  */
 class VentoFoggiaTest {
 

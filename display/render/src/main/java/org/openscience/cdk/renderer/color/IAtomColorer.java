@@ -25,7 +25,6 @@ import java.awt.Color;
 /**
  * Interface to a class for coloring atoms.
  *
- * @cdk.module  render
  * @cdk.githash
  */
 public interface IAtomColorer {

@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-standard
  */
 class ProblemMarkerTest extends CDKTestCase {
 

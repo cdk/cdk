@@ -34,7 +34,6 @@ package org.openscience.cdk.isomorphism;
  * allows us to remove a mapping but put it back in later (backtrack).
  *
  * @author John May
- * @cdk.module isomorphism
  * @see UllmannState
  */
 final class CompatibilityMatrix {

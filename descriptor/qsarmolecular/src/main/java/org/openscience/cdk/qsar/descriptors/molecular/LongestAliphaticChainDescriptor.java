@@ -51,7 +51,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @author chhoppe from EUROSCREEN
  * @author John Mayfield
  * @cdk.created 2006-1-03
- * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:largestAliphaticChain
  */

@@ -47,7 +47,6 @@ import java.util.List;
  * @cdk.githash
  * @cdk.created    2004-11-03
  * @cdk.keyword polarizability
- * @cdk.module     charges
  */
 public class Polarizability {
 

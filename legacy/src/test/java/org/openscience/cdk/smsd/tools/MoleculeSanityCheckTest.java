@@ -37,7 +37,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
- * @cdk.module test-smsd
  * @author Asad
  */
 class MoleculeSanityCheckTest {

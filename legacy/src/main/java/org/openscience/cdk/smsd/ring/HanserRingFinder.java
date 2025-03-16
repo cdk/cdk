@@ -73,7 +73,6 @@ import org.openscience.cdk.interfaces.IRingSet;
  * nodes are deleted from the path graph (collapsed path). What remains is a graph
  * of paths that have the same start and endpoint and are thus rings (source=sink=ring).
  *
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt; 2009-2010
  * @deprecated Use CDK AllRingsFinder. A more recent version of SMSD is available at

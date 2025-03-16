@@ -31,7 +31,6 @@ import org.openscience.cdk.io.formats.IChemFormat;
 /**
  * TestCase for the writing files.
  *
- * @cdk.module test-libiocml
  */
 class CMLWriterFactoryTest {
 

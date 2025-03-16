@@ -41,7 +41,6 @@ import org.openscience.cdk.libio.cml.Convertor;
  * Generates an RSS feed. It the object is a {@link IAtomContainerSet}, the molecules
  * are put in separately. All other objects are made CML and put in.
  *
- * @cdk.module       libiocml
  * @cdk.githash
  * @cdk.iooptions
  *

@@ -12,7 +12,6 @@ import java.util.List;
  *
  * @author egonw
  *
- * @cdk.module fingerprint
  * @cdk.githash
  */
 public class StandardSubstructureSets {

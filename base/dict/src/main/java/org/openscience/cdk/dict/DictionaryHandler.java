@@ -24,7 +24,6 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * Class for unmarshalling a dictionary schema file.
  *
- * @cdk.module     dict
  * @cdk.githash
  */
 public class DictionaryHandler extends DefaultHandler {

@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractReactionTest;
 /**
  * Checks the functionality of the {@link Reaction}.
  *
- * @cdk.module test-silent
  */
 class ReactionTest extends AbstractReactionTest {
 

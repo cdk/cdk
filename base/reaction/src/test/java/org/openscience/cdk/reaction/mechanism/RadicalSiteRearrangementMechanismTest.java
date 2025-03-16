@@ -27,7 +27,6 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
 /**
  * Tests for RadicalSiteRearrangementMechanism implementations.
  *
- * @cdk.module test-reaction
  */
 class RadicalSiteRearrangementMechanismTest extends ReactionMechanismTest {
 

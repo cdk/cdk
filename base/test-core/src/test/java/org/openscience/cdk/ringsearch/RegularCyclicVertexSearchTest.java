@@ -32,7 +32,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * unit tests for the small to medium graphs
  *
  * @author John May
- * @cdk.module test-core
  */
 class RegularCyclicVertexSearchTest {
 

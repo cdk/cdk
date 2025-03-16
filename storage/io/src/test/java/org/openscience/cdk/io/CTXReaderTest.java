@@ -41,7 +41,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * TestCase for the reading CTX files using a test file.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.CrystClustReader
  */

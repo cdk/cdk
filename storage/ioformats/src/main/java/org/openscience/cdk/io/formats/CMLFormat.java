@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://en.wikipedia.org/wiki/Chemical_Markup_Language">here</a>.
  *
- * @cdk.module ioformats
  * @cdk.githash
  */
 public class CMLFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {

@@ -41,7 +41,6 @@ import nu.xom.Serializer;
  * Provides some utility methods for pharmacophore handling.
  *
  * @author Rajarshi Guha
- * @cdk.module pcore
  * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism

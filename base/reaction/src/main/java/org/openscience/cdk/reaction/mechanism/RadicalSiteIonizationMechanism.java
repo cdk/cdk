@@ -43,7 +43,6 @@ import java.util.List;
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
- * @cdk.module     reaction
  * @cdk.githash
  */
 public class RadicalSiteIonizationMechanism implements IReactionMechanism {

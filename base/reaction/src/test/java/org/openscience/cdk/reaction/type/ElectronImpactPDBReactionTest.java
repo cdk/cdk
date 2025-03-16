@@ -48,7 +48,6 @@ import java.util.List;
 /**
  * TestSuite that runs a test for the ElectronImpactPDBReactionTest.
  *
- * @cdk.module test-reaction
  */
 
 public class ElectronImpactPDBReactionTest extends ReactionProcessTest {

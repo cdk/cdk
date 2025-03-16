@@ -41,7 +41,6 @@ import java.util.List;
  * Utility class for testing.
  *
  * @author     maclean
- * @cdk.module test-renderbasic
  */
 public class ElementUtility implements IDrawVisitor {
 

@@ -60,7 +60,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulator;
  * <p>The elements are listed according on difference with the proposed mass.
  *
  *
- * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-03-01
  * @cdk.githash

@@ -38,7 +38,6 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
- * @cdk.module standard
  * @cdk.githash
  *
  * @cdk.keyword smallest-set-of-rings

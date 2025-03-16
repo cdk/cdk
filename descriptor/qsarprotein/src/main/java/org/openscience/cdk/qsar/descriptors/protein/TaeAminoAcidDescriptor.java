@@ -106,7 +106,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author      Rajarshi Guha
  * @cdk.created 2006-08-23
- * @cdk.module  qsarprotein
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:taeAminoAcid
  * @see         IBioPolymer

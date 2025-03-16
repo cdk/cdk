@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 /**
  * Checks the functionality of the AtomContainer.
  *
- * @cdk.module test-datadebug
  */
 class DebugIsotopeTest extends AbstractIsotopeTest {
 

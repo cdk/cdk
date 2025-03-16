@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
- * @cdk.module test-core
  */
 class BODRIsotopeTest {
 

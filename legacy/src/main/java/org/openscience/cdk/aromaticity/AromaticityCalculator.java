@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
- * @cdk.module standard
  * @cdk.githash
  *
  * @author Oliver Horlacher &lt;oliver.horlacher@therastrat.com&gt;

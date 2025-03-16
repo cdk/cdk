@@ -16,7 +16,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IFragmentAtom} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
 

@@ -39,7 +39,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
 /**
- * @cdk.module test-iordf
  */
 class ConvertorTest extends CDKTestCase {
 

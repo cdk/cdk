@@ -43,7 +43,6 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  *@author        steinbeck
  * @cdk.githash
- *@cdk.module    silent
  */
 public class ChemObject implements Serializable, IChemObject, Cloneable {
 

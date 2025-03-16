@@ -27,7 +27,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * @cdk.module test-core
  */
 class AdjacencyMatrixTest extends CDKTestCase {
 

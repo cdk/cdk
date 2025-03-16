@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
  *
- * @cdk.module ioformats
  * @cdk.githash
  */
 public class SDFFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {

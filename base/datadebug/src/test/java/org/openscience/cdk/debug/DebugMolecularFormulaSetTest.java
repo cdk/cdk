@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 /**
  * Checks the functionality of the {@link DebugMolecularFormulaSet}.
  *
- * @cdk.module test-datadebug
  */
 class DebugMolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 

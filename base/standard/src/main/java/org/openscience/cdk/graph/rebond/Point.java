@@ -22,7 +22,6 @@ package org.openscience.cdk.graph.rebond;
 /**
  * @author      Miguel Howard
  * @cdk.created 2003-05
- * @cdk.module  standard
  * @cdk.githash
  */
 public class Point implements Bspt.Tuple {

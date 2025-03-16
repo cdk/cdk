@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">here</a>.
  *
- * @cdk.module ioformats
  * @cdk.githash
  */
 public class PDBFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {

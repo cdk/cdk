@@ -35,7 +35,6 @@ import static org.hamcrest.Matchers.closeTo;
 /**
  * TestSuite that runs XlogP tests.
  *
- * @cdk.module test-qsarmolecular
  */
 class XLogPDescriptorTest extends MolecularDescriptorTest {
 

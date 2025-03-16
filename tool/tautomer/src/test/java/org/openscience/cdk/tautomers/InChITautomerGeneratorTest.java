@@ -45,7 +45,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Tests generation of tautomers.
  * @author Mark Rijnbeek
  *
- * @cdk.module test-tautomer
  */
 
 class InChITautomerGeneratorTest extends CDKTestCase {

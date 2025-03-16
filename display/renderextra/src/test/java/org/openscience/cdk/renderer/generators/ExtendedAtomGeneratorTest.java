@@ -54,7 +54,6 @@ import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowExplicitHy
 import org.openscience.cdk.validate.ProblemMarker;
 
 /**
- * @cdk.module test-renderextra
  */
 public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
 

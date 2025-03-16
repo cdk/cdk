@@ -24,7 +24,6 @@ import java.util.Iterator;
  * Difference between two boolean[]'s.
  *
  * @author     egonw
- * @cdk.module diff
  * @cdk.githash
  */
 public class BooleanArrayDifference extends AbstractDifferenceList implements IDifferenceList {

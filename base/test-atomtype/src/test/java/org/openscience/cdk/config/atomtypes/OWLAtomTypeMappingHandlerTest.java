@@ -26,7 +26,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the {@link OWLAtomTypeMappingHandler}.
  *
- * @cdk.module test-atomtype
  */
 class OWLAtomTypeMappingHandlerTest extends CDKTestCase {
 

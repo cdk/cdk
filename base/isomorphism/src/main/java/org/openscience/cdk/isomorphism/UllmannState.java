@@ -40,7 +40,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * rather and avoids storing/copying the matrix between states.
  *
  * @author John May
- * @cdk.module isomorphism
  */
 final class UllmannState extends State {
 

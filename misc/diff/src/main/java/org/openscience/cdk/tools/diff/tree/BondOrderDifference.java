@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IBond;
  * {@link org.openscience.cdk.tools.diff.tree.IDifference} between two {@link org.openscience.cdk.interfaces.IBond.Order}s.
  *
  * @author     egonw
- * @cdk.module diff
  * @cdk.githash
  */
 public class BondOrderDifference implements IDifference {

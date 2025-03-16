@@ -30,7 +30,6 @@ package org.openscience.cdk.hash.stereo;
  * provided sub-array.
  *
  * @author John May
- * @cdk.module hash
  * @cdk.githash
  */
 final class BasicPermutationParity extends PermutationParity {

@@ -24,7 +24,6 @@ package org.openscience.cdk.reaction.type.parameters;
  * in the reactants.
  *
  * @author      miguelrojasch
- * @cdk.module  reaction
  * @cdk.githash
  */
 public class SetReactionCenter extends ParameterReact {

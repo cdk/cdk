@@ -17,7 +17,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * values.
  *
  * @author John May
- * @cdk.module test-smarts
  */
 class DaylightSMARTSAtomInvariantsTest {
 

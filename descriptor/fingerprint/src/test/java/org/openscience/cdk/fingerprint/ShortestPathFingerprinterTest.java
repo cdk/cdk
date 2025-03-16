@@ -47,7 +47,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @author Syed Asad Rahman (2012)
- * @cdk.module test-fingerprint
  */
 class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 

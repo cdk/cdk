@@ -36,7 +36,6 @@ import java.util.Comparator;
  * @author Syed Asad Rahman (2012)
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.module fingerprint
  * @cdk.githash
  *
  */

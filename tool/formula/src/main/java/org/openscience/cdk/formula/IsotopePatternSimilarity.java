@@ -6,7 +6,6 @@ package org.openscience.cdk.formula;
  *
  * @author Miguel Rojas Cherto
  *
- * @cdk.module  formula
  * @cdk.githash
  */
 public class IsotopePatternSimilarity {

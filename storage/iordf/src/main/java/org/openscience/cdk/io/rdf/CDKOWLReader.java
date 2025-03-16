@@ -40,7 +40,6 @@ import org.openscience.cdk.libio.jena.Convertor;
 /**
  * Reads content from a CDK OWL serialization.
  *
- * @cdk.module  iordf
  * @cdk.githash
  * @cdk.keyword file format, OWL
  */

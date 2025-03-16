@@ -31,7 +31,6 @@ import static org.openscience.cdk.interfaces.IAtomType.Hybridization.PLANAR3;
 import static org.openscience.cdk.interfaces.IAtomType.Hybridization.SP3;
 
 /**
- * @cdk.module test-diff
  */
 class AtomTypeDiffTest {
 

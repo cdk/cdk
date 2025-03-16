@@ -70,7 +70,6 @@ import signature.AbstractVertexSignature;
  * bond symbol, and the relevant bond is to the parent.
  * </p>
  *
- * @cdk.module signature
  * @author maclean
  * @cdk.githash
  */

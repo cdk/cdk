@@ -28,7 +28,6 @@ import java.util.TimeZone;
 
 /**
  * Class that handles execution time of the MCS search.
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent

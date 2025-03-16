@@ -27,7 +27,6 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
 /**
  * Tests for RadicalSiteIonizationMechanism implementations.
  *
- * @cdk.module test-reaction
  */
 class RadicalSiteIonizationMechanismTest extends ReactionMechanismTest {
 

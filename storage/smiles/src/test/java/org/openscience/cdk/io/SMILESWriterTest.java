@@ -48,7 +48,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * TestCase for the writer for SMILES files.
  *
- * @cdk.module test-smiles
  * @see org.openscience.cdk.io.SMILESWriter
  */
 class SMILESWriterTest extends ChemObjectIOTest {

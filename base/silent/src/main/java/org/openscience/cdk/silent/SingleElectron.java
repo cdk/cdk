@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  *   radical.addElectronContainer(new SingleElectron(carbon));
  * </pre>
  *
- * @cdk.module  silent
  * @cdk.githash
  *
  * @cdk.keyword radical

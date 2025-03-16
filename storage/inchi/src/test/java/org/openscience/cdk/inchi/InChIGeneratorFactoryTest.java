@@ -46,7 +46,6 @@ import net.sf.jniinchi.INCHI_RET;
 import org.junit.jupiter.api.Test;
 
 /**
- * @cdk.module test-inchi
  */
 class InChIGeneratorFactoryTest {
 

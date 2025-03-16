@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * @cdk.module test-formula
  */
 class ElementRuleTest extends FormulaRuleTest {
 

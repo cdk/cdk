@@ -40,7 +40,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * TestCase for the writer CDK source code files using one test file.
  *
- * @cdk.module test-io
  * @see org.openscience.cdk.io.CDKSourceCodeWriterTest
  */
 class CDKSourceCodeWriterTest extends ChemObjectIOTest {

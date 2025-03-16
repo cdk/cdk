@@ -40,7 +40,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * Faulon {@cdk.cite FAU96}.
  *
  * @cdk.keyword  structure generator
- * @cdk.module   structgen
  * @cdk.githash
  * @cdk.bug      1632610
  */

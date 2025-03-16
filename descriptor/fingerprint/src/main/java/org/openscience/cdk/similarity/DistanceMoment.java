@@ -32,7 +32,6 @@ import java.util.Iterator;
  * @cdk.created 2007-03-11
  * @cdk.keyword similarity, 3D, manhattan
  * @cdk.githash
- * @cdk.module fingerprint
  */
 public class DistanceMoment {
 

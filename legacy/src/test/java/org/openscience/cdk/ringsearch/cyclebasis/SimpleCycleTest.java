@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- * @cdk.module test-standard
  */
 class SimpleCycleTest extends CDKTestCase {
 

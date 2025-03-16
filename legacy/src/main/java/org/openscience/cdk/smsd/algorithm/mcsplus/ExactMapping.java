@@ -31,7 +31,6 @@ import java.util.Objects;
 /**
  * This class handles MCS between two identical molecules.
  * Hence they generate am MCS where all atoms are mapped.
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent

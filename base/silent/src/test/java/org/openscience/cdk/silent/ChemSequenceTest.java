@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractChemSequenceTest;
 /**
  * Checks the functionality of the {@link ChemSequence}.
  *
- * @cdk.module test-silent
  */
 class ChemSequenceTest extends AbstractChemSequenceTest {
 

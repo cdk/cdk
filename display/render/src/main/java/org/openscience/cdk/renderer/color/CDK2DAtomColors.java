@@ -69,7 +69,6 @@ import static org.openscience.cdk.config.Elements.Xenon;
  *                                             .set("O", Color.RED.lighter());
  * }</pre>
  *
- * @cdk.module render
  * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/CPK_coloring">CPK coloring</a>
  * @see <a href="http://jmol.sourceforge.net/jscolors/">Jmol, Colors</a>

@@ -57,7 +57,6 @@ import static org.openscience.cdk.aromaticity.Aromaticity.*;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module standard
  * @cdk.githash
  */
 public abstract class ElectronDonation {

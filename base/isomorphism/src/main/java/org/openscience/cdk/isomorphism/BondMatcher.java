@@ -33,7 +33,6 @@ import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
  * Defines compatibility checking of bonds for (subgraph)-isomorphism mapping.
  *
  * @author John May
- * @cdk.module isomorphism
  */
 public abstract class BondMatcher {
 

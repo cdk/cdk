@@ -13,7 +13,6 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * TestCase for {@link org.openscience.cdk.interfaces.IAminoAcid} implementations.
  *
- * @cdk.module test-interfaces
  *
  * @author Edgar Luttman &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09

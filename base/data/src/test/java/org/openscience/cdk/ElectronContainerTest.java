@@ -29,7 +29,6 @@ import org.openscience.cdk.test.interfaces.AbstractElectronContainerTest;
 /**
  * Checks the functionality of the {@link ElectronContainer} class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.ElectronContainer
  */

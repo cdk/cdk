@@ -43,7 +43,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * @cdk.module  test-sdg
  * @author      steinbeck
  * @cdk.created September 4, 2003
  * @cdk.require java1.4+

@@ -50,7 +50,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *   </tr>
  * </table>
  *
- * @cdk.module  formula
  * @author      Miguel Rojas Cherto
  * @cdk.created 2007-11-20
  * @cdk.githash

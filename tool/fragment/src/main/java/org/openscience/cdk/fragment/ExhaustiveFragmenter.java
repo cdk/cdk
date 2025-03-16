@@ -48,7 +48,6 @@ import java.util.Map;
  * changed by the user. Side chains are retained.
  *
  * @author Rajarshi Guha
- * @cdk.module  fragment
  * @cdk.githash
  * @cdk.keyword fragment
  */

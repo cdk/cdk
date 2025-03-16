@@ -33,7 +33,6 @@ import java.util.Arrays;
  * is converted to a string representation suitable for various applications.</p>
  *
  * @author Felix Bänsch
- * @cdk.module rinchi
  */
 final class RInChIHash {
 

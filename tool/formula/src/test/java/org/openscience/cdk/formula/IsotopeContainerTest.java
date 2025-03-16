@@ -10,7 +10,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * Class testing the IsotopeContainer class.
  *
- * @cdk.module test-formula
  */
 class IsotopeContainerTest extends CDKTestCase {
 

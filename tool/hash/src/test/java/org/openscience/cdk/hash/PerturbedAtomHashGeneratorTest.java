@@ -41,7 +41,6 @@ import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class PerturbedAtomHashGeneratorTest {
 

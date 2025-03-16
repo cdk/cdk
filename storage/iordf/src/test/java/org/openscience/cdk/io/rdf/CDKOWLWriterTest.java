@@ -36,7 +36,6 @@ import java.io.StringWriter;
 /**
  * TestCase for the {@link CDKOWLWriter}.
  *
- * @cdk.module test-iordf
  */
 class CDKOWLWriterTest extends ChemObjectWriterTest {
 

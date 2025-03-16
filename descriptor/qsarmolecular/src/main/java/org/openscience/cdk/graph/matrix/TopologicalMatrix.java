@@ -11,7 +11,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author federico
  * @cdk.githash
- * @cdk.module  qsarmolecular
  */
 public class TopologicalMatrix implements IGraphMatrix {
 

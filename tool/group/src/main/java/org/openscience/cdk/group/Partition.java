@@ -36,7 +36,6 @@ import java.util.TreeSet;
  * 2}, {3, 4}}.
  *
  * @author maclean
- * @cdk.module group
  */
 public class Partition {
 

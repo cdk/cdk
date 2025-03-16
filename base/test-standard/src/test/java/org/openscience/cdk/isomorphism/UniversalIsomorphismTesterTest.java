@@ -61,7 +61,6 @@ import java.util.BitSet;
 import java.util.List;
 
 /**
- * @cdk.module test-standard
  * @cdk.require java1.4+
  */
 class UniversalIsomorphismTesterTest extends CDKTestCase {

@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IIsotope;
  * be used than by only {@link Isotopes}.
  *
  * @author      egonw
- * @cdk.module  core
  * @cdk.githash
  */
 final class BODRIsotope implements IIsotope {

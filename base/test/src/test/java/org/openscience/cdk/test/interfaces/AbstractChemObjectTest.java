@@ -22,7 +22,6 @@ import org.openscience.cdk.tools.diff.ChemObjectDiff;
  * Tests the functionality of {@link org.openscience.cdk.interfaces.IChemObject} implementations.
  *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
- * @cdk.module  test-interfaces
  * @cdk.created 2001-08-09
  */
 public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {

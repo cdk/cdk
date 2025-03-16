@@ -33,7 +33,6 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  * reflection is required. It is not, however, necessary for most normal
  * drawing situations.
  *
- * @cdk.module  render
  * @cdk.githash
  */
 public interface IGenerator<T extends IChemObject> {

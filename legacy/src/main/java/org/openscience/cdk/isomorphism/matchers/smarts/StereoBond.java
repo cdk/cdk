@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This query bond indicates a particular geometric stereo configuration.
  *
- * @cdk.module  smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

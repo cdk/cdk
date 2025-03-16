@@ -50,7 +50,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.githash
  *
  * @cdk.keyword bond order
- * @cdk.module  valencycheck
  */
 public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceBondOrderTool {
 

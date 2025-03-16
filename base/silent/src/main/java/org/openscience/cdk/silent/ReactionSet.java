@@ -47,7 +47,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * }
  * }</pre>
  *
- * @cdk.module  silent
  * @cdk.githash
  *
  * @cdk.keyword reaction

@@ -45,7 +45,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * <p>The {@link SSSRFinder} is encouraged to be used, providing an exact
  * algorithm for finding the SSSR.
  *
- * @cdk.module extra
  * @cdk.githash
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search

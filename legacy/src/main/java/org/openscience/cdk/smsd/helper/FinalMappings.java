@@ -32,7 +32,6 @@ import org.openscience.cdk.smsd.interfaces.IFinalMapping;
 
 /**
  * Class that stores raw mapping(s) after each algorithm is executed.
- * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent

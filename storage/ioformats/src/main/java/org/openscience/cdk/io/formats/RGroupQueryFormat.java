@@ -28,7 +28,6 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * Format for Symyx RGfiles (Rgroup query files).
- * @cdk.module ioformats
  * @cdk.githash
  */
 public class RGroupQueryFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {

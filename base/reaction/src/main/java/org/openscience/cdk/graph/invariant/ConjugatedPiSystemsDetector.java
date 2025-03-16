@@ -31,7 +31,6 @@ import java.util.Stack;
  * @author       kaihartmann
  * @cdk.githash
  * @cdk.created  2004-09-17
- * @cdk.module   reaction
  *
  * @cdk.todo add negatively charged atoms (e.g. O-) to the pi system
  */

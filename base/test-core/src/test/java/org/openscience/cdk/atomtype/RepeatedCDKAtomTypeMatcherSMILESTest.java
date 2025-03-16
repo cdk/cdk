@@ -32,7 +32,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * This class tests that a second atom typing results in the same atom
  * types as the first perception.
  *
- * @cdk.module test-core
  */
 class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
 

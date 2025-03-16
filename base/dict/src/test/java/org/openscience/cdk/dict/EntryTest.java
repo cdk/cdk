@@ -24,7 +24,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * @cdk.module test-dict
  */
 class EntryTest extends AbstractEntryTest {
 

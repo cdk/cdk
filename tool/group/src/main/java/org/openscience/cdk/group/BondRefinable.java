@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IBond;
  * Wraps an atom container to provide information on the bond connectivity.
  * 
  * @author maclean
- * @cdk.module group
  *
  */
 class BondRefinable implements Refinable {

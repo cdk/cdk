@@ -36,7 +36,6 @@ import org.openscience.cdk.stereo.StereoTool.TetrahedralSign;
 
 /**
  * @author maclean
- * @cdk.module test-standard
  */
 class StereoToolTest extends CDKTestCase {
 

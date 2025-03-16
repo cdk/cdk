@@ -36,7 +36,6 @@ import java.util.Map;
  * Stereochemistry specification for tetravalent atoms. See {@link ITetrahedralChirality} for
  * further details.
  *
- * @cdk.module core
  * @cdk.githash
  * @see org.openscience.cdk.interfaces.ITetrahedralChirality
  */

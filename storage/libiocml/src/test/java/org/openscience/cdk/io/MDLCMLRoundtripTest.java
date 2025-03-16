@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 /**
  * Combined TestCase for the reading/writing of mdl and cml files.
  *
- * @cdk.module test-libiocml
  */
 
 class MDLCMLRoundtripTest {

@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * atom typing.
  *
  * @author     egonw
- * @cdk.module valencycheck
  * @cdk.githash
  */
 public class CDKValencyChecker implements IValencyChecker {

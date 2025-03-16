@@ -33,7 +33,6 @@ import java.util.Map;
  * polarizability.
  *
  * @author     Todd Martin
- * @cdk.module qsar
  * @cdk.githash
  */
 public class AtomicProperties {

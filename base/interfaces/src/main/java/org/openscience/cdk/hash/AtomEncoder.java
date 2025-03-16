@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * the generation of atomic hash codes.
  *
  * @author John May
- * @cdk.module interfaces
  * @see org.openscience.cdk.hash.AtomHashGenerator
  * @cdk.githash
  */

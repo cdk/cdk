@@ -57,7 +57,6 @@ import java.util.StringTokenizer;
  *
  * @author       Miguel Rojas
  * @cdk.created  2006-05-26
- * @cdk.module   qsaratomic
  * @cdk.githash
  * @cdk.dictref  qsar-descriptors:protonaffinity
  */
