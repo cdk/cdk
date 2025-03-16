@@ -43,7 +43,6 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * Generates just the aromatic indicators for rings : circles, or light-gray
  * inner bonds, depending on the value of CDKStyleAromaticity.
  *
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class RingGenerator extends BasicBondGenerator {

@@ -38,7 +38,6 @@ import java.awt.geom.Rectangle2D;
  * IAtomContainerSet, and IAtomContainer.
  *
  * @author maclean
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class BoundsCalculator {

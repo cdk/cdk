@@ -45,7 +45,6 @@ import org.openscience.cdk.renderer.elements.path.QuadTo;
  * A path of rendering elements from the elements.path package.
  *
  * @author Arvid
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class GeneralPath implements IRenderingElement {

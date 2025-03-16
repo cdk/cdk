@@ -57,7 +57,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * Generator for elements from bonds. Only two-atom bonds are supported
  * by this generator.
  *
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class BasicBondGenerator implements IGenerator<IAtomContainer> {

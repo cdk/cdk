@@ -33,7 +33,6 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  * {@link BasicBondGenerator}.
  *
  * @author maclean
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class BasicGenerator implements IGenerator<IAtomContainer> {

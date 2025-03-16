@@ -24,7 +24,6 @@ import java.awt.Color;
 /**
  * A rectangle, with width and height.
  *
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class RectangleElement implements IRenderingElement {

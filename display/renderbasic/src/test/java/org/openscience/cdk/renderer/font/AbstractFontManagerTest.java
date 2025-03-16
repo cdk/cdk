@@ -24,9 +24,6 @@ package org.openscience.cdk.renderer.font;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
 abstract class AbstractFontManagerTest {
 
     private static AbstractFontManager manager;

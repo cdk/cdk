@@ -29,7 +29,6 @@ import javax.vecmath.Point2d;
  * A cubic curve in the path.
  *
  * @author Arvid
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class CubicTo extends PathElement {

@@ -23,9 +23,6 @@ package org.openscience.cdk.renderer.elements;
 
 import org.junit.jupiter.api.BeforeAll;
 
-/**
- * @cdk.module test-renderbasic
- */
 class ElementGroupTest extends AbstractElementTest {
 
     @BeforeAll

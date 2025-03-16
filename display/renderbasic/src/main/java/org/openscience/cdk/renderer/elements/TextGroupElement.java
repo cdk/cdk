@@ -28,7 +28,6 @@ import java.util.List;
  * surrounded by other annotations such as mass number, charge, etc. These
  * annotation elements are the 'children' of the parent text element.
  *
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class TextGroupElement extends TextElement {

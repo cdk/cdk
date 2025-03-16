@@ -31,9 +31,6 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
-/**
- * @cdk.module test-renderbasic
- */
 class BoundsCalculatorTest {
 
     /**

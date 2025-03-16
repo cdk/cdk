@@ -47,7 +47,6 @@ import org.openscience.cdk.renderer.generators.IGenerator;
 
 /**
  * @author     maclean
- * @cdk.module test-renderbasic
  */
 class AtomContainerRendererTest {
 

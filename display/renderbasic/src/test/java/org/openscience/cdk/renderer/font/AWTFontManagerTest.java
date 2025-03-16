@@ -25,9 +25,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
 class AWTFontManagerTest extends AbstractFontManagerTest {
 
     @BeforeAll

@@ -24,7 +24,6 @@ import java.awt.Color;
 /**
  * An oval element (should) have both a width and a height.
  *
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class OvalElement implements IRenderingElement {

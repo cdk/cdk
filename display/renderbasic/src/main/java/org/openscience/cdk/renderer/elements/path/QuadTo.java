@@ -30,7 +30,6 @@ import javax.vecmath.Point2d;
  * Make a quadratic curve in the path.
  *
  * @author Arvid
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class QuadTo extends PathElement {

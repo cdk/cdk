@@ -37,7 +37,6 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  * Test the {@link BasicBondGenerator}.
  *
  * @author     maclean
- * @cdk.module test-renderbasic
  */
 public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
 

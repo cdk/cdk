@@ -27,7 +27,6 @@ package org.openscience.cdk.renderer.elements.path;
  * Indicates the closing point of the path.
  *
  * @author Arvid
- * @cdk.module renderbasic
  * @cdk.githash
  */
 public class Close extends PathElement {

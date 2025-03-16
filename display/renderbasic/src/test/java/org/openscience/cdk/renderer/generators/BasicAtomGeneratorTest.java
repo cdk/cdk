@@ -52,9 +52,6 @@ import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowEndCarbons
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowExplicitHydrogens;
 import org.openscience.cdk.validate.ProblemMarker;
 
-/**
- * @cdk.module test-renderbasic
- */
 public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 
     private BasicAtomGenerator generator;
