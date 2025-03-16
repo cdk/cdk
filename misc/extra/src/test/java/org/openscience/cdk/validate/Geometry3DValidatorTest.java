@@ -44,5 +44,6 @@ class Geometry3DValidatorTest extends CDKTestCase {
         ValidationReport report = engine.validateChemFile(chemFile);
         Assertions.assertEquals(0, report.getErrorCount());
         Assertions.assertEquals(0, report.getWarningCount());
+        reader.close();
     }
 }
