@@ -64,7 +64,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @author Jonathan C. Rienstra-Kiracofe &lt;jrienst@emory.edu&gt;
  * @author Bradley A. Smith &lt;yeldar@home.com&gt;
  * @author Egon Willighagen
- * @cdk.githash
  * @cdk.iooptions
  */
 public class Gaussian03Reader extends DefaultChemObjectReader {

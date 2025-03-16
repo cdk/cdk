@@ -71,7 +71,6 @@ import java.util.Map;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.githash
  * @see ShortestPaths
  */
 public final class AllPairsShortestPaths {

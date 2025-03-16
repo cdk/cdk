@@ -46,7 +46,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @author Federico
  * @cdk.created 2007-03-01
- * @cdk.githash
  */
 
 public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDescriptor implements

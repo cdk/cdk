@@ -87,7 +87,6 @@ package org.openscience.cdk.tools;
  * is called by {@link LoggingToolFactory} to instantiate the
  * implementation.
  *
- * @cdk.githash
  */
 public interface ILoggingTool {
 

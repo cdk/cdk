@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
 
 /**
- * @cdk.githash
  *
  * @see ChemModelManipulator
  */

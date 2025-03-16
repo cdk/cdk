@@ -25,7 +25,6 @@ package org.openscience.cdk.structgen;
 import java.util.List;
 
 /**
- * @cdk.githash
  */
 public interface IStructureGenerationListener {
 

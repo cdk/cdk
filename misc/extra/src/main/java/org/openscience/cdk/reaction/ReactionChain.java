@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IReaction;
  * in a step of the chain.
  *
  * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
- * @cdk.githash
  */
 public class ReactionChain extends ReactionSet {
 

@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * explicit connectivity and is encoded in smarts using {@code D<NUMBER>}.
  *
  * @cdk.keyword SMARTS
- * @cdk.githash
  */
 @Deprecated
 public final class ExplicitConnectionAtom extends SMARTSAtom {

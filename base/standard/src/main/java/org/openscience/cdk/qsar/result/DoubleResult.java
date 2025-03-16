@@ -20,7 +20,6 @@ package org.openscience.cdk.qsar.result;
 
 
 /**
- * @cdk.githash
  */
 public class DoubleResult implements IDescriptorResult {
 

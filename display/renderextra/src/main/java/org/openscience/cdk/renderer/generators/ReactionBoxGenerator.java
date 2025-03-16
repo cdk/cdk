@@ -38,7 +38,6 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
  * Generate the symbols for radicals.
  *
  * @author maclean
- * @cdk.githash
  */
 public class ReactionBoxGenerator implements IGenerator<IReaction> {
 

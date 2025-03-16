@@ -125,7 +125,6 @@ import java.util.Set;
  * </ul>
  *
  * @author Rajarshi Guha
- * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom

@@ -35,7 +35,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * @cdk.githash
  */
 public class QueryAtom extends QueryChemObject implements IQueryAtom {
 

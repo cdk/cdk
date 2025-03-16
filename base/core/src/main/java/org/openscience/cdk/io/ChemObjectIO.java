@@ -41,7 +41,6 @@ import java.util.List;
  * {@link SettingManager#get(String)} is invoked by {@link #getSetting(String)}).
  *
  * @author johnmay
- * @cdk.githash
  * @cdk.created 20.03.2012
  */
 public abstract class ChemObjectIO implements IChemObjectIO {

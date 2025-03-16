@@ -61,7 +61,6 @@ import java.util.Map;
  * @cdk.keyword similarity
  * @cdk.keyword estate
  *
- * @cdk.githash
  */
 public class EStateFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 

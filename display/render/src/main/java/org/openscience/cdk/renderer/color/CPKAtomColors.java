@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * Colors atoms using CPK color scheme {@cdk.cite BER2001}.
  *
- * @cdk.githash
  * @cdk.keyword atom coloring, CPK
  * @deprecated {@link JmolColors} provides more comprehensive CPK color pallet
  */

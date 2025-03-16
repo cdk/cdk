@@ -82,7 +82,6 @@ import java.util.List;
  * </ol>
  *
  * @author     Todd Martin
- * @cdk.githash
  * @cdk.keyword logP
  * @cdk.keyword lipophilicity
  * @cdk.keyword refractivity

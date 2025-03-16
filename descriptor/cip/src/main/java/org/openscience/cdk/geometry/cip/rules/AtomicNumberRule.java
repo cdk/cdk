@@ -28,7 +28,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 /**
  * Compares to {@link ILigand}s based on atomic numbers.
  *
- * @cdk.githash
  */
 class AtomicNumberRule implements ISequenceSubRule<ILigand> {
 

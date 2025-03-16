@@ -44,7 +44,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author         chhoppe
  * @cdk.keyword    AtomPlacer3D
  * @cdk.created    2004-10-8
- * @cdk.githash
  * @see ModelBuilder3D
  */
 public class AtomPlacer3D {

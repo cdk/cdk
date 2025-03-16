@@ -40,7 +40,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @author      Egon Willighagen
  * @cdk.created 2007-12-29
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
  */
 public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor implements IBondDescriptor {

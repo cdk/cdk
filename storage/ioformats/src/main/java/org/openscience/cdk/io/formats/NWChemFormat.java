@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.emsl.pnl.gov/docs/nwchem/">here</a>.
  *
- * @cdk.githash
  */
 public class NWChemFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

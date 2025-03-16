@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @author Miguel Rojas
  *
- * @cdk.githash
  */
 public class Chem3D_Cartesian_2Format extends AbstractResourceFormat implements IChemFormat {
 

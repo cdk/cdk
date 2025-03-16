@@ -36,7 +36,6 @@ import java.util.List;
  *  RingSet are considered connected.
  *
  *
- * @cdk.githash
  */
 public class RingPartitioner {
 

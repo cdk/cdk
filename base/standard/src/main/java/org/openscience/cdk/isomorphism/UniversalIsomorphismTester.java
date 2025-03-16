@@ -103,7 +103,6 @@ import java.util.Map;
  * @author      Stephane Werner from IXELIS mail@ixelis.net
  * @cdk.created 2002-07-17
  * @cdk.require java1.4+
- * @cdk.githash
  */
 public class UniversalIsomorphismTester {
 

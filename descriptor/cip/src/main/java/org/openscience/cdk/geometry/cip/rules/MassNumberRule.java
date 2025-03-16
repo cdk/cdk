@@ -35,7 +35,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Compares to {@link ILigand}s based on mass numbers.
  *
- * @cdk.githash
  */
 class MassNumberRule implements ISequenceSubRule<ILigand> {
 

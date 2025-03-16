@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * on atom nuclei.
  *
  * @author      egonw
- * @cdk.githash
  */
 public interface IElectronicPropertyCalculator {
 

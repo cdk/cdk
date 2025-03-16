@@ -40,7 +40,6 @@ import org.openscience.cdk.libio.jena.Convertor;
 /**
  * Reads content from a CDK OWL serialization.
  *
- * @cdk.githash
  * @cdk.keyword file format, OWL
  */
 public class CDKOWLReader extends DefaultChemObjectReader {

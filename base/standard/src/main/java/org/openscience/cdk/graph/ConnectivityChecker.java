@@ -55,7 +55,6 @@ import java.util.Set;
  *   int fragmentCount = fragments.getAtomContainerCount();
  * </pre>
  *
- * @cdk.githash
  *
  * @cdk.keyword connectivity
  */

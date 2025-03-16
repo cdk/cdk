@@ -40,7 +40,6 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * with the associated {@link RendererModel}.
  *
  * @author egonw
- * @cdk.githash
  */
 public interface IRenderer<T extends IChemObject> {
 

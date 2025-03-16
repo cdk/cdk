@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * location.
  *
  * @author John May
- * @cdk.githash
  */
 @Deprecated
 public final class SmartsMatchers {

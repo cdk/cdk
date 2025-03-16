@@ -37,7 +37,6 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 /**
  * This class handles MCS plus algorithm which is a combination of
  * c-clique algorithm and McGregor algorithm.
- * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.

@@ -27,7 +27,6 @@ package org.openscience.cdk.renderer.elements.path;
  * The type of the path elements.
  *
  * @author Arvid
- * @cdk.githash
  */
 public enum Type {
     // note the ordinal matches the AWT integers =

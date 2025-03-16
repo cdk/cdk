@@ -51,7 +51,6 @@ import org.junit.jupiter.api.BeforeAll;
 /**
  * Tests for AtomPlacer3D
  *
- * @cdk.githash
  */
 class AtomPlacer3DTest extends CDKTestCase {
 

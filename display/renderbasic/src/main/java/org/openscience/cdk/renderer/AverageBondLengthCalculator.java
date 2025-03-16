@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * IChemObject subtypes : IReaction, IAtomContainerSet, IChemModel, and IReactionSet.
  *
  * @author maclean
- * @cdk.githash
  */
 public class AverageBondLengthCalculator {
 

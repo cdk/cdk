@@ -32,7 +32,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Debugging data class.
  *
  * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
- * @cdk.githash
  */
 public class DebugReactionScheme extends ReactionScheme implements IReactionScheme {
 

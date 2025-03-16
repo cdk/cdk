@@ -45,7 +45,6 @@ import javax.xml.stream.events.XMLEvent;
  * The following bits are supported: atoms.aid, atoms.element, atoms.2d,
  * atoms.3d, bonds.aid1, bonds.aid2.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @cdk.keyword file format, PubChem Compound XML

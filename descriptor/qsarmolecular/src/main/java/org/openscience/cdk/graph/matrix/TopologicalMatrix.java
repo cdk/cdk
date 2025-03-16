@@ -10,7 +10,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * two atoms in a molecule.
  *
  * @author federico
- * @cdk.githash
  */
 public class TopologicalMatrix implements IGraphMatrix {
 

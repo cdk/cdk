@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.IAtomType;
  * @see ConjugatedAtomEncoder
  * @see <a href="http://www.bigprimes.net/archive/prime/">Prime numbers
  *      archive</a>
- * @cdk.githash
  */
 public enum BasicAtomEncoder implements AtomEncoder {
 

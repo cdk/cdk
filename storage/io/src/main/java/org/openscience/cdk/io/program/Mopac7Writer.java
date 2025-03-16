@@ -55,7 +55,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Optimization is switched on if there are no coordinates.
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
- * @cdk.githash
  */
 public class Mopac7Writer extends DefaultChemObjectWriter {
 

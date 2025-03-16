@@ -26,7 +26,6 @@ package org.openscience.cdk.exception;
  * Error that is thrown by debug implementations of the core CDK classes.
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- * @cdk.githash
  * @cdk.created 2003-08-07
  */
 public class IncorrectUseOfCDKCoreClassError extends Error {

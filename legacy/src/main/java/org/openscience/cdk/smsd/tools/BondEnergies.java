@@ -186,7 +186,6 @@ import org.openscience.cdk.smsd.helper.BondEnergy;
  * Xe-O	84	175
  * Xe-F	130	195
  *
- * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.

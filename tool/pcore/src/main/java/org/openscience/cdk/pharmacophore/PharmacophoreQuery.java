@@ -36,7 +36,6 @@ import java.util.List;
  * @author Rajarshi Guha
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
- * @cdk.githash
  */
 public class PharmacophoreQuery extends QueryAtomContainer {
 

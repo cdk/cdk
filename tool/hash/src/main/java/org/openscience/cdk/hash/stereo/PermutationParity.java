@@ -30,7 +30,6 @@ package org.openscience.cdk.hash.stereo;
  * @author John May
  * @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of
  *      a Permutation, Wikipedia</a>
- * @cdk.githash
  */
 abstract class PermutationParity {
 

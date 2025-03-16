@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This class matches an atom based on the atomic mass.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

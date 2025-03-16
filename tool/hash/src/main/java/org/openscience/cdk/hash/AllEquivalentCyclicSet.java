@@ -55,7 +55,6 @@ import java.util.TreeSet;
  * @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
  * @see MinimumEquivalentCyclicSet
  * @see MinimumEquivalentCyclicSetUnion
- * @cdk.githash
  */
 final class AllEquivalentCyclicSet extends EquivalentSetFinder {
 

@@ -39,7 +39,6 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * {@link IGenerator} that will show how atoms map between the reactant and
  * product side.
  *
- * @cdk.githash
  */
 public class MappingGenerator implements IGenerator<IReaction> {
 

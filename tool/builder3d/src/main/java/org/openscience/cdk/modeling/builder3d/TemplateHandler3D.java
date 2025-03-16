@@ -64,7 +64,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @author steinbeck
  * @author John Mayfield
  * @cdk.created 2004-09-21
- * @cdk.githash
  */
 public class TemplateHandler3D {
 

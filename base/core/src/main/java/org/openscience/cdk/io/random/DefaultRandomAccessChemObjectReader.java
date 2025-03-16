@@ -32,7 +32,6 @@ import org.openscience.cdk.io.setting.IOSetting;
  * Abstract class that {@link IRandomAccessChemObjectReader}'s can implement to
  * have it take care of basic stuff, like managing the ReaderListeners.
  *
- * @cdk.githash
  */
 public abstract class DefaultRandomAccessChemObjectReader implements IRandomAccessChemObjectReader<IChemObject> {
 

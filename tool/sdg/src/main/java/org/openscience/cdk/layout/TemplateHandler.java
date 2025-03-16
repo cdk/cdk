@@ -69,7 +69,6 @@ import java.util.Set;
  * @cdk.keyword 2D-coordinates
  * @cdk.keyword structure diagram generation
  * @cdk.require java1.4+
- * @cdk.githash
  */
 public final class TemplateHandler {
 

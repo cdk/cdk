@@ -69,7 +69,6 @@ import java.util.TreeSet;
  * 
  * @author Tomas Pluskal
  * @cdk.created 2014-12-28
- * @cdk.githash
  */
 class FullEnumerationFormulaGenerator implements IFormulaGenerator {
 

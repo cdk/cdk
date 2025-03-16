@@ -99,7 +99,6 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * zoom is just a floating point number, 100% = 1 and 200% = 2.
  *
  * @author maclean
- * @cdk.githash
  */
 public class ReactionRenderer extends AbstractRenderer<IReaction> implements IRenderer<IReaction> {
 

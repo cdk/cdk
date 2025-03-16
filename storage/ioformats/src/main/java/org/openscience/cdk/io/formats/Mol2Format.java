@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
  *
- * @cdk.githash
  */
 public class Mol2Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

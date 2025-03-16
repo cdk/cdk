@@ -21,7 +21,6 @@ package org.openscience.cdk.renderer.elements;
 /**
  * Widget toolkit-independent, abstract definition of something to be drawn.
  *
- * @cdk.githash
  */
 public interface IRenderingElement {
 

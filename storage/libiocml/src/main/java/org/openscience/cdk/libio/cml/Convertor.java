@@ -70,7 +70,6 @@ import org.xmlcml.cml.element.CMLSubstance;
 import org.xmlcml.cml.element.CMLSubstanceList;
 
 /**
- * @cdk.githash
  * @cdk.keyword      CML
  * @cdk.keyword      class convertor
  * @cdk.require      java1.5+

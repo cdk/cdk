@@ -28,7 +28,6 @@ package org.openscience.cdk.hash;
  * A pseudorandom number generator.
  *
  * @author John May
- * @cdk.githash
  */
 abstract class Pseudorandom {
 

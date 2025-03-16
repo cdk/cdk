@@ -74,7 +74,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author Rajarshi Guha
  * @cdk.created 2004-11-23
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:gravitationalIndex
  * @cdk.keyword gravitational index
  * @cdk.keyword descriptor

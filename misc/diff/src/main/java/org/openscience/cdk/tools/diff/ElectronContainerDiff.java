@@ -29,7 +29,6 @@ import org.openscience.cdk.tools.diff.tree.IntegerDifference;
  * Compares two {@link IChemObject} classes.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class ElectronContainerDiff {
 

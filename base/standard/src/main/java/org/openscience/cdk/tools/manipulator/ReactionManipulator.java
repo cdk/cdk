@@ -42,7 +42,6 @@ import java.util.function.ToIntFunction;
 
 /**
  * Provides a variety of methods to manipulate and convert from/to {@link IReaction}.
- * @cdk.githash
  *
  * @see ChemModelManipulator
  * @author uli-f

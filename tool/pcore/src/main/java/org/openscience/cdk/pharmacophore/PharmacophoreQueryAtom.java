@@ -31,7 +31,6 @@ import org.openscience.cdk.smarts.SmartsPattern;
  * {@link org.openscience.cdk.isomorphism.matchers.QueryAtomContainer}.
  *
  * @author Rajarshi Guha
- * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond

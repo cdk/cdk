@@ -38,7 +38,6 @@ import java.util.Deque;
  * min/max bounds of all bounding boxes are utilised.
  *
  * @author John May
- * @cdk.githash
  */
 public final class Bounds implements IRenderingElement {
 

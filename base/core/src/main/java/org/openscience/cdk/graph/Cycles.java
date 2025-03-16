@@ -86,7 +86,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * practice the vertex/edge short cycles are similar to MCB. </li> </ul>
  *
  * @author John May
- * @cdk.githash
  */
 public final class Cycles {
 

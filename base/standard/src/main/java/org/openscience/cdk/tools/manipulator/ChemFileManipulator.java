@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IReaction;
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  *
- * @cdk.githash
  */
 public class ChemFileManipulator {
 

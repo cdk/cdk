@@ -62,7 +62,6 @@ import java.util.Set;
  *
  * See {@cdk.cite DAL92}.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @cdk.keyword file format, MDL RXN file

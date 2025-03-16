@@ -362,7 +362,6 @@ import java.util.*;
  * @cdk.keyword  fingerprint
  * @cdk.keyword  similarity
  *
- * @cdk.githash
  */
 
 

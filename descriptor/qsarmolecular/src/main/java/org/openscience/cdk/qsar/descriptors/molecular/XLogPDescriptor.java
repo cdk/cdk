@@ -103,7 +103,6 @@ import java.util.List;
  *
  *@author         mfe4, chhoppe
  *@cdk.created    2004-11-03
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:xlogP
  *
  * @cdk.keyword XLogP

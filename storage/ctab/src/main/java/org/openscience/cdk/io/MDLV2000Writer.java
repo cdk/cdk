@@ -113,7 +113,6 @@ import java.util.stream.Collectors;
  * writer.addChemObjectIOListener(listener);
  * </pre>
  *
- * @cdk.githash
  * @cdk.iooptions
  * @cdk.keyword file format, MDL molfile
  */

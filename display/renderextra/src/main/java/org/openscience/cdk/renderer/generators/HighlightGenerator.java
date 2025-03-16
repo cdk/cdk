@@ -104,7 +104,6 @@ import java.util.Map;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.githash
  */
 public final class HighlightGenerator implements IGenerator<IAtomContainer> {
 

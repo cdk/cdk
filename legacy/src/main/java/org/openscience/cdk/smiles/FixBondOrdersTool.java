@@ -65,7 +65,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
  *
  * @author Kevin Lawson
  * @author Lucy Entwistle
- * @cdk.githash
  * @deprecated use {@link org.openscience.cdk.aromaticity.Kekulization}
  */
 @Deprecated

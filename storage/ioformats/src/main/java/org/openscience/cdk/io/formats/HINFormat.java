@@ -25,7 +25,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.hyper.com/">here</a>.
  *
- * @cdk.githash
  */
 public class HINFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

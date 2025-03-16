@@ -46,7 +46,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * MoleculeSet, Crystal and ReactionSet fields and remove
  * it with the removeAtom(Atom) method.
  *
- * @cdk.githash
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  */

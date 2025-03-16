@@ -28,7 +28,6 @@ import org.openscience.cdk.tools.diff.tree.IDifferenceList;
  * Compares two {@link ISingleElectron} classes.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class SingleElectronDiff {
 

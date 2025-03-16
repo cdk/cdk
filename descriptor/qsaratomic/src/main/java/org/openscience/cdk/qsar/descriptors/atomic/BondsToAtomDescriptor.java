@@ -46,7 +46,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *
  * @author         mfe4
  * @cdk.created    2004-11-13
- * @cdk.githash
  * @cdk.dictref    qsar-descriptors:bondsToAtom
  */
 public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

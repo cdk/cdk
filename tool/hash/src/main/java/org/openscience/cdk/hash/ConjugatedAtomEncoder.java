@@ -58,7 +58,6 @@ import java.util.List;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.githash
  */
 final class ConjugatedAtomEncoder implements AtomEncoder {
 

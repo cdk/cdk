@@ -25,7 +25,6 @@ import java.util.Iterator;
  * Difference between two boolean[]'s.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class Point2dDifference extends AbstractDifferenceList implements IDifferenceList {
 

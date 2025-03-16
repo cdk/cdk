@@ -84,7 +84,6 @@ import java.util.regex.Pattern;
  * @cdk.keyword    fingerprint
  * @cdk.keyword    bayesian
  * @cdk.keyword    model
- * @cdk.githash
  */
 
 public class Bayesian {

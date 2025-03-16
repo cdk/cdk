@@ -23,7 +23,6 @@ package org.openscience.cdk.io.formats;
  *
  * @author Miguel Rojas
  *
- * @cdk.githash
  */
 public class POVRayFormat extends AbstractResourceFormat implements IResourceFormat {
 

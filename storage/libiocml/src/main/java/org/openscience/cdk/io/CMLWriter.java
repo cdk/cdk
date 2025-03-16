@@ -89,7 +89,6 @@ import java.util.List;
  * <p>For atoms it outputs: coordinates, element type and formal charge.
  * For bonds it outputs: order, atoms (2, or more) and wedges.
  *
- * @cdk.githash
  * @cdk.require      java1.5+
  * @cdk.bug          1565563
  * @cdk.iooptions

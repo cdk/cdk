@@ -32,7 +32,6 @@ import java.io.Serializable;
  * be sorted in natural order (ascending).
  *
  * @author jonalv
- * @cdk.githash
  */
 public interface ICountFingerprint extends Serializable {
 

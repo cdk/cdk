@@ -24,7 +24,6 @@ import java.util.List;
 
 /**
  * @author Uli Fechner
- * @cdk.githash
  */
 public abstract class StatusMessagesOutput {
 

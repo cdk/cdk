@@ -54,7 +54,6 @@ import java.util.Map;
  *
  * @author      Rajarshi Guha
  * @cdk.created 2005-05-08
- * @cdk.githash
  * @cdk.bug     1846421
  */
 public class NumericalSurface {

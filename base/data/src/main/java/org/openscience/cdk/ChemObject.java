@@ -44,7 +44,6 @@ import java.util.Objects;
  *  table for administration of physical or chemical properties
  *
  *@author        steinbeck
- * @cdk.githash
  */
 public class ChemObject implements Serializable, IChemObject, Cloneable {
 

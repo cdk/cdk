@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import java.util.Objects;
 
 /**
- * @cdk.githash
  */
 public class SymbolChargeIDQueryAtom extends QueryAtom implements IQueryAtom {
 

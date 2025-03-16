@@ -29,7 +29,6 @@ import java.util.List;
  * This interface is used for classes that are able to match a certain
  * chemical file format. For example: Chemical Markup Language, PDB etc.
  *
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2004-10-25

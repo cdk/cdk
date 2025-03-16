@@ -63,7 +63,6 @@ import java.util.ArrayList;
  * @author         Miguel Rojas
  *
  * @cdk.created    2006-04-01
- * @cdk.githash
  *
  * @see RemovingSEofBMechanism
  *

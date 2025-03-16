@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * concrete derived classes.
  *
  * @author maclean
- * @cdk.githash
  * @cdk.created    2009-09-09
  * @cdk.keyword    permutation
  */

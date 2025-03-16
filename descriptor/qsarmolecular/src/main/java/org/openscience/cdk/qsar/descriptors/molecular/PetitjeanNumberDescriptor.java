@@ -55,7 +55,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author         mfe4
  * @cdk.created    December 7, 2004
  * @cdk.created    2004-11-03
- * @cdk.githash
  * @cdk.dictref    qsar-descriptors:petitjeanNumber
  * @cdk.keyword    Petit-Jean, number
  */

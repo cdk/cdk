@@ -49,7 +49,6 @@ import java.util.Map;
  * </pre>
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- * @cdk.githash
  * @cdk.created  2003-08-22
  */
 public class ValidatorEngine implements IValidator {

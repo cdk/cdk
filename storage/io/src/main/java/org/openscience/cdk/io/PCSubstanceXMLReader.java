@@ -45,7 +45,6 @@ import javax.xml.stream.events.XMLEvent;
  * bits are supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2. Additionally,
  * it extracts the InChI and canonical SMILES properties.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @cdk.keyword file format, PubChem Compound ASN

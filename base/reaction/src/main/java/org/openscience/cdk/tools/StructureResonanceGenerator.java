@@ -65,7 +65,6 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  *
  * @author       Miguel Rojas
  * @cdk.created  2006-5-05
- * @cdk.githash
  *
  * @see org.openscience.cdk.reaction.IReactionProcess
  */

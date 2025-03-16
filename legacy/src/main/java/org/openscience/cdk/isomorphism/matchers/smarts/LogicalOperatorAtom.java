@@ -25,7 +25,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * This class matches a logical operator that connects two query atoms. Logical
  * matchers are created with, {@link #and}, {@link #not} and {@link #or}.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

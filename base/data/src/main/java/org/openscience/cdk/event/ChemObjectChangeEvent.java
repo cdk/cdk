@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  * Event fired by cdk classes to their registered listeners
  * in case something changes within them.
  *
- * @cdk.githash
  */
 public class ChemObjectChangeEvent extends java.util.EventObject implements IChemObjectChangeEvent {
 

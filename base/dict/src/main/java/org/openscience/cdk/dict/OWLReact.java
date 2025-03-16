@@ -44,7 +44,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author Miguel Rojas &lt;miguelrojasch@users.sf.net&gt;
  * @cdk.created  2008-01-01
  * @cdk.keyword  dictionary
- * @cdk.githash
  */
 public class OWLReact extends Dictionary {
 

@@ -44,7 +44,6 @@ import java.util.*;
  *
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
- * @cdk.githash
  */
 public class MolecularFormulaManipulator {
 

@@ -47,7 +47,6 @@ import javax.vecmath.Point3d;
  *
  *@author         mfe4
  *@cdk.created    2004-11-13
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:distanceToAtom
  */
 public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

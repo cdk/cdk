@@ -55,7 +55,6 @@ import org.openscience.cdk.interfaces.IReaction;
  * </pre>
  *
  * @author Uli Fechner
- * @cdk.githash
  */
 public final class RInChIToReaction extends StatusMessagesOutput {
 

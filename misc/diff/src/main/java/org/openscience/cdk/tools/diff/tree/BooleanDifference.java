@@ -24,7 +24,6 @@ import java.util.Objects;
  * {@link IDifference} between two {@link Boolean}s.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class BooleanDifference implements IDifference {
 

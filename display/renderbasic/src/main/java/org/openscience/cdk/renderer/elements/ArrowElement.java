@@ -25,7 +25,6 @@ import java.awt.Color;
 /**
  * {@link IRenderingElement} for linear arrows.
  *
- * @cdk.githash
  */
 public class ArrowElement implements IRenderingElement {
 

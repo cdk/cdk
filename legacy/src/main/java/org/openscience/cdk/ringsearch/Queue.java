@@ -29,7 +29,6 @@ import java.util.Vector;
 /**
  * Implementation of a Queue (FIFO stack).
  *
- * @cdk.githash
  * @deprecated internal implemenation detail from SSSRFinder, do not use
  */
 @Deprecated

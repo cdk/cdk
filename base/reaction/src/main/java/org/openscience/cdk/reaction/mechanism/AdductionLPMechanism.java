@@ -42,7 +42,6 @@ import java.util.List;
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
- * @cdk.githash
  */
 public class AdductionLPMechanism implements IReactionMechanism {
 

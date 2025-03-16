@@ -35,7 +35,6 @@ import javax.vecmath.Point2d;
  * double bond then the configuration is unspecified and 0 is returned.
  *
  * @author John May
- * @cdk.githash
  */
 final class DoubleBond2DParity extends GeometricParity {
 

@@ -38,7 +38,6 @@ import java.util.List;
  * will replace the Atom in the AtomContainer, but in all the ElectronContainer's
  * it participates too.
  *
- * @cdk.githash
  *
  * @author  Egon Willighagen
  * @cdk.created 2003-08-07

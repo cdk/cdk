@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This smarts bond matches any bond that is in a ring.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

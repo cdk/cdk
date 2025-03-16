@@ -42,7 +42,6 @@ import java.io.IOException;
  * This class contains methods for generating simple organic molecules.
  *
  * @cdk.keyword templates
- * @cdk.githash
  * @deprecated Old CDK class primarily for testing, for CDK Tests please use TestMoleculeFactory in cdk-data (testjar).
  */
 @Deprecated

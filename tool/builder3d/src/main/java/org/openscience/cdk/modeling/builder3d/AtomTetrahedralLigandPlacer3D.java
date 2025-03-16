@@ -44,7 +44,6 @@ import org.openscience.cdk.interfaces.IElement;
  *
  *@author         Peter Murray-Rust,chhoppe,egonw
  *@cdk.created    2003-??-??
- * @cdk.githash
  */
 public class AtomTetrahedralLigandPlacer3D {
 

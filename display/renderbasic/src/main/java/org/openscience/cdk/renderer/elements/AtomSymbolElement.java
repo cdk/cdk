@@ -24,7 +24,6 @@ import java.awt.Color;
 /**
  * A text element with added information.
  *
- * @cdk.githash
  */
 public class AtomSymbolElement extends TextElement {
 

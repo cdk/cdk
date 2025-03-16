@@ -31,7 +31,6 @@ package org.openscience.cdk.hash;
  * @see <a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</a>
  * @see <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift
  *      random number generators</a>
- * @cdk.githash
  */
 final class Xorshift extends Pseudorandom {
 

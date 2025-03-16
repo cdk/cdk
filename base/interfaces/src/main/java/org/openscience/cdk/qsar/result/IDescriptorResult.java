@@ -24,7 +24,6 @@ import java.io.Serializable;
  * Object that provides access to the calculated descriptor value.
  * The concept was taken from JOELib.
  *
- * @cdk.githash
  */
 public interface IDescriptorResult extends Serializable {
 

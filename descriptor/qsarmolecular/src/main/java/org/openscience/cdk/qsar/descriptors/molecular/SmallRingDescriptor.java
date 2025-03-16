@@ -62,7 +62,6 @@ import org.openscience.cdk.qsar.result.IntegerArrayResult;
  * <li>nRings9 - total number of 9-membered rings
  * </ol>
  *
- * @cdk.githash
  *
  * @cdk.dictref qsar-descriptors:smallrings
  * @cdk.keyword smallrings

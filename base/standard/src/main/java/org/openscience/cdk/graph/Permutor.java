@@ -47,7 +47,6 @@ import java.util.Random;
  * @author         maclean
  * @cdk.created    2009-09-09
  * @cdk.keyword    permutation
- * @cdk.githash
  */
 public class Permutor {
 

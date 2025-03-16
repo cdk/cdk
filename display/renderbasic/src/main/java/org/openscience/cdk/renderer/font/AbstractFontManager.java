@@ -24,7 +24,6 @@ import java.util.TreeMap;
 /**
  * Implements the common parts of the {@link IFontManager} interface.
  *
- * @cdk.githash
  */
 public abstract class AbstractFontManager implements IFontManager {
 

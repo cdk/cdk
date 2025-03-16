@@ -26,7 +26,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Debugging data class.
  *
  * @author     Miguel Rojas
- * @cdk.githash
  */
 public class DebugPDBStructure extends PDBStructure {
 

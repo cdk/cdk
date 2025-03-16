@@ -47,7 +47,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author Klas J&ouml;nsson
  * @author Egon Willighagen
  * @cdk.created 2012-04-13
- * @cdk.githash
  *
  * @cdk.keyword bond order
  */

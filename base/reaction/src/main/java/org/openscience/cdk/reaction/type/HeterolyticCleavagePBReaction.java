@@ -71,7 +71,6 @@ import java.util.ArrayList;
  * @author         Miguel Rojas
  *
  * @cdk.created    2006-06-09
- * @cdk.githash
  *
  * @see HeterolyticCleavageMechanism
  **/

@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * @cdk.githash
  */
 @Deprecated
 public class OrderQueryBond extends QueryBond implements IQueryBond {

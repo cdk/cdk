@@ -75,7 +75,6 @@ import java.util.TreeMap;
  * @see AllEquivalentCyclicSet
  * @deprecated provided for to demonstrate a relatively robust but ultimately
  *             incomplete approach
- * @cdk.githash
  */
 @Deprecated
 final class MinimumEquivalentCyclicSetUnion extends EquivalentSetFinder {

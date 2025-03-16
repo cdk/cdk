@@ -21,7 +21,6 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * @cdk.githash
  */
 public class MDLV2000Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

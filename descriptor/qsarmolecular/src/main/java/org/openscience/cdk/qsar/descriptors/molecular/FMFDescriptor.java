@@ -47,7 +47,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *
  * @author Rajarshi Guha
  * @cdk.dictref qsar-descriptors:FMF
- * @cdk.githash
  * @see org.openscience.cdk.fragment.MurckoFragmenter
  */
 public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IBond;
  * and the j-th atom in the atomcontainer share a bond. Otherwise it is zero.
  * See {@cdk.cite TRI92}.
  *
- * @cdk.githash
  * @cdk.keyword adjacency matrix
  *
  * @author      steinbeck

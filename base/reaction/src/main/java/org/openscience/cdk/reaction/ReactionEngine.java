@@ -39,7 +39,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author         Miguel Rojas
  *
  * @cdk.created    2008-02-01
- * @cdk.githash
  */
 public class ReactionEngine {
 

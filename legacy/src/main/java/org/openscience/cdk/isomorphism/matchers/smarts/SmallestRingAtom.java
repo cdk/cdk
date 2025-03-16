@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * ring connectivity which is specified as {@code x<NUMBER>}.
  *
  * @cdk.keyword SMARTS
- * @cdk.githash
  */
 @Deprecated
 public final class SmallestRingAtom extends SMARTSAtom {

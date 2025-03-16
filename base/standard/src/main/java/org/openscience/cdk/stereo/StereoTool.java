@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * Some of these methods were adapted from Jmol's smiles search package.
  *
  * @author maclean
- * @cdk.githash
  */
 public class StereoTool {
 

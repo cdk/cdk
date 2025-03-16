@@ -53,7 +53,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Useful for very big files.
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
- * @cdk.githash
  */
 public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectReader implements
         IRandomAccessChemObjectReader<IChemObject> {

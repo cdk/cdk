@@ -24,7 +24,6 @@ package org.openscience.cdk.interfaces;
  * a nanomaterial with impurities.
  *
  * @author     egonw
- * @cdk.githash
  */
 public interface ISubstance extends IAtomContainerSet {
 

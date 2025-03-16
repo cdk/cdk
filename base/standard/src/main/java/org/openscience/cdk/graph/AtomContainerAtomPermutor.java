@@ -40,7 +40,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author maclean
  * @cdk.created 2009-09-09
  * @cdk.keyword permutation
- * @cdk.githash
  */
 public class AtomContainerAtomPermutor extends AtomContainerPermutor {
 

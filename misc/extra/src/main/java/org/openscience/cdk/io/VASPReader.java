@@ -48,7 +48,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Read output files generated with the VASP software.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @author Fabian Dortu &lt;Fabian.Dortu@wanadoo.be&gt;

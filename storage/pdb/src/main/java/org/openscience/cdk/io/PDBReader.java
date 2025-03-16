@@ -75,7 +75,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * <p>A description can be found at <a href="http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html">
  * http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html</a>.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @author      Edgar Luttmann

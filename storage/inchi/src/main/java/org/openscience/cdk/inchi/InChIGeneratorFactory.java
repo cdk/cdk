@@ -60,7 +60,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * </ul>
  *
  * @author Sam Adams
- * @cdk.githash
  */
 public class InChIGeneratorFactory {
 

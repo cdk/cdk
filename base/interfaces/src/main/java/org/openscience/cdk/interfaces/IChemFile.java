@@ -24,7 +24,6 @@ package org.openscience.cdk.interfaces;
  * document
  *
  * @author     egonw
- * @cdk.githash
  */
 public interface IChemFile extends IChemObject {
 

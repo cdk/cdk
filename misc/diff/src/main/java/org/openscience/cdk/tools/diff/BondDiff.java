@@ -30,7 +30,6 @@ import org.openscience.cdk.tools.diff.tree.IntegerDifference;
  * Compares two {@link IBond} classes.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class BondDiff {
 

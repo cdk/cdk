@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * <i>may</i> change which atoms match in a pattern.
  *
  * @cdk.keyword SMARTS
- * @cdk.githash
  */
 @Deprecated
 public class RingMembershipAtom extends SMARTSAtom {

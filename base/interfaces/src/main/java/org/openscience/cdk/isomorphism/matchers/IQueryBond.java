@@ -23,7 +23,6 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * Defines the ability to be matched against IBond's.
  *
- * @cdk.githash
  * @see        org.openscience.cdk.isomorphism.Pattern
  */
 public interface IQueryBond extends IBond {

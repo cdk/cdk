@@ -42,7 +42,6 @@ import java.util.Map;
  * is done by a complementary class <code>NucleicAcidBuilderTool</code> (to be
  * written).
  *
- * @cdk.githash
  */
 public class ProteinBuilderTool {
 

@@ -34,7 +34,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * The format is required to be in the STMML format {@cdk.cite PMR2002}; examples
  * can be found in CVS in the src/org/openscience/cdk/config/data directory.
  *
- * @cdk.githash
  */
 public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 

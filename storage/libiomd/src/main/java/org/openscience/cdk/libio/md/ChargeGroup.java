@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * A CG is a small set of atoms with total zero or Integer charge.
  *
  * @author ola
- * @cdk.githash
  */
 public class ChargeGroup extends AtomContainer {
 

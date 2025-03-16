@@ -34,7 +34,6 @@ import signature.AbstractGraphBuilder;
  * Builds a molecule from a signature.
  *
  * @author maclean
- * @cdk.githash
  */
 public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
 

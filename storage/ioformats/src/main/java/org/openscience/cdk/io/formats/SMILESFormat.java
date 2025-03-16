@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.daylight.com/smiles/f_smiles.html">here</a>.
  *
- * @cdk.githash
  */
 public class SMILESFormat extends AbstractResourceFormat implements IChemFormat {
 

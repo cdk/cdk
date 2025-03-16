@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author John May
  * @see org.openscience.cdk.hash.SeedGenerator
- * @cdk.githash
  */
 final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator implements AtomHashGenerator {
 

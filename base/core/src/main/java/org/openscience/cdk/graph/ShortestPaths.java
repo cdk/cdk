@@ -66,7 +66,6 @@ import java.util.Arrays;
  * shortest distances between atoms is required.
  *
  * @author John May
- * @cdk.githash
  * @see AllPairsShortestPaths
  * @see org.openscience.cdk.graph.matrix.TopologicalMatrix
  */

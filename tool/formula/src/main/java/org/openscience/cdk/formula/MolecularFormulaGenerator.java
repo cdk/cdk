@@ -44,7 +44,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  *
  * @author Tomas Pluskal, Kai Dührkop, Marcus Ludwig
  * @cdk.created 2014-12-28
- * @cdk.githash
  */
 public class MolecularFormulaGenerator implements IFormulaGenerator {
 

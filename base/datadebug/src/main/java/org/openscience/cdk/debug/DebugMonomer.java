@@ -41,7 +41,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Debugging data class.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class DebugMonomer extends Monomer implements IMonomer {
 

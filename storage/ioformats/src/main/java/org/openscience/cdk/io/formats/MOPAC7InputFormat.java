@@ -21,7 +21,6 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * @cdk.githash
  */
 public class MOPAC7InputFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

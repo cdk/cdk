@@ -28,7 +28,6 @@ import javax.vecmath.Vector3d;
  * <p>The crystal is designed to store only the asymetric atoms.
  * Though this is not enforced, it is assumed by all methods.
  *
- * @cdk.githash
  *
  * @cdk.keyword crystal
  */

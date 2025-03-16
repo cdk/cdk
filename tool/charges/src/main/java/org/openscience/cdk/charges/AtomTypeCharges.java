@@ -31,7 +31,6 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  *
  * @author      chhoppe
  * @cdk.created 2004-11-03
- * @cdk.githash
  */
 public class AtomTypeCharges implements IChargeCalculator {
 

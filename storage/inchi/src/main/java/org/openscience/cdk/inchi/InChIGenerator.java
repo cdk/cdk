@@ -93,7 +93,6 @@ import java.util.Map;
  * </b>
  *
  * @author Sam Adams
- * @cdk.githash
  */
 public class InChIGenerator {
 

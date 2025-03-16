@@ -33,7 +33,6 @@ import org.xml.sax.InputSource;
  * files and uses a local version for validation. More information about
  * CML can be found at <a href="http://www.xml-cml.org/">http://www.xml-cml.org/</a>.
  *
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  **/

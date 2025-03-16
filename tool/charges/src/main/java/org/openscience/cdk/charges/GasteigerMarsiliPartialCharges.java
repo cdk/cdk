@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IElement;
  * @author      chhoppe
  * @author      rojas
  *
- * @cdk.githash
  * @cdk.created 2004-11-03
  * @cdk.keyword partial atomic charges
  * @cdk.keyword charge distribution

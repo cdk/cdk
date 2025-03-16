@@ -154,7 +154,6 @@ import java.util.stream.StreamSupport;
  * @cdk.keyword structure search
  * @cdk.keyword mappings
  * @cdk.keyword matching
- * @cdk.githash
  */
 public final class Mappings implements Iterable<int[]> {
 

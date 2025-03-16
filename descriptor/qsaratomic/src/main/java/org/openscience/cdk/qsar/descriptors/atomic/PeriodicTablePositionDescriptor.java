@@ -48,7 +48,6 @@ import java.util.Map;
  *
  *@author         mfe4
  *@cdk.created    2004-11-13
- * @cdk.githash
  *@cdk.dictref qsar-descriptors:period
  */
 public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

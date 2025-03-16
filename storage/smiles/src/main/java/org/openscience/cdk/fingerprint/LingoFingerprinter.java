@@ -48,7 +48,6 @@ import static org.openscience.cdk.graph.Cycles.relevant;
  * @author Rajarshi Guha
  * @cdk.keyword fingerprint
  * @cdk.keyword hologram
- * @cdk.githash
  */
 public class LingoFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 

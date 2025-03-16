@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * Classes that implement this interface are QSAR descriptor calculators.
  *
- * @cdk.githash
  */
 public interface IBondDescriptor extends IDescriptor {
 

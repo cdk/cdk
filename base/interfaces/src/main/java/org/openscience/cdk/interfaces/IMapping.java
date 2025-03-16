@@ -21,7 +21,6 @@ package org.openscience.cdk.interfaces;
 /**
  * Represents a mapping of two atoms.
  *
- * @cdk.githash
  * @author      kaihartmann
  * @cdk.created 2006-02-15
  */

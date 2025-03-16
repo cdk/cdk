@@ -21,7 +21,6 @@ package org.openscience.cdk.interfaces;
 /**
  * A PDBAtom is a subclass of a Atom which is supposed to store additional informations about the Atom.
  *
- * @cdk.githash
  *
  * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;
  * @cdk.created 2006-11-20

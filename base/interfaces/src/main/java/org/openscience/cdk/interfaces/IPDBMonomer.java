@@ -21,7 +21,6 @@ package org.openscience.cdk.interfaces;
 /**
  * Represents the idea of an protein monomer as found in PDB files.
  *
- * @cdk.githash
  *
  * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;
  * @cdk.created 2006-11-20

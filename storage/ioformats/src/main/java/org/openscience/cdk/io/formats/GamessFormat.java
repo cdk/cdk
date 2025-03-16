@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.msg.ameslab.gov/GAMESS/doc.menu.html">here</a>.
  *
- * @cdk.githash
  */
 public class GamessFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

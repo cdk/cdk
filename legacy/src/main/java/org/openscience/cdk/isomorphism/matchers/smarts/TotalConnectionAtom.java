@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * SMARTS as the connectivity. The connectivity is specified using the {@code
  * X<number>} pattern.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

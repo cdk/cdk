@@ -47,7 +47,6 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
 /**
- * @cdk.githash
  */
 public class QueryAtomContainer extends QueryChemObject implements IQueryAtomContainer {
 

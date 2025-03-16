@@ -25,7 +25,6 @@ import java.util.HashMap;
 /**
  * AWT-specific font manager.
  *
- * @cdk.githash
  */
 public class AWTFontManager extends AbstractFontManager {
 

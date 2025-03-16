@@ -113,7 +113,6 @@ import java.util.Arrays;
  *
  * @author Rajarshi Guha
  * @cdk.created 2004-11-30
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:BCUT
  * @cdk.keyword BCUT
  * @cdk.keyword descriptor

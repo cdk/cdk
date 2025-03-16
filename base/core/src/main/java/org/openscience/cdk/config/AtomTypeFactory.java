@@ -64,7 +64,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  AtomType[] types = factory.getAtomTypes("C");
  *  </pre>
  *
- * @cdk.githash
  *
  * @author     steinbeck
  * @cdk.created    2001-08-29

@@ -45,7 +45,6 @@ import javax.xml.parsers.SAXParserFactory;
  * DOM type thing.
  *
  * @author     Egon Willighagen
- * @cdk.githash
  * @cdk.created    2003-08-23
  * @cdk.keyword    dictionary
  */

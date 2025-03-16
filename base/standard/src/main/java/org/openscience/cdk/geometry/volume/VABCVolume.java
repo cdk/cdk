@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IRingSet;
  * P, S, As, B, Si, Se, and Te.
  *
  * @cdk.keyword  volume, molecular
- * @cdk.githash
  */
 public class VABCVolume {
 

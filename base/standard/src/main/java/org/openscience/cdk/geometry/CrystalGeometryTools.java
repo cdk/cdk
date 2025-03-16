@@ -34,7 +34,6 @@ import javax.vecmath.Vector3d;
 /**
  * A set of static methods for working with crystal coordinates.
  *
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  *

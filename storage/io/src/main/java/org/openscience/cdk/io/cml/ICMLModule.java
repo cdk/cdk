@@ -30,7 +30,6 @@ import org.xml.sax.Attributes;
  * This interface describes the procedures classes must implement to be plugable
  * into the CMLHandler. Most procedures reflect those in SAX2.
  *
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  **/

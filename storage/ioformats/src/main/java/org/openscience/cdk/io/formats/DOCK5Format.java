@@ -25,7 +25,6 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @author Miguel Rojas
  *
- * @cdk.githash
  */
 public class DOCK5Format extends AbstractResourceFormat implements IChemFormat {
 

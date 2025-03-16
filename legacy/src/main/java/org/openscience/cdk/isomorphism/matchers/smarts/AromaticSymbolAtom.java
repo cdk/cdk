@@ -23,7 +23,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This class matches aromatic atom with element symbol specified.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

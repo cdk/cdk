@@ -24,7 +24,6 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
  * Abstract class to provide the base functionality for
  * {@link IGeneratorParameter} implementations.
  *
- * @cdk.githash
  */
 public abstract class AbstractGeneratorParameter<T> implements IGeneratorParameter<T> {
 

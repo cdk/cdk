@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * @author Miguel Rojas
  *
- * @cdk.githash
  */
 public class BGFFormat extends AbstractResourceFormat implements IChemFormat {
 

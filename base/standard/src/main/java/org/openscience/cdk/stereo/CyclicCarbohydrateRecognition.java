@@ -55,7 +55,6 @@ import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Righ
  * The methods used are described by {@cdk.cite batchelor13}.  
  * 
  * @author John May
- * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/Haworth_projection">Haworth projection (Wikipedia)</a>
  * @see <a href="http://en.wikipedia.org/wiki/Chair_conformation">Chair conformation (Wikipedia)</a>
  */

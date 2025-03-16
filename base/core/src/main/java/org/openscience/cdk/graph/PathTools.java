@@ -38,7 +38,6 @@ import java.util.List;
  * Tools class with methods for handling molecular graphs.
  *
  * @author      steinbeck
- * @cdk.githash
  * @cdk.created 2001-06-17
  */
 public class PathTools {

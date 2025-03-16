@@ -25,7 +25,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 /**
  * This class matches a logical operator that connects two query bonds.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

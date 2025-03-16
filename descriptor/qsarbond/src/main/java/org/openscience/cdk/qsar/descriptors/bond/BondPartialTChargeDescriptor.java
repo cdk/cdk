@@ -55,7 +55,6 @@ import java.util.List;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-05-18
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:bondPartialTCharge
  *
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor

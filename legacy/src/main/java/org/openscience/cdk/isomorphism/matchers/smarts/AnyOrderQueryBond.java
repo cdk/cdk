@@ -25,7 +25,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 /**
  * This matches a bond of any order.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

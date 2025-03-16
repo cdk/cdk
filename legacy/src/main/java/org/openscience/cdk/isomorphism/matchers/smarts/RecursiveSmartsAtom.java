@@ -26,7 +26,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 /**
  * This matches recursive smarts atoms.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

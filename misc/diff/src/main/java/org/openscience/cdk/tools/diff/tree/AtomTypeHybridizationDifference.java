@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IAtomType;
  * {@link org.openscience.cdk.tools.diff.tree.IDifference} between two {@link org.openscience.cdk.interfaces.IAtomType.Hybridization}s.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class AtomTypeHybridizationDifference implements IDifference {
 

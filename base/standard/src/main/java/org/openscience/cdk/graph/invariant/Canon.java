@@ -67,7 +67,6 @@ import java.util.Comparator;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.githash
  */
 public final class Canon {
 

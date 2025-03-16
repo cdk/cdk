@@ -35,7 +35,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * Generate the arrow for a reaction.
  *
  * @author maclean
- * @cdk.githash
  */
 public class ReactionArrowGenerator implements IGenerator<IReaction> {
 

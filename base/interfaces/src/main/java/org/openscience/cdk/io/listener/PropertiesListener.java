@@ -40,7 +40,6 @@ import java.util.Properties;
  * Command=geometry optimization
  * </pre>
  *
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */

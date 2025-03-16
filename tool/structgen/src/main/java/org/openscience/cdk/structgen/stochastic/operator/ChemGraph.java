@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.math.RandomNumbersTool;
 
 /**
- * @cdk.githash
  */
 public class ChemGraph {
 

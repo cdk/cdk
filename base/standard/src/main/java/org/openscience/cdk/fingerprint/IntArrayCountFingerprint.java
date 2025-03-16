@@ -32,7 +32,6 @@ import java.util.Map;
 
 /**
  * @author jonalv
- * @cdk.githash
  */
 public class IntArrayCountFingerprint implements ICountFingerprint {
 

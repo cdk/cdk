@@ -226,7 +226,6 @@ import java.util.TreeSet;
  * @cdk.keyword cycle
  * @see MinimumCycleBasis
  * @see RelevantCycles
- * @cdk.githash
  */
 public final class TripletShortCycles {
 

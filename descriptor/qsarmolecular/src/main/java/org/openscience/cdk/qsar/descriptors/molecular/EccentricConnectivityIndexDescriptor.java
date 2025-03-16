@@ -62,7 +62,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Returns a single value with name <i>ECCEN</i>
  * @author      Rajarshi Guha
  * @cdk.created     2005-03-19
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
  */
 public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

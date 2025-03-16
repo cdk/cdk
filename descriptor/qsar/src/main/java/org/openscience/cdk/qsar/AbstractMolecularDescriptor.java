@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * interface methods.
  *
  * @author John May
- * @cdk.githash
  */
 public abstract class AbstractMolecularDescriptor extends AbstractDescriptor implements IMolecularDescriptor {
 

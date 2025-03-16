@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * An algorithm for topological symmetry. This algorithm derived from the
  * algorithm {@cdk.cite Hu94}.
  *
- * @cdk.githash
  *
  * @author Junfeng Hao
  * @author Luis F. de Figueiredo

@@ -34,7 +34,6 @@ package org.openscience.cdk.math;
  *
  * @author Dan Gezelter
  *
- * @cdk.githash
  */
 public class FortranFormat {
 

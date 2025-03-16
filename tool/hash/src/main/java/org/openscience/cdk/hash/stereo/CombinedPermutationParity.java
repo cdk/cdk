@@ -29,7 +29,6 @@ package org.openscience.cdk.hash.stereo;
  * Combine two permutation parities into one.
  *
  * @author John May
- * @cdk.githash
  */
 final class CombinedPermutationParity extends PermutationParity {
 

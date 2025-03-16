@@ -30,7 +30,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Debugging data class.
  *
  * @author     Miguel Rojas
- * @cdk.githash
  */
 public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 

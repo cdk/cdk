@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
- * @cdk.githash
  */
 public class MolecularFormulaRangeManipulator {
 

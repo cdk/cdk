@@ -31,7 +31,6 @@ import org.openscience.cdk.tools.diff.tree.IntegerDifference;
  * Compares two {@link IAtomContainer} classes.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class AtomContainerDiff {
 

@@ -45,7 +45,6 @@ import java.util.List;
  *
  * @see Token
  * @author David Robinson
- * @cdk.githash
  * @author Bhupinder Sandhu
  * @author Stephen Tomkinson
  *

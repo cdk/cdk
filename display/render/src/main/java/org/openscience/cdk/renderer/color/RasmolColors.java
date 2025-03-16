@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * <a href="http://www.umass.edu/microbio/rasmol/rascolor.htm"
  * >http://www.umass.edu/microbio/rasmol/rascolor.htm</a>.
  *
- * @cdk.githash
  */
 public class RasmolColors implements IAtomColorer, java.io.Serializable {
 

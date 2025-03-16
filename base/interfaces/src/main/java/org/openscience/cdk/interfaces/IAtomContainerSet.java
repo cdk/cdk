@@ -25,7 +25,6 @@ import java.util.Iterator;
  * A set of AtomContainers.
  *
  * @author     egonw
- * @cdk.githash
  */
 public interface IAtomContainerSet
         extends IChemObject, Iterable<IAtomContainer> {

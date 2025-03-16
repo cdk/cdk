@@ -26,7 +26,6 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 /**
  * Abstract smarts atom.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

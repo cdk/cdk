@@ -32,7 +32,6 @@ import java.util.Set;
 
 /**
  * @author jonalv
- * @cdk.githash
  */
 public class IntArrayFingerprint implements IBitFingerprint {
 

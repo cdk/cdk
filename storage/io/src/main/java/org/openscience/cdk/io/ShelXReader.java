@@ -59,7 +59,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html">
  * http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @cdk.keyword file format, ShelXL

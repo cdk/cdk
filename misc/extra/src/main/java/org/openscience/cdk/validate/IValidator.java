@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * Interface that Validators need to implement to be used in validation.
  *
  * @author   Egon Willighagen
- * @cdk.githash
  * @cdk.created  2003-03-28
  */
 public interface IValidator {

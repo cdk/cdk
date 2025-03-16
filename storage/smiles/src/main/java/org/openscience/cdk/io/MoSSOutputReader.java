@@ -54,7 +54,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p><b>Caution</b>: the output contains substructures, not full molecules,
  * even though they are read as such right now.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @cdk.keyword MoSS

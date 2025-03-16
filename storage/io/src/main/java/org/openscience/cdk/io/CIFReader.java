@@ -46,7 +46,6 @@ import java.util.StringTokenizer;
  * <p>The CIF example on the IUCR website has been tested, as well as Crambin (1CRN)
  * in the PDB database.
  *
- * @cdk.githash
  *
  * @cdk.keyword file format, CIF
  * @cdk.keyword file format, mmCIF

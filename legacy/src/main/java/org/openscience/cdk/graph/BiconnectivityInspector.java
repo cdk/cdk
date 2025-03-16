@@ -50,7 +50,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
- * @cdk.githash
  * @deprecated Use {@link org.openscience.cdk.ringsearch.RingSearch} or
  *             {@link Cycles#markRingAtomsAndBonds(IAtomContainer)}
  */

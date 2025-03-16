@@ -40,7 +40,6 @@ import java.util.ArrayList;
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
- * @cdk.githash
  */
 public class TautomerizationMechanism implements IReactionMechanism {
 

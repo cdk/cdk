@@ -26,7 +26,6 @@ import java.util.Map;
  * table for administration of physical or chemical properties
  *
  * @author        egonw
- * @cdk.githash
  */
 public interface IChemObject extends ICDKObject {
 

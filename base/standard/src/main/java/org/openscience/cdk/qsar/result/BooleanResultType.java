@@ -22,7 +22,6 @@ package org.openscience.cdk.qsar.result;
 /**
  * IDescriptorResult type for boolean.
  *
- * @cdk.githash
  */
 public class BooleanResultType implements IDescriptorResult {
 

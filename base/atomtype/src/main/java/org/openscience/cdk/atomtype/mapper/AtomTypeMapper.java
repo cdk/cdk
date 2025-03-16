@@ -30,7 +30,6 @@ import java.util.Map;
  * Sybyl scheme; using this approach it is possible to use the CDK atom type perception
  * algorithm and write the resulting atom types using the Sybyl atom type scheme.
  *
- * @cdk.githash
  */
 public class AtomTypeMapper {
 

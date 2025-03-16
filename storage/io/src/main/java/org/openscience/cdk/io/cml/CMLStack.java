@@ -26,7 +26,6 @@ package org.openscience.cdk.io.cml;
 /**
  * Low weight alternative to Sun's Stack class.
  *
- * @cdk.githash
  *
  * @cdk.keyword stack
  */

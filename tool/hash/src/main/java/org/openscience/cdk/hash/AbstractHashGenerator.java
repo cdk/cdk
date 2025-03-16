@@ -34,7 +34,6 @@ import java.util.Arrays;
  * other hashing functions.
  *
  * @author John May
- * @cdk.githash
  */
 class AbstractHashGenerator {
 

@@ -28,7 +28,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Default implementation of the {@link IChemObjectReaderErrorHandler} interface.
  * Emits log entries using the {@link LoggingToolFactory}.
  *
- * @cdk.githash
  *
  * @author Uli Fechner
  */

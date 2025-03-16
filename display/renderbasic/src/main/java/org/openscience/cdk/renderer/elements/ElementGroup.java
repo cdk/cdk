@@ -26,7 +26,6 @@ import java.util.List;
 /**
  * A group of rendering elements, of any type.
  *
- * @cdk.githash
  */
 public class ElementGroup implements IRenderingElement, Iterable<IRenderingElement> {
 

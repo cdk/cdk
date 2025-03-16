@@ -40,7 +40,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  *
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
- * @cdk.githash
  */
 public class MolecularFormulaSetManipulator {
 

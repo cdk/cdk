@@ -40,7 +40,6 @@ import java.util.Objects;
  *
  * @author John May
  * @author Till Schäfer (predefined vertex ordering)
- * @cdk.githash
  * @see org.openscience.cdk.ringsearch.RingSearch
  * @see GraphUtil
  * @see <a href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia:

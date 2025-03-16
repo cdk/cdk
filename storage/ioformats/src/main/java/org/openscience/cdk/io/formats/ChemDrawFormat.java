@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @author Miguel Rojas
  *
- * @cdk.githash
  */
 public class ChemDrawFormat extends AbstractResourceFormat implements IChemFormat {
 

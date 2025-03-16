@@ -51,7 +51,6 @@ import java.util.ArrayList;
  *
  * @author mfe4
  * @cdk.created 2004-11-03
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:kierValues
  * @cdk.keyword Kappe shape index
  * @cdk.keyword descriptor

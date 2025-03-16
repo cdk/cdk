@@ -8,7 +8,6 @@ import java.util.Map;
  *
  * @author         chhoppe
  * @cdk.created    2004-10-8
- * @cdk.githash
  */
 public class MMFF94ParametersCall {
 

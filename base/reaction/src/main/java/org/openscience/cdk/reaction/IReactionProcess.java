@@ -29,7 +29,6 @@ import java.util.List;
  * Classes that implement this interface are Reactions types.
  *
  * @author      Miguel Rojas
- * @cdk.githash
  */
 public interface IReactionProcess {
 

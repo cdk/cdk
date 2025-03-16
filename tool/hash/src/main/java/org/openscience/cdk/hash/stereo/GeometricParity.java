@@ -29,7 +29,6 @@ package org.openscience.cdk.hash.stereo;
  * Describes the geometric parity of a stereo configuration.
  *
  * @author John May
- * @cdk.githash
  */
 abstract class GeometricParity {
 

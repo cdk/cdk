@@ -27,7 +27,6 @@ import java.util.Comparator;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
- * @cdk.githash
  */
 public class RingSizeComparator implements Comparator<IRing> {
 

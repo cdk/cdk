@@ -53,7 +53,6 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *
  * @author Gilleain Torrance &lt;gilleain.torrance@gmail.com&gt;
  * @cdk.iooptions
- * @cdk.githash
  */
 public class PDBWriter extends DefaultChemObjectWriter {
 

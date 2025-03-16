@@ -53,7 +53,6 @@ import org.openscience.cdk.smiles.InvPair;
  * for this method to work properly.
  *
  * @author     steinbeck
- * @cdk.githash
  * @cdk.keyword    HOSE code, spherical atom search
  * @cdk.created    2002-05-10
  */

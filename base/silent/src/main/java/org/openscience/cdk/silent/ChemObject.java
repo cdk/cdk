@@ -42,7 +42,6 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *  table for administration of physical or chemical properties
  *
  *@author        steinbeck
- * @cdk.githash
  */
 public class ChemObject implements Serializable, IChemObject, Cloneable {
 

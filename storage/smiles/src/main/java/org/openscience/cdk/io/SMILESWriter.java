@@ -42,7 +42,6 @@ import java.io.*;
 /**
  * Writes the SMILES strings to a plain text file.
  *
- * @cdk.githash
  * @cdk.iooptions
  * @cdk.keyword file format, SMILES
  */

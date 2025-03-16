@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * bonds formed by an atom (including bonds to implicit hydrogens).
  *
  * @cdk.keyword SMARTS
- * @cdk.githash
  */
 @Deprecated
 public final class TotalValencyAtom extends SMARTSAtom {

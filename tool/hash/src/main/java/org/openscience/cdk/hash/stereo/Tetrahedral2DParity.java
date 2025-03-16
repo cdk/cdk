@@ -40,7 +40,6 @@ import javax.vecmath.Point2d;
  * @author John May
  * @see <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak,
  *      T and Wisniewski, J.L. 2001</a>
- * @cdk.githash
  */
 final class Tetrahedral2DParity extends GeometricParity {
 

@@ -28,7 +28,6 @@ package org.openscience.cdk.qsar;
  * interface methods.
  *
  * @author John May
- * @cdk.githash
  */
 public abstract class AbstractAtomPairDescriptor extends AbstractDescriptor implements IAtomPairDescriptor {
 

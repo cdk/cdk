@@ -35,7 +35,6 @@ import java.util.Map;
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
- * @cdk.githash
  */
 public interface IMolecularFormula extends ICDKObject {
 

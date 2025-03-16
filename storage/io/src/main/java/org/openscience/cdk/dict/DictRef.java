@@ -30,7 +30,6 @@ package org.openscience.cdk.dict;
  *
  * @author      Egon Willighagen
  * @cdk.created 2003-08-24
- * @cdk.githash
  */
 public class DictRef implements java.io.Serializable, Cloneable {
 

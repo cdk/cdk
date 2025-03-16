@@ -23,7 +23,6 @@ package org.openscience.cdk.interfaces;
  * implementation.
  *
  * @author        egonw
- * @cdk.githash
  */
 public interface IChemObjectBuilder {
 

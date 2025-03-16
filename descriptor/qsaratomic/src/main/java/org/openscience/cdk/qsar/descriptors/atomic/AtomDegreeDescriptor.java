@@ -52,7 +52,6 @@ import java.util.List;
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:atomDegree
  */
 public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

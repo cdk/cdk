@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * 
  * </pre>
  *
- * @cdk.githash
  * @author Rajarshi Guha
  * @see org.openscience.cdk.ConformerContainer
  * @cdk.keyword file format SDF

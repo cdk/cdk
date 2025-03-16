@@ -48,7 +48,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * );
  * </pre>
  *
- * @cdk.githash
  *
  * @author      Egon Willighagen
  * @cdk.created 2005-01-10

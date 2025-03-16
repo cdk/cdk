@@ -194,7 +194,6 @@ import java.util.Set;
  * @author         Stefan Kuhn (chiral smiles)
  * @author         John May
  * @cdk.keyword    SMILES, generator
- * @cdk.githash
  *
  * @see org.openscience.cdk.aromaticity.Aromaticity
  * @see org.openscience.cdk.stereo.Stereocenters

@@ -51,7 +51,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @author         Miguel Rojas Cherto
  * @cdk.created    2008-104-31
- * @cdk.githash
  * @see StabilizationCharges
  */
 public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

@@ -32,7 +32,6 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 
 /**
- * @cdk.githash
  */
 class AbstractAWTDrawVisitorTest {
 

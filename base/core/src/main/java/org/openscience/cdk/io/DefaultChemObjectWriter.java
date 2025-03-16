@@ -22,7 +22,6 @@ package org.openscience.cdk.io;
  * Abstract class that ChemObjectReader's can implement to have it
  * take care of basic stuff, like managing the ReaderListeners.
  *
- * @cdk.githash
  */
 public abstract class DefaultChemObjectWriter extends ChemObjectIO implements IChemObjectWriter {
 

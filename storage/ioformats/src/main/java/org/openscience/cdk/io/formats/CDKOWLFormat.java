@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * Serializes a CDK model into the Web Ontology Language using the
  * N3 format.
  *
- * @cdk.githash
  */
 public class CDKOWLFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

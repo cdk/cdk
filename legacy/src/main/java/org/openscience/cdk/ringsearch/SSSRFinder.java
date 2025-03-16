@@ -46,7 +46,6 @@ import java.util.List;
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
- * @cdk.githash
  *
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search

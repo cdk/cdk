@@ -28,7 +28,6 @@ import java.util.Locale;
  * Implementation of the {@link ILoggingTool} interface that sends output to
  * the {@link System#err} channel.
  *
- * @cdk.githash
  * @deprecated should not be used directly
  */
 public class SystemOutLoggingTool implements ILoggingTool {

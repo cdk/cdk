@@ -50,7 +50,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:lipinskifailures
  *
  * @cdk.keyword Lipinski

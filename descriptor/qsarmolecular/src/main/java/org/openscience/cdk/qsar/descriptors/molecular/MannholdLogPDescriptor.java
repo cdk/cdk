@@ -35,7 +35,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * <p>Prediction of logP based on the number of carbon and hetero atoms. The
  * implemented equation was proposed in {@cdk.cite Mannhold2009}.
  *
- * @cdk.githash
  * @cdk.dictref    qsar-descriptors:mannholdLogP
  *
  * @cdk.keyword LogP

@@ -80,7 +80,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * @cdk.keyword cycle
  * @cdk.keyword ring
  * @cdk.keyword ring perception
- * @cdk.githash
  * @see org.openscience.cdk.ringsearch.RingSearch
  * @see org.openscience.cdk.ringsearch.SSSRFinder#findRelevantRings()
  * @see GreedyBasis

@@ -24,7 +24,6 @@ import java.awt.Color;
 /**
  * Text element as used in the chemical drawing. This can be a element symbol.
  *
- * @cdk.githash
  */
 public class TextElement implements IRenderingElement {
 

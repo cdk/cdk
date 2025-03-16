@@ -64,7 +64,6 @@ import java.util.ArrayList;
  * @author         Miguel Rojas
  *
  * @cdk.created    2006-10-27
- * @cdk.githash
  *
  * @see HomolyticCleavageMechanism
  **/

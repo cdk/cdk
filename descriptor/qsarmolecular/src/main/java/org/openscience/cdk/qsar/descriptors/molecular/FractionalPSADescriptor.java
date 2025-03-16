@@ -53,7 +53,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
  *
- * @cdk.githash
  *
  * @cdk.dictref qsar-descriptors:fractionalPSA
  * @cdk.keyword volume

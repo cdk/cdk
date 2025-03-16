@@ -57,7 +57,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  *
  * @author      cho
  * @cdk.created 2005-09-30
- * @cdk.githash
  * @cdk.keyword    protein
  * @cdk.keyword    pocket
  */

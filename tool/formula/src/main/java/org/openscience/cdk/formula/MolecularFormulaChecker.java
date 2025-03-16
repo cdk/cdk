@@ -40,7 +40,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecule, molecular formula
- * @cdk.githash
  * @see         IRule
  */
 public class MolecularFormulaChecker {

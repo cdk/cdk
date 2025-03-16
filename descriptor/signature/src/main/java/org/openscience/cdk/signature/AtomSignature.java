@@ -71,7 +71,6 @@ import signature.AbstractVertexSignature;
  * </p>
  *
  * @author maclean
- * @cdk.githash
  */
 public class AtomSignature extends AbstractVertexSignature {
 

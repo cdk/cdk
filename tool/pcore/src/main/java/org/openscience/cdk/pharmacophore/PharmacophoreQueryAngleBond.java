@@ -28,7 +28,6 @@ import org.openscience.cdk.BondRef;
  * Represents a pharmacophore query angle constraint.
  *
  * @author Rajarshi Guha
- * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see PharmacophoreQueryAtom

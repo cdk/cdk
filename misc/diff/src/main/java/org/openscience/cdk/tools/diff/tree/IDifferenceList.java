@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * {@link IDifference} objects.
  *
  * @author     egonw
- * @cdk.githash
  */
 public interface IDifferenceList extends IDifference {
 

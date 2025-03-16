@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 /**
  * Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
  *
- * @cdk.githash
  *
  * @cdk.keyword orbital
  * @cdk.keyword lone-pair

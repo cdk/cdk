@@ -69,7 +69,6 @@ import org.xml.sax.Attributes;
  * <p>Please file a bug report if this parser fails to parse
  * a certain element or attribute value in a valid CML document.
  *
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  **/

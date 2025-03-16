@@ -40,7 +40,6 @@ import org.xmlcml.cml.element.CMLScalar;
  * Customize persistence of MDMolecule by adding support for residues and charge groups.
  *
  * @author ola
- * @cdk.githash
  *
  * @cdk.set       libio-cml-customizers
  */

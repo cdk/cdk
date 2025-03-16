@@ -28,7 +28,6 @@ import java.util.Objects;
  * type filter text
  *
  * @author egonw
- * @cdk.githash
  * @cdk.created 2005-08-24
  * @cdk.keyword bond
  * @cdk.keyword atom

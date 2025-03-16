@@ -25,7 +25,6 @@ package org.openscience.cdk.exception;
 
 
 /**
- * @cdk.githash
  */
 public class UnsupportedChemObjectException extends CDKException {
 

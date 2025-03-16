@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * Validates the 3D geometry of the model.
  *
- * @cdk.githash
  *
  * @cdk.created 2006-05-11
  */

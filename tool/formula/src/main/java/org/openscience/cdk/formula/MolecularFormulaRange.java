@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IIsotope;
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
- * @cdk.githash
  */
 public class MolecularFormulaRange implements Cloneable {
 

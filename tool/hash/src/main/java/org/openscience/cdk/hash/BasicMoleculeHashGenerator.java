@@ -45,7 +45,6 @@ import java.util.Arrays;
  * @author John May
  * @see AtomHashGenerator
  * @see BasicAtomHashGenerator
- * @cdk.githash
  */
 final class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
 

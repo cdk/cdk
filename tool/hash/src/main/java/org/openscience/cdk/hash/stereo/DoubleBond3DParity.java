@@ -34,7 +34,6 @@ import javax.vecmath.Point3d;
  * on the same side (Z or cis).
  *
  * @author John May
- * @cdk.githash
  */
 final class DoubleBond3DParity extends GeometricParity {
 

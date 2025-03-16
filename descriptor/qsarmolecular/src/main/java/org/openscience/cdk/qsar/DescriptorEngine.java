@@ -71,7 +71,6 @@ import java.util.jar.JarFile;
  * obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
  *
  * @cdk.created 2004-12-02
- * @cdk.githash
  * @see DescriptorSpecification
  * @see Dictionary
  * @see org.openscience.cdk.dict.OWLFile

@@ -26,7 +26,6 @@ import org.openscience.cdk.BondRef;
  * Represents a distance relationship between two pharmacophore groups.
  *
  * @author Rajarshi Guha
- * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom

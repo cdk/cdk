@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * @author Miguel Rojas
  *
- * @cdk.githash
  */
 public class AlchemyFormat extends AbstractResourceFormat implements IChemFormat {
 

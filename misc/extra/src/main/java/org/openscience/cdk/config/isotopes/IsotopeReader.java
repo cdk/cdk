@@ -45,7 +45,6 @@ import org.xml.sax.XMLReader;
  * later. If not found it tries the Aelfred2 parser, and as last try the
  * Xerces parser.
  *
- * @cdk.githash
  *
  * @author     Egon Willighagen
  */

@@ -63,7 +63,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <a href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">
  * "CTFile Formats"</a> , Chapter 5.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @cdk.keyword Rgroup

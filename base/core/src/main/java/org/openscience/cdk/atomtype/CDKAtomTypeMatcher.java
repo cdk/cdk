@@ -57,7 +57,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @author         egonw
  * @cdk.created    2007-07-20
- * @cdk.githash
  */
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 

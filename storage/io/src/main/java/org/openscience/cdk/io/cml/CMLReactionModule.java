@@ -33,7 +33,6 @@ import org.xml.sax.Attributes;
 /**
  * @author Egon Willighagen &lt;elw38@cam.ac.uk&gt;
  *
- * @cdk.githash
  */
 public class CMLReactionModule extends CMLCoreModule {
 

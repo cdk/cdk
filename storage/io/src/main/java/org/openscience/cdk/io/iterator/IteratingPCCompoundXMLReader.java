@@ -43,7 +43,6 @@ import javax.xml.stream.events.XMLEvent;
 /**
  * Iterating PubChem PCCompound ASN.1 XML reader.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @see org.openscience.cdk.io.PCCompoundASNReader

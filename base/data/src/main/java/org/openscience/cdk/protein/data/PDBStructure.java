@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IPDBStructure;
  *
  * @author     egonw
  *
- * @cdk.githash
  */
 public class PDBStructure extends ChemObject implements IPDBStructure {
 

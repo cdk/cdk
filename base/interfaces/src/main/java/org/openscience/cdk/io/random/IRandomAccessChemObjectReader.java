@@ -30,7 +30,6 @@ import java.util.ListIterator;
  * Extension of {@link java.util.ListIterator}.
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
- * @cdk.githash
  */
 public interface IRandomAccessChemObjectReader<T> extends ListIterator<T> {
 

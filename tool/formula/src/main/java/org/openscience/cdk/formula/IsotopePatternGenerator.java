@@ -36,7 +36,6 @@ import java.util.List;
  *
  * @author      Miguel Rojas Cherto
  * @cdk.created 2007-11-20
- * @cdk.githash
  *
  * @cdk.keyword isotope pattern
  *

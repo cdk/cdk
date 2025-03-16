@@ -52,7 +52,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * Note: This class is internal and will be private in future.
  *
  * @author John May
- * @cdk.githash
  * @deprecated use QueryStereoFilter
  */
 @Deprecated

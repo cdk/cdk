@@ -22,7 +22,6 @@ package org.openscience.cdk.interfaces;
  * The base class for all data objects in this CDK.
  *
  * @author        egonw
- * @cdk.githash
  */
 public interface ICDKObject extends Cloneable {
 

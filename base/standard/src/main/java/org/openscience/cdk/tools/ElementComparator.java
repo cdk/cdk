@@ -30,7 +30,6 @@ import java.util.Comparator;
   * molecular formula. Order:
   * C, H, other elements in alphabetic order.
   *
- * @cdk.githash
   *
   * @cdk.keyword element, sorting
   */

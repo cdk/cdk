@@ -52,7 +52,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * InChITautomerGeneratorTest test case.
  *
  * @author Mark Rijnbeek
- * @cdk.githash
  */
 public final class InChITautomerGenerator {
 

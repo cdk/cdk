@@ -40,7 +40,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author Miguel Rojas
  * @cdk.created 2006-04-11
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:partialTChargeMMFF94
  * @cdk.bug 1628461
  * @see MMFF94PartialCharges

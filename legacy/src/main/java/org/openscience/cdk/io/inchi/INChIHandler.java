@@ -41,7 +41,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * <p>The returned ChemFile contains a ChemSequence in
  * which the ChemModel represents the molecule.
  *
- * @cdk.githash
  *
  * @see org.openscience.cdk.io.INChIReader
  *

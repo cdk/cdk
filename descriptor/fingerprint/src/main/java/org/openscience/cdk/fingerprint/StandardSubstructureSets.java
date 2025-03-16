@@ -12,7 +12,6 @@ import java.util.List;
  *
  * @author egonw
  *
- * @cdk.githash
  */
 public class StandardSubstructureSets {
     /**

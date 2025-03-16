@@ -35,7 +35,6 @@ import org.xml.sax.Attributes;
  *
  * Implements a Convention for parsing an MDMolecule from CML.
  *
- * @cdk.githash
  *
  * @author Ola Spjuth &lt;ola.spjuth@farmbio.uu.se&gt;
  *

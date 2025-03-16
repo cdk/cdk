@@ -58,7 +58,6 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * The {@link org.openscience.cdk.interfaces.IBond.Stereo} value can be
  * reconstructed from 3D coordinates with the {@link StereoTool}.
  *
- * @cdk.githash
  */
 public class CIPTool {
 

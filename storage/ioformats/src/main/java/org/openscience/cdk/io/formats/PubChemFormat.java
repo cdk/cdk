@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd">here</a>.
  *
- * @cdk.githash
  */
 public class PubChemFormat extends AbstractResourceFormat implements IChemFormat {
 

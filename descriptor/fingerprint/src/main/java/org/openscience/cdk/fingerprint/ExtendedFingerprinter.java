@@ -50,7 +50,6 @@ import java.util.Map;
  * @cdk.created 2006-01-13
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.githash
  * @see org.openscience.cdk.fingerprint.Fingerprinter
  */
 public class ExtendedFingerprinter implements IFingerprinter {

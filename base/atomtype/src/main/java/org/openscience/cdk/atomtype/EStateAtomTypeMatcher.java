@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author Todd Martin
  * @author nick
- * @cdk.githash
  * @cdk.keyword atom type, E-state
  */
 public class EStateAtomTypeMatcher implements IAtomTypeMatcher {

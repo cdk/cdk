@@ -25,7 +25,6 @@ import java.util.EventObject;
  * primarily in place for future development when additional information
  * may be passed to <code>ReaderListener</code>s.
  *
- * @cdk.githash
  *
  * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
  */

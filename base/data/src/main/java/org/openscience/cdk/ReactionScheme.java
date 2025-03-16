@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IReactionScheme;
  *
  * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
  * @cdk.keyword reaction
- * @cdk.githash
  */
 public class ReactionScheme extends ReactionSet implements IReactionScheme {
 

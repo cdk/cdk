@@ -31,7 +31,6 @@ import java.util.Iterator;
  * @author Rajarshi Guha
  * @cdk.created 2007-03-11
  * @cdk.keyword similarity, 3D, manhattan
- * @cdk.githash
  */
 public class DistanceMoment {
 

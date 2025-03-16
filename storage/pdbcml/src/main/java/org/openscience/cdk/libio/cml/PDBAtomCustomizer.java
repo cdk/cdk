@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.IBond;
  *
  * @author        egonw
  * @cdk.created   2005-05-04
- * @cdk.githash
  * @cdk.set       libio-cml-customizers
  * @cdk.require   java1.5+
  */

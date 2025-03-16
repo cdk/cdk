@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Debugging data class.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class DebugPolymer extends Polymer implements IPolymer {
 

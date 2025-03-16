@@ -50,7 +50,6 @@ import java.io.Serializable;
  *   if.configure(isotope);
  * </pre>
  *
- * @cdk.githash
  *
  * @author     steinbeck
  * @cdk.created    2001-08-21

@@ -37,7 +37,6 @@ import java.util.Map;
  * <br/>
  * See interface {@link ILoggingTool} for more details.
  *
- * @cdk.githash
  */
 final class Log4jLoggingTool implements ILoggingTool {
 

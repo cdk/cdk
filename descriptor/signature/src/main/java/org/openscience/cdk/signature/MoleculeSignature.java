@@ -86,7 +86,6 @@ import signature.SymmetryClass;
  * an AtomSignature class.
  *
  * @author maclean
- * @cdk.githash
  */
 public class MoleculeSignature extends AbstractGraphSignature {
 

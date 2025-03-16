@@ -46,7 +46,6 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  *
- * @cdk.githash
  * @deprecated use {@link ShortestPaths}
  */
 @Deprecated

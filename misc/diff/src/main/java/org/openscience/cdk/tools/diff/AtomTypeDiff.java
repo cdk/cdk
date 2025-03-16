@@ -32,7 +32,6 @@ import org.openscience.cdk.tools.diff.tree.StringDifference;
  * Compares two {@link IAtomType} classes.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class AtomTypeDiff {
 

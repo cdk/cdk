@@ -23,7 +23,6 @@ package org.openscience.cdk.rinchi;
  * Reaction InChI (RInChI) strings and keys.
  * 
  * @author Felix Bänsch
- * @cdk.githash
  */
 final class RInChIConstants {
     static final String RINCHI_EMPTY_HEADER = "RInChI=";

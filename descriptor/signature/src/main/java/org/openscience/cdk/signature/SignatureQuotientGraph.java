@@ -37,7 +37,6 @@ import signature.AbstractQuotientGraph;
  * graph the same as the molecule.
  *
  * @author maclean
- * @cdk.githash
  */
 public class SignatureQuotientGraph extends AbstractQuotientGraph {
 

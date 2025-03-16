@@ -81,7 +81,6 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  *
  * @author        egonw
  * @author        john may
- * @cdk.githash
  */
 public class DebugChemObjectBuilder implements IChemObjectBuilder {
 

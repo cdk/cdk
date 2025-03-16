@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * This class contains methods for generating simple organic alkanes.
  *
  * @cdk.keyword templates
- * @cdk.githash
  */
 public class IsoAlkanes {
 

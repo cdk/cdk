@@ -124,7 +124,6 @@ import java.util.Set;
  * @author Christoph Steinbeck
  * @author Egon Willighagen
  * @author John May
- * @cdk.githash
  * @cdk.created 2002-04-29
  * @cdk.keyword SMILES, parser
  */

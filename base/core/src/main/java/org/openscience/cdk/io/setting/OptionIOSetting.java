@@ -26,7 +26,6 @@ import org.openscience.cdk.exception.CDKException;
  * An class for a reader setting which must be found in the list
  * of possible settings.
  *
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */

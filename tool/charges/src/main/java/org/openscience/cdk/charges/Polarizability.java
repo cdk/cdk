@@ -44,7 +44,6 @@ import java.util.List;
  * P, Osp3 and Osp2. Aromaticity must be calculated beforehand.
  *
  * @author         chhoppe
- * @cdk.githash
  * @cdk.created    2004-11-03
  * @cdk.keyword polarizability
  */

@@ -51,7 +51,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-05-18
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:bondPartialPiCharge
  *
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor

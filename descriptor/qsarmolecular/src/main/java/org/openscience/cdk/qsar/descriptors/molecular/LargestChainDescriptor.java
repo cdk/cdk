@@ -60,7 +60,6 @@ import java.util.Set;
  *
  * @author chhoppe from EUROSCREEN
  * @cdk.created 2006-1-03
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:largestChain
  */
 public class LargestChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

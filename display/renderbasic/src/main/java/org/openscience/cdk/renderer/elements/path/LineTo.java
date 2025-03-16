@@ -30,7 +30,6 @@ import javax.vecmath.Point2d;
  * A line element in the path.
  *
  * @author Arvid
- * @cdk.githash
  */
 public class LineTo extends PathElement {
 

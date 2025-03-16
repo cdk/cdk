@@ -41,7 +41,6 @@ import org.openscience.cdk.renderer.elements.GeneralPath;
  * </pre>
  *
  * @author Arvid
- * @cdk.githash
  */
 public class PathBuilder {
 

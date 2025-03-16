@@ -65,7 +65,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  *@author         mfe4
  *@cdk.created    2004-11-03
- * @cdk.githash
  * @cdk.dictref   qsar-descriptors:atomicHardness
  */
 public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

@@ -60,7 +60,6 @@ import java.util.Set;
  * important, have a look at the {@link DoubleBondAcceptingAromaticityDetector}.
  *
  * @author         egonw
- * @cdk.githash
  * @cdk.created    2007-10-05
  *
  * @see org.openscience.cdk.CDKConstants

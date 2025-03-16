@@ -72,7 +72,6 @@ import java.util.List;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.githash
  */
 public final class HashGeneratorMaker {
 

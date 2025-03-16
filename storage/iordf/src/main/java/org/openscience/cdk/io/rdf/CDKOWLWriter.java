@@ -37,7 +37,6 @@ import org.openscience.cdk.libio.jena.Convertor;
 /**
  * Serializes the data model into CDK OWL.
  *
- * @cdk.githash
  */
 public class CDKOWLWriter extends DefaultChemObjectWriter {
 

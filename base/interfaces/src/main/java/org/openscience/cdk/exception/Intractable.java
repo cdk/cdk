@@ -31,7 +31,6 @@ package org.openscience.cdk.exception;
  * completion.
  *
  * @author John May
- * @cdk.githash
  */
 public final class Intractable extends CDKException {
 

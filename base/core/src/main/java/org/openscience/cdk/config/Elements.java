@@ -38,7 +38,6 @@ import java.util.Map;
  *
  * @author egonw
  * @author john may
- * @cdk.githash
  */
 public enum Elements {
     Unknown(0, "", 0, 0, null, 0.00, null),

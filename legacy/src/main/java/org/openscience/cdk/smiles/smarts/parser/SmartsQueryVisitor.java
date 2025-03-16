@@ -91,7 +91,6 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
- * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
 @Deprecated

@@ -29,7 +29,6 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * @cdk.githash
  */
 public class MDMolecule extends AtomContainer {
 

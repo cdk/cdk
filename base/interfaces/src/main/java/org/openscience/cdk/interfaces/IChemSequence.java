@@ -23,7 +23,6 @@ package org.openscience.cdk.interfaces;
  * store the course of a reaction. Each state of the reaction would be
  * stored in one ChemModel.
  *
- * @cdk.githash
  *
  * @cdk.keyword animation
  * @cdk.keyword reaction

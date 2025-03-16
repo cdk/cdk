@@ -112,7 +112,6 @@ import static java.util.Comparator.comparingInt;
  * @cdk.keyword 2D-coordinates
  * @cdk.keyword Coordinate generation, 2D
  * @cdk.dictref blue-obelisk:layoutMolecule
- * @cdk.githash
  * @cdk.bug 1536561
  * @cdk.bug 1788686
  */

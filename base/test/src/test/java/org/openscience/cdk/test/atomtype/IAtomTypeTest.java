@@ -14,7 +14,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * to allow such unit test classes to extend {@link AbstractAtomTypeTest} and
  * take advantage of the functionality that abstract class provides.
  *
- * @cdk.githash
  */
 public interface IAtomTypeTest {
 

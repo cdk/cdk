@@ -33,7 +33,6 @@ import java.util.List;
 /**
  * Tool for calculating atom numbers using the InChI algorithm.
  *
- * @cdk.githash
  */
 public class InChINumbersTools {
 

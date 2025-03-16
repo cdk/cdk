@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * Jmol to CDK. The AtomType's themselves seems have a computational
  * background, but this is not clear.
  *
- * @cdk.githash
  *
  * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
  *

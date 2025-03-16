@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *   ISimpleChemObjectReader reader = new ReaderFactory().createReader(stringReader);
  * }</pre>
  *
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;

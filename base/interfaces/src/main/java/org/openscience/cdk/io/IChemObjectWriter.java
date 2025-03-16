@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IChemObject;
  * <p>Currently, database IO and file IO is supported. Internet IO is
  * expected.
  *
- * @cdk.githash
  */
 public interface IChemObjectWriter extends IChemObjectIO {
 

@@ -21,7 +21,6 @@ package org.openscience.cdk.graph.matrix;
 /**
  * Interface describing a molecular graph matrix calculator.
  *
- * @cdk.githash
  * @cdk.keyword graph matrix, molecular
  *
  * @author      egonw

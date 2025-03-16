@@ -39,7 +39,6 @@ import org.openscience.cdk.tools.StructureResonanceGenerator;
  * @author       Miguel Rojas Cherto
  * @cdk.created  2008-104-31
  * @cdk.keyword  stabilization charge
- * @cdk.githash
  */
 public class StabilizationCharges {
 

@@ -22,7 +22,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * @cdk.githash
  */
 @Deprecated
 public class SymbolAndChargeQueryAtom extends QueryAtom implements IQueryAtom {

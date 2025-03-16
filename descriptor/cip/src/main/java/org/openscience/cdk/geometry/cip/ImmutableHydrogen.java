@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.IBond.Order;
  * implemented.
  *
  * @author egonw
- * @cdk.githash
  */
 class ImmutableHydrogen implements IAtom {
 

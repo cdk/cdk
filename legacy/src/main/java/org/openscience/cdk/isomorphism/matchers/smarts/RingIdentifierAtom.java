@@ -26,7 +26,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * This encapsulates an atom with a ring identifier, with an optional ring
  * bond specified. For example, <code>C=1CCCCC1</code>.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

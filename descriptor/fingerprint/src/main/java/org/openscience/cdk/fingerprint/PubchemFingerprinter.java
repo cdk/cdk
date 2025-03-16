@@ -99,7 +99,6 @@ import java.util.Map;
  * @author Rajarshi Guha
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.githash
  * @cdk.threadnonsafe
  */
 public class PubchemFingerprinter extends AbstractFingerprinter implements IFingerprinter {

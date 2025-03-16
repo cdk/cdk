@@ -46,7 +46,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * <p>Serializes a MoleculeSet or a Molecule object to ShelX code.
  * The output can be read with Platon.
  *
- * @cdk.githash
  * @cdk.iooptions
  *
  * @author Egon Willighagen

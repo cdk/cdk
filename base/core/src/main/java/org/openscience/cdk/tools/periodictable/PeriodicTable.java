@@ -41,7 +41,6 @@ import static org.openscience.cdk.config.Elements.*;
  * @cdk.keyword periodic table
  * @cdk.keyword radius, vanderwaals
  * @cdk.keyword electronegativity
- * @cdk.githash
  */
 public final class PeriodicTable {
 

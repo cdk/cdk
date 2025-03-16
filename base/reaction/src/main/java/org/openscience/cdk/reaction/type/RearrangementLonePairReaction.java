@@ -67,7 +67,6 @@ import java.util.ArrayList;
  * @author         Miguel Rojas
  *
  * @cdk.created    2006-05-05
- * @cdk.githash
  *
  * @see RearrangementChargeMechanism
  **/

@@ -29,7 +29,6 @@ import java.util.BitSet;
  * Interface for bit fingerprint representations.
  *
  * @author jonalv
- * @cdk.githash
  */
 public interface IBitFingerprint extends Serializable {
 

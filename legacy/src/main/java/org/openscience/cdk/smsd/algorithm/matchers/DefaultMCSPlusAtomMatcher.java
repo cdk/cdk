@@ -53,7 +53,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
  * Checks if atom is matching between query and target molecules.
- * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
  *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent

@@ -29,7 +29,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * atomcontainer share a bond, the element i,j in the matrix is set to the
  * bond order value. Otherwise it is zero. See {@cdk.cite TRI92}.
  *
- * @cdk.githash
  * @cdk.keyword connection matrix
  * @cdk.dictref blue-obelisk:calculateConnectivityMatrix
  *

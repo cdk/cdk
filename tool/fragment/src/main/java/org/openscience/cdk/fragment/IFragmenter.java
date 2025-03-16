@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * An interface for classes implementing fragmentation algorithms.
  *
  * @author Rajarshi Guha
- * @cdk.githash
  * @cdk.keyword fragment
  */
 public interface IFragmenter {

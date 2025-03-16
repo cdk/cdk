@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * This matches an atom with chirality property. It is not implemented yet.
  * It'll match any atom right now.
  *
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

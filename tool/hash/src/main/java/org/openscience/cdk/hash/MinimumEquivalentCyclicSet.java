@@ -70,7 +70,6 @@ import java.util.TreeMap;
  * @see MinimumEquivalentCyclicSetUnion
  * @see AllEquivalentCyclicSet
  * @see org.openscience.cdk.hash.HashGeneratorMaker
- * @cdk.githash
  */
 final class MinimumEquivalentCyclicSet extends EquivalentSetFinder {
 

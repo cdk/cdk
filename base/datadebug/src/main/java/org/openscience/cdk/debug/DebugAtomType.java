@@ -34,7 +34,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Debugging data class.
  *
  * @author     egonw
- * @cdk.githash
  */
 public class DebugAtomType extends AtomType implements IAtomType {
 

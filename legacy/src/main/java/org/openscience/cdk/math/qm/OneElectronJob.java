@@ -33,7 +33,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * without electron electron interactions
  *
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
- * @cdk.githash
  * @cdk.created 2001-09-03
  */
 public class OneElectronJob {

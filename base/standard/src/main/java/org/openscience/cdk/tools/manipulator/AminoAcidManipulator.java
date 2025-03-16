@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IElement;
  * Class with convenience methods that provide methods to manipulate
  * AminoAcid's.
  *
- * @cdk.githash
  *
  * @author      Egon Willighagen
  * @cdk.created 2005-08-19

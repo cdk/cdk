@@ -37,7 +37,6 @@ import org.openscience.cdk.signature.AtomSignature;
  * An implementation of a {@link AtomSignature}-based fingerprint.
  *
  * @cdk.keyword fingerprint
- * @cdk.githash
  */
 public class SignatureFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
