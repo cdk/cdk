@@ -1620,7 +1620,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
             if (ap.getNormalizedElectronegativity(s) > 1) {
                 // // F,O,Cl,Br,N
-                oxNum += BondManipulator.destroyBondOrder(atomContainer.getBond(ca0, ca2j).getOrder());
+                oxNum += atomContainer.getBond(ca0, ca2j).getOrder().numeric();
             }
         }
 
@@ -1696,7 +1696,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             // || s.equals("Br") || s.equals("N") || s.equals("S"))
 
             if (ap.getNormalizedElectronegativity(ca2j.getSymbol()) > 1) {
-                oxNum += BondManipulator.destroyBondOrder(atomContainer.getBond(ca0, ca2j).getOrder());
+                oxNum += atomContainer.getBond(ca0, ca2j).getOrder().numeric();
             }
 
         }
@@ -1773,7 +1773,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             // || s.equals("Br") || s.equals("N") || s.equals("S"))
 
             if (ap.getNormalizedElectronegativity(ca2j.getSymbol()) > 1) {
-                oxNum += BondManipulator.destroyBondOrder(atomContainer.getBond(ca0, ca2j).getOrder());
+                oxNum += atomContainer.getBond(ca0, ca2j).getOrder().numeric();
             }
 
         }

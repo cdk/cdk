@@ -54,8 +54,8 @@ public class ConnectionMatrix implements IGraphMatrix {
             bond = container.getBond(f);
             indexAtom1 = container.indexOf(bond.getBegin());
             indexAtom2 = container.indexOf(bond.getEnd());
-            conMat[indexAtom1][indexAtom2] = BondManipulator.destroyBondOrder(bond.getOrder());
-            conMat[indexAtom2][indexAtom1] = BondManipulator.destroyBondOrder(bond.getOrder());
+            conMat[indexAtom1][indexAtom2] = bond.getOrder().numeric();
+            conMat[indexAtom2][indexAtom1] = bond.getOrder().numeric();
         }
         return conMat;
     }

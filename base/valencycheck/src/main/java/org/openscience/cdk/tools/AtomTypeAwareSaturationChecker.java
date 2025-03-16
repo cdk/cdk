@@ -264,7 +264,7 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
         double sum = 0;
 
         for (IBond bond : mol.bonds())
-            if (bond.contains(atom)) sum += BondManipulator.destroyBondOrder(bond.getOrder());
+            if (bond.contains(atom)) sum += bond.getOrder().numeric();
 
         return sum;
     }
@@ -312,7 +312,7 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
     private double bondsUsed(IAtom atom, IAtomContainer atomContainer) throws CDKException {
         int bondsToAtom = 0;
         for (IBond bond : atomContainer.bonds())
-            if (bond.contains(atom)) bondsToAtom += BondManipulator.destroyBondOrder(bond.getOrder());
+            if (bond.contains(atom)) bondsToAtom += bond.getOrder().numeric();
         int implicitHydrogens;
         if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET || atom.getImplicitHydrogenCount() == null) {
             // Will probably only work with group 13-18, and not for helium...
