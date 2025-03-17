@@ -110,7 +110,7 @@ public class AtomContainerSetManipulator {
         for (int i = 0; i < set.getAtomContainerCount(); i++) {
             int thisCharge = AtomContainerManipulator.getTotalFormalCharge(set.getAtomContainer(i));
             double stoich = set.getMultiplier(i);
-            charge += stoich * thisCharge;
+            charge += stoich * (double)thisCharge;
         }
         return charge;
     }
@@ -124,7 +124,7 @@ public class AtomContainerSetManipulator {
         for (int i = 0; i < set.getAtomContainerCount(); i++) {
             int thisCharge = AtomContainerManipulator.getTotalFormalCharge(set.getAtomContainer(i));
             double stoich = set.getMultiplier(i);
-            charge += stoich * thisCharge;
+            charge += (int)(stoich * (double)thisCharge);
         }
         return charge;
     }

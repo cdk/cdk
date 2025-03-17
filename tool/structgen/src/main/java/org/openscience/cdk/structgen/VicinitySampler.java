@@ -86,7 +86,7 @@ public class VicinitySampler {
 
                         b1 = ac.getBond(ax1, ay1);
                         if (b1 != null) {
-                            a11 = BondManipulator.destroyBondOrder(b1.getOrder());
+                            a11 = b1.getOrder().numeric();
                             nonZeroBondsCounter++;
                         } else {
                             a11 = 0;
@@ -94,7 +94,7 @@ public class VicinitySampler {
 
                         b2 = ac.getBond(ax1, ay2);
                         if (b2 != null) {
-                            a12 = BondManipulator.destroyBondOrder(b2.getOrder());
+                            a12 = b2.getOrder().numeric();
                             nonZeroBondsCounter++;
                         } else {
                             a12 = 0;
@@ -102,7 +102,7 @@ public class VicinitySampler {
 
                         b3 = ac.getBond(ax2, ay1);
                         if (b3 != null) {
-                            a21 = BondManipulator.destroyBondOrder(b3.getOrder());
+                            a21 = b3.getOrder().numeric();
                             nonZeroBondsCounter++;
                         } else {
                             a21 = 0;
@@ -110,7 +110,7 @@ public class VicinitySampler {
 
                         b4 = ac.getBond(ax2, ay2);
                         if (b4 != null) {
-                            a22 = BondManipulator.destroyBondOrder(b4.getOrder());
+                            a22 = b4.getOrder().numeric();
                             nonZeroBondsCounter++;
                         } else {
                             a22 = 0;
