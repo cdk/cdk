@@ -223,7 +223,8 @@ public final class PeriodicTable {
 
         Synthetic(Fermium, Seaborgium, Plutonium, Roentgenium, Lawrencium, Meitnerium, Einsteinium, Nobelium, Actinium,
                 Rutherfordium, Americium, Curium, Bohrium, Berkelium, Promethium, Copernicium, Technetium, Hassium,
-                Californium, Mendelevium, Neptunium, Darmstadtium, Dubnium);
+                Californium, Mendelevium, Neptunium, Darmstadtium, Dubnium, Copernicium, Flerovium, Nihonium,
+                Moscovium, Livermorium, Tennessine, Oganesson);
 
         private final Set<Elements> elements;
 
@@ -353,12 +354,12 @@ public final class PeriodicTable {
         ids.put(Darmstadtium, "54083-77-1");
         ids.put(Roentgenium, "54386-24-2");
         ids.put(Copernicium, "54084-26-3");
-        ids.put(Ununtrium, "");
+        ids.put(Nihonium, "54084-70-7");
         ids.put(Flerovium, "54085-16-4");
-        ids.put(Ununpentium, "");
+        ids.put(Moscovium, "54085-64-2");
         ids.put(Livermorium, "54100-71-9");
-        ids.put(Ununseptium, "");
-        ids.put(Ununoctium, "");
+        ids.put(Tennessine, "54101-14-3");
+        ids.put(Oganesson, "54144-19-3");
         return ids;
     }
 
