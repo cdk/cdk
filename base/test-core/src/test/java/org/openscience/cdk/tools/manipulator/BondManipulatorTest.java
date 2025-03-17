@@ -193,12 +193,12 @@ class BondManipulatorTest extends CDKTestCase {
         Assertions.assertEquals(6.0, BondManipulator.destroyBondOrder(Order.SEXTUPLE), 0.00001);
 
         // above code is deprecated in favor of this:
-        Assertions.assertEquals(1.0, Order.SINGLE.numeric(), 0.00001);
-        Assertions.assertEquals(2.0, Order.DOUBLE.numeric(), 0.00001);
-        Assertions.assertEquals(3.0, Order.TRIPLE.numeric(), 0.00001);
-        Assertions.assertEquals(4.0, Order.QUADRUPLE.numeric(), 0.00001);
-        Assertions.assertEquals(5.0, Order.QUINTUPLE.numeric(), 0.00001);
-        Assertions.assertEquals(6.0, Order.SEXTUPLE.numeric(), 0.00001);
+        Assertions.assertEquals(1, Order.SINGLE.numeric());
+        Assertions.assertEquals(2, Order.DOUBLE.numeric());
+        Assertions.assertEquals(3, Order.TRIPLE.numeric());
+        Assertions.assertEquals(4, Order.QUADRUPLE.numeric());
+        Assertions.assertEquals(5, Order.QUINTUPLE.numeric());
+        Assertions.assertEquals(6, Order.SEXTUPLE.numeric());
     }
 
     @Test
