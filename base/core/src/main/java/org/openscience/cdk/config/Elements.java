@@ -153,20 +153,21 @@ public enum Elements {
     Darmstadtium(110, "Ds", 7, 10, null, null, null),
     Roentgenium(111, "Rg", 7, 11, null, null, null),
     Copernicium(112, "Cn", 7, 12, null, null, null),
-    @Deprecated
-    Ununtrium(113, "Uut", 7, 13, null, null, null),
     Nihonium(113, "Nh", 7, 13, null, null, null),
     Flerovium(114, "Fl", 7, 14, null, null, null),
-    @Deprecated
-    Ununpentium(115, "Uup", 7, 15, null, null, null),
     Moscovium(115, "Mc", 7, 15, null, null, null),
     Livermorium(116, "Lv", 7, 16, null, null, null),
+    Tennessine(117, "Ts", 7, 17, null, null, null),
+    Oganesson(118, "Og", 7, 18, null, null, null),
+    @Deprecated
+    Ununtrium(113, "Uut", 7, 13, null, null, null),
+    @Deprecated
+    Ununpentium(115, "Uup", 7, 15, null, null, null),
     @Deprecated
     Ununseptium(117, "Uus", 7, 17, null, null, null),
-    Tennessine(117, "Ts", 7, 17, null, null, null),
     @Deprecated
-    Ununoctium(118, "Uuo", 7, 18, null, null, null),
-    Oganesson(118, "Og", 7, 18, null, null, null);
+    Ununoctium(118, "Uuo", 7, 18, null, null, null);
+
 
     /**
      * Atomic number, periodic table period and group.
@@ -202,7 +203,9 @@ public enum Elements {
     static {
         // index elements
         for (final Elements e : values()) {
-            NUMER_MAP[e.number] = e;
+            // first defined takes priority
+            if (NUMER_MAP[e.number] == null)
+                NUMER_MAP[e.number] = e;
             SYMBOL_MAP.put(e.symbol.toLowerCase(Locale.ENGLISH), e);
             SYMBOL_MAP.put(e.name().toLowerCase(Locale.ENGLISH), e);
         }
