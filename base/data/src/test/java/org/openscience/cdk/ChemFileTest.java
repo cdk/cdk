@@ -29,7 +29,6 @@ import org.openscience.cdk.test.interfaces.AbstractChemFileTest;
 /**
  * Checks the functionality of the {@link ChemFile} class.
  *
- * @cdk.module test-data
  */
 class ChemFileTest extends AbstractChemFileTest {
 

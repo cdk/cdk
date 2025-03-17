@@ -40,7 +40,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * ring search unit tests for a hexaphenylene (ChEBI:33157)
  *
  * @author John May
- * @cdk.module test-standard
  */
 final class RingSearchTest_Hexaphenylene {
 

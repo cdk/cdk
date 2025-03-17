@@ -42,8 +42,6 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * A generator for atoms with mass, charge, etc.
  *
  * @author maclean
- * @cdk.module renderextra
- * @cdk.githash
  */
 public class ExtendedAtomGenerator extends BasicAtomGenerator {
 

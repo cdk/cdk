@@ -30,7 +30,6 @@ import org.openscience.cdk.isomorphism.Ullmann;
 
 /**
  * @author John May
- * @cdk.module test-smarts
  */
 class UllmannSubstructureTest extends SubstructureTest {
 

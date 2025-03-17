@@ -31,7 +31,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
 
 /**
- * @cdk.module test-reaction
  */
 class ResonanceStructuresTest extends CDKTestCase {
 

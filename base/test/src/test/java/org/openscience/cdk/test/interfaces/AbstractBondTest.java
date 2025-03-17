@@ -21,7 +21,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IBond} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 

@@ -27,7 +27,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the ChemObjectChangeEvent class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.event.ChemObjectChangeEvent
  */

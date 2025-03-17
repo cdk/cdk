@@ -52,7 +52,6 @@ import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @cdk.module test-fingerprint
  */
 class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 

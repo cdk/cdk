@@ -24,7 +24,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-core
  */
 class PeriodicTableTest extends CDKTestCase {
 

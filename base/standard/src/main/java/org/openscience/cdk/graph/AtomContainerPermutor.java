@@ -33,10 +33,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * concrete derived classes.
  *
  * @author maclean
- * @cdk.githash
  * @cdk.created    2009-09-09
  * @cdk.keyword    permutation
- * @cdk.module     standard
  */
 public abstract class AtomContainerPermutor extends Permutor implements Iterator<IAtomContainer> {
 

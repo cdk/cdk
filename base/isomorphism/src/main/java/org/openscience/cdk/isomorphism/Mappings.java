@@ -149,13 +149,11 @@ import java.util.stream.StreamSupport;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module isomorphism
  * @see Pattern
  * @cdk.keyword substructure search
  * @cdk.keyword structure search
  * @cdk.keyword mappings
  * @cdk.keyword matching
- * @cdk.githash
  */
 public final class Mappings implements Iterable<int[]> {
 

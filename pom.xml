@@ -707,16 +707,10 @@
                             <tagletClass>net.sf.cdk.tools.doclets.CDKDictRefTaglet</tagletClass>
                         </taglet>
                         <taglet>
-                            <tagletClass>net.sf.cdk.tools.doclets.CDKGitTaglet</tagletClass>
-                        </taglet>
-                        <taglet>
                             <tagletClass>net.sf.cdk.tools.doclets.CDKInChITaglet</tagletClass>
                         </taglet>
                         <taglet>
                             <tagletClass>net.sf.cdk.tools.doclets.CDKIOOptionsTaglet</tagletClass>
-                        </taglet>
-                        <taglet>
-                            <tagletClass>net.sf.cdk.tools.doclets.CDKModuleTaglet</tagletClass>
                         </taglet>
                         <taglet>
                             <tagletClass>net.sf.cdk.tools.doclets.CDKThreadSafeTaglet</tagletClass>

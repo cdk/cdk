@@ -36,7 +36,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
-/** @cdk.module test-inchi */
 class InChINumbersToolsTest extends CDKTestCase {
 
     @Test

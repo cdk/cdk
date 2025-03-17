@@ -36,8 +36,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * Implements the concept of a "query bond" between two or more atoms.
  * Query bonds can be used to capture types such as "Single or Double" or "Any".
  *
- * @cdk.module isomorphism
- * @cdk.githash
  * @cdk.created 2010-12-16
  */
 public class QueryBond extends QueryChemObject implements IQueryBond {

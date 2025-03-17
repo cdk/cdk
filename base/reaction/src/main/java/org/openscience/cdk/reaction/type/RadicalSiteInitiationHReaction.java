@@ -65,8 +65,6 @@ import java.util.ArrayList;
  * @author         Miguel Rojas
  *
  * @cdk.created    2006-10-18
- * @cdk.module     reaction
- * @cdk.githash
  *
  * @see RadicalSiteIonizationMechanism
  **/

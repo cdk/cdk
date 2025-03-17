@@ -43,7 +43,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * {@link ITetrahedralChirality} stereo elements.
  *
  * @author John May
- * @cdk.module hash
  */
 public final class TetrahedralElementEncoderFactory implements StereoEncoderFactory {
 

@@ -29,7 +29,6 @@ import org.openscience.cdk.test.interfaces.AbstractSingleElectronTest;
 /**
  * Checks the functionality of the {@link SingleElectron}.
  *
- * @cdk.module test-silent
  */
 class SingleElectronTest extends AbstractSingleElectronTest {
 

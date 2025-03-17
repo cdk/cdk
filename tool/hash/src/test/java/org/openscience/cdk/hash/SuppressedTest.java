@@ -31,7 +31,6 @@ import java.util.BitSet;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class SuppressedTest {
 

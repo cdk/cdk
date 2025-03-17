@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.IBond.Order;
  * Helper class defining the energy for a bond type. The bond
  * type is defined as to element symbols and a bond order.
  *
- * @cdk.module smsd
- * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.

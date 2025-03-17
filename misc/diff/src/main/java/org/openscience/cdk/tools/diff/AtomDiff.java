@@ -31,8 +31,6 @@ import org.openscience.cdk.tools.diff.tree.Point3dDifference;
  * Compares two {@link IAtom} classes.
  *
  * @author     egonw
- * @cdk.module diff
- * @cdk.githash
  */
 public class AtomDiff {
 

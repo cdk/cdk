@@ -69,7 +69,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 /**
- * @cdk.module test-standard
  */
 class CircularFingerprinterTest extends CDKTestCase {
 

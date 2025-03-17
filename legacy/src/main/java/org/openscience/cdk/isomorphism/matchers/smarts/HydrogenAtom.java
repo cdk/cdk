@@ -27,8 +27,6 @@ import java.util.List;
 /**
  * This matches Hydrogen atoms.
  *
- * @cdk.module smarts
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

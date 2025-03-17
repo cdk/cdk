@@ -38,7 +38,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * @cdk.module test-libiocml
  */
 class ConvertorTest extends CDKTestCase {
 

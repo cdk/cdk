@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
- * @cdk.module test-io
  */
 class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
 

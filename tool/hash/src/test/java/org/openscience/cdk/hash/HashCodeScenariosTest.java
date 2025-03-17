@@ -61,7 +61,6 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * module.
  *
  * @author John May
- * @cdk.module test-hash
  */
 class HashCodeScenariosTest {
 

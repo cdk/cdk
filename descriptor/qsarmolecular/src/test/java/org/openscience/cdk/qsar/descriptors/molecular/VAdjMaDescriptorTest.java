@@ -31,7 +31,6 @@ import static org.hamcrest.Matchers.closeTo;
 /**
  * TestSuite for the VAdjMaDescriptor.
  *
- * @cdk.module test-qsarmolecular
  */
 class VAdjMaDescriptorTest extends MolecularDescriptorTest {
 

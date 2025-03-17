@@ -33,7 +33,6 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 
 /**
  * @author John May
- * @cdk.module test-renderbasic
  */
 class BoundsTest extends AbstractElementTest {
 

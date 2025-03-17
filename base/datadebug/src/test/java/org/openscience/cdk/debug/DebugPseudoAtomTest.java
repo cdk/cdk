@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 /**
  * Checks the functionality of the {@link DebugPseudoAtom}.
  *
- * @cdk.module test-datadebug
  */
 class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
 

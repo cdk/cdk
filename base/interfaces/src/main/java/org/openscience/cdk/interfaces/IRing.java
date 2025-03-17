@@ -25,8 +25,6 @@ package org.openscience.cdk.interfaces;
  * such that atom i (1 &lt; i &lt; N) is bonded to
  * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
  *
- * @cdk.module  interfaces
- * @cdk.githash
  *
  * @cdk.keyword ring
  */

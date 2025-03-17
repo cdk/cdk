@@ -16,7 +16,6 @@ import org.openscience.cdk.interfaces.ILonePair;
  *
  * @see org.openscience.cdk.LonePair
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractLonePairTest extends AbstractElectronContainerTest {
 

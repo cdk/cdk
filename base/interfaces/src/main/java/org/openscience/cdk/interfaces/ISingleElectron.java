@@ -30,8 +30,6 @@ package org.openscience.cdk.interfaces;
  *   radical.addElectronContainer(new SingleElectron(carbon));
  * </pre>
  *
- * @cdk.module interfaces
- * @cdk.githash
  *
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired

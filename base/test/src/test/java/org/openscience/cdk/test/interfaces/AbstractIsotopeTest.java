@@ -13,7 +13,6 @@ import org.openscience.cdk.tools.diff.IsotopeDiff;
 /**
  * Checks the functionality of the Isotope class.
  *
- * @cdk.module test-interfaces
  *
  * @see org.openscience.cdk.Isotope
  */

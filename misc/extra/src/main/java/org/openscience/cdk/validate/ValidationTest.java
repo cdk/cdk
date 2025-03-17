@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IChemObject;
  * Error found during sematical validation of a IChemObject.
  *
  * @author   Egon Willighagen
- * @cdk.githash
  * @cdk.created  2003-03-28
  *
  * @see      org.openscience.cdk.ChemObject

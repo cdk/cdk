@@ -39,8 +39,6 @@ import java.util.Collection;
  * <p>The easiest way to implement a new {@link IChemObjectReader} is to
  * subclass the {@link DefaultChemObjectReader}.
  *
- * @cdk.module  io
- * @cdk.githash
  *
  * @see DefaultChemObjectReader
  *

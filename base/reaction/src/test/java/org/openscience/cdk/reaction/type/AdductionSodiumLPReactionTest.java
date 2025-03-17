@@ -49,7 +49,6 @@ import java.util.List;
  * TestSuite that runs a test for the AdductionProtonLPReactionTest.
  * Generalized Reaction: [X-] + [Na+] => X -Na.
  *
- * @cdk.module test-reaction
  */
 public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
 

@@ -37,7 +37,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @author maclean
- * @cdk.module test-group
  */
 class AtomDiscretePartitionRefinerTest extends CDKTestCase {
 

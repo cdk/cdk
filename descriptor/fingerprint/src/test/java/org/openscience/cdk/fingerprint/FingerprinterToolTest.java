@@ -36,7 +36,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * @cdk.module test-standard
  */
 class FingerprinterToolTest extends CDKTestCase {
 

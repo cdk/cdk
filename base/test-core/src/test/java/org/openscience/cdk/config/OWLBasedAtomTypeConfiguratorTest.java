@@ -29,7 +29,6 @@ import org.openscience.cdk.silent.ChemObject;
 /**
  * Checks the functionality of the {@link OWLBasedAtomTypeConfigurator}.
  *
- * @cdk.module test-core
  */
 class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
 

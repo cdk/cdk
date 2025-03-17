@@ -32,10 +32,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *  match for all non-"C"-Atoms).
  *
  * @author        kha
- * @cdk.githash
  * @cdk.created   2004-09-16
  * @see           SymbolSetQueryAtom
- * @cdk.module    isomorphism
  * @deprecated @deprecated Use {@code new Expr(Element, 6).and(new Expr(Element, 8)).negate() } etc
  */
 @Deprecated

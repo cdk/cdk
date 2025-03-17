@@ -35,7 +35,6 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.ICrystal;
 
 /**
- * @cdk.module test-extra
  */
 class ShelXWriterTest extends CDKTestCase {
 

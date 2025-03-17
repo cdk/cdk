@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * @cdk.module test-ioformats
  */
 abstract class ChemFormatMatcherTest extends ChemFormatTest {
 

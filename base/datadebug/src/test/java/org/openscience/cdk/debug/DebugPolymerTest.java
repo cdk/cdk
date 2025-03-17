@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IPolymer;
 /**
  * Checks the functionality of the {@link DebugPolymer}.
  *
- * @cdk.module test-datadebug
  */
 class DebugPolymerTest extends AbstractPolymerTest {
 

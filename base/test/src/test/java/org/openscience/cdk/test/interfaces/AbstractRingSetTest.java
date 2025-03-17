@@ -22,7 +22,6 @@ import static org.hamcrest.CoreMatchers.not;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IRingSet} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
 

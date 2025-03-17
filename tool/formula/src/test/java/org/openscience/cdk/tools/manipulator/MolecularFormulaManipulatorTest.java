@@ -55,7 +55,6 @@ import static org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator.
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
  *
- * @cdk.module test-formula
  */
 class MolecularFormulaManipulatorTest extends CDKTestCase {
 

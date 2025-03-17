@@ -29,8 +29,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * Interface that allows reading atom type configuration data from some
  * source.
  *
- * @cdk.module core
- * @cdk.githash
  */
 public interface IAtomTypeConfigurator {
 

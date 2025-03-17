@@ -26,8 +26,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * This matcher any non-aromatic atom. This assumes that aromaticity in the
  * molecule has been perceived.
  *
- * @cdk.module  smarts
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

@@ -31,7 +31,6 @@ import java.util.List;
  * optimised using primitive {@literal long} values to represent vertex sets.
  *
  * @author John May
- * @cdk.module core
  */
 class RegularCyclicVertexSearch implements CyclicVertexSearch {
 

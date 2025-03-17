@@ -68,7 +68,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * the Grins output changed and there was not a problem with the conversion.
  *
  * @author John May
- * @cdk.module test-smiles
  */
 class CDKToBeamTest {
 

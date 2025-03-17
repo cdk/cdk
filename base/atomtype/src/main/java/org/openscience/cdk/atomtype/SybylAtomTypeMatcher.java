@@ -41,8 +41,6 @@ import org.openscience.cdk.interfaces.IElement;
  *
  * @author         egonw
  * @cdk.created    2008-07-13
- * @cdk.module     atomtype
- * @cdk.githash
  * @cdk.keyword    atom type, Sybyl
  */
 public class SybylAtomTypeMatcher implements IAtomTypeMatcher {

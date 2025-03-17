@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
  * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
  * like the MDL Molfile <code>Group</code> concept.
  *
- * @cdk.module  silent
- * @cdk.githash
  *
  * @author egonw
  */

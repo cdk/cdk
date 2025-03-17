@@ -43,7 +43,6 @@ import java.util.List;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
  */
 
 class BCUTDescriptorTest extends MolecularDescriptorTest {

@@ -26,8 +26,6 @@ import java.util.List;
  * Diff between two IChemObjects.
  *
  * @author     egonw
- * @cdk.module diff
- * @cdk.githash
  */
 public abstract class AbstractDifferenceList implements IDifferenceList {
 

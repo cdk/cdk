@@ -17,7 +17,6 @@ import org.openscience.cdk.qsar.IDescriptor;
 /**
  * Tests for molecular descriptors.
  *
- * @cdk.module test-qsar
  */
 public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase {
 

@@ -41,7 +41,6 @@ import java.util.Set;
  * Stereo encoder factory for 2D and 3D cumulative double bonds.
  *
  * @author John May
- * @cdk.module hash
  */
 public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactory {
 

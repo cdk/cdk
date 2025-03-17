@@ -32,8 +32,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 /**
  * Volume descriptor using the method implemented in the {@link VABCVolume} class.
  *
- * @cdk.module qsarmolecular
- * @cdk.githash
  *
  * @cdk.dictref qsar-descriptors:vabc
  * @cdk.keyword volume

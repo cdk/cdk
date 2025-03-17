@@ -35,8 +35,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
- * @cdk.module  qsaratomic
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:atomValence
  *
  * @see         org.openscience.cdk.qsar.AtomValenceTool

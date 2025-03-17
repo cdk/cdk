@@ -40,7 +40,6 @@ import org.openscience.cdk.graph.InitialCycles.Cycle;
 
 /**
  * @author John May
- * @cdk.module test-core
  */
 class GreedyBasisTest {
 

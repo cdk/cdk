@@ -94,8 +94,6 @@ import static org.openscience.cdk.rinchi.RInChIConstants.RINCHI_WEB_KEY_HEADER;
  *
  * @author Felix Bänsch
  * @author Uli Fechner
- * @cdk.module rinchi
- * @cdk.githash
  */
 public final class RInChIGenerator extends StatusMessagesOutput {
     private static final int NUMBER_OF_COMPONENTS = 3;

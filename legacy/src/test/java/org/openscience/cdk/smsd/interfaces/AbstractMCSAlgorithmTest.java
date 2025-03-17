@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
  * implement the {@link AbstractMCSAlgorithm} interface.
  *
  * @author     egonw
- * @cdk.module test-smsd
  */
 public abstract class AbstractMCSAlgorithmTest {
 

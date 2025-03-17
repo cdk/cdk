@@ -59,7 +59,6 @@ import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 /**
  * TestCase for the writer MDL SD file writer.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.SDFWriter
  */

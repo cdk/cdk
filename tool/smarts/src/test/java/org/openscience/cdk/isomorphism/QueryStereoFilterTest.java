@@ -41,7 +41,6 @@ import java.util.ArrayList;
  * Some simple isolated tests on functionality.
  *
  * @author John May
- * @cdk.module test-smarts
  */
 class QueryStereoFilterTest {
 

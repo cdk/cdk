@@ -39,8 +39,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * Abstract validator that does nothing but provide all the methods that the
  * ValidatorInterface requires.
  *
- * @cdk.module extra
- * @cdk.githash
  *
  * @author   Egon Willighagen
  * @cdk.created  2004-03-27

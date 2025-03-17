@@ -39,8 +39,6 @@ import java.util.List;
  * <p>TODO: merge with Normalizer.
  *
  * @author     Todd Martin
- * @cdk.module extra
- * @cdk.githash
  *
  * @see        org.openscience.cdk.normalize.Normalizer
  * @deprecated better accomplished with SMARTS patterns or simple REGEX

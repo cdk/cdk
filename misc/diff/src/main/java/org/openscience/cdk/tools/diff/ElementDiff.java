@@ -29,8 +29,6 @@ import org.openscience.cdk.tools.diff.tree.StringDifference;
  * Compares two {@link IElement} classes.
  *
  * @author     egonw
- * @cdk.module diff
- * @cdk.githash
  */
 public class ElementDiff {
 

@@ -27,7 +27,6 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
 /**
  * Tests for HeterolyticCleavageMechanism implementations.
  *
- * @cdk.module test-reaction
  */
 class HeterolyticCleavageMechanismTest extends ReactionMechanismTest {
 

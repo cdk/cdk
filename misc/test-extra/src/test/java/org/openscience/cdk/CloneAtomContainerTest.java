@@ -31,7 +31,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestCase for the AtomContainer class.
  *
- * @cdk.module test-extra
  *
  * @author  Christoph Steinbeck
  * @cdk.created 2001-08-09

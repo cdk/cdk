@@ -32,7 +32,6 @@ import java.util.Arrays;
  * combination at the specified stereo centre indices.
  *
  * @author John May
- * @cdk.module hash
  */
 final class GeometryEncoder implements StereoEncoder {
 

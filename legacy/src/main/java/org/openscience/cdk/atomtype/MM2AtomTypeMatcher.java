@@ -40,8 +40,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author         cho
  * @cdk.created    2005-18-07
- * @cdk.module     extra
- * @cdk.githash
  * @deprecated Incomplete and error prone - use at your own risk.
  */
 @Deprecated

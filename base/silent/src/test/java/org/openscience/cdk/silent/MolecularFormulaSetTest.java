@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 /**
  * Checks the functionality of the {@link MolecularFormulaSet}.
  *
- * @cdk.module test-silent
  */
 class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 

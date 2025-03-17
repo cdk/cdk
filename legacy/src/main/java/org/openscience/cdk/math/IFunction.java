@@ -28,7 +28,6 @@ package org.openscience.cdk.math;
 /**
  * A class, which has a function value should implement this interface.
  *
- * @cdk.module qm
  */
 public interface IFunction {
 

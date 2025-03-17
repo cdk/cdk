@@ -24,8 +24,6 @@ package org.openscience.cdk.renderer.generators;
  * not of atomic properties, rendering a circles for aromatic rings,
  * etc.
  *
- * @cdk.module  render
- * @cdk.githash
  */
 public interface IGeneratorParameter<T> {
 

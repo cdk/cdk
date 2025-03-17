@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 
 /**
- * @cdk.module test-smiles
  */
 class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
 

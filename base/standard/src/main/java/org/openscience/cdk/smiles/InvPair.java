@@ -37,8 +37,6 @@ import java.util.Objects;
  * This is used to hold the invariance numbers for the canonical labeling of
  * {@link IAtomContainer}s.
  *
- * @cdk.module standard
- * @cdk.githash
  */
 public class InvPair implements java.io.Serializable {
 

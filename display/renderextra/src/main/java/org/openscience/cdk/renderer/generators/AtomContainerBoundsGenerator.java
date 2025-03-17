@@ -31,8 +31,6 @@ import org.openscience.cdk.renderer.elements.RectangleElement;
 /**
  * {@link IGenerator} that draws a rectangular around the {@link IAtomContainer}.
  *
- * @cdk.module renderextra
- * @cdk.githash
  */
 public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> {
 

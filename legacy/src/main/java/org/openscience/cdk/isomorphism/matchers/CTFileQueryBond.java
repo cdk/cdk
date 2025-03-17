@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Captures query bond types defined in the CTFile.
  *
- * @cdk.module  isomorphism
- * @cdk.githash
  * @deprecated Use {@link Expr.Type#SINGLE_OR_AROMATIC} etc.
  */
 @Deprecated

@@ -66,12 +66,10 @@ import java.util.TreeMap;
  * </blockquote>
  *
  * @author John May
- * @cdk.module hash
  * @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
  * @see MinimumEquivalentCyclicSetUnion
  * @see AllEquivalentCyclicSet
  * @see org.openscience.cdk.hash.HashGeneratorMaker
- * @cdk.githash
  */
 final class MinimumEquivalentCyclicSet extends EquivalentSetFinder {
 

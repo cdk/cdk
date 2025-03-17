@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * Checks the functionality of the MorganNumberTools.
  *
- * @cdk.module test-standard
  */
 class MorganNumbersToolsTest extends CDKTestCase {
 

@@ -35,7 +35,6 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
- * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 class MolHandlerTest {

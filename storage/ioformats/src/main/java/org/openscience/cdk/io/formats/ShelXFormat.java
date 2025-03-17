@@ -23,8 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://shelx.uni-ac.gwdg.de/SHELX/">here</a>.
  *
- * @cdk.module ioformats
- * @cdk.githash
  */
 public class ShelXFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

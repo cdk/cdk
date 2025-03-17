@@ -41,7 +41,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * This descriptor returns a single double value, labeled as "Fsp3"
  * 
  * @author Kazuya Ujihara
- * @cdk.module qsarmolecular
  * @cdk.dictref qsar-descriptors:Fsp3
  */
 public class FractionalCSP3Descriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

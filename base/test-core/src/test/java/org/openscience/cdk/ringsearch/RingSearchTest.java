@@ -47,7 +47,6 @@ import static org.mockito.Mockito.when;
  * situation unit tests.
  *
  * @author John May
- * @cdk.module test-core
  */
 class RingSearchTest {
 

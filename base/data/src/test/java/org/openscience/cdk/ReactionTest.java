@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.AbstractReactionTest;
 /**
  * TestCase for the Reaction class.
  *
- * @cdk.module test-data
  */
 class ReactionTest extends AbstractReactionTest {
 

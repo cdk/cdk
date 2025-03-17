@@ -70,13 +70,11 @@ import java.util.TreeMap;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module hash
  * @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
  * @see MinimumEquivalentCyclicSet
  * @see AllEquivalentCyclicSet
  * @deprecated provided for to demonstrate a relatively robust but ultimately
  *             incomplete approach
- * @cdk.githash
  */
 @Deprecated
 final class MinimumEquivalentCyclicSetUnion extends EquivalentSetFinder {

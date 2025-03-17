@@ -21,8 +21,6 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * @cdk.module ioformats
- * @cdk.githash
  */
 public class CMLRSSFormat extends AbstractResourceFormat implements IChemFormat {
 

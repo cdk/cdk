@@ -61,9 +61,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * return '10.0' for an input of '10.0', as that is the scale for that desired
  * bond length.</p>
  *
- * @cdk.module renderbasic
  * @author maclean
- * @cdk.githash
  */
 public abstract class AbstractRenderer<T extends IChemObject> {
 

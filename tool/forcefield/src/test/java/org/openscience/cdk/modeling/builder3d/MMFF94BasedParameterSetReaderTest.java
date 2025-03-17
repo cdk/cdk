@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IAtomType;
  *
  * @author danielszisz
  * @version 04/16/2012
- * @cdk.module test-forcefield
  */
 class MMFF94BasedParameterSetReaderTest {
 

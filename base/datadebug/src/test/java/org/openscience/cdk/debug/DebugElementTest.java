@@ -30,7 +30,6 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * Checks the functionality of {@link DebugElement}.
  *
- * @cdk.module test-datadebug
  */
 class DebugElementTest extends AbstractElementTest {
 

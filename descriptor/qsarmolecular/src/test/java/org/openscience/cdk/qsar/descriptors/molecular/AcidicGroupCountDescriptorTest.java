@@ -33,7 +33,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @cdk.module test-qsarmolecular
  */
 class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 

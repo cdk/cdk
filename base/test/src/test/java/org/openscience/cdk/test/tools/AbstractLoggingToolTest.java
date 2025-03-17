@@ -11,7 +11,6 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ILoggingTool;
 
 /**
- * @cdk.module test
  */
 public abstract class AbstractLoggingToolTest extends CDKTestCase {
 

@@ -27,7 +27,6 @@ import org.openscience.cdk.test.interfaces.AbstractAtomContainerSetTest;
 /**
  * Checks the functionality of the MoleculeSet class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.MoleculeSet
  */

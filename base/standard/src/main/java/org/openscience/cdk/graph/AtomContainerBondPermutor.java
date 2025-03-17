@@ -40,10 +40,8 @@ import org.openscience.cdk.interfaces.IBond;
  *
  *
  * @author         maclean
- * @cdk.githash
  * @cdk.created    2009-09-09
  * @cdk.keyword    permutation
- * @cdk.module     standard
  */
 public class AtomContainerBondPermutor extends AtomContainerPermutor {
 

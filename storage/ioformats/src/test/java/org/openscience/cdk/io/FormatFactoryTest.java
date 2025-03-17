@@ -69,7 +69,6 @@ import org.openscience.cdk.io.formats.XYZFormat;
 /**
  * TestCase for the instantiation and functionality of the {@link FormatFactory}.
  *
- * @cdk.module test-ioformats
  */
 class FormatFactoryTest extends CDKTestCase {
 

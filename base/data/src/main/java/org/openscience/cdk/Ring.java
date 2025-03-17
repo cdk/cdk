@@ -31,8 +31,6 @@ import org.openscience.cdk.interfaces.IRing;
  * such that atom i (1 &lt; i &lt; N) is bonded to
  * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
  *
- * @cdk.module  data
- * @cdk.githash
  * @cdk.keyword ring
  */
 public class Ring extends AtomContainer implements java.io.Serializable, IRing {

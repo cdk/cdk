@@ -35,8 +35,6 @@ import java.util.Map;
  * Stereochemistry specification for double bonds. See {@link IDoubleBondStereochemistry} for
  * further details.
  *
- * @cdk.module core
- * @cdk.githash
  *
  * @see org.openscience.cdk.interfaces.IDoubleBondStereochemistry
  */

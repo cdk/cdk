@@ -28,8 +28,6 @@ package org.openscience.cdk.exception;
 /**
  * Exception thrown when an error is occurred during SMILES parsing.
  *
- * @cdk.module standard
- * @cdk.githash
  */
 public class InvalidSmilesException extends CDKException {
 

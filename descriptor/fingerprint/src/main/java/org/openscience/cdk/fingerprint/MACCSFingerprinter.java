@@ -65,8 +65,6 @@ import java.util.Map;
  * @cdk.created 2008-07-23
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.module  fingerprint
- * @cdk.githash
  */
 public class MACCSFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 

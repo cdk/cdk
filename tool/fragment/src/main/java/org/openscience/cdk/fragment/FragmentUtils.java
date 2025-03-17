@@ -37,7 +37,6 @@ import java.util.List;
  * not be used by the rest of the API or by other users of the library.
  *
  * @author Rajarshi Guha
- * @cdk.module fragment
  */
 public class FragmentUtils {
 

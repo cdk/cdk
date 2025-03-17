@@ -13,7 +13,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author John May
- * @cdk.module test-fingerprint
  */
 class ShortestPathWalkerTest {
 

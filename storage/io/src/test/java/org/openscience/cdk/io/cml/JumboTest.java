@@ -41,7 +41,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * in data/cmltest as found in the original Jumbo3 release
  * (http://www.xml-cml.org/).
  *
- * @cdk.module test-io
  */
 class JumboTest extends CDKTestCase {
 

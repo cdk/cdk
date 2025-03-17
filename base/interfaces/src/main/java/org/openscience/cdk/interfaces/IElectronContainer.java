@@ -21,8 +21,6 @@ package org.openscience.cdk.interfaces;
 /**
  * Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
  *
- * @cdk.module interfaces
- * @cdk.githash
  *
  * @cdk.keyword electron
  */

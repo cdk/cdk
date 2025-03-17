@@ -32,7 +32,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsaratomic
  */
 class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 

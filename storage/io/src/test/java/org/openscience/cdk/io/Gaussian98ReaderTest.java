@@ -18,7 +18,6 @@ import java.util.List;
 /**
  * A Test case for the gaussian 98 (G98Reader) class.
  *
- * @cdk.module test-io
  *
  * @author Christoph Steinbeck
  */

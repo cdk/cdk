@@ -35,7 +35,6 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * Checks the functionality of the IsotopePatternGenerator.
  *
- * @cdk.module test-formula
  *
  * @author         Miguel Rojas
  * @cdk.created    2007-03-01

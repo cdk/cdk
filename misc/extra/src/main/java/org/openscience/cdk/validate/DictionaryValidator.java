@@ -31,7 +31,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Validates the existence of references to dictionaries.
  *
  * @author   Egon Willighagen
- * @cdk.githash
  * @cdk.created  2003-03-28
  */
 public class DictionaryValidator extends AbstractValidator {

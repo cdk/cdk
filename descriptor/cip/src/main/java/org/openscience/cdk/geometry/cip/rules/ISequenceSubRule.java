@@ -29,8 +29,6 @@ import java.util.Comparator;
  * precedence {@cdk.cite Cahn1966}. A list ordered based on these rules will be
  * sorted from low to high precedence.
  *
- * @cdk.module cip
- * @cdk.githash
  */
 public interface ISequenceSubRule<ILigand> extends Comparator<ILigand> {
 

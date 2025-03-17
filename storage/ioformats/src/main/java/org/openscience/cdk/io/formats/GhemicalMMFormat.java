@@ -23,8 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.uku.fi/~thassine/ghemical/">here</a>.
  *
- * @cdk.module ioformats
- * @cdk.githash
  */
 public class GhemicalMMFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

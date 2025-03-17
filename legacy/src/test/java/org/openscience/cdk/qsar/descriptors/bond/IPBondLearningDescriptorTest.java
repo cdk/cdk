@@ -34,7 +34,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * TestSuite that runs all QSAR bond tests.
  *
- * @cdk.module test-qsarionpot
  */
 class IPBondLearningDescriptorTest extends CDKTestCase {
 

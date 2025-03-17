@@ -39,8 +39,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author         steinbeck
  * @cdk.created    2002-02-24
  * @cdk.keyword    fingerprint
- * @cdk.module     standard
- * @cdk.githash
  */
 public class FingerprinterTool {
 

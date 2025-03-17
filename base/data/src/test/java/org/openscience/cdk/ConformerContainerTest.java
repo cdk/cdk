@@ -14,7 +14,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-data
  */
 class ConformerContainerTest extends CDKTestCase {
 

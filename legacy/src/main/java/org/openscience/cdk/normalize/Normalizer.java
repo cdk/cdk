@@ -44,8 +44,6 @@ import java.util.List;
  *
  * @author        shk3
  * @cdk.created   2004-03-04
- * @cdk.module    smiles
- * @cdk.githash
  * @deprecated The functionality provided by with class is better suited to SMIRKS
  */
 @Deprecated

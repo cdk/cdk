@@ -30,7 +30,6 @@ import java.text.DecimalFormat;
 /**
  * This class contains a complex matrix.
  *
- * @cdk.module qm
  */
 public class IMatrix {
 

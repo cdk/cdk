@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
- * @cdk.module test-standard
  *
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20

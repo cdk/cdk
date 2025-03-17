@@ -38,7 +38,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Checks the functionality of the MolecularFormulaChecker.
  *
- * @cdk.module test-formula
  */
 class MolecularFormulaCheckerTest extends CDKTestCase {
 

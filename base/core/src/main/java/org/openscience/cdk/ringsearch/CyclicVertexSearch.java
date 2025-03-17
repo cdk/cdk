@@ -29,8 +29,6 @@ package org.openscience.cdk.ringsearch;
  * the isolated and spiro rings of a chemical structures.
  *
  * @author John May
- * @cdk.module core
- * @cdk.githash
  */
 public interface CyclicVertexSearch {
 

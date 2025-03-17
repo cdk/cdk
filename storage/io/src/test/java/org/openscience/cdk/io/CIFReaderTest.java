@@ -41,7 +41,6 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * TestCase for the reading CIF files using a test file with the {@link CIFReader}.
  *
- * @cdk.module test-io
  */
 class CIFReaderTest extends ChemObjectIOTest {
 

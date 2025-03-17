@@ -43,7 +43,6 @@ import java.io.InputStream;
  * @author      Junfeng Hao
  * @author      Luis F. de Figueiredo
  * @cdk.created 2003-09-26
- * @cdk.module test-extra
  */
 class EquivalentClassPartitionerTest extends CDKTestCase {
 

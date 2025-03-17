@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractRingSetTest;
 /**
  * Checks the functionality of the {@link RingSet}.
  *
- * @cdk.module test-silent
  */
 class RingSetTest extends AbstractRingSetTest {
 

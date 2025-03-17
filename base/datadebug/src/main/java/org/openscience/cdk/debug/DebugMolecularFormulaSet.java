@@ -30,8 +30,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging implementation of {@link IMolecularFormulaSet}.
  *
- * @cdk.module datadebug
- * @cdk.githash tag
  */
 public class DebugMolecularFormulaSet extends MolecularFormulaSet implements IMolecularFormulaSet {
 

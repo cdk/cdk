@@ -32,7 +32,6 @@ import org.openscience.cdk.test.fingerprint.AbstractFingerprinterTest;
 import java.util.Map;
 
 /**
- * @cdk.module test-signature
  */
 class SignatureFingerprinterTest extends AbstractFingerprinterTest {
 

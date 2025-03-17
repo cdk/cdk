@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 /**
  * Checks the functionality of the RebondTool.
  *
- * @cdk.module test-standard
  */
 class RebondToolTest extends CDKTestCase {
 

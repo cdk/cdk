@@ -48,8 +48,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * <p>For parsing each SMILES it still uses the normal SMILESReader.
  *
- * @cdk.module smiles
- * @cdk.githash
  * @cdk.iooptions
  *
  * @see org.openscience.cdk.io.SMILESReader

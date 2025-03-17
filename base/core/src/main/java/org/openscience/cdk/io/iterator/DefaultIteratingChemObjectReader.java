@@ -29,8 +29,6 @@ import org.openscience.cdk.io.IChemObjectReaderErrorHandler;
  * Abstract class that IteratingChemObjectReader's can implement to have it
  * take care of basic stuff, like managing the ReaderListeners.
  *
- * @cdk.module io
- * @cdk.githash
  */
 public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> extends ChemObjectIO implements
         IIteratingChemObjectReader<T> {

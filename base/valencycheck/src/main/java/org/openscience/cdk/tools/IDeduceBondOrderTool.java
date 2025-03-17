@@ -32,8 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author      Egon Willighagen
  * @cdk.created 2006-08-16
- * @cdk.module  valencycheck
- * @cdk.githash
  */
 public interface IDeduceBondOrderTool {
 

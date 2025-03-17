@@ -24,8 +24,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This matcher any heavy atom that is not C or H.
  *
- * @cdk.module  smarts
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

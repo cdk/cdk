@@ -56,7 +56,6 @@ import java.util.List;
 /**
 * TestSuite that runs all tests.
 *
-* @cdk.module test-reaction
 */
 public class StructureResonanceGeneratorTest extends CDKTestCase {
 

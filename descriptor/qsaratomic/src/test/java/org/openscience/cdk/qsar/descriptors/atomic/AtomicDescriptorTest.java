@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.diff.AtomDiff;
 /**
  * Tests for molecular descriptors.
  *
- * @cdk.module test-qsaratomic
  */
 abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescriptor> {
 

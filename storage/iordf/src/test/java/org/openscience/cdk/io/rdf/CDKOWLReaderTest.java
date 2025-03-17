@@ -36,7 +36,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * @cdk.module test-iordf
  */
 class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
 

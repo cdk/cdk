@@ -36,7 +36,6 @@ import static org.mockito.Mockito.mock;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class MinimumEquivalentCyclicSetTest {
 

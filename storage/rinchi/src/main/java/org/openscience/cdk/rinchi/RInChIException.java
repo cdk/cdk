@@ -24,8 +24,6 @@ import org.openscience.cdk.exception.CDKException;
  * Exception thrown by classes residing in the module {@code cdk-rinchi}.
  *
  * @author Uli Fechner
- * @cdk.module rinchi
- * @cdk.githash
  */
 public final class RInChIException extends CDKException {
     public RInChIException(String message) {

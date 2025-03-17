@@ -47,8 +47,6 @@ import org.openscience.cdk.renderer.selection.IChemObjectSelection;
  * Model for {@link IRenderer} that contains settings for drawing objects.
  *
  * @author maclean
- * @cdk.module render
- * @cdk.githash
  */
 public class RendererModel implements Serializable, Cloneable {
 

@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
 /**
  * Checks the functionality of the {@link DebugFragmentAtom}.
  *
- * @cdk.module test-datadebug
  */
 class DebugFragmentAtomTest extends AbstractFragmentAtomTest {
 

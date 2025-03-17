@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
  * Tests for formula restriction rules.
  *
- * @cdk.module test-formula
  */
 abstract class FormulaRuleTest extends CDKTestCase {
 

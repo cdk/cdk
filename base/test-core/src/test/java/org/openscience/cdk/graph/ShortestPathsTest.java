@@ -42,7 +42,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * unit tests for ShortestPaths.
  * @author John May
- * @cdk.module test-core
  */
 class ShortestPathsTest {
 

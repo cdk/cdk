@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *   <li><code><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></code></li>
  * </ul>
  *
- * @cdk.module  silent
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula

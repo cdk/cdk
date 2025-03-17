@@ -29,7 +29,6 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 
 /**
- * @cdk.module test-extra
  */
 class Geometry3DValidatorTest extends CDKTestCase {
 

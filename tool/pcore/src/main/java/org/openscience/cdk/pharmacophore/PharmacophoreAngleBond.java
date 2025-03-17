@@ -24,8 +24,6 @@ import org.openscience.cdk.Bond;
  * Represents an angle relationship between three pharmacophore groups.
  *
  * @author Rajarshi Guha
- * @cdk.module pcore
- * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see PharmacophoreAtom

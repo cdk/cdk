@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * Checks the functionality of the {@link ChemObject}.
  *
- * @cdk.module test-silent
  */
 class ChemObjectTest extends AbstractChemObjectTest {
 

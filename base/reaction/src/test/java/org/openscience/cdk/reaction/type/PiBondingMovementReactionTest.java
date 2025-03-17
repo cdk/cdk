@@ -51,7 +51,6 @@ import java.util.List;
  *
  * FIXME: REACT: The tests fail if I don't put the smiles, strange
  *
- * @cdk.module test-reaction
  */
 public class PiBondingMovementReactionTest extends ReactionProcessTest {
 

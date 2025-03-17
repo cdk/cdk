@@ -49,7 +49,6 @@ import static org.hamcrest.Matchers.containsString;
 /**
  * TestCase for the writer MDL rxn files using one test file.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.MDLRXNWriter
  */

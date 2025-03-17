@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IRing;
 /**
  * Checks the functionality of the {@link Ring}.
  *
- * @cdk.module test-silent
  */
 class RingTest extends AbstractRingTest {
 

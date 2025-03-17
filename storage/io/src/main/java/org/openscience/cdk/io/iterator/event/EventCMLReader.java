@@ -49,8 +49,6 @@ import org.xml.sax.XMLReader;
  * CML is an XML based application {@cdk.cite PMR99}, and this Reader
  * applies the method described in {@cdk.cite WIL01}.
  *
- * @cdk.module io
- * @cdk.githash
  *
  * @author       Egon L. Willighagen
  * @cdk.created  2001-02-01

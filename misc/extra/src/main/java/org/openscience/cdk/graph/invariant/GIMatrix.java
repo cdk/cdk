@@ -38,7 +38,6 @@ import java.util.Objects;
  * to disturb Java language way of calling indexes; so the indexes used here take values between [0..n-1] instead.
  *
  * @author Jean-Sebastien Senecal
- * @cdk.githash
  * @version 1.0
  * @cdk.created 1999-05-20
  */

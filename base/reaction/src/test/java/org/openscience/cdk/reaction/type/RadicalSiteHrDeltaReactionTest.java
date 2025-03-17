@@ -48,7 +48,6 @@ import java.util.List;
  * TestSuite that runs a test for the RadicalSiteHrDeltaReactionTest.
  * Generalized Reaction: [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*].
  *
- * @cdk.module test-reaction
  */
 public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
 

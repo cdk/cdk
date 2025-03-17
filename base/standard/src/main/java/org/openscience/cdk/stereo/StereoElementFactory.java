@@ -81,9 +81,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module standard
  * @see Stereocenters
- * @cdk.githash
  */
 public abstract class StereoElementFactory {
 

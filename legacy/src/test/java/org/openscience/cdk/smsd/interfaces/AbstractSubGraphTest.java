@@ -39,7 +39,6 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
- * @cdk.module test-smsd
  */
 public abstract class AbstractSubGraphTest {
 

@@ -37,8 +37,6 @@ import org.openscience.cdk.io.iterator.IIteratingChemObjectReader;
  * a simple read() method for the {@link ISimpleChemObjectReader} and
  * more advanced iterator based access for the {@link IIteratingChemObjectReader} (suitable for large files)
  *
- * @cdk.module io
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @see ISimpleChemObjectReader

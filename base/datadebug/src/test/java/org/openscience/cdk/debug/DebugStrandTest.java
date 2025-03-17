@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IStrand;
 /**
  * Checks the functionality of the {@link DebugStrand}.
  *
- * @cdk.module test-datadebug
  */
 class DebugStrandTest extends AbstractStrandTest {
 

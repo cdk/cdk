@@ -33,8 +33,6 @@ import org.openscience.cdk.interfaces.IPDBAtom;
  * Represents the idea of an atom as used in PDB files. It contains extra fields
  * normally associated with atoms in such files.
  *
- * @cdk.module data
- * @cdk.githash
  *
  * @see  Atom
  */

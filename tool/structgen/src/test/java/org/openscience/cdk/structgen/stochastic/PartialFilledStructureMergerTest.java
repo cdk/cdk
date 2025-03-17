@@ -29,7 +29,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**
- * @cdk.module test-structgen
  */
 class PartialFilledStructureMergerTest extends CDKTestCase {
 

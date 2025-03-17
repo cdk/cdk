@@ -26,8 +26,6 @@ import java.util.Iterator;
  * {@link IDifference} between two {@link IChemObject}s.
  *
  * @author     egonw
- * @cdk.module diff
- * @cdk.githash
  */
 public class ChemObjectDifference extends AbstractDifferenceList implements IDifferenceList {
 

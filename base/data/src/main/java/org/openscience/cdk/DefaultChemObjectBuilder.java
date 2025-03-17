@@ -86,8 +86,6 @@ import java.util.Locale;
  *
  * @author        egonw
  * @author        john may
- * @cdk.module    data
- * @cdk.githash
  */
 public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 

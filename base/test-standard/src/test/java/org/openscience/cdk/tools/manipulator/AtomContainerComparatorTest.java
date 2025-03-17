@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
- * @cdk.module test-standard
  */
 class AtomContainerComparatorTest extends CDKTestCase {
 

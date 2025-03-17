@@ -32,7 +32,6 @@ import static org.openscience.cdk.templates.TestMoleculeFactory.makeNaphthalene;
  * these are mainly to keep the coverage checker happy.
  *
  * @author John Mayfield (né May)
- * @cdk.module test-core
  */
 class CyclesTest {
 

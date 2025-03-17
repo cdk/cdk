@@ -34,8 +34,6 @@ import org.openscience.cdk.interfaces.IBond;
  *   IBond.Order singleBondOrder = CDKConstants.BONDORDER_SINGLE;
  * </pre>
  *
- * @cdk.module  core
- * @cdk.githash
  *
  * @cdk.keyword bond order
  * @cdk.keyword stereochemistry

@@ -18,7 +18,6 @@ import java.util.Iterator;
 /**
  * TestCase for {@link org.openscience.cdk.interfaces.IReaction} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractReactionTest extends AbstractChemObjectTest {
 

@@ -42,7 +42,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author danielszisz
  * @created 05/14/2012
- * @cdk.module test-builder3d
  */
 class FurtherTemplateHandler3DTest {
 

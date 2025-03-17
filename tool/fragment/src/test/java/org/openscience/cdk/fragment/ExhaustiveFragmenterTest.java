@@ -36,7 +36,6 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * Test exhaustive fragmenter.
  *
- * @cdk.module test-fragment
  */
 class ExhaustiveFragmenterTest extends CDKTestCase {
 

@@ -21,8 +21,6 @@ package org.openscience.cdk.io.listener;
 /**
  * Allows monitoring of progress of writing activities.
  *
- * @cdk.module io
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */

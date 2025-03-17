@@ -30,7 +30,6 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 
 /**
- * @cdk.module test-io
  */
 class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
 

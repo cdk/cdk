@@ -30,7 +30,6 @@ import org.openscience.cdk.test.interfaces.AbstractStrandTest;
 /**
  * Checks the functionality of the {@link Strand}.
  *
- * @cdk.module test-silent
  */
 class StrandTest extends AbstractStrandTest {
 

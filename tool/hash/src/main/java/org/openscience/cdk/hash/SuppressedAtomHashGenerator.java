@@ -38,9 +38,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * The suppress atom hashes are returned as '0'.
  *
  * @author John May
- * @cdk.module hash
  * @see org.openscience.cdk.hash.SeedGenerator
- * @cdk.githash
  */
 final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator implements AtomHashGenerator {
 

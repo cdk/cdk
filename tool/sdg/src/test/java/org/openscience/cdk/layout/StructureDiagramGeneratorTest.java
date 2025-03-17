@@ -82,7 +82,6 @@ import static org.hamcrest.Matchers.lessThan;
 /**
  *  A set of test cases for the StructureDiagramGenerator
  *
- * @cdk.module test-sdg
  *
  *@author     steinbeck
  *@cdk.created    August 29, 2003

@@ -33,7 +33,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import java.io.InputStream;
 
 /**
- * @cdk.module test-io
  */
 class IteratingPCCompoundASNReaderTest extends CDKTestCase {
 

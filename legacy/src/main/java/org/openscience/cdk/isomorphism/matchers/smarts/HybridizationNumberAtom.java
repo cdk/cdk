@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This matcher checks the hybridization state of an atom.
  *
- * @cdk.module smarts
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 

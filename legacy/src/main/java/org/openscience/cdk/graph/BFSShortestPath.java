@@ -37,8 +37,6 @@ import java.util.List;
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
- * @cdk.module  standard
- * @cdk.githash
  * @cdk.created 2004-10-19
  * @deprecated Use {@link ShortestPaths}
  */

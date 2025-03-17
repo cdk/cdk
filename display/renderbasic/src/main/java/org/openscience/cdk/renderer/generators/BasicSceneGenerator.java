@@ -35,8 +35,6 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * for various generator parameters used by most drawings, such as the zoom,
  * background color, margin, etc.
  *
- * @cdk.module renderbasic
- * @cdk.githash
  */
 public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 

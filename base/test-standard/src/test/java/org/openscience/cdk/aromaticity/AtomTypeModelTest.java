@@ -41,7 +41,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * bonds are not considered.
  *
  * @author John May
- * @cdk.module test-standard
  */
 class AtomTypeModelTest {
 

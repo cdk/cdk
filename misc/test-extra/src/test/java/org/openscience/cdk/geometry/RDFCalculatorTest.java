@@ -31,7 +31,6 @@ import org.openscience.cdk.test.CDKTestCase;
  * This class defines regression tests that should ensure that the source code
  * of the org.openscience.cdk.geometry.RDFCalculator is not broken.
  *
- * @cdk.module    test-extra
  *
  * @author        Egon Willighagen
  * @cdk.created   2005-01-12

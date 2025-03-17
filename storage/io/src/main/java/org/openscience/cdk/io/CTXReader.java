@@ -44,8 +44,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * Reader that extracts information from the IDENT, NAME, ATOMS and BONDS
  * blocks in CTX files.
  *
- * @cdk.module io
- * @cdk.githash
  * @cdk.iooptions
  */
 public class CTXReader extends DefaultChemObjectReader {

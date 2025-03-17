@@ -35,7 +35,6 @@ import java.util.NoSuchElementException;
  * available in JDK 8).
  *
  * @author John May
- * @cdk.module isomorphism
  */
 final class StateStream implements Iterator<int[]> {
 

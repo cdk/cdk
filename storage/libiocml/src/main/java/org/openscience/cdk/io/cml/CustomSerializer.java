@@ -33,8 +33,6 @@ import nu.xom.Serializer;
  * output the XML declaration.
  *
  * @author     egonw
- * @cdk.module libiocml
- * @cdk.githash
  */
 public class CustomSerializer extends Serializer {
 

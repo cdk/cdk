@@ -35,8 +35,6 @@ import java.util.Objects;
  *
  * <p>Alternatively, you can use the UniversalIsomorphismTester.
  *
- * @cdk.module standard
- * @cdk.githash
  *
  * @author     steinbeck
  * @cdk.created    2001-09-10

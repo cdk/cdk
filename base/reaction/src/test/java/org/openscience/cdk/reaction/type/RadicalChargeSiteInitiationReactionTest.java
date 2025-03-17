@@ -43,7 +43,6 @@ import java.util.List;
  * TestSuite that runs a test for the RearrangementRadicalReactionTest.
  * Generalized Reaction: [A*+]-B-C => [A+]=B + [c*].
  *
- * @cdk.module test-reaction
  */
 public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest {
 

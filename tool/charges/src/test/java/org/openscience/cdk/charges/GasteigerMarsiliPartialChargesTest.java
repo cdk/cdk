@@ -45,7 +45,6 @@ import static org.hamcrest.CoreMatchers.not;
 /**
  *  Description of the Class
  *
- * @cdk.module test-charges
  *
  *@author     chhoppe
  *@cdk.created    2004-11-04

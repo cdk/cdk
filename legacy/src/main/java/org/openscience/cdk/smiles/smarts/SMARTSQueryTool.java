@@ -103,8 +103,6 @@ import java.util.stream.StreamSupport;
  *
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
- * @cdk.module smarts
- * @cdk.githash
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
  * @deprecated use {@link org.openscience.cdk.smarts.SmartsPattern}

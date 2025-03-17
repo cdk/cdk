@@ -60,13 +60,11 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module hash
  * @see SeedGenerator
  * @see <a href="http://mathworld.wolfram.com/GraphDiameter.html">Graph
  *      Diameter</a>
  * @see <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Original
  *      Publication</a>
- * @cdk.githash
  */
 final class BasicAtomHashGenerator extends AbstractAtomHashGenerator implements AtomHashGenerator {
 

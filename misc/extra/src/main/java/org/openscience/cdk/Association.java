@@ -34,8 +34,6 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  * Base class for storing interactions like hydrogen bonds and ionic interactions.
  * The ElectronContainer contains zero electrons by default.
  *
- * @cdk.module extra
- * @cdk.githash
  *
  * @cdk.keyword orbital
  * @cdk.keyword association

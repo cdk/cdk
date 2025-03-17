@@ -58,7 +58,6 @@ import static org.hamcrest.CoreMatchers.is;
  * explicit {@link IAtomContainer}s; test using data files
  * must be placed in {@link CDKAtomTypeMatcherFilesTest}.
  *
- * @cdk.module test-core
  */
 class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 

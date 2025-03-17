@@ -14,7 +14,6 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * TestSuite that runs all QSAR tests.
  * @author      chhoppe from EUROSCREEN
- * @cdk.module test-qsarmolecular
  */
 
 class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest {

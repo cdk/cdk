@@ -38,8 +38,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author Syed Asad Rahman (2012)
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.module fingerprint
- * @cdk.githash
  *
  */
 public class SimpleAtomCanonicalizer {

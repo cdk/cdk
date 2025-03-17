@@ -67,10 +67,8 @@ import java.util.TreeSet;
  * The code was originally developed for a MZmine 2 framework module, published
  * in Pluskal et al. {@cdk.cite Pluskal2012}.
  * 
- * @cdk.module formula
  * @author Tomas Pluskal
  * @cdk.created 2014-12-28
- * @cdk.githash
  */
 class FullEnumerationFormulaGenerator implements IFormulaGenerator {
 

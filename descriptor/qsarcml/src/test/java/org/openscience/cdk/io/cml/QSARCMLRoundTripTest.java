@@ -49,7 +49,6 @@ import java.io.StringWriter;
 
 /**
  * @author John Mayfield
- * @cdk.module test-qsarcml
  */
 class QSARCMLRoundTripTest {
 

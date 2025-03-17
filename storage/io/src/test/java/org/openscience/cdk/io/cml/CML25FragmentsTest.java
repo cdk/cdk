@@ -40,7 +40,6 @@ import org.openscience.cdk.silent.ChemFile;
  * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.5,
  * as can be determined in cdk/src/org.openscience.cdk/io/cml/cml25TestFramework.xml</code>.
  *
- * @cdk.module test-io
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */

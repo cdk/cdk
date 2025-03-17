@@ -42,7 +42,6 @@ import static org.openscience.cdk.graph.GraphUtil.toAdjList;
 
 /**
  * @author John May
- * @cdk.module test-standard
  */
 class CanonTest {
 

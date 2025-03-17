@@ -23,7 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * See tests in MmffTest.
  *
- * @cdk.module test-qsaratomic
  * @cdk.bug 1627763
  */
 class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {

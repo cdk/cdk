@@ -54,8 +54,6 @@ import org._3pq.jgrapht.graph.Subgraph;
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  *
- * @cdk.module standard
- * @cdk.githash
  * @deprecated internal implemenation detail from SSSRFinder, do not use
  */
 @Deprecated

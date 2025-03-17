@@ -55,7 +55,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @cdk.module test-smsd
  * @author     Syed Asad Rahman
  * @cdk.require java1.5+
  */

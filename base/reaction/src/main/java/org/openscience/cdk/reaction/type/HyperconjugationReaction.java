@@ -67,8 +67,6 @@ import java.util.ArrayList;
  * @author         Miguel Rojas
  *
  * @cdk.created    2006-07-04
- * @cdk.module     reaction
- * @cdk.githash
  *
  **/
 public class HyperconjugationReaction extends ReactionEngine implements IReactionProcess {

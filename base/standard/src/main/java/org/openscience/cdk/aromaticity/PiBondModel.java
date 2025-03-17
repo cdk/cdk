@@ -37,7 +37,6 @@ import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
  * aromaticity in the MDL/Mol2 file formats.
  *
  * @author John May
- * @cdk.module standard
  */
 final class PiBondModel extends ElectronDonation {
 

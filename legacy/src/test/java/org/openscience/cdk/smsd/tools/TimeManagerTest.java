@@ -29,7 +29,6 @@ import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author Asad
- * @cdk.module test-smsd
  */
 @Tag("SlowTest")
 // test uses Thread.sleep...

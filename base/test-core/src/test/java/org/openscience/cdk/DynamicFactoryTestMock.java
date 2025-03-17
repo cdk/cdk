@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * inner class creation.
  *
  * @author John May
- * @cdk.module test-core
  * @see DynamicFactoryTest
  */
 class DynamicFactoryTestMock implements ICDKObject {

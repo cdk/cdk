@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
- * @cdk.module test-formula
  */
 public class IsotopePatternRuleTest extends FormulaRuleTest {
 

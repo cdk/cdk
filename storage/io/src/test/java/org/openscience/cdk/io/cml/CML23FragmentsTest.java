@@ -52,7 +52,6 @@ import java.util.Iterator;
  * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.3,
  * as can be determined in cdk/src/org.openscience.cdk/io/cml/cml23TestFramework.xml.
  *
- * @cdk.module test-io
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */

@@ -40,7 +40,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
  */
 
 class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {

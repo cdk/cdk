@@ -18,7 +18,6 @@ import org.openscience.cdk.interfaces.IStrand;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IBioPolymer} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 

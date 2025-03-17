@@ -48,7 +48,6 @@ import java.util.List;
  * TestSuite that runs a test for the RadicalSiteHrGammaReaction.
  * Generalized Reaction: [A*]-(C)_3-C4[H] => A([H])-(C_3)-[C4*].
  *
- * @cdk.module test-reaction
  */
 public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
 

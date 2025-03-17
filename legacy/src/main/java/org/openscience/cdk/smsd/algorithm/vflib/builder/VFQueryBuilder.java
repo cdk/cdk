@@ -63,8 +63,6 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 
 /**
  * Class for parsing and generating query graph.
- * @cdk.module smsd
- * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.

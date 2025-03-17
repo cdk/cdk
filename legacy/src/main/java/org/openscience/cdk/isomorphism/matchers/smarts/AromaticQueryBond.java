@@ -25,8 +25,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 /**
  * This matches an aromatic bond.
  *
- * @cdk.module  smarts
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

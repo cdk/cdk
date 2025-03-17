@@ -40,10 +40,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Dictionary with entries build from an OWL file.
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
- * @cdk.githash
  * @cdk.created  2005-11-18
  * @cdk.keyword  dictionary
- * @cdk.module   dict
  *
  */
 public class OWLFile extends Dictionary {

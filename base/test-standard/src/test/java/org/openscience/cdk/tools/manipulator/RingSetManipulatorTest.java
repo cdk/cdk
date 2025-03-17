@@ -42,7 +42,6 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
- * @cdk.module test-standard
  */
 class RingSetManipulatorTest extends CDKTestCase {
 

@@ -22,8 +22,6 @@ package org.openscience.cdk;
  * Interface that is used to describe the specification of a certain
  * implementation of an algorithm.
  *
- * @cdk.module standard
- * @cdk.githash
  */
 public interface IImplementationSpecification {
 

@@ -50,8 +50,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-05-17
- * @cdk.module  qsaratomic
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:piElectronegativity
  *
  * @see Electronegativity

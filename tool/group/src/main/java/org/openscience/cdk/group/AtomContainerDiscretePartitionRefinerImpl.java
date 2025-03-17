@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * Base class for discrete partition refiners of IAtomContainers.
  * 
  * @author maclean
- * @cdk.module group
  *
  */
 abstract class AtomContainerDiscretePartitionRefinerImpl 

@@ -37,7 +37,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Verifies the types of atoms accepted as exhibiting stereo chemistry.
  *
  * @author John May
- * @cdk.module test-standard
  */
 class StereocentersTest {
 

@@ -17,7 +17,6 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  *
  * @see org.openscience.cdk.SingleElectron
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractSingleElectronTest extends AbstractElectronContainerTest {
 

@@ -24,8 +24,6 @@ package org.openscience.cdk.interfaces;
  * some way but without hard coded semantics.
  *
  * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
- * @cdk.module  interfaces
- * @cdk.githash
  */
 public interface IReactionScheme extends IReactionSet {
 

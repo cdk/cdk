@@ -32,7 +32,6 @@ import org.openscience.cdk.test.interfaces.AbstractChemObjectTest;
  * TestCase for the IChemObject class.
  *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
- * @cdk.module  test-data
  * @cdk.created 2001-08-09
  */
 class ChemObjectTest extends AbstractChemObjectTest {

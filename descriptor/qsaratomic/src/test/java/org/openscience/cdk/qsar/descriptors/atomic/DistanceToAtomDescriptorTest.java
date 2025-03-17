@@ -33,7 +33,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsaratomic
  */
 class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
 

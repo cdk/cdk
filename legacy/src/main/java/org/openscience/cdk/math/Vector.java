@@ -28,7 +28,6 @@ import javax.vecmath.Tuple3d;
 /**
  * This class handles vectors.
  *
- * @cdk.module  qm
  */
 public class Vector {
 

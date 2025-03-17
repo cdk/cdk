@@ -42,7 +42,6 @@ import java.io.InputStream;
 /**
  * Checks the functionality of the IsotopeFactory
  *
- * @cdk.module test-extra
  */
 class XMLIsotopeFactoryTest extends CDKTestCase {
 

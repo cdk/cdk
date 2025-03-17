@@ -32,7 +32,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 /**
  * JUnit test routines for the core parser.
  *
- * @cdk.module test-extra
  * @cdk.require ant1.6
  *
  * @author Stephen Tomkinson

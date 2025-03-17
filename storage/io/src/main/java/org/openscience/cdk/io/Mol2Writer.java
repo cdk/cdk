@@ -42,8 +42,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <a href="http://www.tripos.com/data/support/mol2.pdf">Tripos Mol2 format</a>.
  * Writes the atoms and the bonds only at this moment.
  *
- * @cdk.module io
- * @cdk.githash
  * @cdk.iooptions
  *
  * @author     Egon Willighagen

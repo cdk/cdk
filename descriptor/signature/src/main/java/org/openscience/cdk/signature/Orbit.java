@@ -32,9 +32,7 @@ import java.util.List;
 /**
  * A list of atom indices, and the label of the orbit.
  *
- * @cdk.module signature
  * @author maclean
- * @cdk.githash
  */
 public class Orbit implements Iterable<Integer>, Cloneable {
 

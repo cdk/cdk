@@ -54,8 +54,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * }
  * </pre>
  *
- * @cdk.module data
- * @cdk.githash
  * @author Rajarshi Guha
  * @see org.openscience.cdk.io.iterator.IteratingMDLConformerReader
  */

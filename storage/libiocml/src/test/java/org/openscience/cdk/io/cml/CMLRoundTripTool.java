@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Helper tool for round tripping CDK classes via CML.
  *
- * @cdk.module  test-libiocml
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5+
  */

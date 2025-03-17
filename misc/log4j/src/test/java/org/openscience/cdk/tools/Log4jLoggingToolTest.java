@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 
 /**
- * @cdk.module test-log4j
  */
 class Log4jLoggingToolTest extends AbstractLoggingToolTest {
 

@@ -50,7 +50,6 @@ import java.util.List;
  * TestSuite that runs a test for the CarbonylEliminationReactionTest.
  * Generalized Reaction: RC-C#[O+] => R[C] + |C#[O+]
  *
- * @cdk.module test-reaction
  */
 public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 

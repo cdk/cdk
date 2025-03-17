@@ -32,9 +32,7 @@ import org.openscience.cdk.interfaces.IReactionScheme;
  * some way but without hard coded semantics.
  *
  * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
- * @cdk.module  data
  * @cdk.keyword reaction
- * @cdk.githash
  */
 public class ReactionScheme extends ReactionSet implements IReactionScheme {
 

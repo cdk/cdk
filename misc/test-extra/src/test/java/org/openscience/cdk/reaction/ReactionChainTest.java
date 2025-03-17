@@ -29,7 +29,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * Tests for IReactionChain implementations.
  *
- * @cdk.module test-extra
  */
 class ReactionChainTest extends CDKTestCase {
 

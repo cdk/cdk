@@ -31,7 +31,6 @@ import static org.hamcrest.Matchers.is;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
  */
 
 class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {

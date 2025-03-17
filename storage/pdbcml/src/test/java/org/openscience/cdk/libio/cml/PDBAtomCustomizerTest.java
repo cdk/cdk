@@ -14,7 +14,6 @@ import java.io.StringWriter;
 
 /**
  * @author John May
- * @cdk.module test-pdbcml
  */
 class PDBAtomCustomizerTest {
 

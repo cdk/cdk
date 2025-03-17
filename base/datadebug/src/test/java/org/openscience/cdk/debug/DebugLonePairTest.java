@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.ILonePair;
 /**
  * Checks the functionality of the {@link DebugLonePair}.
  *
- * @cdk.module test-datadebug
  */
 class DebugLonePairTest extends AbstractLonePairTest {
 

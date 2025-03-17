@@ -49,7 +49,6 @@ import java.util.List;
  * TestSuite that runs a test for the HyperconjugationReactionTest.
  * Generalized Reaction: [C1+]-C2 => C1=C2 + [H+].
  *
- * @cdk.module test-reaction
  */
 public class HyperconjugationReactionTest extends ReactionProcessTest {
 

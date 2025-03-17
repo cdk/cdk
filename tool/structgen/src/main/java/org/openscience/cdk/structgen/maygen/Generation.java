@@ -32,7 +32,6 @@ import java.util.List;
  * functions are kept in a separate class.
  *
  * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
- * @cdk.module structgen
  */
 class Generation {
     private final Maygen maygen;

@@ -48,7 +48,6 @@ import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
 /**
  * TestCase for CDK IO classes.
  *
- * @cdk.module test-io
  */
 public abstract class ChemObjectIOTest extends CDKTestCase {
 

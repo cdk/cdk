@@ -26,7 +26,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the NoSuchAtomException class.
  *
- * @cdk.module test-core
  *
  * @see org.openscience.cdk.exception.NoSuchAtomException
  */

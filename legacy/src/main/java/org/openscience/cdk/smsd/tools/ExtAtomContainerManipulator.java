@@ -60,8 +60,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * <p>This is an extension of CDK AtomContainer.
  * Some part of this code was taken from CDK source code and modified.</p>
  *
- * @cdk.module smsd
- * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.

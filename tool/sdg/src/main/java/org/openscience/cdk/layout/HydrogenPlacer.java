@@ -45,8 +45,6 @@ import java.util.List;
  *
  * @author Christoph Steinbeck
  * @cdk.created 2003-08-06
- * @cdk.module sdg
- * @cdk.githash
  * @see AtomPlacer
  */
 public final class HydrogenPlacer {

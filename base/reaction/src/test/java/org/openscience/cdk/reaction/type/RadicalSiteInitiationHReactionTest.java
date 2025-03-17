@@ -48,7 +48,6 @@ import java.util.List;
  * TestSuite that runs a test for the RadicalSiteInitiationHReactionTest.
  * Generalized Reaction: [A*]-B-H => A=B + [H*].
  *
- * @cdk.module test-reaction
  */
 public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
 

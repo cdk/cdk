@@ -15,8 +15,6 @@ package org.openscience.cdk.fingerprint;
  * Presence of 4860 substructures
  *
  * @author yapchunwei
- * @cdk.module fingerprint
- * @cdk.githash
  */
 public class KlekotaRothFingerprinter extends SubstructureFingerprinter {
 

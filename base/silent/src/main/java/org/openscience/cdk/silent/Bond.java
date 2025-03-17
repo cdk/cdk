@@ -47,8 +47,6 @@ import org.openscience.cdk.interfaces.IChemObject;
  * using multi-center bonds using this class as the orders may not make sense.
  *
  * @author steinbeck
- * @cdk.module  silent
- * @cdk.githash
  * @cdk.created 2003-10-02
  * @cdk.keyword bond
  * @cdk.keyword atom

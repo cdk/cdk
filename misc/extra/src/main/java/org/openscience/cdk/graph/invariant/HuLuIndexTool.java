@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IElement;
  * Collection of methods for the calculation of topological indices of a
  * molecular graph as described in {@cdk.cite HU96}.
  *
- * @cdk.githash
  * @author Mark Vine
  * @author John Mayfield
  */

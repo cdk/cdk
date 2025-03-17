@@ -39,7 +39,6 @@ import org.openscience.cdk.BondRef;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
- * @cdk.module test-pcore
  */
 class PharmacophoreMatcherTest {
 

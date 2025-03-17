@@ -35,7 +35,6 @@ import static org.openscience.cdk.isomorphism.AbstractVFState.UNMAPPED;
 
 /**
  * @author John May
- * @cdk.module test-isomorphism
  */
 class AbstractVFStateTest {
 

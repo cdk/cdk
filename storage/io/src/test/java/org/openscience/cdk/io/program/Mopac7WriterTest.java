@@ -37,7 +37,6 @@ import org.openscience.cdk.test.io.ChemObjectWriterTest;
 import org.openscience.cdk.io.listener.PropertiesListener;
 
 /**
- * @cdk.module test-io
  */
 class Mopac7WriterTest extends ChemObjectWriterTest {
 

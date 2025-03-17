@@ -26,10 +26,8 @@ import java.util.Iterator;
  * Represents the idea of an chemical atom.
  *
  * @author egonw
- * @cdk.module interfaces
  * @cdk.created 2005-08-24
  * @cdk.keyword atom
- * @cdk.githash
  */
 public interface IAtom extends IAtomType {
 

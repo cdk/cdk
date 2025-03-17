@@ -44,8 +44,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * Tetrahedron Comput. Methodol., 1990, 3:351-358] and modified in the thesis of
  * T. Hanser [Unknown BibTeXML type: HAN93].
  *
- * @cdk.module smsd
- * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
  *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent

@@ -26,7 +26,6 @@ import org.openscience.cdk.test.CDKTestCase;
  * This class tests the mapper that maps CDK atom types to other atom type
  * schemes.
  *
- * @cdk.module test-atomtype
  */
 class AtomTypeMapperTest extends CDKTestCase {
 

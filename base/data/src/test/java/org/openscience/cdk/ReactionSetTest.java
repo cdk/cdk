@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractReactionSetTest;
 /**
  * Checks the functionality of the ReactionSet class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.ReactionSet
  */

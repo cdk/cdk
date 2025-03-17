@@ -48,7 +48,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Test fragment utils
  *
- * @cdk.module test-fragment
  */
 class FragmentUtilsTest extends CDKTestCase {
 

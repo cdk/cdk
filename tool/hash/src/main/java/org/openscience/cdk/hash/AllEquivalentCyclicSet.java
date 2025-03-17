@@ -52,11 +52,9 @@ import java.util.TreeSet;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module hash
  * @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
  * @see MinimumEquivalentCyclicSet
  * @see MinimumEquivalentCyclicSetUnion
- * @cdk.githash
  */
 final class AllEquivalentCyclicSet extends EquivalentSetFinder {
 

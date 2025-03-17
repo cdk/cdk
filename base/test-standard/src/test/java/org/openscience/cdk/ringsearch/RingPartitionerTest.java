@@ -31,7 +31,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 /**
  * This class tests the RingPartitioner class.
  *
- * @cdk.module test-standard
  *
  * @author         kaihartmann
  * @cdk.created    2005-05-24

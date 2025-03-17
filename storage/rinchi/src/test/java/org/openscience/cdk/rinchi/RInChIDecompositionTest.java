@@ -40,7 +40,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Uli Fechner
- * @cdk.module test-rinchi
  */
 class RInChIDecompositionTest extends CDKTestCase {
 

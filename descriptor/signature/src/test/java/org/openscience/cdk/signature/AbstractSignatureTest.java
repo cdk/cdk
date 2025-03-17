@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
- * @cdk.module test-signature
  * @author maclean
  *
  */

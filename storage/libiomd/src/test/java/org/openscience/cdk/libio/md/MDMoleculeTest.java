@@ -50,7 +50,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.xmlcml.cml.element.CMLAtom;
 
 /**
- * @cdk.module test-libiomd
  */
 class MDMoleculeTest extends CDKTestCase {
 

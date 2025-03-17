@@ -17,7 +17,6 @@ import org.openscience.cdk.interfaces.IChemSequence;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IChemSequence} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
 

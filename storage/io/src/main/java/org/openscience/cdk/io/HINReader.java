@@ -45,8 +45,6 @@ import java.util.StringTokenizer;
 /**
  * Reads an object from HIN formated input.
  *
- * @cdk.module io
- * @cdk.githash
  *
  * @author Rajarshi Guha &lt;rajarshi.guha@gmail.com&gt;
  * @cdk.created 2004-01-27

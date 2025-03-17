@@ -30,8 +30,6 @@ import java.util.regex.Pattern;
 /**
  * Tool to help process INChI 1.12beta content.
  *
- * @cdk.module extra
- * @cdk.githash
  */
 @Deprecated
 public class INChIContentProcessorTool {

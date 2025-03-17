@@ -51,8 +51,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  * Helper class that converts a CDK {@link IChemObject} into RDF using a
  * Jena model and the CDK data model ontology.
  *
- * @cdk.module       iordf
- * @cdk.githash
  * @cdk.keyword      Resource Description Framework
  * @cdk.keyword      Jena
  * @cdk.keyword      RDF

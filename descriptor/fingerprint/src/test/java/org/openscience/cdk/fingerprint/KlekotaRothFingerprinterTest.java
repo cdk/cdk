@@ -32,7 +32,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.fingerprint.AbstractFingerprinterTest;
 
 /**
- * @cdk.module test-fingerprint
  */
 class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
 

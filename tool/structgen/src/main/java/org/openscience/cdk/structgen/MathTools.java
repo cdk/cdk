@@ -22,8 +22,6 @@ package org.openscience.cdk.structgen;
 /**
  * Class providing convenience methods for simple mathematical operations.
  *
- * @cdk.module standard
- * @cdk.githash
  */
 class MathTools {
 

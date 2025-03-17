@@ -61,8 +61,6 @@ import java.util.Objects;
  * contribute '0' electrons.</li></ul>
  *
  * @author John May
- * @cdk.module standard
- * @cdk.githash
  */
 final class DaylightModel extends ElectronDonation {
 

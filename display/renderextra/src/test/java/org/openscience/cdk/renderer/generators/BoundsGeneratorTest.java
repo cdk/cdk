@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
- * @cdk.module test-renderextra
  */
 public class BoundsGeneratorTest extends AbstractGeneratorTest {
 

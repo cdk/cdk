@@ -48,7 +48,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * TestCase for the reading CML 2 files using a few test files
  * in data/cmltest.
  *
- * @cdk.module test-libiocml
  * @cdk.require java1.5+
  */
 class CML2Test extends CDKTestCase {

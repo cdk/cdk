@@ -31,7 +31,6 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
- * @cdk.module test-qsaratomic
  */
 class InductiveAtomicSoftnessDescriptorTest extends AtomicDescriptorTest {
 

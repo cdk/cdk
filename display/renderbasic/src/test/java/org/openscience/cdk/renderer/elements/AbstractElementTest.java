@@ -26,9 +26,6 @@ import java.awt.geom.AffineTransform;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
 abstract class AbstractElementTest {
 
     private static IRenderingElement element;

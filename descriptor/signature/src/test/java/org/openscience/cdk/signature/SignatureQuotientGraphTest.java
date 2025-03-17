@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * @cdk.module test-signature
  * @author maclean
  *
  */

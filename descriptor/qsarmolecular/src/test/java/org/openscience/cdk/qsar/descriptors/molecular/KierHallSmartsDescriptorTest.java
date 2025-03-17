@@ -32,7 +32,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * TestSuite that runs all test for the KierHallSmartsDescriptor
  *
- * @cdk.module test-qsarmolecular
  */
 class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
 

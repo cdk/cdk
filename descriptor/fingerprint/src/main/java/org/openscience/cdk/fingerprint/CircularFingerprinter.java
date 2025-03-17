@@ -88,8 +88,6 @@ import org.openscience.cdk.interfaces.IElement;
  * @cdk.created    2014-01-01
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
- * @cdk.module     standard
- * @cdk.githash
  */
 public class CircularFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 

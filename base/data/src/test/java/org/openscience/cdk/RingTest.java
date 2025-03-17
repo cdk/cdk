@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IRing;
 /**
  * Checks the functionality of the Ring class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.Ring
  */

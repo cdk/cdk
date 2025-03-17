@@ -55,7 +55,6 @@ import java.util.function.Predicate;
  * }</pre></blockquote>
  *
  * @author John Mayfield
- * @cdk.module isomorphism
  */
 final class ExclusiveAtomMatches implements Predicate<int[]> {
 

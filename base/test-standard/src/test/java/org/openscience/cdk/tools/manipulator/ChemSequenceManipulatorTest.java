@@ -45,7 +45,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.IDCreator;
 
 /**
- * @cdk.module test-standard
  */
 class ChemSequenceManipulatorTest extends CDKTestCase {
 

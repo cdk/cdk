@@ -37,8 +37,6 @@ import java.util.List;
  *
  * @author         egonw
  * @cdk.created    2007-03-08
- * @cdk.module     extra
- * @cdk.githash
  */
 public class HOSECodeAnalyser {
 

@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
- * @cdk.module test-signature
  * @author maclean
  *
  */

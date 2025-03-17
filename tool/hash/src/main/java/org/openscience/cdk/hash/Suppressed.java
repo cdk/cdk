@@ -32,7 +32,6 @@ import java.util.BitSet;
  * when computing an atomic/molecular hash code.
  *
  * @author John May
- * @cdk.module hash
  */
 abstract class Suppressed {
 

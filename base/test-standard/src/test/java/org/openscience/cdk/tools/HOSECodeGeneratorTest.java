@@ -46,7 +46,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Tests the HOSECode generator.
  *
- * @cdk.module  test-standard
  * @author      steinbeck
  * @cdk.created 2002-11-16
  */

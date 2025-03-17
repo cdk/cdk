@@ -24,7 +24,6 @@ import org.openscience.cdk.CDK;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-standard
  */
 class DescriptorSpecificationTest extends CDKTestCase {
 

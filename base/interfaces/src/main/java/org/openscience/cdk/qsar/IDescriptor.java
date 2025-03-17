@@ -77,8 +77,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * of <code>setParameters()</code>, the current parameter values are
  * returned.
  *
- * @cdk.module qsar
- * @cdk.githash
  *
  * @see        DescriptorValue
  * @see        IDescriptorResult

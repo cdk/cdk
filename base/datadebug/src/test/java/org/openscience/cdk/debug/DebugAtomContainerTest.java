@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.ILonePair;
 /**
  * Checks the functionality of the {@link DebugAtomContainer}.
  *
- * @cdk.module test-datadebug
  */
 class DebugAtomContainerTest extends AbstractAtomContainerTest {
 

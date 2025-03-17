@@ -38,8 +38,6 @@ import java.util.Set;
  * removes all terminal atoms which although equivalent are not relevant.
  *
  * @author John May
- * @cdk.module hash
- * @cdk.githash
  */
 abstract class EquivalentSetFinder {
 

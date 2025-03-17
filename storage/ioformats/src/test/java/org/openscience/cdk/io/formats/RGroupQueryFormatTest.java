@@ -25,7 +25,6 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * @cdk.module test-ioformats
  */
 class RGroupQueryFormatTest extends ChemFormatMatcherTest {
 

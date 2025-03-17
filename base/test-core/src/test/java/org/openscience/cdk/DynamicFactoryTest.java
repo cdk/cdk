@@ -47,7 +47,6 @@ import static org.openscience.cdk.DynamicFactory.key;
  * Unit test for the DynamicFactory.
  *
  * @author John May
- * @cdk.module test-core
  */
 public class DynamicFactoryTest {
 

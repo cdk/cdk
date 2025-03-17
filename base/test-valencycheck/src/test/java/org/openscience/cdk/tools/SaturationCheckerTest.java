@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ISingleElectron;
 
 /**
- * @cdk.module test-valencycheck
  *
  * @author     steinbeck
  * @cdk.created    2003-02-20

@@ -13,7 +13,6 @@ import org.openscience.cdk.interfaces.IReactionScheme;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IReactionScheme} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest {
 

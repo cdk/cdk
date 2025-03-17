@@ -33,7 +33,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
 * TestSuite that runs all tests.
 *
-* @cdk.module test-charges
 */
 class StabilizationChargesTest extends CDKTestCase {
 

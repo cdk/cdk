@@ -37,7 +37,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * This class tests the matching of atom types defined in the
  * CDK atom type list.
  *
- * @cdk.module test-core
  */
 class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
 

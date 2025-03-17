@@ -44,7 +44,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author danielszisz
  * @version 09/05/2012
- * @cdk.module test-forcefield
  */
 class ForceFieldConfiguratorTest {
 

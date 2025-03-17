@@ -23,8 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.schrodinger.com/">here</a>.
  *
- * @cdk.module ioformats
- * @cdk.githash
  */
 public class JaguarFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

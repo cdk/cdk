@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
- * @cdk.module test-dict
  */
 class OWLFileTest extends AbstractDictionaryTest {
 

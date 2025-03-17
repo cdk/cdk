@@ -68,8 +68,6 @@ import java.util.Iterator;
  * @author         Miguel Rojas
  *
  * @cdk.created    2007-02-02
- * @cdk.module     reaction
- * @cdk.githash
  *
  **/
 public class PiBondingMovementReaction extends ReactionEngine implements IReactionProcess {

@@ -27,8 +27,6 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
  * Compares two {@link IChemObject} classes.
  *
  * @author     egonw
- * @cdk.module diff
- * @cdk.githash
  */
 public class ChemObjectDiff {
 

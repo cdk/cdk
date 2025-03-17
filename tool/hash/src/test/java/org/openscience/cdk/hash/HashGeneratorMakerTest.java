@@ -47,7 +47,6 @@ import static org.openscience.cdk.hash.BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class HashGeneratorMakerTest {
 

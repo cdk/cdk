@@ -11,7 +11,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @author maclean
- * @cdk.module test-group
  */
 class AtomContainerPrinter {
 

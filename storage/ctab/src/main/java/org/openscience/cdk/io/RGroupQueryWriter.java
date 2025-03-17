@@ -54,8 +54,6 @@ import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
  * This class relies on the {@link org.openscience.cdk.io.MDLV2000Writer} to
  * create CTAB data blocks.
  *
- * @cdk.module io
- * @cdk.githash
  * @cdk.iooptions
  * @cdk.keyword Rgroup
  * @cdk.keyword R group

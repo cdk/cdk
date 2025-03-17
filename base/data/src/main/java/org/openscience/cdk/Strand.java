@@ -34,8 +34,6 @@ import java.util.Map;
  * A Strand is an AtomContainer which stores additional strand specific
  * informations for a group of Atoms.
  *
- * @cdk.module  data
- * @cdk.githash
  * @cdk.created 2004-12-20
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @author Ola Spjuth &lt;ola.spjuth@farmbio.uu.se&gt;

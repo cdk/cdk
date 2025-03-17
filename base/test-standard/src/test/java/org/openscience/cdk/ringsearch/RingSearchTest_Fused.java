@@ -38,7 +38,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * ring search unit tests for a fused system
  *
  * @author John May
- * @cdk.module test-standard
  */
 class RingSearchTest_Fused {
 

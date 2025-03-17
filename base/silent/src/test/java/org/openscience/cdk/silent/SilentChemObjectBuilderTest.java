@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IReaction;
 /**
  * Checks the functionality of the {@link IChemObjectBuilder} {@link SilentChemObjectBuilder} implementation.
  *
- * @cdk.module test-silent
  */
 class SilentChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 

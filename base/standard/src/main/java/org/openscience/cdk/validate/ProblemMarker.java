@@ -27,8 +27,6 @@ import org.openscience.cdk.interfaces.IChemObject;
  * Tool to mark IChemObject's as having a problem. There are two levels:
  * a problem, and a warning, to allow for different coloring by renderer's.
  *
- * @cdk.module standard
- * @cdk.githash
  *
  * @author   Egon Willighagen
  * @cdk.created  2003-08-11

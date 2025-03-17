@@ -9,7 +9,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Class testing the IsotopePatternManipulator class.
  *
- * @cdk.module test-formula
  */
 class IsotopePatternManipulatorTest extends CDKTestCase {
 

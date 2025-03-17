@@ -50,7 +50,6 @@ import java.util.Iterator;
 /**
  * TestCase for the reading MDL RXN files using one test file.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */

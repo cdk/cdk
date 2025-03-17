@@ -37,7 +37,6 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
- * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 class HanserRingFinderTest {

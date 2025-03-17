@@ -37,8 +37,6 @@ import javax.vecmath.Point3d;
  *
  * @author Rajarshi Guha
  * @cdk.created 2005-05-08
- * @cdk.module  qsarmolecular
- * @cdk.githash
  */
 public class Tessellate {
 

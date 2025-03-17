@@ -26,7 +26,6 @@ package org.openscience.cdk.group;
  * Marker interface for invariants.
  * 
  * @author maclean
- * @cdk.module group
  *
  */
 public interface Invariant extends Comparable<Invariant> { }

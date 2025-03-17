@@ -25,7 +25,6 @@ package org.openscience.cdk.controller;
 import javax.swing.JComponent;
 
 /**
- * @cdk.module control
  */
 public class SwingEventRelay implements IViewEventRelay {
 

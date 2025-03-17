@@ -81,8 +81,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *
  *@author         Miguel Rojas
  *@cdk.created    2005-03-24
- *@cdk.module     qsaratomic
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
  */
 public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

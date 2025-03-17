@@ -15,7 +15,6 @@ import org.openscience.cdk.interfaces.IPDBAtom;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IPDBAtom} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
 

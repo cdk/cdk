@@ -34,7 +34,6 @@ import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
- * @cdk.module test-standard
  */
 class BondToolsTest extends CDKTestCase {
 

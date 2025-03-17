@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.AbstractMoleculeTest;
 /**
  * Checks the functionality of the Molecule class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.Molecule
  */

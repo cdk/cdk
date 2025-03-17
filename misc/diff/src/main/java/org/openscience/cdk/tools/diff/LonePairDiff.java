@@ -28,8 +28,6 @@ import org.openscience.cdk.tools.diff.tree.IDifferenceList;
  * Compares two {@link ILonePair} classes.
  *
  * @author     egonw
- * @cdk.module diff
- * @cdk.githash
  */
 public class LonePairDiff {
 

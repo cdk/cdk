@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
- * @cdk.module test-renderextra
  */
 public class LonePairGeneratorTest extends AbstractGeneratorTest {
 

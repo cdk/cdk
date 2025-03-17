@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 /**
  * TestCase for CDK IO classes.
  *
- * @cdk.module test-io
  */
 public abstract class ChemObjectReaderTest extends ChemObjectIOTest {
 

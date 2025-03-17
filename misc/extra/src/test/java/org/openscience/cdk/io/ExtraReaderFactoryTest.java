@@ -43,7 +43,6 @@ import java.io.InputStream;
  * TestCase for the instantiation and functionality of the {@link ReaderFactory} for
  * io classes currently in 'cdk-extra'.
  *
- * @cdk.module test-extra
  */
 class ExtraReaderFactoryTest {
 

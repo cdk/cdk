@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.AbstractAminoAcidTest;
 /**
  * TestCase for the AminoAcid class.
  *
- * @cdk.module test-data
  *
  * @author Edgar Luttman &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09

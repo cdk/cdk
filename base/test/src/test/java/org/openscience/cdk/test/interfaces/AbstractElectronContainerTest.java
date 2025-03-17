@@ -12,7 +12,6 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IElectronContainer} implementations.
  *
- * @cdk.module test-interfaces
  *
  * @see org.openscience.cdk.ElectronContainer
  */

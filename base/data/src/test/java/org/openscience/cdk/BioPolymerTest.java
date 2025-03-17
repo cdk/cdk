@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IStrand;
 /**
  * Checks the functionality of the BioPolymer class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.BioPolymer
  */

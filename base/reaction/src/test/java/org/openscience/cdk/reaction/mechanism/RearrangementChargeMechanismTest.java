@@ -27,7 +27,6 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
 /**
  * Tests for RearrangementChargeMechanism implementations.
  *
- * @cdk.module test-reaction
  */
 class RearrangementChargeMechanismTest extends ReactionMechanismTest {
 

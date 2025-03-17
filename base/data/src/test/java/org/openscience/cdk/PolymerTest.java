@@ -37,7 +37,6 @@ import org.junit.jupiter.api.Test;
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.created 2001-08-09
- * @cdk.module  test-data
  */
 class PolymerTest extends AbstractPolymerTest {
 

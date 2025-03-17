@@ -26,8 +26,6 @@ import java.awt.geom.AffineTransform;
  * that the rendering engine is widget toolkit independent. Current
  * supported widget toolkits include SWT, Swing, and SVG.
  *
- * @cdk.module  render
- * @cdk.githash
  */
 public interface IRenderingVisitor {
 

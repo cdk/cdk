@@ -59,8 +59,6 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * @author           Miguel Rojas
  * @cdk.created      2006-05-26
- * @cdk.module       qsarionpot
- * @cdk.githash
  * @cdk.dictref      qsar-descriptors:ionizationPotential
  * @cdk.keyword      ionization potential
  *

@@ -61,8 +61,6 @@ import java.io.StringReader;
  * <p>For each line a molecule is generated, and multiple Molecules are
  * read as MoleculeSet.
  *
- * @cdk.module  smiles
- * @cdk.githash
  * @cdk.iooptions
  * @cdk.keyword file format, SMILES
  *

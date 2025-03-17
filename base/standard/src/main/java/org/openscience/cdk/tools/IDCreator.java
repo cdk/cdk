@@ -50,8 +50,6 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
  * and Reaction. It will only create missing IDs. If you want to create new
  * IDs for all ChemObjects, you need to delete them first.
  *
- * @cdk.module standard
- * @cdk.githash
  *
  * @author   Egon Willighagen
  * @cdk.created  2003-04-01

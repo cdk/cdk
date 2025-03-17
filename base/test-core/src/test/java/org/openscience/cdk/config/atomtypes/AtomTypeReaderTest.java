@@ -32,7 +32,6 @@ import java.util.List;
 /**
  * Checks the functionality of the AtomTypeReader.
  *
- * @cdk.module test-core
  */
 class AtomTypeReaderTest extends CDKTestCase {
 

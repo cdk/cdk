@@ -38,7 +38,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
- * @cdk.module test-io
  */
 class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 

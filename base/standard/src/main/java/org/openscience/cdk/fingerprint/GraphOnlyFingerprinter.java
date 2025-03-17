@@ -35,8 +35,6 @@ import java.util.BitSet;
  * @cdk.created    2007-01-11
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
- * @cdk.module     standard
- * @cdk.githash
  *
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */

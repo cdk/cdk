@@ -27,8 +27,6 @@ import javax.vecmath.Point2d;
 /**
  * A path composed of points.
  *
- * @cdk.module renderbasic
- * @cdk.githash
  */
 public class PathElement implements IRenderingElement {
 

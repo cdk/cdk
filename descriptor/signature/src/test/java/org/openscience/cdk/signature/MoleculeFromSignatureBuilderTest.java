@@ -34,7 +34,6 @@ import signature.AbstractVertexSignature;
 import signature.ColoredTree;
 
 /**
- * @cdk.module test-signature
  * @author maclean
  *
  */

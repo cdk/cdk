@@ -50,7 +50,6 @@ import java.util.Map;
 
 /**
  * Validation test for the Bayesian model building & serialisation.
- * @cdk.module test-standard
  */
 class BayesianTest {
 

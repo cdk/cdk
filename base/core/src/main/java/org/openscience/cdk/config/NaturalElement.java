@@ -35,8 +35,6 @@ import org.openscience.cdk.interfaces.IElement;
  * be used than by only {@link Elements}.
  *
  * @author      egonw
- * @cdk.module  core
- * @cdk.githash
  */
 final class NaturalElement implements IElement {
 

@@ -31,7 +31,6 @@ import org.openscience.cdk.test.CDKTestCase;
  * Checks the propagation of ChangeEvents through a
  * nested set of objects.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.ChemFile
  */

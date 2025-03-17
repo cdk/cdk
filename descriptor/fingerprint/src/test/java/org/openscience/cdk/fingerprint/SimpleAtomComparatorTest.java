@@ -9,7 +9,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @author John May
- * @cdk.module test-fingerprint
  */
 class SimpleAtomComparatorTest {
 

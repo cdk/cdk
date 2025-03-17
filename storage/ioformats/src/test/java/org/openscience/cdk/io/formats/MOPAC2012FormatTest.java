@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * @cdk.module test-ioformats
  */
 class MOPAC2012FormatTest extends ChemFormatMatcherTest {
 

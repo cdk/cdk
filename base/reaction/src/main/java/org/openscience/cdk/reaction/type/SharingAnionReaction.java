@@ -64,8 +64,6 @@ import java.util.ArrayList;
  * @author         Miguel Rojas
  *
  * @cdk.created    2006-05-05
- * @cdk.module     reaction
- * @cdk.githash
  *
  **/
 public class SharingAnionReaction extends ReactionEngine implements IReactionProcess {

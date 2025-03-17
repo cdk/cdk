@@ -35,7 +35,6 @@ import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
 
 /**
  * @author John May
- * @cdk.module test-core
  */
 class VertexShortCyclesTest {
 

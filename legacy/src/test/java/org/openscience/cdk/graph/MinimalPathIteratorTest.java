@@ -34,7 +34,6 @@ import java.util.List;
 /**
  * This class tests the MinimalPathIteratorTest class.
  *
- * @cdk.module test-standard
  *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
