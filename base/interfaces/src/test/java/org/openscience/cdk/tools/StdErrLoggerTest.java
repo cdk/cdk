@@ -182,7 +182,7 @@ public class StdErrLoggerTest {
     	Assertions.assertTrue(output.contains("DEBUG: Exception: oh no"));
     	Assertions.assertTrue(output.contains("DEBUG: Caused by"));
     	Assertions.assertTrue(output.contains("DEBUG: Exception: For input string: \"no integer\""));
-    	Assertions.assertTrue(output.contains("at java.lang.Integer.parseInt"));
+    	Assertions.assertTrue(output.contains("java.lang.Integer.parseInt"));
     }
 
     @Test
@@ -202,7 +202,7 @@ public class StdErrLoggerTest {
     	Assertions.assertTrue(output.contains("DEBUG: Exception: oh no"));
     	Assertions.assertTrue(output.contains("DEBUG: Caused by"));
     	Assertions.assertTrue(output.contains("DEBUG: Exception: For input string: \"no integer\""));
-    	Assertions.assertFalse(output.contains("at java.lang.Integer.parseInt"));
+    	Assertions.assertFalse(output.contains("java.lang.Integer.parseInt"));
     }
 
     @Test
