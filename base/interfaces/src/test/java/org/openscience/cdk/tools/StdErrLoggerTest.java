@@ -26,6 +26,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.CDKException;
 
 public class StdErrLoggerTest {
 
@@ -49,6 +50,7 @@ public class StdErrLoggerTest {
     	Assertions.assertFalse(logger.isDebugEnabled());
     	logger.setLevel(ILoggingTool.DEBUG);
     	Assertions.assertTrue(logger.isDebugEnabled());
+    	Assertions.assertEquals(ILoggingTool.DEBUG, logger.getLevel());
     }
 
     @Test
@@ -75,6 +77,138 @@ public class StdErrLoggerTest {
     	String output = new String(errContent.toByteArray());
     	Assertions.assertTrue(logger.isDebugEnabled());
     	Assertions.assertTrue(output.contains("java.class.path"));
+    }
+
+    @Test
+    public void testDebug_Objects() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.DEBUG);
+    	logger.debug("test", "foo", "bar");
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("DEBUG: testfoobar"));
+    }
+
+    @Test
+    public void testInfo() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.INFO);
+    	logger.info("test");
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("INFO: test"));
+    }
+
+    @Test
+    public void testInfo_Objects() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.INFO);
+    	logger.info("test", "foo", "bar");
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("INFO: testfoobar"));
+    }
+
+    @Test
+    public void testWarn() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.INFO);
+    	logger.warn("test");
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("WARN: test"));
+    }
+
+    @Test
+    public void testWarn_Objects() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.INFO);
+    	logger.warn("test", "foo", "bar");
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("WARN: testfoobar"));
+    }
+
+    @Test
+    public void testThrowable() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.DEBUG);
+    	logger.debug(new CDKException("oh no"));
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("DEBUG: Exception: oh no"));
+    }
+
+    @Test
+    public void testThrowables() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.DEBUG);
+    	logger.debug(new CDKException("oh no", new CDKException("this is bad")));
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("DEBUG: Exception: oh no"));
+    	Assertions.assertTrue(output.contains("DEBUG: Caused by"));
+    	Assertions.assertTrue(output.contains("DEBUG: Exception: this is bad"));
+    }
+
+    @Test
+    public void testThrowables_Length() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.DEBUG);
+    	logger.setStackLength(5);
+    	try {
+    		new Integer("no integer");
+    	} catch (Exception e) {
+    		logger.debug(new CDKException("oh no", e));
+		}
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("DEBUG: Exception: oh no"));
+    	Assertions.assertTrue(output.contains("DEBUG: Caused by"));
+    	Assertions.assertTrue(output.contains("DEBUG: Exception: For input string: \"no integer\""));
+    	Assertions.assertTrue(output.contains("at java.lang.Integer.parseInt"));
+    }
+
+    @Test
+    public void testThrowables_Length_Limited() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.DEBUG);
+    	logger.setStackLength(1);
+    	try {
+    		new Integer("no integer");
+    	} catch (Exception e) {
+    		logger.debug(new CDKException("oh no", e));
+		}
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("DEBUG: Exception: oh no"));
+    	Assertions.assertTrue(output.contains("DEBUG: Caused by"));
+    	Assertions.assertTrue(output.contains("DEBUG: Exception: For input string: \"no integer\""));
+    	Assertions.assertFalse(output.contains("at java.lang.Integer.parseInt"));
+    }
+
+    @Test
+    public void testCreate() throws IOException {
+    	ILoggingTool logger = StdErrLogger.create(this.getClass());
+    	Assertions.assertNotNull(logger);
     }
 
 }
