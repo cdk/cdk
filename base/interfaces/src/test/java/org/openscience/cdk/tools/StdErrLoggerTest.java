@@ -43,7 +43,7 @@ public class StdErrLoggerTest {
 	}
 	
     @Test
-    public void testSetLevel() throws IOException {
+    void testSetLevel() {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -54,7 +54,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testDumpSystemProperties() throws IOException {
+    void testDumpSystemProperties() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -67,7 +67,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testDumpClasspath() throws IOException {
+    void testDumpClasspath() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -80,7 +80,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testDebug_Objects() throws IOException {
+    void testDebug_Objects() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -92,7 +92,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testInfo() throws IOException {
+    void testInfo() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -104,7 +104,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testInfo_Objects() throws IOException {
+    void testInfo_Objects() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -116,7 +116,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testFatal() throws IOException {
+    void testFatal() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -128,7 +128,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testWarn() throws IOException {
+    void testWarn() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -140,7 +140,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testWarn_Objects() throws IOException {
+    void testWarn_Objects() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -152,7 +152,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testThrowable() throws IOException {
+    void testThrowable() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -164,7 +164,7 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testThrowables() throws IOException {
+    void testThrowables() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
@@ -178,14 +178,14 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testThrowables_Length() throws IOException {
+    void testThrowables_Length() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
     	logger.setLevel(ILoggingTool.DEBUG);
     	logger.setStackLength(5);
     	try {
-    		new Integer("no integer");
+    		Integer.parseInt("no integer");
     	} catch (Exception e) {
     		logger.debug(new CDKException("oh no", e));
 		}
@@ -198,14 +198,14 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testThrowables_Length_Limited() throws IOException {
+    void testThrowables_Length_Limited() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
     	ILoggingTool logger = new StdErrLogger(this.getClass());
     	logger.setLevel(ILoggingTool.DEBUG);
     	logger.setStackLength(1);
     	try {
-    		new Integer("no integer");
+    		Integer.parseInt("no integer");
     	} catch (Exception e) {
     		logger.debug(new CDKException("oh no", e));
 		}
@@ -218,13 +218,13 @@ public class StdErrLoggerTest {
     }
 
     @Test
-    public void testCreate() throws IOException {
+    void testCreate() {
     	ILoggingTool logger = StdErrLogger.create(this.getClass());
     	Assertions.assertNotNull(logger);
     }
 
     @Test
-    public void testCreateWithSysenvLevels() throws IOException {
+    void testCreateWithSysenvLevels() {
     	String originalLevel = System.getProperty("cdk.logging.level", "warn");
 
     	System.setProperty("cdk.logging.level", "trace");
