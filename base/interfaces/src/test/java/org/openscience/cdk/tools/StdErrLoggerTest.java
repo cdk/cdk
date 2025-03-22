@@ -116,6 +116,18 @@ public class StdErrLoggerTest {
     }
 
     @Test
+    public void testFatal() throws IOException {
+    	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    	System.setErr(new PrintStream(errContent));
+    	ILoggingTool logger = new StdErrLogger(this.getClass());
+    	logger.setLevel(ILoggingTool.FATAL);
+    	logger.fatal("test");
+    	errContent.flush();
+    	String output = new String(errContent.toByteArray());
+    	Assertions.assertTrue(output.contains("FATAL: test"));
+    }
+
+    @Test
     public void testWarn() throws IOException {
     	ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     	System.setErr(new PrintStream(errContent));
@@ -209,6 +221,33 @@ public class StdErrLoggerTest {
     public void testCreate() throws IOException {
     	ILoggingTool logger = StdErrLogger.create(this.getClass());
     	Assertions.assertNotNull(logger);
+    }
+
+    @Test
+    public void testCreateWithSysenvLevels() throws IOException {
+    	String originalLevel = System.getProperty("cdk.logging.level", "warn");
+
+    	System.setProperty("cdk.logging.level", "trace");
+    	ILoggingTool logger = StdErrLogger.create(this.getClass());
+    	Assertions.assertEquals(ILoggingTool.TRACE, logger.getLevel());
+    	System.setProperty("cdk.logging.level", "debug");
+    	logger = StdErrLogger.create(this.getClass());
+    	Assertions.assertEquals(ILoggingTool.DEBUG, logger.getLevel());
+    	System.setProperty("cdk.logging.level", "info");
+    	logger = StdErrLogger.create(this.getClass());
+    	Assertions.assertEquals(ILoggingTool.INFO, logger.getLevel());
+    	System.setProperty("cdk.logging.level", "warn");
+    	logger = StdErrLogger.create(this.getClass());
+    	Assertions.assertEquals(ILoggingTool.WARN, logger.getLevel());
+    	System.setProperty("cdk.logging.level", "error");
+    	logger = StdErrLogger.create(this.getClass());
+    	Assertions.assertEquals(ILoggingTool.ERROR, logger.getLevel());
+    	System.setProperty("cdk.logging.level", "fatal");
+    	logger = StdErrLogger.create(this.getClass());
+    	Assertions.assertEquals(ILoggingTool.FATAL, logger.getLevel());
+
+    	// restore the original value
+    	System.setProperty("cdk.logging.level", originalLevel);
     }
 
 }
