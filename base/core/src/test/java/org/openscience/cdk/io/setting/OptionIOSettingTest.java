@@ -69,4 +69,45 @@ class OptionIOSettingTest {
 			// should happen
 		}
     }
+
+    @Test
+    void testSetSetting_Integer() {
+    	List<String> options = new ArrayList<>();
+    	options.add("Option1");
+    	options.add("Option2");
+    	OptionIOSetting setting = new OptionIOSetting("Menu", Importance.LOW, "What option do you want?", options, "Option1");
+        Assertions.assertEquals("Option1", setting.getSetting());
+        try {
+			setting.setSetting(2);
+		} catch (CDKException e) {
+			Assertions.fail(e); // should not happen
+		}
+        Assertions.assertEquals("Option2", setting.getSetting());
+    }
+
+    @Test
+    void testSetSetting_InvalidValue_Integer() {
+    	List<String> options = new ArrayList<>();
+    	options.add("Option1");
+    	options.add("Option2");
+    	OptionIOSetting setting = new OptionIOSetting("Menu", Importance.LOW, "What option do you want?", options, "Option1");
+        try {
+			setting.setSetting(3);
+			Assertions.fail("Expected exception was not thrown"); // should not happen
+		} catch (CDKException e) {
+			// should happen
+		}
+    }
+
+    @Test
+    void testGetSetting() {
+    	List<String> options = new ArrayList<>();
+    	options.add("Option1");
+    	options.add("Option2");
+    	OptionIOSetting setting = new OptionIOSetting("Menu", Importance.LOW, "What option do you want?", options, "Option1");
+    	List<String> options2 = setting.getOptions();
+        Assertions.assertEquals(2, options2.size());
+        Assertions.assertTrue(options2.contains("Option1"));
+        Assertions.assertTrue(options2.contains("Option2"));
+    }
 }

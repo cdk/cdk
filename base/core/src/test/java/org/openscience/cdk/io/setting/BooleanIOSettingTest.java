@@ -55,6 +55,15 @@ class BooleanIOSettingTest {
     }
 
     @Test
+    void testSetSetting_Variants() throws CDKException {
+        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", "true");
+		setting.setSetting("yes"); Assertions.assertEquals("true", setting.getSetting());
+		setting.setSetting("no"); Assertions.assertEquals("false", setting.getSetting());
+		setting.setSetting("y"); Assertions.assertEquals("true", setting.getSetting());
+		setting.setSetting("n"); Assertions.assertEquals("false", setting.getSetting());
+    }
+
+    @Test
     void testSetSetting_InvalidValue() {
         BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", "true");
         try {
