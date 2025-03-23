@@ -123,7 +123,7 @@ class LoggingToolFactoryTest {
 
         @Override
         public void setLevel(int level) {
-
+        	 // no implemented because not used in the testing
         }
 
         @Override
