@@ -69,31 +69,40 @@ class LoggingToolFactoryTest {
         }
 
         @Override
-        public void debug(Object object) {}
+        public void debug(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void debug(Object object, Object... objects) {}
+        public void debug(Object object, Object... objects) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void dumpClasspath() {}
+        public void dumpClasspath() { // no implemented because not used in the testing
+        }
 
         @Override
-        public void dumpSystemProperties() {}
+        public void dumpSystemProperties() { // no implemented because not used in the testing
+        }
 
         @Override
-        public void error(Object object) {}
+        public void error(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void error(Object object, Object... objects) {}
+        public void error(Object object, Object... objects) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void fatal(Object object) {}
+        public void fatal(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void info(Object object) {}
+        public void info(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void info(Object object, Object... objects) {}
+        public void info(Object object, Object... objects) { // no implemented because not used in the testing
+        }
 
         @Override
         public boolean isDebugEnabled() {
@@ -101,13 +110,16 @@ class LoggingToolFactoryTest {
         }
 
         @Override
-        public void setStackLength(int length) {}
+        public void setStackLength(int length) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void warn(Object object) {}
+        public void warn(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void warn(Object object, Object... objects) {}
+        public void warn(Object object, Object... objects) { // no implemented because not used in the testing
+        }
 
         @Override
         public void setLevel(int level) {
