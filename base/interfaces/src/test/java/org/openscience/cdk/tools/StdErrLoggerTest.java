@@ -28,17 +28,17 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
 
-public class StdErrLoggerTest {
+class StdErrLoggerTest {
 
 	private static PrintStream originalErr = System.err;
 
 	@BeforeAll
-	public static void setUpStreams() {
+	static void setUpStreams() {
 		originalErr = System.err;
 	}
 
 	@AfterAll
-	public static void restoreStreams() {
+	static void restoreStreams() {
 	    System.setErr(originalErr);
 	}
 	
