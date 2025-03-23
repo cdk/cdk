@@ -1,4 +1,5 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *               2025       Egon Willighagen <egon.willighagen@maastrichtuniversity.nl>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -21,36 +22,20 @@ package org.openscience.cdk.exception;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * Checks the functionality of the CDKException class.
+ * Checks the functionality of the NoSuchAtomException class.
  *
  *
- * @see org.openscience.cdk.exception.CDKException
+ * @see org.openscience.cdk.exception.NoSuchAtomException
  */
-class CDKExceptionTest extends CDKTestCase {
+class NoSuchAtomExceptionTest {
 
     @Test
-    void testCDKException_String() {
-        final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
-        CDKException exception = new CDKException(EXPLANATION);
+    void testNoSuchAtomException_String() {
+        final String EXPLANATION = "Buckybull is not an element!";
+        NoSuchAtomException exception = new NoSuchAtomException(EXPLANATION);
         Assertions.assertNotNull(exception);
         Assertions.assertEquals(EXPLANATION, exception.getMessage());
-    }
-
-    @Test
-    void testCDKException_String_Throwable() {
-        final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
-        try {
-            int[] array = new int[0];
-            int dummy = array[50];
-            dummy = dummy + 1;
-            Assertions.fail("Should not have reached this place. The test *requires* the error to occur!");
-        } catch (Exception exception) {
-            CDKException cdkException = new CDKException(EXPLANATION, exception);
-            Assertions.assertNotNull(cdkException);
-            Assertions.assertEquals(EXPLANATION, cdkException.getMessage());
-        }
     }
 }

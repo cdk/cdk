@@ -1,4 +1,5 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *               2025       Egon Willighagen <egon.willighagen@maastrichtuniversity.nl>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -21,7 +22,6 @@ package org.openscience.cdk.exception;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the NoSuchAtomTypeException class.
@@ -29,7 +29,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.exception.NoSuchAtomTypeException
  */
-class NoSuchAtomTypeExceptionTest extends CDKTestCase {
+class NoSuchAtomTypeExceptionTest {
 
     @Test
     void testNoSuchAtomTypeException_String() {
