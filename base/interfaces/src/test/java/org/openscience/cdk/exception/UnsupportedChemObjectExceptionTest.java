@@ -1,4 +1,4 @@
-/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2007,2025  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,15 +20,8 @@ package org.openscience.cdk.exception;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
-/**
- */
-class UnsupportedChemObjectExceptionTest extends CDKTestCase {
-
-    UnsupportedChemObjectExceptionTest() {
-        super();
-    }
+class UnsupportedChemObjectExceptionTest {
 
     @Test
     void testUnsupportedChemObjectException_String() {
