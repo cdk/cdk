@@ -1,4 +1,4 @@
-/* Copyright (C) 2009  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2009,2025  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,9 +27,9 @@ class LoggingToolFactoryTest {
 
     @Test
     void testSetGetLoggingToolClass() {
-        Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
+        Class<? extends ILoggingTool> logger = StdErrLogger.class;
         LoggingToolFactory.setLoggingToolClass(logger);
-        Assertions.assertEquals(Log4jLoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
+        Assertions.assertEquals(StdErrLogger.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
     }
 
     @Test
@@ -40,10 +40,10 @@ class LoggingToolFactoryTest {
 
     @Test
     void testCreateLog4jLoggingTool() {
-        Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
+        Class<? extends ILoggingTool> logger = StdErrLogger.class;
         LoggingToolFactory.setLoggingToolClass(logger);
         ILoggingTool instance = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
-        Assertions.assertTrue(instance instanceof Log4jLoggingTool);
+        Assertions.assertTrue(instance instanceof StdErrLogger);
     }
 
     @Test
