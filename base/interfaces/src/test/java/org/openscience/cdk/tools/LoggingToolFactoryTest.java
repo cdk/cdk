@@ -1,4 +1,4 @@
-/* Copyright (C) 2009  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2009,2025  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,9 +27,9 @@ class LoggingToolFactoryTest {
 
     @Test
     void testSetGetLoggingToolClass() {
-        Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
+        Class<? extends ILoggingTool> logger = StdErrLogger.class;
         LoggingToolFactory.setLoggingToolClass(logger);
-        Assertions.assertEquals(Log4jLoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
+        Assertions.assertEquals(StdErrLogger.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
     }
 
     @Test
@@ -40,10 +40,10 @@ class LoggingToolFactoryTest {
 
     @Test
     void testCreateLog4jLoggingTool() {
-        Class<? extends ILoggingTool> logger = Log4jLoggingTool.class;
+        Class<? extends ILoggingTool> logger = StdErrLogger.class;
         LoggingToolFactory.setLoggingToolClass(logger);
         ILoggingTool instance = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
-        Assertions.assertTrue(instance instanceof Log4jLoggingTool);
+        Assertions.assertTrue(instance instanceof StdErrLogger);
     }
 
     @Test
@@ -69,31 +69,40 @@ class LoggingToolFactoryTest {
         }
 
         @Override
-        public void debug(Object object) {}
+        public void debug(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void debug(Object object, Object... objects) {}
+        public void debug(Object object, Object... objects) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void dumpClasspath() {}
+        public void dumpClasspath() { // no implemented because not used in the testing
+        }
 
         @Override
-        public void dumpSystemProperties() {}
+        public void dumpSystemProperties() { // no implemented because not used in the testing
+        }
 
         @Override
-        public void error(Object object) {}
+        public void error(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void error(Object object, Object... objects) {}
+        public void error(Object object, Object... objects) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void fatal(Object object) {}
+        public void fatal(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void info(Object object) {}
+        public void info(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void info(Object object, Object... objects) {}
+        public void info(Object object, Object... objects) { // no implemented because not used in the testing
+        }
 
         @Override
         public boolean isDebugEnabled() {
@@ -101,17 +110,20 @@ class LoggingToolFactoryTest {
         }
 
         @Override
-        public void setStackLength(int length) {}
+        public void setStackLength(int length) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void warn(Object object) {}
+        public void warn(Object object) { // no implemented because not used in the testing
+        }
 
         @Override
-        public void warn(Object object, Object... objects) {}
+        public void warn(Object object, Object... objects) { // no implemented because not used in the testing
+        }
 
         @Override
         public void setLevel(int level) {
-
+        	 // no implemented because not used in the testing
         }
 
         @Override

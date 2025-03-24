@@ -1,4 +1,5 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *               2025       Egon Willighagen <egon.willighagen@maastrichtuniversity.nl>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -21,20 +22,19 @@ package org.openscience.cdk.exception;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * Checks the functionality of the NoSuchAtomException class.
+ * Checks the functionality of the NoSuchAtomTypeException class.
  *
  *
- * @see org.openscience.cdk.exception.NoSuchAtomException
+ * @see org.openscience.cdk.exception.NoSuchAtomTypeException
  */
-class NoSuchAtomExceptionTest extends CDKTestCase {
+class NoSuchAtomTypeExceptionTest {
 
     @Test
-    void testNoSuchAtomException_String() {
-        final String EXPLANATION = "Buckybull is not an element!";
-        NoSuchAtomException exception = new NoSuchAtomException(EXPLANATION);
+    void testNoSuchAtomTypeException_String() {
+        final String EXPLANATION = "Buckybull is not an atom type!";
+        NoSuchAtomTypeException exception = new NoSuchAtomTypeException(EXPLANATION);
         Assertions.assertNotNull(exception);
         Assertions.assertEquals(EXPLANATION, exception.getMessage());
     }

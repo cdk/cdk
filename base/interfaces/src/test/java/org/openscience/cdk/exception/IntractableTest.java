@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
+/* Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -35,13 +34,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 class IntractableTest {
 
     @Test
-    void timeout() throws Exception {
+    void timeout() {
         Intractable e = Intractable.timeout(12);
         assertThat(e.getMessage(), is("Operation did not finish after 12 ms."));
     }
 
     @Test
-    void timeoutWithDesc() throws Exception {
+    void timeoutWithDesc() {
         Intractable e = Intractable.timeout("MCS", 200);
         assertThat(e.getMessage(), is("MCS did not finish after 200 ms."));
     }
