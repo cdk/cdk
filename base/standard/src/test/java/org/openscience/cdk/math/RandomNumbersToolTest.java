@@ -18,16 +18,15 @@
  */
 package org.openscience.cdk.math;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
-
-import java.util.Random;
 
 /**
  */
-class RandomNumbersToolTest extends CDKTestCase {
+class RandomNumbersToolTest {
 
     RandomNumbersToolTest() {
         super();

@@ -20,11 +20,10 @@ package org.openscience.cdk.math;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class FortranFormatTest extends CDKTestCase {
+class FortranFormatTest {
 
     FortranFormatTest() {
         super();
