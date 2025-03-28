@@ -15,6 +15,16 @@
     <name>cdk-standard</name>
     <dependencies>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>javax.vecmath</groupId>
             <artifactId>vecmath</artifactId>
         </dependency>
@@ -28,6 +38,12 @@
             <artifactId>cdk-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-data</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 	<build>
     	<plugins>
@@ -35,9 +51,6 @@
         		<groupId>org.apache.maven.plugins</groupId>
         		<artifactId>maven-surefire-plugin</artifactId>
         		<version>3.2.5</version>
-        		<configuration>
-          			<skipTests>true</skipTests>
-        		</configuration>
       		</plugin>
     	</plugins>
   	</build>

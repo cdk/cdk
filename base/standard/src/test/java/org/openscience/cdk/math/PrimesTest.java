@@ -20,11 +20,10 @@ package org.openscience.cdk.math;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class PrimesTest extends CDKTestCase {
+class PrimesTest {
 
     PrimesTest() {
         super();
