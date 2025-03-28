@@ -24,46 +24,43 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.test.CDKTestCase;
 
-/**
- */
-class AtomContainerPermutorTest extends CDKTestCase {
+class AtomContainerBondPermutorTest {
+
+    AtomContainerBondPermutorTest() {
+        super();
+    }
 
     @Test
-    void testAtomPermutation() {
-        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-        IAtomContainer result;
-        String atoms;
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("N"));
-        ac.addAtom(new Atom("P"));
-        ac.addAtom(new Atom("O"));
-        ac.addAtom(new Atom("S"));
-        ac.addAtom(new Atom("Br"));
-        ac.addBond(0, 1, IBond.Order.SINGLE);
-        ac.addBond(1, 2, IBond.Order.SINGLE);
-        ac.addBond(2, 3, IBond.Order.SINGLE);
-        ac.addBond(3, 4, IBond.Order.SINGLE);
-        ac.addBond(4, 5, IBond.Order.SINGLE);
-        AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(ac);
-        int counter = 0;
-        while (acap.hasNext()) {
-            counter++;
-            atoms = "";
-            result = acap.next();
-            for (int f = 0; f < result.getAtomCount(); f++) {
-                atoms += result.getAtom(f).getSymbol();
-            }
-        }
-        Assertions.assertEquals(719, counter);
+    void constructorTest() {
+        IAtomContainer atomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        atomContainer.addAtom(new Atom("C"));
+        atomContainer.addAtom(new Atom("O"));
+        atomContainer.addAtom(new Atom("S"));
+        atomContainer.addBond(0, 1, IBond.Order.SINGLE);
+        atomContainer.addBond(0, 2, IBond.Order.SINGLE);
+        AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(atomContainer);
+        Assertions.assertNotNull(acbp);
+    }
+
+    @Test
+    void containerFromPermutationTest() {
+        IAtomContainer atomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        atomContainer.addAtom(new Atom("C"));
+        atomContainer.addAtom(new Atom("O"));
+        atomContainer.addAtom(new Atom("S"));
+        atomContainer.addBond(0, 1, IBond.Order.SINGLE);
+        atomContainer.addBond(0, 2, IBond.Order.SINGLE);
+        AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(atomContainer);
+        IAtomContainer permuted = acbp.containerFromPermutation(new int[]{1, 0, 2});
+        Assertions.assertNotNull(permuted);
+        Assertions.assertEquals(atomContainer.getAtomCount(), permuted.getAtomCount());
+        Assertions.assertEquals(atomContainer.getBondCount(), permuted.getBondCount());
     }
 
     @Test
     void testBondPermutation() {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-        IAtomContainer result;
-        String bonds;
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("N"));
         ac.addAtom(new Atom("P"));
@@ -79,12 +76,7 @@ class AtomContainerPermutorTest extends CDKTestCase {
         int counter = 0;
         while (acap.hasNext()) {
             counter++;
-            bonds = "";
-            result = acap.next();
-            for (int f = 0; f < result.getBondCount(); f++) {
-                bonds += result.getBond(f).getOrder();
-            }
-            //logger.debug(bonds);
+            acap.next();
         }
         Assertions.assertEquals(119, counter);
     }
