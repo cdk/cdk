@@ -41,7 +41,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @author John May
  */
-final class RingSearchTest_Hexaphenylene {
+final class RingSearch_HexaphenyleneTest {
 
     private final IAtomContainer hexaphenylene = hexaphenylene();
 

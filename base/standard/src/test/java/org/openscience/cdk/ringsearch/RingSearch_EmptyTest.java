@@ -35,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @author John May
  */
-final class RingSearchTest_Empty {
+final class RingSearch_EmptyTest {
 
     private final IAtomContainer empty = DefaultChemObjectBuilder.getInstance().newAtomContainer();
 

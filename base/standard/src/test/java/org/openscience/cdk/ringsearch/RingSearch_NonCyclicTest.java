@@ -35,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @author John May
  */
-final class RingSearchTest_NonCyclic {
+final class RingSearch_NonCyclicTest {
 
     private final IAtomContainer nonCyclic = TestMoleculeFactory.makeBranchedAliphatic();
 

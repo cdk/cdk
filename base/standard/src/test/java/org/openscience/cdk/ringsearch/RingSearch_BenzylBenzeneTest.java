@@ -40,7 +40,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @author John May
  * */
-final class RingSearchTest_BenzylBenzene {
+final class RingSearch_BenzylBenzeneTest {
 
     private final IAtomContainer benzylbenzene = benzylbenzene();
 
