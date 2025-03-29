@@ -20,30 +20,33 @@ package org.openscience.cdk.qsar.result;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class IntegerArrayResultTypeTest extends CDKTestCase {
+class BooleanResultTest {
 
-    IntegerArrayResultTypeTest() {
+    BooleanResultTest() {
         super();
     }
 
+    // well, these tests are not shocking...
+
     @Test
-    void testIntegerArrayResultType() {
-        IDescriptorResult type = new IntegerArrayResultType(6);
-        Assertions.assertNotNull(type);
+    void testBooleanResult_boolean() {
+        BooleanResult result = new BooleanResult(true);
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    void testBooleanValue() {
+        Assertions.assertTrue(new BooleanResult(true).booleanValue());
+        Assertions.assertFalse(new BooleanResult(false).booleanValue());
     }
 
     @Test
     void testToString() {
-        Assertions.assertEquals("IntegerArrayResultType", new IntegerArrayResultType(7).toString());
-    }
-
-    @Test
-    void testLength() {
-        Assertions.assertEquals(7, new IntegerArrayResultType(7).length());
+        Assertions.assertEquals("true", new BooleanResult(true).toString());
+        Assertions.assertEquals("false", new BooleanResult(false).toString());
     }
 
 }

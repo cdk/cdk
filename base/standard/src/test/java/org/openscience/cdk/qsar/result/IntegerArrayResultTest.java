@@ -20,33 +20,44 @@ package org.openscience.cdk.qsar.result;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class DoubleArrayResultTest extends CDKTestCase {
+class IntegerArrayResultTest {
 
-    DoubleArrayResultTest() {
+    IntegerArrayResultTest() {
         super();
     }
 
     @Test
-    void testDoubleArrayResult_int() {
-        DoubleArrayResult result = new DoubleArrayResult(5);
+    void IntegerArrayResult_int() {
+        IntegerArrayResult result = new IntegerArrayResult(5);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(5, result.length());
     }
 
     @Test
-    void testDoubleArrayResult() {
-        DoubleArrayResult result = new DoubleArrayResult();
+    void testIntegerArrayResult() {
+        IntegerArrayResult result = new IntegerArrayResult();
         Assertions.assertNotNull(result);
         Assertions.assertEquals(0, result.length());
     }
 
     @Test
+    void testAdd_int() {
+        IntegerArrayResult result = new IntegerArrayResult();
+        Assertions.assertNotNull(result);
+        result.add(5);
+        result.add(5);
+        result.add(5);
+        result.add(5);
+        result.add(5);
+        Assertions.assertEquals(5, result.length());
+    }
+
+    @Test
     void testSize() {
-        DoubleArrayResult result = new DoubleArrayResult();
+        IntegerArrayResult result = new IntegerArrayResult();
         Assertions.assertNotNull(result);
         Assertions.assertEquals(0, result.length());
         result.add(5);
@@ -54,43 +65,32 @@ class DoubleArrayResultTest extends CDKTestCase {
     }
 
     @Test
-    void testAdd_double() {
-        DoubleArrayResult result = new DoubleArrayResult();
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals("", result.toString());
-        result.add(5);
-        result.add(2);
-        result.add(-3);
-        Assertions.assertEquals(3, result.length());
-    }
-
-    @Test
     void testToString() {
-        DoubleArrayResult result = new DoubleArrayResult();
+        IntegerArrayResult result = new IntegerArrayResult();
         Assertions.assertNotNull(result);
         Assertions.assertEquals("", result.toString());
         result.add(5);
-        Assertions.assertEquals("5.0", result.toString());
+        Assertions.assertEquals("5", result.toString());
         result.add(2);
-        Assertions.assertEquals("5.0,2.0", result.toString());
+        Assertions.assertEquals("5,2", result.toString());
         result.add(-3);
-        Assertions.assertEquals("5.0,2.0,-3.0", result.toString());
+        Assertions.assertEquals("5,2,-3", result.toString());
     }
 
     @Test
     void testGet_int() {
-        DoubleArrayResult result = new DoubleArrayResult();
+        IntegerArrayResult result = new IntegerArrayResult();
         Assertions.assertNotNull(result);
         Assertions.assertEquals("", result.toString());
         result.add(5);
-        Assertions.assertEquals(5, result.get(0), 0.000001);
+        Assertions.assertEquals(5, result.get(0));
         result.add(2);
-        Assertions.assertEquals(5, result.get(0), 0.000001);
-        Assertions.assertEquals(2, result.get(1), 0.000001);
+        Assertions.assertEquals(5, result.get(0));
+        Assertions.assertEquals(2, result.get(1));
         result.add(-1);
-        Assertions.assertEquals(5, result.get(0), 0.000001);
-        Assertions.assertEquals(2, result.get(1), 0.000001);
-        Assertions.assertEquals(-1, result.get(2), 0.000001);
+        Assertions.assertEquals(5, result.get(0));
+        Assertions.assertEquals(2, result.get(1));
+        Assertions.assertEquals(-1, result.get(2));
     }
 
 }

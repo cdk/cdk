@@ -20,34 +20,36 @@ package org.openscience.cdk.qsar.result;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class BooleanResultTest extends CDKTestCase {
+class DoubleResultTest {
 
-    BooleanResultTest() {
+    DoubleResultTest() {
         super();
     }
 
-    // well, these tests are not shocking...
-
     @Test
-    void testBooleanResult_boolean() {
-        BooleanResult result = new BooleanResult(true);
+    void testDoubleResult_double() {
+        DoubleResult result = new DoubleResult(5.0);
         Assertions.assertNotNull(result);
     }
 
     @Test
-    void testBooleanValue() {
-        Assertions.assertTrue(new BooleanResult(true).booleanValue());
-        Assertions.assertFalse(new BooleanResult(false).booleanValue());
+    void testToString() {
+        DoubleResult result = new DoubleResult(5.0);
+        Assertions.assertEquals("5.0", result.toString());
     }
 
     @Test
-    void testToString() {
-        Assertions.assertEquals("true", new BooleanResult(true).toString());
-        Assertions.assertEquals("false", new BooleanResult(false).toString());
+    void testDoubleValue() {
+        DoubleResult result = new DoubleResult(5);
+        Assertions.assertEquals(5.0, result.doubleValue(), 0.000001);
     }
 
+    @Test
+    void testLength() {
+        DoubleResult result = new DoubleResult(5);
+        Assertions.assertEquals(1, result.length());
+    }
 }

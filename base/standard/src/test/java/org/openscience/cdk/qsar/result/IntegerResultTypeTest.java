@@ -20,37 +20,29 @@ package org.openscience.cdk.qsar.result;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class IntegerResultTest extends CDKTestCase {
+class IntegerResultTypeTest {
 
-    IntegerResultTest() {
+    IntegerResultTypeTest() {
         super();
     }
 
     @Test
-    void testIntegerResult_int() {
-        IntegerResult result = new IntegerResult(5);
-        Assertions.assertNotNull(result);
+    void testIntegerResultType() {
+        IDescriptorResult type = new IntegerResultType();
+        Assertions.assertNotNull(type);
     }
 
     @Test
     void testToString() {
-        IntegerResult result = new IntegerResult(5);
-        Assertions.assertEquals("5", result.toString());
-    }
-
-    @Test
-    void testIntValue() {
-        IntegerResult result = new IntegerResult(5);
-        Assertions.assertEquals(5, result.intValue());
+        Assertions.assertEquals("IntegerResultType", new IntegerResultType().toString());
     }
 
     @Test
     void testLength() {
-        IntegerResult result = new IntegerResult(5);
-        Assertions.assertEquals(1, result.length());
+        Assertions.assertEquals(1, new IntegerResultType().length());
     }
+
 }
