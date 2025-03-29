@@ -25,13 +25,12 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the {@link OWLAtomTypeMappingReader}.
  *
  */
-class OWLAtomTypeMappingReaderTest extends CDKTestCase {
+class OWLAtomTypeMappingReaderTest {
 
     private final String OWL_CONTENT = "<?xml version=\"1.0\"?>" + "<!DOCTYPE rdf:RDF ["
                                              + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
