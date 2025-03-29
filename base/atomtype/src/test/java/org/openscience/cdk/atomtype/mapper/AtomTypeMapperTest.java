@@ -20,14 +20,13 @@ package org.openscience.cdk.atomtype.mapper;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * This class tests the mapper that maps CDK atom types to other atom type
  * schemes.
  *
  */
-class AtomTypeMapperTest extends CDKTestCase {
+class AtomTypeMapperTest {
 
     @Test
     void testGetInstance_String() {

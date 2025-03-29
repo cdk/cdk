@@ -21,11 +21,10 @@ package org.openscience.cdk.tools.periodictable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class PeriodicTableTest extends CDKTestCase {
+class PeriodicTableTest {
 
     PeriodicTableTest() {
         super();
