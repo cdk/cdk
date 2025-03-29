@@ -13,7 +13,6 @@
     <modules>
         <module>control</module>
         <module>extra</module>
-        <module>test-extra</module>
         <module>diff</module>
         <module>log4j</module>
         <module>slf4j</module>
