@@ -29,76 +29,68 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Unit tests for ring search. These unit tests ensure bicyclo rings (a bridged
- * system) is found correctly.
+ * ring search unit tests for spiro rings
  *
  * @author John May
  */
-final class RingSearchTest_Bicyclo {
+final class RingSearch_SpiroRingsTest {
 
-    private static final IAtomContainer bicyclo = TestMoleculeFactory.makeBicycloRings();
+    private final IAtomContainer spiro = TestMoleculeFactory.makeSpiroRings();
 
     @Test
     void testCyclic() {
-        int n = bicyclo.getAtomCount();
-        assertThat("cyclic vertices should be invariant for any ordering", new RingSearch(bicyclo).cyclic().length,
-                is(n));
+        assertThat(new RingSearch(spiro).cyclic().length, is(spiro.getAtomCount()));
     }
 
     @Test
     void testCyclic_Int() {
-        int n = bicyclo.getAtomCount();
-
-        RingSearch ringSearch = new RingSearch(bicyclo);
-        for (int i = 0; i < n; i++)
-            Assertions.assertTrue(ringSearch.cyclic(i), "all atoms should be cyclic");
-
+        int n = spiro.getAtomCount();
+        RingSearch ringSearch = new RingSearch(spiro);
+        for (int i = 0; i < n; i++) {
+            Assertions.assertTrue(ringSearch.cyclic(i));
+        }
     }
 
     @Test
     void testIsolated() {
-        assertThat("no isolated cycle should be found", new RingSearch(bicyclo).isolated().length, is(0));
-
+        RingSearch search = new RingSearch(spiro);
+        int[][] isolated = search.isolated();
+        assertThat(isolated.length, is(2));
+        assertThat(4, anyOf(is(isolated[0].length), is(isolated[1].length)));
+        assertThat(7, anyOf(is(isolated[0].length), is(isolated[1].length)));
     }
 
     @Test
     void testFused() {
-        assertThat("one fused cycle should be found", new RingSearch(bicyclo).fused().length, is(1));
-
+        assertThat(new RingSearch(spiro).fused().length, is(0));
     }
 
     @Test
     void testRingFragments() {
-        int n = bicyclo.getAtomCount();
-
-        IAtomContainer fragment = new RingSearch(bicyclo).ringFragments();
-        assertThat(fragment.getAtomCount(), is(bicyclo.getAtomCount()));
-        assertThat(fragment.getBondCount(), is(bicyclo.getBondCount()));
-
+        IAtomContainer fragment = new RingSearch(spiro).ringFragments();
+        assertThat(fragment.getAtomCount(), is(spiro.getAtomCount()));
+        assertThat(fragment.getBondCount(), is(spiro.getBondCount()));
     }
 
     @Test
     void testIsolatedRingFragments() {
-        int n = bicyclo.getAtomCount();
-
-        List<IAtomContainer> fragments = new RingSearch(bicyclo).isolatedRingFragments();
-        Assertions.assertTrue(fragments.isEmpty());
-
+        RingSearch search = new RingSearch(spiro);
+        List<IAtomContainer> isolated = search.isolatedRingFragments();
+        assertThat(isolated.size(), is(2));
+        assertThat(4, anyOf(is(isolated.get(0).getAtomCount()), is(isolated.get(1).getAtomCount())));
+        assertThat(7, anyOf(is(isolated.get(0).getAtomCount()), is(isolated.get(1).getAtomCount())));
     }
 
     @Test
     void testFusedRingFragments() {
-
-        List<IAtomContainer> fragments = new RingSearch(bicyclo).fusedRingFragments();
-        assertThat(fragments.size(), is(1));
-        IAtomContainer fragment = fragments.get(0);
-        assertThat(fragment.getAtomCount(), is(bicyclo.getAtomCount()));
-        assertThat(fragment.getBondCount(), is(bicyclo.getBondCount()));
-
+        RingSearch search = new RingSearch(spiro);
+        List<IAtomContainer> fused = search.fusedRingFragments();
+        assertThat(fused.size(), is(0));
     }
 
 }

@@ -39,7 +39,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @author John May
  */
-class RingSearchTest_Fused {
+class RingSearch_FusedTest {
 
     private final IAtomContainer fusedRings = TestMoleculeFactory.makeFusedRings();
 
