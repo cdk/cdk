@@ -21,11 +21,8 @@ package org.openscience.cdk.qsar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDK;
-import org.openscience.cdk.test.CDKTestCase;
 
-/**
- */
-class DescriptorSpecificationTest extends CDKTestCase {
+class DescriptorSpecificationTest {
 
     DescriptorSpecificationTest() {
         super();
