@@ -631,8 +631,6 @@
                         <exclude>**/TestMoleculeFactory.java</exclude>
                         <!-- missing functionality -->
                         <exclude>**/cdk/limitations/**</exclude>
-                        <!-- format tests do not work (cyclic dependency) -->
-                        <exclude>**/io/formats/*FormatTest.java</exclude>
                     </excludes>
                     <excludedGroups>SlowTest</excludedGroups>
                 </configuration>
