@@ -16,38 +16,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.exception;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class ElementComparatorTest extends CDKTestCase {
+class InvalidSmilesExceptionTest {
 
-    ElementComparatorTest() {
+    InvalidSmilesExceptionTest() {
         super();
     }
 
     @Test
-    void testElementComparator() {
-        ElementComparator comp = new ElementComparator();
-        Assertions.assertNotNull(comp);
+    void testInvalidSmilesException_String() {
+        final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
+        InvalidSmilesException exception = new InvalidSmilesException(EXPLANATION);
+        Assertions.assertNotNull(exception);
+        Assertions.assertEquals(EXPLANATION, exception.getMessage());
     }
-
-    /**
-     * @cdk.bug 1638375
-     */
-    @Test
-    void testCompare_Object_Object() {
-        ElementComparator comp = new ElementComparator();
-
-        Assertions.assertTrue(comp.compare("C", "H") < 0);
-        Assertions.assertTrue(comp.compare("H", "O") < 0);
-        Assertions.assertTrue(comp.compare("N", "O") < 0);
-        Assertions.assertEquals(0, comp.compare("Cl", "Cl"));
-        Assertions.assertTrue(comp.compare("Cl", "C") > 0);
-    }
-
 }
