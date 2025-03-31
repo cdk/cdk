@@ -295,34 +295,21 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
                 Color highlight = null;
 
-
-                if (false) {
-                    Map<Color, Integer> colorCount = new HashMap<>();
-                    for (IAtom atom : ring.atoms()) {
-                        Color color = getHighlightColor(atom, parameters);
-                        if (color != null) {
-                            Integer count = colorCount.computeIfAbsent(color, k -> 0);
-                            colorCount.put(color, count + 1);
-                        }
-                    }
-
-                    for (Map.Entry<Color, Integer> e : colorCount.entrySet()) {
-                        if (e.getValue() >= (ring.getAtomCount() / 2))
-                            highlight = e.getKey();
-                    }
-                } else {
-                    for (IBond bond : ring.bonds()) {
-                        Color color = getHighlightColor(bond, parameters);
-                        if (color == null)
-                            continue;
-                        if (highlight == null) {
-                            highlight = color;
-                        } else if (!highlight.equals(color)) {
-                            highlight = null;
-                            break;
-                        }
+                for (IBond bond : ring.bonds()) {
+                    Color color = getHighlightColor(bond, parameters);
+                    if (color == null)
+                        continue;
+                    if (isHidden(bond)) {
+                        highlight = null;
+                        break;
+                    } else if (highlight == null) {
+                        highlight = color;
+                    } else if (!highlight.equals(color)) {
+                        highlight = null;
+                        break;
                     }
                 }
+
 
                 if (highlight == null)
                     continue;
