@@ -568,24 +568,41 @@ final class BeamToCDK {
     private IStereoElement newExtendedTetrahedral(int u, Graph g, IAtom[] atoms) {
 
         int[] terminals = findExtendedTetrahedralEnds(g, u);
-        int[] xs = new int[]{-1, terminals[0], -1, terminals[1]};
+        int[] xs = new int[]{-1, -1, -1, -1};
 
         int n = 0;
         for (Edge e : g.edges(terminals[0])) {
             if (e.bond().order() == 1) xs[n++] = e.other(terminals[0]);
         }
+        if (n == 1) {
+            if (xs[0] > terminals[0]) {
+                xs[1] = xs[0];
+                xs[0] = terminals[0];
+            } else {
+                xs[1] = terminals[0];
+            }
+        }
         n = 2;
         for (Edge e : g.edges(terminals[1])) {
             if (e.bond().order() == 1) xs[n++] = e.other(terminals[1]);
         }
-
-        Arrays.sort(xs);
+        if (n == 3) {
+            if (xs[2] > terminals[1]) {
+                xs[3] = xs[2];
+                xs[2] = terminals[1];
+            } else {
+                xs[3] = terminals[1];
+            }
+        }
 
         Stereo stereo = g.configurationOf(u).shorthand() == Configuration.CLOCKWISE ? Stereo.CLOCKWISE
                 : Stereo.ANTI_CLOCKWISE;
 
-        return new org.openscience.cdk.stereo.ExtendedTetrahedral(atoms[u], new IAtom[]{atoms[xs[0]], atoms[xs[1]],
-                atoms[xs[2]], atoms[xs[3]]}, stereo);
+        return new org.openscience.cdk.stereo.ExtendedTetrahedral(atoms[u],
+                                                                  new IAtom[]{atoms[xs[0]],
+                                                                              atoms[xs[1]],
+                                                                              atoms[xs[2]],
+                                                                              atoms[xs[3]]}, stereo);
     }
 
     /**
