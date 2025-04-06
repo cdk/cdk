@@ -28,6 +28,7 @@ import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -44,12 +45,15 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * Performs exhaustive fragmentation of molecules by breaking single non-ring, non-terminal bonds.
+ * Performs exhaustive fragmentation of molecules by breaking single non-ring, non-terminal bonds in all
+ * combinations.
  * <p>
- * This fragmentation method avoids splitting bonds connected to single heavy atoms (non-terminal bonds).
+ * Non-terminal meaning bonds connected to more than one single heavy atom (non-terminal bonds).
  * By default:
- * - Fragments smaller than 6 atoms (excluding implicit hydrogen) are ignored.
- * - Fragments are returned unsaturated.
+ * - Fragments smaller than 6 atoms (excluding implicit hydrogen) don't get returned.
+ * <br>
+ * - Fragments are returned with open valences, where a bond has been split.
+ * <br>
  * However, users can modify these settings.
  * <p>
  * <strong>Example Usage:</strong>
@@ -57,17 +61,19 @@ import java.util.Stack;
  * // By default, returns unsaturated fragments with a minimum size of 6 atoms
  * ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter();
  * SmilesParser smiParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
- * IAtomContainer mol = smiParser.parseSmiles("c1ccccc1C");  // Benzyl molecule
+ * IAtomContainer mol = smiParser.parseSmiles("C1CCC(C1)C2=CC=CC=C2");  //  Cyclopentylbenzene molecule
  * fragmenter.generateFragments(mol);
  *
  * // Retrieve SMILES representations of fragments
  * String[] smilesFragments = fragmenter.getFragments();
+ * // Results:
+ * //
  *
  * // Retrieve AtomContainer representations of fragments
  * IAtomContainer[] atomContainerFragments = fragmenter.getFragmentsAsContainers();
  * }</pre>
  *
- * @author Rajarshi Guha
+ * @author Rajarshi Guha, Tom Weiß
  * @cdk.module  fragment
  * @cdk.keyword fragment
  */
@@ -78,7 +84,10 @@ public class ExhaustiveFragmenter implements IFragmenter {
      */
     public enum Saturation {
         // Fragments will be returned in their saturated form (implicit hydrogen atoms added).
-        SATURATED_FRAGMENTS,
+        HYDROGEN_SATURATED_FRAGMENTS,
+
+        // Fragments will be saturated with R atoms.
+        REST_SATURATED_FRAGMENTS,
 
         // Fragments will be returned in their unsaturated form (no additional hydrogen atoms).
         UNSATURATED_FRAGMENTS
@@ -127,16 +136,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
     }
 
     /**
-     * Constructs an ExhaustiveFragmenter with a user-defined saturation setting.
-     * The minimum fragment size defaults to 6 atoms.
-     *
-     * @param saturationSetting Determines whether fragments should be saturated or unsaturated.
-     */
-    public ExhaustiveFragmenter(Saturation saturationSetting) {
-        this(DEFAULT_MIN_FRAG_SIZE, saturationSetting);
-    }
-
-    /**
      * Sets the minimum allowed fragment size.
      *
      * @param minFragSize Minimum number of atoms in a valid fragment.
@@ -166,11 +165,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     /**
      * Generates fragments for the given molecule.
-     * <p>
-     * Based on the saturation setting:
-     * - **Unsaturated mode**: Fragments are returned without additional hydrogen atoms.
-     * - **Saturated mode**: Hydrogen atoms are explicitly added to atoms where bonds are broken.
-     * <p>
      * The generated fragments are stored internally and can be retrieved via:
      * - {@link #getFragments()} (SMILES representation)
      * - {@link #getFragmentsAsContainers()} (IAtomContainer representation)
@@ -181,22 +175,18 @@ public class ExhaustiveFragmenter implements IFragmenter {
     @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
         fragMap.clear();
-        if (this.saturationSetting == Saturation.UNSATURATED_FRAGMENTS) {
-            runUnsaturated(atomContainer, maxTreeDepth);
-        } else {
-            runSaturated(atomContainer, maxTreeDepth);
-        }
+        run(atomContainer, this.maxTreeDepth);
     }
 
     /**
-     * Splits the molecule at all possible combinations of splittable bonds and adds implicit hydrogen atoms
-     * to atoms that were originally involved in the split.
+     * Splits the molecule at all possible combinations of splittable bonds and saturates the open valences of the
+     * resulting fragments if the Saturation setting is turned on.
      *
      * @param atomContainer The molecule to be split.
      * @param maxTreeDepth  The maximum number of bond splits allowed per subset.
      * @throws CDKException If an error occurs during hydrogen addition or atom type perception.
      */
-    private void runSaturated(IAtomContainer atomContainer, int maxTreeDepth) throws CDKException {
+    private void run(IAtomContainer atomContainer, int maxTreeDepth) throws CDKException {
 
         // Return early if the molecule has fewer than 3 bonds (no meaningful splits possible)
         if (atomContainer.getBondCount() < 3) return;
@@ -239,85 +229,19 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
             // Process each fragment
             for (IAtomContainer partContainer : parts) {
-                AtomContainerManipulator.clearAtomConfigurations(partContainer);
-
-                // Reset implicit hydrogen count before recalculating
-                for (IAtom atom : partContainer.atoms()) {
-                    atom.setImplicitHydrogenCount(0);
-                }
 
                 // Configure atom types and add implicit hydrogens
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
-                CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
 
-                // Apply aromaticity perception (legacy operation)
-                // TODO: Investigate for the current method to do this.
-                Aromaticity.cdkLegacy().apply(partContainer);
+                // Add Hydrogen to fragments if
+                if (saturationSetting == Saturation.HYDROGEN_SATURATED_FRAGMENTS) {
 
-                // Generate a unique SMILES representation of the fragment
-                String tmpSmiles = smilesGenerator.create(partContainer);
-                int numberOfAtoms = partContainer.getAtomCount();
-
-                // Store the fragment if it meets the size requirement and is unique
-                if (numberOfAtoms >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
-                    fragMap.put(tmpSmiles, partContainer);
+                    // Reset implicit hydrogen count before recalculating
+                    for (IAtom atom : partContainer.atoms()) {
+                        atom.setImplicitHydrogenCount(0);
+                    }
+                    CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
                 }
-            }
-        }
-    }
-
-    /**
-     * Splits the molecule at all possible combinations of splittable bonds without adding implicit hydrogens.
-     *
-     * @param atomContainer The molecule to be split.
-     * @param maxTreeDepth  The maximum number of bond splits allowed per subset.
-     * @throws CDKException If an error occurs during atom type perception.
-     */
-    private void runUnsaturated(IAtomContainer atomContainer, int maxTreeDepth) throws CDKException {
-
-        // Return early if the molecule has fewer than 3 bonds (no meaningful splits possible)
-        if (atomContainer.getBondCount() < 3) return;
-
-        // Retrieve bonds that are eligible for splitting
-        IBond[] splittableBonds = getSplitableBonds(atomContainer);
-        int splittableBondsLength = splittableBonds.length;
-
-        // If no splittable bonds are found, return early
-        if (splittableBondsLength == 0) return;
-        logger.debug("Got " + splittableBondsLength + " splittable bonds");
-
-        // Compute the number of possible bond subsets (excluding the empty set): 2^n - 1
-        int numberOfIterations = (1 << splittableBondsLength) - 1;
-
-        // Store indices of splittable bonds for subset generation
-        int[] splittableBondIndices = new int[splittableBondsLength];
-        for (int i = 0; i < splittableBondsLength; i++) {
-            splittableBondIndices[i] = splittableBonds[i].getIndex();
-        }
-
-        // Iterate over all non-empty subsets of splittable bonds
-        for (int i = 1; i <= numberOfIterations; i++) {
-            int[] subset = generateSubset(i, splittableBondIndices);
-            int subsetSize = subset.length;
-
-            // Skip subsets exceeding the allowed depth
-            if (subsetSize > maxTreeDepth) {
-                continue;
-            }
-
-            // Convert subset indices back to bond objects
-            IBond[] bondsToSplit = new IBond[subsetSize];
-            for (int j = 0; j < subsetSize; j++) {
-                bondsToSplit[j] = atomContainer.getBond(subset[j]);
-            }
-
-            // TODO: Investigate whether copying is necessary. Consider using FragmentUtils.splitMolecule instead.
-            IAtomContainer[] parts = splitBondsWithCopy(atomContainer, bondsToSplit);
-
-            // Process each fragment
-            for (IAtomContainer partContainer : parts) {
-                // Configure atom types (no hydrogen addition in unsaturated mode)
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
 
                 // Apply aromaticity perception (legacy operation)
                 // TODO: Investigate for the current method to do this.
@@ -403,7 +327,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         int[] subset = new int[Integer.bitCount(index)];
         int subsetIndex = 0;
 
-        // Iterate through each bit position (up to 32 bits).
+        // Iterate through each bit position (up to 31 bits).
         for (int j = 0; j < 32; j++) {
             // If the j-th bit in index is set, include nums[j] in the subset.
             if (((index >> j) & 1) == 1) {
@@ -412,6 +336,23 @@ public class ExhaustiveFragmenter implements IFragmenter {
         }
 
         return subset;
+    }
+
+    /**
+     * Add pseudo ("R") atoms to an atom in a molecule.
+     *
+     * @param atom the atom to add the pseudo atoms to
+     * @param rcount the number of pseudo atoms to add
+     * @param mol the molecule the atom belongs to
+     */
+    private void addRAtoms(IAtom atom, int rcount, IAtomContainer mol) {
+        for (int i = 0; i < rcount; i++) {
+            IPseudoAtom tmpRAtom = atom.getBuilder().newInstance(IPseudoAtom.class, "R");
+            tmpRAtom.setAttachPointNum(1);
+            tmpRAtom.setImplicitHydrogenCount(0);
+            mol.addAtom(tmpRAtom);
+            mol.addBond(atom.getBuilder().newInstance(IBond.class, atom, tmpRAtom, IBond.Order.SINGLE));
+        }
     }
 
     /**
@@ -427,6 +368,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         copiedAtom.setIsAromatic(originalAtom.isAromatic());
         copiedAtom.setValency(originalAtom.getValency());
         copiedAtom.setAtomTypeName(originalAtom.getAtomTypeName());
+        copiedAtom.setFormalCharge(originalAtom.getFormalCharge());
         return copiedAtom;
     }
 
@@ -455,6 +397,18 @@ public class ExhaustiveFragmenter implements IFragmenter {
         for (IBond bond : bondsToSplit) {
             IAtom beg = bond.getBegin();
             IAtom end = bond.getEnd();
+            switch (this.saturationSetting) {
+                case HYDROGEN_SATURATED_FRAGMENTS:
+                    beg.setImplicitHydrogenCount(beg.getImplicitHydrogenCount() + 1);
+                    end.setImplicitHydrogenCount(end.getImplicitHydrogenCount() + 1);
+                    break;
+                case REST_SATURATED_FRAGMENTS:
+                    addRAtoms(beg, 1, mol);
+                    addRAtoms(end, 1, mol);
+                    break;
+                case UNSATURATED_FRAGMENTS:
+                    break;
+            }
             atomsToSplit.computeIfAbsent(beg, k -> new ArrayList<>()).add(end);
         }
 

@@ -49,8 +49,10 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
 
     @BeforeAll
     static void setup() {
-        fragmenterSaturated = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.SATURATED_FRAGMENTS);
-        fragmenterUnsaturated = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
+        fragmenterSaturated = new ExhaustiveFragmenter();
+        fragmenterSaturated.setSaturationSetting(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        fragmenterUnsaturated = new ExhaustiveFragmenter();
+        fragmenterUnsaturated.setSaturationSetting(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
         smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
