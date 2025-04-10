@@ -22,17 +22,12 @@
  */
 package org.openscience.cdk.tautomers;
 
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.InChINumbersTools;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.AtomMatcher;
@@ -42,6 +37,19 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
@@ -405,102 +413,65 @@ public final class InChITautomerGenerator {
         return totalMobHydrCount;
     }
 
+    static boolean nextToDoubleBond(IAtom atom) {
+        for (IBond bond : atom.bonds()) {
+            if (bond.getOrder() == IBond.Order.DOUBLE)
+                return true;
+        }
+        return false;
+    }
+
     /**
      * Constructs tautomers following (most) steps of the algorithm in {@cdk.cite Thalheim2010}.
      * @param inputMolecule input molecule
-     * @param mobHydrAttachPositions mobile H positions
+     * @param mobileHydrogensAttach mobile H positions
      * @param totalMobHydrCount count of mobile hydrogens in molecule
      * @return tautomers
      * @throws CloneNotSupportedException
      */
-    private List<IAtomContainer> constructTautomers(IAtomContainer inputMolecule, List<Integer> mobHydrAttachPositions,
-            int totalMobHydrCount) throws CloneNotSupportedException {
+    private List<IAtomContainer> constructTautomers(IAtomContainer inputMolecule,
+                                                    List<Integer> mobileHydrogensAttach,
+                                                    int totalMobHydrCount) throws CloneNotSupportedException, CDKException {
         List<IAtomContainer> tautomers = new ArrayList<>();
 
         //Tautomeric skeleton generation
-        IAtomContainer skeleton = inputMolecule.clone();
+        IAtomContainer skeleton = inputMolecule.getBuilder().newAtomContainer();
 
-        boolean atomsToRemove = true;
-        List<IAtom> removedAtoms = new ArrayList<>();
-        boolean atomRemoved = false;
-        while (atomsToRemove) {
-            ATOMS: for (IAtom atom : skeleton.atoms()) {
-                atomRemoved = false;
-                int position = Integer.parseInt(atom.getID());
-                if (!mobHydrAttachPositions.contains(position)
-                        && atom.getHybridization().equals(IAtomType.Hybridization.SP3)) {
-                    skeleton.removeAtomOnly(atom);
-                    removedAtoms.add(atom);
-                    atomRemoved = true;
-                    break ATOMS;
-                } else {
-                    for (IBond bond : skeleton.bonds()) {
-                        if (bond.contains(atom) && bond.getOrder().equals(IBond.Order.TRIPLE)) {
-                            skeleton.removeAtomOnly(atom);
-                            removedAtoms.add(atom);
-                            atomRemoved = true;
-                            break ATOMS;
-                        }
-                    }
-                }
+        Set<IAtom> included = new HashSet<>();
+        for (IAtom atom : inputMolecule.atoms()) {
+            int position = Integer.parseInt(atom.getID());
+            if (mobileHydrogensAttach.contains(position) ||
+                nextToDoubleBond(atom)) {
+                skeleton.addAtom(atom);
+                included.add(atom);
+                if (mobileHydrogensAttach.contains(position))
+                    atom.setImplicitHydrogenCount(0);
             }
-            if (!atomRemoved) atomsToRemove = false;
-
         }
-        boolean bondsToRemove = true;
-        boolean bondRemoved = false;
-        while (bondsToRemove) {
-            BONDS: for (IBond bond : skeleton.bonds()) {
-                bondRemoved = false;
-                for (IAtom removedAtom : removedAtoms) {
-                    if (bond.contains(removedAtom)) {
-                        IAtom other = bond.getOther(removedAtom);
-                        int decValence = 0;
-                        switch (bond.getOrder()) {
-                            case SINGLE:
-                                decValence = 1;
-                                break;
-                            case DOUBLE:
-                                decValence = 2;
-                                break;
-                            case TRIPLE:
-                                decValence = 3;
-                                break;
-                            case QUADRUPLE:
-                                decValence = 4;
-                                break;
-                        }
-                        other.setValency(other.getValency() - decValence);
-                        skeleton.removeBond(bond);
-                        bondRemoved = true;
-                        break BONDS;
-                    }
-                }
+        for (IBond bond : inputMolecule.bonds()) {
+            IAtom beg = bond.getBegin();
+            IAtom end = bond.getEnd();
+            if (included.contains(beg) && included.contains(end)) {
+                skeleton.addBond(bond);
+            } else if (included.contains(beg)) {
+                beg.setValency(beg.getValency() - bond.getOrder().numeric());
+            }else if (included.contains(end)) {
+                end.setValency(end.getValency() - bond.getOrder().numeric());
             }
-            if (!bondRemoved) bondsToRemove = false;
-
         }
+
         int doubleBondCount = 0;
         for (IBond bond : skeleton.bonds()) {
             if (bond.getOrder().equals(IBond.Order.DOUBLE)) {
-            	bond.setOrder(IBond.Order.SINGLE);
+                bond.setOrder(IBond.Order.SINGLE);
                 doubleBondCount++;
             }
         }
 
-        for (int hPosition : mobHydrAttachPositions) {
-            IAtom atom = findAtomByPosition(skeleton, hPosition);
-            if (atom == null)
-                throw new IllegalStateException("Could not find H atom at position=" + hPosition);
-            atom.setImplicitHydrogenCount(0);
-        }
-
-       
-
         // Make combinations for mobile Hydrogen attachments
         List<List<Integer>> combinations = new ArrayList<>();
         combineHydrogenPositions(new ArrayList<>(), combinations, skeleton, totalMobHydrCount,
-                mobHydrAttachPositions);
+                mobileHydrogensAttach);
 
         Stack<Object> solutions = new Stack<>();
         for (List<Integer> hPositions : combinations) {
@@ -525,7 +496,7 @@ public final class InChITautomerGenerator {
             }
         }
         LOGGER.debug("#possible solutions : ", solutions.size());
-        if (solutions.size() == 0) {
+        if (solutions.isEmpty()) {
             LOGGER.error("Could not generate any tautomers for the input. Is input in Kekule form? ");
             tautomers.add(inputMolecule);
         } else {

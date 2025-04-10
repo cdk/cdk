@@ -22,13 +22,9 @@
  */
 package org.openscience.cdk.tautomers;
 
-import java.io.StringReader;
-import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,9 +33,16 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Tests generation of tautomers.
@@ -264,4 +267,31 @@ class InChITautomerGeneratorTest extends CDKTestCase {
         Assertions.assertEquals(8, tautomers.size());
     }
 
+    /**
+     * With the new AtomContainer the tautomer generator was deleting
+     * atoms/bonds but leaving stereochemistry around in an invalid state
+     * which causes errors when it was copied/emitted.
+     *
+     * <a href="https://github.com/cdk/cdk/issues/1183">CDK Issue 1183</a>
+     */
+    @Test
+    void testStereochemistry() throws Exception {
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer molecule = smipar.parseSmiles("CCCCCN1C2=CC=CC=C2C(C(N[C@](C(C)C)([H])C(=N)O)=O)=N1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+
+        InChITautomerGenerator tautoGen = new InChITautomerGenerator();
+        List<IAtomContainer> tautomers = tautoGen.getTautomers(molecule);
+        List<String> smilesActual = new ArrayList<>();
+        List<String> smilesExpected = new ArrayList<>();
+        smilesExpected.add("CCCCCN1C2=CC=CC=C2C(C(=N[C@@H](C(C)C)C(=N)O)O)=N1");
+        smilesExpected.add("CCCCCN1C2=CC=CC=C2C(C(N[C@@H](C(C)C)C(=N)O)=O)=N1");
+        smilesExpected.add("CCCCCN1C2=CC=CC=C2C(C(=N[C@@H](C(C)C)C(N)=O)O)=N1");
+        smilesExpected.add("CCCCCN1C2=CC=CC=C2C(C(N[C@@H](C(C)C)C(N)=O)=O)=N1");
+        for (IAtomContainer tautomer : tautomers) {
+            smilesActual.add(smigen.create(tautomer));
+        }
+        Assertions.assertEquals(smilesExpected, smilesActual);
+    }
 }
