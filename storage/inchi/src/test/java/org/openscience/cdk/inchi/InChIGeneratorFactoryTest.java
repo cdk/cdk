@@ -244,18 +244,18 @@ class InChIGeneratorFactoryTest {
             inchiFactory.setIgnoreAromaticBonds(false);
 
             // include aromatic bonds by default
-            InChIGenerator genAromaticity1 = inchiFactory.getInChIGenerator(tetrazole);
+            InChIGenerator genAromaticity1 = inchiFactory.getInChIGenerator(tetrazole, "");
 
             // exclude aromatic bonds
             Assertions.assertFalse(inchiFactory.getIgnoreAromaticBonds());
             inchiFactory.setIgnoreAromaticBonds(true);
             Assertions.assertTrue(inchiFactory.getIgnoreAromaticBonds());
-            InChIGenerator genNoAromaticity = inchiFactory.getInChIGenerator(tetrazole);
+            InChIGenerator genNoAromaticity = inchiFactory.getInChIGenerator(tetrazole, "");
 
             // include aromatic bonds again
             inchiFactory.setIgnoreAromaticBonds(false);
             Assertions.assertFalse(inchiFactory.getIgnoreAromaticBonds());
-            InChIGenerator genAromaticity2 = inchiFactory.getInChIGenerator(tetrazole);
+            InChIGenerator genAromaticity2 = inchiFactory.getInChIGenerator(tetrazole, "");
 
             // with the aromatic bonds included, no InChI can be generated
             Assertions.assertEquals(INCHI_RET.ERROR, genAromaticity1.getReturnStatus(), "return status was not in error");
