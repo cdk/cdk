@@ -1059,10 +1059,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         return valence;
     }
 
-    private int determineStereoParity(IAtomContainer container,
-                                      Map<IAtom, ITetrahedralChirality> atomstereo,
-                                      Map<IAtom, Integer> atomindex, IAtom atom) {
-        final ITetrahedralChirality tc = atomstereo.get(atom);
+    static int determineStereoParity(IAtomContainer container,
+                                     Map<IAtom, ITetrahedralChirality> atomStereos,
+                                     Map<? extends IChemObject, Integer> outputOrder,
+                                     IAtom atom) {
+        final ITetrahedralChirality tc = atomStereos.get(atom);
         if (tc == null)
             return 0;
         int parity = tc.getStereo() == ITetrahedralChirality.Stereo.CLOCKWISE ? 1 : 2;
@@ -1081,8 +1082,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         if (parity != 0) {
             for (int i = 0; i < 4; i++) {
                 for (int j = i + 1; j < 4; j++) {
-                    int a = atomindex.get(carriers[i]);
-                    int b = atomindex.get(carriers[j]);
+                    int a = outputOrder.get(carriers[i]);
+                    int b = outputOrder.get(carriers[j]);
                     if (i == hidx)
                         a = container.getAtomCount();
                     if (j == hidx)

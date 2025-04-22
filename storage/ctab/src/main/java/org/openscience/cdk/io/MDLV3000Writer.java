@@ -272,48 +272,6 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     }
 
     /**
-     * Utility function for computing CTfile windings. The return value is adjusted
-     * to the MDL's model (look to lowest rank/highest number) from CDK's model (look from
-     * first).
-     *
-     * @param idxs atom/bond index lookup
-     * @param stereo the tetrahedral configuration
-     * @return winding to write to molfile
-     */
-    private static Stereo getLocalParity(Map<IChemObject, Integer> idxs, ITetrahedralChirality stereo) {
-        final IAtom[] neighbours = stereo.getLigands();
-        final int[] neighbourIdx = new int[neighbours.length];
-
-        if (neighbours.length != 4) {
-            throw new AssertionError("The number of neighbours must be 4 but is " + neighbours.length + ".");
-        }
-
-        for (int i = 0; i < 4; i++) {
-            // impl H is last
-            if (stereo.getChiralAtom().equals(neighbours[i])) {
-                neighbourIdx[i] = Integer.MAX_VALUE;
-            } else {
-                neighbourIdx[i] = idxs.get(neighbours[i]);
-            }
-        }
-
-        // determine winding swaps
-        boolean inverted = false;
-        for (int i = 0; i < 4; i++) {
-            for (int j = i + 1; j < 4; j++) {
-                if (neighbourIdx[i] > neighbourIdx[j])
-                    inverted = !inverted;
-            }
-        }
-
-        // CDK winding is looking from the first atom, MDL is looking
-        // towards the last so we invert by default, note inverting twice
-        // would be a no op and is omitted
-        return inverted ? stereo.getStereo()
-                        : stereo.getStereo().invert();
-    }
-
-    /**
      * Write the atoms of a molecule. We pass in the order of atoms since for compatibility we
      * have shifted all hydrogens to the back.
      *
@@ -427,19 +385,9 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 writer.write(" VAL=").write(val);
             }
 
-            ITetrahedralChirality stereo = atomToStereo.get(atom);
-            if (stereo != null) {
-                switch (getLocalParity(idxs, stereo)) {
-                    case CLOCKWISE:
-                        writer.write(" CFG=1");
-                        break;
-                    case ANTI_CLOCKWISE:
-                        writer.write(" CFG=2");
-                        break;
-                    default:
-                        break;
-                }
-            }
+            int i = MDLV2000Writer.determineStereoParity(mol, atomToStereo, idxs, atom);
+            if (i != 0)
+                writer.write(" CFG=" + i);
 
             writer.write('\n');
         }
