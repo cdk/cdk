@@ -187,7 +187,7 @@ class MDLV3000WriterTest {
     @Test
     void writeLeadingZero() throws IOException, CDKException {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
-        Atom           atom   = new Atom("C");
+        Atom atom = new Atom("C");
         atom.setPoint2d(new Point2d(0.5, 1.2));
         mol.addAtom(atom);
         assertThat(writeToStr(mol), CoreMatchers.containsString("0.5 1.2"));
@@ -200,7 +200,7 @@ class MDLV3000WriterTest {
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("Cl"));
         mol.addAtom(new Atom("H"));
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
@@ -213,14 +213,34 @@ class MDLV3000WriterTest {
         mol.getAtom(3).setImplicitHydrogenCount(3);
         mol.getAtom(4).setImplicitHydrogenCount(3);
         mol.getAtom(5).setImplicitHydrogenCount(0);
-        mol.addStereoElement(new TetrahedralChirality(mol.getAtom(1),
-                                                      new IAtom[]{mol.getAtom(0),  // oxygen (look from)
-                                                                  mol.getAtom(2),  // Et
-                                                                  mol.getAtom(4),  // Me
-                                                                  mol.getAtom(5)}, // H
-                                                      ITetrahedralChirality.Stereo.CLOCKWISE));
+        TetrahedralChirality expected = new TetrahedralChirality(mol.getAtom(1),
+                                                                new IAtom[]{mol.getAtom(0),  // oxygen (look from)
+                                                                            mol.getAtom(2),  // Et
+                                                                            mol.getAtom(4),  // Cl
+                                                                            mol.getAtom(5)}, // H
+                                                                ITetrahedralChirality.Stereo.CLOCKWISE);
+        mol.addStereoElement(expected);
         String res = writeToStr(mol);
-        assertThat(res, CoreMatchers.containsString("M  V30 2 C 0 0 0 0 CFG=2\n"));
+        assertThat(res, CoreMatchers.containsString("M  V30 2 C 0 0 0 0 CFG=1\n"));
+
+        // ensure round trip of 0D stereo-chemistry
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(res))) {
+            IAtomContainer roundtrip = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            List<ITetrahedralChirality> tetrahedrals = new ArrayList<>();
+            for (IStereoElement<?, ?> se : roundtrip.stereoElements()) {
+                if (se instanceof ITetrahedralChirality)
+                    tetrahedrals.add((ITetrahedralChirality) se);
+            }
+            assertThat(tetrahedrals.size(), is(1));
+            assertThat(tetrahedrals.get(0).getStereo(), is(expected.getStereo()));
+            List<IAtom> actualCarriers = tetrahedrals.get(0).getCarriers();
+            List<IAtom> expectedCarriers = expected.getCarriers();
+            for (int i = 0; i < expectedCarriers.size(); i++) {
+                assertThat(actualCarriers.get(0).getSymbol(),
+                           is(expectedCarriers.get(0).getSymbol()));
+            }
+
+        }
     }
 
     @Test
@@ -250,7 +270,7 @@ class MDLV3000WriterTest {
                                                                   mol.getAtom(5)}, // Me
                                                       ITetrahedralChirality.Stereo.CLOCKWISE));
         String res = writeToStr(mol);
-        assertThat(res, CoreMatchers.containsString("M  V30 2 C 0 0 0 0 CFG=1\n"));
+        assertThat(res, CoreMatchers.containsString("M  V30 2 C 0 0 0 0 CFG=2\n"));
         // H was moved to position 6 from 5
         assertThat(res, CoreMatchers.containsString("M  V30 6 H 0 0 0 0\n"));
     }
@@ -485,31 +505,31 @@ class MDLV3000WriterTest {
     @Test
     void testNoChiralFlag() throws Exception {
         final String input = "\n" +
-                "  Mrv1810 02052112362D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 7 7 0 0 0\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
-                "M  V30 2 C -3.4743 11.5447 0 0\n" +
-                "M  V30 3 C -3.4743 10.0047 0 0\n" +
-                "M  V30 4 C -2.1407 9.2347 0 0\n" +
-                "M  V30 5 C -0.807 10.0047 0 0\n" +
-                "M  V30 6 N -0.807 11.5447 0 0\n" +
-                "M  V30 7 O -2.1407 13.8548 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 1 2\n" +
-                "M  V30 2 1 2 3\n" +
-                "M  V30 3 1 3 4\n" +
-                "M  V30 4 1 4 5\n" +
-                "M  V30 5 1 5 6\n" +
-                "M  V30 6 1 1 6\n" +
-                "M  V30 7 1 1 7 CFG=1\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 END CTAB\n" +
-                "M  END\n";
+                             "  Mrv1810 02052112362D          \n" +
+                             "\n" +
+                             "  0  0  0     0  0            999 V3000\n" +
+                             "M  V30 BEGIN CTAB\n" +
+                             "M  V30 COUNTS 7 7 0 0 0\n" +
+                             "M  V30 BEGIN ATOM\n" +
+                             "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
+                             "M  V30 2 C -3.4743 11.5447 0 0\n" +
+                             "M  V30 3 C -3.4743 10.0047 0 0\n" +
+                             "M  V30 4 C -2.1407 9.2347 0 0\n" +
+                             "M  V30 5 C -0.807 10.0047 0 0\n" +
+                             "M  V30 6 N -0.807 11.5447 0 0\n" +
+                             "M  V30 7 O -2.1407 13.8548 0 0\n" +
+                             "M  V30 END ATOM\n" +
+                             "M  V30 BEGIN BOND\n" +
+                             "M  V30 1 1 1 2\n" +
+                             "M  V30 2 1 2 3\n" +
+                             "M  V30 3 1 3 4\n" +
+                             "M  V30 4 1 4 5\n" +
+                             "M  V30 5 1 5 6\n" +
+                             "M  V30 6 1 1 6\n" +
+                             "M  V30 7 1 1 7 CFG=1\n" +
+                             "M  V30 END BOND\n" +
+                             "M  V30 END CTAB\n" +
+                             "M  END\n";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
@@ -518,38 +538,38 @@ class MDLV3000WriterTest {
         }
         assertThat(sw.toString(), containsString("M  V30 COUNTS 7 7 0 0 0"));
         assertThat(sw.toString(), not(containsString("BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(1)\n" +
-                "END COLLECTION")));
+                                                     "M  V30 MDLV30/STERAC1 ATOMS=(1)\n" +
+                                                     "END COLLECTION")));
     }
 
     @Test
     void testChiralFlag() throws Exception {
         final String input = "\n" +
-                "  Mrv1810 02052112362D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 7 7 0 0 1\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
-                "M  V30 2 C -3.4743 11.5447 0 0\n" +
-                "M  V30 3 C -3.4743 10.0047 0 0\n" +
-                "M  V30 4 C -2.1407 9.2347 0 0\n" +
-                "M  V30 5 C -0.807 10.0047 0 0\n" +
-                "M  V30 6 N -0.807 11.5447 0 0\n" +
-                "M  V30 7 O -2.1407 13.8548 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 1 2\n" +
-                "M  V30 2 1 2 3\n" +
-                "M  V30 3 1 3 4\n" +
-                "M  V30 4 1 4 5\n" +
-                "M  V30 5 1 5 6\n" +
-                "M  V30 6 1 1 6\n" +
-                "M  V30 7 1 1 7 CFG=1\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 END CTAB\n" +
-                "M  END\n";
+                             "  Mrv1810 02052112362D          \n" +
+                             "\n" +
+                             "  0  0  0     0  0            999 V3000\n" +
+                             "M  V30 BEGIN CTAB\n" +
+                             "M  V30 COUNTS 7 7 0 0 1\n" +
+                             "M  V30 BEGIN ATOM\n" +
+                             "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
+                             "M  V30 2 C -3.4743 11.5447 0 0\n" +
+                             "M  V30 3 C -3.4743 10.0047 0 0\n" +
+                             "M  V30 4 C -2.1407 9.2347 0 0\n" +
+                             "M  V30 5 C -0.807 10.0047 0 0\n" +
+                             "M  V30 6 N -0.807 11.5447 0 0\n" +
+                             "M  V30 7 O -2.1407 13.8548 0 0\n" +
+                             "M  V30 END ATOM\n" +
+                             "M  V30 BEGIN BOND\n" +
+                             "M  V30 1 1 1 2\n" +
+                             "M  V30 2 1 2 3\n" +
+                             "M  V30 3 1 3 4\n" +
+                             "M  V30 4 1 4 5\n" +
+                             "M  V30 5 1 5 6\n" +
+                             "M  V30 6 1 1 6\n" +
+                             "M  V30 7 1 1 7 CFG=1\n" +
+                             "M  V30 END BOND\n" +
+                             "M  V30 END CTAB\n" +
+                             "M  END\n";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
@@ -558,41 +578,41 @@ class MDLV3000WriterTest {
         }
         assertThat(sw.toString(), containsString("M  V30 COUNTS 7 7 0 0 1"));
         assertThat(sw.toString(), not(containsString("BEGIN COLLECTION\n" +
-                "M  V30 M  V30 MDLV30/STEABS ATOMS=(1)\n" +
-                "END COLLECTION")));
+                                                     "M  V30 M  V30 MDLV30/STEABS ATOMS=(1)\n" +
+                                                     "END COLLECTION")));
     }
 
     @Test
     void testStereoRac1() throws Exception {
         final String input = "\n" +
-                "  Mrv1810 02052113162D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 7 7 0 0 0\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
-                "M  V30 2 C -3.4743 11.5447 0 0\n" +
-                "M  V30 3 C -3.4743 10.0047 0 0\n" +
-                "M  V30 4 C -2.1407 9.2347 0 0\n" +
-                "M  V30 5 C -0.807 10.0047 0 0\n" +
-                "M  V30 6 N -0.807 11.5447 0 0\n" +
-                "M  V30 7 O -2.1407 13.8548 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 1 2\n" +
-                "M  V30 2 1 2 3\n" +
-                "M  V30 3 1 3 4\n" +
-                "M  V30 4 1 4 5\n" +
-                "M  V30 5 1 5 6\n" +
-                "M  V30 6 1 1 6\n" +
-                "M  V30 7 1 1 7 CFG=1\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(1 1)\n" +
-                "M  V30 END COLLECTION\n" +
-                "M  V30 END CTAB\n" +
-                "M  END";
+                             "  Mrv1810 02052113162D          \n" +
+                             "\n" +
+                             "  0  0  0     0  0            999 V3000\n" +
+                             "M  V30 BEGIN CTAB\n" +
+                             "M  V30 COUNTS 7 7 0 0 0\n" +
+                             "M  V30 BEGIN ATOM\n" +
+                             "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
+                             "M  V30 2 C -3.4743 11.5447 0 0\n" +
+                             "M  V30 3 C -3.4743 10.0047 0 0\n" +
+                             "M  V30 4 C -2.1407 9.2347 0 0\n" +
+                             "M  V30 5 C -0.807 10.0047 0 0\n" +
+                             "M  V30 6 N -0.807 11.5447 0 0\n" +
+                             "M  V30 7 O -2.1407 13.8548 0 0\n" +
+                             "M  V30 END ATOM\n" +
+                             "M  V30 BEGIN BOND\n" +
+                             "M  V30 1 1 1 2\n" +
+                             "M  V30 2 1 2 3\n" +
+                             "M  V30 3 1 3 4\n" +
+                             "M  V30 4 1 4 5\n" +
+                             "M  V30 5 1 5 6\n" +
+                             "M  V30 6 1 1 6\n" +
+                             "M  V30 7 1 1 7 CFG=1\n" +
+                             "M  V30 END BOND\n" +
+                             "M  V30 BEGIN COLLECTION\n" +
+                             "M  V30 MDLV30/STERAC1 ATOMS=(1 1)\n" +
+                             "M  V30 END COLLECTION\n" +
+                             "M  V30 END CTAB\n" +
+                             "M  END";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
@@ -601,41 +621,41 @@ class MDLV3000WriterTest {
         }
         assertThat(sw.toString(), containsString("M  V30 COUNTS 7 7 0 0 0"));
         assertThat(sw.toString(), not(containsString("BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(1)\n" +
-                "END COLLECTION")));
+                                                     "M  V30 MDLV30/STERAC1 ATOMS=(1)\n" +
+                                                     "END COLLECTION")));
     }
 
     @Test
     void testStereoRel1() throws Exception {
         final String input = "\n" +
-                "  Mrv1810 02052113162D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 7 7 0 0 0\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
-                "M  V30 2 C -3.4743 11.5447 0 0\n" +
-                "M  V30 3 C -3.4743 10.0047 0 0\n" +
-                "M  V30 4 C -2.1407 9.2347 0 0\n" +
-                "M  V30 5 C -0.807 10.0047 0 0\n" +
-                "M  V30 6 N -0.807 11.5447 0 0\n" +
-                "M  V30 7 O -2.1407 13.8548 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 1 2\n" +
-                "M  V30 2 1 2 3\n" +
-                "M  V30 3 1 3 4\n" +
-                "M  V30 4 1 4 5\n" +
-                "M  V30 5 1 5 6\n" +
-                "M  V30 6 1 1 6\n" +
-                "M  V30 7 1 1 7 CFG=1\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEREL5 ATOMS=(1 1)\n" +
-                "M  V30 END COLLECTION\n" +
-                "M  V30 END CTAB\n" +
-                "M  END";
+                             "  Mrv1810 02052113162D          \n" +
+                             "\n" +
+                             "  0  0  0     0  0            999 V3000\n" +
+                             "M  V30 BEGIN CTAB\n" +
+                             "M  V30 COUNTS 7 7 0 0 0\n" +
+                             "M  V30 BEGIN ATOM\n" +
+                             "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
+                             "M  V30 2 C -3.4743 11.5447 0 0\n" +
+                             "M  V30 3 C -3.4743 10.0047 0 0\n" +
+                             "M  V30 4 C -2.1407 9.2347 0 0\n" +
+                             "M  V30 5 C -0.807 10.0047 0 0\n" +
+                             "M  V30 6 N -0.807 11.5447 0 0\n" +
+                             "M  V30 7 O -2.1407 13.8548 0 0\n" +
+                             "M  V30 END ATOM\n" +
+                             "M  V30 BEGIN BOND\n" +
+                             "M  V30 1 1 1 2\n" +
+                             "M  V30 2 1 2 3\n" +
+                             "M  V30 3 1 3 4\n" +
+                             "M  V30 4 1 4 5\n" +
+                             "M  V30 5 1 5 6\n" +
+                             "M  V30 6 1 1 6\n" +
+                             "M  V30 7 1 1 7 CFG=1\n" +
+                             "M  V30 END BOND\n" +
+                             "M  V30 BEGIN COLLECTION\n" +
+                             "M  V30 MDLV30/STEREL5 ATOMS=(1 1)\n" +
+                             "M  V30 END COLLECTION\n" +
+                             "M  V30 END CTAB\n" +
+                             "M  END";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
@@ -643,50 +663,50 @@ class MDLV3000WriterTest {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
         assertThat(sw.toString(), containsString("M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEREL1 ATOMS=(1)\n" +
-                "M  V30 END COLLECTION"));
+                                                 "M  V30 MDLV30/STEREL1 ATOMS=(1)\n" +
+                                                 "M  V30 END COLLECTION"));
     }
 
     @Test
     void testStereoRac1And() throws Exception {
         final String input = "\n" +
-                "  Mrv1810 02062121432D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 11 11 0 0 1\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C 0 6.16 0 0\n" +
-                "M  V30 2 C 0 4.62 0 0 CFG=2\n" +
-                "M  V30 3 O -1.3337 3.85 0 0\n" +
-                "M  V30 4 C 1.3337 3.85 0 0 CFG=2\n" +
-                "M  V30 5 O 2.6674 4.62 0 0\n" +
-                "M  V30 6 C 1.3337 2.31 0 0\n" +
-                "M  V30 7 C 2.6674 1.54 0 0\n" +
-                "M  V30 8 C 2.6674 -0 0 0\n" +
-                "M  V30 9 C 1.3337 -0.77 0 0\n" +
-                "M  V30 10 C 0 0 0 0\n" +
-                "M  V30 11 C 0 1.54 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 2 1\n" +
-                "M  V30 2 1 2 3 CFG=1\n" +
-                "M  V30 3 1 2 4\n" +
-                "M  V30 4 1 4 5 CFG=3\n" +
-                "M  V30 5 1 4 6\n" +
-                "M  V30 6 1 6 7\n" +
-                "M  V30 7 1 7 8\n" +
-                "M  V30 8 1 8 9\n" +
-                "M  V30 9 1 9 10\n" +
-                "M  V30 10 1 10 11\n" +
-                "M  V30 11 1 6 11\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEABS ATOMS=(1 4)\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(1 2)\n" +
-                "M  V30 END COLLECTION\n" +
-                "M  V30 END CTAB\n" +
-                "M  END\n";
+                             "  Mrv1810 02062121432D          \n" +
+                             "\n" +
+                             "  0  0  0     0  0            999 V3000\n" +
+                             "M  V30 BEGIN CTAB\n" +
+                             "M  V30 COUNTS 11 11 0 0 1\n" +
+                             "M  V30 BEGIN ATOM\n" +
+                             "M  V30 1 C 0 6.16 0 0\n" +
+                             "M  V30 2 C 0 4.62 0 0 CFG=2\n" +
+                             "M  V30 3 O -1.3337 3.85 0 0\n" +
+                             "M  V30 4 C 1.3337 3.85 0 0 CFG=2\n" +
+                             "M  V30 5 O 2.6674 4.62 0 0\n" +
+                             "M  V30 6 C 1.3337 2.31 0 0\n" +
+                             "M  V30 7 C 2.6674 1.54 0 0\n" +
+                             "M  V30 8 C 2.6674 -0 0 0\n" +
+                             "M  V30 9 C 1.3337 -0.77 0 0\n" +
+                             "M  V30 10 C 0 0 0 0\n" +
+                             "M  V30 11 C 0 1.54 0 0\n" +
+                             "M  V30 END ATOM\n" +
+                             "M  V30 BEGIN BOND\n" +
+                             "M  V30 1 1 2 1\n" +
+                             "M  V30 2 1 2 3 CFG=1\n" +
+                             "M  V30 3 1 2 4\n" +
+                             "M  V30 4 1 4 5 CFG=3\n" +
+                             "M  V30 5 1 4 6\n" +
+                             "M  V30 6 1 6 7\n" +
+                             "M  V30 7 1 7 8\n" +
+                             "M  V30 8 1 8 9\n" +
+                             "M  V30 9 1 9 10\n" +
+                             "M  V30 10 1 10 11\n" +
+                             "M  V30 11 1 6 11\n" +
+                             "M  V30 END BOND\n" +
+                             "M  V30 BEGIN COLLECTION\n" +
+                             "M  V30 MDLV30/STEABS ATOMS=(1 4)\n" +
+                             "M  V30 MDLV30/STERAC1 ATOMS=(1 2)\n" +
+                             "M  V30 END COLLECTION\n" +
+                             "M  V30 END CTAB\n" +
+                             "M  END\n";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
@@ -695,9 +715,9 @@ class MDLV3000WriterTest {
         }
         assertThat(sw.toString(), containsString("M  V30 COUNTS 11 11 0 0 0"));
         assertThat(sw.toString(), containsString("M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEABS ATOMS=(4)\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(2)\n" +
-                "M  V30 END COLLECTION"));
+                                                 "M  V30 MDLV30/STEABS ATOMS=(4)\n" +
+                                                 "M  V30 MDLV30/STERAC1 ATOMS=(2)\n" +
+                                                 "M  V30 END COLLECTION"));
     }
 
     @Test
@@ -724,13 +744,13 @@ class MDLV3000WriterTest {
 
         // assert
         assertThat(actual, containsString("M  V30 BEGIN BOND\n" +
-                "M  V30 1 4 1 2\n" +
-                "M  V30 2 4 2 3\n" +
-                "M  V30 3 4 3 4\n" +
-                "M  V30 4 4 4 5\n" +
-                "M  V30 5 4 5 6\n" +
-                "M  V30 6 4 6 1\n" +
-                "M  V30 END BOND"));
+                                          "M  V30 1 4 1 2\n" +
+                                          "M  V30 2 4 2 3\n" +
+                                          "M  V30 3 4 3 4\n" +
+                                          "M  V30 4 4 4 5\n" +
+                                          "M  V30 5 4 5 6\n" +
+                                          "M  V30 6 4 6 1\n" +
+                                          "M  V30 END BOND"));
     }
 
     @Test
@@ -794,24 +814,24 @@ class MDLV3000WriterTest {
         // assert
         assertThat(actual, Matchers.matchesRegex(
                 "\n" +
-                        "  CDK     [0-9]{10}\n" +
-                        "\n" +
-                        "  0  0  0     0  0            999 V3000\n" +
-                        "M  V30 BEGIN CTAB\n" +
-                        "M  V30 COUNTS 4 3 0 0 0\n" +
-                        "M  V30 BEGIN ATOM\n" +
-                        "M  V30 1 C 0 0 0 0\n" +
-                        "M  V30 2 C 0 0 0 0\n" +
-                        "M  V30 3 C 0 0 0 0\n" +
-                        "M  V30 4 O 0 0 0 0\n" +
-                        "M  V30 END ATOM\n" +
-                        "M  V30 BEGIN BOND\n" +
-                        "M  V30 1 1 1 2\n" +
-                        "M  V30 2 6 2 3\n" +
-                        "M  V30 3 2 3 4\n" +
-                        "M  V30 END BOND\n" +
-                        "M  V30 END CTAB\n" +
-                        "M  END\n"));
+                "  CDK     [0-9]{10}\n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 4 3 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C 0 0 0 0\n" +
+                "M  V30 2 C 0 0 0 0\n" +
+                "M  V30 3 C 0 0 0 0\n" +
+                "M  V30 4 O 0 0 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 6 2 3\n" +
+                "M  V30 3 2 3 4\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 END CTAB\n" +
+                "M  END\n"));
     }
 
     @Test
@@ -834,24 +854,24 @@ class MDLV3000WriterTest {
         // assert
         assertThat(actual, Matchers.matchesRegex(
                 "\n" +
-                        "  CDK     [0-9]{10}\n" +
-                        "\n" +
-                        "  0  0  0     0  0            999 V3000\n" +
-                        "M  V30 BEGIN CTAB\n" +
-                        "M  V30 COUNTS 4 3 0 0 0\n" +
-                        "M  V30 BEGIN ATOM\n" +
-                        "M  V30 1 C 0 0 0 0\n" +
-                        "M  V30 2 C 0 0 0 0\n" +
-                        "M  V30 3 C 0 0 0 0\n" +
-                        "M  V30 4 O 0 0 0 0\n" +
-                        "M  V30 END ATOM\n" +
-                        "M  V30 BEGIN BOND\n" +
-                        "M  V30 1 1 1 2\n" +
-                        "M  V30 2 7 2 3\n" +
-                        "M  V30 3 2 3 4\n" +
-                        "M  V30 END BOND\n" +
-                        "M  V30 END CTAB\n" +
-                        "M  END\n"));
+                "  CDK     [0-9]{10}\n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 4 3 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C 0 0 0 0\n" +
+                "M  V30 2 C 0 0 0 0\n" +
+                "M  V30 3 C 0 0 0 0\n" +
+                "M  V30 4 O 0 0 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 7 2 3\n" +
+                "M  V30 3 2 3 4\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 END CTAB\n" +
+                "M  END\n"));
     }
 
     @Test
@@ -874,24 +894,24 @@ class MDLV3000WriterTest {
         // assert
         assertThat(actual, Matchers.matchesRegex(
                 "\n" +
-                        "  CDK     [0-9]{10}\n" +
-                        "\n" +
-                        "  0  0  0     0  0            999 V3000\n" +
-                        "M  V30 BEGIN CTAB\n" +
-                        "M  V30 COUNTS 4 3 0 0 0\n" +
-                        "M  V30 BEGIN ATOM\n" +
-                        "M  V30 1 C 0 0 0 0\n" +
-                        "M  V30 2 C 0 0 0 0\n" +
-                        "M  V30 3 C 0 0 0 0\n" +
-                        "M  V30 4 O 0 0 0 0\n" +
-                        "M  V30 END ATOM\n" +
-                        "M  V30 BEGIN BOND\n" +
-                        "M  V30 1 1 1 2\n" +
-                        "M  V30 2 8 2 3\n" +
-                        "M  V30 3 2 3 4\n" +
-                        "M  V30 END BOND\n" +
-                        "M  V30 END CTAB\n" +
-                        "M  END\n"));
+                "  CDK     [0-9]{10}\n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 4 3 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C 0 0 0 0\n" +
+                "M  V30 2 C 0 0 0 0\n" +
+                "M  V30 3 C 0 0 0 0\n" +
+                "M  V30 4 O 0 0 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 8 2 3\n" +
+                "M  V30 3 2 3 4\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 END CTAB\n" +
+                "M  END\n"));
     }
 
     @Test
@@ -918,24 +938,24 @@ class MDLV3000WriterTest {
         // assert
         assertThat(actual, Matchers.matchesRegex(
                 "\n" +
-                        "  CDK     [0-9]{10}\n" +
-                        "\n" +
-                        "  0  0  0     0  0            999 V3000\n" +
-                        "M  V30 BEGIN CTAB\n" +
-                        "M  V30 COUNTS 4 3 0 0 0\n" +
-                        "M  V30 BEGIN ATOM\n" +
-                        "M  V30 1 C 0 0 0 0\n" +
-                        "M  V30 2 C 0 0 0 0\n" +
-                        "M  V30 3 C 0 0 0 0\n" +
-                        "M  V30 4 O 0 0 0 0\n" +
-                        "M  V30 END ATOM\n" +
-                        "M  V30 BEGIN BOND\n" +
-                        "M  V30 1 1 1 2\n" +
-                        "M  V30 2 5 2 3 TOPO=1\n" +
-                        "M  V30 3 2 3 4\n" +
-                        "M  V30 END BOND\n" +
-                        "M  V30 END CTAB\n" +
-                        "M  END\n"));
+                "  CDK     [0-9]{10}\n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 4 3 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C 0 0 0 0\n" +
+                "M  V30 2 C 0 0 0 0\n" +
+                "M  V30 3 C 0 0 0 0\n" +
+                "M  V30 4 O 0 0 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 5 2 3 TOPO=1\n" +
+                "M  V30 3 2 3 4\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 END CTAB\n" +
+                "M  END\n"));
     }
 
     @Test
@@ -961,26 +981,26 @@ class MDLV3000WriterTest {
 
         // assert
         assertThat(actual, Matchers.matchesRegex(
-                "\n" +
-                        "  CDK     [0-9]{10}\n" +
-                        "\n" +
-                        "  0  0  0     0  0            999 V3000\n" +
-                        "M  V30 BEGIN CTAB\n" +
-                        "M  V30 COUNTS 4 3 0 0 0\n" +
-                        "M  V30 BEGIN ATOM\n" +
-                        "M  V30 1 C 0 0 0 0\n" +
-                        "M  V30 2 C 0 0 0 0\n" +
-                        "M  V30 3 C 0 0 0 0\n" +
-                        "M  V30 4 O 0 0 0 0\n" +
-                        "M  V30 END ATOM\n" +
-                        "M  V30 BEGIN BOND\n" +
-                        "M  V30 1 1 1 2\n" +
-                        "M  V30 2 7 2 3 TOPO=2\n" +
-                        "M  V30 3 2 3 4\n" +
-                        "M  V30 END BOND\n" +
-                        "M  V30 END CTAB\n" +
-                        "M  END\n")
-        );
+                           "\n" +
+                           "  CDK     [0-9]{10}\n" +
+                           "\n" +
+                           "  0  0  0     0  0            999 V3000\n" +
+                           "M  V30 BEGIN CTAB\n" +
+                           "M  V30 COUNTS 4 3 0 0 0\n" +
+                           "M  V30 BEGIN ATOM\n" +
+                           "M  V30 1 C 0 0 0 0\n" +
+                           "M  V30 2 C 0 0 0 0\n" +
+                           "M  V30 3 C 0 0 0 0\n" +
+                           "M  V30 4 O 0 0 0 0\n" +
+                           "M  V30 END ATOM\n" +
+                           "M  V30 BEGIN BOND\n" +
+                           "M  V30 1 1 1 2\n" +
+                           "M  V30 2 7 2 3 TOPO=2\n" +
+                           "M  V30 3 2 3 4\n" +
+                           "M  V30 END BOND\n" +
+                           "M  V30 END CTAB\n" +
+                           "M  END\n")
+                  );
     }
 
     @Test
@@ -994,31 +1014,31 @@ class MDLV3000WriterTest {
 
             // assess
             assertThat(actual, Matchers.matchesRegex(
-                    "\n" +
-                    "  CDK     [0-9]{10}2D\n" +
-                    "\n" +
-                    "  0  0  0     0  0            999 V3000\n" +
-                    "M  V30 BEGIN CTAB\n" +
-                    "M  V30 COUNTS 6 6 0 0 0\n" +
-                    "M  V30 BEGIN ATOM\n" +
-                    "M  V30 1 C -4.5415 1.04 0 0 VAL=-1\n" +
-                    "M  V30 2 C -5.8749 0.2701 0 0 VAL=-1\n" +
-                    "M  V30 3 C -5.8749 -1.27 0 0 VAL=-1\n" +
-                    "M  V30 4 C -4.5415 -2.04 0 0 VAL=-1\n" +
-                    "M  V30 5 C -3.2078 -1.27 0 0 VAL=-1\n" +
-                    "M  V30 6 C -3.2078 0.2701 0 0 VAL=-1\n" +
-                    "M  V30 END ATOM\n" +
-                    "M  V30 BEGIN BOND\n" +
-                    "M  V30 1 4 1 2\n" +
-                    "M  V30 2 4 2 3\n" +
-                    "M  V30 3 4 3 4\n" +
-                    "M  V30 4 4 4 5\n" +
-                    "M  V30 5 4 5 6\n" +
-                    "M  V30 6 4 6 1\n" +
-                    "M  V30 END BOND\n" +
-                    "M  V30 END CTAB\n" +
-                    "M  END\n")
-            );
+                               "\n" +
+                               "  CDK     [0-9]{10}2D\n" +
+                               "\n" +
+                               "  0  0  0     0  0            999 V3000\n" +
+                               "M  V30 BEGIN CTAB\n" +
+                               "M  V30 COUNTS 6 6 0 0 0\n" +
+                               "M  V30 BEGIN ATOM\n" +
+                               "M  V30 1 C -4.5415 1.04 0 0 VAL=-1\n" +
+                               "M  V30 2 C -5.8749 0.2701 0 0 VAL=-1\n" +
+                               "M  V30 3 C -5.8749 -1.27 0 0 VAL=-1\n" +
+                               "M  V30 4 C -4.5415 -2.04 0 0 VAL=-1\n" +
+                               "M  V30 5 C -3.2078 -1.27 0 0 VAL=-1\n" +
+                               "M  V30 6 C -3.2078 0.2701 0 0 VAL=-1\n" +
+                               "M  V30 END ATOM\n" +
+                               "M  V30 BEGIN BOND\n" +
+                               "M  V30 1 4 1 2\n" +
+                               "M  V30 2 4 2 3\n" +
+                               "M  V30 3 4 3 4\n" +
+                               "M  V30 4 4 4 5\n" +
+                               "M  V30 5 4 5 6\n" +
+                               "M  V30 6 4 6 1\n" +
+                               "M  V30 END BOND\n" +
+                               "M  V30 END CTAB\n" +
+                               "M  END\n")
+                      );
         }
     }
 
@@ -1033,24 +1053,24 @@ class MDLV3000WriterTest {
 
             // assess
             assertThat(actual, Matchers.matchesRegex(
-                    "\n" +
-                    "  CDK     [0-9]{10}2D\n" +
-                    "\n" +
-                    "  0  0  0     0  0            999 V3000\n" +
-                    "M  V30 BEGIN CTAB\n" +
-                    "M  V30 COUNTS 3 2 0 0 0\n" +
-                    "M  V30 BEGIN ATOM\n" +
-                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
-                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
-                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
-                    "M  V30 END ATOM\n" +
-                    "M  V30 BEGIN BOND\n" +
-                    "M  V30 1 1 1 2\n" +
-                    "M  V30 2 5 2 3\n" +
-                    "M  V30 END BOND\n" +
-                    "M  V30 END CTAB\n" +
-                    "M  END\n")
-            );
+                               "\n" +
+                               "  CDK     [0-9]{10}2D\n" +
+                               "\n" +
+                               "  0  0  0     0  0            999 V3000\n" +
+                               "M  V30 BEGIN CTAB\n" +
+                               "M  V30 COUNTS 3 2 0 0 0\n" +
+                               "M  V30 BEGIN ATOM\n" +
+                               "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                               "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                               "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                               "M  V30 END ATOM\n" +
+                               "M  V30 BEGIN BOND\n" +
+                               "M  V30 1 1 1 2\n" +
+                               "M  V30 2 5 2 3\n" +
+                               "M  V30 END BOND\n" +
+                               "M  V30 END CTAB\n" +
+                               "M  END\n")
+                      );
         }
     }
 
@@ -1065,24 +1085,24 @@ class MDLV3000WriterTest {
 
             // assess
             assertThat(actual, Matchers.matchesRegex(
-                    "\n" +
-                    "  CDK     [0-9]{10}2D\n" +
-                    "\n" +
-                    "  0  0  0     0  0            999 V3000\n" +
-                    "M  V30 BEGIN CTAB\n" +
-                    "M  V30 COUNTS 3 2 0 0 0\n" +
-                    "M  V30 BEGIN ATOM\n" +
-                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
-                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
-                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
-                    "M  V30 END ATOM\n" +
-                    "M  V30 BEGIN BOND\n" +
-                    "M  V30 1 1 1 2\n" +
-                    "M  V30 2 6 2 3\n" +
-                    "M  V30 END BOND\n" +
-                    "M  V30 END CTAB\n" +
-                    "M  END\n")
-            );
+                               "\n" +
+                               "  CDK     [0-9]{10}2D\n" +
+                               "\n" +
+                               "  0  0  0     0  0            999 V3000\n" +
+                               "M  V30 BEGIN CTAB\n" +
+                               "M  V30 COUNTS 3 2 0 0 0\n" +
+                               "M  V30 BEGIN ATOM\n" +
+                               "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                               "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                               "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                               "M  V30 END ATOM\n" +
+                               "M  V30 BEGIN BOND\n" +
+                               "M  V30 1 1 1 2\n" +
+                               "M  V30 2 6 2 3\n" +
+                               "M  V30 END BOND\n" +
+                               "M  V30 END CTAB\n" +
+                               "M  END\n")
+                      );
         }
     }
 
@@ -1097,24 +1117,24 @@ class MDLV3000WriterTest {
 
             // assess
             assertThat(actual, Matchers.matchesRegex(
-                    "\n" +
-                    "  CDK     [0-9]{10}2D\n" +
-                    "\n" +
-                    "  0  0  0     0  0            999 V3000\n" +
-                    "M  V30 BEGIN CTAB\n" +
-                    "M  V30 COUNTS 3 2 0 0 0\n" +
-                    "M  V30 BEGIN ATOM\n" +
-                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
-                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
-                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
-                    "M  V30 END ATOM\n" +
-                    "M  V30 BEGIN BOND\n" +
-                    "M  V30 1 1 1 2\n" +
-                    "M  V30 2 7 2 3\n" +
-                    "M  V30 END BOND\n" +
-                    "M  V30 END CTAB\n" +
-                    "M  END\n")
-            );
+                               "\n" +
+                               "  CDK     [0-9]{10}2D\n" +
+                               "\n" +
+                               "  0  0  0     0  0            999 V3000\n" +
+                               "M  V30 BEGIN CTAB\n" +
+                               "M  V30 COUNTS 3 2 0 0 0\n" +
+                               "M  V30 BEGIN ATOM\n" +
+                               "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                               "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                               "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                               "M  V30 END ATOM\n" +
+                               "M  V30 BEGIN BOND\n" +
+                               "M  V30 1 1 1 2\n" +
+                               "M  V30 2 7 2 3\n" +
+                               "M  V30 END BOND\n" +
+                               "M  V30 END CTAB\n" +
+                               "M  END\n")
+                      );
         }
     }
 
@@ -1129,24 +1149,24 @@ class MDLV3000WriterTest {
 
             // assess
             assertThat(actual, Matchers.matchesRegex(
-                    "\n" +
-                    "  CDK     [0-9]{10}2D\n" +
-                    "\n" +
-                    "  0  0  0     0  0            999 V3000\n" +
-                    "M  V30 BEGIN CTAB\n" +
-                    "M  V30 COUNTS 3 2 0 0 0\n" +
-                    "M  V30 BEGIN ATOM\n" +
-                    "M  V30 1 C -17.5389 13.8444 0 0\n" +
-                    "M  V30 2 C -16.2052 14.6144 0 0\n" +
-                    "M  V30 3 F -14.8715 13.8444 0 0\n" +
-                    "M  V30 END ATOM\n" +
-                    "M  V30 BEGIN BOND\n" +
-                    "M  V30 1 1 1 2\n" +
-                    "M  V30 2 8 2 3\n" +
-                    "M  V30 END BOND\n" +
-                    "M  V30 END CTAB\n" +
-                    "M  END\n")
-            );
+                               "\n" +
+                               "  CDK     [0-9]{10}2D\n" +
+                               "\n" +
+                               "  0  0  0     0  0            999 V3000\n" +
+                               "M  V30 BEGIN CTAB\n" +
+                               "M  V30 COUNTS 3 2 0 0 0\n" +
+                               "M  V30 BEGIN ATOM\n" +
+                               "M  V30 1 C -17.5389 13.8444 0 0\n" +
+                               "M  V30 2 C -16.2052 14.6144 0 0\n" +
+                               "M  V30 3 F -14.8715 13.8444 0 0\n" +
+                               "M  V30 END ATOM\n" +
+                               "M  V30 BEGIN BOND\n" +
+                               "M  V30 1 1 1 2\n" +
+                               "M  V30 2 8 2 3\n" +
+                               "M  V30 END BOND\n" +
+                               "M  V30 END CTAB\n" +
+                               "M  END\n")
+                      );
         }
     }
 
@@ -1161,31 +1181,31 @@ class MDLV3000WriterTest {
 
             // assess
             assertThat(actual, Matchers.matchesRegex(
-                    "\n" +
-                            "  CDK     [0-9]{10}2D\n" +
-                            "\n" +
-                            "  0  0  0     0  0            999 V3000\n" +
-                            "M  V30 BEGIN CTAB\n" +
-                            "M  V30 COUNTS 6 6 0 0 0\n" +
-                            "M  V30 BEGIN ATOM\n" +
-                            "M  V30 1 C 5.4833 -0.5211 0 0\n" +
-                            "M  V30 2 N 4.1497 -1.2911 0 0\n" +
-                            "M  V30 3 C 4.1497 -2.8311 0 0\n" +
-                            "M  V30 4 C 5.4833 -3.6011 0 0\n" +
-                            "M  V30 5 C 6.817 -2.8311 0 0\n" +
-                            "M  V30 6 C 6.817 -1.2911 0 0\n" +
-                            "M  V30 END ATOM\n" +
-                            "M  V30 BEGIN BOND\n" +
-                            "M  V30 1 1 2 3\n" +
-                            "M  V30 2 1 3 4\n" +
-                            "M  V30 3 1 4 5\n" +
-                            "M  V30 4 1 5 6\n" +
-                            "M  V30 5 1 1 6\n" +
-                            "M  V30 6 5 1 2 TOPO=1\n" +
-                            "M  V30 END BOND\n" +
-                            "M  V30 END CTAB\n" +
-                            "M  END\n")
-            );
+                               "\n" +
+                               "  CDK     [0-9]{10}2D\n" +
+                               "\n" +
+                               "  0  0  0     0  0            999 V3000\n" +
+                               "M  V30 BEGIN CTAB\n" +
+                               "M  V30 COUNTS 6 6 0 0 0\n" +
+                               "M  V30 BEGIN ATOM\n" +
+                               "M  V30 1 C 5.4833 -0.5211 0 0\n" +
+                               "M  V30 2 N 4.1497 -1.2911 0 0\n" +
+                               "M  V30 3 C 4.1497 -2.8311 0 0\n" +
+                               "M  V30 4 C 5.4833 -3.6011 0 0\n" +
+                               "M  V30 5 C 6.817 -2.8311 0 0\n" +
+                               "M  V30 6 C 6.817 -1.2911 0 0\n" +
+                               "M  V30 END ATOM\n" +
+                               "M  V30 BEGIN BOND\n" +
+                               "M  V30 1 1 2 3\n" +
+                               "M  V30 2 1 3 4\n" +
+                               "M  V30 3 1 4 5\n" +
+                               "M  V30 4 1 5 6\n" +
+                               "M  V30 5 1 1 6\n" +
+                               "M  V30 6 5 1 2 TOPO=1\n" +
+                               "M  V30 END BOND\n" +
+                               "M  V30 END CTAB\n" +
+                               "M  END\n")
+                      );
         }
     }
 
@@ -1200,31 +1220,31 @@ class MDLV3000WriterTest {
 
             // assess
             assertThat(actual, Matchers.matchesRegex(
-                    "\n" +
-                            "  CDK     [0-9]{10}2D\n" +
-                            "\n" +
-                            "  0  0  0     0  0            999 V3000\n" +
-                            "M  V30 BEGIN CTAB\n" +
-                            "M  V30 COUNTS 6 6 0 0 0\n" +
-                            "M  V30 BEGIN ATOM\n" +
-                            "M  V30 1 C 5.4833 -0.5211 0 0\n" +
-                            "M  V30 2 N 4.1497 -1.2911 0 0\n" +
-                            "M  V30 3 C 4.1497 -2.8311 0 0\n" +
-                            "M  V30 4 C 5.4833 -3.6011 0 0\n" +
-                            "M  V30 5 C 6.817 -2.8311 0 0\n" +
-                            "M  V30 6 C 6.817 -1.2911 0 0\n" +
-                            "M  V30 END ATOM\n" +
-                            "M  V30 BEGIN BOND\n" +
-                            "M  V30 1 1 2 3\n" +
-                            "M  V30 2 1 3 4\n" +
-                            "M  V30 3 1 4 5\n" +
-                            "M  V30 4 1 5 6\n" +
-                            "M  V30 5 1 1 6\n" +
-                            "M  V30 6 5 1 2 TOPO=2\n" +
-                            "M  V30 END BOND\n" +
-                            "M  V30 END CTAB\n" +
-                            "M  END\n")
-            );
+                               "\n" +
+                               "  CDK     [0-9]{10}2D\n" +
+                               "\n" +
+                               "  0  0  0     0  0            999 V3000\n" +
+                               "M  V30 BEGIN CTAB\n" +
+                               "M  V30 COUNTS 6 6 0 0 0\n" +
+                               "M  V30 BEGIN ATOM\n" +
+                               "M  V30 1 C 5.4833 -0.5211 0 0\n" +
+                               "M  V30 2 N 4.1497 -1.2911 0 0\n" +
+                               "M  V30 3 C 4.1497 -2.8311 0 0\n" +
+                               "M  V30 4 C 5.4833 -3.6011 0 0\n" +
+                               "M  V30 5 C 6.817 -2.8311 0 0\n" +
+                               "M  V30 6 C 6.817 -1.2911 0 0\n" +
+                               "M  V30 END ATOM\n" +
+                               "M  V30 BEGIN BOND\n" +
+                               "M  V30 1 1 2 3\n" +
+                               "M  V30 2 1 3 4\n" +
+                               "M  V30 3 1 4 5\n" +
+                               "M  V30 4 1 5 6\n" +
+                               "M  V30 5 1 1 6\n" +
+                               "M  V30 6 5 1 2 TOPO=2\n" +
+                               "M  V30 END BOND\n" +
+                               "M  V30 END CTAB\n" +
+                               "M  END\n")
+                      );
         }
     }
 
