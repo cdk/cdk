@@ -68,7 +68,7 @@ public class InChIGeneratorFactory {
     /**
      * If the CDK aromaticity flag should be ignored and the bonds treated solely as single and double bonds.
      */
-    private static boolean IGNORE_AROMATIC_BONDS_DEFAULT = true;
+    private static final boolean IGNORE_AROMATIC_BONDS_DEFAULT = true;
 
     private boolean ignoreAromaticBonds = IGNORE_AROMATIC_BONDS_DEFAULT;
 
@@ -150,7 +150,7 @@ public class InChIGeneratorFactory {
      * @throws CDKException if the generator cannot be instantiated
      */
     public InChIGenerator getInChIGenerator(IAtomContainer container, String options) throws CDKException {
-        return new InChIGenerator(container, options, IGNORE_AROMATIC_BONDS_DEFAULT);
+        return new InChIGenerator(container, options, ignoreAromaticBonds);
     }
 
     /**
@@ -165,7 +165,7 @@ public class InChIGeneratorFactory {
     @Deprecated
     public InChIGenerator getInChIGenerator(IAtomContainer container, List<INCHI_OPTION> options) throws CDKException {
         if (options == null) throw new IllegalArgumentException("Null options");
-        return (new InChIGenerator(container, options, IGNORE_AROMATIC_BONDS_DEFAULT));
+        return (new InChIGenerator(container, options, ignoreAromaticBonds));
     }
 
     /**
