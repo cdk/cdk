@@ -234,13 +234,19 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
 
                 // Add Hydrogen to fragments if
-                if (saturationSetting == Saturation.HYDROGEN_SATURATED_FRAGMENTS) {
-
-                    // Reset implicit hydrogen count before recalculating
-                    for (IAtom atom : partContainer.atoms()) {
-                        atom.setImplicitHydrogenCount(0);
-                    }
-                    CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
+                switch (this.saturationSetting) {
+                    case HYDROGEN_SATURATED_FRAGMENTS:
+                        for (IAtom atom : partContainer.atoms()) {
+                            atom.setImplicitHydrogenCount(0);
+                        }
+                        CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
+                        break;
+                    case REST_SATURATED_FRAGMENTS:
+                        // TODO: find a good working solution.
+                        saturateWithRAtoms(partContainer);
+                        break;
+                    case UNSATURATED_FRAGMENTS:
+                        break;
                 }
 
                 // Apply aromaticity perception (legacy operation)
@@ -355,6 +361,16 @@ public class ExhaustiveFragmenter implements IFragmenter {
         }
     }
 
+    private void saturateWithRAtoms(IAtomContainer mol) {
+        for (IAtom atom : mol.atoms()) {
+            int connected = mol.getConnectedBondsCount(atom);
+            Integer valency = atom.getValency();
+            if (valency == null) continue;
+            int toAdd = valency - connected;
+            if (toAdd > 0) addRAtoms(atom, toAdd, mol);
+        }
+    }
+
     /**
      * Creates a copy of an atom and adds it to the specified atom container.
      *
@@ -397,18 +413,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
         for (IBond bond : bondsToSplit) {
             IAtom beg = bond.getBegin();
             IAtom end = bond.getEnd();
-            switch (this.saturationSetting) {
-                case HYDROGEN_SATURATED_FRAGMENTS:
-                    beg.setImplicitHydrogenCount(beg.getImplicitHydrogenCount() + 1);
-                    end.setImplicitHydrogenCount(end.getImplicitHydrogenCount() + 1);
-                    break;
-                case REST_SATURATED_FRAGMENTS:
-                    addRAtoms(beg, 1, mol);
-                    addRAtoms(end, 1, mol);
-                    break;
-                case UNSATURATED_FRAGMENTS:
-                    break;
-            }
             atomsToSplit.computeIfAbsent(beg, k -> new ArrayList<>()).add(end);
         }
 

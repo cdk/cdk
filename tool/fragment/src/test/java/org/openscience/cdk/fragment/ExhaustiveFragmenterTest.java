@@ -45,6 +45,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
 
     private static ExhaustiveFragmenter fragmenterSaturated;
     private static ExhaustiveFragmenter fragmenterUnsaturated;
+    private static ExhaustiveFragmenter fragmenterRestSaturated;
     private static SmilesParser         smilesParser;
 
     @BeforeAll
@@ -53,6 +54,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterSaturated.setSaturationSetting(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         fragmenterUnsaturated = new ExhaustiveFragmenter();
         fragmenterUnsaturated.setSaturationSetting(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
+        fragmenterRestSaturated = new ExhaustiveFragmenter();
+        fragmenterRestSaturated.setSaturationSetting(ExhaustiveFragmenter.Saturation.REST_SATURATED_FRAGMENTS);
         smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
@@ -225,5 +228,44 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         for (IAtomContainer frag : containerFrags) {
             org.hamcrest.MatcherAssert.assertThat(smilesFrags, hasItems(smilesGenerator.create(frag)));
         }
+    }
+
+    @Test
+    void testEF3RestSaturated() throws Exception {
+        IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
+        fragmenterRestSaturated.generateFragments(mol);
+        String[] frags = fragmenterRestSaturated.getFragments();
+        Assertions.assertNotNull(frags);
+        MatcherAssert.assertThat(frags, is(new String[]{"[R]C1CCCCC1"}));
+    }
+
+    @Test
+    void testEF5RestSaturated() throws Exception {
+        IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1Cc1ccccc1");
+        fragmenterRestSaturated.generateFragments(mol);
+        String[] frags = fragmenterRestSaturated.getFragments();
+        Assertions.assertNotNull(frags);
+        MatcherAssert.assertThat(Arrays.asList(frags), hasItems("[R]c1ccccc1", "c1ccccc1"));
+        Assertions.assertEquals(2, fragmenterRestSaturated.getFragmentsAsContainers().length);
+    }
+
+    @Test
+    void testEF6RestSaturated() throws Exception {
+        IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1c1ccccc1");
+        fragmenterRestSaturated.generateFragments(mol);
+        String[] frags = fragmenterRestSaturated.getFragments();
+        Assertions.assertNotNull(frags);
+        MatcherAssert.assertThat(frags, is(new String[]{"[R]c1ccccc1"}));
+        Assertions.assertEquals(1, fragmenterRestSaturated.getFragmentsAsContainers().length);
+    }
+
+    @Test
+    void testEF7RestSaturated() throws Exception {
+        IAtomContainer mol = smilesParser.parseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
+        fragmenterRestSaturated.generateFragments(mol);
+        List<String> frags = Arrays.asList(fragmenterRestSaturated.getFragments());
+        Assertions.assertNotNull(frags);
+        Assertions.assertEquals(25, fragmenterRestSaturated.getFragmentsAsContainers().length);
+        MatcherAssert.assertThat(frags, hasItems("[R]c1ccccc1", "[R]C1CCC(c2ccccc2)(CC3C=CC=C3)C1", "[R]C1CCC([R])(c2ccccc2)C1"));
     }
 }
