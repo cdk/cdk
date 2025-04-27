@@ -151,6 +151,21 @@ final class BeamToCDK {
                 case DOWN:
                     checkBondStereo = true;
                     bond.setOrder(IBond.Order.SINGLE);
+                    bond.setIsAromatic(atoms[u].isAromatic() && atoms[v].isAromatic());
+                    break;
+                case UP_AROMATIC:
+                case DOWN_AROMATIC:
+                    // if both end atoms are aromatic it follows this
+                    // bond must be aromatic, why? well because sane aromatic
+                    // atoms are degree <= 3 and the double bond must be exo
+                    // to the ring (e.g. O=C(C=C/1)C=NC1=C\C). If that bond is
+                    // not aromatic then there has to be two other bonds which
+                    // are - since otherwise the atom is not in an aromatic ring
+                    checkBondStereo = true;
+                    bond.setOrder(IBond.Order.SINGLE);
+                    bond.setIsAromatic(true);
+                    atoms[u].setIsAromatic(true);
+                    atoms[v].setIsAromatic(true);
                     break;
                 case UP_AROMATIC:
                 case DOWN_AROMATIC:
