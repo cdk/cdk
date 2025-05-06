@@ -159,8 +159,8 @@ final class Hydrogens {
                     carriers.set(i, ends[1]);
                 updated = true;
             } else if (atomsToSproutFrom.contains(atom) &&
-                       atom.equals(ends[0]) ||
-                       atom.equals(ends[1])) {
+                       (atom.equals(ends[0]) ||
+                        atom.equals(ends[1]))) {
                 // find the new explicit H neighbour
                 for (IBond bond : atom.bonds()) {
                     IAtom nbor = bond.getOther(atom);
@@ -534,13 +534,55 @@ final class Hydrogens {
     private static void makeExplicit(IStereoElement<?, ?> se,
                                      Set<IAtom> atomsToSproutFrom,
                                      Set<IAtom> atomsToContract) {
-        if (se instanceof ITetrahedralChirality) {
-            ITetrahedralChirality tc = (ITetrahedralChirality) se;
+        if (se.getConfigClass() == IStereoElement.Tetrahedral ||
+            se.getConfigClass() == IStereoElement.SquarePlanar ||
+            se.getConfigClass() == IStereoElement.TrigonalBipyramidal ||
+            se.getConfigClass() == IStereoElement.Octahedral) {
+            IStereoElement<IAtom,IAtom> tc = (IStereoElement<IAtom,IAtom>) se;
             IAtom focus = tc.getFocus();
             if (hasImplH(focus))
                 atomsToSproutFrom.add(focus);
             for (IAtom atom : tc.getCarriers())
                 atomsToContract.remove(atom);
+        }
+        // todo octahedral etc
+        else if (se instanceof ExtendedTetrahedral) {
+            ExtendedTetrahedral tc = (ExtendedTetrahedral) se;
+            IAtom focus = tc.getFocus();
+            IAtom[] ends = ExtendedTetrahedral.findTerminalAtoms(focus.getContainer(), focus);
+            if (hasImplH(ends[0]))
+                atomsToSproutFrom.add(ends[0]);
+            if (hasImplH(ends[1]))
+                atomsToSproutFrom.add(ends[1]);
+            for (IAtom atom : tc.getCarriers())
+                atomsToContract.remove(atom);
+        } else if (se instanceof ExtendedCisTrans) {
+            ExtendedCisTrans tc = (ExtendedCisTrans) se;
+            IBond focus = tc.getFocus();
+            IAtom[] ends = ExtendedCisTrans.findTerminalAtoms(focus.getContainer(), focus);
+            if (ends != null) {
+                if (hasImplH(ends[0]))
+                    atomsToSproutFrom.add(ends[0]);
+                if (hasImplH(ends[1]))
+                    atomsToSproutFrom.add(ends[1]);
+                for (IBond bond : ends[0].bonds())
+                    atomsToContract.remove(bond.getOther(ends[0]));
+                for (IBond bond : ends[1].bonds())
+                    atomsToContract.remove(bond.getOther(ends[1]));
+            }
+        } else if (se instanceof IDoubleBondStereochemistry) {
+            IDoubleBondStereochemistry tc = (IDoubleBondStereochemistry) se;
+            IBond focus = tc.getFocus();
+            IAtom begin = focus.getBegin();
+            IAtom end = focus.getEnd();
+            if (hasImplH(begin))
+                atomsToSproutFrom.add(begin);
+            if (hasImplH(end))
+                atomsToSproutFrom.add(end);
+            for (IBond bond : begin.bonds())
+                atomsToContract.remove(bond.getOther(begin));
+            for (IBond bond : end.bonds())
+                atomsToContract.remove(bond.getOther(end));
         }
     }
 

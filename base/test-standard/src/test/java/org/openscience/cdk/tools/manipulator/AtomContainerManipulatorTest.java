@@ -2092,4 +2092,46 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         assertHydrogenConversion("C1CCC[C@H]2[C@H]1CCCC2",
                                  "C1CCC[C@H]2[C@H]1CCCC2", HydrogenState.Depiction);
     }
+
+    @Test
+    public void testExtendedCisTrans() throws CDKException {
+        assertHydrogenConversion("C/C=C=C=C(\\[H])C",
+                                 "C/C=C=C=C/C", HydrogenState.Minimal);
+        assertHydrogenConversion("C/C=C=C=C(\\[H])C",
+                                 "C/C(=C=C=C(\\[H])C)[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("C/C=C=C=C([H])/C",
+                                 "C/C=C=C=C/C", HydrogenState.Minimal);
+        assertHydrogenConversion("C/C=C=C=C(\\[H])C",
+                                 "C/C(=C=C=C(\\[H])C)[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("C/C=C=C=C(\\[H])C",
+                                 "C/C=C=C=C/C", HydrogenState.Depiction);
+    }
+
+    @Test
+    public void testAllene() throws CDKException {
+        assertHydrogenConversion("CC=[C@]=CC",
+                                 "CC=[C@]=CC", HydrogenState.Minimal);
+        assertHydrogenConversion("CC=[C@]=CC",
+                                 "CC(=[C@@]=C(C)[H])[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("CC=[C@]=CC",
+                                 "CC(=[C@@]=C(C)[H])[H]", HydrogenState.Depiction);
+        assertHydrogenConversion("CC=[C@]=C([H])C",
+                                 "CC=[C@]=CC", HydrogenState.Minimal);
+        assertHydrogenConversion("C([H])C=[C@]=CC",
+                                 "CC=[C@]=CC", HydrogenState.Minimal);
+        assertHydrogenConversion("[H]1.C2.C12=[C@]=C([H])C",
+                                 "CC=[C@@]=CC", HydrogenState.Minimal);
+    }
+
+    @Test
+    public void testOctahedral() throws CDKException {
+        assertHydrogenConversion("N[C@OH1H2](Cl)(Cl)Cl",
+                                 "N[C@OH1H2](Cl)(Cl)Cl", HydrogenState.Minimal);
+        assertHydrogenConversion("N[C@OH1H2](Cl)(Cl)Cl",
+                                 "N[C@OH6](Cl)(Cl)(Cl)([H])[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("N[C@OH1H2](Cl)(Cl)Cl",
+                                 "N[C@OH6](Cl)(Cl)(Cl)([H])[H]", HydrogenState.Depiction);
+        assertHydrogenConversion("N[C@OH1H]([H])(Cl)(Cl)Cl",
+                                 "N[C@OH3]([H])(Cl)(Cl)(Cl)[H]", HydrogenState.Stereo);
+    }
 }
