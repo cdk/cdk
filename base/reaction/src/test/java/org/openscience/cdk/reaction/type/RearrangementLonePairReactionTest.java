@@ -71,14 +71,12 @@ import java.util.List;
  * @author         Miguel Rojas
  *
  * @cdk.created    2006-05-05
- * @cdk.module     test-reaction
  *
  **/
 /**
  * TestSuite that runs a test for the RearrangementLonePairReactionTest.
  * Generalized Reaction: [A-]-B=C => A=B-[C-].
  *
- * @cdk.module test-reaction
  */
 
 public class RearrangementLonePairReactionTest extends ReactionProcessTest {

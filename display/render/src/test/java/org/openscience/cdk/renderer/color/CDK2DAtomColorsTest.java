@@ -30,9 +30,6 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 
-/**
- * @cdk.module test-render
- */
 class CDK2DAtomColorsTest extends CDKTestCase {
 
     @Test

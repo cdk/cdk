@@ -36,7 +36,6 @@ import java.io.StringReader;
  * JUnit test routines for the SMARTS parser.
  *
  * @author Egon Willighagen
- * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
 class ParserTest extends CDKTestCase {

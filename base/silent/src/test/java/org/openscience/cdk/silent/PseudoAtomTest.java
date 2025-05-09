@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 /**
  * Checks the functionality of the {@link PseudoAtom}.
  *
- * @cdk.module test-silent
  */
 class PseudoAtomTest extends AbstractPseudoAtomTest {
 

@@ -31,8 +31,6 @@ import org.apache.jena.vocabulary.RDF;
  * Helper class to provide a Java API to the CDK OWL ontology, following the design of similar namespace
  * classes in the Jena library, like {@link RDF}.
  *
- * @cdk.module iordf
- * @cdk.githash
  */
 public class CDK {
 

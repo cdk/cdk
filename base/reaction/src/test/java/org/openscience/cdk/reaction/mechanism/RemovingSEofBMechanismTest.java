@@ -27,7 +27,6 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
 /**
  * Tests for RemovingSEofBMechanism implementations.
  *
- * @cdk.module test-reaction
  */
 class RemovingSEofBMechanismTest extends ReactionMechanismTest {
 

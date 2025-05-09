@@ -62,8 +62,6 @@ import java.util.regex.Pattern;
  * @param <T> the type of setting that will be managed (e.g. IOSetting).
  *
  * @author       John May
- * @cdk.module   io
- * @cdk.githash
  * @cdk.created  20.03.2012
  * @see          ISetting
  * @see          IOSetting

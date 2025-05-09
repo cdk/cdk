@@ -48,7 +48,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- * @cdk.module test-fingerprint
  */
 public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 

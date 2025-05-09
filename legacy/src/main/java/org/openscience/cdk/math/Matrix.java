@@ -29,9 +29,7 @@ import java.text.DecimalFormat;
  * This class contains a matrix.
  *
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
- * @cdk.githash
  * @cdk.created 2001-06-07
- * @cdk.module  qm
  */
 public class Matrix {
 

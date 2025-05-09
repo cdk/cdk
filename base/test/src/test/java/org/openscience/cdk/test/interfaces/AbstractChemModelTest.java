@@ -23,7 +23,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IChemModel} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
 

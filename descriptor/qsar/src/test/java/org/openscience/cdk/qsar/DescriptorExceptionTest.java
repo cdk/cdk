@@ -25,7 +25,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *
- * @cdk.module test-qsar
  */
 class DescriptorExceptionTest extends CDKTestCase {
 

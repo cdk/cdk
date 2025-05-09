@@ -47,7 +47,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * CDK atom type perception and mapping of CDK atom types to Sybyl
  * atom types.
  *
- * @cdk.module test-atomtype
  */
 class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 

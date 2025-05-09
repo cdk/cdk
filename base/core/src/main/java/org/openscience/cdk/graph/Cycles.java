@@ -86,8 +86,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * practice the vertex/edge short cycles are similar to MCB. </li> </ul>
  *
  * @author John May
- * @cdk.module core
- * @cdk.githash
  */
 public final class Cycles {
 
@@ -465,7 +463,7 @@ public final class Cycles {
      * that {@link #markRingAtomsAndBonds(IAtomContainer)} has been called
      * first to set the {@link IAtom#isInRing()} status of each atom/bond. If
      * you need to check every atom in a molecule use
-     * {@link @see #smallRingSizes(IAtomContainer, int[])}.
+     * {@link #smallRingSizes(IAtomContainer, int[])}.
      *
      * @param atom the atom
      * @param max the max ring size
@@ -510,7 +508,7 @@ public final class Cycles {
      * that {@link #markRingAtomsAndBonds(IAtomContainer)} has been called
      * first to set the {@link IAtom#isInRing()} status of each atom/bond. If
      * you need to check every atom in a molecule use
-     * {@link @see #smallRingSizes(IAtomContainer, int[])}.
+     * {@link #smallRingSizes(IAtomContainer, int[])}.
      *
      * @param atom the atom
      * @return the ring size, or 0 if the atom is not in a ring

@@ -101,8 +101,6 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * zoom is just a floating point number, 100% = 1 and 200% = 2.
  *
  * @author maclean
- * @cdk.module renderextra
- * @cdk.githash
  */
 public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements IRenderer<IChemModel> {
 

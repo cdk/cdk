@@ -41,7 +41,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author Egon Willighagen
  * @author uli-f
- * @cdk.module test-standard
  * @cdk.created 2003-07-23
  */
 class ReactionManipulatorTest extends CDKTestCase {

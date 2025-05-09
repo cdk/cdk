@@ -97,8 +97,6 @@ import static java.lang.Math.min;
  * zoom is just a floating point number, 100% = 1 and 200% = 2.
  *
  * @author maclean
- * @cdk.module renderbasic
- * @cdk.githash
  */
 public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> implements IRenderer<IAtomContainer> {
 

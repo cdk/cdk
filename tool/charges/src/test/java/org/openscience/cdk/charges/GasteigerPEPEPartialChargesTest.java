@@ -42,7 +42,6 @@ import java.util.List;
  * Description of the Class
  *
  * @author Miguel Rojas
- * @cdk.module test-charges
  * @cdk.created 2008-18-05
  */
 class GasteigerPEPEPartialChargesTest extends CDKTestCase {

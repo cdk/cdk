@@ -30,7 +30,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Values in the paper are inaccurate. The spreadsheet from the SI is better.
  *
- * @cdk.module test-standard
  */
 class VABCVolumeTest {
 

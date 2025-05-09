@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 /**
  * TestCase for the {@link CMLModuleStack} class.
  *
- * @cdk.module test-io
  */
 class CMLModuleStackTest extends CDKTestCase {
 

@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Checks the functionality of the IsomorphismTester
  *
- * @cdk.module test-standard
  */
 class IsomorphismTesterTest extends CDKTestCase {
 

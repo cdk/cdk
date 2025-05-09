@@ -37,7 +37,6 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 /**
  * TestCase for the reading Cerius<sup>2</sup> Polymorph Predictor files using a test file.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.PMPReader
  */

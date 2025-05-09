@@ -34,7 +34,6 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
 /**
  * TestSuite that runs test for the TAE descriptors
  *
- * @cdk.module test-qsarprotein
  *
  */
 class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {

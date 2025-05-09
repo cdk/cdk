@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-dict
  */
 abstract class AbstractEntryTest extends CDKTestCase {
 

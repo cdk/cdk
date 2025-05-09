@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.ICrystal;
 /**
  * Checks the functionality of the {@link DebugCrystal}.
  *
- * @cdk.module test-datadebug
  */
 class DebugCrystalTest extends AbstractCrystalTest {
 

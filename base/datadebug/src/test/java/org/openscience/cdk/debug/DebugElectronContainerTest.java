@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 /**
  * Checks the functionality of the {@link DebugElectronContainer}.
  *
- * @cdk.module test-datadebug
  */
 class DebugElectronContainerTest extends AbstractElectronContainerTest {
 

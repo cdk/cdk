@@ -29,7 +29,6 @@ package org.openscience.cdk.math;
  * This class handles quaternions.
  * Quaternion are 2*2 complex matrices.
  *
- * @cdk.module qm
  */
 public class Quaternion {
 

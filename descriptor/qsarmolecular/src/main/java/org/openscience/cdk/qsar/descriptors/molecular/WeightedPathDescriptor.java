@@ -77,8 +77,6 @@ import java.util.List;
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-01-15
- * @cdk.module qsarmolecular
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:weightedPath
  */
 public class WeightedPathDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

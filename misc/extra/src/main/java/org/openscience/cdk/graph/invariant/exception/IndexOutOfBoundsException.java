@@ -20,7 +20,6 @@
 package org.openscience.cdk.graph.invariant.exception;
 
 /**
- * @cdk.githash
  */
 public class IndexOutOfBoundsException extends Exception {
 

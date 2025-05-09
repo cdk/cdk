@@ -28,7 +28,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.
  *
- * @cdk.module test-forcefield
  *
  *@author        cubic
  *@cdk.created       2004-11-04

@@ -1744,6 +1744,15 @@
     <at:formalBondType rdf:resource="&bo;single"/>
     </at:AtomType>
 
+    <at:AtomType rdf:ID="As.planar3">
+	<at:formalCharge>0</at:formalCharge>
+	<at:hasElement rdf:resource="&elem;As"/>
+	<at:lonePairCount>1</at:lonePairCount>
+	<at:formalBondType rdf:resource="&bo;single"/>
+	<at:formalBondType rdf:resource="&bo;single"/>
+	<at:formalBondType rdf:resource="&bo;single"/>
+	</at:AtomType>
+
     <at:AtomType rdf:ID="As.5">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;As"/>
@@ -1762,7 +1771,9 @@
     <at:hybridization rdf:resource="&at;sp2"/>
     <at:formalBondType rdf:resource="&bo;single"/>
     <at:formalBondType rdf:resource="&bo;double"/>
-    </at:AtomType> 
+    </at:AtomType>
+
+
 
     <at:AtomType rdf:ID="As.3plus">
     <at:formalCharge>3</at:formalCharge>

@@ -83,8 +83,6 @@ import java.util.Map;
  *
  * @author Sam Adams
  *
- * @cdk.module inchi
- * @cdk.githash
  */
 public class InChIToStructure {
 

@@ -43,7 +43,6 @@ import org.openscience.cdk.test.io.ChemObjectIOTest;
  * same model out as an RGfile again without changing anything. Then
  * check that the original inputfile and the outputfile have the same content.
  *
- * @cdk.module test-io
  * @author Mark Rijnbeek
  */
 class RGroupQueryWriterTest extends ChemObjectIOTest {

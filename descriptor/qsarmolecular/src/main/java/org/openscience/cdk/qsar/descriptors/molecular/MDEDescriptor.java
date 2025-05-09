@@ -76,8 +76,6 @@ import java.util.List;
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-09-18
- * @cdk.module qsarmolecular
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:mde
  */
 public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

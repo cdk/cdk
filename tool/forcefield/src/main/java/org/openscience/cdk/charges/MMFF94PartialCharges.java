@@ -48,8 +48,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author mfe4
  * @author chhoppe
  * @cdk.created 2004-11-03
- * @cdk.module forcefield
- * @cdk.githash
  * @see Mmff#partialCharges(IAtomContainer) 
  */
 public class MMFF94PartialCharges implements IChargeCalculator {

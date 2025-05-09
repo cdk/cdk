@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
- * @cdk.module test-cip
  */
 class LigancyFourChiralityTest extends CDKTestCase {
 

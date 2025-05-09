@@ -70,7 +70,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * }</pre></blockquote>
  *
  * @author John May
- * @cdk.module isomorphism
  */
 public final class VentoFoggia extends Pattern {
 

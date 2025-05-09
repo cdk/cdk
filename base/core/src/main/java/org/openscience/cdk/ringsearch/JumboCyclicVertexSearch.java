@@ -31,7 +31,6 @@ import java.util.List;
  * CyclicVertexSearch for graphs with more then 64 vertices.
  *
  * @author John May
- * @cdk.module core
  */
 class JumboCyclicVertexSearch implements CyclicVertexSearch {
 

@@ -22,8 +22,6 @@ package org.openscience.cdk.qsar.result;
 /**
  * IDescriptorResult type for double.
  *
- * @cdk.module standard
- * @cdk.githash
  */
 public class DoubleResultType implements IDescriptorResult {
 

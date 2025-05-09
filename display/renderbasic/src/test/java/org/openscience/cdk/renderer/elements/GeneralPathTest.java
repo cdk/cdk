@@ -26,9 +26,6 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
 
-/**
- * @cdk.module test-renderbasic
- */
 class GeneralPathTest extends AbstractElementTest {
 
     @BeforeAll

@@ -42,8 +42,6 @@ import java.util.function.ToIntFunction;
 
 /**
  * Provides a variety of methods to manipulate and convert from/to {@link IReaction}.
- * @cdk.module standard
- * @cdk.githash
  *
  * @see ChemModelManipulator
  * @author uli-f
@@ -484,14 +482,20 @@ public class ReactionManipulator {
     public static Set<IBond> findMappedBonds(IReaction reaction) {
         Set<IBond> mapped = new HashSet<>();
 
+        List<IAtomContainer> leftSide = new ArrayList<>();
+        for (IAtomContainer mol : reaction.getReactants())
+            leftSide.add(mol);
+        for (IAtomContainer mol : reaction.getAgents())
+            leftSide.add(mol);
+
         // first we collect the occurrance of mapped bonds from reacants then products
         Set<IntTuple> mappedReactantBonds = new HashSet<>();
         Set<IntTuple> mappedProductBonds  = new HashSet<>();
-        for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
+        for (IAtomContainer reactant : leftSide) {
             for (IBond bond : reactant.bonds()) {
-                Integer begidx = bond.getBegin().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getEnd().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                if (begidx != null && endidx != null)
+                int begidx = bond.getBegin().getMapIdx();
+                int endidx = bond.getEnd().getMapIdx();
+                if (begidx != 0 && endidx != 0)
                     mappedReactantBonds.add(new IntTuple(begidx, endidx));
             }
         }
@@ -499,11 +503,11 @@ public class ReactionManipulator {
         if (mappedReactantBonds.isEmpty())
             return Collections.emptySet();
 
-        for (IAtomContainer product : reaction.getProducts().atomContainers()) {
+        for (IAtomContainer product : reaction.getProducts()) {
             for (IBond bond : product.bonds()) {
-                Integer begidx = bond.getBegin().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getEnd().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                if (begidx != null && endidx != null)
+                int begidx = bond.getBegin().getMapIdx();
+                int endidx = bond.getEnd().getMapIdx();
+                if (begidx != 0 && endidx != 0)
                     mappedProductBonds.add(new IntTuple(begidx, endidx));
             }
         }
@@ -512,19 +516,19 @@ public class ReactionManipulator {
             return Collections.emptySet();
 
         // repeat above but now store any that are different or unmapped as being mapped
-        for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
+        for (IAtomContainer reactant : leftSide) {
             for (IBond bond : reactant.bonds()) {
-                Integer begidx = bond.getBegin().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getEnd().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                if (begidx != null && endidx != null && mappedProductBonds.contains(new IntTuple(begidx, endidx)))
+                int begidx = bond.getBegin().getMapIdx();
+                int endidx = bond.getEnd().getMapIdx();
+                if (begidx != 0 && endidx != 0 && mappedProductBonds.contains(new IntTuple(begidx, endidx)))
                     mapped.add(bond);
             }
         }
-        for (IAtomContainer product : reaction.getProducts().atomContainers()) {
+        for (IAtomContainer product : reaction.getProducts()) {
             for (IBond bond : product.bonds()) {
-                Integer begidx = bond.getBegin().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getEnd().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                if (begidx != null && endidx != null && mappedReactantBonds.contains(new IntTuple(begidx, endidx)))
+                int begidx = bond.getBegin().getMapIdx();
+                int endidx = bond.getEnd().getMapIdx();
+                if (begidx != 0 && endidx != 0 && mappedReactantBonds.contains(new IntTuple(begidx, endidx)))
                     mapped.add(bond);
             }
         }

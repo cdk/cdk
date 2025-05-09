@@ -50,7 +50,6 @@ import static org.openscience.cdk.rinchi.StatusMessagesOutput.Status.*;
 /**
  * @author Nikolay Kochev
  * @author Uli Fechner
- * @cdk.module test-rinchi
  */
 class RInChIGeneratorTest extends CDKTestCase {
 

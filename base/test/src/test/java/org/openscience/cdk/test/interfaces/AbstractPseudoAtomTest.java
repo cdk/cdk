@@ -17,7 +17,6 @@ import javax.vecmath.Point3d;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IPseudoAtom} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
 

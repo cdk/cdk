@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.ICrystal;
 /**
  * Checks the functionality of the Crystal.
  *
- * @cdk.module test-data
  */
 class CrystalTest extends AbstractCrystalTest {
 

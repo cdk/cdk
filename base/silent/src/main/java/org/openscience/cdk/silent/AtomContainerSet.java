@@ -33,8 +33,6 @@ import java.util.NoSuchElementException;
  * A set of AtomContainers.
  *
  * @author        hel
- * @cdk.module    silent
- * @cdk.githash
  */
 public class AtomContainerSet extends ChemObject implements Serializable, IAtomContainerSet, IChemObjectListener,
         Cloneable {

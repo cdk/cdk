@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * Checks the functionality of the {@link DebugBond}.
  *
- * @cdk.module test-datadebug
  */
 class DebugBondTest extends AbstractBondTest {
 

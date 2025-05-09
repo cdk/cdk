@@ -49,7 +49,6 @@ import java.util.List;
  * TestSuite that runs a test for the AdductionProtonPBReactionTest.
  * Generalized Reaction: A=B + [H+] => [A+]-B-H.
  *
- * @cdk.module test-reaction
  */
 public class AdductionProtonPBReactionTest extends ReactionProcessTest {
 

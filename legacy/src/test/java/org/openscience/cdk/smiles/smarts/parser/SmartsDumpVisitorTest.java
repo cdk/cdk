@@ -9,7 +9,6 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-05-10
- * @cdk.module test-smarts
  * @cdk.keyword SMARTS
  */
 class SmartsDumpVisitorTest extends CDKTestCase {

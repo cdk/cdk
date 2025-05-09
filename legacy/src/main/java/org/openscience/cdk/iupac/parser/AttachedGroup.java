@@ -26,7 +26,6 @@ import java.util.List;
  * Holds data on a specific functional group or substituent.
  *
  * @author  Stephen Tomkinson
- * @cdk.githash
  * @cdk.require ant1.6
  */
 public class AttachedGroup {

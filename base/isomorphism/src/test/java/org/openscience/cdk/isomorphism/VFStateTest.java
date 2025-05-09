@@ -41,7 +41,6 @@ import static org.mockito.Mockito.when;
  * will add.
  *
  * @author John May
- * @cdk.module test-isomorphism
  */
 class VFStateTest {
 

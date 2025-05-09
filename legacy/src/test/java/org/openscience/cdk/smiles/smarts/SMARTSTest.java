@@ -52,7 +52,6 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * @cdk.module  test-smarts
  * @cdk.require java1.4+
  */
 class SMARTSTest extends CDKTestCase {

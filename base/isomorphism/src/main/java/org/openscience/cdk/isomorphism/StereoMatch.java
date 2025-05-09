@@ -53,7 +53,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * }</pre></blockquote>
  *
  * @author John May
- * @cdk.module isomorphism
  */
 final class StereoMatch implements Predicate<int[]> {
 

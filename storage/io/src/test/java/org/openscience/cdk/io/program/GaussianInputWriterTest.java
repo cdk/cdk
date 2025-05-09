@@ -35,7 +35,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  * TestCase for the reading MDL mol files using one test file.
  * A test case for SDF files is available as separate Class.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.GaussianInputWriter
  */

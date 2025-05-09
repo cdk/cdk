@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 /**
  * Checks the functionality of the MolecularFormulaSet class.
  *
- * @cdk.module test-data
  *
  * @see MolecularFormulaSet
  */

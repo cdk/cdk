@@ -30,7 +30,6 @@ import org.openscience.cdk.isomorphism.VentoFoggia;
 
 /**
  * @author John May
- * @cdk.module test-smarts
  */
 class VFSubstructureTest extends SubstructureTest {
 

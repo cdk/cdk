@@ -38,7 +38,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Uli Fechner
- * @cdk.module test-rinchi
  */
 class RInChIToReactionTest extends CDKTestCase {
     private final SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Canonical);

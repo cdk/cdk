@@ -40,7 +40,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * odd/even // parity from MDL molfile)
  *
  * @author John May
- * @cdk.module test-smarts
  */
 class SmartsStereoTest {
 

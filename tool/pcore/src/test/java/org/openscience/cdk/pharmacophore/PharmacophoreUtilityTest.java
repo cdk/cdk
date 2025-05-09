@@ -36,7 +36,6 @@ import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
- * @cdk.module test-pcore
  */
 class PharmacophoreUtilityTest {
 

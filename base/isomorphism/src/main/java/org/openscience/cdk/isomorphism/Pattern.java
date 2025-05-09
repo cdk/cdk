@@ -35,7 +35,6 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * A structural pattern for finding an exact matching in a target compound.
  *
  * @author John May
- * @cdk.module isomorphism
  */
 public abstract class Pattern {
 

@@ -44,7 +44,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author John May
- * @cdk.module test-io
  */
 class MDLV2000PropertiesBlockTest {
 

@@ -26,7 +26,6 @@
 package org.openscience.cdk.math;
 
 /**
- * @cdk.module qm
  */
 public class IVector {
 

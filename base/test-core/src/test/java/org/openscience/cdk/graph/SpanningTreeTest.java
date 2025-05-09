@@ -40,7 +40,6 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
- * @cdk.module test-core
  */
 class SpanningTreeTest extends CDKTestCase {
 

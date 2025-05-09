@@ -43,7 +43,6 @@ import java.util.Map;
  * Adds implicit hydrogens and specifies valency using the MDL valence model.
  *
  * @author John May
- * @cdk.module io
  * @see <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
  *      and Implicit Hydrogens: taking liberties with valence</a>
  */

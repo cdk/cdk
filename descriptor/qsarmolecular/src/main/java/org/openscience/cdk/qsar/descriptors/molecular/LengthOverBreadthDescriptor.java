@@ -56,8 +56,6 @@ import javax.vecmath.Point3d;
  *
  * @author      Rajarshi Guha
  * @cdk.created 2006-09-26
- * @cdk.module  qsarmolecular
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:lengthOverBreadth
  */
 public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

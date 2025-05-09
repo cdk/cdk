@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 /**
  * Checks the functionality of the {@link AtomContainerSet}.
  *
- * @cdk.module test-silent
  */
 class AtomContainerSetTest extends AbstractAtomContainerSetTest {
 

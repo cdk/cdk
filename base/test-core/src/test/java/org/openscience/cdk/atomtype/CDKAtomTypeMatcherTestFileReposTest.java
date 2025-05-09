@@ -45,7 +45,6 @@ import java.util.Objects;
  * This class tests the matching of atom types defined in the
  * cdk atom type list, using the test files in <code>src/test/data</code>.
  *
- * @cdk.module test-core
  *
  * @see org.openscience.cdk.atomtype.CDKAtomTypeMatcher
  */

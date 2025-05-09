@@ -35,7 +35,6 @@ import org.openscience.cdk.test.interfaces.AbstractStrandTest;
  * Window - Preferences - Java - Code Style - Code Templates
  *
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
- * @cdk.module test-data
  */
 class StrandTest extends AbstractStrandTest {
 

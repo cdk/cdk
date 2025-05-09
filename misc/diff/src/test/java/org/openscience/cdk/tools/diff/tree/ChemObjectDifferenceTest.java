@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.CoreMatchers.containsString;
 
 /**
- * @cdk.module test-diff
  */
 class ChemObjectDifferenceTest {
 

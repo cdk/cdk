@@ -13,7 +13,6 @@ import org.openscience.cdk.tools.diff.ElementDiff;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IElement} implementations.
  *
- * @cdk.module test-interfaces
  *
  * @see org.openscience.cdk.Element
  */

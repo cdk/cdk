@@ -51,7 +51,6 @@ import java.util.List;
 /**
  * TestSuite that runs a test for the ElectronImpactNBEReactionTest.
  *
- * @cdk.module test-reaction
  */
 
 public class ElectronImpactNBEReactionTest extends ReactionProcessTest {

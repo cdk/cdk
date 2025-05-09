@@ -37,7 +37,6 @@ import java.io.StringWriter;
 /**
  * TestCase for the writer MOL2 writer from smiles.
  *
- * @cdk.module test-smiles
  * @see org.openscience.cdk.io.Mol2Writer
  */
 class SMILES2Mol2WriterTest {

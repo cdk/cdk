@@ -24,8 +24,6 @@ import java.awt.Color;
 /**
  * A rectangle, with width and height.
  *
- * @cdk.module renderbasic
- * @cdk.githash
  */
 public class RectangleElement implements IRenderingElement {
 
@@ -82,6 +80,14 @@ public class RectangleElement implements IRenderingElement {
         this.height = height;
         this.filled = filled;
         this.color = color;
+    }
+
+    // create a square centered on the given coords
+    public static IRenderingElement createSquare(double cx, double cy, double size,
+                                                 boolean filled, Color color) {
+        return new RectangleElement(cx - size, cy + size,
+                                    2*size, 2*-size,
+                                    filled, color);
     }
 
     /** {@inheritDoc }**/

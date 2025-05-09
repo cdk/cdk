@@ -27,8 +27,6 @@ import org.openscience.cdk.BondRef;
  * Represents a pharmacophore query distance constraint.
  *
  * @author Rajarshi Guha
- * @cdk.module pcore
- * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom

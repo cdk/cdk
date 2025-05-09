@@ -33,8 +33,6 @@ import java.lang.reflect.Method;
  * }
  * </pre>
  *
- * @cdk.module core
- * @cdk.githash
  */
 public class LoggingToolFactory {
 

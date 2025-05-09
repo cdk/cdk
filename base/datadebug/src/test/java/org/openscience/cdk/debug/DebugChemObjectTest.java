@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * Checks the functionality of the {@link DebugChemObject}.
  *
- * @cdk.module test-datadebug
  */
 class DebugChemObjectTest extends AbstractChemObjectTest {
 

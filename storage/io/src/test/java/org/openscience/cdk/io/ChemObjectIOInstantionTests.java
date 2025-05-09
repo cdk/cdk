@@ -35,7 +35,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Tests whether all Reader and Writer classes can be instantiated.
  *
- * @cdk.module test-io
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */

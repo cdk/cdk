@@ -45,7 +45,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 
 /**
- * @cdk.module test-core
  */
 class DoubleBondStereochemistryTest extends CDKTestCase {
 

@@ -32,7 +32,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * Utility that helps determine which data features are present.
  *
  * @author egonw
- * @cdk.githash
  *
  * @see    DataFeatures
  */

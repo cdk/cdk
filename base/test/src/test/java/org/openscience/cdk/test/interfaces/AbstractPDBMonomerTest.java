@@ -12,7 +12,6 @@ import org.openscience.cdk.interfaces.IPDBMonomer;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IPDBMonomer} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractPDBMonomerTest extends AbstractMonomerTest {
 

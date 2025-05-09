@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IRing;
 /**
  * Checks the functionality of the {@link DebugRing}.
  *
- * @cdk.module test-datadebug
  */
 class DebugRingTest extends AbstractRingTest {
 

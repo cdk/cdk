@@ -31,7 +31,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Uli
- * @cdk.module test-inchi
  */
 class EmptyReactionSmilesGenerationTest {
 

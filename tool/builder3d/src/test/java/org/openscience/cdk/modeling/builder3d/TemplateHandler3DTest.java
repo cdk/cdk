@@ -41,7 +41,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- * @cdk.module test-builder3d
  *
  * @author      chhoppe
  * @author      Christoph Steinbeck

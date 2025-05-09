@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 /**
  * Checks the functionality of the {@link DebugAtomContainerSet}.
  *
- * @cdk.module test-datadebug
  */
 class DebugAtomContainerSetTest extends AbstractAtomContainerSetTest {
 

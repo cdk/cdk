@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IStrand;
 /**
  * Checks the functionality of the {@link PDBPolymer}.
  *
- * @cdk.module test-silent
  */
 class PDBPolymerTest extends AbstractPDBPolymerTest {
 

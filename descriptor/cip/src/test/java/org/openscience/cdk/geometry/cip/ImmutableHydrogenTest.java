@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
- * @cdk.module test-cip
  */
 class ImmutableHydrogenTest extends CDKTestCase {
 

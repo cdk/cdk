@@ -10,8 +10,6 @@ import java.util.List;
  *
  * @author Miguel Rojas Cherto
  *
- * @cdk.module  formula
- * @cdk.githash
  */
 public class IsotopePatternManipulator {
 

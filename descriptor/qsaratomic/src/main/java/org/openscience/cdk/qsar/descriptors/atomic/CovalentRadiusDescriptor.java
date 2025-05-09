@@ -51,8 +51,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author         Miguel Rojas
  * @cdk.created    2006-05-17
- * @cdk.module     qsaratomic
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:covalentradius
  */
 public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

@@ -40,7 +40,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.helper.FinalMappings;
 
 /**
- * @cdk.module test-smsd
  * @author     Syed Asad Rahman
  * @cdk.require java1.5+
  */

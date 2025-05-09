@@ -47,7 +47,6 @@ import static org.mockito.Mockito.when;
 /**
  * @author John May
  * @author Uli Fechner
- * @cdk.module test-hash
  */
 class BasicMoleculeHashGeneratorTest {
 

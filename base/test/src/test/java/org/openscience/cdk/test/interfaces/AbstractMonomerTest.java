@@ -12,7 +12,6 @@ import org.openscience.cdk.interfaces.IMonomer;
 /**
  * TestCase for {@link org.openscience.cdk.interfaces.IMonomer} implementations.
  *
- * @cdk.module test-interfaces
  *
  * @author Edgar Luttman &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09

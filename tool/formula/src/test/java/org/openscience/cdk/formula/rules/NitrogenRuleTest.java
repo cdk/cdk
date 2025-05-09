@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * @cdk.module test-formula
  */
 class NitrogenRuleTest extends FormulaRuleTest {
 

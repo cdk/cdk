@@ -31,7 +31,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * It keeps track of the atom types which have been tested, to ensure
  * that all atom types are tested.
  *
- * @cdk.module test-core
  * @cdk.bug    1890702
  */
 abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomTypeTest {

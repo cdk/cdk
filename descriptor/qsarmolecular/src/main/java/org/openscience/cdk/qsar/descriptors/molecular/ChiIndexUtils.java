@@ -44,8 +44,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * be used to evaluate path, path-cluster, cluster and chain chi indices.
  *
  * @author     Rajarshi Guha
- * @cdk.module qsarmolecular
- * @cdk.githash
  */
 class ChiIndexUtils {
 

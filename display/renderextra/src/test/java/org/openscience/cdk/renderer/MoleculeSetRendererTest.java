@@ -34,7 +34,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 
 /**
- * @cdk.module test-renderextra
  */
 class MoleculeSetRendererTest {
 

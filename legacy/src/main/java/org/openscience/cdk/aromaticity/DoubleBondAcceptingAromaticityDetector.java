@@ -50,8 +50,6 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * ring atoms with double bonds pointing out of the ring.
  *
  * @author         egonw
- * @cdk.module     standard
- * @cdk.githash
  *
  * @see org.openscience.cdk.CDKConstants
  * @see CDKHueckelAromaticityDetector

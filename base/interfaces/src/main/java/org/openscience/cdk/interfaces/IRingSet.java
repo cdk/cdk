@@ -21,8 +21,6 @@ package org.openscience.cdk.interfaces;
 /**
  * Maintains a set of Ring objects.
  *
- * @cdk.module  interfaces
- * @cdk.githash
  *
  * @cdk.keyword ring, set of
  */

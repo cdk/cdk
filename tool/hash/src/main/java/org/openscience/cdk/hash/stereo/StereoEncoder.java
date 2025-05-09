@@ -30,7 +30,6 @@ package org.openscience.cdk.hash.stereo;
  * then the appropriate value is the {@code next[]} is modified.
  *
  * @author John May
- * @cdk.module hash
  */
 public interface StereoEncoder {
 

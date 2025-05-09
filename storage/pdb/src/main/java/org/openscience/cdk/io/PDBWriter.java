@@ -45,7 +45,6 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -53,9 +52,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * writing of PDBProtein data structures.
  *
  * @author Gilleain Torrance &lt;gilleain.torrance@gmail.com&gt;
- * @cdk.module pdb
  * @cdk.iooptions
- * @cdk.githash
  */
 public class PDBWriter extends DefaultChemObjectWriter {
 
@@ -112,7 +109,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     }
 
     @Override
-    public void setWriter(Writer out) throws CDKException {
+    public void setWriter(Writer out) {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
         } else {
@@ -121,7 +118,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     }
 
     @Override
-    public void setWriter(OutputStream output) throws CDKException {
+    public void setWriter(OutputStream output) {
         setWriter(new OutputStreamWriter(output));
     }
 
@@ -181,13 +178,13 @@ public class PDBWriter extends DefaultChemObjectWriter {
 
             String hetatmRecordName = (writeAsHET.isSet()) ? "HETATM" : "ATOM  ";
             String id = molecule.getID();
-            String residueName = (id == null || id.equals("")) ? "MOL" : id;
+            String residueName = (id == null || id.isEmpty()) ? "MOL" : id;
             String terRecordName = "TER";
 
             // Loop through the atoms and write them out:
             StringBuilder buffer = new StringBuilder();
             Iterator<IAtom> atoms = molecule.atoms().iterator();
-            FormatStringBuffer fsb = new FormatStringBuffer("");
+            FormatStringBuilder fsb = new FormatStringBuilder("");
             String[] connectRecords = null;
             if (writeCONECTRecords.isSet()) {
                 connectRecords = new String[molecule.getAtomCount()];
@@ -203,7 +200,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                 if (useElementSymbolAsAtomName.isSet()) {
                     name = atom.getSymbol();
                 } else {
-                    if (atom.getID() == null || atom.getID().equals("")) {
+                    if (atom.getID() == null || atom.getID().isEmpty()) {
                         name = atom.getSymbol();
                     } else {
                         name = atom.getID();
@@ -236,7 +233,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
 
                 if (connectRecords != null && writeCONECTRecords.isSet()) {
                     List<IAtom> neighbours = molecule.getConnectedAtomsList(atom);
-                    if (neighbours.size() != 0) {
+                    if (!neighbours.isEmpty()) {
                         StringBuilder connectBuffer = new StringBuilder("CONECT");
                         connectBuffer.append(String.format("%5d", atomNumber));
                         for (IAtom neighbour : neighbours) {
@@ -292,7 +289,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
             double[] ucParams = CrystalGeometryTools.cartesianToNotional(a, b, c);
             final String LENGTH_FORMAT = "%4.3f";
             final String ANGLE_FORMAT = "%3.3f";
-            FormatStringBuffer fsb = new FormatStringBuffer("");
+            FormatStringBuilder fsb = new FormatStringBuilder("");
             fsb.reset(LENGTH_FORMAT).format(ucParams[0]);
             writer.write("CRYST1 " + fsb);
             fsb.reset(LENGTH_FORMAT).format(ucParams[1]);

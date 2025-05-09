@@ -69,8 +69,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *   molecule.getProperty(CDKConstants.TITLE);
  * </pre>
  *
- * @cdk.module io
- * @cdk.githash
  * @cdk.iooptions
  *
  * @author     steinbeck

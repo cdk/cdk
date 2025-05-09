@@ -52,7 +52,6 @@ import org.openscience.cdk.exception.CDKException;
  * This application takes a XYZ, CML or MDL mol file, calculates
  * orbitals and outputs them to STDOUT.
  *
- * @cdk.module test-qm
  *
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.created 2001-06-09

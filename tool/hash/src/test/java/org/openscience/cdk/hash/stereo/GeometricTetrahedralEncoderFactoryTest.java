@@ -48,7 +48,6 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class GeometricTetrahedralEncoderFactoryTest {
 

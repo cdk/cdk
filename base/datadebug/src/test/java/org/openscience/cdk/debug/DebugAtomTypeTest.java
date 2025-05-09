@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 /**
  * Checks the functionality of the {@link DebugAtomType}.
  *
- * @cdk.module test-datadebug
  */
 class DebugAtomTypeTest extends AbstractAtomTypeTest {
 

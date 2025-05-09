@@ -33,8 +33,6 @@ import java.util.NoSuchElementException;
  *  document
  *
  *@author        steinbeck
- * @cdk.githash
- *@cdk.module    data
  */
 public class ChemFile extends ChemObject implements Serializable, Cloneable, IChemFile, IChemObjectListener {
 

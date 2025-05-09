@@ -53,7 +53,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * TestCase for the InChIGenerator.
  *
- * @cdk.module test-inchi
  * @author Sam Adams
  * @author Egon Willighagen
  * @author Uli Fechner

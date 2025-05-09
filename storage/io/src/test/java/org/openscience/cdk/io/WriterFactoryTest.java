@@ -32,7 +32,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * TestCase for the writing files.
  *
- * @cdk.module test-io
  */
 class WriterFactoryTest extends CDKTestCase {
 

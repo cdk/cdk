@@ -35,8 +35,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * <P>
  * See also {@link RGroupList} and {@link RGroupQuery}.
  *
- * @cdk.module  isomorphism
- * @cdk.githash
  * @cdk.keyword Rgroup
  * @cdk.keyword R group
  * @cdk.keyword R-group

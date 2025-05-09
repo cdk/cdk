@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 
 /**
- * @cdk.module test-smsd
  * @author Asad
  */
 class GenerateCompatibilityGraphTest {

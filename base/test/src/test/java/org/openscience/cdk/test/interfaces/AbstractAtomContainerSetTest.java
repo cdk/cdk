@@ -27,7 +27,6 @@ import static org.mockito.Mockito.verify;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IAtomContainerSet} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTest {
 

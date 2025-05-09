@@ -27,9 +27,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
 class WedgeLineElementTest extends AbstractElementTest {
 
     @BeforeAll

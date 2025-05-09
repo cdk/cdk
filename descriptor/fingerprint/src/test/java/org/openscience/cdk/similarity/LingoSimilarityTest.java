@@ -36,7 +36,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @cdk.module test-fingerprint
  */
 class LingoSimilarityTest extends CDKTestCase {
 

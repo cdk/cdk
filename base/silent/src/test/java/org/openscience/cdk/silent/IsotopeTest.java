@@ -32,7 +32,6 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 /**
  * Checks the functionality of the {@link Isotope}.
  *
- * @cdk.module test-silent
  */
 class IsotopeTest extends AbstractIsotopeTest {
 

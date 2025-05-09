@@ -73,7 +73,6 @@ import java.util.TreeMap;
  * @author Christian Hoppe
  * @author Niels Out
  * @author John May
- * @cdk.githash
  */
 public final class GeometryUtil {
 

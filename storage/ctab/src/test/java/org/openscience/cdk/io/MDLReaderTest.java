@@ -53,7 +53,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * TestCase for the reading MDL mol files using one test file.
  * A test case for SDF files is available as separate Class.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.MDLReader
  * @see org.openscience.cdk.io.SDFReaderTest

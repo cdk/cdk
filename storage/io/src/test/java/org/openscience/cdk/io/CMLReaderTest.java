@@ -46,7 +46,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 /**
  * TestCase for reading CML files.
  *
- * @cdk.module test-io
  */
 class CMLReaderTest extends SimpleChemObjectReaderTest {
 

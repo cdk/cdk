@@ -56,8 +56,6 @@ import nu.xom.Element;
  *
  * @author        egonw
  * @cdk.created   2005-05-04
- * @cdk.module    qsarcml
- * @cdk.githash
  * @cdk.require   java1.5+
  */
 public class QSARCustomizer implements ICMLCustomizer {

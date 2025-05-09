@@ -38,7 +38,6 @@ import org.openscience.cdk.renderer.elements.LineElement;
  * Test the {@link BasicBondGenerator}.
  *
  * @author     maclean
- * @cdk.module test-renderbasic
  */
 public class BasicGeneratorTest extends AbstractGeneratorTest {
 

@@ -30,7 +30,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
  */
 class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
 

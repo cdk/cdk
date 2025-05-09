@@ -66,7 +66,7 @@ import java.util.regex.Pattern;
  * <li>7 double or aromatic</li>
  * <li>8 any</li>
  * </ul>
- * <b>Limitations:<b/>
+ * <b>Limitations:</b>
  * <br>
  * Atoms: The only properties read in the atom block are atom index, atom type,
  * atom coordinates, atom-atom mapping, atom charge ({@code CHG}), atom radical
@@ -77,8 +77,6 @@ import java.util.regex.Pattern;
  * 9 (coordination) or 10 (hydrogen) are encountered.
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
- * @cdk.module io
- * @cdk.githash
  * @cdk.iooptions
  * @cdk.created 2006
  * @cdk.keyword MDL molfile V3000

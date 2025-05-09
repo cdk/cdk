@@ -32,7 +32,6 @@ import org.openscience.cdk.test.io.ChemObjectIOTest;
 /**
  * TestCase for CDK IO classes.
  *
- * @cdk.module test-io
  */
 abstract class ChemObjectReaderTest extends org.openscience.cdk.test.io.ChemObjectIOTest {
 

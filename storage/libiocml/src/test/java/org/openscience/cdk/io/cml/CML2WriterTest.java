@@ -65,7 +65,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * TestCase for the reading CML 2 files using a few test files
  * in data/cmltest.
  *
- * @cdk.module test-libiocml
  * @cdk.require java1.5+
  */
 class CML2WriterTest extends CDKTestCase {

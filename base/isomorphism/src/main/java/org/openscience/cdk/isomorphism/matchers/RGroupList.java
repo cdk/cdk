@@ -37,8 +37,6 @@ import org.openscience.cdk.exception.CDKException;
  * Represents a list of Rgroup substitutes to be associated with some
  * {@link RGroupQuery}.
  *
- * @cdk.module  isomorphism
- * @cdk.githash
  * @cdk.keyword Rgroup
  * @cdk.keyword R group
  * @cdk.keyword R-group

@@ -38,8 +38,6 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * ligands point away from the observer; the {@link STEREO} then defines the order of the second, third, and
  * fourth ligand to be clockwise or anti-clockwise.
  *
- * @cdk.module cip
- * @cdk.githash
  */
 class LigancyFourChirality {
 

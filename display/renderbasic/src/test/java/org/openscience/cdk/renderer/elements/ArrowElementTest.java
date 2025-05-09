@@ -25,9 +25,6 @@ import java.awt.Color;
 
 import org.junit.jupiter.api.BeforeAll;
 
-/**
- * @cdk.module test-renderbasic
- */
 class ArrowElementTest extends AbstractElementTest {
 
     @BeforeAll

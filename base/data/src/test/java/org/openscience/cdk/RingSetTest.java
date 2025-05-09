@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractRingSetTest;
 /**
  * Checks the functionality of the RingSet class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.RingSet
  */

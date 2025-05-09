@@ -49,7 +49,6 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author John May
- * @cdk.module test-smarts
  */
 class MappingsTest {
 

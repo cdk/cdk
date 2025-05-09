@@ -33,7 +33,6 @@ import java.util.stream.IntStream;
  * carbons.
  *
  * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
- * @cdk.module structgen
  */
 class HydrogenDistributor {
     private int[] capacity;

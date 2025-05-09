@@ -41,7 +41,6 @@ package org.openscience.cdk.rinchi;
  * interpreted.</p>
  *
  * @author Felix Bänsch
- * @cdk.module rinchi
  */
 final class KeyBase26 {
 

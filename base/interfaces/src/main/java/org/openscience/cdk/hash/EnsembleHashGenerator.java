@@ -32,8 +32,6 @@ import java.util.Set;
  * molecules (ensemble).
  *
  * @author John May
- * @cdk.module interfaces
- * @cdk.githash
  */
 public interface EnsembleHashGenerator {
 

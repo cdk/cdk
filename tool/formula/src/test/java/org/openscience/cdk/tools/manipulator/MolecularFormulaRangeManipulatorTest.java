@@ -33,7 +33,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * Checks the functionality of the MolecularFormulaRangeManipulator.
  *
- * @cdk.module test-formula
  */
 class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
 

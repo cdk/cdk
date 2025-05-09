@@ -39,11 +39,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *   <li><code>[C2H4O2+Na]+</code></li>
  * </ul>
  *
- * @cdk.module  data
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
- * @cdk.githash
  */
 public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormula, Cloneable {
 

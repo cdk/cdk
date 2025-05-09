@@ -32,7 +32,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * Defines compatibility checking of atoms for (subgraph)-isomorphism mapping.
  *
  * @author John May
- * @cdk.module isomorphism
  */
 public abstract class AtomMatcher {
 

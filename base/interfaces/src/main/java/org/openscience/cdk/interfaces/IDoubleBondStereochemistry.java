@@ -34,8 +34,6 @@ import java.util.Map;
  * ({@link Conformation#TOGETHER}) or in the trans position ({@link Conformation#OPPOSITE}), matching the
  * orientation of the methyls in but-2-ene respectively as <i>Z</i> and <i>E</i>.
  *
- * @cdk.module interfaces
- * @cdk.githash
  */
 public interface IDoubleBondStereochemistry extends IStereoElement<IBond,IBond> {
 

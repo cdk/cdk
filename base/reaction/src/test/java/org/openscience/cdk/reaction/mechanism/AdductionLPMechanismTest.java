@@ -27,7 +27,6 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
 /**
  * Tests for AdductionLPMechanism implementations.
  *
- * @cdk.module test-reaction
  */
 class AdductionLPMechanismTest extends ReactionMechanismTest {
 

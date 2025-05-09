@@ -109,8 +109,6 @@ import Jama.Matrix;
  *
  * @author Rajarshi Guha
  * @cdk.created 2004-12-1
- * @cdk.module qsarmolecular
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:WHIM
  * @cdk.keyword WHIM
  * @cdk.keyword descriptor

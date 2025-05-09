@@ -380,6 +380,14 @@ class SmartsPatternTest {
                     "*[Pt@OH1](C)(F)([H])(Cl)*", 1, 1);
     }
 
+
+    @Test
+    void testSpVsOh() throws Exception {
+        assertMatch("C1CCCO1[Cr@SP1](I)(O1CCCC1)",
+                    "I[Cr@OH8](Cl)(Cl)(N)(O1CCCC1)O1CCCC1", 4, 1);
+
+    }
+
     @Test
     void testInsaturationOnTriple() throws Exception {
         assertMatch("[Ci]~[Ci]O", "C#CO", 1, 1);

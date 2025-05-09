@@ -63,7 +63,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * TestCase for reading CML 2 files using a few test files
  * in data/cmltest.
  *
- * @cdk.module  test-libiocml
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5+
  */

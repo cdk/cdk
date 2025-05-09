@@ -42,7 +42,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Test the electron contribution using the Daylight aromatic model.
  *
  * @author John May
- * @cdk.module test-standard
  */
 class DaylightModelTest {
 

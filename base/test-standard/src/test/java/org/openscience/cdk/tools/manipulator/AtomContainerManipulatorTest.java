@@ -61,7 +61,6 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.openscience.cdk.tools.manipulator.AtomContainerManipulator.*;
 
 /**
- * @cdk.module test-standard
  */
 class AtomContainerManipulatorTest extends CDKTestCase {
 

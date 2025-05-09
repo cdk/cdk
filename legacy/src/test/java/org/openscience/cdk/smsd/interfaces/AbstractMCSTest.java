@@ -33,7 +33,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
- * @cdk.module test-smsd
  */
 abstract class AbstractMCSTest {
 

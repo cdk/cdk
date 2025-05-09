@@ -31,7 +31,6 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * Checks the functionality of {@link Element}.
  *
- * @cdk.module test-silent
  */
 class ElementTest extends AbstractElementTest {
 

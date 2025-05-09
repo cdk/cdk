@@ -25,9 +25,6 @@ import javax.vecmath.Point2d;
 
 import org.junit.jupiter.api.BeforeAll;
 
-/**
- * @cdk.module test-renderbasic
- */
 class LineToTest extends AbstractPathElementTest {
 
     @BeforeAll

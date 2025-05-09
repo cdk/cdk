@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractPDBMonomerTest;
 /**
  * Checks the functionality of the {@link PDBMonomer}.
  *
- * @cdk.module test-silent
  */
 class PDBMonomerTest extends AbstractPDBMonomerTest {
 

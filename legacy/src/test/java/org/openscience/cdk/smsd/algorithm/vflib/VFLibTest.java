@@ -52,7 +52,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Unit testing for the {@link VFMapper}, {@link VFState}, {@link Match} class.
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @cdk.module test-smsd
  */
 class VFLibTest extends CDKTestCase {
 

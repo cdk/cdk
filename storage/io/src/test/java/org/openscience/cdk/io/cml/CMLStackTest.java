@@ -31,7 +31,6 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * TestCase for the CMLStack class.
  *
- * @cdk.module test-io
  */
 class CMLStackTest extends CDKTestCase {
 

@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 /**
  * Checks the functionality of the {@link AtomType}.
  *
- * @cdk.module test-silent
  */
 class AtomTypeTest extends AbstractAtomTypeTest {
 

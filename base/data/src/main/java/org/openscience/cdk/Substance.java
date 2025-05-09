@@ -27,8 +27,6 @@ import org.openscience.cdk.interfaces.ISubstance;
  * An implementation of the {@link ISubstance} interface.
  *
  * @author        egonw
- * @cdk.module    data
- * @cdk.githash
  */
 public class Substance extends AtomContainerSet implements Serializable, ISubstance, IChemObjectListener, Cloneable {
 

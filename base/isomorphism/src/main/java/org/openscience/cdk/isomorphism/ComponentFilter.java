@@ -55,7 +55,6 @@ import java.util.function.Predicate;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module isomorphism
  * @see Pattern
  */
 final class ComponentFilter implements Predicate<int[]> {

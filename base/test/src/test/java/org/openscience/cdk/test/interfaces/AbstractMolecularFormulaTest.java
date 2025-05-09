@@ -19,7 +19,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IMolecularFormula} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
 

@@ -35,7 +35,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * @author John May
- * @cdk.module test-isomorphism
  */
 class ComponentGroupingTest {
 

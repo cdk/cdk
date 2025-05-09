@@ -26,8 +26,6 @@ import org.openscience.cdk.IImplementationSpecification;
 /**
  * Class that is used to distribute descriptor specifications.
  *
- * @cdk.module standard
- * @cdk.githash
  */
 public class DescriptorSpecification implements Serializable, IImplementationSpecification {
 

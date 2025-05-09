@@ -52,8 +52,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * <p>This class is based on Dan Gezelter's XYZReader from Jmol
  *
- * @cdk.module io
- * @cdk.githash
  * @cdk.iooptions
  *
  * @cdk.keyword file format, XYZ

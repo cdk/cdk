@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * Helper class to test the functionality of the NNChemObject.
  *
- * @cdk.module test-silent
  */
 class ChemObjectTestHelper {
 

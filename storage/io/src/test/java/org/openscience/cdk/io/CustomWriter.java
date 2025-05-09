@@ -35,7 +35,6 @@ import org.openscience.cdk.io.setting.IOSetting;
 /**
  * Dummy class to test the {@link WriterFactory} registerWriter functionality.
  *
- * @cdk.module test-io
  */
 class CustomWriter extends ChemObjectIO implements IChemObjectWriter {
 

@@ -40,7 +40,6 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  * Some simple isolated tests on functionality.
  *
  * @author John May
- * @cdk.module test-isomorphism
  */
 class StereoMatchTest {
 

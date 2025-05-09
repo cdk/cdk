@@ -16,7 +16,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IRing} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractRingTest extends AbstractAtomContainerTest {
 

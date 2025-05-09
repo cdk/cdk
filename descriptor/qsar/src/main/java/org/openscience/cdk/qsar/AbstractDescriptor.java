@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * interface methods.
  *
  * @author John May
- * @cdk.module qsar
  */
 abstract class AbstractDescriptor implements IDescriptor {
 

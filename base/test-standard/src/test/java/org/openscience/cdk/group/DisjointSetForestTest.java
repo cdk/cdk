@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author maclean
- * @cdk.module test-standard
  */
 class DisjointSetForestTest {
 

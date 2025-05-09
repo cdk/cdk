@@ -27,7 +27,6 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the Association class.
  *
- * @cdk.module test-extra
  *
  * @see org.openscience.cdk.Association
  */

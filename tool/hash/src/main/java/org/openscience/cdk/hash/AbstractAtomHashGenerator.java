@@ -34,7 +34,6 @@ import java.util.BitSet;
  * the information.
  *
  * @author John May
- * @cdk.module hash
  */
 abstract class AbstractAtomHashGenerator extends AbstractHashGenerator implements AtomHashGenerator {
 

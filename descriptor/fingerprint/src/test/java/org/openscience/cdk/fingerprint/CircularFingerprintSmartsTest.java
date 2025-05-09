@@ -41,7 +41,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIn.isIn;
 
 /**
- * @cdk.module test-standard
  */
 class CircularFingerprintSmartsTest extends CDKTestCase {
 

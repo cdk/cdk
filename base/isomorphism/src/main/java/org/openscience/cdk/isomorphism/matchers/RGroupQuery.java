@@ -64,8 +64,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * input RGroup query files contained in the CDK and how they translate into
  * RGroupXX objects. The JChempaint application can visualize the input files for you.
  *
- * @cdk.module  isomorphism
- * @cdk.githash
  * @cdk.keyword Rgroup
  * @cdk.keyword R group
  * @cdk.keyword R-group

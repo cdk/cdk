@@ -22,8 +22,6 @@ package org.openscience.cdk.tools.diff.tree;
  * Object that describes the difference between two {@link Object}s.
  *
  * @author     egonw
- * @cdk.module diff
- * @cdk.githash
  */
 public interface IDifference {
 

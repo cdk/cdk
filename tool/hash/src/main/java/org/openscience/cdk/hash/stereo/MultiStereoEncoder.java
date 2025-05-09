@@ -37,7 +37,6 @@ import java.util.List;
  * #reset()}.
  *
  * @author John May
- * @cdk.module hash
  */
 final class MultiStereoEncoder implements StereoEncoder {
 

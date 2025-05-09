@@ -31,8 +31,6 @@ package org.openscience.cdk.io.formats;
  * equality testing.
  *
  * @author John May
- * @cdk.module ioformats
- * @cdk.githash
  */
 public abstract class AbstractResourceFormat implements IResourceFormat {
 

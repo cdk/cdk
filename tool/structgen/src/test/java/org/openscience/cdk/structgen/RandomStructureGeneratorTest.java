@@ -30,7 +30,6 @@ import javax.vecmath.Vector2d;
 import java.util.Vector;
 
 /**
- * @cdk.module test-structgen
  */
 class RandomStructureGeneratorTest extends CDKTestCase {
 

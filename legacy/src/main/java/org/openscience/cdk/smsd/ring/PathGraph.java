@@ -57,8 +57,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  *
- * @cdk.module smsd
- * @cdk.githash
  * @author Richard L. Apodaca &lt;rapodaca at metamolecular.com&gt; 2007-2009,
  *         Syed Asad Rahman &gt;asad@ebi.ac.uk&lt; 2009-2010
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public

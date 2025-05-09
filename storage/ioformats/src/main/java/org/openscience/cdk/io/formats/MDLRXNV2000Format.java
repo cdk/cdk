@@ -25,8 +25,6 @@ import java.util.List;
 /**
  * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
  *
- * @cdk.module ioformats
- * @cdk.githash
  */
 public class MDLRXNV2000Format extends AbstractResourceFormat implements IChemFormatMatcher {
 

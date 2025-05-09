@@ -27,7 +27,6 @@ import static org.hamcrest.CoreMatchers.not;
 /**
  * Tests the {@link CDK} helper class functionality.
  *
- * @cdk.module test-core
  */
 class CDKTest {
 

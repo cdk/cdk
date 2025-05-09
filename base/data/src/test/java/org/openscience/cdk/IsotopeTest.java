@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 /**
  * Checks the functionality of the Isotope class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.Isotope
  */

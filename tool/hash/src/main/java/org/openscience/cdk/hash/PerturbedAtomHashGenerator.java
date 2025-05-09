@@ -54,11 +54,9 @@ import java.util.Set;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module hash
  * @see org.openscience.cdk.hash.SeedGenerator
  * @see <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Original
  *      Publication</a>
- * @cdk.githash
  * @see HashGeneratorMaker
  */
 final class PerturbedAtomHashGenerator extends AbstractHashGenerator implements AtomHashGenerator {

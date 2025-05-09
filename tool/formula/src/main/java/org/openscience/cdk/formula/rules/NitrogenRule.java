@@ -46,10 +46,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *   </tr>
  * </table>
  *
- * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2008-06-11
- * @cdk.githash
  */
 public class NitrogenRule implements IRule {
 

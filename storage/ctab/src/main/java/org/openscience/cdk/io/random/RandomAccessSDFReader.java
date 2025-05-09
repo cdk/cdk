@@ -41,8 +41,6 @@ import org.openscience.cdk.io.listener.IReaderListener;
  * index and seeks to find the correct record offset.
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
- * @cdk.module io
- * @cdk.githash
  */
 public class RandomAccessSDFReader extends RandomAccessReader {
 

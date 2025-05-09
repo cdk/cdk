@@ -39,8 +39,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * Generate the symbols for lone pairs.
  *
  * @author maclean
- * @cdk.module renderextra
- * @cdk.githash
  */
 public class LonePairGenerator implements IGenerator<IAtomContainer> {
 

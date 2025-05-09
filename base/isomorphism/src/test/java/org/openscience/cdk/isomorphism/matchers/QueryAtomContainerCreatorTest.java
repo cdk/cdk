@@ -32,7 +32,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * Checks the functionality of the <code>QueryAtomContainerCreator</code>.
  *
- * @cdk.module test-isomorphism
  */
 class QueryAtomContainerCreatorTest extends CDKTestCase {
 

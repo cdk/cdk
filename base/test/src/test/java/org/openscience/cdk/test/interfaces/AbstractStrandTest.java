@@ -18,7 +18,6 @@ import org.openscience.cdk.interfaces.IStrand;
  * Tests the functionality of {@link org.openscience.cdk.interfaces.IStrand} implementations.
  *
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
- * @cdk.module test-interfaces
  */
 public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
 

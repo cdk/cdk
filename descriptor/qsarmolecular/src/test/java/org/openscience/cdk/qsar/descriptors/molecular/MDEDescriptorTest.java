@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * TestSuite that runs a test for the MDEDescriptor.
  *
- * @cdk.module test-qsarmolecular
  */
 
 class MDEDescriptorTest extends MolecularDescriptorTest {

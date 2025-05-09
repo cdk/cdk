@@ -48,7 +48,6 @@ import java.util.Map;
  * double-bonds with a configuration can not be corrected (error logged).</b>
  *
  * @author John May
- * @cdk.module sdg
  */
 final class CorrectGeometricConfiguration {
 

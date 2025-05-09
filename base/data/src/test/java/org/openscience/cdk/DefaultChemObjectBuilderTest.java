@@ -31,7 +31,6 @@ import org.openscience.cdk.test.AbstractChemObjectBuilderTest;
 /**
  * Checks the functionality of the {@link IChemObjectBuilder} {@link DefaultChemObjectBuilder} implementation.
  *
- * @cdk.module test-data
  */
 class DefaultChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 

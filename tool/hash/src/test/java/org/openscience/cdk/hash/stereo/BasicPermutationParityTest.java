@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class BasicPermutationParityTest {
 

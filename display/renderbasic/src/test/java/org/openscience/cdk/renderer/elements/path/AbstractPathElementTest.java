@@ -24,9 +24,6 @@ package org.openscience.cdk.renderer.elements.path;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
 abstract class AbstractPathElementTest {
 
     private static PathElement pathElement;

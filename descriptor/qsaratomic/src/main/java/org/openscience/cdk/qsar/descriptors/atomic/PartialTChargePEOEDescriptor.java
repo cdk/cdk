@@ -56,8 +56,6 @@ import java.util.List;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-04-11
- * @cdk.module  qsaratomic
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:PartialTChargePEOE
  *
  * @see         GasteigerMarsiliPartialCharges

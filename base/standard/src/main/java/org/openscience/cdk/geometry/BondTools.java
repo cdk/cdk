@@ -45,8 +45,6 @@ import java.util.TreeMap;
  *
  * @author      shk3
  * @cdk.created 2005-08-04
- * @cdk.module  standard
- * @cdk.githash
  */
 public class BondTools {
 

@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * molecule.
  *
  * @author John May
- * @cdk.module interfaces
- * @cdk.githash
  */
 public interface AtomHashGenerator {
 

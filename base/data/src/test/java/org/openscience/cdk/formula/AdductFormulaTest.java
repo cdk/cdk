@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
  * Checks the functionality of the AdductFormula.
  *
- * @cdk.module test-data
  *
  * @see AdductFormula
  */

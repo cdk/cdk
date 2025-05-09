@@ -48,7 +48,6 @@ import static org.mockito.Mockito.mock;
 /**
  * TestCase for the writer MOL2 writer.
  *
- * @cdk.module test-io
  * @see Mol2Writer
  * @see SMILES2Mol2WriterTest
  */

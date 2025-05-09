@@ -33,7 +33,6 @@ import java.util.List;
 /**
  * This class tests the BiconnectivityInspector class.
  *
- * @cdk.module test-standard
  *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */

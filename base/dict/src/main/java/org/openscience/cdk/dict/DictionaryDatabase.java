@@ -38,10 +38,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * and entities.
  *
  * @author     Egon Willighagen
- * @cdk.githash
  * @cdk.created    2003-04-06
  * @cdk.keyword    dictionary
- * @cdk.module     dict
  */
 public class DictionaryDatabase {
 

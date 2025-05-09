@@ -44,8 +44,6 @@ import org.openscience.cdk.smsd.tools.BondEnergies;
 /**
  * This class handles single atom mapping.
  * Either query and/or target molecule with single atom is mapped by this class.
- * @cdk.module smsd
- * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
  *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent

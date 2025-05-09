@@ -42,7 +42,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * externally
  *
  * @author John May
- * @cdk.module isomorphism
  */
 final class VFSubState extends AbstractVFState {
 

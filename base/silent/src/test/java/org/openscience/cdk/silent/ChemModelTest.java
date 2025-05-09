@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 /**
  * Checks the functionality of the {@link ChemModel}.
  *
- * @cdk.module test-silent
  */
 class ChemModelTest extends AbstractChemModelTest {
 

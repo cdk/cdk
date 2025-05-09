@@ -20,7 +20,6 @@ import org.openscience.cdk.interfaces.IPolymer;
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.created 2001-08-09
- * @cdk.module  test-interfaces
  */
 public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
 

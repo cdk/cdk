@@ -29,7 +29,6 @@ import java.io.InputStream;
 /**
  * Checks the functionality of the TXTBasedAtomTypeConfigurator.
  *
- * @cdk.module test-core
  */
 class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase {
 

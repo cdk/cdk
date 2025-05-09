@@ -27,8 +27,6 @@ package org.openscience.cdk.io.formats;
  * An implementation is supposed to be a singleton class, so it should have
  * only private constructors, and implement the getInstance() method.
  *
- * @cdk.module ioformats
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2006-03-04

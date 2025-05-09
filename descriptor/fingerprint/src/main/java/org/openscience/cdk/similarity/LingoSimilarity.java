@@ -33,10 +33,8 @@ import java.util.TreeSet;
  * value ranges from 0 to 1
  *
  * @author Rajarshi Guha
- * @cdk.githash
  * @cdk.keyword lingo
  * @cdk.keyword similarity, tanimoto
- * @cdk.module fingerprint
  */
 public class LingoSimilarity {
 

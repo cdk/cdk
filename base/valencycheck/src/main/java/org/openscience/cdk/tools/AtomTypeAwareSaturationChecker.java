@@ -47,10 +47,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author Klas J&ouml;nsson
  * @author Egon Willighagen
  * @cdk.created 2012-04-13
- * @cdk.githash
  *
  * @cdk.keyword bond order
- * @cdk.module  valencycheck
  */
 public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceBondOrderTool {
 
@@ -264,7 +262,7 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
         double sum = 0;
 
         for (IBond bond : mol.bonds())
-            if (bond.contains(atom)) sum += BondManipulator.destroyBondOrder(bond.getOrder());
+            if (bond.contains(atom)) sum += bond.getOrder().numeric();
 
         return sum;
     }
@@ -312,7 +310,7 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
     private double bondsUsed(IAtom atom, IAtomContainer atomContainer) throws CDKException {
         int bondsToAtom = 0;
         for (IBond bond : atomContainer.bonds())
-            if (bond.contains(atom)) bondsToAtom += BondManipulator.destroyBondOrder(bond.getOrder());
+            if (bond.contains(atom)) bondsToAtom += bond.getOrder().numeric();
         int implicitHydrogens;
         if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET || atom.getImplicitHydrogenCount() == null) {
             // Will probably only work with group 13-18, and not for helium...

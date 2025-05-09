@@ -33,8 +33,6 @@ import java.util.Objects;
  *
  * @author Stephane Werner, IXELIS &lt;mail@ixelis.net&gt;
  * @cdk.created 2002-07-24
- * @cdk.module  standard
- * @cdk.githash
  */
 public class RMap {
 

@@ -37,7 +37,6 @@ import java.util.List;
  * @cdk.keyword all rings
  * @cdk.keyword path graph
  * @cdk.keyword p-graph
- * @cdk.module core
  */
 abstract class PathGraph {
 

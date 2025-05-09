@@ -21,8 +21,6 @@ package org.openscience.cdk.interfaces;
 /**
  * Represents the idea of an chemical structure.
  *
- * @cdk.module  interfaces
- * @cdk.githash
  *
  * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;
  * @cdk.created 2006-11-20

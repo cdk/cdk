@@ -60,8 +60,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * </ul>
  *
  * @author Sam Adams
- * @cdk.module inchi
- * @cdk.githash
  */
 public class InChIGeneratorFactory {
 
@@ -70,7 +68,9 @@ public class InChIGeneratorFactory {
     /**
      * If the CDK aromaticity flag should be ignored and the bonds treated solely as single and double bonds.
      */
-    private boolean ignoreAromaticBonds = true;
+    private static final boolean IGNORE_AROMATIC_BONDS_DEFAULT = true;
+
+    private boolean ignoreAromaticBonds = IGNORE_AROMATIC_BONDS_DEFAULT;
 
     /**
      * <p>Constructor for InChIGeneratorFactory. Ensures that native code
@@ -137,8 +137,8 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIGenerator getInChIGenerator(IAtomContainer container) throws CDKException {
-        return (new InChIGenerator(container, ignoreAromaticBonds));
+    public static InChIGenerator getInChIGenerator(IAtomContainer container) throws CDKException {
+        return new InChIGenerator(container, IGNORE_AROMATIC_BONDS_DEFAULT);
     }
 
     /**
@@ -150,7 +150,7 @@ public class InChIGeneratorFactory {
      * @throws CDKException if the generator cannot be instantiated
      */
     public InChIGenerator getInChIGenerator(IAtomContainer container, String options) throws CDKException {
-        return (new InChIGenerator(container, options, ignoreAromaticBonds));
+        return new InChIGenerator(container, options, ignoreAromaticBonds);
     }
 
     /**

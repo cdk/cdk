@@ -55,7 +55,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Tests for molecular descriptors.
  *
- * @cdk.module test-qsarmolecular
  */
 abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularDescriptor> {
 

@@ -38,7 +38,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author John May
- * @cdk.module test-smarts
  */
 class MappingPredicatesTest {
 

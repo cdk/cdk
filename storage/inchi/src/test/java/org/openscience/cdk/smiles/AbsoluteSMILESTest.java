@@ -39,7 +39,6 @@ import static org.hamcrest.CoreMatchers.is;
 
 /**
  * @author John May
- * @cdk.module test-inchi
  */
 class AbsoluteSMILESTest {
 

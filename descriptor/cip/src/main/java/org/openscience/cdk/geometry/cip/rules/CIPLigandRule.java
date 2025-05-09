@@ -34,8 +34,6 @@ import org.openscience.cdk.geometry.cip.ILigand;
  *   <li>{@link AtomicNumberRule}</li>
  * </ol>
  *
- * @cdk.module cip
- * @cdk.githash
  */
 public class CIPLigandRule implements ISequenceSubRule<ILigand> {
 

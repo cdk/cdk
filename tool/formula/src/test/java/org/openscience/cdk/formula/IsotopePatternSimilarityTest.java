@@ -11,7 +11,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * Class testing the IsotopePatternSimilarity class.
  *
- * @cdk.module test-formula
  */
 class IsotopePatternSimilarityTest extends CDKTestCase {
 

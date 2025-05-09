@@ -72,7 +72,6 @@ import java.util.Set;
  * }</pre>
  * 
  * @author John May
- * @cdk.githash
  */
 public class Mmff {
 

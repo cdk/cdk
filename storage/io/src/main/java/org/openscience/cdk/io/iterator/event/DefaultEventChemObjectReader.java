@@ -28,8 +28,6 @@ import org.openscience.cdk.io.listener.IReaderListener;
  * Abstract class that IteratingChemObjectReader's can implement to have it
  * take care of basic stuff, like managing the ReaderListeners.
  *
- * @cdk.module io
- * @cdk.githash
  */
 public abstract class DefaultEventChemObjectReader extends ChemObjectIO implements IEventChemObjectReader {
 

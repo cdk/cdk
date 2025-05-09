@@ -31,7 +31,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * @cdk.module test-structgen
  */
 class SingleStructureRandomGeneratorTest {
 

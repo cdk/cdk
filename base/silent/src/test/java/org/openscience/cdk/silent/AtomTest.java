@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IElement;
 /**
  * Checks the functionality of the {@link Atom}.
  *
- * @cdk.module test-silent
  */
 class AtomTest extends AbstractAtomTest {
 

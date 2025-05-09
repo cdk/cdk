@@ -61,6 +61,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
+import java.awt.Color;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -110,8 +112,6 @@ import static java.util.Comparator.comparingInt;
  * @cdk.keyword 2D-coordinates
  * @cdk.keyword Coordinate generation, 2D
  * @cdk.dictref blue-obelisk:layoutMolecule
- * @cdk.module sdg
- * @cdk.githash
  * @cdk.bug 1536561
  * @cdk.bug 1788686
  */
@@ -388,6 +388,7 @@ public class StructureDiagramGenerator {
         generateAlignedCoordinates(mol, null, pattern);
     }
 
+
     /**
      * <p>Convenience method to generate 2D coordinates for a reaction. If atom-atom
      * maps are present on a reaction, the substructures are automatically aligned.</p>
@@ -399,18 +400,22 @@ public class StructureDiagramGenerator {
     public final void generateCoordinates(final IReaction reaction) throws CDKException {
 
         // layout products and agents
-        for (IAtomContainer mol : reaction.getProducts().atomContainers())
-            generateCoordinates(mol);
+        for (IAtomContainer mol : reaction.getProducts().atomContainers()) {
+            if (!GeometryUtil.has2DCoordinates(mol))
+                generateCoordinates(mol);
+        }
+        List<IAtomContainer> leftSide = new ArrayList<>();
+        for (IAtomContainer mol : reaction.getReactants().atomContainers())
+            leftSide.add(mol);
         for (IAtomContainer mol : reaction.getAgents().atomContainers())
-            generateCoordinates(mol);
+            leftSide.add(mol);
 
         // do not align = simple layout of reactants
         if (alignMappedReaction) {
             final Set<IBond> mapped = ReactionManipulator.findMappedBonds(reaction);
-
             Map<Integer, List<Map<Integer, IAtom>>> refmap = new HashMap<>();
 
-            for (IAtomContainer mol : reaction.getProducts().atomContainers()) {
+            for (IAtomContainer mol : reaction.getProducts()) {
                 Cycles.markRingAtomsAndBonds(mol);
                 final ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjListSubgraph(mol, mapped));
                 final IAtomContainerSet parts = ConnectivityChecker.partitionIntoMolecules(mol, cc.components());
@@ -421,7 +426,7 @@ public class StructureDiagramGenerator {
                     final Map<Integer, IAtom> map = new HashMap<>();
                     for (IAtom atom : part.atoms()) {
                         // safe as substructure should only be mapped bonds and therefore atoms!
-                        int idx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                        int idx = atom.getMapIdx();
                         if (map.put(idx, atom) == null)
                             refmap.computeIfAbsent(idx, k -> new ArrayList<>()).add(map);
                     }
@@ -431,7 +436,7 @@ public class StructureDiagramGenerator {
             Map<IAtom,IAtom> afix = new HashMap<>();
             Set<IBond>       bfix = new HashSet<>();
 
-            for (IAtomContainer mol : reaction.getReactants().atomContainers()) {
+            for (IAtomContainer mol : leftSide) {
                 Cycles.markRingAtomsAndBonds(mol);
                 final ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjListSubgraph(mol, mapped));
                 final IAtomContainerSet parts = ConnectivityChecker.partitionIntoMolecules(mol, cc.components());
@@ -450,12 +455,12 @@ public class StructureDiagramGenerator {
 
                 if (largest != null && largest.getAtomCount() > 1) {
 
-                    int idx = largest.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                    int idx = largest.getAtom(0).getMapIdx();
 
                     // select the largest and use those coordinates
                     Map<Integer, IAtom> reference = select(refmap.getOrDefault(idx, Collections.emptyList()));
                     for (IAtom atom : largest.atoms()) {
-                        idx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                        idx = atom.getMapIdx();
                         final IAtom src = reference.get(idx);
                         if (src == null) continue;
                         if (!aggresive) {
@@ -496,6 +501,7 @@ public class StructureDiagramGenerator {
                             }
                         }
                     } else {
+
                         for (IBond bond : mol.bonds()) {
                             if (afix.containsKey(bond.getBegin()) && afix.containsKey(bond.getEnd())) {
                                 // only fix bonds that match their ring membership status
@@ -504,7 +510,7 @@ public class StructureDiagramGenerator {
                                 for (IAtomContainer product : reaction.getProducts().atomContainers()) {
                                     IBond srcBond = product.getBond(srcBeg, srcEnd);
                                     if (srcBond != null) {
-                                        if (srcBond.isInRing() == bond.isInRing())
+                                        if (srcBond.isInRing() == bond.isInRing() || !bond.isInRing())
                                             bfix.add(bond);
                                         break;
                                     }
@@ -571,20 +577,14 @@ public class StructureDiagramGenerator {
             }
 
             // reorder reactants such that they are in the same order they appear on the right
-            reaction.getReactants().sortAtomContainers(new Comparator<IAtomContainer>() {
-                @Override
-                public int compare(IAtomContainer a, IAtomContainer b) {
-                    Point2d aCenter = GeometryUtil.get2DCenter(a);
-                    Point2d bCenter = GeometryUtil.get2DCenter(b);
-                    if (aCenter == null || bCenter == null)
-                        return 0;
-                    else
-                        return Double.compare(aCenter.x, bCenter.x);
-                }
+            reaction.getReactants().sortAtomContainers((a, b) -> {
+                Point2d aCenter = GeometryUtil.get2DCenter(a);
+                Point2d bCenter = GeometryUtil.get2DCenter(b);
+                return Double.compare(aCenter.x, bCenter.x);
             });
 
         } else {
-            for (IAtomContainer mol : reaction.getReactants().atomContainers())
+            for (IAtomContainer mol : leftSide)
                 generateCoordinates(mol);
         }
     }
@@ -1191,7 +1191,7 @@ public class StructureDiagramGenerator {
         }
     }
 
-    private List<IBond> getNonContractedNonTerminalBonds(IAtomContainer mol) {
+    private List<IBond> getNonContractedNonTerminalBonds(IAtomContainer mol, boolean includeRingBonds) {
         List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
         List<IBond> result = new ArrayList<>();
         Set<IBond> xbonds = new HashSet<>();
@@ -1213,6 +1213,8 @@ public class StructureDiagramGenerator {
                 if ((begDeg == 1 && endDeg > 2) ||
                     (endDeg == 1 && begDeg > 2))
                     continue;
+                if (!includeRingBonds && bond.isInRing() || begDeg != 2 && endDeg != 2)
+                    continue;
                 result.add(bond);
             }
         } else {
@@ -1221,6 +1223,8 @@ public class StructureDiagramGenerator {
                 int endDeg = mol.getConnectedBondsCount(bond.getEnd());
                 if ((begDeg == 1 && endDeg > 2) ||
                     (endDeg == 1 && begDeg > 2))
+                    continue;
+                if (!includeRingBonds && bond.isInRing() || begDeg != 2 && endDeg != 2)
                     continue;
                 result.add(bond);
             }
@@ -1244,8 +1248,8 @@ public class StructureDiagramGenerator {
     private void selectOrientation(IAtomContainer mol, double widthDiff, int alignDiff) {
 
         // only select based on non-contracted non-terminal bonds
-        List<IBond> bonds = getNonContractedNonTerminalBonds(mol);
-        if (bonds.size() == 0)
+        List<IBond> bonds = getNonContractedNonTerminalBonds(mol, true);
+        if (bonds.isEmpty())
             return;
 
         double[] minmax  = GeometryUtil.getMinMax(mol);

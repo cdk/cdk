@@ -30,7 +30,6 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 /**
  * Checks the functionality of the AtomType class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.AtomType
  */

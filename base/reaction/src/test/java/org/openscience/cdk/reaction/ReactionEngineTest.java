@@ -27,7 +27,6 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 /**
  * Tests for ReactionEngine implementations.
  *
- * @cdk.module test-reaction
  */
 class ReactionEngineTest extends CDKTestCase {
 

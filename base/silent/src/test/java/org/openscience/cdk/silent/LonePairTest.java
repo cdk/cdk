@@ -29,7 +29,6 @@ import org.openscience.cdk.test.interfaces.AbstractLonePairTest;
 /**
  * Checks the functionality of the {@link LonePair}.
  *
- * @cdk.module test-silent
  */
 class LonePairTest extends AbstractLonePairTest {
 

@@ -45,7 +45,6 @@ import static org.mockito.Mockito.when;
  * example usage.
  *
  * @author John May
- * @cdk.module test-hash
  */
 class DoubleBondElementEncoderFactoryTest {
 

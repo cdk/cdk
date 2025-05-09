@@ -32,7 +32,6 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * @cdk.module test-render
  */
 class CDKAtomColorsTest extends CDKTestCase {
 

@@ -10,7 +10,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * @author maclean
- * @cdk.module test-group
  */
 class AtomPermutationTests extends CDKTestCase {
 

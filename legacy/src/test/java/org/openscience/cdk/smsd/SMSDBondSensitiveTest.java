@@ -40,7 +40,6 @@ import org.openscience.cdk.smsd.tools.ExtAtomContainerManipulator;
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
- * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 @Tag("SlowTest")

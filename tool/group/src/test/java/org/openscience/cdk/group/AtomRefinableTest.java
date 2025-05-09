@@ -36,7 +36,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * Test the refinable wrapper around atom containers.
  * 
  * @author maclean
- * @cdk.module group
  */
 class AtomRefinableTest {
     

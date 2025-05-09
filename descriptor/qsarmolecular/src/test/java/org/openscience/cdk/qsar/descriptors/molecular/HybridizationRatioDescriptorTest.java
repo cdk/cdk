@@ -30,7 +30,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * TestSuite that runs a test for the {@link HybridizationRatioDescriptor}.
  *
- * @cdk.module test-qsarmolecular
  */
 class HybridizationRatioDescriptorTest extends MolecularDescriptorTest {
 

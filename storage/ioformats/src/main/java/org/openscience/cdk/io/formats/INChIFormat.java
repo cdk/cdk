@@ -23,8 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://www.iupac.org/inchi/">here</a>.
  *
- * @cdk.module ioformats
- * @cdk.githash
  */
 public class INChIFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

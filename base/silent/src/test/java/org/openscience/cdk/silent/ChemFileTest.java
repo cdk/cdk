@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 /**
  * Checks the functionality of the {@link ChemFile}.
  *
- * @cdk.module test-silent
  */
 class ChemFileTest extends AbstractChemFileTest {
 

@@ -37,7 +37,6 @@ import java.util.regex.Pattern;
  * </ul>
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- * @cdk.githash
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  *
  * @see <a href="http://www.cas.org">CAS website</a>

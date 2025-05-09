@@ -23,8 +23,6 @@ package org.openscience.cdk.charges;
  * on atom nuclei.
  *
  * @author      egonw
- * @cdk.module  charges
- * @cdk.githash
  */
 public interface IChargeCalculator extends IElectronicPropertyCalculator {
 

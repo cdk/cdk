@@ -40,7 +40,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * @cdk.module test-fingerprint
  */
 public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 

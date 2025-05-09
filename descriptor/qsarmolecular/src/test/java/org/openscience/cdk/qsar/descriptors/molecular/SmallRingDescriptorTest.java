@@ -54,7 +54,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test for small rings descriptor.
  *
- * @cdk.module test-qsarmolecular
  */
 
 class SmallRingDescriptorTest extends MolecularDescriptorTest {

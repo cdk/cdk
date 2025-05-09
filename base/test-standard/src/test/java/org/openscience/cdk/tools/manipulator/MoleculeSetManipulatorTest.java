@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
- * @cdk.module test-standard
  *
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20

@@ -33,7 +33,6 @@ import org.junit.jupiter.api.BeforeAll;
 /**
  * Checks the functionality of the AtomTypeFactory
  *
- * @cdk.module test-data
  */
 class PseudoAtomTest extends AbstractPseudoAtomTest {
 

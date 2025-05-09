@@ -31,7 +31,6 @@ import javax.vecmath.Point2d;
 
 /**
  * @author John May
- * @cdk.module test-hash
  */
 class DoubleBond2DParityTest {
 

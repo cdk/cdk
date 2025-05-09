@@ -66,8 +66,6 @@ import java.util.Map;
  * widget toolkit, allowing molecules to be rendered with toolkits based on
  * AWT, like the Java reference graphics platform Swing.
  *
- * @cdk.module renderawt
- * @cdk.githash
  */
 public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 

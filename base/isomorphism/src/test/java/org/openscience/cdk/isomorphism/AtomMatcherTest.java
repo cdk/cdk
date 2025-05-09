@@ -35,7 +35,6 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author John May
- * @cdk.module test-isomorphism
  */
 class AtomMatcherTest {
 

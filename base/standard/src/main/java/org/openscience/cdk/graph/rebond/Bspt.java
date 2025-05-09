@@ -67,8 +67,6 @@ import java.util.Enumeration;
  * @author  Miguel Howard
  * @cdk.created 2003-05
  *
- * @cdk.module  standard
- * @cdk.githash
  * @cdk.keyword rebonding
  * @cdk.keyword Binary Space Partitioning Tree
  * @cdk.keyword join-the-dots

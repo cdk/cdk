@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IElement;
 /**
  * Checks the functionality of the AtomTypeFactory
  *
- * @cdk.module test-data
  */
 class AtomTest extends AbstractAtomTest {
 

@@ -31,8 +31,6 @@ package org.openscience.cdk.rinchi;
  * </pre>
  *
  * @author Uli Fechner
- * @cdk.module rinchi
- * @cdk.githash
  */
 public final class RInChIOptions {
     /**

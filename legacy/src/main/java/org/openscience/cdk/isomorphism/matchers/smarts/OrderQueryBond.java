@@ -27,8 +27,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * Daylight spec indicates that if match a single bond
  * using '-', it should be an aliphatic single bond
  *
- * @cdk.module  smarts
- * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated

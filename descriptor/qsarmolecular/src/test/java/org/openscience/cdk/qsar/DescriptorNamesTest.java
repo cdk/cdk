@@ -41,7 +41,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *
- * @cdk.module test-qsarmolecular
  */
 class DescriptorNamesTest extends CDKTestCase {
 

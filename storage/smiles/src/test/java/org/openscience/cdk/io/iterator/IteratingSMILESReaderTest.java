@@ -45,7 +45,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * TestCase for the reading SMILES mol files using one test file.
  *
- * @cdk.module test-smiles
  * @see org.openscience.cdk.io.SMILESReader
  */
 class IteratingSMILESReaderTest extends CDKTestCase {

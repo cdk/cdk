@@ -51,7 +51,6 @@ import java.util.List;
  * TestSuite that runs a test for the SharingAnionReactionTest.
  * Generalized Reaction: [A+]-[B-] => A=B.
  *
- * @cdk.module test-reaction
  */
 
 public class SharingAnionReactionTest extends ReactionProcessTest {

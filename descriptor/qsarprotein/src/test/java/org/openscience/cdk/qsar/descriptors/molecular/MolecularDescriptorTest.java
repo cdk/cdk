@@ -53,7 +53,6 @@ import javax.vecmath.Point3d;
 /**
  * Tests for molecular descriptors.
  *
- * @cdk.module test-qsarmolecular
  */
 public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularDescriptor> {
 

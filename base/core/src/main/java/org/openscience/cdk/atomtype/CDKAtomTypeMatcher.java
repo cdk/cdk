@@ -57,8 +57,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @author         egonw
  * @cdk.created    2007-07-20
- * @cdk.module     core
- * @cdk.githash
  */
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
@@ -1567,9 +1565,17 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 }
             }
             if (neighbors == 2) {
-                IAtomType type = getAtomType("As.2");
-                if (isAcceptable(atom, atomContainer, type)) {
-                    return type;
+                IBond.Order maxOrder = getMaximumBondOrder(atomContainer.getConnectedBondsList(atom));
+                if (maxOrder == Order.DOUBLE) {
+                    IAtomType type = getAtomType("As.2");
+                    if (isAcceptable(atom, atomContainer, type)) {
+                        return type;
+                    }
+                } else if (maxOrder == Order.SINGLE) {
+                    IAtomType type = getAtomType("As.planar3");
+                    if (isAcceptable(atom, atomContainer, type)) {
+                        return type;
+                    }
                 }
             }
             IAtomType type = getAtomType("As");

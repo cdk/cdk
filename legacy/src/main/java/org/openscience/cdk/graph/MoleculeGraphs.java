@@ -35,8 +35,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  *
- * @cdk.module standard
- * @cdk.githash
  *
  */
 @Deprecated

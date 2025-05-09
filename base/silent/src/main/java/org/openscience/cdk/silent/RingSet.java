@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 /**
  * Maintains a set of Ring objects.
  *
- * @cdk.module  silent
- * @cdk.githash
  *
  * @cdk.keyword     ring, set of
  */

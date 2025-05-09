@@ -33,8 +33,6 @@ import org.openscience.cdk.interfaces.ICrystal;
  * <p>The crystal is designed to store only the asymmetric atoms.
  * Though this is not enforced, it is assumed by all methods.
  *
- * @cdk.module  silent
- * @cdk.githash
  *
  * @cdk.keyword crystal
  */

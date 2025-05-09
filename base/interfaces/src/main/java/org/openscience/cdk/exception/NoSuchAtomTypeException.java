@@ -27,8 +27,6 @@ package org.openscience.cdk.exception;
  * Exception that may be thrown when an atom type is looked up or perceived
  * but no such atom type was found.
  *
- * @cdk.module core
- * @cdk.githash
  */
 public class NoSuchAtomTypeException extends CDKException {
 

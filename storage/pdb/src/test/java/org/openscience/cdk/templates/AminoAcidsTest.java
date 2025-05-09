@@ -27,7 +27,6 @@ import org.openscience.cdk.test.CDKTestCase;
 import java.util.Map;
 
 /**
- * @cdk.module test-pdb
  */
 class AminoAcidsTest extends CDKTestCase {
 

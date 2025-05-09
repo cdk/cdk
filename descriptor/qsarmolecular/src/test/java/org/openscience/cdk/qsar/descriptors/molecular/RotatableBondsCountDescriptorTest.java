@@ -39,7 +39,6 @@ import static org.hamcrest.Matchers.is;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
  */
 
 class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {

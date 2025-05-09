@@ -37,7 +37,6 @@ import java.util.List;
  * Test the {@link org.openscience.cdk.renderer.generators.BasicBondGenerator}.
  *
  * @author     maclean
- * @cdk.module test-renderbasic
  */
 public class BasicBondGeneratorTest extends AbstractGeneratorTest {
 

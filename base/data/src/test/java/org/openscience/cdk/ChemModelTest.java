@@ -36,7 +36,6 @@ import org.openscience.cdk.test.interfaces.AbstractChemModelTest;
 /**
  * Checks the functionality of the ChemModel class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.ChemModel
  */

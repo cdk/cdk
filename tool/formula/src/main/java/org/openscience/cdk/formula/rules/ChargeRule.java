@@ -42,10 +42,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *   </tr>
  * </table>
  *
- * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
- * @cdk.githash
  */
 public class ChargeRule implements IRule {
 

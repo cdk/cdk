@@ -29,7 +29,6 @@ import java.util.List;
  * of the vector.
  *
  * @author Bradley A. Smith &lt;yeldar@home.com&gt;
- * @cdk.githash
  */
 public class Vibration {
 

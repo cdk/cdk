@@ -29,7 +29,6 @@ import java.util.Set;
  * equitable and discrete partition refiners.
  * 
  * @author maclean
- * @cdk.module group
  *
  */
 public interface Refinable {

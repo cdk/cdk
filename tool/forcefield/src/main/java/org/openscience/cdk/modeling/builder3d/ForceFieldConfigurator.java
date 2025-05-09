@@ -57,8 +57,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *
  * @author     chhoppe
  * @cdk.created    2004-09-07
- * @cdk.module     forcefield
- * @cdk.githash
  */
 public class ForceFieldConfigurator {
 

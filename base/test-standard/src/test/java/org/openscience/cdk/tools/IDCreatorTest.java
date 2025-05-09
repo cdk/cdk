@@ -33,7 +33,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
- * @cdk.module test-standard
  */
 class IDCreatorTest extends CDKTestCase {
 

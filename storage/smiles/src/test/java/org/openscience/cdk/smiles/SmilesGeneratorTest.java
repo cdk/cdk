@@ -80,7 +80,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author         steinbeck
  * @cdk.created    2004-02-09
- * @cdk.module     test-smiles
  */
 class SmilesGeneratorTest extends CDKTestCase {
 

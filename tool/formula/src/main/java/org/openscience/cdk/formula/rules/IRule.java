@@ -24,10 +24,8 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
  * Interface which groups all method that validate a IMolecularFormula.
  *
- * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
- * @cdk.githash
  */
 public interface IRule {
 

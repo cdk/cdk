@@ -45,8 +45,6 @@ import java.util.stream.Collectors;
  * </pre>
  *
  * @author Uli Fechner
- * @cdk.module rinchi
- * @cdk.githash
  */
 class RInChIDecomposition extends StatusMessagesOutput {
 

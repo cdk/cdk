@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.MDLRXNReader;
 
 /**
- * @cdk.module test-standard
  */
 class ReactionSetManipulatorTest extends CDKTestCase {
 

@@ -56,7 +56,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * TestCase for the instantiation and functionality of the {@link ReaderFactory}.
  *
- * @cdk.module test-io
  */
 class ReaderFactoryTest extends AbstractReaderFactoryTest {
 

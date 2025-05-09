@@ -30,8 +30,6 @@ import org.openscience.cdk.io.IChemObjectIO;
  * in specific file format (e.g. CML), without reading them all into memory first. Suitable
  * for very large files, with thousands of molecules.
  *
- * @cdk.module io
- * @cdk.githash
  *
  * @see IChemObjectIO
  *

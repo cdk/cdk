@@ -40,8 +40,6 @@ import org.xml.sax.XMLReader;
 /**
  * XML Reader for the {@link OWLBasedAtomTypeConfigurator}.
  *
- * @cdk.module  atomtype
- * @cdk.githash
  */
 public class OWLAtomTypeMappingReader {
 

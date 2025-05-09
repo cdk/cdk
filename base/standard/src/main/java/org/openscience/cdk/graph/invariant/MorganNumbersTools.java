@@ -35,8 +35,6 @@ import java.util.Arrays;
  * module.
  *
  * @author shk3
- * @cdk.module standard
- * @cdk.githash
  * @cdk.created 2003-06-30
  * @cdk.keyword Morgan number
  * @see InChINumbersTools

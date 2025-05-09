@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  *
  * @author maclean
- * @cdk.module group
  */
 class BondDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefinerImpl {
 

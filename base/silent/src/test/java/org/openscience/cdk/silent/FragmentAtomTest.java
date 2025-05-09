@@ -28,7 +28,6 @@ import org.openscience.cdk.test.interfaces.AbstractFragmentAtomTest;
 /**
  * Checks the functionality of the {@link FragmentAtom}.
  *
- * @cdk.module test-silent
  */
 class FragmentAtomTest extends AbstractFragmentAtomTest {
 

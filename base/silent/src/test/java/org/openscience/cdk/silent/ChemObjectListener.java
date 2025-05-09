@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 /**
  * Helper class to test the functionality of the {@link ChemObjectListener}.
  *
- * @cdk.module test-silent
  */
 class ChemObjectListener implements IChemObjectListener {
 

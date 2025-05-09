@@ -35,7 +35,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 /**
  * Tests CDK's valency checker capabilities in terms of example molecules.
  *
- * @cdk.module  test-valencycheck
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2007-07-28

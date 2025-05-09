@@ -49,7 +49,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 /**
  * Checks the functionality of the AtomType-MMFF94AtomTypeMatcher.
  *
- * @cdk.module test-extra
  *
  * @see MMFF94AtomTypeMatcher
  */

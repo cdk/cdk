@@ -33,7 +33,6 @@ import org.openscience.cdk.qsar.result.IntegerResultType;
  * formula. Originally aimed at metal oxide nanoparticles {@cdk.cite Liu2011}.
  *
  * @author      egonw
- * @cdk.githash
  */
 public class OxygenAtomCountDescriptor implements ISubstanceDescriptor {
 

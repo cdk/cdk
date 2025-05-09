@@ -31,7 +31,6 @@ import javax.vecmath.Vector3d;
  * All methods that start with test are regression tests, e.g.
  * <code>testNotionalToCartesian()</code>.
  *
- * @cdk.module test-standard
  *
  * @author     Egon Willighagen
  * @cdk.created    2003-08-19

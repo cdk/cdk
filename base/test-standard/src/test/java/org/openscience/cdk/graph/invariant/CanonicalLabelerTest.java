@@ -49,7 +49,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 /**
  * Checks the functionality of the CanonicalLabeler.
  *
- * @cdk.module test-standard
  */
 @Tag("SlowTest")
 // CanonicalLabeler is deprecated (slow)

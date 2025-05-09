@@ -41,7 +41,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Checks the functionality of the {@link AtomContainer}.
  *
- * @cdk.module test-silent
  */
 class AtomContainer2Test extends AbstractAtomContainerTest {
 

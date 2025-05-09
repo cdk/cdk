@@ -40,7 +40,6 @@ import java.util.BitSet;
  * #other(int)}. 
  *
  * @author John May
- * @cdk.module standard
  * @see <a href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching
  * (graph theory), Wikipedia</a>
  */

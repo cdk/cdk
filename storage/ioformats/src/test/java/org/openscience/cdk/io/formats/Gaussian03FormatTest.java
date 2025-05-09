@@ -23,7 +23,6 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * @cdk.module test-ioformats
  */
 class Gaussian03FormatTest extends ChemFormatMatcherTest {
 

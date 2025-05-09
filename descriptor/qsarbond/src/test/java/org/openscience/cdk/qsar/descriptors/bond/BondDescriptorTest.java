@@ -35,7 +35,6 @@ import org.openscience.cdk.tools.diff.BondDiff;
 /**
  * Tests for bond descriptors.
  *
- * @cdk.module test-qsarbond
  */
 abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor> {
 

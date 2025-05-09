@@ -32,8 +32,6 @@ import org.openscience.cdk.interfaces.IElement;
  *   <li>{@link AtomicNumberRule}</li>
  * </ol>
  *
- * @cdk.module cip
- * @cdk.githash
  */
 class CombinedAtomicMassNumberRule implements ISequenceSubRule<ILigand> {
 

@@ -43,7 +43,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
- * @cdk.module test-core
  */
 class PathToolsTest extends CDKTestCase {
 

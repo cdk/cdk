@@ -42,7 +42,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * in data/cmltest as found in the JChemPaint distribution
  * (http://jchempaint.sf.org/).
  *
- * @cdk.module test-io
  */
 class JChemPaintTest extends CDKTestCase {
 

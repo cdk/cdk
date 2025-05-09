@@ -24,7 +24,6 @@ package org.openscience.cdk.group;
 
 /**
  * @author maclean
- * @cdk.module group
  */
 class IntegerInvariant implements Invariant {
     

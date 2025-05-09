@@ -51,8 +51,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * repository.
  *
  * @author      egonw
- * @cdk.module  core
- * @cdk.githash
  */
 public class Isotopes extends IsotopeFactory {
 

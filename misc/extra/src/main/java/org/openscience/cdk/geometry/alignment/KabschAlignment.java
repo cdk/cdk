@@ -88,7 +88,6 @@ import Jama.Matrix;
  * @author           Rajarshi Guha
  * @cdk.created      2004-12-11
  * @cdk.dictref      blue-obelisk:alignmentKabsch
- * @cdk.githash
  */
 public class KabschAlignment {
 

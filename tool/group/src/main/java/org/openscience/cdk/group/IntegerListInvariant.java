@@ -26,7 +26,6 @@ import java.util.Arrays;
 
 /**
  * @author maclean
- * @cdk.module group
  */
 class IntegerListInvariant implements Invariant {
     

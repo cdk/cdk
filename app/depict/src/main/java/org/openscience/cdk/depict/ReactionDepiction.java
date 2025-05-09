@@ -38,6 +38,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -220,7 +221,7 @@ final class ReactionDepiction extends Depiction {
     }
 
     @Override
-    String toVecStr(String fmt, String units) {
+    byte[] toVecBytes(String fmt, String units) {
 
         // format margins and padding for raster images
         final double scale = model.get(BasicSceneGenerator.Scale.class);
@@ -310,9 +311,9 @@ final class ReactionDepiction extends Depiction {
 
         if (wrapper != null) {
             wrapper.dispose();
-            return wrapper.toString();
+            return wrapper.getBytes();
         } else {
-            return visitor.toString();
+            return visitor.toString().getBytes(StandardCharsets.UTF_8);
         }
     }
 

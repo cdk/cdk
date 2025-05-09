@@ -33,7 +33,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsaratomic
  */
 class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest {
 

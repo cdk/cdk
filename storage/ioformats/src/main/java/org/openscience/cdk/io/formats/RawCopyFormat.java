@@ -23,8 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://openbabel.sourceforge.net/wiki/Raw_Copy">here</a>.
  *
- * @cdk.module ioformats
- * @cdk.githash
  */
 public class RawCopyFormat extends AbstractResourceFormat implements IChemFormat {
 

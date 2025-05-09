@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IStrand;
 /**
  * Checks the functionality of the {@link BioPolymer}.
  *
- * @cdk.module test-silent
  */
 class BioPolymerTest extends AbstractBioPolymerTest {
 

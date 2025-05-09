@@ -25,9 +25,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
-/**
- * @cdk.module test-render
- */
 class AbstractGeneratorParameterTest {
 
     class MockParameter extends AbstractGeneratorParameter<Boolean> {

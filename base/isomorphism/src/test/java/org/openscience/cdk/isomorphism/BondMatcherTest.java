@@ -35,7 +35,6 @@ import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 
 /**
  * @author John May
- * @cdk.module test-isomorphism
  */
 class BondMatcherTest {
 

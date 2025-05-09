@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  * @author Asad
- * @cdk.module test-smsd
  */
 class BondEnergiesTest extends CDKTestCase {
 

@@ -34,7 +34,6 @@ package org.openscience.cdk.isomorphism;
  * the mapping was feasible.
  *
  * @author John May
- * @cdk.module isomorphism
  */
 abstract class State {
 

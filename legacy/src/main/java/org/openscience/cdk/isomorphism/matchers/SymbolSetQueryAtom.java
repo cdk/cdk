@@ -31,10 +31,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *  match for the most common halogens).
  *
  *@author        kha
- * @cdk.githash
  *@cdk.created   2004-09-16
  *@see           InverseSymbolSetQueryAtom
- *@cdk.module    isomorphism
  * @deprecated Use {@code new Expr(Element, 6).and(new Expr(Element, 8))} etc
  */
 @Deprecated

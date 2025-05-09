@@ -57,8 +57,6 @@ import java.util.stream.StreamSupport;
  *
  *@author      steinbeck
  *@cdk.created 2003-08-29
- *@cdk.module  sdg
- * @cdk.githash
  */
 public class AtomPlacer {
 
@@ -129,10 +127,12 @@ public class AtomPlacer {
         Vector2d newDirection = new Vector2d(atom.getPoint2d());
         Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
         occupiedDirection.sub(newDirection);
-        // if the placing on the centre atom we get NaNs just give a arbitary direciton the
-        // rest works it's self out
-        if (Math.abs(occupiedDirection.length()) < 0.001)
+        // if the placing on the centre atom we get NaNs, previously this just
+        // gave an arbitrary direction but we can do slightly better if we have
+        // terminal atoms
+        if (Math.abs(occupiedDirection.length()) < 0.001) {
             occupiedDirection = new Vector2d(0, 1);
+        }
         logger.debug("distributePartners->occupiedDirection.lenght(): " + occupiedDirection.length());
         List<IAtom> atomsToDraw = new ArrayList<>();
 
@@ -462,24 +462,20 @@ public class AtomPlacer {
         final Point2d b = atom.getPoint2d();
 
         List<IBond> bonds = molecule.getConnectedBondsList(atom);
-        if (isColinear(atom, bonds)) {
+        if (isColinear(atom, bonds) || (Elements.isMetal(atom) && bonds.size() == 1)) {
             return new Vector2d(b.x-a.x, b.y-a.y);
         }
 
         double angle = GeometryUtil.getAngle(previousAtom.getPoint2d().x - atom.getPoint2d().x,
-                previousAtom.getPoint2d().y - atom.getPoint2d().y);
+                                             previousAtom.getPoint2d().y - atom.getPoint2d().y);
         double addAngle;
 
         if (isTerminalD4(atom))
             addAngle = Math.toRadians(45);
-        else if (isColinear(atom, bonds))
-            addAngle = Math.toRadians(180);
         else if (Elements.isMetal(atom))
             addAngle = (2 * Math.PI) / bonds.size();
         else {
-            addAngle = Math.toRadians(120);
-            if (!trans)
-                addAngle = Math.toRadians(60);
+            addAngle = trans ? Math.toRadians(120) : Math.toRadians(60);
         }
 
         angle += addAngle;

@@ -50,7 +50,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * TestCase for the reading MDL RXN files using one test file.
  * @author Egon Willighagen
  * @author Uli Fechner
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.MDLRXNV2000Reader
  */

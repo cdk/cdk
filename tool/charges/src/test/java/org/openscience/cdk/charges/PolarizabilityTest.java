@@ -29,7 +29,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  *  Description of the Class
  *
- * @cdk.module test-charges
  *
  *@author     chhoppe
  *@cdk.created    2004-11-04

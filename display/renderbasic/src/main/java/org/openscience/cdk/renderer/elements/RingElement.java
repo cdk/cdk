@@ -7,8 +7,6 @@ import java.awt.Color;
  * A ring is just a circle - in other words, an oval whose width and height are
  * the same.
  *
- * @cdk.module renderbasic
- * @cdk.githash
  */
 public class RingElement extends OvalElement implements IRenderingElement {
 

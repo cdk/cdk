@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 /**
  * Checks the functionality of the {@link Mapping}.
  *
- * @cdk.module test-silent
  */
 class MappingTest extends AbstractMappingTest {
 

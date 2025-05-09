@@ -33,12 +33,10 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * with respect to a particular atom type.
  *
  * @author         Miguel Rojas
- * @cdk.githash
  * @cdk.created    2006-04-01
  *
  * @cdk.keyword    saturation
  * @cdk.keyword    atom, valency
- * @cdk.module     standard
  */
 public class LonePairElectronChecker {
 

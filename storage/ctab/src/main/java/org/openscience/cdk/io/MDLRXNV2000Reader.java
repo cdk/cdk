@@ -73,8 +73,6 @@ import java.util.StringTokenizer;
  * Additionally, {@code MDLV2000Reader} used for reading the individual molecular
  * entities comes with its own set of constraints when running in {@code STRICT} mode.
  * </p>
- * @cdk.module io
- * @cdk.githash
  * @cdk.iooptions
  *
  * @author Egon Willighagen

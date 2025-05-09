@@ -40,7 +40,6 @@ import java.util.Map;
  * This class tests the matching of atom types defined in the
  * structgen atom type list.
  *
- * @cdk.module test-structgen
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class StructGenMatcherTest extends AbstractAtomTypeTest {

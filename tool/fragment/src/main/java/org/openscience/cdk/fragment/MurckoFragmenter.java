@@ -67,8 +67,6 @@ import java.util.Set;
  * the largest framework.
  *
  * @author Rajarshi Guha
- * @cdk.module fragment
- * @cdk.githash
  * @cdk.keyword fragment
  * @cdk.keyword framework
  * @see org.openscience.cdk.fragment.ExhaustiveFragmenter

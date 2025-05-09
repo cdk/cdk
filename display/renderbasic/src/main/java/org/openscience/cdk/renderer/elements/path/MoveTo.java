@@ -31,8 +31,6 @@ import javax.vecmath.Point2d;
  * curves and is commonly used to start a path or make gaps in the path.
  *
  * @author Arvid
- * @cdk.module renderbasic
- * @cdk.githash
  */
 public class MoveTo extends PathElement {
 

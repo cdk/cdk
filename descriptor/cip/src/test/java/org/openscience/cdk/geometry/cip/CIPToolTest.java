@@ -64,7 +64,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * @cdk.module test-cip
  */
 class CIPToolTest extends CDKTestCase {
 

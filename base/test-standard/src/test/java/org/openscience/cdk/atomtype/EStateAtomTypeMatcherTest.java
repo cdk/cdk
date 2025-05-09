@@ -37,7 +37,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @cdk.module test-standard
  */
 class EStateAtomTypeMatcherTest extends CDKTestCase {
 

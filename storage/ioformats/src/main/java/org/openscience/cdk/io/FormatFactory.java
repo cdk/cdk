@@ -50,8 +50,6 @@ import java.util.stream.Collectors;
  *   IChemFormat format = new FormatFactory().guessFormat(stringReader);
  * }</pre>
  *
- * @cdk.module  ioformats
- * @cdk.githash
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;

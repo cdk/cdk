@@ -33,8 +33,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *
  * @author     mfe4
  * @author     egonw
- * @cdk.module standard
- * @cdk.githash
  */
 public class AtomTypeManipulator {
 

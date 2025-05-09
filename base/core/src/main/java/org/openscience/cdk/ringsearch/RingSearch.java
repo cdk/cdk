@@ -98,8 +98,6 @@ import java.util.Set;
  * }</pre></blockquote>
  *
  * @author John May
- * @cdk.module core
- * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle (Graph
  *      Theory) - Wikipedia</a>
  * @see <a href="http://efficientbits.blogspot.co.uk/2012/12/scaling-up-faster-ring-detection-in-cdk.html">Scaling

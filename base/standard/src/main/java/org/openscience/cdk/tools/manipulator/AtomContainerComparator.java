@@ -48,8 +48,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author Andreas Schueller
  * @cdk.created  2007-09-05
- * @cdk.module   standard
- * @cdk.githash
  */
 public class AtomContainerComparator implements Comparator<IAtomContainer> {
 

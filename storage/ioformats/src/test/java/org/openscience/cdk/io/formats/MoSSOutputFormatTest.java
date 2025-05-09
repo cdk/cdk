@@ -22,7 +22,6 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * @cdk.module test-ioformats
  */
 class MoSSOutputFormatTest extends ChemFormatMatcherTest {
 

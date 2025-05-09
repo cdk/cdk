@@ -54,7 +54,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * TestCase for the reading MDL V3000 mol files.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.MDLReader
  * @see org.openscience.cdk.io.SDFReaderTest

@@ -30,7 +30,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarbond
  */
 class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
 

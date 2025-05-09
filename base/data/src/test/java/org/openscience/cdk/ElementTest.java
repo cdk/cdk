@@ -30,7 +30,6 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * Checks the functionality of the Element class.
  *
- * @cdk.module test-data
  *
  * @see org.openscience.cdk.Element
  */

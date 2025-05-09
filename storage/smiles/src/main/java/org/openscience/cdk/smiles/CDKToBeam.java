@@ -84,7 +84,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module smiles
  * @cdk.keyword SMILES
  * @see <a href="http://johnmay.github.io/Beam">Beam SMILES Toolkit</a>
  */

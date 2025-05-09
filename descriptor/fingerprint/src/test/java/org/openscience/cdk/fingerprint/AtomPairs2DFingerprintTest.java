@@ -17,7 +17,6 @@ import org.openscience.cdk.test.fingerprint.AbstractFingerprinterTest;
 import java.util.Map;
 
 /**
- * @cdk.module test-fingerprint
  */
 class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
 

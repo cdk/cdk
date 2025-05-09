@@ -80,8 +80,6 @@ import java.util.Locale;
  *
  * @author        egonw
  * @author        john may
- * @cdk.module    silent
- * @cdk.githash
  * @see DynamicFactory
  */
 public class SilentChemObjectBuilder implements IChemObjectBuilder {

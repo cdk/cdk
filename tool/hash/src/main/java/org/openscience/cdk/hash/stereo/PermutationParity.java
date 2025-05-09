@@ -28,10 +28,8 @@ package org.openscience.cdk.hash.stereo;
  * Calculate the permutation parity on a given array of current values.
  *
  * @author John May
- * @cdk.module hash
  * @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of
  *      a Permutation, Wikipedia</a>
- * @cdk.githash
  */
 abstract class PermutationParity {
 

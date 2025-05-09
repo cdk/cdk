@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module  test-charges
  * @author      egonw
  * @cdk.created 2008-01-04
  */

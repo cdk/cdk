@@ -17,7 +17,6 @@ import org.openscience.cdk.tools.diff.AtomTypeDiff;
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IAtomType} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
 

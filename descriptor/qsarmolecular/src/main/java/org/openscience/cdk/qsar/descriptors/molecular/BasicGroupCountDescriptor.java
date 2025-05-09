@@ -42,8 +42,6 @@ import org.openscience.cdk.smarts.SmartsPattern;
  * JOELib {@cdk.cite WEGNER2006}.
  *
  * @author      egonw
- * @cdk.module  qsarmolecular
- * @cdk.githash
  * @cdk.dictref qsar-descriptors:acidicGroupCount
  */
 public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

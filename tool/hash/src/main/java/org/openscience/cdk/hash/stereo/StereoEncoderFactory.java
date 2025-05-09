@@ -31,8 +31,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * specific stereo elements.
  *
  * @author John May
- * @cdk.module hash
- * @cdk.githash
  */
 public interface StereoEncoderFactory {
 

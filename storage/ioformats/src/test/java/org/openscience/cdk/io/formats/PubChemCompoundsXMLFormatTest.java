@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * @cdk.module test-ioformats
  */
 public class PubChemCompoundsXMLFormatTest extends ChemFormatMatcherTest {
 

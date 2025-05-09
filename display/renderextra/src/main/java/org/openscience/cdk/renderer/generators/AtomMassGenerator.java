@@ -30,8 +30,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * {@link IGenerator} that can render mass number information of atoms.
  *
- * @cdk.module renderextra
- * @cdk.githash
  */
 public class AtomMassGenerator extends BasicAtomGenerator {
 

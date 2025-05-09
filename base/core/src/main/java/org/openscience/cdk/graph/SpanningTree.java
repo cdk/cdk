@@ -36,8 +36,6 @@ import org.openscience.cdk.interfaces.IRingSet;
  * inefficient AllRingsFinder to run for too long.
  *
  * @author      Nina Jeliazkova
- * @cdk.module  core
- * @cdk.githash
  * @cdk.dictref blue-obelisk:graphSpanningTree
  * @cdk.keyword spanning tree
  * @cdk.keyword ring finding

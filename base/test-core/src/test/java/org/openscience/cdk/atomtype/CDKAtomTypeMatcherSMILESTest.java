@@ -32,7 +32,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * This class tests the matching of atom types defined in the
  * CDK atom type list, starting from SMILES strings.
  *
- * @cdk.module test-core
  */
 class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
 

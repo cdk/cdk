@@ -36,11 +36,9 @@ import org.openscience.cdk.interfaces.IIsotope;
  *   <li><code>[C(1-5)H(4-10)]-</code></li>
  * </ul>
  *
- * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
- * @cdk.githash
  */
 public class MolecularFormulaRange implements Cloneable {
 

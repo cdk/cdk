@@ -54,7 +54,6 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 /**
  * Checks the functionality of {@link IChemObjectBuilder} implementations.
  *
- * @cdk.module test-interfaces
  */
 public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
 

@@ -29,7 +29,6 @@ import org.openscience.cdk.exception.CDKException;
 
 /**
  * @cdk.keyword HOSE code
- * @cdk.githash
  */
 public class BremserOneSphereHOSECodePredictor implements java.io.Serializable {
 

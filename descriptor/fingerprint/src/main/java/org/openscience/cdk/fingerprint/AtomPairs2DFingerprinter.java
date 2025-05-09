@@ -33,8 +33,6 @@ import java.util.Map;
  * @cdk.created 2018-02-05
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.module fingerprint
- * @cdk.githash
  * @see org.openscience.cdk.fingerprint.Fingerprinter
  */
 public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements IFingerprinter {

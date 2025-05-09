@@ -57,8 +57,6 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * <P>The elements that are read are given in the INChIHandler class.
  *
- * @cdk.module extra
- * @cdk.githash
  * @cdk.iooptions
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;

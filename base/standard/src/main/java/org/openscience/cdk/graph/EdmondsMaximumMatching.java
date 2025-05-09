@@ -47,7 +47,6 @@ import java.util.Map;
  * @see <a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation
  * from Vazirani on his and Micali O(|E| * sqrt(|V|)) algorithm</a>
  *
- * @cdk.module standard
  */
 final class EdmondsMaximumMatching {
 

@@ -40,7 +40,6 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 
 /**
  * @author John May
- * @cdk.module test-sdg
  */
 class CorrectGeometricConfigurationTest {
 

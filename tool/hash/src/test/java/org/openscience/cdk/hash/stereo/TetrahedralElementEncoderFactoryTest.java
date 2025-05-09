@@ -42,7 +42,6 @@ import static org.mockito.Mockito.when;
 /**
  * See {@link org.openscience.cdk.hash.HashCodeScenariosTest} for examples.
  * @author John May
- * @cdk.module test-hash
  * @see org.openscience.cdk.hash.HashCodeScenariosTest
  */
 class TetrahedralElementEncoderFactoryTest {

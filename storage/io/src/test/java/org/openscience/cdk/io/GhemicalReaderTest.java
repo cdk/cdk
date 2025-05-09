@@ -38,7 +38,6 @@ import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.GhemicalReader
  */

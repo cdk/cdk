@@ -26,7 +26,6 @@ import java.util.GregorianCalendar;
  *  A set of utilities which did not really fit into any other category.
  *
  * @author     steinbeck
- * @cdk.githash
  * @cdk.created    2001-06-19
  */
 @Deprecated

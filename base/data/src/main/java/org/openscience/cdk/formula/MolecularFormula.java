@@ -36,11 +36,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *   <li><code><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></code></li>
  * </ul>
  *
- * @cdk.module  data
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
- * @cdk.githash
  */
 public class MolecularFormula implements IMolecularFormula {
 

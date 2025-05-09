@@ -25,8 +25,6 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 
 /**
  * Helper class for the unit tests in {@link RendererModelTest}.
- *
- * @cdk.module test-render
  */
 class SomeParam extends AbstractGeneratorParameter<Boolean> {
 

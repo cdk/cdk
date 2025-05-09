@@ -57,7 +57,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Tests CDK's hydrogen adding capabilities in terms of
  * example molecules.
  *
- * @cdk.module  test-valencycheck
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2007-07-28

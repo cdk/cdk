@@ -37,7 +37,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  *  Description of the Class
  *
- * @cdk.module test-sdg
  *
  *@author     steinbeck
  *@cdk.created    September 4, 2003

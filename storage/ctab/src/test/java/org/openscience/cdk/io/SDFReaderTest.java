@@ -40,7 +40,6 @@ import java.io.InputStream;
 /**
  * TestCase for the reading MDL mol files using one test file.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.MDLReader
  */

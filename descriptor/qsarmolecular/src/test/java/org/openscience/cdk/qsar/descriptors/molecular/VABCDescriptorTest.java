@@ -28,7 +28,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * @cdk.module test-qsarmolecular
  */
 class VABCDescriptorTest extends MolecularDescriptorTest {
 

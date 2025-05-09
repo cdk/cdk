@@ -44,8 +44,6 @@ import javax.xml.stream.events.XMLEvent;
 /**
  * Iterating PubChem PC-Substances ASN.1 XML reader.
  *
- * @cdk.module   io
- * @cdk.githash
  * @cdk.iooptions
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;

@@ -3,7 +3,7 @@
 
 # The Chemistry Development Kit (CDK)
  
-Copyright &copy; 1997-2024 The CDK Development Team
+Copyright &copy; 1997-2025 The CDK Development Team
 
 License: LGPL v2, see LICENSE.txt
 
@@ -55,7 +55,7 @@ everything, note it is much more efficient to use include the modules you need:
 
 If you are a Python user, the Cinfony project provides access via [Jython](http://www.redbrick.dcu.ie/~noel/CDKJython.html).
 Noel O'Boyle's [Cinfony](http://cinfony.github.io/) provides a wrapper around the CDK and over toolkits exposing core
-functionality as a consistent API. `ScyJava` can also be used, as explain in [ChemPyFormatics](https://egonw.github.io/chempyformatics/).
+functionality as a consistent API. `ScyJava` can also be used, as explain in [ChemPyFormatics](https://cdk.github.io/chempyformatics/).
 
 Further details on building the project in integrated development environments (IDEs) are available on the wiki:
  * [Building the CDK](https://github.com/cdk/cdk/wiki/Building-CDK)
@@ -64,14 +64,3 @@ Further details on building the project in integrated development environments (
 ## Getting Help
 
 The [Toolkit-Rosetta Wiki Page](https://github.com/cdk/cdk/wiki/Toolkit-Rosetta) provides some examples for common tasks. If you need help using the CDK and have questions please use the user mailing list, [``cdk-user@lists.sf.net``](mailto:cdk-user@lists.sf.net) (**you must [subscribe here]( https://sourceforge.net/projects/cdk/lists/cdk-user) first to post**).
- 
-## Acknowledgments
-
-![YourKit Logo](https://www.yourkit.com/images/yklogo.png)
-
-The CDK developers use YourKit to profile and optimise code.
-
-YourKit supports open source projects with its full-featured Java Profiler.
-YourKit, LLC is the creator of <a href="https://www.yourkit.com/java/profiler/index.jsp">YourKit Java Profiler</a>
-and <a href="https://www.yourkit.com/.net/profiler/index.jsp">YourKit .NET Profiler</a>,
-innovative and intelligent tools for profiling Java and .NET applications.

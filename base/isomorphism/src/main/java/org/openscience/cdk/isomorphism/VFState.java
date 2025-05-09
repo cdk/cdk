@@ -35,7 +35,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * should be checked externally
  *
  * @author John May
- * @cdk.module isomorphism
  */
 final class VFState extends AbstractVFState {
 

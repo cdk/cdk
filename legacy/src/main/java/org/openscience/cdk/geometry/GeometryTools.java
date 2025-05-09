@@ -65,8 +65,6 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @author        Niels Out
  * @author        John May
  *
- * @cdk.module    standard
- * @cdk.githash
  * @deprecated use {@link GeometryUtil} moved for dependency reorganisation
  */
 @Deprecated

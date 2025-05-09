@@ -8,8 +8,6 @@ import java.util.Map;
  *
  * @author         chhoppe
  * @cdk.created    2004-10-8
- * @cdk.module     forcefield
- * @cdk.githash
  */
 public class MMFF94ParametersCall {
 

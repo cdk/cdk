@@ -121,8 +121,6 @@ import java.util.TreeSet;
  * }</pre>
  *
  * @author John May
- * @cdk.module core
- * @cdk.githash
  */
 public class DynamicFactory {
 

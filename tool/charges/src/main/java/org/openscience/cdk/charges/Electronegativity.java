@@ -29,9 +29,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author         Miguel Rojas Cherto
  * @cdk.created    2008-104-31
- * @cdk.module  charges
  * @cdk.keyword electronegativity
- * @cdk.githash
  */
 public class Electronegativity {
 

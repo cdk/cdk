@@ -31,7 +31,6 @@ import org.openscience.cdk.test.interfaces.AbstractCrystalTest;
 /**
  * Checks the functionality of the {@link Crystal}.
  *
- * @cdk.module test-silent
  */
 class CrystalTest extends AbstractCrystalTest {
 

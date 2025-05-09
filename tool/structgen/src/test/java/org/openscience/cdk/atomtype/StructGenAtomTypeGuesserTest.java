@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IBond;
 import java.util.List;
 
 /**
- * @cdk.module test-structgen
  */
 class StructGenAtomTypeGuesserTest extends CDKTestCase {
 

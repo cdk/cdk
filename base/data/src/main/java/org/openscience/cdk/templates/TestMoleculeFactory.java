@@ -39,7 +39,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * This class contains methods for generating simple organic molecules and is
  * copy of {@link MoleculeFactory} for use in tests.
  *
- * @cdk.module test-data
  */
 public class TestMoleculeFactory {
 

@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import javax.vecmath.Point2d;
 
 /**
- * @cdk.module test-diff
  */
 class Point2dDifferenceTest {
 

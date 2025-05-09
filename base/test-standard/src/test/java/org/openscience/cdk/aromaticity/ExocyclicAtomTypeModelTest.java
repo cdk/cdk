@@ -42,7 +42,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * bonds are considered.
  *
  * @author John May
- * @cdk.module test-standard
  */
 class ExocyclicAtomTypeModelTest {
 

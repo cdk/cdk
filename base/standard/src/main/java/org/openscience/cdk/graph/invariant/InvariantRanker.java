@@ -29,7 +29,6 @@ package org.openscience.cdk.graph.invariant;
  * a merge/insertion sort with the primary interaction through {@link #rank}.
  *
  * @author John May
- * @cdk.module standard
  * @see <a href="http://algs4.cs.princeton.edu/22mergesort/">Mergesort</a>
  * @see Canon
  */

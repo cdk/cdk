@@ -42,7 +42,6 @@ import org.openscience.cdk.test.io.ChemObjectIOTest;
 /**
  * TestCase for the writer XYZ files using one test file.
  *
- * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.XYZWriter
  */

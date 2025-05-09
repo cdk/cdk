@@ -55,8 +55,6 @@ import org.openscience.cdk.interfaces.IElement;
  * <p>More examples about using this class can be found in the
  * Junit test for this class.
  *
- * @cdk.module  silent
- * @cdk.githash
  *
  * @author     steinbeck
  * @cdk.created    2000-10-02

@@ -47,7 +47,6 @@ import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smiles;
  * Test recursive smarts
  *
  * @author Dazhi Jiao
- * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
 class RecursiveTest extends CDKTestCase {

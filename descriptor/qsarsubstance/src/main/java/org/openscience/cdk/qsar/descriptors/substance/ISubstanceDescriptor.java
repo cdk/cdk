@@ -24,7 +24,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 /**
  * Classes that implement this interface are QSAR substance calculators.
  *
- * @cdk.githash
  */
 public interface ISubstanceDescriptor extends IDescriptor {
 

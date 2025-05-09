@@ -35,8 +35,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * Gaussian elimination.
  *
  * @author John May
- * @cdk.module core
- * @cdk.githash
  * @see RelevantCycles
  */
 final class GreedyBasis {

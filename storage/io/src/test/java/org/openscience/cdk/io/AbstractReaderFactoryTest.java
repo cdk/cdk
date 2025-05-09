@@ -45,7 +45,6 @@ import java.io.InputStream;
 /**
  * TestCase for the instantiation and functionality of the {@link org.openscience.cdk.io.ReaderFactory}.
  *
- * @cdk.module test-io
  */
 class AbstractReaderFactoryTest {
 

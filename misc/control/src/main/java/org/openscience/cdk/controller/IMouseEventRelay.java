@@ -26,7 +26,6 @@ package org.openscience.cdk.controller;
 /**
  * Widget toolkit-independent interface to relay for mouse events.
  *
- * @cdk.module control
  */
 public interface IMouseEventRelay {
 

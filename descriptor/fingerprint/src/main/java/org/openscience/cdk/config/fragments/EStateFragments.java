@@ -38,12 +38,10 @@ import org.openscience.cdk.smarts.SmartsPattern;
  * These fragments were originally described in {@cdk.cite HALL1995} and were
  * converted into SMARTS forms by the <a href="http://www.rdkit.org">RDKit</a> project
  *
- * @cdk.module  standard
  * @author  Greg Landrum
  * @cdk.created 2008-07-22
  * @cdk.keyword estate
  * @cdk.keyword fragment
- * @cdk.githash
  */
 public class EStateFragments {
 

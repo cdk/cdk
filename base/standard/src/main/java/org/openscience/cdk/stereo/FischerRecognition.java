@@ -64,7 +64,6 @@ import static org.openscience.cdk.stereo.Stereocenters.Type.Tetracoordinate;
  * interpreted.
  * 
  * @author John May
- * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/Fischer_projection">Fischer 
  *      projection (Wikipedia)</a>
  */

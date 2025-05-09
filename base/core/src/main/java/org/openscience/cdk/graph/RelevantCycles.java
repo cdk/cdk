@@ -73,7 +73,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * </pre></blockquote>
  *
  * @author John May
- * @cdk.module core
  * @cdk.keyword relevant cycles
  * @cdk.keyword relevant rings
  * @cdk.keyword R(G)
@@ -81,7 +80,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * @cdk.keyword cycle
  * @cdk.keyword ring
  * @cdk.keyword ring perception
- * @cdk.githash
  * @see org.openscience.cdk.ringsearch.RingSearch
  * @see org.openscience.cdk.ringsearch.SSSRFinder#findRelevantRings()
  * @see GreedyBasis

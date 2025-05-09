@@ -47,7 +47,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Unit testing for the {@link MCSPlusHandler} class.
  * @author     Syed Asad Rahman
  * @author     egonw
- * @cdk.module test-smsd
  */
 public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
