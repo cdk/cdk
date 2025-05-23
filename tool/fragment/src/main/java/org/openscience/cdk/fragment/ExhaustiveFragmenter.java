@@ -32,16 +32,16 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -50,10 +50,10 @@ import java.util.Stack;
  * <p>
  * Non-terminal meaning bonds connected to more than one single heavy atom (non-terminal bonds).
  * By default:
- * - Fragments smaller than 6 atoms (excluding implicit hydrogen) don't get returned.
- * <br>
- * - Fragments are returned with open valences, where a bond has been split.
- * <br>
+ * <ul>
+ *     <li>Fragments smaller than 6 atoms (excluding implicit hydrogen) don't get returned.</li>
+ *     <li>Fragments are returned with open valences, where a bond has been split.</li>
+ * </ul>
  * However, users can modify these settings.
  * <p>
  * <strong>Example Usage:</strong>
@@ -61,19 +61,20 @@ import java.util.Stack;
  * // By default, returns unsaturated fragments with a minimum size of 6 atoms
  * ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter();
  * SmilesParser smiParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
- * IAtomContainer mol = smiParser.parseSmiles("C1CCC(C1)C2=CC=CC=C2");  //  Cyclopentylbenzene molecule
+ * IAtomContainer mol = smiParser.parseSmiles("C1CCC(C1)C1=CC=CC=C1");  //  Cyclopentylbenzene molecule
  * fragmenter.generateFragments(mol);
  *
  * // Retrieve SMILES representations of fragments
  * String[] smilesFragments = fragmenter.getFragments();
- * // Results:
+ * // Results: ["C1CCCCC1", "C1=CC=CC=C1"]
  * //
  *
  * // Retrieve AtomContainer representations of fragments
  * IAtomContainer[] atomContainerFragments = fragmenter.getFragmentsAsContainers();
  * }</pre>
  *
- * @author Rajarshi Guha, Tom Weiß
+ * @author Rajarshi Guha
+ * @author Tom Weiß
  * @cdk.module  fragment
  * @cdk.keyword fragment
  */
@@ -83,13 +84,19 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * Specifies whether generated fragments should be saturated (hydrogens added) or unsaturated.
      */
     public enum Saturation {
-        // Fragments will be returned in their saturated form (implicit hydrogen atoms added).
+        /**
+         * Fragments will be returned in their saturated form (implicit hydrogen atoms added).
+         */
         HYDROGEN_SATURATED_FRAGMENTS,
 
-        // Fragments will be saturated with R atoms.
+        /**
+         * Fragments will be saturated with R atoms.
+         */
         REST_SATURATED_FRAGMENTS,
 
-        // Fragments will be returned in their unsaturated form (no additional hydrogen atoms).
+        /**
+         * Fragments will be returned in their unsaturated form (no additional hydrogen atoms).
+         */
         UNSATURATED_FRAGMENTS
     }
 
@@ -98,15 +105,17 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     private final Map<String, IAtomContainer> fragMap;
     private final SmilesGenerator smilesGenerator;
-    private int maxTreeDepth = 31;
+    private int exclusiveMaxTreeDepth = Integer.SIZE;
     private int minFragSize;
     private Saturation saturationSetting;
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(ExhaustiveFragmenter.class);
 
     /**
      * Constructs an ExhaustiveFragmenter with the default settings:
-     * - Minimum fragment size: 6 atoms
-     * - Unsaturated fragments
+     * <ul>
+     *     <li>Minimum fragment size: 6 atoms</li>
+     *     <li>Unsaturated fragments</li>
+     * </ul>
      */
     public ExhaustiveFragmenter() {
         this(DEFAULT_MIN_FRAG_SIZE, DEFAULT_SATURATION);
@@ -115,21 +124,21 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment size and saturation setting.
      *
-     * @param minFragSize       Minimum number of atoms in a valid fragment.
-     * @param saturationSetting Determines whether fragments should be saturated or unsaturated.
+     * @param minFragSize       minimum number of atoms in a valid fragment.
+     * @param saturationSetting determines whether fragments should be saturated or unsaturated.
      */
     public ExhaustiveFragmenter(int minFragSize, Saturation saturationSetting) {
         this.minFragSize = minFragSize;
         this.saturationSetting = saturationSetting;
-        fragMap = new HashMap<>();
-        smilesGenerator = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
+        this.fragMap = new HashMap<>();
+        this.smilesGenerator = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
     }
 
     /**
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment size.
      * Saturation defaults to unsaturated fragments.
      *
-     * @param minFragSize Minimum number of atoms in a valid fragment.
+     * @param minFragSize minimum number of atoms in a valid fragment.
      */
     public ExhaustiveFragmenter(int minFragSize) {
         this(minFragSize, DEFAULT_SATURATION);
@@ -147,20 +156,23 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Sets whether fragments should be saturated or unsaturated.
      *
-     * @param saturationSetting The saturation mode for generated fragments.
+     * @param saturationSetting the saturation mode for generated fragments.
      */
     public void setSaturationSetting(Saturation saturationSetting) {
         this.saturationSetting = saturationSetting;
     }
 
     /**
-     * Sets the maximum number of bonds that can be simultaneously split.
-     * Must be within the range `0 < maxTreeDepth < 32`.
+     * Sets the maximum number of bonds that can be simultaneously split. Must be within the range
+     * {@code 0 < exclusiveMaxTreeDepth < 32}. This is the limit of the maximal possible bonds to split,
+     * caused by the combinatorial explosion of fragments when dealing with larger molecules. Because Java
+     * indexes its common data structures with int32's and this algorithm scales with 2^n, this limit is
+     * strictly necessary.
      *
-     * @param maxTreeDepth Maximum number of bonds that can be split at once.
+     * @param exclusiveMaxTreeDepth maximum number of bonds that can be split in one atom container.
      */
-    public void setMaxTreeDepth(int maxTreeDepth) {
-        this.maxTreeDepth = maxTreeDepth;
+    public void setExclusiveMaxTreeDepth(int exclusiveMaxTreeDepth) {
+        this.exclusiveMaxTreeDepth = exclusiveMaxTreeDepth;
     }
 
     /**
@@ -169,22 +181,23 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * - {@link #getFragments()} (SMILES representation)
      * - {@link #getFragmentsAsContainers()} (IAtomContainer representation)
      *
-     * @param atomContainer The input molecule.
-     * @throws CDKException If fragmentation encounters an error.
+     * @param atomContainer the input molecule.
+     * @throws CDKException if fragmentation encounters an error.
      */
     @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
-        fragMap.clear();
-        run(atomContainer, this.maxTreeDepth);
+        this.fragMap.clear();
+        run(atomContainer, this.exclusiveMaxTreeDepth);
     }
 
     /**
      * Splits the molecule at all possible combinations of splittable bonds and saturates the open valences of the
      * resulting fragments if the Saturation setting is turned on.
+     * Only non-ring and non-terminal single bonds are considered for splitting.
      *
-     * @param atomContainer The molecule to be split.
-     * @param maxTreeDepth  The maximum number of bond splits allowed per subset.
-     * @throws CDKException If an error occurs during hydrogen addition or atom type perception.
+     * @param atomContainer the molecule to be split.
+     * @param maxTreeDepth  the maximum number of bond splits allowed per subset of bonds.
+     * @throws CDKException if an error occurs during hydrogen addition or atom type perception.
      */
     private void run(IAtomContainer atomContainer, int maxTreeDepth) throws CDKException {
 
@@ -193,18 +206,17 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
         // Retrieve bonds that are eligible for splitting
         IBond[] splittableBonds = getSplitableBonds(atomContainer);
-        int splittableBondsLength = splittableBonds.length;
 
         // If no splittable bonds are found, return early
-        if (splittableBondsLength == 0) return;
-        logger.debug("Got " + splittableBondsLength + " splittable bonds");
+        if (splittableBonds.length == 0) return;
+        logger.debug("Got " + splittableBonds.length + " splittable bonds");
 
         // Compute the number of possible bond subsets (excluding the empty set): 2^n - 1
-        int numberOfIterations = (1 << splittableBondsLength) - 1;
+        int numberOfIterations = (1 << splittableBonds.length) - 1;
 
         // Store indices of splittable bonds for subset generation
-        int[] splittableBondIndices = new int[splittableBondsLength];
-        for (int i = 0; i < splittableBondsLength; i++) {
+        int[] splittableBondIndices = new int[splittableBonds.length];
+        for (int i = 0; i < splittableBonds.length; i++) {
             splittableBondIndices[i] = splittableBonds[i].getIndex();
         }
 
@@ -214,7 +226,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             int subsetSize = subset.length;
 
             // Skip subsets exceeding the allowed depth
-            if (subsetSize > maxTreeDepth) {
+            if (subsetSize > this.exclusiveMaxTreeDepth) {
                 continue;
             }
 
@@ -233,22 +245,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 // Configure atom types and add implicit hydrogens
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
 
-                // Add Hydrogen to fragments if
-                switch (this.saturationSetting) {
-                    case HYDROGEN_SATURATED_FRAGMENTS:
-                        for (IAtom atom : partContainer.atoms()) {
-                            atom.setImplicitHydrogenCount(0);
-                        }
-                        CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
-                        break;
-                    case REST_SATURATED_FRAGMENTS:
-                        // TODO: find a good working solution.
-                        saturateWithRAtoms(partContainer);
-                        break;
-                    case UNSATURATED_FRAGMENTS:
-                        break;
-                }
-
                 // Apply aromaticity perception (legacy operation)
                 // TODO: Investigate for the current method to do this.
                 Aromaticity.cdkLegacy().apply(partContainer);
@@ -265,7 +261,23 @@ public class ExhaustiveFragmenter implements IFragmenter {
         }
     }
 
-    private IBond[] getSplitableBonds(IAtomContainer atomContainer) {
+    /**
+     * Detects and returns the bonds, which will be split by an exhaustive fragmentation. This method is especially useful
+     * to determine if it is even possible to split a specific molecule exhaustively. The number of fragments is 2^n - 1 with n
+     * being the number of splittable bonds. Therefore, it is impossible to entirely split a molecule with more than 31 splittable Bonds.
+     * To mitigate this one cna check this with this function, for example:
+     * <pre>
+     *     {@code
+     *     ExhaustiveFragmenter exhFragmenter = new Exhaustive Fragmenter;
+     *     if (exhFragmenter.getSplittableBonds(mol) > 31) {
+     *         // handle the case, where it is impossible to entirely split the molecule
+     *     }}
+     * </pre>
+     *
+     * @param atomContainer the container which contains the molecule in question.
+     * @return the bonds which would be split by the exhaustive fragmentation.
+     */
+    public IBond[] getSplitableBonds(IAtomContainer atomContainer) {
         // do ring detection
         SpanningTree spanningTree = new SpanningTree(atomContainer);
         IRingSet allRings = spanningTree.getAllRings();
@@ -334,7 +346,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         int subsetIndex = 0;
 
         // Iterate through each bit position (up to 31 bits).
-        for (int j = 0; j < 32; j++) {
+        for (int j = 0; j < Integer.SIZE; j++) {
             // If the j-th bit in index is set, include nums[j] in the subset.
             if (((index >> j) & 1) == 1) {
                 subset[subsetIndex++] = nums[j];
@@ -361,16 +373,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
         }
     }
 
-    private void saturateWithRAtoms(IAtomContainer mol) {
-        for (IAtom atom : mol.atoms()) {
-            int connected = mol.getConnectedBondsCount(atom);
-            Integer valency = atom.getValency();
-            if (valency == null) continue;
-            int toAdd = valency - connected;
-            if (toAdd > 0) addRAtoms(atom, toAdd, mol);
-        }
-    }
-
     /**
      * Creates a copy of an atom and adds it to the specified atom container.
      *
@@ -391,97 +393,94 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Splits a molecule into multiple fragments by removing the specified bonds and making copies of the resulting fragments.
      *
-     * @param mol          The molecule to be split.
+     * @param origMol      The molecule to be split.
      * @param bondsToSplit The bonds that should be removed to create separate fragments.
      * @return An array of copied molecular fragments resulting from the split.
      */
-    private IAtomContainer[] splitBondsWithCopy(IAtomContainer mol, IBond[] bondsToSplit) {
-        // Track visited atoms and bonds during traversal
-        boolean[] visitedAtoms = new boolean[mol.getAtomCount()];
-        boolean[] visitedBonds = new boolean[mol.getBondCount()];
-
-        // Initialize visited markers to false
-        Arrays.fill(visitedAtoms, false);
-        Arrays.fill(visitedBonds, false);
-
-        // The number of fragments is always the number of bonds removed + 1
-        int numberOfFragments = bondsToSplit.length + 1;
-        IAtomContainer[] fragments = new IAtomContainer[numberOfFragments];
-
-        // Map atoms to the atoms they should be disconnected from
-        Map<IAtom, List<IAtom>> atomsToSplit = new HashMap<>((int) Math.ceil((bondsToSplit.length * 2) / 0.75));
+    private IAtomContainer[] splitBondsWithCopy(IAtomContainer origMol, IBond[] bondsToSplit) {
+        Set<Set<IAtom>> splitBondAtomPairs = new HashSet<>();
         for (IBond bond : bondsToSplit) {
-            IAtom beg = bond.getBegin();
-            IAtom end = bond.getEnd();
-            atomsToSplit.computeIfAbsent(beg, k -> new ArrayList<>()).add(end);
+            Set<IAtom> pair = new HashSet<>(2);
+            pair.add(bond.getAtom(0));
+            pair.add(bond.getAtom(1));
+            splitBondAtomPairs.add(pair);
         }
 
-        // Stack to track starting atoms for fragment creation
-        Stack<IAtom> startingAtoms = new Stack<>();
+        boolean[] visitedOriginalAtoms = new boolean[origMol.getAtomCount()];
+        List<IAtomContainer> fragmentList = new ArrayList<>(bondsToSplit.length + 1);
 
-        // Start traversal from the first atom of the molecule
-        startingAtoms.add(mol.getAtom(0));
+        for (int i = 0; i < origMol.getAtomCount(); i++) {
+            IAtom currPotentialStartAtom = origMol.getAtom(i);
+            if (!visitedOriginalAtoms[origMol.indexOf(currPotentialStartAtom)]) {
+                IAtomContainer fragmentContainer = origMol.getBuilder().newInstance(IAtomContainer.class);
+                Map<IAtom, IAtom> origToCpyMap = new HashMap<>();
+                Stack<IAtom> dfsStack = new Stack<>();
+                // Store split counts specific to the atoms in the fragment being built
+                Map<IAtom, Integer> splitCountsCpyAtoms = new HashMap<>();
 
-        // Iterate to create each fragment while avoiding split bonds
-        for (int i = 0; i < numberOfFragments; i++) {
-            // Map to associate original atoms with their copied versions
-            Map<IAtom, IAtom> origToCpyMap = new HashMap<>((int) Math.ceil(mol.getAtomCount() / 0.75));
-            IAtomContainer fragmentContainer = mol.getBuilder().newInstance(IAtomContainer.class);
+                dfsStack.push(currPotentialStartAtom);
+                visitedOriginalAtoms[origMol.indexOf(currPotentialStartAtom)] = true;
+                IAtom cpyStartAtom = copyAtom(currPotentialStartAtom, fragmentContainer);
+                origToCpyMap.put(currPotentialStartAtom, cpyStartAtom);
 
-            // Stack for depth-first search (DFS) traversal
-            Stack<IAtom> atomStack = new Stack<>();
+                while (!dfsStack.isEmpty()) {
+                    IAtom origCurrAtom = dfsStack.pop();
+                    IAtom copiedCurrentAtom = origToCpyMap.get(origCurrAtom);
 
-            // Start DFS from the next available atom
-            atomStack.add(startingAtoms.pop());
+                    for (IBond origBond : origMol.getConnectedBondsList(origCurrAtom)) {
+                        IAtom origNbor = origBond.getOther(origCurrAtom);
+                        Set<IAtom> currBondPair = new HashSet<>(2);
+                        currBondPair.add(origCurrAtom);
+                        currBondPair.add(origNbor);
+                        boolean isThisABondToSplit = splitBondAtomPairs.contains(currBondPair);
 
-            // Copy the first atom and store the mapping
-            IAtom firstAtom = atomStack.peek();
-            IAtom atomCpy = copyAtom(firstAtom, fragmentContainer);
-            origToCpyMap.put(firstAtom, atomCpy);
-
-            while (!atomStack.isEmpty()) {
-                // Retrieve the current atom and its copy
-                IAtom atom = atomStack.pop();
-                atomCpy = origToCpyMap.get(atom);
-                visitedAtoms[atom.getIndex()] = true;
-
-                // Iterate over neighboring atoms
-                for (IAtom nbor : atom.neighbors()) {
-                    IBond bond = mol.getBond(atom, nbor);
-                    int bondIndex = bond.getIndex();
-
-                    // Skip if the bond was already processed
-                    if (visitedBonds[bondIndex]) {
-                        continue;
-                    }
-
-                    // If the neighbor is not part of a split bond, copy it and create a bond
-                    if (!atomsToSplit.containsKey(atom) || !atomsToSplit.get(atom).contains(nbor)) {
-                        if (!visitedAtoms[nbor.getIndex()]) {
-                            IAtom nborCpy = copyAtom(nbor, fragmentContainer);
-                            fragmentContainer.newBond(atomCpy, nborCpy, bond.getOrder());
-                            visitedBonds[bondIndex] = true;
-                            atomStack.add(nbor);
-                            origToCpyMap.put(nbor, nborCpy);
-                            visitedAtoms[nbor.getIndex()] = true;
-                        } else {
-                            // If the neighbor was already copied, establish a bond to maintain cyclic structures
-                            IAtom nborCpy = origToCpyMap.get(nbor);
-                            if (nborCpy != null) {
-                                fragmentContainer.newBond(atomCpy, nborCpy, bond.getOrder());
-                                visitedBonds[bondIndex] = true;
+                        if (!isThisABondToSplit) {
+                            if (!origToCpyMap.containsKey(origNbor)) {
+                                visitedOriginalAtoms[origMol.indexOf(origNbor)] = true;
+                                IAtom cpyNbor = copyAtom(origNbor, fragmentContainer);
+                                origToCpyMap.put(origNbor, cpyNbor);
+                                fragmentContainer.addBond(copiedCurrentAtom.getIndex(), cpyNbor.getIndex(),
+                                        origBond.getOrder(), origBond.getStereo());
+                                dfsStack.push(origNbor);
+                            } else {
+                                IAtom cpyNbor = origToCpyMap.get(origNbor);
+                                if (fragmentContainer.getBond(copiedCurrentAtom, cpyNbor) == null) {
+                                    fragmentContainer.addBond(copiedCurrentAtom.getIndex(), cpyNbor.getIndex(),
+                                            origBond.getOrder(), origBond.getStereo());
+                                    // Add bond only if not already present
+                                }
                             }
+                        } else {
+                            // This bond is being cut. The origCurrAtom is part of the fragment being built.
+                            // Increment the cleavage count for its corresponding copied atom.
+                            splitCountsCpyAtoms.put(copiedCurrentAtom,
+                                    splitCountsCpyAtoms.getOrDefault(copiedCurrentAtom, 0) + 1);
                         }
-                    } else {
-                        // If the neighbor is part of a split bond, mark it as a starting atom for a new fragment
-                        startingAtoms.add(nbor);
                     }
                 }
+
+                // Apply saturation logic based on the number of splitting counts for this fragment
+                if (this.saturationSetting != Saturation.UNSATURATED_FRAGMENTS) {
+                    for (Map.Entry<IAtom, Integer> entry : splitCountsCpyAtoms.entrySet()) {
+                        IAtom atom = entry.getKey();
+                        int bondsCutCount = entry.getValue();
+
+                        switch (this.saturationSetting) {
+                            case HYDROGEN_SATURATED_FRAGMENTS:
+                                Integer currImplHCount = atom.getImplicitHydrogenCount();
+                                int newImplHCount = (currImplHCount == null ? 0 : currImplHCount) + bondsCutCount;
+                                atom.setImplicitHydrogenCount(newImplHCount);
+                                break;
+                            case REST_SATURATED_FRAGMENTS:
+                                addRAtoms(atom, bondsCutCount, fragmentContainer);
+                                break;
+                        }
+                    }
+                }
+                fragmentList.add(fragmentContainer);
             }
-            // Store the created fragment
-            fragments[i] = fragmentContainer;
         }
-        return fragments;
+        return fragmentList.toArray(new IAtomContainer[0]);
     }
 
 
