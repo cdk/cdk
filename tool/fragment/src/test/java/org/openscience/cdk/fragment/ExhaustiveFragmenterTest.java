@@ -540,8 +540,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
      * )
      *
      * 4.  exclusiveMaxTreeDepth = 4 (allows up to 3 simultaneous cuts):
-     * - Since there are only 2 splittable bonds, allowing up to 3 cuts (or more) will yield
-     * the same set of fragments as allowing up to 2 cuts.
+     * - Since there are only combinations of 2 splittable bonds that allow a fragment size bigger the 6, allowing up
+     *  to 3 cuts (or more) will yield the same set of fragments as allowing up to 2 cuts.
      * - Expected unique fragments: 10 (
      * c1ccc(cc1)C
      * c1ccc(cc1)CC
