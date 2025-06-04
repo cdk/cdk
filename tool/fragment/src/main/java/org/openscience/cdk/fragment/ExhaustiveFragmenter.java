@@ -51,26 +51,57 @@ import java.util.Stack;
  * Non-terminal meaning bonds connected to more than one single heavy atom (non-terminal bonds).
  * By default:
  * <ul>
- *     <li>Fragments smaller than 6 atoms (excluding implicit hydrogen) don't get returned.</li>
- *     <li>Fragments are returned with open valences, where a bond has been split.</li>
+ * <li>Fragments smaller than 6 atoms (excluding implicit hydrogen) don't get returned.</li>
+ * <li>Fragments are returned with open valences, where a bond has been split.</li>
  * </ul>
  * However, users can modify these settings.
  * <p>
+ * <strong>Fragment Deduplication:</strong>
+ * The `ExhaustiveFragmenter` uses canonical SMILES strings for internal deduplication of generated fragments.
+ * This means that after a fragment is generated, its unique SMILES representation is computed
+ * (using {@link SmilesGenerator} with {@code SmiFlavor.Unique} and {@code SmiFlavor.UseAromaticSymbols}).
+ * If a fragment with the same canonical SMILES has already been generated and stored, the new fragment
+ * is considered a duplicate and is not added to the results.
+ * <p>
+ * This deduplication strategy is particularly important when considering the {@link Saturation} setting:
+ * <ul>
+ * <li>If fragments are {@link Saturation#HYDROGEN_SATURATED_FRAGMENTS} or
+ * {@link Saturation#REST_SATURATED_FRAGMENTS}, the saturation process might lead to a canonical SMILES
+ * that is identical to a fragment obtained via a different bond cleavage, or a fragment that appears
+ * different due to explicit hydrogen representation but becomes identical when canonicalized.</li>
+ * <li>For example, an unsaturated fragment like `[CH]1CCCCC1` (cyclohexyl radical) might deduplicate
+ * with a saturated `C1CCCCC1` (cyclohexane) if `HYDROGEN_SATURATED_FRAGMENTS` is enabled and both forms
+ * canonicalize to the same SMILES depending on the exact SMILES generator and atom properties.</li>
+ * <li>It is crucial to understand that the uniqueness is based solely on the canonical SMILES string,
+ * not on the exact atom-by-atom identity or origin within the original molecule.</li>
+ * </ul>
+ *
+ * <p>
  * <strong>Example Usage:</strong>
  * <pre>{@code
+ * import org.openscience.cdk.DefaultChemObjectBuilder;
+ * import org.openscience.cdk.interfaces.IAtomContainer;
+ * import org.openscience.cdk.smiles.SmilesParser;
+ *
  * // By default, returns unsaturated fragments with a minimum size of 6 atoms
  * ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter();
- * SmilesParser smiParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
- * IAtomContainer mol = smiParser.parseSmiles("C1CCC(C1)C1=CC=CC=C1");  //  Cyclopentylbenzene molecule
+ * SmilesParser smiParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ * IAtomContainer mol = smiParser.parseSmiles("C1CCC(C1)C1=CC=CC=C1");  // Cyclopentylbenzene molecule
  * fragmenter.generateFragments(mol);
  *
  * // Retrieve SMILES representations of fragments
  * String[] smilesFragments = fragmenter.getFragments();
- * // Results: ["C1CCCCC1", "C1=CC=CC=C1"]
- * //
+ * // Example Result (depending on exact fragmentation points and min size):
+ * // ["C1CCCCC1", "c1ccccc1"]
+ * // Note: Actual fragments might vary based on chosen saturation setting and bond definitions.
  *
  * // Retrieve AtomContainer representations of fragments
  * IAtomContainer[] atomContainerFragments = fragmenter.getFragmentsAsContainers();
+ *
+ * // Example: Configuring for hydrogen-saturated fragments with a minimum size of 5
+ * ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(5, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+ * saturatedFragmenter.generateFragments(mol);
+ * String[] saturatedSmilesFragments = saturatedFragmenter.getFragments();
  * }</pre>
  *
  * @author Rajarshi Guha
@@ -102,6 +133,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     private static final int DEFAULT_MIN_FRAG_SIZE = 6;
     private static final Saturation DEFAULT_SATURATION = Saturation.UNSATURATED_FRAGMENTS;
+    private static final SmilesGenerator DEFAULT_SMILES_GENERATOR = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
 
     private final Map<String, IAtomContainer> fragMap;
     private final SmilesGenerator smilesGenerator;
@@ -113,35 +145,51 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Constructs an ExhaustiveFragmenter with the default settings:
      * <ul>
-     *     <li>Minimum fragment size: 6 atoms</li>
-     *     <li>Unsaturated fragments</li>
+     * <li>Minimum fragment size: 6 atoms (excluding implicit hydrogen)</li>
+     * <li>Unsaturated fragments</li>
+     * <li>Default {@link SmilesGenerator} ({@code SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols})</li>
      * </ul>
      */
     public ExhaustiveFragmenter() {
-        this(DEFAULT_MIN_FRAG_SIZE, DEFAULT_SATURATION);
+        this(DEFAULT_SMILES_GENERATOR, DEFAULT_MIN_FRAG_SIZE, DEFAULT_SATURATION);
     }
 
     /**
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment size and saturation setting.
+     * Uses the default {@link SmilesGenerator}.
      *
-     * @param minFragSize       minimum number of atoms in a valid fragment.
-     * @param saturationSetting determines whether fragments should be saturated or unsaturated.
+     * @param minFragSize       Minimum number of atoms in a valid fragment (excluding implicit hydrogen).
+     * @param saturationSetting Determines whether fragments should be saturated (with hydrogens or R-atoms) or unsaturated.
      */
     public ExhaustiveFragmenter(int minFragSize, Saturation saturationSetting) {
-        this.minFragSize = minFragSize;
-        this.saturationSetting = saturationSetting;
-        this.fragMap = new HashMap<>();
-        this.smilesGenerator = new SmilesGenerator(SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols);
+        this(DEFAULT_SMILES_GENERATOR, minFragSize, saturationSetting);
     }
 
     /**
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment size.
-     * Saturation defaults to unsaturated fragments.
+     * Saturation defaults to {@link Saturation#UNSATURATED_FRAGMENTS}.
+     * Uses the default {@link SmilesGenerator}.
      *
-     * @param minFragSize minimum number of atoms in a valid fragment.
+     * @param minFragSize Minimum number of atoms in a valid fragment (excluding implicit hydrogen).
      */
     public ExhaustiveFragmenter(int minFragSize) {
-        this(minFragSize, DEFAULT_SATURATION);
+        this(DEFAULT_SMILES_GENERATOR, minFragSize, DEFAULT_SATURATION);
+    }
+
+    /**
+     * Constructs an ExhaustiveFragmenter with a user-provided {@link SmilesGenerator},
+     * user-defined minimum fragment size, and saturation setting.
+     *
+     * @param smilesGenerator   The {@link SmilesGenerator} instance to use for creating SMILES strings
+     * for fragment deduplication and retrieval.
+     * @param minFragSize       Minimum number of atoms in a valid fragment (excluding implicit hydrogen).
+     * @param saturationSetting Determines whether fragments should be saturated (with hydrogens or R-atoms) or unsaturated.
+     */
+    public ExhaustiveFragmenter(SmilesGenerator smilesGenerator, int minFragSize, Saturation saturationSetting) {
+        this.minFragSize = minFragSize;
+        this.saturationSetting = saturationSetting;
+        this.fragMap = new HashMap<>();
+        this.smilesGenerator = smilesGenerator;
     }
 
     /**
@@ -163,13 +211,17 @@ public class ExhaustiveFragmenter implements IFragmenter {
     }
 
     /**
-     * Sets the maximum number of bonds that can be simultaneously split. Must be within the range
-     * {@code 0 < exclusiveMaxTreeDepth < 32}. This is the limit of the maximal possible bonds to split,
-     * caused by the combinatorial explosion of fragments when dealing with larger molecules. Because Java
-     * indexes its common data structures with int32's and this algorithm scales with 2^n, this limit is
-     * strictly necessary.
+     * Sets the maximum number of bonds that can be simultaneously split in a single
+     * fragmentation event. This value is exclusive, meaning if set to `3`, a maximum of `2` bonds
+     * can be split simultaneously.
+     * <p>
+     * Must be within the range {@code 0 < exclusiveMaxTreeDepth < 32}. This limit is important
+     * due to the combinatorial explosion of fragments (which scales with 2^n, where n is the
+     * number of splittable bonds) and Java's use of 32-bit integers for indexing.
+     * Setting a lower limit can help manage computational resources for larger molecules.
+     * </p>
      *
-     * @param exclusiveMaxTreeDepth maximum number of bonds that can be split in one atom container.
+     * @param exclusiveMaxTreeDepth The exclusive maximum number of bonds that can be split in one atom container.
      */
     public void setExclusiveMaxTreeDepth(int exclusiveMaxTreeDepth) {
         this.exclusiveMaxTreeDepth = exclusiveMaxTreeDepth;
@@ -187,7 +239,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
     @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
         this.fragMap.clear();
-        run(atomContainer, this.exclusiveMaxTreeDepth);
+        run(atomContainer);
     }
 
     /**
@@ -196,10 +248,9 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * Only non-ring and non-terminal single bonds are considered for splitting.
      *
      * @param atomContainer the molecule to be split.
-     * @param maxTreeDepth  the maximum number of bond splits allowed per subset of bonds.
      * @throws CDKException if an error occurs during hydrogen addition or atom type perception.
      */
-    private void run(IAtomContainer atomContainer, int maxTreeDepth) throws CDKException {
+    private void run(IAtomContainer atomContainer) throws CDKException {
 
         // Return early if the molecule has fewer than 3 bonds (no meaningful splits possible)
         if (atomContainer.getBondCount() < 3) return;
@@ -226,7 +277,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             int subsetSize = subset.length;
 
             // Skip subsets exceeding the allowed depth
-            if (subsetSize > this.exclusiveMaxTreeDepth) {
+            if (subsetSize >= this.exclusiveMaxTreeDepth) {
                 continue;
             }
 
@@ -246,11 +297,11 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
 
                 // Apply aromaticity perception (legacy operation)
-                // TODO: Investigate for the current method to do this.
+                // TODO: Not sure how to handle this
                 Aromaticity.cdkLegacy().apply(partContainer);
 
                 // Generate a unique SMILES representation of the fragment
-                String tmpSmiles = smilesGenerator.create(partContainer);
+                String tmpSmiles = this.smilesGenerator.create(partContainer);
                 int numberOfAtoms = partContainer.getAtomCount();
 
                 // Store the fragment if it meets the size requirement and is unique
@@ -269,7 +320,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * <pre>
      *     {@code
      *     ExhaustiveFragmenter exhFragmenter = new Exhaustive Fragmenter;
-     *     if (exhFragmenter.getSplittableBonds(mol) > 31) {
+     *     if (exhFragmenter.getSplittableBonds(mol) > Integer.SIZE - 1) {
      *         // handle the case, where it is impossible to entirely split the molecule
      *     }}
      * </pre>
@@ -279,6 +330,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      */
     public IBond[] getSplitableBonds(IAtomContainer atomContainer) {
         // do ring detection
+        // TODO: Is this really the proper way to do ring detection here ?
         SpanningTree spanningTree = new SpanningTree(atomContainer);
         IRingSet allRings = spanningTree.getAllRings();
 
@@ -340,7 +392,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      *              Duplicate values in `nums` may result in duplicate subset entries.
      * @return      An array containing the subset corresponding to `index`.
      */
-    private static int[] generateSubset(int index, int[] nums) {
+    static int[] generateSubset(int index, int[] nums) {
         // Allocate subset array based on the number of 1-bits in index.
         int[] subset = new int[Integer.bitCount(index)];
         int subsetIndex = 0;
@@ -391,7 +443,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
     }
 
     /**
-     * Splits a molecule into multiple fragments by removing the specified bonds and making copies of the resulting fragments.
+     * Splits and saturates (if specified via {@link #saturationSetting}) a molecule into multiple fragments by removing the
+     * specified bonds and making copies of the resulting fragments.
      *
      * @param origMol      The molecule to be split.
      * @param bondsToSplit The bonds that should be removed to create separate fragments.
