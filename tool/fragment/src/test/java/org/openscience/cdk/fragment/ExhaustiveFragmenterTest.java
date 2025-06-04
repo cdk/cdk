@@ -175,7 +175,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         // There is one additional fragment in comparison to the saturated version because there are following fragments:
         // [C]1CCC([CH2])C1
         // [CH2][C]1C[CH]CC1
-        // these fragments only differ in the number of hydrogens bonded to their respective carbon atoms. So these
+        // these fragments only differ in the number of hydrogen's bonded to their respective carbon atoms. So these
         // fragments would show up as one if saturated.
         Assertions.assertEquals(26, frags.size());
 
@@ -334,7 +334,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     /**
      * Tests a complex molecule with R-group saturated fragments.
      * The number of fragments can differ from hydrogen-saturated or unsaturated versions
-     * due to the explicit R-group notation affecting canonical SMILES.
+     * due to the R-group affecting the size of the fragments.
      */
     @Test
     void testEF7RestSaturated() throws Exception {
@@ -497,12 +497,11 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
 
     /**
      * Tests the setExclusiveMaxTreeDepth method using 1,4-dibutylbenzene.
-     * This molecule has two splittable bonds (the bonds connecting the butyl chains to the benzene ring).
      * By varying `exclusiveMaxTreeDepth`, we can observe how the number of generated fragments changes.
      *
      * <pre>
      * Molecule: 1,4-dibutylbenzene (CCCCc1ccc(CCCC)cc1)
-     * Splittable bonds: 3 (the two C-C bonds connecting the butyl chains to the ring).
+     * Splittable bonds: 6 (the three C-C bonds for each butyl chain, from the ring until the the second last C-atom).
      * Fragmenter setup: minFragSize = 4 (to include butyl and benzene fragments), hydrogen-saturated fragments.
      *
      * Expected fragments for different exclusiveMaxTreeDepth settings:
@@ -513,9 +512,6 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
      *
      * 2.  exclusiveMaxTreeDepth = 2 (allows up to 1 simultaneous cut):
      * - Considers all subsets of splittable bonds of size 1.
-     * - Cleaving one butyl-benzene bond yields:
-     * a) A butyl chain (canonical SMILES: "CCCC")
-     * b) A butylbenzene fragment (canonical SMILES: "CCCCc1ccccc1")
      * - Expected unique fragments: 4 (
      * c1ccc(cc1)CCCC
      * c1cc(ccc1C)CCCC

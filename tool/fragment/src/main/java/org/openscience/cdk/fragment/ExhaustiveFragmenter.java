@@ -453,7 +453,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
     private IAtomContainer[] splitBondsWithCopy(IAtomContainer origMol, IBond[] bondsToSplit) {
         Set<Set<IAtom>> splitBondAtomPairs = new HashSet<>();
         for (IBond bond : bondsToSplit) {
-            Set<IAtom> pair = new HashSet<>(2);
+            Set<IAtom> pair = new HashSet<>((int) Math.ceil(2 / (double) 0.75f));
             pair.add(bond.getAtom(0));
             pair.add(bond.getAtom(1));
             splitBondAtomPairs.add(pair);
