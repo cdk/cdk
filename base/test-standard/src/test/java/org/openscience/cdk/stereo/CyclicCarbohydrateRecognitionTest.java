@@ -37,7 +37,6 @@ import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import javax.vecmath.Point2d;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -217,6 +216,199 @@ class CyclicCarbohydrateRecognitionTest {
         m.addBond(0, 10, IBond.Order.SINGLE);
         m.addBond(5, 11, IBond.Order.SINGLE);
 
+        EdgeToBondMap                 bondMap = EdgeToBondMap.withSpaceFor(m);
+        int[][]                       graph   = GraphUtil.toAdjList(m, bondMap);
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
+        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
+                                                                                stereocenters);
+
+
+        List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Chair));
+        assertTetrahedralCenter(elements.get(0),
+                                m.getAtom(1),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(8), m.getAtom(0), m.getAtom(1), m.getAtom(2));
+        assertTetrahedralCenter(elements.get(1),
+                                m.getAtom(3),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(7), m.getAtom(2), m.getAtom(3), m.getAtom(4));
+        assertTetrahedralCenter(elements.get(2),
+                                m.getAtom(4),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(4), m.getAtom(3), m.getAtom(6), m.getAtom(5));
+        assertTetrahedralCenter(elements.get(3),
+                                m.getAtom(5),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(11), m.getAtom(4), m.getAtom(5), m.getAtom(0));
+        assertTetrahedralCenter(elements.get(4),
+                                m.getAtom(0),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(0), m.getAtom(5), m.getAtom(10), m.getAtom(1));
+    }
+
+    /**
+     * 3 of the neighbours are made horizontal
+     * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+     */
+    @Test
+    void betaDGlucose_Chair_horizontalNeighbours() throws Exception {
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        m.addAtom(atom("C", 1, -0.77d, 10.34d));
+        m.addAtom(atom("C", 1, 0.03d, 10.13d));
+        m.addAtom(atom("O", 0, 0.83d, 10.34d));
+        m.addAtom(atom("C", 1, 1.24d, 9.63d));
+        m.addAtom(atom("C", 1, 0.44d, 9.84d));
+        m.addAtom(atom("C", 1, -0.35d, 9.63d));
+        m.addAtom(atom("O", 1, 0.86d, 9.13d));
+        m.addAtom(atom("O", 1, 2.04d, 9.83d));
+        m.addAtom(atom("C", 2, -0.68d, 10.54d));
+        m.addAtom(atom("O", 1, -0.68d, 11.37d));
+        m.addAtom(atom("O", 1, -1.48d, 10.34d));
+        m.addAtom(atom("O", 1, -1.15d, 9.63d));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(5, 0, IBond.Order.SINGLE);
+        m.addBond(4, 6, IBond.Order.SINGLE);
+        m.addBond(3, 7, IBond.Order.SINGLE);
+        m.addBond(1, 8, IBond.Order.SINGLE);
+        m.addBond(8, 9, IBond.Order.SINGLE);
+        m.addBond(0, 10, IBond.Order.SINGLE);
+        m.addBond(5, 11, IBond.Order.SINGLE);
+
+        EdgeToBondMap                 bondMap = EdgeToBondMap.withSpaceFor(m);
+        int[][]                       graph   = GraphUtil.toAdjList(m, bondMap);
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
+        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
+                                                                                stereocenters);
+
+
+        List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Chair));
+        assertTetrahedralCenter(elements.get(0),
+                                m.getAtom(1),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(8), m.getAtom(0), m.getAtom(1), m.getAtom(2));
+        assertTetrahedralCenter(elements.get(1),
+                                m.getAtom(3),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(7), m.getAtom(2), m.getAtom(3), m.getAtom(4));
+        assertTetrahedralCenter(elements.get(2),
+                                m.getAtom(4),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(4), m.getAtom(3), m.getAtom(6), m.getAtom(5));
+        assertTetrahedralCenter(elements.get(3),
+                                m.getAtom(5),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(11), m.getAtom(4), m.getAtom(5), m.getAtom(0));
+        assertTetrahedralCenter(elements.get(4),
+                                m.getAtom(0),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(0), m.getAtom(5), m.getAtom(10), m.getAtom(1));
+    }
+
+
+    /**
+     * 3 of the neighbours are made horizontal and the whole structure is rotated
+     * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+     */
+    @Test
+    void betaDGlucose_Chair_horizontalNeighboursTiltedNeg() throws Exception {
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        m.addAtom(atom("C", 1, -0.77d, 10.34d));
+        m.addAtom(atom("C", 1, 0.03d, 10.13d));
+        m.addAtom(atom("O", 0, 0.83d, 10.34d));
+        m.addAtom(atom("C", 1, 1.24d, 9.63d));
+        m.addAtom(atom("C", 1, 0.44d, 9.84d));
+        m.addAtom(atom("C", 1, -0.35d, 9.63d));
+        m.addAtom(atom("O", 1, 0.86d, 9.13d));
+        m.addAtom(atom("O", 1, 2.04d, 9.83d));
+        m.addAtom(atom("C", 2, -0.68d, 10.54d));
+        m.addAtom(atom("O", 1, -0.68d, 11.37d));
+        m.addAtom(atom("O", 1, -1.48d, 10.34d));
+        m.addAtom(atom("O", 1, -1.15d, 9.63d));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(5, 0, IBond.Order.SINGLE);
+        m.addBond(4, 6, IBond.Order.SINGLE);
+        m.addBond(3, 7, IBond.Order.SINGLE);
+        m.addBond(1, 8, IBond.Order.SINGLE);
+        m.addBond(8, 9, IBond.Order.SINGLE);
+        m.addBond(0, 10, IBond.Order.SINGLE);
+        m.addBond(5, 11, IBond.Order.SINGLE);
+
+        GeometryUtil.rotate(m, GeometryUtil.get2DCenter(m), Math.toRadians(-40));
+
+        EdgeToBondMap                 bondMap = EdgeToBondMap.withSpaceFor(m);
+        int[][]                       graph   = GraphUtil.toAdjList(m, bondMap);
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
+        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
+                                                                                stereocenters);
+
+
+        List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Chair));
+        assertTetrahedralCenter(elements.get(0),
+                                m.getAtom(1),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(8), m.getAtom(0), m.getAtom(1), m.getAtom(2));
+        assertTetrahedralCenter(elements.get(1),
+                                m.getAtom(3),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(7), m.getAtom(2), m.getAtom(3), m.getAtom(4));
+        assertTetrahedralCenter(elements.get(2),
+                                m.getAtom(4),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(4), m.getAtom(3), m.getAtom(6), m.getAtom(5));
+        assertTetrahedralCenter(elements.get(3),
+                                m.getAtom(5),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(11), m.getAtom(4), m.getAtom(5), m.getAtom(0));
+        assertTetrahedralCenter(elements.get(4),
+                                m.getAtom(0),
+                                ITetrahedralChirality.Stereo.CLOCKWISE,
+                                m.getAtom(0), m.getAtom(5), m.getAtom(10), m.getAtom(1));
+    }
+
+    /**
+     * 3 of the neighbours are made horizontal and the whole structure is rotated
+     * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+     */
+    @Test
+    void betaDGlucose_Chair_horizontalNeighboursTiltedPos() throws Exception {
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        m.addAtom(atom("C", 1, -0.77d, 10.34d));
+        m.addAtom(atom("C", 1, 0.03d, 10.13d));
+        m.addAtom(atom("O", 0, 0.83d, 10.34d));
+        m.addAtom(atom("C", 1, 1.24d, 9.63d));
+        m.addAtom(atom("C", 1, 0.44d, 9.84d));
+        m.addAtom(atom("C", 1, -0.35d, 9.63d));
+        m.addAtom(atom("O", 1, 0.86d, 9.13d));
+        m.addAtom(atom("O", 1, 2.04d, 9.83d));
+        m.addAtom(atom("C", 2, -0.68d, 10.54d));
+        m.addAtom(atom("O", 1, -0.68d, 11.37d));
+        m.addAtom(atom("O", 1, -1.48d, 10.34d));
+        m.addAtom(atom("O", 1, -1.15d, 9.63d));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(5, 0, IBond.Order.SINGLE);
+        m.addBond(4, 6, IBond.Order.SINGLE);
+        m.addBond(3, 7, IBond.Order.SINGLE);
+        m.addBond(1, 8, IBond.Order.SINGLE);
+        m.addBond(8, 9, IBond.Order.SINGLE);
+        m.addBond(0, 10, IBond.Order.SINGLE);
+        m.addBond(5, 11, IBond.Order.SINGLE);
+
+        GeometryUtil.rotate(m, GeometryUtil.get2DCenter(m), Math.toRadians(40));
 
         EdgeToBondMap                 bondMap = EdgeToBondMap.withSpaceFor(m);
         int[][]                       graph   = GraphUtil.toAdjList(m, bondMap);
