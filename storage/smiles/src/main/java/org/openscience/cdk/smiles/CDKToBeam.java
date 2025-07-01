@@ -319,6 +319,9 @@ final class CDKToBeam {
      */
     private static void addGeometricConfiguration(IDoubleBondStereochemistry dbs, int flavour, GraphBuilder gb, Map<IAtom, Integer> indices) {
 
+        if (dbs.getStereoBond().getOrder() != IBond.Order.DOUBLE)
+            return;
+
         IBond db = dbs.getStereoBond();
         IBond[] bs = dbs.getBonds();
 
