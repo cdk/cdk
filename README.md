@@ -38,8 +38,8 @@ You can also download a pre-built library JAR from [releases](https://github.com
 Include the main JAR on the Java classpath when compiling and running your code:
 
 ```bash
-$ javac -cp cdk-2.9.jar MyClass.java
-$ java -cp cdk-2.9.jar:. MyClass
+$ javac -cp cdk-2.11.jar MyClass.java
+$ java -cp cdk-2.11.jar:. MyClass
 ```
 
 If you are using Maven, you can use the **uber** ``cdk-bundle`` to grab 
@@ -49,7 +49,7 @@ everything, note it is much more efficient to use include the modules you need:
 <dependency>
   <artifactId>cdk-bundle</artifactId>
   <groupId>org.openscience.cdk</groupId>
-  <version>2.9</version>
+  <version>2.11</version>
 </dependency>
 ```
 
