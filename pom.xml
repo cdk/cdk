@@ -52,7 +52,7 @@
          ~/.m2/settings.xml -->
     <distributionManagement>
         <snapshotRepository>
-            <id>central-snapshots</id>
+            <id>central</id>
             <url>https://central.sonatype.com/repository/maven-snapshots/</url>
         </snapshotRepository>
         <repository>
