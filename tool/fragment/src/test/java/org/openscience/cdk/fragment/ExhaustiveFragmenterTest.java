@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2010 Rajarshi Guha <rajarshi.guha@gmail.com>
+/* Copyright (C) 2025  Rajarshi Guha <rajarshi.guha@gmail.com>
+ *                     Tom Weiß <tom.weiss@uni-jena.de>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -71,7 +72,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterUnsaturated = new ExhaustiveFragmenter();
         fragmenterUnsaturated.setSaturationSetting(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
         fragmenterRestSaturated = new ExhaustiveFragmenter();
-        fragmenterRestSaturated.setSaturationSetting(ExhaustiveFragmenter.Saturation.REST_SATURATED_FRAGMENTS);
+        fragmenterRestSaturated.setSaturationSetting(ExhaustiveFragmenter.Saturation.R_SATURATED_FRAGMENTS);
         smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
@@ -136,7 +137,12 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterUnsaturated.generateFragments(mol);
         String[] frags = fragmenterUnsaturated.getFragments();
         Assertions.assertNotNull(frags);
-        MatcherAssert.assertThat(Arrays.asList(frags), hasItems("[CH2]c1ccccc1", "[c]1ccccc1"));
+        MatcherAssert.assertThat(Arrays.asList(frags),
+                hasItems(
+                        "[CH2]c1ccccc1",
+                        "[c]1ccccc1"
+                )
+        );
         Assertions.assertNotNull(fragmenterUnsaturated.getFragmentsAsContainers());
         Assertions.assertEquals(2, fragmenterUnsaturated.getFragmentsAsContainers().length);
     }
@@ -182,7 +188,13 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         Assertions.assertNotNull(fragmenterUnsaturated.getFragmentsAsContainers());
         Assertions.assertEquals(26, fragmenterUnsaturated.getFragmentsAsContainers().length);
 
-        MatcherAssert.assertThat(frags, hasItems("[c]1ccccc1", "[CH2]CC1CCC(c2ccccc2)(CC3C=CC=C3)C1", "[CH2]C1CCC([CH2])(c2ccccc2)C1"));
+        MatcherAssert.assertThat(frags,
+                hasItems(
+                        "[c]1ccccc1",
+                        "[CH2]CC1CCC(c2ccccc2)(CC3C=CC=C3)C1",
+                        "[CH2]C1CCC([CH2])(c2ccccc2)C1"
+                )
+        );
     }
 
     // --- Hydrogen-Saturated Fragments Tests ---
@@ -247,7 +259,12 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterSaturated.generateFragments(mol);
         String[] frags = fragmenterSaturated.getFragments();
         Assertions.assertNotNull(frags);
-        org.hamcrest.MatcherAssert.assertThat(Arrays.asList(frags), hasItems("c1ccc(cc1)C", "c1ccccc1"));
+        org.hamcrest.MatcherAssert.assertThat(Arrays.asList(frags),
+                hasItems(
+                        "c1ccc(cc1)C",
+                        "c1ccccc1"
+                )
+        );
         Assertions.assertNotNull(fragmenterSaturated.getFragmentsAsContainers());
         Assertions.assertEquals(2, fragmenterSaturated.getFragmentsAsContainers().length);
     }
@@ -285,7 +302,13 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         Assertions.assertNotNull(fragmenterSaturated.getFragmentsAsContainers());
         Assertions.assertEquals(25, fragmenterSaturated.getFragmentsAsContainers().length);
 
-        MatcherAssert.assertThat(frags, hasItems("c1ccccc1", "c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3", "c1ccc(cc1)C2(C)CCC(C)C2"));
+        MatcherAssert.assertThat(frags,
+                hasItems(
+                        "c1ccccc1",
+                        "c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3",
+                        "c1ccc(cc1)C2(C)CCC(C)C2"
+                )
+        );
     }
 
     // --- R-Group Saturated Fragments Tests ---
@@ -313,7 +336,12 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterRestSaturated.generateFragments(mol);
         String[] frags = fragmenterRestSaturated.getFragments();
         Assertions.assertNotNull(frags);
-        MatcherAssert.assertThat(Arrays.asList(frags), hasItems("*c1ccccc1", "*Cc1ccccc1"));
+        MatcherAssert.assertThat(Arrays.asList(frags),
+                hasItems(
+                        "*c1ccccc1",
+                        "*Cc1ccccc1"
+                )
+        );
         Assertions.assertEquals(2, fragmenterRestSaturated.getFragmentsAsContainers().length);
     }
 
@@ -348,7 +376,13 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         // these fragments only differ in size compared to their respective hydrogen saturated version beacuse the R-Group represented by '*'
         // is also counted as a valid atom in comparison to implicit hydrogens. So these are valid fragments with size 6.
         Assertions.assertEquals(28, fragmenterRestSaturated.getFragmentsAsContainers().length);
-        MatcherAssert.assertThat(frags, hasItems("*c1ccccc1", "*C1CCC(c2ccccc2)(CC3C=CC=C3)C1", "*C1CCC(*)(c2ccccc2)C1"));
+        MatcherAssert.assertThat(frags,
+                hasItems(
+                    "*c1ccccc1",
+                    "*C1CCC(c2ccccc2)(CC3C=CC=C3)C1",
+                    "*C1CCC(*)(c2ccccc2)C1"
+            )
+        );
     }
 
     // --- General Fragmenter Tests ---
@@ -383,7 +417,12 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         String[] frags = localFragmenter.getFragments();
         Assertions.assertNotNull(frags);
         Assertions.assertEquals(2, frags.length);
-        MatcherAssert.assertThat(Arrays.asList(frags), hasItems("C1CCCCC1", "C1CCCC1"));
+        MatcherAssert.assertThat(Arrays.asList(frags),
+                hasItems(
+                        "C1CCCCC1",
+                        "C1CCCC1"
+                )
+        );
     }
 
     /**
@@ -485,13 +524,18 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     void testCustomSmilesGenerator() throws Exception {
         SmilesGenerator customSmilesGen = new SmilesGenerator(SmiFlavor.Unique); // No SmiFlavor.UseAromaticSymbols
         ExhaustiveFragmenter customFragmenter = new ExhaustiveFragmenter(
-                customSmilesGen, 6, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+                customSmilesGen, 6, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS, Integer.SIZE - 1);
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1Cc1ccccc1"); // Diphenylmethane
         customFragmenter.generateFragments(mol);
         String[] frags = customFragmenter.getFragments();
 
         Assertions.assertNotNull(frags);
-        MatcherAssert.assertThat(Arrays.asList(frags), hasItems("C=1C=CC=CC1", "C=1C=CC(=CC1)C"));
+        MatcherAssert.assertThat(Arrays.asList(frags),
+                hasItems(
+                        "C=1C=CC=CC1",
+                        "C=1C=CC(=CC1)C"
+                )
+        );
         Assertions.assertEquals(2, frags.length);
     }
 
@@ -561,38 +605,132 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
 
         ExhaustiveFragmenter localFragmenter;
 
-        localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
-        localFragmenter.setExclusiveMaxTreeDepth(1);
+        localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS, Integer.SIZE - 1);
+        localFragmenter.setInclusiveMaxTreeDepth(1);
         localFragmenter.generateFragments(mol);
         String[] fragsDepth1 = localFragmenter.getFragments();
         Assertions.assertEquals(0, fragsDepth1.length,
-                "Expected 0 fragments when exclusiveMaxTreeDepth is 1 (allows 0 cuts) for 1,4-dibutylbenzene");
+                "Expected 0 fragments when inclusiveMaxTreeDepth is 0 (allows 0 cuts) for 1,4-dibutylbenzene");
 
-        localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
-        localFragmenter.setExclusiveMaxTreeDepth(2);
+        localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS, Integer.SIZE - 1);
+        localFragmenter.setInclusiveMaxTreeDepth(2);
         localFragmenter.generateFragments(mol);
         String[] fragsDepth2 = localFragmenter.getFragments();
         Assertions.assertEquals(4, fragsDepth2.length,
-                "Expected 4 fragments when exclusiveMaxTreeDepth is 2 (allows up to 1 cut)");
+                "Expected 4 fragments when inclusiveMaxTreeDepth is 1 (allows up to 1 cut)");
         MatcherAssert.assertThat(Arrays.asList(fragsDepth2),
-                hasItems("CCCC", "c1ccc(cc1)CCCC"));
+                hasItems(
+                        "CCCC",
+                        "c1ccc(cc1)CCCC"
+                )
+        );
 
-        localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
-        localFragmenter.setExclusiveMaxTreeDepth(3);
+        localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS, Integer.SIZE - 1);
+        localFragmenter.setInclusiveMaxTreeDepth(3);
         localFragmenter.generateFragments(mol);
         String[] fragsDepth3 = localFragmenter.getFragments();
         Assertions.assertEquals(10, fragsDepth3.length,
-                "Expected 10 fragments when exclusiveMaxTreeDepth is 3 (allows up to 2 cuts)");
+                "Expected 10 fragments when inclusiveMaxTreeDepth is 2 (allows up to 2 cuts)");
         MatcherAssert.assertThat(Arrays.asList(fragsDepth3),
-                hasItems("CCCC", "c1ccc(cc1)CCCC", "c1ccccc1"));
+                hasItems(
+                        "CCCC",
+                        "c1ccc(cc1)CCCC",
+                        "c1ccccc1"
+                )
+        );
 
-        localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
-        localFragmenter.setExclusiveMaxTreeDepth(4);
+        localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS, Integer.SIZE - 1);
+        localFragmenter.setInclusiveMaxTreeDepth(4);
         localFragmenter.generateFragments(mol);
         String[] fragsDepth4 = localFragmenter.getFragments();
         Assertions.assertEquals(10, fragsDepth4.length,
-                "Expected 10 fragments when exclusiveMaxTreeDepth is 4 (allows up to 3 cuts), same as max 2 cuts");
+                "Expected 10 fragments when inclusiveMaxTreeDepth is 3 (allows up to 3 cuts), same as max 2 cuts");
         MatcherAssert.assertThat(Arrays.asList(fragsDepth4),
-                hasItems("CCCC", "c1ccc(cc1)CCCC", "c1ccccc1"));
+                hasItems(
+                        "CCCC",
+                        "c1ccc(cc1)CCCC",
+                        "c1ccccc1"
+                )
+        );
+    }
+
+    // --- Complementary Molecule Tests ---
+
+    /**
+     * Tests correct functional group identification on an example molecule with
+     * a disconnected structure.
+     * This was not allowed in a previous version.
+     */
+    @Test
+    void testDisconnectedMolecules() throws Exception {
+        IAtomContainer mol = smilesParser.parseSmiles("C(CN(CC(=O)[O-])CC(=O)[O-])N(CC(=O)[O-])CC(=O)[O-].[Na+].[Na+].[Na+].[Na+]"); //Sodium edetate
+        fragmenterSaturated.generateFragments(mol);
+        String[] frags = fragmenterSaturated.getFragments();
+        MatcherAssert.assertThat(
+                Arrays.asList(frags),
+                hasItems(
+                        "O=C([O-])CNCCNCC(=O)[O-]",
+                        "O=C([O-])CNCC(=O)[O-]",
+                        "O=C([O-])CN(C)CCN(C)C",
+                        "O=C([O-])CNCCNC",
+                        "O=C([O-])CN(CC(=O)[O-])CC"
+                )
+        );
+    }
+
+    /**
+     * Testing a bigger molecule
+     *
+     * @throws Exception if anything goes wrong
+     */
+    @Test
+    void testIndexBigMolecule() throws Exception {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smiPar.parseSmiles("CC1=C(C(=CC=C1)NC2=CC=CC=C2C" +
+                "(=O)NC(CCS(=O)C)C(=O)NC(C)C3=CC=C(C=C3)F)C"); //PubChem CID 118705975
+
+        fragmenterSaturated.generateFragments(mol);
+        String[] frags = fragmenterSaturated.getFragments();
+        Assertions.assertEquals(
+                Arrays.asList(frags),
+                hasItems(
+                        "O=CCNC(=O)c1ccccc1",
+                        "O=C(N)CNC(=O)c1ccccc1N",
+                        "O=C(NC)c1ccccc1N",
+                        "O=C(NCCC)c1ccccc1N",
+                        "O=CCNC(=O)c1ccccc1Nc2cccc(c2C)C",
+                        "O=C(N)CCCS(=O)C",
+                        "O=C(N)C(NC(=O)c1ccccc1)CCS(=O)C"
+                )
+        );
+    }
+
+
+    /**
+     * Testing a bigger molecule
+     *
+     * @throws Exception if anything goes wrong
+     */
+    @Test
+    void testIndexBigMolecule2() throws Exception {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smiPar.parseSmiles("C[C@]12CC[C@](CC1C3=CC(=O)C4[C@]5(CCC(C(C5CC[C@]4([C@@]3(CC2)C)C)(C)C)" +
+                "OC6C(C(C(C(O6)C(=O)N[C@H](CCC(=O)OC)C(=O)OC)O)O)OC7C(C(C(C(O7)C(=O)N[C@H](CCC(=O)OC)C(=O)OC)O)O)O)C)(C)C" +
+                "(=O)N[C@H](CCC(=O)OC)C(=O)OC"); // Pubchem CID 16396833
+        System.out.println(fragmenterSaturated.getSplitableBonds(mol).length);
+        fragmenterSaturated.generateFragments(mol);
+        String[] frags = fragmenterSaturated.getFragments();
+        Assertions.assertEquals(
+                Arrays.asList(frags),
+                hasItems(
+                        "O=CCNC(=O)c1ccccc1",
+                        "O=C(N)CNC(=O)c1ccccc1N",
+                        "O=C(NC)c1ccccc1N",
+                        "O=C(NCCC)c1ccccc1N",
+                        "O=CCNC(=O)c1ccccc1Nc2cccc(c2C)C",
+                        "O=C(N)CCCS(=O)C",
+                        "O=C(N)C(NC(=O)c1ccccc1)CCS(=O)C"
+                )
+        );
     }
 }
