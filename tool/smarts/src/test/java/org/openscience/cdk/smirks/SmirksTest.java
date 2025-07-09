@@ -1539,4 +1539,12 @@ class SmirksTest {
                         "[#6:1]Cl>>[#6:1]OC",
                         "C(=O)(C1=CC=CC=C1)OC");
     }
+
+    /* https://github.com/cdk/cdk/issues/1199 */
+    @Test
+    void testRemoveBocFailing() throws Exception {
+        assertTransform("CC(C)(C)OC(=O)N1CCCCC1",
+                        "[NH0:1]C(OC(C)(C)C)=O>>[NH1:1]",
+                        "N1CCCCC1");
+    }
 }

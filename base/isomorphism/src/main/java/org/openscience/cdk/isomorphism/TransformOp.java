@@ -401,19 +401,16 @@ public final class TransformOp implements Comparable<TransformOp> {
         int thatMinIdx = that.getMinAtomIdx();
         int thatMaxIdx = that.getMaxAtomIdx();
 
-        // FIXME: better ordering needed, but priority=0 is creation
-        // and we want to ensure all the atoms are created before a bond
-        // is made
         if (getPriority() == 0) {
             cmp = Integer.compare(thisMaxIdx, thatMaxIdx);
             if (cmp != 0)
                 return cmp;
+        } else {
+            cmp = Integer.compare(thisMinIdx, thatMinIdx);
+            if (cmp != 0)
+                return cmp;
         }
 
-        if (thisMaxIdx < thatMinIdx)
-            return -1;
-        if (thatMaxIdx < thisMinIdx)
-            return +1;
         return this.type.compareTo(that.type);
     }
 
