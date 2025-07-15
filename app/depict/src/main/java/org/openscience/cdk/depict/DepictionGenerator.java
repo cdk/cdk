@@ -758,7 +758,7 @@ public final class DepictionGenerator {
             grp.add(gen.generate(molecule, model));
 
         // cleanup
-        if (annotateAtomNum || annotateAtomMap) {
+        if (annotateAtomNum || annotateAtomMap || annotateAtomVal) {
             for (IAtom atom : molecule.atoms()) {
                 atom.removeProperty(StandardGenerator.ANNOTATION_LABEL);
             }
