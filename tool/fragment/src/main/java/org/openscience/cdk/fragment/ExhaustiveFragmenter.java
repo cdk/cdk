@@ -278,6 +278,9 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * @throws CDKException if an error occurs during hydrogen addition or atom type perception.
      */
     private void run(IAtomContainer atomContainer) throws CDKException {
+        if (atomContainer == null) {
+            throw new NullPointerException("No molecule provided");
+        }
 
         // Return early if the molecule has fewer than 3 bonds (no meaningful splits possible)
         if (atomContainer.getBondCount() < 3 || atomContainer.getAtomCount() < this.minFragSize || atomContainer.isEmpty()) {

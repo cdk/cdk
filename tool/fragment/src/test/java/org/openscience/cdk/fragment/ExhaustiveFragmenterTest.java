@@ -65,7 +65,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
 
     /**
      * Tests that a simple linear alkane (propane) with no splittable bonds
-     * yields no fragments when using the unsaturated setting.
+     * yields no fragments when using the unsaturated setting. This can not return any fragment even with
+     * a smaller minimal fragment size this doesn't result in any fragment as all bonds are terminal bonds.
      */
     @Test
     void testEF1Unsaturated() throws Exception {
@@ -77,7 +78,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
 
     /**
      * Tests that a simple cycloalkane (cyclopentane) with no non-ring, non-terminal bonds
-     * yields no fragments when using the unsaturated setting.
+     * yields no fragments when using the unsaturated setting. Because this is just one big
+     * ring there will be no resulting fragments whatsoever.
      */
     @Test
     void testEF2Unsaturated() throws Exception {
