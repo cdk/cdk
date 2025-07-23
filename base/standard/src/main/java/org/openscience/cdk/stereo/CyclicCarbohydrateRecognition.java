@@ -68,8 +68,7 @@ final class CyclicCarbohydrateRecognition {
      */
     public static final double CARDINALITY_THRESHOLD = Math.toRadians(5);
     
-    public static final double QUART_CARDINALITY_THRESHOLD = CARDINALITY_THRESHOLD / 4;
-    
+
     private final IAtomContainer container;
     private final int[][]        graph;
     private final EdgeToBondMap  bonds;
@@ -126,16 +125,17 @@ final class CyclicCarbohydrateRecognition {
             if (projection.projection == Projection.Haworth && !checkHaworthAlignment(points))
                 continue;
             
-            final Point2d horizontalXy = horizontalOffset(points, turns, projection.projection);
+            final double angle = horizontalOffset(points, turns, projection.projection);
 
-            // near vertical, should also flag as potentially ambiguous 
-            if (1 - Math.abs(horizontalXy.y) < QUART_CARDINALITY_THRESHOLD)
+            // near vertical, should also flag as potentially ambiguous
+            if (Math.abs(Math.abs(angle) - (Math.PI/2)) <= 0.05) {
                 continue;
+            }
                 
             int[] above = cycle.clone();
             int[] below = cycle.clone();
 
-            if (!assignSubstituents(cycle, above, below, projection, horizontalXy))
+            if (!assignSubstituents(cycle, above, below, projection, angle))
                 continue;
 
             elements.addAll(newTetrahedralCenters(cycle, above, below, projection));
@@ -180,14 +180,14 @@ final class CyclicCarbohydrateRecognition {
      * @param below        vertices that will be below the cycle (filled by
      *                     method)
      * @param projection   the type of projection
-     * @param horizontalXy offset from the horizontal axis                  
+     * @param angle        offset from the horizontal axis
      * @return assignment okay (true), not okay (false)
      */
     private boolean assignSubstituents(int[] cycle,
                                        int[] above,
                                        int[] below,
                                        WoundProjection projection,
-                                       Point2d horizontalXy) {
+                                       double angle) {
 
         boolean haworth = projection.projection == Projection.Haworth;
 
@@ -209,10 +209,23 @@ final class CyclicCarbohydrateRecognition {
 
             Point2d centerXy = container.getAtom(curr).getPoint2d();
 
+            // the xy coordinate of the other ring atoms, we use
+            // there for chairs with
+            Point2d ringXy = new Point2d(container.getAtom(prev).getPoint2d());
+            ringXy.add(container.getAtom(next).getPoint2d());
+            ringXy.x /= 2;
+            ringXy.y /= 2;
+
             // determine the direction of each substituent 
             for (final int w : ws) {
                 Point2d otherXy = container.getAtom(w).getPoint2d();
-                Direction direction = direction(centerXy, otherXy, horizontalXy, haworth);
+
+
+                Direction direction = direction(centerXy,
+                                                otherXy,
+                                                angle,
+                                                ringXy,
+                                                haworth);
 
                 switch (direction) {
                     case Up:
@@ -321,37 +334,57 @@ final class CyclicCarbohydrateRecognition {
      *
      * @param centerXy      location of center
      * @param substituentXy location fo substituent
-     * @param horizontalXy  horizontal offset, x > 0                      
+     * @param angle         rotated angle
      * @param haworth       is Haworth project (substituent must be directly up
      *                      or down)
      * @return the direction (up, down, other)
      */
-    private static Direction direction(Point2d centerXy, Point2d substituentXy, Point2d horizontalXy, boolean haworth) {
+    private static Direction direction(Point2d centerXy,
+                                       Point2d substituentXy,
+                                       double angle,
+                                       Point2d ringXy,
+                                       boolean haworth) {
         double deltaX = substituentXy.x - centerXy.x;
         double deltaY = substituentXy.y - centerXy.y;
 
-        // normalise vector length so threshold is independent of length 
+        // normalise vector length so threshold is independent of length
         double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         deltaX /= mag;
         deltaY /= mag;
 
-        // account for an offset horizontal reference and re-normalise,
-        // we presume no vertical chairs and use the deltaX +ve or -ve to
-        // determine direction, the horizontal offset should be deltaX > 0.
-        if (deltaX > 0) {
-            deltaX -= horizontalXy.x;
-            deltaY -= horizontalXy.y;
-        } else {
-            deltaX += horizontalXy.x;
-            deltaY += horizontalXy.y;
+        if (Math.abs(angle) > 0.05) {
+            double cs = Math.cos(-angle);
+            double sn = Math.sin(-angle);
+            double newX = deltaX * cs - deltaY * sn;
+            double newY = deltaX * sn + deltaY * cs;
+            deltaX = newX;
+            deltaY = newY;
         }
-        mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        deltaX /= mag;
-        deltaY /= mag;
 
         if (haworth && Math.abs(deltaX) > CARDINALITY_THRESHOLD)
             return Direction.Other;
-        
+
+        // if the bond is horizontal in a chair (or boat) then we use the
+        // location of the other ring neighbours to work if we are up/down
+        // relative to those
+        if (!haworth && Math.abs(deltaY) < 0.075) {
+            double ringDeltaX = ringXy.x - centerXy.x;
+            double ringDeltaY = ringXy.y - centerXy.y;
+
+            if (Math.abs(angle) > 0.05) {
+                double cs = Math.cos(-angle);
+                double sn = Math.sin(-angle);
+                ringDeltaY = ringDeltaX * sn + ringDeltaY * cs;
+            }
+
+            if (ringDeltaY < 0.01)
+                return Direction.Down;
+            else if (ringDeltaY > 0.01)
+                return Direction.Up;
+            else
+                return Direction.Other;
+        }
+
         return deltaY > 0 ? Direction.Up : Direction.Down;
     }
 
@@ -386,13 +419,13 @@ final class CyclicCarbohydrateRecognition {
      * @param projection the type of projection
      * @return the horizontal offset
      */
-    private Point2d horizontalOffset(Point2d[] points, Turn[] turns, Projection projection) {
+    private double horizontalOffset(Point2d[] points, Turn[] turns, Projection projection) {
         
         // Haworth must currently be drawn vertically, I have seen them drawn
         // slanted but it's difficult to determine which way the projection
         // is relative
         if (projection != Projection.Chair)
-            return new Point2d(0, 0);        
+            return 0;
                               
         // the atoms either side of a central atom are our reference
         int offset = chairCenterOffset(turns);
@@ -414,8 +447,7 @@ final class CyclicCarbohydrateRecognition {
             deltaY = -deltaY;
         }
 
-        // horizontal = <1,0> so the offset if the difference from this 
-        return new Point2d(1 - deltaX, deltaY);
+        return Math.atan2(deltaY, deltaX);
     }
 
     /**

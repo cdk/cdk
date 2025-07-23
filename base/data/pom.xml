@@ -74,7 +74,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.22.0</version>
+                <version>3.27.0</version>
                 <configuration>
                     <rulesets>
                         <ruleset>/pmd/custom-data.xml</ruleset>
@@ -84,7 +84,7 @@
                   <dependency>
                       <groupId>org.openscience.cdk</groupId>
                       <artifactId>cdk-build-utils</artifactId>
-                      <version>1.0.1</version>
+                      <version>1.0.2.9-jdk11</version>
                   </dependency>
                 </dependencies>
             </plugin>

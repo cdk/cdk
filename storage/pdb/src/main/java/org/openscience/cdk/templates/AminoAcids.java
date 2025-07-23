@@ -64,6 +64,10 @@ public class AminoAcids {
 
         if (aminoAcids == null) {
             createAAs();
+            // if still null, init to empty array there would have been
+            // a log message within createAAs()
+            if (aminoAcids == null)
+                aminoAcids = new AminoAcid[0];
         }
 
         int[][] info = new int[153][4];

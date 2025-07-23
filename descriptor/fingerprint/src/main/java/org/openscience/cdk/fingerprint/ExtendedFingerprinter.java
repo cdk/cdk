@@ -236,4 +236,16 @@ public class ExtendedFingerprinter implements IFingerprinter {
     public void setHashPseudoAtoms(boolean hashPseudoAtoms) {
         this.fingerprinter.setHashPseudoAtoms(hashPseudoAtoms);
     }
+
+    /**
+     * Include explicit hydrogen atoms in the fingerprint. This means you
+     * get a different fingerprint if hydrogens are implicit/explicit.
+     * Generally for substructure screening, which path based fingerprints are
+     * most useful, this is not wanted.
+     *
+     * @param hashExplHash the setting (false by default)
+     */
+    public void setHashExplicitHydrogens(boolean hashExplHash) {
+        this.fingerprinter.setHashExplicitHydrogens(hashExplHash);
+    }
 }
