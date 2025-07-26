@@ -119,23 +119,24 @@ class ProblemMarkerTest {
         }
 
         // the rest of the methods are needed for this test
+        final static String NOTNEEDED = "Not needed for the test";
         @Override public IChemObjectBuilder getBuilder() { return null; }
-        @Override public void addListener(IChemObjectListener col) {}
+        @Override public void addListener(IChemObjectListener col) { throw new UnsupportedOperationException(NOTNEEDED); }
         @Override public int getListenerCount() { return 0; }
-        @Override public void removeListener(IChemObjectListener col) {}
-        @Override public void setNotification(boolean bool) {}
+        @Override public void removeListener(IChemObjectListener col) { throw new UnsupportedOperationException(NOTNEEDED); }
+        @Override public void setNotification(boolean bool) { throw new UnsupportedOperationException(NOTNEEDED); }
         @Override public boolean getNotification() { return false; }
-        @Override public void notifyChanged() {}
-        @Override public void notifyChanged(IChemObjectChangeEvent evt) {}
+        @Override public void notifyChanged() { throw new UnsupportedOperationException(NOTNEEDED); }
+        @Override public void notifyChanged(IChemObjectChangeEvent evt) { throw new UnsupportedOperationException(NOTNEEDED); }
         @Override public String getID() { return null; }
-        @Override public void setID(String identifier) {}
-        @Override public void setFlag(int mask, boolean value) {}
+        @Override public void setID(String identifier) { throw new UnsupportedOperationException(NOTNEEDED); }
+        @Override public void setFlag(int mask, boolean value) { throw new UnsupportedOperationException(NOTNEEDED); }
         @Override public boolean getFlag(int mask) { return false; }
         @Override public void setFlags(boolean[] newFlags) {}
         @Override public boolean[] getFlags() { return null; }
         @Override public Number getFlagValue() { return null; }
-        @Override public void set(int flags) {}
-        @Override public void clear(int flags) {}
+        @Override public void set(int flags) { throw new UnsupportedOperationException(NOTNEEDED); }
+        @Override public void clear(int flags) { throw new UnsupportedOperationException(NOTNEEDED); }
         @Override public boolean is(int flags) { return false; }
         @Override public int flags() { return 0; }
         public ChemObject clone() { return this; }
