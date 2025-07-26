@@ -1,4 +1,4 @@
-/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2007,2025  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,25 +20,33 @@ package org.openscience.cdk.graph.rebond;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class BsptTest extends CDKTestCase {
+class PointTest {
 
-    BsptTest() {
+    PointTest() {
         super();
     }
 
     @Test
-    void testToString() {
-        Bspt bspt = new Bspt(3);
-        Assertions.assertNotNull(bspt.toString());
+    void testPoint_double_double_double() {
+        Point point = new Point(0.1, 0.2, 0.3);
+        Assertions.assertNotNull(point);
     }
 
     @Test
-    void testBspt() {
-        Bspt bspt = new Bspt(3);
-        Assertions.assertNotNull(bspt);
+    void testGetDimValue_int() {
+        Point point = new Point(0.1, 0.2, 0.3);
+        Assertions.assertEquals(0.1, point.getDimValue(0), 0.0001);
+        Assertions.assertEquals(0.2, point.getDimValue(1), 0.0001);
+        Assertions.assertEquals(0.3, point.getDimValue(2), 0.0001);
     }
+
+    @Test
+    void testToString() {
+        Point point = new Point(0.1, 0.2, 0.3);
+        Assertions.assertEquals("<0.1,0.2,0.3>", point.toString());
+    }
+
 }
