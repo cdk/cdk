@@ -1,4 +1,4 @@
-/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2007,2025  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -18,15 +18,19 @@
  */
 package org.openscience.cdk.validate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  */
-class ProblemMarkerTest extends CDKTestCase {
+class ProblemMarkerTest {
 
     ProblemMarkerTest() {
         super();
@@ -79,6 +83,63 @@ class ProblemMarkerTest extends CDKTestCase {
         Assertions.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
         ProblemMarker.markWithWarning(object);
         Assertions.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+    }
+
+    private class ChemObject implements IChemObject {
+
+        Map<Object,Object> properties = new HashMap<>();
+
+        @Override
+        public void setProperty(Object description, Object property) {
+            properties.put(description, property);
+        }
+
+        @Override
+        public void removeProperty(Object description) {
+            if (properties != null) properties.remove(description);
+        }
+
+        @Override
+        public <T> T getProperty(Object description) { return (T) properties.get(description); }
+
+        @Override
+        public <T> T getProperty(Object description, Class<T> c) { return (T) properties.get(description); }
+
+        @Override
+        public Map<Object, Object> getProperties() { return properties; }
+
+        @Override
+        public void setProperties(Map<Object, Object> properties) {
+            this.properties = properties;
+        }
+
+        @Override
+        public void addProperties(Map<Object, Object> properties) {
+            properties.putAll(properties);
+        }
+
+        // the rest of the methods are needed for this test
+        @Override public IChemObjectBuilder getBuilder() { return null; }
+        @Override public void addListener(IChemObjectListener col) {}
+        @Override public int getListenerCount() { return 0; }
+        @Override public void removeListener(IChemObjectListener col) {}
+        @Override public void setNotification(boolean bool) {}
+        @Override public boolean getNotification() { return false; }
+        @Override public void notifyChanged() {}
+        @Override public void notifyChanged(IChemObjectChangeEvent evt) {}
+        @Override public String getID() { return null; }
+        @Override public void setID(String identifier) {}
+        @Override public void setFlag(int mask, boolean value) {}
+        @Override public boolean getFlag(int mask) { return false; }
+        @Override public void setFlags(boolean[] newFlags) {}
+        @Override public boolean[] getFlags() { return null; }
+        @Override public Number getFlagValue() { return null; }
+        @Override public void set(int flags) {}
+        @Override public void clear(int flags) {}
+        @Override public boolean is(int flags) { return false; }
+        @Override public int flags() { return 0; }
+        public ChemObject clone() { return this; }
+
     }
 
 }
