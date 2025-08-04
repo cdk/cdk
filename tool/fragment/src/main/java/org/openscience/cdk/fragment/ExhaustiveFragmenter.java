@@ -23,14 +23,9 @@
  */
 package org.openscience.cdk.fragment;
 
-import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.ringsearch.RingSearch;
@@ -38,8 +33,6 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -50,11 +43,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 
 /**
  * Performs exhaustive fragmentation of molecules by breaking single non-ring, non-terminal bonds in all
- * combinations.
+ * combinations. If it is not possible to generate fragments an empty list is returned.
  * <p>
  * Non-terminal meaning bonds connected to more than one single heavy atom (non-terminal bonds).
  * By default:
