@@ -46,7 +46,7 @@ import java.util.Map;
  * @see <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
  *      and Implicit Hydrogens: taking liberties with valence</a>
  */
-final class MDLValence {
+public final class MDLValence {
 
     private MDLValence() {}
 
@@ -56,7 +56,7 @@ final class MDLValence {
      * @param container an atom container loaded from an MDL format
      * @return the container (for convenience)
      */
-    static IAtomContainer apply(IAtomContainer container) {
+    public static IAtomContainer apply(IAtomContainer container) {
 
         int n = container.getAtomCount();
 
@@ -121,7 +121,7 @@ final class MDLValence {
      * @see <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
      *      and Implicit Hydrogens taking liberties with valence</a>
      */
-    static int implicitValence(int elem, int q, int val) {
+    public static int implicitValence(int elem, int q, int val) {
         switch (elem) {
             case 1: // H
             case 3: // Li

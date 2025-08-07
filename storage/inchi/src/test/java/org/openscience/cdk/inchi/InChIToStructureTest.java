@@ -136,8 +136,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void testGetAtomContainer_IChemObjectBuilder() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         // test if the created IAtomContainer is done with the Silent module...
         // OK, this is not typical use, but maybe the above generate method should be private
@@ -146,8 +145,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void atomicOxygen() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/O", DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        InChIToStructure parser = new InChIToStructure("InChI=1S/O", SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
         org.hamcrest.MatcherAssert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
@@ -156,8 +154,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void heavyOxygenWater() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/H2O/h1H2/i1+2", DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        InChIToStructure parser = new InChIToStructure("InChI=1S/H2O/h1H2/i1+2", SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         org.hamcrest.MatcherAssert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));        org.hamcrest.MatcherAssert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
@@ -168,8 +165,7 @@ class InChIToStructureTest extends CDKTestCase {
     @Test
     void e_bute_2_ene() throws Exception {
         InChIToStructure parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+",
-                DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+                SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
@@ -183,7 +179,6 @@ class InChIToStructureTest extends CDKTestCase {
     void inchiRadical() throws Exception {
         InChIToStructure parser = new InChIToStructure("InChI=1S/C2H5/c1-2/h1H2,2H3",
                                                        SilentChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = parser.getAtomContainer();
         StringWriter sw = new StringWriter();
         try (MDLV2000Writer wtr = new MDLV2000Writer(sw)) {
@@ -195,8 +190,7 @@ class InChIToStructureTest extends CDKTestCase {
     @Test
     void z_bute_2_ene() throws Exception {
         InChIToStructure parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-",
-                DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+                SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
