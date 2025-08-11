@@ -10,9 +10,16 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This class generates an {@link IAtomContainer} from an InChI AuxInfo (auxiliary information) string.
  *
- * <p>It acts as a wrapper around the JNI-InChI library functions,
+ * <p>
+ * It acts as a wrapper around the JNI-InChI library functions,
  * parsing the AuxInfo string to regenerate the molecular structure,
  * including optional handling of implicit hydrogen suppression and stereo differences.
+ * </p>
+ *
+ * <p>
+ * It should be noted that issues such as the potential absence of hydrogen atoms
+ * may arise during the process of reconversion within the InChI API.
+ * It is important to note that the result should be checked.
  * </p>
  *
  * <p>
@@ -20,6 +27,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * The resulting IAtomContainer will have the same 2D or 3D coordinates as given in the
  * InChI AuxInfo string. If there are no coordinates given they are set to 0.0,
  * if only 2D coordinates are given the z-coordinate is 0.0.
+ * In some cases are no implicit hydrogens returned by the InChI API. To set hydrogens
+ * the {@link org.openscience.cdk.atomtype.CDKAtomTypeMatcher} is intended.
  * </p>
  *
  * <br>
@@ -42,9 +51,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * }</pre>
  *
  * @author Felix Bänsch
- *  @see JnaInchi#getInchiInputFromAuxInfo(String, boolean, boolean)
- *  @see InChIOutputToStructure
- *  @see IAtomContainer
+ * @see JnaInchi#getInchiInputFromAuxInfo(String, boolean, boolean)
+ * @see InChIOutputToStructure
+ * @see IAtomContainer
  */
 public class AuxInfoToStructure {
 
@@ -61,29 +70,9 @@ public class AuxInfoToStructure {
    */
   protected AuxInfoToStructure(String auxInfo, IChemObjectBuilder builder)
           throws CDKException {
-    if (auxInfo == null)
-      throw new IllegalArgumentException("Null AuxInfo string provided");
-    this.output = JnaInchi.getInchiInputFromAuxInfo(auxInfo, false, false);
-    this.molecule = InChIOutputToStructure.generateAtomContainerFromAuxInfo(this.output, builder, false);
+    this(auxInfo, builder, false);
   }
 
-  /**
-   * Constructor. Generates IAtomContainer from InChI AuxInfo with
-   * optional suppression of implicit hydrogen atoms.
-   *
-   * @param auxInfo  the InChI AuxInfo string (must not be {@code null})
-   * @param builder  the {@link IChemObjectBuilder} to create {@link IAtomContainer}
-   * @param doNotAddH if {@code true}, implicit hydrogen atoms will not be added
-   * @throws CDKException if parsing the AuxInfo fails
-   * @throws IllegalArgumentException if {@code auxInfo} is {@code null}
-   */
-  protected AuxInfoToStructure(String auxInfo, IChemObjectBuilder builder, boolean doNotAddH)
-          throws CDKException {
-    if (auxInfo == null)
-      throw new IllegalArgumentException("Null AuxInfo string provided");
-    this.output = JnaInchi.getInchiInputFromAuxInfo(auxInfo, doNotAddH, false);
-    this.molecule = InChIOutputToStructure.generateAtomContainerFromAuxInfo(this.output, builder, doNotAddH);
-  }
 
   /**
    * Constructor. Generates IAtomContainer from InChI AuxInfo with
@@ -92,17 +81,16 @@ public class AuxInfoToStructure {
    *
    * @param auxInfo  the InChI AuxInfo string (must not be {@code null})
    * @param builder  the {@link IChemObjectBuilder} to create {@link IAtomContainer}
-   * @param doNotAddH if {@code true}, implicit hydrogen atoms will not be added
    * @param diffUnkUndfStereo if {@code true}, differentiates unknown and undefined stereo
    * @throws CDKException if parsing the AuxInfo fails
    * @throws IllegalArgumentException if {@code auxInfo} is {@code null}
    */
-  protected AuxInfoToStructure(String auxInfo, IChemObjectBuilder builder, boolean doNotAddH, boolean diffUnkUndfStereo)
+  protected AuxInfoToStructure(String auxInfo, IChemObjectBuilder builder, boolean diffUnkUndfStereo)
           throws CDKException {
     if (auxInfo == null)
       throw new IllegalArgumentException("Null AuxInfo string provided");
-    this.output = JnaInchi.getInchiInputFromAuxInfo(auxInfo, doNotAddH, diffUnkUndfStereo);
-    this.molecule = InChIOutputToStructure.generateAtomContainerFromAuxInfo(this.output, builder, doNotAddH);
+    this.output = JnaInchi.getInchiInputFromAuxInfo(auxInfo, false, diffUnkUndfStereo);
+    this.molecule = InChIOutputToStructure.generateAtomContainerFromAuxInfo(this.output, builder);
   }
 
   /**

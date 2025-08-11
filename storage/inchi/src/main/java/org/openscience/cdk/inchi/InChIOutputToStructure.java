@@ -4,7 +4,6 @@ import io.github.dan2097.jnainchi.*;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.MDLValence;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
@@ -68,12 +67,9 @@ final class InChIOutputToStructure {
    * @return IAtomContainer
    * @throws CDKException
    */
-  static IAtomContainer generateAtomContainerFromAuxInfo(InchiInputFromAuxinfoOutput output, IChemObjectBuilder builder, boolean doNotAddH)
+  static IAtomContainer generateAtomContainerFromAuxInfo(InchiInputFromAuxinfoOutput output, IChemObjectBuilder builder)
           throws CDKException {
-    IAtomContainer mol = generateAtomContainerFromInChIInput(output.getInchiInput(), builder);
-    if (doNotAddH)
-      return mol;
-    return MDLValence.apply(mol);
+    return generateAtomContainerFromInChIInput(output.getInchiInput(), builder);
   }
 
   /**
@@ -109,7 +105,10 @@ final class InChIOutputToStructure {
       // InChI does not have unset properties so we set charge,
       // hydrogen count (implicit) and isotopic mass
       cAt.setFormalCharge(iAt.getCharge());
-      cAt.setImplicitHydrogenCount(iAt.getImplicitHydrogen());
+      if (iAt.getImplicitHydrogen() == -1)
+        cAt.setImplicitHydrogenCount(null);
+      else
+        cAt.setImplicitHydrogenCount(iAt.getImplicitHydrogen());
       int isotopicMass = iAt.getIsotopicMass();
 
       if (isotopicMass != 0) {
