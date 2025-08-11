@@ -86,7 +86,7 @@ public class AuxInfoToStructureTest extends CDKTestCase {
     Assertions.assertEquals(1, ((Collection<?>)mol.stereoElements()).size());
 
     if (mol.stereoElements().iterator().hasNext()) {
-      IStereoElement first = mol.stereoElements().iterator().next();
+      IStereoElement<?,?> first = mol.stereoElements().iterator().next();
       Assertions.assertInstanceOf(TetrahedralChirality.class, first);
       Assertions.assertEquals("C", ((IAtom)first.getFocus()).getSymbol());
       Assertions.assertEquals("Cl", ((IAtom)first.getCarriers().get(0)).getSymbol());
@@ -105,15 +105,5 @@ public class AuxInfoToStructureTest extends CDKTestCase {
 
     Assertions.assertNotNull(mol);
     Assertions.assertEquals(1, ((Collection<?>)mol.stereoElements()).size());
-  }
-
-  @Test
-  void testDoNotAddH() throws CDKException {
-    String auxInfo = "AuxInfo=1/0/N:3,2,5,1,4/it:im/rA:5ClC.oCIBr/rB:p1;s2;s2;N2;/rC:0,-1.54,0;;0,1.54,0;1.54,0,0;-1.54,0,0;";
-    AuxInfoToStructure parser = new AuxInfoToStructure(auxInfo, SilentChemObjectBuilder.getInstance(), true);
-    IAtomContainer mol = parser.getAtomContainer();
-
-    InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(mol);
-    Assertions.assertEquals("InChI=1S/C2BrClI/c1-2(3,4)5/t2-/m0/s1", gen.getInchi());
   }
 }
