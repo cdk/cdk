@@ -1,3 +1,21 @@
+/* Copyright (C) 2006-2007  Sam Adams <sea36@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.inchi;
 
 import io.github.dan2097.jnainchi.*;
@@ -15,6 +33,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class reconstructs an {@link IAtomContainer} from the output of the JNI-InChI library.
+ * Either{@link InchiInputFromInchiOutput} or {@link InchiInputFromAuxinfoOutput} are
+ * used for reconstruction.
+ * It places calls to a JNI wrapper for the InChI C library.
+ *
+ * <p>
+ * This is a low-level conversion utility with no public constructor; all functionality is exposed
+ * via static methods. It is designed for internal use by InChI-to-structure workflows, rather
+ * than as a general-purpose InChI API.
+ * </p>
+ *
+ * <p>
+ * The InChI API imposes some limitations:
+ *  <ul>
+ *    <li>Coordinates are only set if present in AuxInfo, InChI does not provide coordinates (default 0.0).</li>
+ *    <li>Double bond and allene stereochemistry are not currently recorded.</li>
+ *    <li>In some cases are no implicit hydrogens returned by the InChI API.</li>
+ *  </ul>
+ * </p>
+ *
+ * @author Sam Adams, Felix Bänsch
+ */
 final class InChIOutputToStructure {
 
   // magic number - indicates isotope mass is relative
