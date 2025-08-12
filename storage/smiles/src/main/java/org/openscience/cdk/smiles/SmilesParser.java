@@ -392,13 +392,16 @@ public final class SmilesParser {
 
                 final Map<IAtom, IAtomContainer> atomToMol = new HashMap<>(2*mol.getAtomCount());
                 final List<IAtom> atoms = new ArrayList<>(mol.getAtomCount());
+                final List<IBond> bonds = new ArrayList<>(mol.getBondCount());
 
                 for (IAtom atom : mol.atoms()) {
                     atoms.add(atom);
                     atomToMol.put(atom, mol);
                 }
+                for (IBond bond : mol.bonds())
+                    bonds.add(bond);
 
-                assignCxSmilesInfo(mol.getBuilder(), mol, atoms, atomToMol, cxstate);
+                assignCxSmilesInfo(mol.getBuilder(), mol, atoms, bonds, atomToMol, cxstate);
             }
         }
     }
@@ -420,6 +423,7 @@ public final class SmilesParser {
 
                 final Map<IAtom, IAtomContainer> atomToMol = new HashMap<>(100);
                 final List<IAtom> atoms = new ArrayList<>();
+                final List<IBond> bonds = new ArrayList<>();
 
                 // collect atom offsets before handling fragment groups
                 Set<IAtomContainer> uniqueMolecules = new HashSet<>();
@@ -428,6 +432,8 @@ public final class SmilesParser {
                         continue;
                     for (IAtom atom : mol.atoms())
                         atoms.add(atom);
+                    for (IBond bond : mol.bonds())
+                        bonds.add(bond);
                 }
 
                 handleFragmentGrouping(rxns, cxstate);
@@ -437,7 +443,7 @@ public final class SmilesParser {
                     for (IAtom atom : mol.atoms())
                         atomToMol.put(atom, mol);
 
-                assignCxSmilesInfo(rxns.getBuilder(), rxns, atoms, atomToMol, cxstate);
+                assignCxSmilesInfo(rxns.getBuilder(), rxns, atoms, bonds, atomToMol, cxstate);
             }
 
             String arrowType = rxns.getProperty(CDKConstants.REACTION_ARROW);
@@ -578,6 +584,7 @@ public final class SmilesParser {
     private void assignCxSmilesInfo(IChemObjectBuilder bldr,
                                     IChemObject chemObj,
                                     List<IAtom> atoms,
+                                    List<IBond> bonds,
                                     Map<IAtom, IAtomContainer> atomToMol,
                                     CxSmilesState cxstate) throws InvalidSmilesException {
 
@@ -668,6 +675,26 @@ public final class SmilesParser {
             }
         }
 
+        if (cxstate.bondDisplay != null) {
+            for (Map.Entry<Map.Entry<Integer,Integer>, IBond.Display> e : cxstate.bondDisplay) {
+                Integer atmIdx = e.getKey().getKey();
+                Integer bndIdx = e.getKey().getValue();
+                IBond.Display style = e.getValue();
+                IAtom atom = atmIdx < atoms.size() ? atoms.get(atmIdx) : null;
+                IBond bond = bndIdx < bonds.size() ? bonds.get(bndIdx) : null;
+                if (bond.getBegin().equals(atom)) {
+                    bond.setDisplay(style);
+                } else if (bond.getEnd().equals(atom)) {
+                    if (style == IBond.Display.WedgeBegin)
+                        bond.setDisplay(IBond.Display.WedgeEnd);
+                    else if (style == IBond.Display.WedgedHashBegin)
+                        bond.setDisplay(IBond.Display.WedgedHashEnd);
+                    else
+                        bond.setDisplay(style);
+                }
+            }
+        }
+
         Map<IAtomContainer, List<Sgroup>> sgroupMap = new HashMap<>();
         Map<CxSmilesState.CxSgroup, Sgroup> sgroupRemap = new HashMap<>();
 
@@ -678,11 +705,11 @@ public final class SmilesParser {
                 sgroup.setType(SgroupType.ExtMulticenter);
                 IAtom beg = atoms.get(e.getKey());
                 IAtomContainer mol = atomToMol.get(beg);
-                List<IBond> bonds = mol.getConnectedBondsList(beg);
-                if (bonds.isEmpty())
+                List<IBond> connectedBonds = mol.getConnectedBondsList(beg);
+                if (connectedBonds.isEmpty())
                     continue; // possibly okay
                 sgroup.addAtom(beg);
-                sgroup.addBond(bonds.get(0));
+                sgroup.addBond(connectedBonds.get(0));
                 for (Integer endpt : e.getValue())
                     sgroup.addAtom(atoms.get(endpt));
                 sgroupMap.computeIfAbsent(mol, k -> new ArrayList<>())
@@ -697,10 +724,10 @@ public final class SmilesParser {
                 sgroup.setType(SgroupType.ExtAttachOrdering);
                 IAtom beg = atoms.get(e.getKey());
                 IAtomContainer mol = atomToMol.get(beg);
-                List<IBond> bonds = mol.getConnectedBondsList(beg);
-                if (bonds.isEmpty())
+                List<IBond> connectedBonds = mol.getConnectedBondsList(beg);
+                if (connectedBonds.isEmpty())
                     throw new InvalidSmilesException("CXSMILES LO: no bonds to order");
-                if (bonds.size() != e.getValue().size())
+                if (connectedBonds.size() != e.getValue().size())
                     throw new InvalidSmilesException("CXSMILES LO: bond count and ordering count was different");
                 sgroup.addAtom(beg);
                 for (Integer endpt : e.getValue()) {
