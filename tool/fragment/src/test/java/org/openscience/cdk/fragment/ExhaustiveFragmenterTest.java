@@ -33,6 +33,9 @@ import org.openscience.cdk.test.CDKTestCase;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Test exhaustive fragmenter.
@@ -47,7 +50,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     private static ExhaustiveFragmenter fragmenterSaturated;
     private static ExhaustiveFragmenter fragmenterUnsaturated;
     private static ExhaustiveFragmenter fragmenterRestSaturated;
-    private static SmilesParser         smilesParser;
+    private static SmilesParser smilesParser;
 
     @BeforeAll
     static void setup() {
@@ -95,7 +98,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
         fragmenterUnsaturated.generateFragments(mol);
         String[] frags = fragmenterUnsaturated.getFragments();
-        Assertions.assertArrayEquals(frags, new String[]{"[CH]1CCCCC1"});
+        Assertions.assertArrayEquals(new String[]{"[CH]1CCCCC1"}, frags);
     }
 
     /**
@@ -108,7 +111,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterUnsaturated.generateFragments(mol);
         String[] frags = fragmenterUnsaturated.getFragments();
         Assertions.assertNotNull(frags);
-        Assertions.assertArrayEquals(frags, new String[]{"[c]1ccccc1"});
+        Assertions.assertArrayEquals(new String[]{"[c]1ccccc1"}, frags);
     }
 
     /**
@@ -121,11 +124,11 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterUnsaturated.generateFragments(mol);
         String[] frags = fragmenterUnsaturated.getFragments();
         Assertions.assertNotNull(frags);
-        Assertions.assertTrue(
-                hasItems(frags, new String[] {
+        assertFragsContain(
+                new String[]{
                         "[CH2]c1ccccc1",
                         "[c]1ccccc1"
-                })
+                }, frags
         );
         Assertions.assertNotNull(fragmenterUnsaturated.getFragmentsAsContainers());
         Assertions.assertEquals(2, fragmenterUnsaturated.getFragmentsAsContainers().length);
@@ -172,12 +175,12 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         Assertions.assertNotNull(fragmenterUnsaturated.getFragmentsAsContainers());
         Assertions.assertEquals(26, fragmenterUnsaturated.getFragmentsAsContainers().length);
 
-        Assertions.assertTrue(
-                hasItems(frags, new String[] {
+        assertFragsContain(
+                new String[]{
                         "[c]1ccccc1",
                         "[CH2]CC1CCC(c2ccccc2)(CC3C=CC=C3)C1",
                         "[CH2]C1CCC([CH2])(c2ccccc2)C1"
-                })
+                }, frags
         );
     }
 
@@ -216,7 +219,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
         fragmenterSaturated.generateFragments(mol);
         String[] frags = fragmenterSaturated.getFragments();
-        Assertions.assertArrayEquals(frags, new String[]{"C1CCCCC1"});
+        Assertions.assertArrayEquals(new String[]{"C1CCCCC1"}, frags);
     }
 
     /**
@@ -229,7 +232,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterSaturated.generateFragments(mol);
         String[] frags = fragmenterSaturated.getFragments();
         Assertions.assertNotNull(frags);
-        Assertions.assertArrayEquals(frags, new String[]{"c1ccccc1"});
+        Assertions.assertArrayEquals(new String[]{"c1ccccc1"}, frags);
     }
 
     /**
@@ -243,11 +246,11 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterSaturated.generateFragments(mol);
         String[] frags = fragmenterSaturated.getFragments();
         Assertions.assertNotNull(frags);
-        Assertions.assertTrue(
-                hasItems(frags, new String[] {
+        assertFragsContain(
+                new String[]{
                         "c1ccc(cc1)C",
                         "c1ccccc1"
-                })
+                }, frags
         );
         Assertions.assertNotNull(fragmenterSaturated.getFragmentsAsContainers());
         Assertions.assertEquals(2, fragmenterSaturated.getFragmentsAsContainers().length);
@@ -263,7 +266,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterSaturated.generateFragments(mol);
         String[] frags = fragmenterSaturated.getFragments();
         Assertions.assertNotNull(frags);
-        Assertions.assertArrayEquals(frags, new String[]{"c1ccccc1"});
+        Assertions.assertArrayEquals(new String[]{"c1ccccc1"}, frags);
 
         Assertions.assertNotNull(fragmenterSaturated.getFragmentsAsContainers());
         Assertions.assertEquals(1, fragmenterSaturated.getFragmentsAsContainers().length);
@@ -286,12 +289,12 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         Assertions.assertNotNull(fragmenterSaturated.getFragmentsAsContainers());
         Assertions.assertEquals(25, fragmenterSaturated.getFragmentsAsContainers().length);
 
-        Assertions.assertTrue(
-                hasItems(frags, new String[] {
+        assertFragsContain(
+                new String[]{
                         "c1ccccc1",
                         "c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3",
                         "c1ccc(cc1)C2(C)CCC(C)C2"
-                })
+                }, frags
         );
     }
 
@@ -307,7 +310,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterRestSaturated.generateFragments(mol);
         String[] frags = fragmenterRestSaturated.getFragments();
         Assertions.assertNotNull(frags);
-        Assertions.assertArrayEquals(frags, new String[]{"*C1CCCCC1"});
+        Assertions.assertArrayEquals(new String[]{"*C1CCCCC1"}, frags);
     }
 
     /**
@@ -320,11 +323,11 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterRestSaturated.generateFragments(mol);
         String[] frags = fragmenterRestSaturated.getFragments();
         Assertions.assertNotNull(frags);
-        Assertions.assertTrue(
-                hasItems(frags, new String[] {
+        assertFragsContain(
+                new String[]{
                         "*c1ccccc1",
                         "*Cc1ccccc1"
-                })
+                }, frags
         );
         Assertions.assertEquals(2, fragmenterRestSaturated.getFragmentsAsContainers().length);
     }
@@ -339,7 +342,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenterRestSaturated.generateFragments(mol);
         String[] frags = fragmenterRestSaturated.getFragments();
         Assertions.assertNotNull(frags);
-        Assertions.assertArrayEquals(frags, new String[]{"*c1ccccc1"});
+        Assertions.assertArrayEquals(new String[]{"*c1ccccc1"}, frags);
         Assertions.assertEquals(1, fragmenterRestSaturated.getFragmentsAsContainers().length);
     }
 
@@ -356,12 +359,12 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         Assertions.assertNotNull(frags);
         // Needs to have the same number of fragments as the unsaturated version.
         Assertions.assertEquals(26, fragmenterRestSaturated.getFragmentsAsContainers().length);
-        Assertions.assertTrue(
-                hasItems(frags, new String[] {
-                    "*c1ccccc1",
-                    "*C1CCC(c2ccccc2)(CC3C=CC=C3)C1",
-                    "*C1CCC(*)(c2ccccc2)C1"
-                })
+        assertFragsContain(
+                new String[]{
+                        "*c1ccccc1",
+                        "*C1CCC(c2ccccc2)(CC3C=CC=C3)C1",
+                        "*C1CCC(*)(c2ccccc2)C1"
+                }, frags
         );
     }
 
@@ -397,11 +400,11 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         String[] frags = localFragmenter.getFragments();
         Assertions.assertNotNull(frags);
         Assertions.assertEquals(2, frags.length);
-        Assertions.assertTrue(
-                hasItems(frags, new String[] {
+        assertFragsContain(
+                new String[]{
                         "C1CCCCC1",
                         "C1CCCC1"
-                })
+                }, frags
         );
     }
 
@@ -417,9 +420,11 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         String[] smilesFrags = fragmenterSaturated.getFragments();
         IAtomContainer[] containerFrags = fragmenterSaturated.getFragmentsAsContainers();
         for (IAtomContainer frag : containerFrags) {
-            Assertions.assertTrue(hasItems(smilesFrags, new String[] {
-                    smilesGenerator.create(frag)
-            }));
+            assertFragsContain(
+                    new String[]{
+                            smilesGenerator.create(frag)
+                    }, smilesFrags
+            );
         }
     }
 
@@ -430,8 +435,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testGetSplittableBondsLinearMolecule() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("CCC"); // Propane
-        IBond[] splittableBonds = ExhaustiveFragmenter.getSplittableBonds(mol);
-        Assertions.assertEquals(0, splittableBonds.length);
+        Set<IBond> splittableBonds = ExhaustiveFragmenter.getSplittableBonds(mol);
+        Assertions.assertTrue(splittableBonds.isEmpty());
     }
 
     /**
@@ -441,8 +446,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testGetSplittableBondsCyclicMolecule() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCC1"); // Cyclopentane
-        IBond[] splittableBonds = ExhaustiveFragmenter.getSplittableBonds(mol);
-        Assertions.assertEquals(0, splittableBonds.length);
+        Set<IBond> splittableBonds = ExhaustiveFragmenter.getSplittableBonds(mol);
+        Assertions.assertTrue(splittableBonds.isEmpty());
     }
 
     /**
@@ -452,8 +457,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testGetSplittableBondsBenzeneWithSideChain() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1CC"); // Ethylbenzene
-        IBond[] splittableBonds = ExhaustiveFragmenter.getSplittableBonds(mol);
-        Assertions.assertEquals(1, splittableBonds.length);
+        Set<IBond> splittableBonds = ExhaustiveFragmenter.getSplittableBonds(mol);
+        Assertions.assertEquals(1, splittableBonds.size());
     }
 
     /**
@@ -463,8 +468,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testGetSplittableBondsBiphenyl() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1c1ccccc1"); // Biphenyl
-        IBond[] splittableBonds = ExhaustiveFragmenter.getSplittableBonds(mol);
-        Assertions.assertEquals(1, splittableBonds.length);
+        Set<IBond> splittableBonds = ExhaustiveFragmenter.getSplittableBonds(mol);
+        Assertions.assertEquals(1, splittableBonds.size());
     }
 
     /**
@@ -512,11 +517,11 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         String[] frags = customFragmenter.getFragments();
 
         Assertions.assertNotNull(frags);
-        Assertions.assertTrue(
-                hasItems(frags, new String[] {
+        assertFragsContain(
+                new String[]{
                         "C=1C=CC=CC1",
                         "C=1C=CC(=CC1)C"
-                })
+                }, frags
         );
         Assertions.assertEquals(2, frags.length);
     }
@@ -599,11 +604,11 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         String[] fragsDepth2 = localFragmenter.getFragments();
         Assertions.assertEquals(4, fragsDepth2.length,
                 "Expected 4 fragments when inclusiveMaxTreeDepth is 1 (allows up to 1 cut)");
-        Assertions.assertTrue(
-                hasItems(fragsDepth2, new String[] {
+        assertFragsContain(
+                new String[]{
                         "CCCC",
                         "c1ccc(cc1)CCCC"
-                })
+                }, fragsDepth2
         );
 
         localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS, Integer.SIZE - 1);
@@ -612,12 +617,12 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         String[] fragsDepth3 = localFragmenter.getFragments();
         Assertions.assertEquals(10, fragsDepth3.length,
                 "Expected 10 fragments when inclusiveMaxTreeDepth is 2 (allows up to 2 cuts)");
-        Assertions.assertTrue(
-                hasItems(fragsDepth3, new String[] {
+        assertFragsContain(
+                new String[]{
                         "CCCC",
                         "c1ccc(cc1)CCCC",
                         "c1ccccc1"
-                })
+                }, fragsDepth3
         );
 
         localFragmenter = new ExhaustiveFragmenter(standardSmilesGen, 4, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS, Integer.SIZE - 1);
@@ -626,36 +631,34 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         String[] fragsDepth4 = localFragmenter.getFragments();
         Assertions.assertEquals(10, fragsDepth4.length,
                 "Expected 10 fragments when inclusiveMaxTreeDepth is 3 (allows up to 3 cuts), same as max 2 cuts");
-        Assertions.assertTrue(
-                hasItems(fragsDepth4, new String[]{
+        assertFragsContain(
+                new String[]{
                         "CCCC",
                         "c1ccc(cc1)CCCC",
                         "c1ccccc1"
-                })
+                }, fragsDepth4
         );
     }
 
     // --- Complementary Molecule Tests ---
 
     /**
-     * Tests correct functional group identification on an example molecule with
-     * a disconnected structure.
-     * This was not allowed in a previous version.
+     * Tests exhaustive fragmentation on an example molecule with a disconnected
+     * structure.
      */
     @Test
     void testDisconnectedMolecules() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C(CN(CC(=O)[O-])CC(=O)[O-])N(CC(=O)[O-])CC(=O)[O-].[Na+].[Na+].[Na+].[Na+]"); //Sodium edetate
         fragmenterSaturated.generateFragments(mol);
         String[] frags = fragmenterSaturated.getFragments();
-        Assertions.assertTrue(
-                hasItems(frags, new String[]{
-                                "O=C([O-])CNCCNCC(=O)[O-]",
-                                "O=C([O-])CNCC(=O)[O-]",
-                                "O=C([O-])CN(C)CCN(C)C",
-                                "O=C([O-])CNCCNC",
-                                "O=C([O-])CN(CC(=O)[O-])CC"
-                        }
-                )
+        assertFragsContain(
+                new String[]{
+                        "O=C([O-])CNCCNCC(=O)[O-]",
+                        "O=C([O-])CNCC(=O)[O-]",
+                        "O=C([O-])CN(C)CCN(C)C",
+                        "O=C([O-])CNCCNC",
+                        "O=C([O-])CN(CC(=O)[O-])CC"
+                }, frags
         );
     }
 
@@ -672,71 +675,108 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
 
         fragmenterSaturated.generateFragments(mol);
         String[] frags = fragmenterSaturated.getFragments();
-        Assertions.assertTrue(
-                hasItems(
-                        frags, new String[]{
-                                "O=C(NCC)CCC",
-                                "NC=1C=CC=CC1",
-                                "O=C(N)CCCS(=O)C",
-                                "FC=1C=CC(=CC1)C(N)C"
-                        }
-                )
+        assertFragsContain(
+                new String[]{
+                        "O=C(NCC)CCC",
+                        "NC=1C=CC=CC1",
+                        "O=C(N)CCCS(=O)C",
+                        "FC=1C=CC(=CC1)C(N)C"
+                }, frags
         );
     }
 
     /**
-     * Testing a bigger molecule
+     * Testing a molecule with 31 splittable bonds (takes extremely long, maybe days)
+     *
+     * @throws Exception if anything goes wrong
+     */
+    // @Test
+    void testIndexBigMolecule2() throws Exception {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smiPar.parseSmiles("C[C@]12CC[C@](CC1C3=CC(=O)C4[C@]5(CCC(C(C5CC[C@]4([C@@]3(CC2)C)C)(C)C)" +
+                "OC6C(C(C(C(O6)C(=O)N[C@H](CCC(=O)OC)C(=O)OC)O)O)OC7C(C(C(C(O7)C(=O)N[C@H](CCC(=O)OC)C(=O)OC)O)O)O)C)(C)C" +
+                "(=O)N[C@H](CCC(=O)OC)C(=O)OC"); // Pubchem CID 16396833
+        fragmenterSaturated.generateFragments(mol);
+        String[] frags = fragmenterSaturated.getFragments();
+        assertFragsContain(
+                new String[]{
+                        "O=CCNC(=O)c1ccccc1",
+                        "O=C(N)CNC(=O)c1ccccc1N",
+                        "O=C(NC)c1ccccc1N",
+                        "O=C(NCCC)c1ccccc1N",
+                        "O=CCNC(=O)c1ccccc1Nc2cccc(c2C)C",
+                        "O=C(N)CCCS(=O)C",
+                        "O=C(N)C(NC(=O)c1ccccc1)CCS(=O)C"
+                }, frags
+        );
+    }
+
+    /**
+     * Testing the test molecule of the Java doc comment for the
+     * {@link ExhaustiveFragmenter}
      *
      * @throws Exception if anything goes wrong
      */
     @Test
     void testTestMoleculeUnsaturated() throws Exception {
+
+        // test with default settings
         SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer mol = smiPar.parseSmiles("C1CCCCC1c1ccccc1"); //PubChem CID
-        fragmenterUnsaturated.generateFragments(mol);
-        String[] frags = fragmenterUnsaturated.getFragments();
-        Assertions.assertTrue(hasItems(frags, new String[] {
-                "[CH]1CCCCC1",
-                "[c]1ccccc1"
-        }));
+        IAtomContainer mol = smiPar.parseSmiles("C1CCCC1C1=CC=CC=C1");
+        ExhaustiveFragmenter localDefaultFragmenter = new ExhaustiveFragmenter();
+        localDefaultFragmenter.generateFragments(mol.clone());
+        String[] fragsDefault = localDefaultFragmenter.getFragments();
+        assertFragsContain(
+                new String[]{
+                        "[C]1=CC=CC=C1"
+                }, fragsDefault
+        );
+
+        // test with minimal fragment size of 5 and hydrogen saturation
+
+        ExhaustiveFragmenter localCustomFragmenter = new ExhaustiveFragmenter(
+                5,
+                ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS
+        );
+        localCustomFragmenter.generateFragments(mol.clone());
+        String[] fragsCustom = localCustomFragmenter.getFragments();
+        assertFragsContain(
+                new String[]{
+                        "C1CCCC1",
+                        "C1=CC=CC=C1",
+                },
+                fragsCustom
+        );
     }
 
-//    /**
-//     * Testing a molecule with 31 splittable bonds (takes extremely long, maybe days)
-//     *
-//     * @throws Exception if anything goes wrong
-//     */
-//    @Test
-//    void testIndexBigMolecule2() throws Exception {
-//        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-//        IAtomContainer mol = smiPar.parseSmiles("C[C@]12CC[C@](CC1C3=CC(=O)C4[C@]5(CCC(C(C5CC[C@]4([C@@]3(CC2)C)C)(C)C)" +
-//                "OC6C(C(C(C(O6)C(=O)N[C@H](CCC(=O)OC)C(=O)OC)O)O)OC7C(C(C(C(O7)C(=O)N[C@H](CCC(=O)OC)C(=O)OC)O)O)O)C)(C)C" +
-//                "(=O)N[C@H](CCC(=O)OC)C(=O)OC"); // Pubchem CID 16396833
-//        System.out.println(fragmenterSaturated.getSplitableBonds(mol).length);
-//        fragmenterSaturated.generateFragments(mol);
-//        String[] frags = fragmenterSaturated.getFragments();
-//        Assertions.assertEquals(
-//                Arrays.asList(frags),
-//                hasItems(
-//                        "O=CCNC(=O)c1ccccc1",
-//                        "O=C(N)CNC(=O)c1ccccc1N",
-//                        "O=C(NC)c1ccccc1N",
-//                        "O=C(NCCC)c1ccccc1N",
-//                        "O=CCNC(=O)c1ccccc1Nc2cccc(c2C)C",
-//                        "O=C(N)CCCS(=O)C",
-//                        "O=C(N)C(NC(=O)c1ccccc1)CCS(=O)C"
-//                )
-//        );
-//    }
 
     // --utility --
-    static boolean hasItems(String[] allFragments, String[] requiredFragments) {
-        Set<String> allFragmentsSet = new HashSet<>(Arrays.asList(allFragments));
-        for (String frag : requiredFragments) {
-            if (!allFragmentsSet.contains(frag)) {
-                return false;
+
+    private static <T> void assertFragsContain(
+            T[] expected,
+            T[] actual
+    ) {
+
+        Set<T> expectedSet = new HashSet<>(Arrays.asList(expected));
+        Set<T> actualSet = new HashSet<>(Arrays.asList(actual));
+
+        Set<T> missing = expectedSet.stream()
+                .filter(item -> !actualSet.contains(item))
+                .collect(Collectors.toSet());
+
+        Set<T> extra = actualSet.stream()
+                .filter(item -> !expectedSet.contains(item))
+                .collect(Collectors.toSet());
+
+        if (!missing.isEmpty()) {
+            StringBuilder failureMessage = new StringBuilder();
+
+            failureMessage.append("Expected but not found: ").append(missing).append("\n");
+            if (!extra.isEmpty()) {
+                failureMessage.append("Found but not expected: ").append(extra).append("\n");
             }
+
+            fail(failureMessage.toString());
         }
-        return true;
     }
 }
