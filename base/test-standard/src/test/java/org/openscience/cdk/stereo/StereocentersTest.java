@@ -31,6 +31,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -160,7 +161,7 @@ class StereocentersTest {
 
         // nitrogen inversion -> reject
         none("N");
-        none("N(C)(N)(O)");
+        nonTetrahedral("N(C)(N)(O)");
         none("N(=C)(C)");
     }
 
@@ -173,7 +174,7 @@ class StereocentersTest {
     @Test
     void nitrogen_v3_neutral_in_larger_ring() throws Exception {
         none("N(C)(C1)CCCC1"); // n.b. equivalence checked later
-        none("N(C)(C1)CCCC1C");
+        nonTetrahedral("N(C)(C1)CCCC1C");
     }
 
     /**
@@ -785,7 +786,7 @@ class StereocentersTest {
     void bridgehead_nitrogens() throws Exception {
         tetrahedral("N1(CC2)CC2CC1");
         // fused
-        none("N1(CCCC2)CCCC12");
+        nonTetrahedral("N1(CCCC2)CCCC12"); // OKAY - it is not tetrahedral
         // adjacent to fused (but not fused)
         tetrahedral("N1(c(cccc3)c32)CC2CC1");
 
@@ -796,6 +797,11 @@ class StereocentersTest {
     void tetrahedral(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         test(sp.parseSmiles(smi), Stereocenters.Type.Tetracoordinate, smi + " was not accepted", true);
+    }
+
+    void nonTetrahedral(String smi) throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        testNot(sp.parseSmiles(smi), Stereocenters.Type.Tetracoordinate, smi + " was not accepted", true);
     }
 
     // assert the first atom of the SMILES is accepted as a geometric center
@@ -822,6 +828,14 @@ class StereocentersTest {
         if (hnorm) {
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
             assertThat(mesg + " (unsupressed hydrogens)", Stereocenters.of(container).elementType(0), is(type));
+        }
+    }
+
+    void testNot(IAtomContainer container, Stereocenters.Type type, String mesg, boolean hnorm) {
+        assertThat(mesg, Stereocenters.of(container).elementType(0), is(not(type)));
+        if (hnorm) {
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+            assertThat(mesg + " (unsupressed hydrogens)", Stereocenters.of(container).elementType(0), is(not(type)));
         }
     }
 
