@@ -2893,7 +2893,7 @@ public class StructureDiagramGenerator {
                                         }
                                     } else if (otherAttachAtoms.equals(visit)) {
                                         IAtom ringAtom = otherRingAtoms.iterator().next();
-                                        if (!visited.contains(ringAtom)) {
+                                        if (!visited.contains(ringAtom) && placed.contains(ringAtom)) {
                                             traversePart(newvisit, ringAtom);
                                         }
                                     }
@@ -2901,7 +2901,6 @@ public class StructureDiagramGenerator {
                             }
                         }
 
-                        newvisit.retainAll(placed);
                         visited.addAll(newvisit);
                     } while (!newvisit.isEmpty());
 
