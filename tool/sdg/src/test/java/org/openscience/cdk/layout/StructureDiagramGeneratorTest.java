@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.ISetting;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -61,6 +62,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
+import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -1376,5 +1378,26 @@ class StructureDiagramGeneratorTest extends CDKTestCase {
         for (IAtomContainer ring : rset.atomContainers()) {
             assertConvex(AtomContainerManipulator.getAtomArray(ring));
         }
+    }
+
+    public static void assertColinear(Point2d a, Point2d b, Point2d c)
+    {
+        Assertions.assertEquals(0, Math.abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)), 0.1);
+    }
+
+    @Test
+    void testMulticenterAndIonicBondsConflict() throws CDKException {
+        String smiles = "*[Fe++]*.[CH-]1C=CC=C1.[CH-]1C=CC=C1 |m:0:3.4.5.6.7,2:8.9.10.11.12|";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        IAtom atom = mol.getAtom(1);
+        Assertions.assertEquals(IAtom.Fe, mol.getAtom(1).getAtomicNumber());
+        Assertions.assertEquals(2, mol.getAtom(1).getBondCount());
+        List<IBond> bonds = mol.getConnectedBondsList(atom);
+        assertColinear(bonds.get(0).getOther(atom).getPoint2d(),
+                       atom.getPoint2d(),
+                       bonds.get(1).getOther(atom).getPoint2d());
     }
 }

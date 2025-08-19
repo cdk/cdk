@@ -61,7 +61,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-import java.awt.Color;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -78,7 +77,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Stack;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -1414,7 +1412,7 @@ public class StructureDiagramGenerator {
     }
 
     private void generateFragmentCoordinates(IAtomContainer mol, List<IAtomContainer> frags) throws CDKException {
-        final List<IBond> ionicBonds = makeIonicBonds(frags);
+        final List<IBond> ionicBonds = makeTempBonds(frags);
 
         // add tmp bonds and re-fragment
         int rollback = mol.getBondCount();
@@ -1530,11 +1528,11 @@ public class StructureDiagramGenerator {
             mol.removeBond(numBonds);
     }
 
-    private void lengthenIonicBonds(List<IBond> ionicBonds, IAtomContainer fragment) {
+    private void lengthenIonicBonds(List<IBond> tempBonds, IAtomContainer fragment) {
 
         final IChemObjectBuilder bldr = fragment.getBuilder();
 
-        if (ionicBonds.isEmpty())
+        if (tempBonds.isEmpty())
             return;
 
         IAtomContainer newfrag = bldr.newInstance(IAtomContainer.class);
@@ -1544,7 +1542,7 @@ public class StructureDiagramGenerator {
         newfrag.setAtoms(atoms);
 
         for (IBond bond : fragment.bonds()) {
-            if (!ionicBonds.contains(bond)) {
+            if (!tempBonds.contains(bond)) {
                 newfrag.addBond(bond);
             } else {
                 Integer numBegIonic = bond.getBegin().getProperty("ionicDegree");
@@ -1569,7 +1567,7 @@ public class StructureDiagramGenerator {
             for (IAtom atom : subfragment.atoms())
                 atomToFrag.put(atom, subfragment);
 
-        for (IBond bond : ionicBonds) {
+        for (IBond bond : tempBonds) {
             IAtom beg = bond.getBegin();
             IAtom end = bond.getEnd();
 
@@ -1608,6 +1606,7 @@ public class StructureDiagramGenerator {
      * Property to cache the charge of a fragment.
      */
     private static final String FRAGMENT_CHARGE = "FragmentCharge";
+    private static final String ADJUSTED_CHARGE = "AdjustedCharge";
 
     /**
      * Merge fragments with duplicate atomic ions (e.g. [Na+].[Na+].[Na+]) into
@@ -1631,7 +1630,7 @@ public class StructureDiagramGenerator {
                     IAtom iAtm = frag.getAtom(0);
                     if (res.get(i).getBondCount() == 0) {
                         IAtom jAtm = res.get(i).getAtom(0);
-                        if (nullAsZero(iAtm.getFormalCharge()) == nullAsZero(jAtm.getFormalCharge()) &&
+                        if (nullAsZero(iAtm.getProperty(ADJUSTED_CHARGE)) == nullAsZero(jAtm.getProperty(ADJUSTED_CHARGE)) &&
                             nullAsZero(iAtm.getAtomicNumber()) == nullAsZero(jAtm.getAtomicNumber()) &&
                             nullAsZero(iAtm.getImplicitHydrogenCount()) == nullAsZero(jAtm.getImplicitHydrogenCount())) {
                             break;
@@ -1669,12 +1668,12 @@ public class StructureDiagramGenerator {
         for (IAtom atom : frag.atoms()) {
             if (fragChg == 0)
                 break;
-            int atmChg = nullAsZero(atom.getFormalCharge());
+            int atmChg = atom.getProperty(ADJUSTED_CHARGE);
             if (Integer.signum(atmChg) == sign) {
 
                 // skip in first pass if charge separated
                 for (IBond bond : frag.getConnectedBondsList(atom)) {
-                    if (Integer.signum(nullAsZero(bond.getOther(atom).getFormalCharge())) + sign == 0)
+                    if (Integer.signum(bond.getOther(atom).getProperty(ADJUSTED_CHARGE)) + sign == 0)
                         continue FIRST_PASS;
                 }
 
@@ -1692,7 +1691,7 @@ public class StructureDiagramGenerator {
         for (IAtom atom : frag.atoms()) {
             if (fragChg == 0)
                 break;
-            int atmChg = nullAsZero(atom.getFormalCharge());
+            int atmChg = atom.getProperty(ADJUSTED_CHARGE);
             if (Math.signum(atmChg) == sign) {
                 while (fragChg != 0 && atmChg != 0) {
                     atoms.add(atom);
@@ -1718,8 +1717,37 @@ public class StructureDiagramGenerator {
      * @param frags connected fragments
      * @return ionic bonds to make
      */
-    private List<IBond> makeIonicBonds(final List<IAtomContainer> frags) {
+    private List<IBond> makeTempBonds(final List<IAtomContainer> frags) {
         assert frags.size() > 1;
+
+        final IChemObjectBuilder bldr = frags.get(0).getBuilder();
+        final List<IBond> tempBonds = new ArrayList<>();
+
+        for (IAtom atom : molecule.atoms()) {
+            atom.setProperty(ADJUSTED_CHARGE, nullAsZero(atom.getFormalCharge()));
+        }
+
+        // multicenter bonds, we distinguish here between multicenter (i.e. all) and
+        // positional variation (i.e. any), with positional variation mainly used
+        // for queries (e.g. an R group/chloro hanging of the ring).
+
+        // to avoid an odd depiction we adjust the charge of multicenter
+        // connections that cancel out, we should not need to rebond these
+        List<Sgroup> sgroups = molecule.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getType() == SgroupType.ExtMulticenter) {
+                    Set<IBond> bonds = sgroup.getBonds();
+                    assert bonds.size() == 1;
+                    IBond bond = bonds.iterator().next();
+                    if (Elements.isMetal(bond.getBegin().getAtomicNumber())) {
+                        neutralizeMulticenter(sgroup, bond.getBegin());
+                    } else if (Elements.isMetal(bond.getEnd().getAtomicNumber())) {
+                        neutralizeMulticenter(sgroup, bond.getEnd());
+                    }
+                }
+            }
+        }
 
         // merge duplicates together, e.g. [H-].[H-].[H-].[Na+].[Na+].[Na+]
         // would be two needsMerge fragments. We currently only do single
@@ -1732,7 +1760,7 @@ public class StructureDiagramGenerator {
         for (IAtomContainer frag : mergedFrags) {
             int chg = 0;
             for (final IAtom atom : frag.atoms())
-                chg += nullAsZero(atom.getFormalCharge());
+                chg += atom.<Integer>getProperty(ADJUSTED_CHARGE);
             chgSum += chg;
             frag.setProperty(FRAGMENT_CHARGE, chg);
             if (chg < 0)
@@ -1743,7 +1771,7 @@ public class StructureDiagramGenerator {
 
         // non-neutral or we only have one needsMerge fragment?
         if (chgSum != 0 || mergedFrags.size() == 1)
-            return Collections.emptyList();
+            return tempBonds;
 
         List<IAtom> cations = new ArrayList<>();
         List<IAtom> anions = new ArrayList<>();
@@ -1781,29 +1809,52 @@ public class StructureDiagramGenerator {
         if (cations.size() != anions.size() && cations.isEmpty())
             return Collections.emptyList();
 
-        final IChemObjectBuilder bldr = frags.get(0).getBuilder();
-
         // make the bonds
-        final List<IBond> ionicBonds = new ArrayList<>(cations.size());
         for (int i = 0; i < cations.size(); i++) {
             final IAtom beg = cations.get(i);
             final IAtom end = anions.get(i);
 
+            // FIXME - slow
             boolean unique = true;
-            for (IBond bond : ionicBonds)
+            for (IBond bond : tempBonds)
                 if (bond.getBegin().equals(beg) && bond.getEnd().equals(end) ||
                     bond.getEnd().equals(beg) && bond.getBegin().equals(end))
                     unique = false;
 
             if (unique)
-                ionicBonds.add(bldr.newInstance(IBond.class, beg, end));
+                tempBonds.add(bldr.newInstance(IBond.class, beg, end));
         }
 
         // we could merge the fragments here using union-find structures
         // but it's much simpler (and probably more efficient) to return
         // the new bonds and re-fragment the molecule with these bonds added.
 
-        return ionicBonds;
+        return tempBonds;
+    }
+
+
+    /**
+     * This function checks and neutralizes charged metal atoms involved in a
+     * multicenter connection (e.g. ferrocene). We store this as an 'adjusted
+     * charge' without which the counter ion rebonding gets confused and
+     * generates a strange depiction.
+     *
+     * @param multicenter multicenter sgroup
+     * @param metal the metal atom
+     */
+    private static void neutralizeMulticenter(Sgroup multicenter, IAtom metal) {
+        int metalCharge = metal.getProperty(ADJUSTED_CHARGE);
+        if (metalCharge > 0) {
+            int ringCharge = 0;
+            for (IAtom ringAtom : multicenter.getAtoms())
+                ringCharge += ringAtom.<Integer>getProperty(ADJUSTED_CHARGE);
+            if (ringCharge < 0 && metalCharge - ringCharge >= 0) {
+                metal.setProperty(ADJUSTED_CHARGE, metalCharge - ringCharge);
+                for (IAtom ringAtom : multicenter.getAtoms()) {
+                    ringAtom.setProperty(ADJUSTED_CHARGE, 0);
+                }
+            }
+        }
     }
 
     /**
@@ -2737,20 +2788,17 @@ public class StructureDiagramGenerator {
                 }
             }
 
-            bonds.sort(new Comparator<IBond>() {
-                @Override
-                public int compare(IBond a, IBond b) {
-                    int atype = getPositionalRingBondPref(a, mol);
-                    int btype = getPositionalRingBondPref(b, mol);
-                    if (atype != btype)
-                        return Integer.compare(atype, btype);
-                    int aord = a.getOrder().numeric();
-                    int bord = b.getOrder().numeric();
-                    if (aord > 0 && bord > 0) {
-                        return Integer.compare(aord, bord);
-                    }
-                    return 0;
+            bonds.sort((a, b) -> {
+                int atype = getPositionalRingBondPref(a, mol);
+                int btype = getPositionalRingBondPref(b, mol);
+                if (atype != btype)
+                    return Integer.compare(atype, btype);
+                int aord = a.getOrder().numeric();
+                int bord = b.getOrder().numeric();
+                if (aord > 0 && bord > 0) {
+                    return Integer.compare(aord, bord);
                 }
+                return 0;
             });
 
             if (bonds.size() >= e.getValue().size()) {
