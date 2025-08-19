@@ -29,17 +29,20 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.PseudoAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.stereo.Atropisomeric;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -48,6 +51,8 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CxSmilesTest {
 
@@ -99,21 +104,21 @@ class CxSmilesTest {
     @Test
     void nonCXSMILESLayer() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1 |<benzene>|");
-        Assertions.assertNotNull(mol);
+        assertNotNull(mol);
         assertThat(mol.getTitle(), is("|<benzene>|"));
     }
 
     @Test
     void truncatedCXSMILES() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1 |");
-        Assertions.assertNotNull(mol);
+        assertNotNull(mol);
         assertThat(mol.getTitle(), is("|"));
     }
 
     @Test
     void correctTitle() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1 |c:1,3,4| benzene");
-        Assertions.assertNotNull(mol);
+        assertNotNull(mol);
         assertThat(mol.getTitle(), is("benzene"));
     }
 
@@ -422,5 +427,64 @@ class CxSmilesTest {
         IAtomContainer mol = smipar.parseSmiles("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgH:3:4.0,4:2.1|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
         assertThat(smigen.create(mol), is("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6:c:,Sg:c:7,8:c:,Sg:c:9:c:,Sg:mix:0,1,2,3,4,5,6,7,8,9:mix:,Sg:mix:7,8,9:mix:,SgH:3:0.4,4:1.2|"));
+    }
+
+
+    static Atropisomeric findAtropisomerStereo(IAtomContainer mol) {
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            if (se.getConfigClass() == IStereoElement.Atropisomeric)
+                return (Atropisomeric)se;
+        }
+        return null;
+    }
+
+    @Test
+    void testRdkitAtropisomers_S_Binol() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("Oc1ccc2ccccc2c1-c1c(O)ccc2ccccc12 |wU:10.10|    (S)-(−)-1,1′-Bi(2-napthol)");
+        Atropisomeric at = findAtropisomerStereo(mol);
+        assertNotNull(at);
+        assertEquals(IStereoElement.LEFT, at.getConfigOrder());
+    }
+
+    @Test
+    void testRdkitAtropisomers_R_Binol() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("Oc1ccc2ccccc2c1-c1c(O)ccc2ccccc12 |wU:10.11|    (R)-(−)-1,1′-Bi(2-napthol)");
+        Atropisomeric at = findAtropisomerStereo(mol);
+        assertNotNull(at);
+        assertEquals(IStereoElement.RIGHT, at.getConfigOrder());
+    }
+
+    @Test
+    void testRdkitAtropisomers_R_Binol_Alt() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("Oc1ccc2ccccc2c1-c1c(O)ccc2ccccc12 |wD:10.10|    (R)-(−)-1,1′-Bi(2-napthol)");
+        Atropisomeric at = findAtropisomerStereo(mol);
+        assertNotNull(at);
+        assertEquals(IStereoElement.RIGHT, at.getConfigOrder());
+    }
+
+    @Test
+    void testRdkitAtropisomers_m_sotorasib() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("C=CC(=O)N1CCN(c2nc(=O)n(-c3c(C)ccnc3C(C)C)c3nc(-c4c(O)cccc4F)c(F)cc23)[C@@H](C)C1 |wU:12.23|    (m)-sotorasib");
+        Atropisomeric at = findAtropisomerStereo(mol);
+        assertNotNull(at);
+        assertEquals(IStereoElement.LEFT, at.getConfigOrder());
+    }
+
+    @Test
+    void testRdkitAtropisomers_p_sotorasib() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("C=CC(=O)N1CCN(c2nc(=O)n(-c3c(C)ccnc3C(C)C)c3nc(-c4c(O)cccc4F)c(F)cc23)[C@@H](C)C1 |wU:12.11|    (p)-sotorasib");
+        Atropisomeric at = findAtropisomerStereo(mol);
+        assertNotNull(at);
+        assertEquals(IStereoElement.RIGHT, at.getConfigOrder());
     }
 }
