@@ -2755,6 +2755,15 @@ public class StructureDiagramGenerator {
         return 2;
     }
 
+    private boolean isHorizontal(IBond bond) {
+        IAtom beg = bond.getBegin();
+        IAtom end = bond.getEnd();
+        if (beg.getPoint2d() == null || end.getPoint2d() == null)
+            return false;
+        return Math.abs(beg.getPoint2d().y - end.getPoint2d().y) < 0.1 &&
+               Math.abs(beg.getPoint2d().x - end.getPoint2d().x) >= 0.5;
+    }
+
     private void placePositionalVariation(final IAtomContainer mol) {
 
         final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
@@ -2766,9 +2775,11 @@ public class StructureDiagramGenerator {
         if (mapping.isEmpty())
             return;
 
+        Set<IAtom> placed = new HashSet<>();
         for (Map.Entry<Set<IAtom>,List<IAtom>> e : mapping.entrySet()) {
-            List<IBond> bonds = new ArrayList<>();
+            boolean isMulticenter = allMetalAttachments(e.getValue());
 
+            List<IBond> bonds = new ArrayList<>();
             IAtomContainer shared = mol.getBuilder().newInstance(IAtomContainer.class);
             for (IAtom atom : e.getKey())
                 shared.addAtom(atom);
@@ -2786,6 +2797,14 @@ public class StructureDiagramGenerator {
                 int btype = getPositionalRingBondPref(b, mol);
                 if (atype != btype)
                     return Integer.compare(atype, btype);
+
+                // prefer horizontal bonds when multicenter
+                if (isMulticenter) {
+                    int cmp = Boolean.compare(isHorizontal(a), isHorizontal(b));
+                    if (cmp != 0)
+                        return -cmp;
+                }
+
                 int aord = a.getOrder().numeric();
                 int bord = b.getOrder().numeric();
                 if (aord > 0 && bord > 0) {
@@ -2881,8 +2900,13 @@ public class StructureDiagramGenerator {
                                 }
                             }
                         }
+
+                        newvisit.retainAll(placed);
                         visited.addAll(newvisit);
                     } while (!newvisit.isEmpty());
+
+                    placed.addAll(visited);
+                    placed.addAll(e.getKey());
 
                     IAtomContainer frag = mol.getBuilder().newInstance(IAtomContainer.class);
                     for (IAtom visit : visited)
@@ -2911,6 +2935,17 @@ public class StructureDiagramGenerator {
                 System.err.println("Positional variation not yet handled");
             }
         }
+    }
+
+    // check if all attach atoms are metals
+    private boolean allMetalAttachments(List<IAtom> atoms) {
+        for (IAtom atom : atoms) {
+            for (IBond bond : atom.bonds()) {
+                if (!Elements.isMetal(bond.getOther(atom)))
+                    return false;
+            }
+        }
+        return !atoms.isEmpty();
     }
 
     private static void visit(Set<Integer> visited, int[][] g, int v) {
