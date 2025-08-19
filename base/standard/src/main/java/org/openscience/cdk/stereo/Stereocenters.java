@@ -466,7 +466,7 @@ public final class Stereocenters {
                     if (deg == 4 && nUnique == 1 && terminal) stereocenters[element.focus] = Stereocenter.Non;
                 } else if (element.type == Type.Tricoordinate) {
                     Tricoordinate either = (Tricoordinate) element;
-                    if (stereocenters[either.other] == Stereocenter.True) paraElements.add(element);
+                    if (either.other >= 0 && stereocenters[either.other] == Stereocenter.True) paraElements.add(element);
                 }
             }
 
