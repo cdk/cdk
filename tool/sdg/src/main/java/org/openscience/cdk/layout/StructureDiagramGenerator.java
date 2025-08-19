@@ -2860,11 +2860,13 @@ public class StructureDiagramGenerator {
 
                     newBegP.add(bndVec);
                     bndXVec.normalize();
-                    bndXVec.scale(2*bndStep);
+                    if (!isMulticenter)
+                        bndXVec.scale(2*bndStep);
                     newBegP.sub(bndXVec);
                     newEndP.sub(bndVec);
                     bndXVec.normalize();
-                    bndXVec.scale(4*bndStep);
+                    if (!isMulticenter)
+                        bndXVec.scale(4*bndStep);
                     newEndP.add(bndXVec);
 
                     if (atom.getBondCount() != 1)
