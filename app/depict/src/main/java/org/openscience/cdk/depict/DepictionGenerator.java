@@ -196,6 +196,11 @@ public final class DepictionGenerator {
     private boolean annotateAtomNum = false;
 
     /**
+     * Flag to indicate bond numbers should be displayed.
+     */
+    private boolean annotateBondNum = false;
+
+    /**
      * Flag to indicate atom values should be displayed.
      */
     private boolean annotateAtomVal = false;
@@ -272,6 +277,7 @@ public final class DepictionGenerator {
         this.annotateAtomMap = org.annotateAtomMap;
         this.annotateAtomVal = org.annotateAtomVal;
         this.annotateAtomNum = org.annotateAtomNum;
+        this.annotateBondNum = org.annotateBondNum;
         this.highlightAtomMap = org.highlightAtomMap;
         this.atomMapColors = org.atomMapColors;
         this.dimensions = org.dimensions;
@@ -716,7 +722,7 @@ public final class DepictionGenerator {
         }
     }
 
-    private IRenderingElement generate(IAtomContainer molecule, RendererModel model, AtomNumbering atomNumbering) throws CDKException {
+    private IRenderingElement generate(IAtomContainer molecule, RendererModel model, AtomNumbering sequence) throws CDKException {
 
         // tag the atom and bond ids
         String molId = molecule.getProperty(MarkedElement.ID_KEY);
@@ -733,7 +739,14 @@ public final class DepictionGenerator {
                 if (atom.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
                     throw new UnsupportedOperationException("Multiple annotation labels are not supported.");
                 atom.setProperty(StandardGenerator.ANNOTATION_LABEL,
-                                 Integer.toString(atomNumbering.nextId()));
+                                 Integer.toString(sequence.nextId()));
+            }
+        } else if (annotateBondNum) {
+            for (IBond bond : molecule.bonds()) {
+                if (bond.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
+                    throw new UnsupportedOperationException("Multiple annotation labels are not supported.");
+                bond.setProperty(StandardGenerator.ANNOTATION_LABEL,
+                                 Integer.toString(sequence.nextId()));
             }
         } else if (annotateAtomVal) {
             for (IAtom atom : molecule.atoms()) {
@@ -914,10 +927,30 @@ public final class DepictionGenerator {
      * @see StandardGenerator#ANNOTATION_LABEL
      */
     public DepictionGenerator withAtomNumbers() {
-        if (annotateAtomMap || annotateAtomVal)
-            throw new IllegalArgumentException("Can not annotated atom numbers, atom values or maps are already annotated");
+        if (annotateAtomMap || annotateAtomVal || annotateBondNum)
+            throw new IllegalArgumentException("Can not annotated atom numbers - bond numbers, atom values or maps are already annotated");
         DepictionGenerator copy = new DepictionGenerator(this);
         copy.annotateAtomNum = true;
+        return copy;
+    }
+
+    /**
+     * Display bond numbers on the molecule or reaction. The numbers are based on the
+     * ordering of bonds in the molecule data structure and not a systematic system
+     * such as IUPAC numbering.
+     * <p>
+     * Note: A depiction can not have both atom numbers and atom maps visible
+     * (but this can be achieved by manually setting the annotation).
+     *
+     * @return new generator for method chaining
+     * @see #withAtomMapNumbers()
+     * @see StandardGenerator#ANNOTATION_LABEL
+     */
+    public DepictionGenerator withBondNumbers() {
+        if (annotateAtomNum || annotateAtomMap || annotateAtomVal)
+            throw new IllegalArgumentException("Can not annotated bond numbers - atom number,s values or maps are already annotated");
+        DepictionGenerator copy = new DepictionGenerator(this);
+        copy.annotateBondNum = true;
         return copy;
     }
 
