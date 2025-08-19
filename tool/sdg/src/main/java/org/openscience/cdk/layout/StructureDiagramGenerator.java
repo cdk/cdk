@@ -2766,13 +2766,6 @@ public class StructureDiagramGenerator {
         if (mapping.isEmpty())
             return;
 
-        // helps with traversal
-        GraphUtil.EdgeToBondMap bondMap = GraphUtil.EdgeToBondMap.withSpaceFor(mol);
-        int[][] adjlist = GraphUtil.toAdjList(mol, bondMap);
-        Map<IAtom,Integer> idxs = new HashMap<>();
-        for (IAtom atom : mol.atoms())
-            idxs.put(atom, idxs.size());
-
         for (Map.Entry<Set<IAtom>,List<IAtom>> e : mapping.entrySet()) {
             List<IBond> bonds = new ArrayList<>();
 
@@ -2855,33 +2848,34 @@ public class StructureDiagramGenerator {
                     bndXVec.scale(4*bndStep);
                     newEndP.add(bndXVec);
 
-                    int atomIdx = idxs.get(atom);
-                    if (adjlist[atomIdx].length != 1)
+                    if (atom.getBondCount() != 1)
                         continue;
 
                     // get all atoms connected to the part we will move
-                    Set<Integer> visited = new HashSet<>();
-                    visit(visited, adjlist, atomIdx);
+                    Set<IAtom> visited = new HashSet<>();
+                    traversePart(visited, atom);
 
-                    // gather up other position group
-                    Set<Integer> newvisit = new HashSet<>();
+                    // gather-up other position group
+                    Set<IAtom> newvisit = new HashSet<>();
                     do {
                         newvisit.clear();
-                        for (Integer idx : visited) {
-                            IAtom visitedAtom = mol.getAtom(idx);
-                            if (e.getKey().contains(visitedAtom) || e.getValue().contains(visitedAtom))
+                        for (IAtom visit : visited) {
+
+                            // skip the one already being placed
+                            if (e.getKey().contains(visit) || e.getValue().contains(visit))
                                 continue;
+
                             for (Map.Entry<Set<IAtom>, List<IAtom>> e2 : mapping.entrySet()) {
-                                for (IAtom val : e2.getValue()) {
-                                    if (e2.getKey().contains(visitedAtom)) {
-                                        int other = idxs.get(val);
-                                        if (!visited.contains(other) && newvisit.add(other)) {
-                                            visit(newvisit, adjlist, other);
+                                for (IAtom otherAttachAtoms : e2.getValue()) {
+                                    Set<IAtom> otherRingAtoms = e2.getKey();
+                                    if (otherRingAtoms.contains(visit)) {
+                                        if (!visited.contains(otherAttachAtoms)) {
+                                            traversePart(newvisit, otherAttachAtoms);
                                         }
-                                    } else if (val.equals(visitedAtom)) {
-                                        int other = idxs.get(e2.getKey().iterator().next());
-                                        if (!visited.contains(other) && newvisit.add(other)) {
-                                            visit(newvisit, adjlist, other);
+                                    } else if (otherAttachAtoms.equals(visit)) {
+                                        IAtom ringAtom = otherRingAtoms.iterator().next();
+                                        if (!visited.contains(ringAtom)) {
+                                            traversePart(newvisit, ringAtom);
                                         }
                                     }
                                 }
@@ -2891,10 +2885,10 @@ public class StructureDiagramGenerator {
                     } while (!newvisit.isEmpty());
 
                     IAtomContainer frag = mol.getBuilder().newInstance(IAtomContainer.class);
-                    for (Integer visit : visited)
-                        frag.addAtom(mol.getAtom(visit));
+                    for (IAtom visit : visited)
+                        frag.addAtom(visit);
 
-                    final IBond attachBond = bondMap.get(atomIdx, adjlist[atomIdx][0]);
+                    final IBond attachBond = atom.bonds().iterator().next();
                     final Point2d begP = atom.getPoint2d();
                     final Point2d endP = attachBond.getOther(atom).getPoint2d();
 
@@ -2924,6 +2918,14 @@ public class StructureDiagramGenerator {
         for (int w : g[v]) {
             if (!visited.contains(w))
                 visit(visited, g, w);
+        }
+    }
+
+    private static void traversePart(Set<IAtom> visited, IAtom atom) {
+        if (!visited.add(atom))
+            return;
+        for (IBond bond : atom.bonds()) {
+            traversePart(visited, bond.getOther(atom));
         }
     }
 
