@@ -91,6 +91,10 @@ final class MacroCycleLayout {
         Point2d[] best = new Point2d[anon.getAtomCount()];
         int bestOffset = selectCoords(coords, best, macrocycle, ringset);
 
+        if (macrocycle.getAtomCount() <= 9 &&
+            !macrocycle.stereoElements().iterator().hasNext())
+            return false;
+
         for (int i = 0; i < macrocycle.getAtomCount(); i++) {
             macrocycle.getAtom(i).setPoint2d(best[(bestOffset + i) % macrocycle.getAtomCount()]);
             macrocycle.getAtom(i).setFlag(PLACED, true);
