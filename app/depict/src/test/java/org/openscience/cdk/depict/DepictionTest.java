@@ -138,6 +138,15 @@ class DepictionTest {
         depictionGenerator.depict(atomContainer);
     }
 
+    @Test
+    void testAtomPropertyEmptyStringAnnotationLabel() throws CDKException {
+        DepictionGenerator depictionGenerator = new DepictionGenerator().withAtomValues();
+        SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = smilesParser.parseSmiles("C1CCCCC1CCCCC");
+        atomContainer.atoms().forEach(a -> a.setProperty(CDKConstants.COMMENT, ""));
+        depictionGenerator.depict(atomContainer);
+    }
+
     @Disabled("Not stable between systems")
     @Test
     void depictUndirectedReactionAsSVG()

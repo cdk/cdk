@@ -673,7 +673,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             String label = null;
             if (!isHidden(atom))
                 label = getAnnotationLabel(atom);
-            if (label != null) {
+            if (label != null && !label.isEmpty()) {
 
                 // to ensure consistent draw distance we need to adjust the annotation distance
                 // depending on whether we are drawing next to an atom symbol or not.
