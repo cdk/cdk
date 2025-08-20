@@ -53,7 +53,7 @@ class DepictionTest {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
         String eps = dg.depict(ac).toPsStr();
-        String nl = System.getProperty("line.separator");
+        String nl = System.lineSeparator();
         String[] lines = eps.split(nl,3);
         Assertions.assertEquals("%!PS-Adobe-3.0", lines[0]);
         Assertions.assertEquals("%%Creator: FreeHEP Graphics2D Driver", lines[1]);
@@ -65,7 +65,7 @@ class DepictionTest {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
         String eps = dg.depict(ac).toEpsStr();
-        String nl = System.getProperty("line.separator");
+        String nl = System.lineSeparator();
         String[] lines = eps.split(nl,3);
         Assertions.assertEquals("%!PS-Adobe-3.0 EPSF-3.0", lines[0]);
         Assertions.assertTrue(lines[1].startsWith("%%BoundingBox: 0 0"));
@@ -77,7 +77,7 @@ class DepictionTest {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("C1CCCCC1CCCCC");
         String eps = dg.depict(ac).toEpsStr();
-        String nl = System.getProperty("line.separator");
+        String nl = System.lineSeparator();
         String[] lines = eps.split(nl,3);
         Assertions.assertEquals("%!PS-Adobe-3.0 EPSF-3.0", lines[0]);
         Assertions.assertEquals("%%BoundingBox: 0 0 92 33", lines[1]);
@@ -123,8 +123,8 @@ class DepictionTest {
         );
         List<String> foundmatches =
             Stream.of(targetLines)
-                .map(el -> el.trim())
-                .filter(el -> stringsToFind.indexOf(el) != -1).collect(Collectors.toList());
+                .map(String::trim)
+                .filter(stringsToFind::contains).collect(Collectors.toList());
         Assertions.assertIterableEquals(stringsToFind, foundmatches);
     }
 
@@ -142,9 +142,9 @@ class DepictionTest {
     void testAtomPropertyEmptyStringAnnotationLabel() throws CDKException {
         DepictionGenerator depictionGenerator = new DepictionGenerator().withAtomValues();
         SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer atomContainer = smilesParser.parseSmiles("C1CCCCC1CCCCC");
-        atomContainer.atoms().forEach(a -> a.setProperty(CDKConstants.COMMENT, ""));
-        depictionGenerator.depict(atomContainer);
+        IAtomContainer molecule = smilesParser.parseSmiles("C1CCCCC1CCCCC");
+        molecule.atoms().forEach(a -> a.setProperty(CDKConstants.COMMENT, ""));
+        depictionGenerator.depict(molecule);
     }
 
     @Disabled("Not stable between systems")
