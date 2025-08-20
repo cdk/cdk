@@ -158,7 +158,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             );
     private static final int DEFAULT_INCLUSIVE_MAX_TREE_DEPTH = Integer.SIZE - 1;
 
-    private final Map<String, IAtomContainer> fragMap;
+    private Map<String, IAtomContainer> fragMap;
     private final SmilesGenerator smilesGenerator;
     private int inclusiveMaxTreeDepth;
     private int minFragSize;
@@ -253,7 +253,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         this.smilesGenerator = smilesGenerator;
         this.setInclusiveMaxTreeDepth(inclusiveMaxTreeDepth);
         this.setMinimumFragmentSize(minFragSize);
-        this.fragMap = new HashMap<>();
+        this.fragMap = null;
     }
 
     /**
@@ -320,7 +320,9 @@ public class ExhaustiveFragmenter implements IFragmenter {
      */
     @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
-        this.fragMap.clear();
+        if (this.fragMap != null) {
+            this.fragMap.clear();
+        }
         run(atomContainer);
     }
 
@@ -344,16 +346,17 @@ public class ExhaustiveFragmenter implements IFragmenter {
         if (atomContainer.getBondCount() < 3 ||
                 atomContainer.getAtomCount() < this.minFragSize ||
                 atomContainer.isEmpty()) {
+            this.fragMap = new HashMap<>(0);
             return;
         }
 
         // Retrieve bonds that are eligible for splitting
-        IBond[] splittableBonds =
-                getSplittableBonds(atomContainer).toArray(new IBond[0]);
+        IBond[] splittableBonds = getSplittableBonds(atomContainer);
 
         // If no splittable bonds are found, return early
         if (splittableBonds.length == 0) {
             logger.debug("no splittable bonds found");
+            this.fragMap = new HashMap<>(0);
             return;
         }
         if (splittableBonds.length > this.inclusiveMaxTreeDepth) {
@@ -375,6 +378,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
         for (int i = 0; i < splittableBonds.length; i++) {
             splittableBondIndices[i] = splittableBonds[i].getIndex();
         }
+
+        this.fragMap = new HashMap<>(numberOfIterations);
 
         // Iterate over all non-empty subsets of splittable bonds
         for (int i = 1; i <= numberOfIterations; i++) {
@@ -444,7 +449,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * @param atomContainer the container which contains the molecule in question.
      * @return the bonds which would be split by the exhaustive fragmentation.
      */
-    public static Set<IBond> getSplittableBonds(IAtomContainer atomContainer) {
+    public static IBond[] getSplittableBonds(IAtomContainer atomContainer) {
         if (atomContainer == null) {
             throw new NullPointerException("The atom container must not be null");
         }
@@ -458,7 +463,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         IAtomContainer allRingsContainer = ringSearch.ringFragments();
 
         // find the splittable bonds
-        Set<IBond> splittableBondSet = new HashSet<>(
+        ArrayList<IBond> splittableBondSet = new ArrayList<>(
                 atomContainer.getBondCount() / 3
         );
 
@@ -483,7 +488,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 if (!(isInRing || isTerminal)) splittableBondSet.add(bond);
             }
         }
-        return splittableBondSet;
+        return splittableBondSet.toArray(new IBond[0]);
     }
 
     /**
@@ -718,6 +723,10 @@ public class ExhaustiveFragmenter implements IFragmenter {
      */
     @Override
     public String[] getFragments() {
+        if (fragMap == null) {
+            throw new NullPointerException("It is mandatory to generate " +
+                    "fragments before getting them");
+        }
         return (new ArrayList<>(fragMap.keySet())).toArray(new String[0]);
     }
 
@@ -728,6 +737,10 @@ public class ExhaustiveFragmenter implements IFragmenter {
      */
     @Override
     public IAtomContainer[] getFragmentsAsContainers() {
+        if (fragMap == null) {
+            throw new NullPointerException("It is mandatory to generate " +
+                    "fragments before getting them");
+        }
         return (new ArrayList<>(fragMap.values())).toArray(new IAtomContainer[0]);
     }
 
