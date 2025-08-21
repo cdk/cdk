@@ -797,10 +797,50 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         );
     }
 
+    /**
+     * Ensures that stereochemical information (chiral centers '@' and double-bond
+     * E/Z markers '/' or '\') is preserved when generating fragment containers.
+     */
+    @Test
+    void testStereoChemistryCopied() throws Exception {
+        SmilesGenerator smilesGenerator =
+                new SmilesGenerator(
+                        SmiFlavor.UseAromaticSymbols | SmiFlavor.Stereo
+                );
+        IAtomContainer mol = smilesParser.parseSmiles("CC[C@H](F)C/C=C/C");
+        ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter(
+                smilesGenerator,
+                6,
+                ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS,
+                31
+        );
+        fragmenter.generateFragments(mol);
+
+        String[] smilesFrags = fragmenter.getFragments();
+        IAtomContainer[] containerFrags = fragmenter.getFragmentsAsContainers();
+
+        Assertions.assertNotNull(smilesFrags);
+        Assertions.assertNotNull(containerFrags);
+        Assertions.assertEquals(smilesFrags.length, containerFrags.length,
+                "Number of SMILES fragments and container fragments must match");
+
+        String[] containerSmiles = new String[smilesFrags.length];
+        for (int i = 0; i < containerSmiles.length; i++) {
+            containerSmiles[i] = smilesGenerator.create(containerFrags[i]);
+        }
+
+        assertFragsContain(new String[]{
+                "C(F)C/C=C/C"
+        }, smilesFrags);
+
+        assertFragsContain(new String[]{
+                "C(F)C/C=C/C"
+        }, containerSmiles);
+    }
 
     // --utility --
 
-    private static <T> void assertFragsContain(
+    private static void assertFragsContain(
             String[] expected,
             String[] actual
     ) {

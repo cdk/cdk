@@ -27,7 +27,9 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -173,6 +175,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * <li>Unsaturated fragments</li>
      * <li>Default {@link SmilesGenerator}
      *     ({@code SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols})</li>
+     * <li>{@link ExhaustiveFragmenter#inclusiveMaxTreeDepth} of 31</li>
      * </ul>
      */
     public ExhaustiveFragmenter() {
@@ -186,7 +189,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     /**
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment
-     * size and saturation setting. Uses the default {@link SmilesGenerator}.
+     * size and saturation setting. Uses the default {@link SmilesGenerator} and
+     * default {@link ExhaustiveFragmenter#inclusiveMaxTreeDepth} of 31
      *
      * @param minFragSize       Minimum number of atoms in a valid fragment
      *                          (excluding implicit hydrogen).
@@ -205,7 +209,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment
      * size. Saturation defaults to {@link Saturation#UNSATURATED_FRAGMENTS}.
-     * Uses the default {@link SmilesGenerator}.
+     * Uses the default {@link SmilesGenerator} and the default
+     * {@link ExhaustiveFragmenter#inclusiveMaxTreeDepth} of 31
      *
      * @param minFragSize Minimum number of atoms in a valid fragment
      *                    (excluding implicit hydrogen).
@@ -221,7 +226,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     /**
      * Constructs an ExhaustiveFragmenter with a user-provided {@link SmilesGenerator},
-     * user-defined minimum fragment size, and saturation setting.
+     * user-defined minimum fragment size, inclusive max tree depth and
+     * saturation setting.
      *
      * @param smilesGenerator   The {@link SmilesGenerator} instance to use for
      *                          creating SMILES strings
@@ -240,13 +246,13 @@ public class ExhaustiveFragmenter implements IFragmenter {
             int inclusiveMaxTreeDepth
     ) {
         if (saturationSetting == null) {
-            throw new IllegalArgumentException(
+            throw new NullPointerException(
                     "The given SaturationSetting can not be null"
             );
         }
         this.saturationSetting = saturationSetting;
         if (smilesGenerator == null) {
-            throw new IllegalArgumentException(
+            throw new NullPointerException(
                     "The given SmilesGenerator can not be null"
             );
         }
@@ -592,7 +598,19 @@ public class ExhaustiveFragmenter implements IFragmenter {
         return copiedAtom;
     }
 
-    private static void copyBond(
+    /**
+     * Creates a copy of a bond and adds it to the specified atom container.
+     *
+     * @param cpyCurrentAtom Atom in the new atom container that is connected by
+     *                       the bond to be copied.
+     * @param cpyNbor        The neighbour of `cpyCurrentAtom` that
+     *                       is connected by the bond one wants to copy.
+     * @param origBond       The bond in the original molecule.
+     * @param atomContainer  The new atom container to which the bond is to
+     *                       be copied.
+     * @return The bond in the new atom container.
+     */
+    private static IBond copyBond(
             IAtom cpyCurrentAtom,
             IAtom cpyNbor,
             IBond origBond,
@@ -607,6 +625,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
         // Setting is in ring is possible here because we always detect rings
         // in the process of detecting the splittable bonds.
         cpyBond.setIsInRing(origBond.isInRing());
+        return cpyBond;
     }
 
     /**
@@ -624,7 +643,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             IBond[] bondsToSplit
     ) {
         Set<IBond> bondsToSplitSet = new HashSet<>(
-                (int) Math.ceil(bondsToSplit.length / (double) 0.75f)
+                (int) Math.ceil(bondsToSplit.length / 0.75)
         );
         // for a faster lookup the hashset is used here.
         bondsToSplitSet.addAll(Arrays.asList(bondsToSplit));
@@ -636,7 +655,12 @@ public class ExhaustiveFragmenter implements IFragmenter {
             if (!visitedOriginalAtoms[origMol.indexOf(currPotentialStartAtom)]) {
                 IAtomContainer fragmentContainer =
                         origMol.getBuilder().newInstance(IAtomContainer.class);
-                Map<IAtom, IAtom> origToCpyMap = new HashMap<>();
+                Map<IAtom, IAtom> origToCpyAtomMap = new HashMap<>(
+                        (int) Math.ceil(origMol.getAtomCount() / 0.75)
+                );
+                Map<IBond, IBond> origToCpyBondMap = new HashMap<>(
+                        (int) Math.ceil(origMol.getBondCount() / 0.75)
+                );
                 Deque<IAtom> dfsStack = new ArrayDeque<>();
                 // Store split counts specific to the atoms in the fragment being built
                 Map<IAtom, Integer> splitCountsCpyAtoms = new HashMap<>();
@@ -644,38 +668,40 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 dfsStack.push(currPotentialStartAtom);
                 visitedOriginalAtoms[origMol.indexOf(currPotentialStartAtom)] = true;
                 IAtom cpyStartAtom = copyAtom(currPotentialStartAtom, fragmentContainer);
-                origToCpyMap.put(currPotentialStartAtom, cpyStartAtom);
+                origToCpyAtomMap.put(currPotentialStartAtom, cpyStartAtom);
 
                 while (!dfsStack.isEmpty()) {
                     IAtom origCurrAtom = dfsStack.pop();
-                    IAtom cpyCurrentAtom = origToCpyMap.get(origCurrAtom);
+                    IAtom cpyCurrentAtom = origToCpyAtomMap.get(origCurrAtom);
 
                     for (IBond origBond : origMol.getConnectedBondsList(origCurrAtom)) {
                         IAtom origNbor = origBond.getOther(origCurrAtom);
                         boolean isThisABondToSplit = bondsToSplitSet.contains(origBond);
 
                         if (!isThisABondToSplit) {
-                            if (!origToCpyMap.containsKey(origNbor)) {
+                            if (!origToCpyAtomMap.containsKey(origNbor)) {
                                 visitedOriginalAtoms[origMol.indexOf(origNbor)] = true;
                                 IAtom cpyNbor = copyAtom(origNbor, fragmentContainer);
-                                origToCpyMap.put(origNbor, cpyNbor);
-                                copyBond(
+                                origToCpyAtomMap.put(origNbor, cpyNbor);
+                                IBond cpyBond = copyBond(
                                         cpyCurrentAtom,
                                         cpyNbor,
                                         origBond,
                                         fragmentContainer
                                 );
+                                origToCpyBondMap.put(origBond, cpyBond);
                                 dfsStack.push(origNbor);
                             } else {
-                                IAtom cpyNbor = origToCpyMap.get(origNbor);
+                                IAtom cpyNbor = origToCpyAtomMap.get(origNbor);
                                 // Add bond only if not already present
                                 if (fragmentContainer.getBond(cpyCurrentAtom, cpyNbor) == null) {
-                                    copyBond(
+                                    IBond cpyBond = copyBond(
                                             cpyCurrentAtom,
                                             cpyNbor,
                                             origBond,
                                             fragmentContainer
                                     );
+                                    origToCpyBondMap.put(origBond, cpyBond);
                                 }
                             }
                         } else {
@@ -708,6 +734,41 @@ public class ExhaustiveFragmenter implements IFragmenter {
                                         "no treatment defined yet for this new enum constant"
                                 );
                         }
+                    }
+                }
+                // adding stereo information if all elements are present in the
+                // new fragment
+                for (IStereoElement<?, ?> elem : origMol.stereoElements()) {
+                    boolean allAtomsPresent = true;
+                    IChemObject focus = elem.getFocus();
+                    if (focus instanceof IAtom) {
+                        if (!origToCpyAtomMap.containsKey(focus)) {
+                            allAtomsPresent = false;
+                        }
+                    } else if (focus instanceof IBond) {
+                        if (!origToCpyBondMap.containsKey(focus)) {
+                            allAtomsPresent = false;
+                        }
+                    }
+
+                    if (allAtomsPresent) {
+                        for (IChemObject iChemObject : elem.getCarriers()) {
+                            if (iChemObject instanceof IAtom) {
+                                if (!origToCpyAtomMap.containsKey(iChemObject)) {
+                                    allAtomsPresent = false;
+                                    break;
+                                }
+                            } else if (iChemObject instanceof IBond) {
+                                if (!origToCpyBondMap.containsKey(iChemObject)) {
+                                    allAtomsPresent = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (allAtomsPresent) {
+                        fragmentContainer.addStereoElement(elem.map(origToCpyAtomMap, origToCpyBondMap));
                     }
                 }
                 fragmentList.add(fragmentContainer);
