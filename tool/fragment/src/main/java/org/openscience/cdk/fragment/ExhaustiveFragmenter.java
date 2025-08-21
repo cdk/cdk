@@ -393,7 +393,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             int subsetSize = subset.length;
 
             // Skip subsets exceeding the allowed depth
-            if (subsetSize >= this.inclusiveMaxTreeDepth) {
+            if (subsetSize > this.inclusiveMaxTreeDepth) {
                 continue;
             }
 
