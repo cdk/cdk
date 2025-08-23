@@ -236,10 +236,7 @@ public final class DepictionGenerator {
      * system font.
      */
     public DepictionGenerator() {
-        this(new Font(getDefaultOsFont(), Font.PLAIN, 13));
-        setParam(BasicSceneGenerator.BondLength.class, 26.1d);
-        setParam(StandardGenerator.HashSpacing.class, 26 / 8d);
-        setParam(StandardGenerator.WaveSpacing.class, 26 / 8d);
+        this(new Font(getDefaultOsFont(), Font.PLAIN, 14));
     }
 
     /**

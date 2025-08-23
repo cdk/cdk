@@ -1239,7 +1239,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          */
         @Override
         public Double getDefault() {
-            return 5d;
+            return 3.25;
         }
     }
 
@@ -1253,7 +1253,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          */
         @Override
         public Double getDefault() {
-            return 5d;
+            return 3.25;
         }
     }
 
