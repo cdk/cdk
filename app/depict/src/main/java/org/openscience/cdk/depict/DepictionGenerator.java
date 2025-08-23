@@ -1293,6 +1293,17 @@ public final class DepictionGenerator {
         return copy;
     }
 
+    public DepictionGenerator withParams(RendererModel model) {
+        DepictionGenerator copy = new DepictionGenerator(this);
+        for (IGeneratorParameter<?> param : model.getRenderingParameters()) {
+            if (copy.getModel().hasParameter(param.getClass())) {
+                System.err.println(param.getClass().getSimpleName() + ": " + copy.getModel().get(param.getClass()) + " =>" + param.getValue());
+                copy.setParam(param.getClass(), param.getValue());
+            }
+        }
+        return copy;
+    }
+
     private double caclModelScale(Collection<IAtomContainer> mols) {
         List<IBond> bonds = new ArrayList<>();
         for (IAtomContainer mol : mols) {
