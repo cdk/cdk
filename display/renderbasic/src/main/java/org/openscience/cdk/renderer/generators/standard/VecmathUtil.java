@@ -221,6 +221,13 @@ final class VecmathUtil {
         return Math.tan(hypotenuse.angle(adjacent)) * oppositeLength;
     }
 
+    private static boolean colinear(List<Vector2d> vector2ds) {
+        assert vector2ds.size() == 2;
+        Vector2d a = vector2ds.get(0);
+        Vector2d b = vector2ds.get(1);
+        return Math.abs(a.dot(b) - -1) < 0.01;
+    }
+
     /**
      * Average a collection of vectors.
      *
@@ -228,6 +235,12 @@ final class VecmathUtil {
      * @return average vector
      */
     static Vector2d average(final Collection<Vector2d> vectors) {
+
+        if (vectors.size() == 2 &&
+            colinear(new ArrayList<>(vectors))) {
+            return new Vector2d(-1, 0);
+        }
+
         final Vector2d average = new Vector2d(0, 0);
         for (final Vector2d vector : vectors) {
             average.add(vector);

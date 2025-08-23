@@ -92,7 +92,7 @@ final class StandardDonutGenerator {
     }
 
     private boolean canDelocalise(final IAtomContainer ring) {
-        boolean okay = ring.getBondCount() < 8;
+        boolean okay = ring.getBondCount() <= 8;
         if (!okay)
             return false;
         for (IBond bond : ring.bonds()) {

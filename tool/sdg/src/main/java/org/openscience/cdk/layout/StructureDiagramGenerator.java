@@ -1849,7 +1849,7 @@ public class StructureDiagramGenerator {
             for (IAtom ringAtom : multicenter.getAtoms())
                 ringCharge += ringAtom.<Integer>getProperty(ADJUSTED_CHARGE);
             if (ringCharge < 0 && metalCharge - ringCharge >= 0) {
-                metal.setProperty(ADJUSTED_CHARGE, metalCharge - ringCharge);
+                metal.setProperty(ADJUSTED_CHARGE, metalCharge + ringCharge);
                 for (IAtom ringAtom : multicenter.getAtoms()) {
                     ringAtom.setProperty(ADJUSTED_CHARGE, 0);
                 }
@@ -2860,13 +2860,11 @@ public class StructureDiagramGenerator {
 
                     newBegP.add(bndVec);
                     bndXVec.normalize();
-                    if (!isMulticenter)
-                        bndXVec.scale(2*bndStep);
+                    bndXVec.scale(isMulticenter ? 3*bndStep : 2*bndStep);
                     newBegP.sub(bndXVec);
                     newEndP.sub(bndVec);
                     bndXVec.normalize();
-                    if (!isMulticenter)
-                        bndXVec.scale(4*bndStep);
+                    bndXVec.scale(isMulticenter ? 3*bndStep : 4*bndStep);
                     newEndP.add(bndXVec);
 
                     if (atom.getBondCount() != 1)
