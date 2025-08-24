@@ -1294,7 +1294,6 @@ public final class DepictionGenerator {
         DepictionGenerator copy = new DepictionGenerator(this);
         for (IGeneratorParameter<?> param : model.getRenderingParameters()) {
             if (copy.getModel().hasParameter(param.getClass())) {
-                System.err.println(param.getClass().getSimpleName() + ": " + copy.getModel().get(param.getClass()) + " =>" + param.getValue());
                 copy.setParam(param.getClass(), param.getValue());
             }
         }
