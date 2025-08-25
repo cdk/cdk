@@ -1187,8 +1187,15 @@ public final class DepictionGenerator {
     }
 
     /**
-     * Specify a desired size of margin. The units depend on the output format with
-     * raster images using pixels and vector graphics using millimeters.
+     * Specify a desired size of margin, this margin is a minimum amount of
+     * space around the depiction and the edge of the draw area. If you have
+     * specified {@link #withSize} larger than required the margin will grow
+     * to center the molecule/reaction. If you specify a margin you should also
+     * specify {@link #withPadding} which will default to a multiple of the
+     * margin amount.
+     * <br/>
+     * The units depend on the output format with raster images using pixels
+     * and vector graphics using millimeters.
      *
      * @param m margin
      * @return new generator for method chaining
@@ -1201,8 +1208,8 @@ public final class DepictionGenerator {
 
     /**
      * Specify a desired size of padding for molecule sets and reactions. The units
-     * depend on the output format with raster images using pixels and vector graphics
-     * using millimeters.
+     * depend on the output format with raster images using pixels and
+     * vector graphics using millimeters.
      *
      * @param p padding
      * @return new generator for method chaining
@@ -1232,9 +1239,10 @@ public final class DepictionGenerator {
     }
 
     /**
-     * Resize depictions to fill all available space (only if a size is specified).
-     * This generally isn't wanted as very small molecules (e.g. acetaldehyde) may
-     * become huge.
+     * Resize depictions to fill all available space (only if a size is
+     * specified). This generally isn't wanted as very small molecules (e.g.
+     * acetaldehyde) may become huge and for publication quality work all bond
+     * lengths should be the same size.
      *
      * @return new generator for method chaining
      * @see BasicSceneGenerator.FitToScreen
