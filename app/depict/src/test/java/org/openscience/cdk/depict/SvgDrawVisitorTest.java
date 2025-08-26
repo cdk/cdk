@@ -147,7 +147,15 @@ class SvgDrawVisitorTest {
         final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.setTransform(AffineTransform.getTranslateInstance(15, 15));
         visitor.visit(GeneralPath.shapeOf(new RoundRectangle2D.Double(0, 0, 10, 10, 2, 2), new Color(255,0,0,126)));
-        assertThat(visitor.toString(), StringContains.containsString("rgba(255,0,0,0.49)"));
+        assertThat(visitor.toString(), StringContains.containsString("fill='#FF0000' opacity='0.49'"));
+    }
+
+    @Test
+    void testStrokeTransparencyLocaleEncoding() {
+        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
+        visitor.setTransform(AffineTransform.getTranslateInstance(15, 15));
+        visitor.visit(GeneralPath.outlineOf(new RoundRectangle2D.Double(0, 0, 10, 10, 2, 2), 1.0, new Color(255,0,0,126)));
+        assertThat(visitor.toString(), StringContains.containsString("stroke='#FF0000' stroke-opacity='0.49'"));
     }
 
 }

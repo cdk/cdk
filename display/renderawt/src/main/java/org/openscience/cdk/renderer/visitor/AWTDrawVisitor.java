@@ -429,6 +429,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
 
     private void visit(RectangleElement rectangle) {
+        if (rectangle.color == null)
+            return;
         this.graphics.setColor(rectangle.color);
         int width = scaleX(rectangle.width);
         int height = scaleY(rectangle.height);
