@@ -167,6 +167,16 @@ public interface IBond extends IElectronContainer {
          */
         WedgeEnd,
         /**
+         * Display as a hollow wedge, with the narrow end
+         * towards the begin atom of the bond ({@link IBond#getBegin()}).
+         */
+        HollowWedgeBegin,
+        /**
+         * Display as a hollow wedge, with the narrow end
+         * towards the end atom of the bond ({@link IBond#getEnd()}).
+         */
+        HollowWedgeEnd,
+        /**
          * Display as an arrow (e.g. co-ordination bond), the arrow points
          * to the begin ({@link IBond#getBegin()}) atom.
          */
