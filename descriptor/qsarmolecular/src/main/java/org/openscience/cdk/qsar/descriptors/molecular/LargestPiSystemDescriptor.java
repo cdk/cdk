@@ -31,6 +31,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
@@ -62,16 +64,17 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
 
     private boolean               checkAromaticity = false;
     private static final String[] NAMES            = {"nAtomP"};
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(LargestPiSystemDescriptor.class);
 
     /**
      * Constructor for the LargestPiSystemDescriptor object.
      */
-    public LargestPiSystemDescriptor() {}
+    public LargestPiSystemDescriptor() { /* empty, setParameters(Object[] params) is used for setting parameters */ }
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
      * is implemented by this class.
-     * 
+     * <p>
      * These fields are used in the map:
      * <ul>
      * <li>Specification-Reference: refers to an entry in a unique dictionary
@@ -92,7 +95,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
 
     /**
      * Sets the parameters attribute of the LargestPiSystemDescriptor object.
-     * 
+     * <p>
      * This descriptor takes one parameter, which should be Boolean to indicate whether
      * aromaticity has been checked (TRUE) or not (FALSE).
      *
@@ -139,9 +142,9 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
     /**
      * Calculate the count of atoms of the largest pi system in the supplied {@link IAtomContainer}.
      * 
-     * <p>The method require one parameter:
+     * <p>The method requires one parameter:
      * <ol>
-     * <li>if checkAromaticity is true, the method check the aromaticity,
+     * <li>if checkAromaticity is true, the method checks the aromaticity (by applying cdkLegacy),
      * <li>if false, means that the aromaticity has already been checked
      * </ol>
      *
@@ -151,41 +154,34 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
-        boolean[] originalFlag4 = new boolean[container.getAtomCount()];
-        for (int i = 0; i < originalFlag4.length; i++) {
-            originalFlag4[i] = container.getAtom(i).getFlag(IChemObject.VISITED);
-        }
+        boolean[] visited = new boolean[container.getAtomCount()];
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
                 Aromaticity.cdkLegacy().apply(container);
             } catch (CDKException e) {
-                return getDummyDescriptorValue(e);
+                logger.warn("Could not perceive atom types or configure atoms or set aromaticity: " + e.getMessage(), e);
             }
         }
         int largestPiSystemAtomsCount = 0;
         List<IAtom> startSphere;
         List<IAtom> path;
-        //Set all VisitedFlags to False
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            container.getAtom(i).setFlag(IChemObject.VISITED, false);
-        }
-        //logger.debug("Set all atoms to Visited False");
         for (int i = 0; i < container.getAtomCount(); i++) {
             //Possible pi System double bond or triple bond, charge, N or O (free electron pair)
-            //logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
+            logger.debug("atom: "+i+" maxBondOrder: "+container.getMaximumBondOrder(container.getAtom(i))+" Aromatic: "+container.getAtom(i).isAromatic()+" FormalCharge: "+container.getAtom(i).getFormalCharge()+" Charge: "+container.getAtom(i).getCharge()+" Flag: "+visited[i]);
             if ((container.getMaximumBondOrder(container.getAtom(i)) != IBond.Order.SINGLE
                     || Math.abs(container.getAtom(i).getFormalCharge()) >= 1
                     || container.getAtom(i).getFlag(IChemObject.AROMATIC)
                     || container.getAtom(i).getAtomicNumber() == IElement.N || container.getAtom(i).getAtomicNumber() == IElement.O)
-                    && !container.getAtom(i).getFlag(IChemObject.VISITED)) {
-                //logger.debug("...... -> Accepted");
+                    && !visited[i]) {
+                logger.debug("...... -> Accepted");
                 startSphere = new ArrayList<>();
                 path = new ArrayList<>();
                 startSphere.add(container.getAtom(i));
                 try {
-                    breadthFirstSearch(container, startSphere, path);
+                    breadthFirstSearch(container, startSphere, path, visited);
                 } catch (CDKException e) {
+                    logger.error("Could not determine largest pi system, returning dummy descriptor value, exception message: " + e.getMessage(), e);
                     return getDummyDescriptorValue(e);
                 }
                 if (path.size() > largestPiSystemAtomsCount) {
@@ -194,18 +190,13 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
             }
 
         }
-        // restore original flag values
-        for (int i = 0; i < originalFlag4.length; i++) {
-            container.getAtom(i).setFlag(IChemObject.VISITED, originalFlag4[i]);
-        }
-
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
                 largestPiSystemAtomsCount), getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
+     * <p>
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
@@ -229,37 +220,39 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      * @param sphere    A sphere of atoms to
      *                  start the search with
      * @param path      An array list which stores the atoms belonging to the pi system
+     * @param visited boolean array where each position corresponds to an atom index in the container,
+     *                stating whether the respective atom has already been visited
      * @throws org.openscience.cdk.exception.CDKException
      *          Description of the
      *          Exception
      */
-    private void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws CDKException {
+    private void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path, boolean[] visited) throws CDKException {
         IAtom nextAtom;
         List<IAtom> newSphere = new ArrayList<>();
-        //logger.debug("Start of breadthFirstSearch");
+        logger.debug("Start of breadthFirstSearch");
         for (IAtom atom : sphere) {
-            //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
-            List bonds = container.getConnectedBondsList(atom);
-            for (Object bond : bonds) {
-                nextAtom = ((IBond) bond).getOther(atom);
+            logger.debug("BreadthFirstSearch around atom " + (container.indexOf(atom) + 1));
+            List<IBond> bonds = container.getConnectedBondsList(atom);
+            for (IBond bond : bonds) {
+                nextAtom = bond.getOther(atom);
                 if ((container.getMaximumBondOrder(nextAtom) != IBond.Order.SINGLE
                         || Math.abs(nextAtom.getFormalCharge()) >= 1 || nextAtom.getFlag(IChemObject.AROMATIC)
                         || nextAtom.getAtomicNumber() == IElement.N || nextAtom.getAtomicNumber() == IElement.O)
-                        & !nextAtom.getFlag(IChemObject.VISITED)) {
-                    //logger.debug("BDS> AtomNr:"+container.indexOf(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
+                        && !visited[container.indexOf(nextAtom)]) {
+                    logger.debug("BDS> AtomNr: "+container.indexOf(nextAtom)+" maxBondOrder: "+container.getMaximumBondOrder(nextAtom)+" Aromatic: "+nextAtom.isAromatic()+" FormalCharge: "+nextAtom.getFormalCharge()+" Charge: "+nextAtom.getCharge()+" Flag: "+visited[container.indexOf(nextAtom)]);
                     path.add(nextAtom);
-                    //logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
-                    nextAtom.setFlag(IChemObject.VISITED, true);
+                    logger.debug("BreadthFirstSearch is meeting new atom " + (container.indexOf(atom) + 1));
+                    visited[container.indexOf(nextAtom)] = true;
                     if (container.getConnectedBondsCount(nextAtom) > 1) {
                         newSphere.add(nextAtom);
                     }
                 } else {
-                    nextAtom.setFlag(IChemObject.VISITED, true);
+                    visited[container.indexOf(nextAtom)] = true;
                 }
             }
         }
-        if (newSphere.size() > 0) {
-            breadthFirstSearch(container, newSphere, path);
+        if (!newSphere.isEmpty()) {
+            breadthFirstSearch(container, newSphere, path, visited);
         }
     }
 
