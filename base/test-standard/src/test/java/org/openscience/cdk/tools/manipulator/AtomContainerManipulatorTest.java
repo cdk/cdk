@@ -26,6 +26,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
@@ -619,10 +620,10 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
-        mol.getAtom(0).setImplicitHydrogenCount(0);
-        mol.getAtom(1).setImplicitHydrogenCount(1);
-        mol.getAtom(2).setImplicitHydrogenCount(1);
-        mol.getAtom(3).setImplicitHydrogenCount(1);
+        mol.getAtom(0).setImplicitHydrogenCount(1);
+        mol.getAtom(1).setImplicitHydrogenCount(0);
+        mol.getAtom(2).setImplicitHydrogenCount(0);
+        mol.getAtom(3).setImplicitHydrogenCount(0);
         mol.addBond(0, 1, Order.SINGLE);
         mol.addBond(0, 2, Order.SINGLE);
         mol.addBond(0, 3, Order.SINGLE);
@@ -675,8 +676,13 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     void testRemoveNonChiralHydrogens_StereoParity() throws Exception {
 
         IAtomContainer molecule = getChiralMolTemplate();
+        molecule.addStereoElement(new TetrahedralChirality(molecule.getAtom(1),
+                                                           new IAtom[]{molecule.getAtom(0),
+                                                                       molecule.getAtom(2),
+                                                                       molecule.getAtom(3),
+                                                                       molecule.getAtom(4)},
+                                                           ITetrahedralChirality.Stereo.CLOCKWISE));
         molecule.getAtom(1).setStereoParity(CDKConstants.STEREO_ATOM_PARITY_MINUS);
-
         Assertions.assertEquals(8, molecule.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeNonChiralHydrogens(molecule);
         Assertions.assertEquals(6, ac.getAtomCount());
@@ -686,6 +692,12 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     void testRemoveNonChiralHydrogens_StereoBond() throws Exception {
 
         IAtomContainer molecule = getChiralMolTemplate();
+        molecule.addStereoElement(new TetrahedralChirality(molecule.getAtom(1),
+                                                           new IAtom[]{molecule.getAtom(0),
+                                                                       molecule.getAtom(2),
+                                                                       molecule.getAtom(3),
+                                                                       molecule.getAtom(4)},
+                                                           ITetrahedralChirality.Stereo.CLOCKWISE));
         molecule.getBond(2).setStereo(IBond.Stereo.UP);
 
         Assertions.assertEquals(8, molecule.getAtomCount());
@@ -697,6 +709,12 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     void testRemoveNonChiralHydrogens_StereoBondHeteroAtom() throws Exception {
 
         IAtomContainer molecule = getChiralMolTemplate();
+        molecule.addStereoElement(new TetrahedralChirality(molecule.getAtom(1),
+                                                           new IAtom[]{molecule.getAtom(0),
+                                                                       molecule.getAtom(2),
+                                                                       molecule.getAtom(3),
+                                                                       molecule.getAtom(4)},
+                                                           ITetrahedralChirality.Stereo.CLOCKWISE));
         molecule.getBond(3).setStereo(IBond.Stereo.UP);
 
         Assertions.assertEquals(8, molecule.getAtomCount());
@@ -1715,6 +1733,15 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
+    void removeBondStereo2() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[2H]/C=C=C=C/[H]");
+        AtomContainerManipulator.suppressHydrogens(mol);
+        assertThat(mol.stereoElements().iterator().hasNext(),
+                   CoreMatchers.is(false));
+    }
+
+    @Test
     void keep1Hisotopes() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[2H]/C=C/[1H]");
@@ -1938,5 +1965,173 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
         Assertions.assertEquals("C([Pt@OH25](Cl)(Cl)([H])[H])([H])([H])[H]", smigen.create(mol));
+    }
+
+    @Test
+    public void suppressExtendedTetrahedral() throws CDKException {
+        String smi = "CC([H])=[C@]=C([H])C";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("CC=[C@]=CC", smigen.create(mol));
+    }
+
+    @Test
+    public void suppressExtendedTetrahedral2() throws CDKException {
+        String smi = "CC([H])=[C@]=C(C)[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("CC=[C@@]=CC", smigen.create(mol));
+    }
+
+    @Test
+    public void explExtendedTetrahedral() throws CDKException {
+        String smi = "[C]C=[C@]=C[C]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("[C]C(=[C@@]=C([C])[H])[H]", smigen.create(mol));
+    }
+
+    public static void assertHydrogenConversion(String input, String expected, HydrogenState type) throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(input);
+        AtomContainerManipulator.normalizeHydrogens(mol, type);
+        Cycles.markRingAtomsAndBonds(mol);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.AtomAtomMap);
+        Assertions.assertEquals(expected, smigen.create(mol));
+    }
+
+    @Test
+    public void testMolecularHydrogens() throws CDKException {
+        assertHydrogenConversion("[H][H]", "[H][H]", HydrogenState.Minimal);
+        // note the SMILES does not represent the interanl state, it really is "[HH]"!
+        assertHydrogenConversion("[H][H]", "[H][H]", HydrogenState.Unsafe);
+        assertHydrogenConversion("[HH]", "[H][H]", HydrogenState.Minimal);
+        assertHydrogenConversion("[HH]", "[H][H]", HydrogenState.Explicit);
+    }
+
+    @Test
+    public void testBridgedHydrogen() throws CDKException {
+        assertHydrogenConversion("B1[H]B[H]1", "B1[H]B[H]1", HydrogenState.Minimal);
+        assertHydrogenConversion("B1[H]B[H]1", "B.B", HydrogenState.Unsafe);
+        assertHydrogenConversion("B1[H]B[H]1", "B1([H]B([H]1)[H])[H]", HydrogenState.Explicit);
+    }
+
+    @Test
+    public void testHydrogenIsotope() throws CDKException {
+        assertHydrogenConversion("[H]C[2H]", "C[2H]", HydrogenState.Minimal);
+        assertHydrogenConversion("[H]C[2H]", "C", HydrogenState.Unsafe);
+    }
+
+    @Test
+    public void testMappedHydrogen() throws CDKException {
+        assertHydrogenConversion("[H:1]C[H:2]", "[H:1]C[H:2]", HydrogenState.Minimal);
+        assertHydrogenConversion("[H:1]C[H:2]", "C", HydrogenState.Unsafe);
+    }
+
+    @Test
+    public void testHydrogenIon() throws CDKException {
+        assertHydrogenConversion("[H+]", "[H+]", HydrogenState.Minimal);
+        assertHydrogenConversion("[H+]", "[H+]", HydrogenState.Unsafe);
+        assertHydrogenConversion("[H+]C", "[H+]C", HydrogenState.Minimal);
+        assertHydrogenConversion("[H+]C", "C", HydrogenState.Unsafe);
+    }
+
+    @Test
+    public void testSru() throws CDKException {
+        assertHydrogenConversion("CCC[H] |Sg:n:1,2:n:ht|", "CCC[H] |Sg:n:1,2:n:ht|",
+                                 HydrogenState.Minimal);
+        assertHydrogenConversion("CCC[H] |Sg:n:1,2:n:ht|",
+                                 "C(C(C([H])([H])[H])([H])[H])([H])([H])[H] |Sg:n:1,2,4,5,6,7:n:ht|",
+                                 HydrogenState.Explicit);
+        assertHydrogenConversion("C(C(C([H])([H])[H])([H])[H])([H])([H])[H] |Sg:n:1,2,4,5,6,7:n:ht|",
+                                 "CCC[H] |Sg:n:1,2:n:ht|",
+                                 HydrogenState.Minimal);
+        // sgroup is removed since it would not be possible to represent it
+        assertHydrogenConversion("CCC[H] |Sg:n:1,2:n:ht|", "CCC",
+                                 HydrogenState.Unsafe);
+        // sgroup is removed since it would not be possible to represent it,
+        // the valid multi-attach is kept
+        assertHydrogenConversion("CCC[H].*Cl |m:4:0.1,Sg:n:1,2:n:ht|", "CCC.*Cl |m:3:0.1|",
+                                 HydrogenState.Unsafe);
+    }
+
+    @Test
+    public void testSimpleChiralHydrogens() throws CDKException {
+        assertHydrogenConversion("C[C@H](CO)Cl", "C[C@H](CO)Cl", HydrogenState.Minimal);
+        assertHydrogenConversion("C[C@H](CO)Cl", "C([C@](C(O[H])([H])[H])(Cl)[H])([H])([H])[H]", HydrogenState.Explicit);
+        assertHydrogenConversion("C[C@H](CO)Cl", "C[C@](CO)(Cl)[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("C[C@H](CO)Cl", "C[C@H](CO)Cl", HydrogenState.Depiction);
+    }
+
+    // we add a hydrogen so it can be wedged, the other stereo can be wedged
+    // without being ambiguous
+    @Test
+    public void testCongestedStereo() throws CDKException {
+        assertHydrogenConversion("O[C@H](Cl)[C@H]([C@H](Br)(Cl))[C@H](Br)F",
+                                 "O[C@H](Cl)[C@H]([C@H](Br)Cl)[C@H](Br)F", HydrogenState.Minimal);
+        assertHydrogenConversion("O[C@H](Cl)[C@H]([C@H](Br)(Cl))[C@H](Br)F",
+                                 "O[C@](Cl)([C@]([C@](Br)(Cl)[H])([C@](Br)(F)[H])[H])[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("O[C@H](Cl)[C@H]([C@H](Br)(Cl))[C@H](Br)F",
+                                 "O[C@H](Cl)[C@]([C@H](Br)Cl)([C@H](Br)F)[H]", HydrogenState.Depiction);
+    }
+
+    // we add a hydrogen so it can be wedged, the other stereo can be wedged
+    // without being ambiguous
+    @Test
+    public void testBridgeHead() throws CDKException {
+        assertHydrogenConversion("C1CCC[C@H]2[C@H]1CCCC2",
+                                 "C1CCC[C@H]2[C@H]1CCCC2", HydrogenState.Minimal);
+        assertHydrogenConversion("C1CCC[C@H]2[C@H]1CCCC2",
+                                 "C1CCC[C@]2([C@]1(CCCC2)[H])[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("C1CCC[C@H]2[C@H]1CCCC2",
+                                 "C1CCC[C@H]2[C@H]1CCCC2", HydrogenState.Depiction);
+    }
+
+    @Test
+    public void testExtendedCisTrans() throws CDKException {
+        assertHydrogenConversion("C/C=C=C=C(\\[H])C",
+                                 "C/C=C=C=C/C", HydrogenState.Minimal);
+        assertHydrogenConversion("C/C=C=C=C(\\[H])C",
+                                 "C/C(=C=C=C(\\[H])C)[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("C/C=C=C=C([H])/C",
+                                 "C/C=C=C=C/C", HydrogenState.Minimal);
+        assertHydrogenConversion("C/C=C=C=C(\\[H])C",
+                                 "C/C(=C=C=C(\\[H])C)[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("C/C=C=C=C(\\[H])C",
+                                 "C/C=C=C=C/C", HydrogenState.Depiction);
+    }
+
+    @Test
+    public void testAllene() throws CDKException {
+        assertHydrogenConversion("CC=[C@]=CC",
+                                 "CC=[C@]=CC", HydrogenState.Minimal);
+        assertHydrogenConversion("CC=[C@]=CC",
+                                 "CC(=[C@@]=C(C)[H])[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("CC=[C@]=CC",
+                                 "CC(=[C@@]=C(C)[H])[H]", HydrogenState.Depiction);
+        assertHydrogenConversion("CC=[C@]=C([H])C",
+                                 "CC=[C@]=CC", HydrogenState.Minimal);
+        assertHydrogenConversion("C([H])C=[C@]=CC",
+                                 "CC=[C@]=CC", HydrogenState.Minimal);
+        assertHydrogenConversion("[H]1.C2.C12=[C@]=C([H])C",
+                                 "CC=[C@@]=CC", HydrogenState.Minimal);
+    }
+
+    @Test
+    public void testOctahedral() throws CDKException {
+        assertHydrogenConversion("N[C@OH1H2](Cl)(Cl)Cl",
+                                 "N[C@OH1H2](Cl)(Cl)Cl", HydrogenState.Minimal);
+        assertHydrogenConversion("N[C@OH1H2](Cl)(Cl)Cl",
+                                 "N[C@OH6](Cl)(Cl)(Cl)([H])[H]", HydrogenState.Stereo);
+        assertHydrogenConversion("N[C@OH1H2](Cl)(Cl)Cl",
+                                 "N[C@OH6](Cl)(Cl)(Cl)([H])[H]", HydrogenState.Depiction);
+        assertHydrogenConversion("N[C@OH1H]([H])(Cl)(Cl)Cl",
+                                 "N[C@OH3]([H])(Cl)(Cl)(Cl)[H]", HydrogenState.Stereo);
     }
 }
