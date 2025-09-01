@@ -416,6 +416,8 @@ public final class SmilesParser {
      * @param rxns  parsed reactions
      */
     private void parseRxnCXSMILES(String title, IReactionSet rxns) throws InvalidSmilesException {
+        rxns.setProperty(CDKConstants.TITLE, title);
+
         CxSmilesState cxstate;
         int pos;
         if (title != null && title.startsWith("|")) {
