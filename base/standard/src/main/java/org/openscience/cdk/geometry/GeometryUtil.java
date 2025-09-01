@@ -288,23 +288,20 @@ public final class GeometryUtil {
                     continue;
 
                 IBond.Display flipped = null;
-                IBond.Stereo  flippedStereo = null;
                 switch (bond.getDisplay()) {
                     case WedgeBegin:
+                    case HollowWedgeBegin:
                         flipped = IBond.Display.WedgedHashBegin;
-                        flippedStereo = IBond.Stereo.DOWN;
                         break;
                     case WedgeEnd:
+                    case HollowWedgeEnd:
                         flipped = IBond.Display.WedgedHashEnd;
-                        flippedStereo = IBond.Stereo.DOWN_INVERTED;
                         break;
                     case WedgedHashBegin:
                         flipped = IBond.Display.WedgeBegin;
-                        flippedStereo = IBond.Stereo.UP;
                         break;
                     case WedgedHashEnd:
                         flipped = IBond.Display.WedgeEnd;
-                        flippedStereo = IBond.Stereo.UP_INVERTED;
                         break;
                     case Bold:
                         flipped = IBond.Display.Hash;
@@ -321,7 +318,6 @@ public final class GeometryUtil {
                 // lookup depends on provided collection... but we
                 // only do that if there was a bond display to flip
                 if (atoms.contains(nbor)) {
-                    bond.setStereo(flippedStereo); // wish this was cleaner
                     bond.setDisplay(flipped);
                 }
             }
