@@ -104,8 +104,8 @@ class BondTest extends AbstractBondTest {
         Assertions.assertEquals(2, bond.getAtomCount());
         Assertions.assertEquals(c, bond.getBegin());
         Assertions.assertEquals(o, bond.getEnd());
-        Assertions.assertTrue(bond.getOrder() == IBond.Order.DOUBLE);
-        Assertions.assertEquals(IBond.Stereo.NONE, bond.getStereo());
+        Assertions.assertEquals(IBond.Order.DOUBLE, bond.getOrder());
+        Assertions.assertEquals(IBond.Stereo.E_Z_BY_COORDINATES, bond.getStereo());
     }
 
     @Test

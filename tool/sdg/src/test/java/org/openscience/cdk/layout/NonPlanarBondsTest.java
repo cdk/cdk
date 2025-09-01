@@ -48,6 +48,7 @@ import javax.vecmath.Point2d;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -331,7 +332,7 @@ class NonPlanarBondsTest {
         m.addAtom(atom("C", 2, 1.299, -0.750));
         m.addBond(0, 1, IBond.Order.DOUBLE);
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.E_Z_BY_COORDINATES));
     }
 
     /**
@@ -453,7 +454,8 @@ class NonPlanarBondsTest {
         m.addBond(0, 5, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
         for (IBond bond : m.bonds()) {
-            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+            assertThat(bond.getStereo(), anyOf(is(IBond.Stereo.E_Z_BY_COORDINATES),
+                                               is(IBond.Stereo.NONE)));
         }
     }
 
@@ -476,7 +478,8 @@ class NonPlanarBondsTest {
         m.addBond(3, 5, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
         for (IBond bond : m.bonds())
-            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+            assertThat(bond.getStereo(), anyOf(is(IBond.Stereo.E_Z_BY_COORDINATES),
+                                               is(IBond.Stereo.NONE)));
     }
 
     /**
@@ -507,8 +510,10 @@ class NonPlanarBondsTest {
         m.addBond(8, 9, IBond.Order.SINGLE);
         m.addBond(9, 10, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
-        for (IBond bond : m.bonds())
-            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        for (IBond bond : m.bonds()) {
+            assertThat(bond.getStereo(), anyOf(is(IBond.Stereo.E_Z_BY_COORDINATES),
+                                               is(IBond.Stereo.NONE)));
+        }
     }
 
     /**
@@ -537,8 +542,10 @@ class NonPlanarBondsTest {
         m.addBond(7, 8, IBond.Order.SINGLE);
         m.addBond(8, 9, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
-        for (IBond bond : m.bonds())
-            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        for (IBond bond : m.bonds()) {
+            assertThat(bond.getStereo(), anyOf(is(IBond.Stereo.E_Z_BY_COORDINATES),
+                                               is(IBond.Stereo.NONE)));
+        }
     }
 
     /**

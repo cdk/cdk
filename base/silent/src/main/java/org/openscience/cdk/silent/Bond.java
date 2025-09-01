@@ -79,11 +79,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     protected IAtom[]         atoms            = new IAtom[2];
 
-    /**
-     * A descriptor the stereochemical orientation of this bond.
-     */
-    protected IBond.Stereo    stereo;
-
     protected IBond.Display   display = Display.Solid;
 
     /**
@@ -152,7 +147,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         atoms[0] = beg;
         atoms[1] = end;
         setOrder(order);
-        this.stereo = stereo;
+        setStereo(stereo);
         this.atomCount = 2;
     }
 
@@ -387,7 +382,35 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public IBond.Stereo getStereo() {
-        return this.stereo;
+        switch (display) {
+            case WedgeBegin:
+            case HollowWedgeBegin:
+            case Bold:
+                return Stereo.UP;
+            case HollowWedgeEnd:
+            case WedgeEnd:
+                return Stereo.UP_INVERTED;
+            case WedgedHashBegin:
+            case Hash:
+                return Stereo.DOWN;
+            case WedgedHashEnd:
+                return Stereo.DOWN_INVERTED;
+            case Wavy:
+                if (order == Order.SINGLE)
+                    return Stereo.UP_OR_DOWN;
+                else if (order == Order.DOUBLE)
+                    return Stereo.E_OR_Z;
+                return Stereo.NONE;
+            case Solid:
+                if (order == Order.SINGLE)
+                    return Stereo.NONE;
+                else if (order == Order.DOUBLE)
+                    return Stereo.E_Z_BY_COORDINATES;
+                else
+                    return Stereo.NONE;
+            default:
+                return Stereo.NONE;
+        }
     }
 
     /**
@@ -399,11 +422,14 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public void setStereo(IBond.Stereo stereo) {
-        this.stereo = stereo;
         if (stereo == null) {
             this.display = Display.Solid;
         } else {
             switch (stereo) {
+                case NONE:
+                case E_Z_BY_COORDINATES:
+                    display = Display.Solid;
+                    break;
                 case UP:
                     display = Display.WedgeBegin;
                     break;
@@ -416,6 +442,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
                 case DOWN_INVERTED:
                     display = Display.WedgedHashEnd;
                     break;
+                case E_OR_Z:
                 case UP_OR_DOWN:
                 case UP_OR_DOWN_INVERTED:
                     display = Display.Wavy;
