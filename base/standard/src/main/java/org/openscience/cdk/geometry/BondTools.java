@@ -544,6 +544,8 @@ public class BondTools {
         return (giveAngleBothMethods(from, to1, to2, false));
     }
 
+    // JWM: this function cannot be correct since the stereo of the H depends
+    // on where it is positioned!
     public static void makeUpDownBonds(IAtomContainer container) {
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom a = container.getAtom(i);
@@ -554,12 +556,12 @@ public class BondTools {
                 IAtom h = null;
                 for (int k = 0; k < 4; k++) {
                     IAtom conAtom = container.getConnectedAtomsList(a).get(k);
-                    IBond.Stereo stereo = container.getBond(a, conAtom).getStereo();
-                    if (stereo == IBond.Stereo.UP) {
+                    IBond.Display stereo = container.getBond(a, conAtom).getDisplay();
+                    if (stereo == IBond.Display.Up) {
                         up++;
-                    } else if (stereo == IBond.Stereo.DOWN) {
+                    } else if (stereo == IBond.Display.Down) {
                         down++;
-                    } else if (stereo == IBond.Stereo.NONE && conAtom.getAtomicNumber() == IElement.H) {
+                    } else if (stereo == IBond.Display.Solid && conAtom.getAtomicNumber() == IElement.H) {
                         h = conAtom;
                         hs++;
                     } else {
@@ -567,10 +569,10 @@ public class BondTools {
                     }
                 }
                 if (up == 0 && down == 1 && h != null && hs == 1) {
-                    container.getBond(a, h).setStereo(IBond.Stereo.UP);
+                    container.getBond(a, h).setDisplay(IBond.Display.Up);
                 }
                 if (up == 1 && down == 0 && h != null && hs == 1) {
-                    container.getBond(a, h).setStereo(IBond.Stereo.DOWN);
+                    container.getBond(a, h).setDisplay(IBond.Display.Down);
                 }
             }
         }

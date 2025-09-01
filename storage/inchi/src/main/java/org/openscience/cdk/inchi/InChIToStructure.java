@@ -387,25 +387,23 @@ public class InChIToStructure {
 
             switch (stereo) {
                 case NONE:
-                    cBo.setStereo(IBond.Stereo.NONE);
+                    cBo.setDisplay(IBond.Display.Solid);
                     break;
                 case SINGLE_1DOWN:
-                    cBo.setStereo(IBond.Stereo.DOWN);
+                    cBo.setDisplay(IBond.Display.WedgedHashBegin);
                     break;
                 case SINGLE_1UP:
-                    cBo.setStereo(IBond.Stereo.UP);
+                    cBo.setDisplay(IBond.Display.WedgeBegin);
                     break;
                 case SINGLE_2DOWN:
-                    cBo.setStereo(IBond.Stereo.DOWN_INVERTED);
+                    cBo.setDisplay(IBond.Display.WedgedHashEnd);
                     break;
                 case SINGLE_2UP:
-                    cBo.setStereo(IBond.Stereo.UP_INVERTED);
+                    cBo.setDisplay(IBond.Display.WedgeEnd);
                     break;
                 case SINGLE_1EITHER:
-                    cBo.setStereo(IBond.Stereo.UP_OR_DOWN);
-                    break;
                 case SINGLE_2EITHER:
-                    cBo.setStereo(IBond.Stereo.UP_OR_DOWN_INVERTED);
+                    cBo.setDisplay(IBond.Display.Wavy);
                     break;
             }
 

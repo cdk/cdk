@@ -201,7 +201,7 @@ public interface IBond extends IElectronContainer {
          *
          * @return the flipped bond display
          */
-        Display flip() {
+        public Display flip() {
             switch (this) {
                 case WedgeBegin: return WedgeEnd;
                 case WedgeEnd: return WedgeBegin;
@@ -214,6 +214,16 @@ public interface IBond extends IElectronContainer {
                 default: return this;
             }
         }
+
+        /**
+         * Convenience name for bold wedge, narrow end at begin atom.
+         */
+        public static final IBond.Display Up = Display.WedgeBegin;
+
+        /**
+         * Convenience name for hashed wedge bond, narrow end at begin atom.
+         */
+        public static final IBond.Display Down = Display.WedgedHashBegin;
     }
 
     /**
@@ -372,6 +382,7 @@ public interface IBond extends IElectronContainer {
      *
      * @return The stereo descriptor for this bond
      * @see #setStereo
+     * @deprecated use {@link #getDisplay}
      */
     IBond.Stereo getStereo();
 

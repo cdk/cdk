@@ -53,7 +53,7 @@ class ConvertorTest extends CDKTestCase {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IBond bond = builder.newInstance(IBond.class);
         bond.setOrder(IBond.Order.SINGLE);
-        bond.setStereo(IBond.Stereo.UP);
+        bond.setDisplay(IBond.Display.WedgeBegin);
 
         Convertor convertor = new Convertor(true, null);
         CMLBond cmlBond = convertor.cdkBondToCMLBond(bond);
@@ -79,7 +79,7 @@ class ConvertorTest extends CDKTestCase {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IBond bond = builder.newInstance(IBond.class);
         bond.setOrder(IBond.Order.SINGLE);
-        bond.setStereo(IBond.Stereo.DOWN);
+        bond.setDisplay(IBond.Display.WedgedHashBegin);
 
         Convertor convertor = new Convertor(true, null);
         CMLBond cmlBond = convertor.cdkBondToCMLBond(bond);
