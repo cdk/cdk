@@ -335,6 +335,10 @@ final class StandardBondGenerator {
                 return generateBoldWedgeBond(from, to, toBonds);
             case WedgeEnd:
                 return generateBoldWedgeBond(to, from, fromBonds);
+            case HollowWedgeBegin:
+                return generateBoldWedgeBond(from, to, toBonds).outline(stroke);
+            case HollowWedgeEnd:
+                return generateBoldWedgeBond(to, from, fromBonds).outline(stroke);
             case Wavy:
                 return generateWavyBond(from, to);
             case Dash:
@@ -374,7 +378,7 @@ final class StandardBondGenerator {
      * @param toBonds bonds connected to the 'to atom'
      * @return the rendering element
      */
-    IRenderingElement generateBoldWedgeBond(IAtom from, IAtom to, List<IBond> toBonds) {
+    GeneralPath generateBoldWedgeBond(IAtom from, IAtom to, List<IBond> toBonds) {
 
         final Point2d fromPoint = from.getPoint2d();
         final Point2d toPoint = to.getPoint2d();
