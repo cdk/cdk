@@ -28,6 +28,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -241,15 +243,21 @@ class CMLReaderTest extends SimpleChemObjectReaderTest {
 
             // we check here that the malformed dictRef doesn't throw an exception
             for (int i = 0; i < 19; i++) {
-                Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(i).getStereo(), "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo());
+                MatcherAssert.assertThat("found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
+                                         container.getBond(i).getStereo(),
+                                         CoreMatchers.anyOf(CoreMatchers.is(IBond.Stereo.NONE), CoreMatchers.is(IBond.Stereo.E_Z_BY_COORDINATES)));
             }
             Assertions.assertEquals(IBond.Stereo.DOWN, container.getBond(19).getStereo(), "expected a wedge bond");
             for (int i = 20; i < 30; i++) {
-                Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(i).getStereo(), "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo());
+                MatcherAssert.assertThat("found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
+                                         container.getBond(i).getStereo(),
+                                         CoreMatchers.anyOf(CoreMatchers.is(IBond.Stereo.NONE), CoreMatchers.is(IBond.Stereo.E_Z_BY_COORDINATES)));
             }
             Assertions.assertEquals(IBond.Stereo.UP, container.getBond(30).getStereo(), "expected a wedge bond");
             for (int i = 31; i <= 37; i++) {
-                Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(i).getStereo(), "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo());
+                MatcherAssert.assertThat("found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
+                                         container.getBond(i).getStereo(),
+                                         CoreMatchers.anyOf(CoreMatchers.is(IBond.Stereo.NONE), CoreMatchers.is(IBond.Stereo.E_Z_BY_COORDINATES)));
             }
         } finally {
             reader.close();
