@@ -151,14 +151,14 @@ class StereoElementFactoryTest {
         mol.addAtom(atom("C", 2, -1.36, 0.75));
         mol.addAtom(atom("N", 0, -0.07, 1.50));
         mol.addAtom(atom("C", 2, 0.39, -0.00));
-        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.NONE);
-        mol.addBond(2, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
-        mol.addBond(2, 3, IBond.Order.SINGLE, IBond.Stereo.NONE);
-        mol.addBond(3, 4, IBond.Order.SINGLE, IBond.Stereo.NONE);
-        mol.addBond(4, 5, IBond.Order.SINGLE, IBond.Stereo.NONE);
-        mol.addBond(5, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
-        mol.addBond(5, 6, IBond.Order.SINGLE, IBond.Stereo.NONE);
-        mol.addBond(2, 6, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(2, 1, IBond.Order.SINGLE, IBond.Display.Up);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
+        mol.addBond(4, 5, IBond.Order.SINGLE);
+        mol.addBond(5, 0, IBond.Order.SINGLE, IBond.Display.Up);
+        mol.addBond(5, 6, IBond.Order.SINGLE);
+        mol.addBond(2, 6, IBond.Order.SINGLE);
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(mol);
         assertThat(factory.createAll().size(), is(2));
     }
@@ -341,7 +341,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, -0.87d, 2.20d));
         m.addBond(0, 1, IBond.Order.DOUBLE);
         m.addBond(1, 2, IBond.Order.SINGLE);
-        m.addBond(0, 3, IBond.Order.SINGLE, IBond.Stereo.UP_OR_DOWN);
+        m.addBond(0, 3, IBond.Order.SINGLE, IBond.Display.Wavy);
 
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
@@ -356,7 +356,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 1, -2.10d, 1.46d));
         m.addAtom(atom("C", 3, -2.50d, 0.74d));
         m.addAtom(atom("C", 3, -0.87d, 2.20d));
-        m.addBond(0, 1, IBond.Order.DOUBLE, IBond.Stereo.E_OR_Z);
+        m.addBond(0, 1, IBond.Order.DOUBLE, IBond.Display.Crossed);
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
 
@@ -374,7 +374,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 2, -1.71d, 2.67d));
         m.addAtom(atom("C", 3, -1.68d, 1.24d));
         m.addAtom(atom("C", 3, -2.53d, 2.66d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
@@ -392,7 +392,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 2, -1.71d, 2.67d));
         m.addAtom(atom("C", 3, -1.68d, 1.24d));
         m.addAtom(atom("C", 3, -2.53d, 2.66d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
@@ -486,7 +486,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 2, -1.71d, 2.67d));
         m.addAtom(atom("C", 3, -1.68d, 1.24d));
         m.addAtom(atom("C", 3, -2.53d, 2.66d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP_OR_DOWN);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Wavy);
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
@@ -507,7 +507,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 2, -1.30d, 2.23d));
         m.addAtom(atom("C", 3, -1.33d, 3.73d));
         m.addAtom(atom("O", 0, 1.29d, 2.28d));
-        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.DOUBLE);
@@ -528,7 +528,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 2, -1.30d, 2.23d));
         m.addAtom(atom("C", 3, -1.33d, 3.73d));
         m.addAtom(atom("O", 0, 1.29d, 2.28d));
-        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.DOUBLE);
@@ -582,7 +582,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 2, -1.71d, 2.67d));
         m.addAtom(atom("C", 3, -1.68d, 1.24d));
         m.addAtom(atom("C", 3, -2.53d, 2.66d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN_INVERTED);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.WedgedHashEnd);
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
@@ -605,7 +605,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, -2.53d, 2.66d));
         m.addAtom(atom("O", 1, -1.31d, 3.39d));
         m.addBond(1, 0, IBond.Order.SINGLE);
-        m.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN_INVERTED);
+        m.addBond(1, 2, IBond.Order.SINGLE, IBond.Display.WedgedHashEnd);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
         m.addBond(2, 5, IBond.Order.SINGLE);
@@ -622,8 +622,8 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
         m.addAtom(atom("Cl", 0, -1.71d, 2.67d));
         m.addAtom(atom("C", 3, -1.68d, 1.24d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN); // CH-OH
-        m.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.UP);  // CH-CH2
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Down); // CH-OH
+        m.addBond(1, 2, IBond.Order.SINGLE, IBond.Display.Up);  // CH-CH2
         m.addBond(1, 3, IBond.Order.SINGLE); // CH-Cl
         StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         Assertions.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
@@ -638,7 +638,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
         m.addAtom(atom("Cl", 0, -1.71d, 2.67d));
         m.addAtom(atom("C", 3, -1.68d, 1.24d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN); // CH-OH
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Down); // CH-OH
         m.addBond(1, 2, IBond.Order.SINGLE);  // CH-CH2
         m.addBond(1, 3, IBond.Order.SINGLE); // CH-Cl
 
@@ -773,11 +773,11 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, 0.94d, 2.17d));
         m.addAtom(atom("H", 0, 0.92d, 0.74d));
         m.addAtom(atom("H", 0, -1.53d, 2.21d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
-        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Up);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Display.Solid);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Display.Solid);
         m.addBond(3, 4, IBond.Order.SINGLE);
-        m.addBond(1, 6, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(1, 6, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
         ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
@@ -797,11 +797,11 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, 0.94d, 2.17d));
         m.addAtom(atom("H", 0, 0.92d, 0.74d));
         m.addAtom(atom("H", 0, -1.53d, 2.21d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
-        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Down);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Display.Solid);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Display.Solid);
         m.addBond(3, 4, IBond.Order.SINGLE);
-        m.addBond(1, 6, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(1, 6, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
         ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
@@ -819,9 +819,9 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 0, -0.31d, 1.47d));
         m.addAtom(atom("C", 1, 0.52d, 1.46d));
         m.addAtom(atom("C", 3, 0.94d, 2.17d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
-        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Up);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Display.Solid);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Display.Solid);
         m.addBond(3, 4, IBond.Order.SINGLE);
 
         ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
@@ -839,9 +839,9 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 0, -0.31d, 1.47d));
         m.addAtom(atom("C", 1, 0.52d, 1.46d));
         m.addAtom(atom("C", 3, 0.94d, 2.17d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
-        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Down);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Display.Solid);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Display.Solid);
         m.addBond(3, 4, IBond.Order.SINGLE);
 
         ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
@@ -861,11 +861,11 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, 0.94d, 2.17d));
         m.addAtom(atom("H", 0, 0.92d, 0.74d));
         m.addAtom(atom("H", 0, -1.53d, 2.21d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.NONE);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
-        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Solid);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Display.Solid);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Display.Solid);
         m.addBond(3, 4, IBond.Order.SINGLE);
-        m.addBond(1, 6, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        m.addBond(1, 6, IBond.Order.SINGLE, IBond.Display.Solid);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
         ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
@@ -933,9 +933,9 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 0, -0.31d, 1.47d));
         m.addAtom(atom("C", 1, 0.52d, 1.46d));
         m.addAtom(atom("C", 3, 0.94d, 2.17d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
-        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Up);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Display.Solid);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Display.Solid);
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.setStereoElements(StereoElementFactory.using2DCoordinates(m).createAll());
         Assertions.assertTrue(m.stereoElements().iterator().hasNext());
@@ -951,9 +951,9 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 0, 0.52d, 1.46d));
         m.addAtom(atom("C", 3, 0.94d, 2.17d));
         m.addAtom(atom("C", 3, 0.92d, 0.74d));
-        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
-        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Up);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Display.Solid);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Display.Solid);
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
         m.setStereoElements(StereoElementFactory.using2DCoordinates(m).checkSymmetry(true).createAll());
@@ -976,7 +976,7 @@ class StereoElementFactoryTest {
         m.addBond(2, 0, IBond.Order.SINGLE);
         m.addBond(2, 1, IBond.Order.SINGLE);
         m.addBond(3, 2, IBond.Order.SINGLE);
-        m.addBond(2, 4, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(2, 4, IBond.Order.SINGLE, IBond.Display.Down);
 
         StereoElementFactory sef = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = sef.createTetrahedral(2, Stereocenters.of(m));
@@ -1003,11 +1003,11 @@ class StereoElementFactoryTest {
         m.addAtom(atom("O", 1, 0.34d, 0.85d));
         m.addAtom(atom("C", 3, -0.90d, 2.99d));
         m.addAtom(atom("C", 3, -0.90d, 1.56d));
-        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
-        m.addBond(2, 4, IBond.Order.SINGLE, IBond.Stereo.DOWN);
-        m.addBond(3, 5, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(2, 4, IBond.Order.SINGLE, IBond.Display.Down);
+        m.addBond(3, 5, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(2, 6, IBond.Order.SINGLE);
         m.addBond(3, 7, IBond.Order.SINGLE);
 
@@ -1235,8 +1235,8 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, -0.66, 0.82));
         m.addAtom(atom("C", 2, 0.76, 0.74));
         m.addAtom(atom("C", 3, 1.50, 1.12));
-        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
-        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up);
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(0, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
@@ -1256,7 +1256,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, -0.66, 0.82));
         m.addAtom(atom("C", 2, 0.76, 0.74));
         m.addAtom(atom("C", 3, 1.50, 1.12));
-        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(0, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
@@ -1277,7 +1277,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, -0.66, 0.82));
         m.addAtom(atom("C", 2, 0.76, 0.74));
         m.addAtom(atom("C", 3, 1.50, 1.12));
-        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(0, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
@@ -1303,8 +1303,8 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, -0.66, 0.82));
         m.addAtom(atom("C", 2, 0.76, 0.74));
         m.addAtom(atom("C", 3, 1.50, 1.12));
-        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
-        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up);
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(0, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
@@ -1329,8 +1329,8 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, -0.66, 0.82));
         m.addAtom(atom("C", 2, 0.76, 0.74));
         m.addAtom(atom("C", 3, 1.50, 1.12));
-        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
-        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up);
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(0, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
@@ -1406,12 +1406,12 @@ class StereoElementFactoryTest {
                 StereoElementFactory.using2DCoordinates(m)
                                     .createAll();
         assertThat(stereo.size(), is(0));
-        m.getBond(12).setStereo(IBond.Stereo.UP);
+        m.getBond(12).setDisplay(IBond.Display.Up);
         List<IStereoElement> stereoUp =
                 StereoElementFactory.using2DCoordinates(m)
                                     .createAll();
         assertThat(stereoUp.size(), is(1));
-        m.getBond(12).setStereo(IBond.Stereo.DOWN);
+        m.getBond(12).setDisplay(IBond.Display.Down);
         List<IStereoElement> stereoDown =
                 StereoElementFactory.using2DCoordinates(m)
                                     .createAll();
@@ -1424,8 +1424,8 @@ class StereoElementFactoryTest {
         assertThat(s2.getConfigOrder(), is(IStereoElement.LEFT));
 
         // now test placement of wedges else where
-        m.getBond(12).setStereo(IBond.Stereo.NONE);
-        m.getBond(m.getAtom(9), m.getAtom(12)).setStereo(IBond.Stereo.UP);
+        m.getBond(12).setDisplay(IBond.Display.Solid);
+        m.getBond(m.getAtom(9), m.getAtom(12)).setDisplay(IBond.Display.Up);
         List<IStereoElement> stereoUpOther =
                 StereoElementFactory.using2DCoordinates(m)
                                     .createAll();
@@ -1435,7 +1435,7 @@ class StereoElementFactoryTest {
         assertThat(s3.getCarriers(), is(s2.getCarriers()));
         assertThat(s3.getConfigOrder(), is(s2.getConfigOrder()));
 
-        m.getBond(m.getAtom(9), m.getAtom(12)).setStereo(IBond.Stereo.DOWN);
+        m.getBond(m.getAtom(9), m.getAtom(12)).setDisplay(IBond.Display.Down);
         List<IStereoElement> stereoDownOther =
                 StereoElementFactory.using2DCoordinates(m)
                                     .createAll();
@@ -1504,7 +1504,7 @@ class StereoElementFactoryTest {
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(3, 4, IBond.Order.DOUBLE);
-        m.addBond(23, 4, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(23, 4, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(5, 6, IBond.Order.SINGLE);
         m.addBond(6, 7, IBond.Order.SINGLE);
         m.addBond(7, 8, IBond.Order.SINGLE);
@@ -1515,7 +1515,7 @@ class StereoElementFactoryTest {
         m.addBond(11, 12, IBond.Order.SINGLE);
         m.addBond(11, 13, IBond.Order.DOUBLE);
         m.addBond(12, 14, IBond.Order.DOUBLE);
-        m.addBond(7, 15, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(7, 15, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(8, 16, IBond.Order.SINGLE);
         m.addBond(16, 17, IBond.Order.DOUBLE);
         m.addBond(17, 18, IBond.Order.SINGLE);
@@ -1544,7 +1544,7 @@ class StereoElementFactoryTest {
         m.addBond(38, 33, IBond.Order.SINGLE);
         m.addBond(34, 39, IBond.Order.SINGLE);
         m.addBond(38, 40, IBond.Order.SINGLE);
-        m.getBond(12).setStereo(IBond.Stereo.UP);
+        m.getBond(12).setDisplay(IBond.Display.Up);
         List<IStereoElement> stereo =
                 StereoElementFactory.using2DCoordinates(m)
                                     .createAll();
@@ -1604,7 +1604,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 3, -8.96, -1.30));
         m.addAtom(atom("O", 1, -6.10, -1.30));
         m.addAtom(atom("C", 3, -6.10, -2.12));
-        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(3, 4, IBond.Order.DOUBLE);
@@ -1646,7 +1646,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 0, -8.24, -0.88));
         m.addAtom(atom("C", 3, -8.96, -1.30));
         m.addAtom(atom("O", 1, -6.10, -1.30));
-        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(3, 4, IBond.Order.DOUBLE);
@@ -1687,7 +1687,7 @@ class StereoElementFactoryTest {
         m.addAtom(atom("C", 0, -8.24, -0.88));
         m.addAtom(atom("C", 3, -8.96, -1.30));
         m.addAtom(atom("C", 3, -6.10, -2.12));
-        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(3, 4, IBond.Order.DOUBLE);
@@ -1755,7 +1755,7 @@ class StereoElementFactoryTest {
         m.addBond(14, 15, IBond.Order.DOUBLE);
         m.addBond(15, 16, IBond.Order.SINGLE);
         m.addBond(16, 17, IBond.Order.DOUBLE);
-        m.addBond(11, 17, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(11, 17, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(17, 18, IBond.Order.SINGLE);
         m.addBond(18, 19, IBond.Order.DOUBLE);
         m.addBond(19, 20, IBond.Order.SINGLE);
@@ -1823,7 +1823,7 @@ class StereoElementFactoryTest {
         m.addBond(2, 1, IBond.Order.SINGLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
-        m.getBond(2).setStereo(IBond.Stereo.DOWN);
+        m.getBond(2).setDisplay(IBond.Display.Down);
 
         List<IStereoElement> ses = StereoElementFactory.using2DCoordinates(m).createAll();
         boolean flag = false;
