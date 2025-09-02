@@ -681,10 +681,10 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
-        Assertions.assertEquals(IBond.Display.Wavy, mol.getBond(1).getDisplay());
-        Assertions.assertEquals(IBond.Display.Wavy, mol.getBond(6).getDisplay());
-        Assertions.assertEquals(IBond.Display.Wavy, mol.getBond(7).getDisplay());
-        Assertions.assertEquals(IBond.Display.Wavy, mol.getBond(11).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(1).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(6).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(7).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(11).getDisplay());
     }
 
     @Test
@@ -754,7 +754,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertEquals(1, containersList.size());
         IAtomContainer container = containersList.get(0);
         Assertions.assertEquals(IBond.Display.Solid, container.getBond(0).getDisplay());
-        Assertions.assertEquals(IBond.Display.Wavy, container.getBond(2).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, container.getBond(2).getDisplay());
     }
 
     /**

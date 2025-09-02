@@ -513,6 +513,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                     writer.write(" CFG=1");
                     break;
                 case Wavy:
+                case Crossed:
                     writer.write(" CFG=2");
                     break;
                 case WedgedHashBegin:

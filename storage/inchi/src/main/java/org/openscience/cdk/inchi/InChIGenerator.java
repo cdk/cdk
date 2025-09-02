@@ -322,9 +322,8 @@ public class InChIGenerator {
                 case HollowWedgeEnd:      iDisplay = InchiBondStereo.SINGLE_2UP; break;
                 case WedgedHashBegin:     iDisplay = InchiBondStereo.SINGLE_1DOWN; break;
                 case WedgedHashEnd:       iDisplay = InchiBondStereo.SINGLE_2DOWN; break;
-                case Wavy:                iDisplay = bond.getOrder() == Order.DOUBLE ?
-                                          InchiBondStereo.DOUBLE_EITHER :
-                                          InchiBondStereo.SINGLE_1EITHER; break;
+                case Crossed:             iDisplay =InchiBondStereo.DOUBLE_EITHER; break;
+                case Wavy:                iDisplay = InchiBondStereo.SINGLE_1EITHER; break;
                 default:                  iDisplay = InchiBondStereo.NONE; break;
             }
 

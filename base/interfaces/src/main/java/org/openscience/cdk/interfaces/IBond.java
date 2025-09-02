@@ -144,10 +144,14 @@ public interface IBond extends IElectronContainer {
         /** A bold line. */
         Bold,
         /**
-         * This is used for undefined stereochemistry. A wavy line
-         * (when the order is 1) a crossed line (when the order is 2).
+         * A wavy line, this is used for undefined stereochemistry, it is
+         * undirected.
          */
         Wavy,
+        /**
+         * A crossed double bond to indicate unknown configuration.
+         */
+        Crossed,
         /** A dotted line. */
         Dot,
         /**

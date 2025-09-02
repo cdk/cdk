@@ -307,7 +307,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         // previously generating inconsistent output
         Assertions.assertEquals(Order.DOUBLE, mol.getBond(0).getOrder());
         Assertions.assertEquals(Order.SINGLE, mol.getBond(1).getOrder());
-        mol.getBond(0).setDisplay(IBond.Display.Wavy);
+        mol.getBond(0).setDisplay(IBond.Display.Crossed);
         mol.getBond(1).setDisplay(IBond.Display.Wavy);
         StringWriter   writer    = new StringWriter();
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);

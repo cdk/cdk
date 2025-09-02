@@ -1518,7 +1518,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             case 3:
                 if (mode == Mode.STRICT && type == 1)
                     throw new CDKException("stereo flag was 'cis/trans' but bond order was 1");
-                return IBond.Display.Wavy;
+                return IBond.Display.Crossed;
             case 4:
                 if (mode == Mode.STRICT && type == 2)
                     throw new CDKException("stereo flag was 'up/down' but bond order was 2");

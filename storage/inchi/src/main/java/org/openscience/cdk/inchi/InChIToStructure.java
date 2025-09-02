@@ -402,8 +402,10 @@ public class InChIToStructure {
                     cBo.setDisplay(IBond.Display.WedgeEnd);
                     break;
                 case SINGLE_1EITHER:
-                case SINGLE_2EITHER:
                     cBo.setDisplay(IBond.Display.Wavy);
+                    break;
+                case SINGLE_2EITHER:
+                    cBo.setDisplay(IBond.Display.Crossed);
                     break;
             }
 

@@ -694,7 +694,11 @@ final class StandardBondGenerator {
         final IAtom atom1 = outOfOrder ? bond.getEnd() : bond.getBegin();
         final IAtom atom2 = outOfOrder ? bond.getBegin() : bond.getEnd();
 
-        if (IBond.Display.Wavy == bond.getDisplay())
+        // MDL V3000 + ChemDraw use "unspecified" to mean both wavy and crossed
+        // hopefully at this point CDK has parsed it but in-case not we allow it
+        // here
+        if (IBond.Display.Crossed == bond.getDisplay() ||
+            IBond.Display.Wavy == bond.getDisplay())
             return generateCrossedDoubleBond(atom1, atom2);
 
         final List<IBond> atom1Bonds = refContainer.getConnectedBondsList(atom1);
