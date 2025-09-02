@@ -617,7 +617,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         if (getOrder() != null) {
             resultString.append(", #O:").append(getOrder());
         }
-        resultString.append(", #S:").append(getStereo());
+        resultString.append(", #D:").append(getDisplay());
         if (getAtomCount() > 0) {
             resultString.append(", #A:").append(getAtomCount());
             for (int i = 0; i < atomCount; i++) {

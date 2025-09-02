@@ -69,7 +69,7 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
         for (IBond bond : container.bonds()) {
 
             // if double bond and not E or Z query bond
-            if (DOUBLE.equals(bond.getOrder()) && !E_OR_Z.equals(bond.getStereo())) {
+            if (DOUBLE.equals(bond.getOrder()) && !IBond.Display.Wavy.equals(bond.getDisplay())) {
 
                 IAtom left = bond.getBegin();
                 IAtom right = bond.getEnd();
@@ -256,8 +256,8 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
             if (DOUBLE.equals(bond.getOrder())) dbCount++;
 
             // up/down bonds sometimes used to indicate E/Z
-            IBond.Stereo stereo = bond.getStereo();
-            if (IBond.Stereo.UP_OR_DOWN.equals(stereo) || IBond.Stereo.UP_OR_DOWN_INVERTED.equals(stereo))
+            IBond.Display display = bond.getDisplay();
+            if (display == IBond.Display.Wavy)
                 return false;
 
         }

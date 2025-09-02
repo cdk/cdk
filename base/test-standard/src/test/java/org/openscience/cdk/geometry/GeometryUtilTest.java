@@ -944,7 +944,7 @@ class GeometryUtilTest extends CDKTestCase {
             atoms.add(mol.getAtom(9));
             GeometryUtil.reflect(atoms, mol.getBond(9));
             assertThat(mol.getBond(8).getDisplay(), is(IBond.Display.WedgedHashBegin));
-            assertThat(mol.getBond(8).getStereo(), is(IBond.Stereo.DOWN));
+            assertThat(mol.getBond(8).getDisplay(), is(IBond.Display.Down));
         }
     }
 

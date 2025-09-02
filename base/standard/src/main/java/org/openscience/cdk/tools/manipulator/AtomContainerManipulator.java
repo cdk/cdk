@@ -852,8 +852,8 @@ public class AtomContainerManipulator {
                         addToRemove = true;
                         // keep if any of the bonds of the hetero atom have stereo information
                         for (IBond bond : org.getConnectedBondsList(neighbour)) {
-                            IBond.Stereo bondStereo = bond.getStereo();
-                            if (bondStereo != null && bondStereo != IBond.Stereo.NONE) addToRemove = false;
+                            IBond.Display bondStereo = bond.getDisplay();
+                            if (bondStereo != null && bondStereo != IBond.Display.Solid) addToRemove = false;
                             IAtom neighboursNeighbour = bond.getOther(neighbour);
                             // remove in any case if the hetero atom is connected to more than one hydrogen
                             if (neighboursNeighbour.getAtomicNumber() == IElement.H && !neighboursNeighbour.equals(atom)) {

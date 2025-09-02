@@ -483,7 +483,7 @@ final class CyclicCarbohydrateRecognition {
     private static boolean isPlanarSigmaBond(IBond bond) {
         return bond != null &&
                 IBond.Order.SINGLE.equals(bond.getOrder()) &&
-                IBond.Stereo.NONE.equals(bond.getStereo());
+                IBond.Display.Solid == bond.getDisplay();
     }
 
     /**

@@ -869,27 +869,19 @@ public class ChemicalFilters {
      */
     public static int convertBondStereo(IBond bond) {
         int value;
-        switch (bond.getStereo()) {
-            case UP:
+        switch (bond.getDisplay()) {
+            case WedgeBegin:
+            case WedgeEnd:
+            case HollowWedgeBegin:
+            case HollowWedgeEnd:
                 value = 1;
                 break;
-            case UP_INVERTED:
-                value = 1;
-                break;
-            case DOWN:
+            case WedgedHashBegin:
+            case WedgedHashEnd:
                 value = 6;
                 break;
-            case DOWN_INVERTED:
-                value = 6;
-                break;
-            case UP_OR_DOWN:
-                value = 4;
-                break;
-            case UP_OR_DOWN_INVERTED:
-                value = 4;
-                break;
-            case E_OR_Z:
-                value = 3;
+            case Wavy:
+                value = bond.getOrder() == Order.DOUBLE ? 3 : 4;
                 break;
             default:
                 value = 0;
