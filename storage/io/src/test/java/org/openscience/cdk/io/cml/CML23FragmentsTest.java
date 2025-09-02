@@ -230,7 +230,8 @@ class CML23FragmentsTest extends CDKTestCase {
         Assertions.assertEquals(2, mol.getAtomCount());
         Assertions.assertEquals(1, mol.getBondCount());
         IBond bond = mol.getBond(0);
-        Assertions.assertEquals(IBond.Stereo.DOWN, bond.getStereo());
+//        Assertions.assertEquals(IBond.Stereo.DOWN, bond.getStereo());
+        Assertions.assertEquals(IBond.Display.Down, bond.getDisplay());
     }
 
     @Test

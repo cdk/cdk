@@ -306,9 +306,7 @@ class GeometricDoubleBondEncoderFactoryTest {
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP2);
         when(a.getOrder()).thenReturn(IBond.Order.DOUBLE);
         Assertions.assertTrue(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
-        when(b.getStereo()).thenReturn(IBond.Stereo.UP_OR_DOWN);
-        Assertions.assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
-        when(b.getStereo()).thenReturn(IBond.Stereo.UP_OR_DOWN_INVERTED);
+        when(b.getDisplay()).thenReturn(IBond.Display.Wavy);
         Assertions.assertFalse(GeometricDoubleBondEncoderFactory.accept(atom, bonds));
     }
 

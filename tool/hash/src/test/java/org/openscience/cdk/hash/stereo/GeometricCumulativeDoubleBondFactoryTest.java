@@ -92,7 +92,7 @@ class GeometricCumulativeDoubleBondFactoryTest {
         IAtom a1 = mock(IAtom.class);
         IAtom a2 = mock(IAtom.class);
         IBond bond = mock(IBond.class);
-        when(bond.getStereo()).thenReturn(IBond.Stereo.UP);
+        when(bond.getDisplay()).thenReturn(IBond.Display.WedgeBegin);
         when(bond.getBegin()).thenReturn(a1);
         when(bond.getEnd()).thenReturn(a2);
         assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond, a1), is(+1));
@@ -104,7 +104,7 @@ class GeometricCumulativeDoubleBondFactoryTest {
         IAtom a1 = mock(IAtom.class);
         IAtom a2 = mock(IAtom.class);
         IBond bond = mock(IBond.class);
-        when(bond.getStereo()).thenReturn(IBond.Stereo.DOWN);
+        when(bond.getDisplay()).thenReturn(IBond.Display.WedgedHashBegin);
         when(bond.getBegin()).thenReturn(a1);
         when(bond.getEnd()).thenReturn(a2);
         assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond, a1), is(-1));
@@ -120,14 +120,14 @@ class GeometricCumulativeDoubleBondFactoryTest {
     @Test
     void testElevation_Up() throws Exception {
         IBond bond = mock(IBond.class);
-        when(bond.getStereo()).thenReturn(IBond.Stereo.UP);
+        when(bond.getDisplay()).thenReturn(IBond.Display.WedgeBegin);
         assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond), is(+1));
     }
 
     @Test
     void testElevation_Down() throws Exception {
         IBond bond = mock(IBond.class);
-        when(bond.getStereo()).thenReturn(IBond.Stereo.DOWN);
+        when(bond.getDisplay()).thenReturn(IBond.Display.WedgedHashBegin);
         assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond), is(-1));
     }
 }

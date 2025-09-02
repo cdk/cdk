@@ -424,14 +424,13 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     private IRenderingElement generateStereoElement(IBond bond, RendererModel model) {
 
-        IBond.Stereo stereo = bond.getStereo();
+        IBond.Display stereo = bond.getDisplay();
         WedgeLineElement.TYPE type = WedgeLineElement.TYPE.WEDGED;
         Direction dir = Direction.toSecond;
-        if (stereo == IBond.Stereo.DOWN || stereo == IBond.Stereo.DOWN_INVERTED) type = WedgeLineElement.TYPE.DASHED;
-        if (stereo == IBond.Stereo.UP_OR_DOWN || stereo == IBond.Stereo.UP_OR_DOWN_INVERTED)
+        if (stereo == IBond.Display.WedgedHashBegin || stereo == IBond.Display.WedgedHashEnd) type = WedgeLineElement.TYPE.DASHED;
+        if (stereo == IBond.Display.Wavy)
             type = WedgeLineElement.TYPE.INDIFF;
-        if (stereo == IBond.Stereo.DOWN_INVERTED || stereo == IBond.Stereo.UP_INVERTED
-                || stereo == IBond.Stereo.UP_OR_DOWN_INVERTED) dir = Direction.toFirst;
+        if (stereo == IBond.Display.WedgedHashEnd || stereo == IBond.Display.WedgeEnd) dir = Direction.toFirst;
 
         IRenderingElement base = generateBondElement(bond, IBond.Order.SINGLE, model);
         return new WedgeLineElement((LineElement) base, type, dir, getColorForBond(bond, model));
@@ -464,8 +463,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * @return true if the bond has stero information
      */
     private boolean isStereoBond(IBond bond) {
-        return bond.getStereo() != IBond.Stereo.NONE && bond.getStereo() != CDKConstants.UNSET
-                && bond.getStereo() != IBond.Stereo.E_Z_BY_COORDINATES;
+        return bond.getDisplay() != IBond.Display.Solid &&
+               bond.getDisplay() != null;
     }
 
     /**

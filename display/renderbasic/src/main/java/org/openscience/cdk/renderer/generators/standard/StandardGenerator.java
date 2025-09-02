@@ -1078,7 +1078,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     static boolean isPlainBond(IBond bond) {
         return bond.getOrder() == IBond.Order.SINGLE
-                && (bond.getStereo() == IBond.Stereo.NONE || bond.getStereo() == null);
+                && (bond.getDisplay() == IBond.Display.Solid || bond.getDisplay() == null);
     }
 
     /**
@@ -1088,8 +1088,17 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @return the bond is wedge (bold or hashed)
      */
     static boolean isWedged(IBond bond) {
-        return (bond.getStereo() == IBond.Stereo.UP || bond.getStereo() == IBond.Stereo.DOWN
-                || bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED);
+        switch (bond.getDisplay()) {
+            case WedgeBegin:
+            case WedgeEnd:
+            case WedgedHashBegin:
+            case WedgedHashEnd:
+            case HollowWedgeBegin:
+            case HollowWedgeEnd:
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**

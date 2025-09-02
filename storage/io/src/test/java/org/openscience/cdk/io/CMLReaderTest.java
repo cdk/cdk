@@ -100,7 +100,8 @@ class CMLReaderTest extends SimpleChemObjectReaderTest {
 
             Assertions.assertNotNull(bond, "Null bond");
 
-            Assertions.assertEquals(IBond.Stereo.UP, bond.getStereo(), "Expected Wedge (Up) Bond");
+//            Assertions.assertEquals(IBond.Stereo.UP, bond.getStereo(), "Expected Wedge (Up) Bond"); // deprecated
+            Assertions.assertEquals(IBond.Display.Up, bond.getDisplay(), "Expected Wedge (Up) Bond");
 
         } finally {
             reader.close();
@@ -186,9 +187,13 @@ class CMLReaderTest extends SimpleChemObjectReaderTest {
 
             // we check here that the charContent is not used and also that more then
             // one stereo isn't set
-            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(0).getStereo(), "expected non-stereo bond");
-            Assertions.assertEquals(IBond.Stereo.DOWN, container.getBond(1).getStereo(), "expected Hatch (Down) Bond");
-            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(2).getStereo(), "expected non-stereo bond");
+//            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(0).getStereo(), "expected non-stereo bond");
+//            Assertions.assertEquals(IBond.Stereo.DOWN, container.getBond(1).getStereo(), "expected Hatch (Down) Bond");
+//            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(2).getStereo(), "expected non-stereo bond");
+
+            Assertions.assertEquals(IBond.Display.Solid, container.getBond(0).getDisplay(), "expected non-stereo bond");
+            Assertions.assertEquals(IBond.Display.Down, container.getBond(1).getDisplay(), "expected Hatch (Down) Bond");
+            Assertions.assertEquals(IBond.Display.Solid, container.getBond(2).getDisplay(), "expected non-stereo bond");
 
         } finally {
             reader.close();
@@ -219,9 +224,9 @@ class CMLReaderTest extends SimpleChemObjectReaderTest {
             Assertions.assertNotNull(container, "null atom container read");
 
             // we check here that the malformed dictRef doesn't throw an exception
-            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(0).getStereo(), "expected non-stereo bond");
-            Assertions.assertEquals(IBond.Stereo.UP, container.getBond(1).getStereo(), "expected Wedge (Up) Bond");
-            Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(2).getStereo(), "expected non-stereo bond");
+            Assertions.assertEquals(IBond.Display.Solid, container.getBond(0).getDisplay(), "expected non-stereo bond");
+            Assertions.assertEquals(IBond.Display.Up, container.getBond(1).getDisplay(), "expected Wedge (Up) Bond");
+            Assertions.assertEquals(IBond.Display.Solid, container.getBond(2).getDisplay(), "expected non-stereo bond");
 
         } finally {
             reader.close();
@@ -243,21 +248,21 @@ class CMLReaderTest extends SimpleChemObjectReaderTest {
 
             // we check here that the malformed dictRef doesn't throw an exception
             for (int i = 0; i < 19; i++) {
-                MatcherAssert.assertThat("found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
-                                         container.getBond(i).getStereo(),
-                                         CoreMatchers.anyOf(CoreMatchers.is(IBond.Stereo.NONE), CoreMatchers.is(IBond.Stereo.E_Z_BY_COORDINATES)));
+                MatcherAssert.assertThat("found an unexpected wedge bond for " + i + ": " + container.getBond(i).getDisplay(),
+                                         container.getBond(i).getDisplay(),
+                                         CoreMatchers.is(IBond.Display.Solid));
             }
-            Assertions.assertEquals(IBond.Stereo.DOWN, container.getBond(19).getStereo(), "expected a wedge bond");
+            Assertions.assertEquals(IBond.Display.Down, container.getBond(19).getDisplay(), "expected a wedge bond");
             for (int i = 20; i < 30; i++) {
-                MatcherAssert.assertThat("found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
-                                         container.getBond(i).getStereo(),
-                                         CoreMatchers.anyOf(CoreMatchers.is(IBond.Stereo.NONE), CoreMatchers.is(IBond.Stereo.E_Z_BY_COORDINATES)));
+                MatcherAssert.assertThat("found an unexpected wedge bond for " + i + ": " + container.getBond(i).getDisplay(),
+                                         container.getBond(i).getDisplay(),
+                                         CoreMatchers.is(IBond.Display.Solid));
             }
-            Assertions.assertEquals(IBond.Stereo.UP, container.getBond(30).getStereo(), "expected a wedge bond");
+            Assertions.assertEquals(IBond.Display.Up, container.getBond(30).getDisplay(), "expected a wedge bond");
             for (int i = 31; i <= 37; i++) {
-                MatcherAssert.assertThat("found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
-                                         container.getBond(i).getStereo(),
-                                         CoreMatchers.anyOf(CoreMatchers.is(IBond.Stereo.NONE), CoreMatchers.is(IBond.Stereo.E_Z_BY_COORDINATES)));
+                MatcherAssert.assertThat("found an unexpected wedge bond for " + i + ": " + container.getBond(i).getDisplay(),
+                                         container.getBond(i).getDisplay(),
+                                         CoreMatchers.is(IBond.Display.Solid));
             }
         } finally {
             reader.close();
