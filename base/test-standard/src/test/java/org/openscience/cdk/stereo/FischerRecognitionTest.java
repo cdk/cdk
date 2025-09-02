@@ -67,7 +67,7 @@ class FischerRecognitionTest {
         m.addAtom(atom("O", 1, 1.52d, -0.82d));
         m.addBond(0, 1, IBond.Order.SINGLE);
         m.addBond(0, 2, IBond.Order.SINGLE);
-        m.addBond(0, 3, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
+        m.addBond(0, 3, IBond.Order.DOUBLE);
         m.addBond(1, 4, IBond.Order.SINGLE);
         m.addBond(1, 5, IBond.Order.SINGLE);
         m.addBond(1, 6, IBond.Order.SINGLE);
@@ -103,7 +103,7 @@ class FischerRecognitionTest {
         m.addAtom(atom("O", 1, 1.52d, -0.82d));
         m.addBond(0, 1, IBond.Order.SINGLE);
         m.addBond(0, 2, IBond.Order.SINGLE);
-        m.addBond(0, 3, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
+        m.addBond(0, 3, IBond.Order.DOUBLE);
         m.addBond(1, 4, IBond.Order.SINGLE);
         m.addBond(1, 5, IBond.Order.SINGLE);
         m.addBond(1, 6, IBond.Order.SINGLE);
@@ -138,7 +138,7 @@ class FischerRecognitionTest {
         m.addAtom(atom("O", 1, 1.52d, -0.82d));
         m.addBond(0, 1, IBond.Order.SINGLE);
         m.addBond(0, 2, IBond.Order.SINGLE);
-        m.addBond(0, 3, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
+        m.addBond(0, 3, IBond.Order.DOUBLE);
         m.addBond(1, 4, IBond.Order.SINGLE);
         m.addBond(1, 5, IBond.Order.SINGLE);
         m.addBond(5, 6, IBond.Order.SINGLE);
@@ -562,14 +562,14 @@ class FischerRecognitionTest {
         m.addBond(11, 1, IBond.Order.SINGLE);
         m.addBond(12, 6, IBond.Order.SINGLE);
         m.addBond(13, 3, IBond.Order.SINGLE);
-        m.addBond(14, 5, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
-        m.addBond(15, 7, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
-        m.addBond(1, 16, IBond.Order.SINGLE, IBond.Stereo.UP);
-        m.addBond(3, 17, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(14, 5, IBond.Order.DOUBLE);
+        m.addBond(15, 7, IBond.Order.DOUBLE);
+        m.addBond(1, 16, IBond.Order.SINGLE, IBond.Display.Up);
+        m.addBond(3, 17, IBond.Order.SINGLE, IBond.Display.Up);
         m.addBond(18, 8, IBond.Order.SINGLE);
         m.addBond(19, 8, IBond.Order.SINGLE);
-        m.addBond(2, 20, IBond.Order.SINGLE, IBond.Stereo.DOWN);
-        m.addBond(6, 21, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(2, 20, IBond.Order.SINGLE, IBond.Display.Down);
+        m.addBond(6, 21, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(5, 4, IBond.Order.SINGLE);
         m.addBond(11, 12, IBond.Order.SINGLE);
         m.addBond(10, 13, IBond.Order.SINGLE);
@@ -604,15 +604,15 @@ class FischerRecognitionTest {
         m.addAtom(atom("O", 0, 14.77d, -15.79d));
         m.addAtom(atom("C", 3, 13.54d, -15.68d));
         m.addBond(0, 1, IBond.Order.SINGLE);
-        m.addBond(0, 5, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
+        m.addBond(0, 5, IBond.Order.DOUBLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
-        m.addBond(3, 4, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
+        m.addBond(3, 4, IBond.Order.DOUBLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
         m.addBond(7, 6, IBond.Order.SINGLE);
         m.addBond(7, 8, IBond.Order.SINGLE);
         m.addBond(8, 9, IBond.Order.SINGLE);
-        m.addBond(8, 10, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
+        m.addBond(8, 10, IBond.Order.DOUBLE);
         m.addBond(0, 7, IBond.Order.SINGLE);
         m.addBond(11, 7, IBond.Order.SINGLE);
         

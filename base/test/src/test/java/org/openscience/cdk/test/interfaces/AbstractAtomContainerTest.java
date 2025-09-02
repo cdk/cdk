@@ -393,7 +393,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         IBond c1c4 = builder.newInstance(IBond.class, c1, c4);
         IBond c1h5 = builder.newInstance(IBond.class, c1, h5);
 
-        c1o2.setStereo(IBond.Stereo.UP);
+        c1o2.setDisplay(IBond.Display.Up);
 
         container.addBond(c1o2);
         container.addBond(c1n3);
@@ -2129,9 +2129,9 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        acetone.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP); // yes this is crap
-        acetone.addBond(1, 3, IBond.Order.DOUBLE, IBond.Stereo.DOWN);
-        acetone.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        acetone.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up); // yes this is crap
+        acetone.addBond(1, 3, IBond.Order.DOUBLE, IBond.Display.Down);
+        acetone.addBond(1, 2, IBond.Order.SINGLE);
 
         Assertions.assertEquals(3, acetone.getBondCount());
         for (IBond iBond : acetone.bonds()) Assertions.assertNotNull(iBond);

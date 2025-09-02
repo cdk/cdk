@@ -141,7 +141,7 @@ class MDLV3000WriterTest {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
-        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up);
         mol.getAtom(0).setImplicitHydrogenCount(3);
         mol.getAtom(1).setImplicitHydrogenCount(1);
         String res = writeToStr(mol);
@@ -153,7 +153,7 @@ class MDLV3000WriterTest {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
-        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Down);
         mol.getAtom(0).setImplicitHydrogenCount(3);
         mol.getAtom(1).setImplicitHydrogenCount(1);
         String res = writeToStr(mol);
@@ -165,7 +165,7 @@ class MDLV3000WriterTest {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
-        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP_INVERTED);
+        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.WedgeEnd);
         mol.getAtom(0).setImplicitHydrogenCount(3);
         mol.getAtom(1).setImplicitHydrogenCount(1);
         String res = writeToStr(mol);
@@ -177,7 +177,7 @@ class MDLV3000WriterTest {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("O"));
-        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.DOWN_INVERTED);
+        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.WedgedHashEnd);
         mol.getAtom(0).setImplicitHydrogenCount(3);
         mol.getAtom(1).setImplicitHydrogenCount(1);
         String res = writeToStr(mol);
