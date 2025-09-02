@@ -759,11 +759,23 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     /**
      * Adds a bond to this container.
      *
+     * @param atom1  idx of the first atom of the Bond in [0,..]
+     * @param atom2  idx of the second atom of the Bond in [0,..]
+     * @param order  the bond order
+     * @param display the display type of the bond
+     */
+    void addBond(int atom1, int atom2, IBond.Order order, IBond.Display display);
+
+    /**
+     * Adds a bond to this container.
+     *
      * @param atom1 Id of the first atom of the Bond in [0,..]
      * @param atom2 Id of the second atom of the Bond in [0,..]
      * @param order Bondorder
      */
-    void addBond(int atom1, int atom2, IBond.Order order);
+    default void addBond(int atom1, int atom2, IBond.Order order) {
+        addBond(atom1, atom2, order, IBond.Display.Solid);
+    }
 
     /**
      * Adds a LonePair to this Atom.
