@@ -233,6 +233,7 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
             switch (display) {
             // query bonds... no configuration possible
                 case Wavy:
+                case Crossed:
                     return -1;
                 case WedgeEnd:
                 case WedgeBegin:

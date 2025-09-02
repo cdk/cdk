@@ -209,10 +209,10 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
         IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
-        Assertions.assertEquals(IBond.Display.Wavy, mol.getBond(1).getDisplay());
-        Assertions.assertEquals(IBond.Display.Wavy, mol.getBond(6).getDisplay());
-        Assertions.assertEquals(IBond.Display.Wavy, mol.getBond(7).getDisplay());
-        Assertions.assertEquals(IBond.Display.Wavy, mol.getBond(11).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(1).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(6).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(7).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(11).getDisplay());
     }
 
     @Test

@@ -402,11 +402,9 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             case WedgedHashEnd:
                 return Stereo.DOWN_INVERTED;
             case Wavy:
-                if (order == Order.SINGLE)
-                    return Stereo.UP_OR_DOWN;
-                else if (order == Order.DOUBLE)
-                    return Stereo.E_OR_Z;
-                return Stereo.NONE;
+                return Stereo.UP_OR_DOWN;
+            case Crossed:
+                return Stereo.E_OR_Z;
             case Solid:
                 if (order == Order.SINGLE)
                     return Stereo.NONE;
@@ -455,6 +453,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
                     display = Display.WedgedHashEnd;
                     break;
                 case E_OR_Z:
+                    display = Display.Crossed;
+                    break;
                 case UP_OR_DOWN:
                 case UP_OR_DOWN_INVERTED:
                     display = Display.Wavy;

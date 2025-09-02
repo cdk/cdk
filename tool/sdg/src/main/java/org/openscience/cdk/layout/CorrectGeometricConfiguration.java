@@ -155,7 +155,7 @@ final class CorrectGeometricConfiguration {
         visited[atomToIndex.get(left)] = true;
 
         if (ringSearch.cyclic(atomToIndex.get(left), atomToIndex.get(right))) {
-            db.setDisplay(IBond.Display.Wavy);
+            db.setDisplay(IBond.Display.Crossed);
             return;
         }
 

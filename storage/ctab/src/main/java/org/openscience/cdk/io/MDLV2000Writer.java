@@ -671,11 +671,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     case WedgedHashEnd:
                         line.append("6");
                         break;
+                    case Crossed:
+                        line.append("3");
+                        break;
                     case Wavy:
-                        if (bond.getOrder() == IBond.Order.DOUBLE)
-                            line.append("3");
-                        else
-                            line.append("4");
+                        line.append("4");
                         break;
                     default:
                         line.append("0");

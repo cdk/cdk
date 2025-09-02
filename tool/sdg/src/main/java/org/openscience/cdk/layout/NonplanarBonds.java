@@ -64,10 +64,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.openscience.cdk.interfaces.IBond.Display.Down;
-import static org.openscience.cdk.interfaces.IBond.Display.Solid;
-import static org.openscience.cdk.interfaces.IBond.Display.Up;
-import static org.openscience.cdk.interfaces.IBond.Display.Wavy;
+import static org.openscience.cdk.interfaces.IBond.Display.*;
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 
@@ -1316,7 +1313,7 @@ final class NonplanarBonds {
 
         // we got here and no bond was marked, fortunately we have a fallback and can use
         // crossed bond
-        doubleBond.setDisplay(IBond.Display.Wavy);
+        doubleBond.setDisplay(Crossed);
     }
 
 

@@ -408,7 +408,7 @@ class NonPlanarBondsTest {
                                                          },
                                                          OPPOSITE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(3).getDisplay(), is(IBond.Display.Wavy));
+        assertThat(m.getBond(3).getDisplay(), is(IBond.Display.Crossed));
     }
 
     /**

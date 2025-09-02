@@ -863,7 +863,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                     } else if (configuration == 1) {
                                         bond.setDisplay(IBond.Display.WedgeBegin);
                                     } else if (configuration == 2) {
-                                        bond.setDisplay(IBond.Display.Wavy);
+                                        if (bond.getOrder() == IBond.Order.DOUBLE)
+                                            bond.setDisplay(IBond.Display.Crossed);
+                                        else
+                                            bond.setDisplay(IBond.Display.Wavy);
                                     } else if (configuration == 3) {
                                         bond.setDisplay(IBond.Display.WedgedHashBegin);
                                     }

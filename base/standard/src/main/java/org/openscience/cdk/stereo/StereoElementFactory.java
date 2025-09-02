@@ -1046,7 +1046,8 @@ public abstract class StereoElementFactory {
          * @return the bond has unspecified stereochemistry
          */
         private boolean isUnspecified(IBond bond) {
-            return bond.getDisplay() == IBond.Display.Wavy;
+            return bond.getDisplay() == IBond.Display.Wavy ||
+                   bond.getDisplay() == IBond.Display.Crossed;
         }
 
         /**

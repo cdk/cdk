@@ -880,8 +880,11 @@ public class ChemicalFilters {
             case WedgedHashEnd:
                 value = 6;
                 break;
+            case Crossed:
+                value = 3;
+                break;
             case Wavy:
-                value = bond.getOrder() == Order.DOUBLE ? 3 : 4;
+                value = 4;
                 break;
             default:
                 value = 0;

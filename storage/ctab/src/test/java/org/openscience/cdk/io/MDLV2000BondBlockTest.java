@@ -170,7 +170,7 @@ class MDLV2000BondBlockTest {
         String input = "  1  3  2  3  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.DOUBLE));
-        assertThat(bond.getDisplay(), is(IBond.Display.Wavy));
+        assertThat(bond.getDisplay(), is(IBond.Display.Crossed));
     }
 
     @Test
