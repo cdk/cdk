@@ -622,6 +622,13 @@ public class DebugAtomContainer extends AtomContainer implements IAtomContainer 
         super.addBond(atom1, atom2, order, stereo);
     }
 
+    @Override
+    public void addBond(int atom1, int atom2, IBond.Order order,
+                        IBond.Display display) {
+        logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order + " display=" + display);
+        super.addBond(atom1, atom2, order, display);
+    }
+
     /**
      * {@inheritDoc}
      */

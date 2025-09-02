@@ -1233,6 +1233,14 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         addBond(bond);
     }
 
+    @Override
+    public void addBond(int atom1, int atom2, IBond.Order order,
+                        IBond.Display display) {
+        IBond bond = getBuilder().newInstance(IBond.class, getAtom(atom1), getAtom(atom2), order);
+        bond.setDisplay(display);
+        addBond(bond);
+    }
+
     /**
      * {@inheritDoc}
      */

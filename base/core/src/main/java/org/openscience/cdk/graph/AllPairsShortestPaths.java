@@ -545,7 +545,7 @@ public final class AllPairsShortestPaths {
 
                                                                  @Override
                                                                  public void addBond(int atom1, int atom2,
-                                                                         IBond.Order order) {
+                                                                         IBond.Order order, IBond.Display display) {
 
                                                                  }
 
