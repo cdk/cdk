@@ -163,7 +163,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         atoms = new IAtom[2];
         atoms[0] = beg;
         atoms[1] = end;
-        setOrder(order);
+        this.order = order;
+        updateElectronCount(order);
         this.display = display;
         this.atomCount = 2;
     }
