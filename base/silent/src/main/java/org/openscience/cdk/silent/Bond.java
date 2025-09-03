@@ -85,7 +85,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * Constructs an empty bond.
      */
     public Bond() {
-        this(null, null, null, IBond.Stereo.NONE);
+        this(null, null, null, Display.Solid);
         atomCount = 0;
     }
 
@@ -96,7 +96,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @param atom2 the second Atom in the bond
      */
     public Bond(IAtom atom1, IAtom atom2) {
-        this(atom1, atom2, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        this(atom1, atom2, IBond.Order.SINGLE, Display.Solid);
     }
 
     /**
@@ -107,7 +107,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @param order the bond order
      */
     public Bond(IAtom atom1, IAtom atom2, Order order) {
-        this(atom1, atom2, order, IBond.Stereo.NONE);
+        this(atom1, atom2, order, Display.Solid);
     }
 
     /**
@@ -148,6 +148,24 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         atoms[1] = end;
         setOrder(order);
         setStereo(stereo);
+        this.atomCount = 2;
+    }
+
+    /**
+     * Constructs a bond with a given order and display from an array
+     * of atoms.
+     *
+     * @param beg  the first Atom in the bond
+     * @param end  the second Atom in the bond
+     * @param order  the bond order
+     * @param display graphical display of this bond
+     */
+    public Bond(IAtom beg, IAtom end, Order order, IBond.Display display) {
+        atoms = new IAtom[2];
+        atoms[0] = beg;
+        atoms[1] = end;
+        setOrder(order);
+        this.display = display;
         this.atomCount = 2;
     }
 
