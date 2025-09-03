@@ -60,8 +60,8 @@ import java.util.Set;
  * <li>The fragmentation splits at a maximum tree depth of 31, meaning that
  *     maximum 31 bonds are split in one run.</li>
  * <li>The SMILES code of the fragments is generated with {@link SmiFlavor#Unique}
- *     and {@link SmiFlavor#UseAromaticSymbols}. It does not contain information
- *     about the stereochemistry.</li>
+ *     and {@link SmiFlavor#UseAromaticSymbols}.</li>
+ * <li>Stereo information is disregarded</li>
  * </ul>
  * However, users can modify these settings, with the exception, that the
  * maximum tree depth can not be higher than 31 (Java's limitation caused by
@@ -71,10 +71,12 @@ import java.util.Set;
  * The `ExhaustiveFragmenter` uses unique SMILES strings for internal
  * deduplication of generated fragments. This means that after a fragment is
  * generated, its unique SMILES representation is computed (using the default or
- * user specified {@link SmilesGenerator}). These SMILES do not encode
- * stereochemistry. If a fragment with the same canonical SMILES has already
- * been generated and stored, the new fragment is considered a duplicate and is
- * not added to the results.
+ * user specified {@link SmilesGenerator}). Be aware that stereo information is
+ * only copied and checked for deduplication if
+ * {@link ExhaustiveFragmenter#setAttemptCopySteroInfo} is set to true and the
+ * specified {@link SmilesGenerator} has {@link SmiFlavor#Stereo}. If a fragment
+ * with the same canonical SMILES has already been generated and stored, the new
+ * fragment is considered a duplicate and is not added to the results.
  * <p>
  * This deduplication strategy is particularly important when considering the
  * {@link Saturation} setting:
@@ -159,12 +161,14 @@ public class ExhaustiveFragmenter implements IFragmenter {
                     SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols
             );
     private static final int DEFAULT_INCLUSIVE_MAX_TREE_DEPTH = Integer.SIZE - 1;
+    private static final boolean DEFAULT_COPY_STEREO_INFO = false;
 
     private Map<String, IAtomContainer> fragMap;
     private final SmilesGenerator smilesGenerator;
     private int inclusiveMaxTreeDepth;
     private int minFragSize;
     private Saturation saturationSetting;
+    private boolean attemptCopySteroInfo;
     private static final ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(ExhaustiveFragmenter.class);
 
@@ -172,26 +176,29 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * Constructs an ExhaustiveFragmenter with the default settings:
      * <ul>
      * <li>Minimum fragment size: 6 atoms (excluding implicit hydrogen)</li>
-     * <li>Unsaturated fragments</li>
+     * <li>{@link Saturation#UNSATURATED_FRAGMENTS}</li>
      * <li>Default {@link SmilesGenerator}
-     *     ({@code SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols})</li>
-     * <li>{@link ExhaustiveFragmenter#inclusiveMaxTreeDepth} of 31</li>
+     *     ({@link SmiFlavor#Unique} | {@link SmiFlavor#UseAromaticSymbols})</li>
+     * <li> inclusive maximum tree depth of 31</li>
      * </ul>
+     * @see ExhaustiveFragmenter#setInclusiveMaxTreeDepth
      */
     public ExhaustiveFragmenter() {
         this(
                 DEFAULT_SMILES_GENERATOR,
                 DEFAULT_MIN_FRAG_SIZE,
                 DEFAULT_SATURATION,
-                DEFAULT_INCLUSIVE_MAX_TREE_DEPTH
+                DEFAULT_INCLUSIVE_MAX_TREE_DEPTH,
+                DEFAULT_COPY_STEREO_INFO
         );
     }
 
     /**
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment
      * size and saturation setting. Uses the default {@link SmilesGenerator} and
-     * default {@link ExhaustiveFragmenter#inclusiveMaxTreeDepth} of 31
+     * default inclusive maximum tree depth of 31
      *
+     * @see ExhaustiveFragmenter#setInclusiveMaxTreeDepth
      * @param minFragSize       Minimum number of atoms in a valid fragment
      *                          (excluding implicit hydrogen).
      * @param saturationSetting Determines whether fragments should be saturated
@@ -202,7 +209,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 DEFAULT_SMILES_GENERATOR,
                 minFragSize,
                 saturationSetting,
-                DEFAULT_INCLUSIVE_MAX_TREE_DEPTH
+                DEFAULT_INCLUSIVE_MAX_TREE_DEPTH,
+                DEFAULT_COPY_STEREO_INFO
         );
     }
 
@@ -210,8 +218,9 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment
      * size. Saturation defaults to {@link Saturation#UNSATURATED_FRAGMENTS}.
      * Uses the default {@link SmilesGenerator} and the default
-     * {@link ExhaustiveFragmenter#inclusiveMaxTreeDepth} of 31
+     * inclusive maximum tree depth of 31
      *
+     * @see ExhaustiveFragmenter#setInclusiveMaxTreeDepth
      * @param minFragSize Minimum number of atoms in a valid fragment
      *                    (excluding implicit hydrogen).
      */
@@ -220,7 +229,27 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 DEFAULT_SMILES_GENERATOR,
                 minFragSize,
                 DEFAULT_SATURATION,
-                DEFAULT_INCLUSIVE_MAX_TREE_DEPTH
+                DEFAULT_INCLUSIVE_MAX_TREE_DEPTH,
+                DEFAULT_COPY_STEREO_INFO
+        );
+    }
+
+    /**
+     * Constructs an ExhaustiveFragmenter with a user-defined saturation setting
+     * size. Fragment size defaults to 6. Uses the default {@link SmilesGenerator}
+     * and the default inclusive maximum tree depth of 31.
+     *
+     * @see ExhaustiveFragmenter#setInclusiveMaxTreeDepth
+     * @param saturation how open valences should be treated after the
+     *                   fragmentation.
+     */
+    public ExhaustiveFragmenter(Saturation saturation) {
+        this(
+                DEFAULT_SMILES_GENERATOR,
+                DEFAULT_MIN_FRAG_SIZE,
+                saturation,
+                DEFAULT_INCLUSIVE_MAX_TREE_DEPTH,
+                DEFAULT_COPY_STEREO_INFO
         );
     }
 
@@ -229,21 +258,41 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * user-defined minimum fragment size, inclusive max tree depth and
      * saturation setting.
      *
-     * @param smilesGenerator   The {@link SmilesGenerator} instance to use for
-     *                          creating SMILES strings
-     *                          for fragment deduplication and retrieval.
-     * @param minFragSize       Minimum number of atoms in a valid fragment
-     *                          (excluding implicit hydrogen).
+     * @param smilesGenerator The {@link SmilesGenerator} instance to use for
+     *                        creating SMILES strings
+     *                        for fragment deduplication and retrieval.
+     * @param minFragSize Minimum number of atoms in a valid fragment
+     *                    (excluding implicit hydrogen).
      * @param saturationSetting Determines whether fragments should be saturated
      *                          (with hydrogens or R-atoms) or unsaturated.
      * @param inclusiveMaxTreeDepth Represents the number of Bonds that will be
      *                              split for a fragmentation.
+     * @param attemptCopySteroInfo Signals whether to attempt to copy stereochemical
+     * information from the original molecule to the generated fragments.
+     * <p>
+     * <strong>Warning:</strong> This process is not reliable and can lead
+     * to incorrect stereochemistry in the resulting fragments.
+     * When a chiral center is broken during fragmentation, the new fragment may
+     * be incorrectly assigned as chiral even if it is not.
+     * This can occur because the algorithm may copy the original chirality
+     * information without having all the necessary atoms to correctly define
+     * the stereocenter in the new, smaller fragment.
+     * </p>
+     * <strong>Note on Stereochemistry and SMILES:</strong>
+     * For stereochemical information to be included in the SMILES strings
+     * returned by {@link #getFragments()}, the `smilesGenerator` used by this
+     * fragmenter must be configured with the {@link SmiFlavor#Stereo} flag.
+     * If the flag is not set, the SMILES will not contain stereochemistry,
+     * even if this setting is enabled and the underlying `IAtomContainer` objects
+     * have stereo elements.
+     * </p>
      */
     public ExhaustiveFragmenter(
             SmilesGenerator smilesGenerator,
             int minFragSize,
             Saturation saturationSetting,
-            int inclusiveMaxTreeDepth
+            int inclusiveMaxTreeDepth,
+            boolean attemptCopySteroInfo
     ) {
         if (saturationSetting == null) {
             throw new NullPointerException(
@@ -257,6 +306,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             );
         }
         this.smilesGenerator = smilesGenerator;
+        this.attemptCopySteroInfo = attemptCopySteroInfo;
         this.setInclusiveMaxTreeDepth(inclusiveMaxTreeDepth);
         this.setMinimumFragmentSize(minFragSize);
         this.fragMap = null;
@@ -313,6 +363,36 @@ public class ExhaustiveFragmenter implements IFragmenter {
             );
         }
         this.inclusiveMaxTreeDepth = inclusiveMaxTreeDepth;
+    }
+
+    /**
+     * Sets whether stereochemical information from the original molecule should
+     * be copied to the generated fragments.
+     *
+     * <p>
+     * <strong>Warning:</strong> The copying process is not reliable and can
+     * result in fragments with incorrect stereochemistry. This method copies
+     * elements based on the presence of atoms and bonds, but it does not perform
+     * a chemical validation check on the resulting fragment.
+     * For example, a chiral center might be copied even if the new fragment does
+     * not contain the minimum four different substituents required for chirality.
+     * Use caution and consider a separate validation step.
+     * </p>
+     * <p>
+     * <strong>Note on Stereochemistry and SMILES:</strong>
+     * For stereochemical information to be included in the SMILES strings
+     * returned by {@link #getFragments()}, the `smilesGenerator` used by this
+     * fragmenter must be configured with the {@link SmiFlavor#Stereo} flag.
+     * If the flag is not set, the SMILES will not contain stereochemistry,
+     * even if this setting is enabled and the underlying `IAtomContainer` objects
+     * have stereo elements.
+     * </p>
+     *
+     * @param attemptCopySteroInfo {@code true} to enable attempting to copy
+     * stereo information; {@code false} otherwise.
+     */
+    public void setAttemptCopySteroInfo(boolean attemptCopySteroInfo) {
+        this.attemptCopySteroInfo = attemptCopySteroInfo;
     }
 
     /**
@@ -629,6 +709,79 @@ public class ExhaustiveFragmenter implements IFragmenter {
     }
 
     /**
+     * Copies a subset of stereochemical information from a source molecule
+     * to a new fragment.
+     *
+     * <p>
+     * This method iterates through the stereochemical elements of the original
+     * molecule (e.g., chiral centers, cis/trans bonds) and copies only those
+     * that are fully contained within the new fragment. A stereochemical element
+     * is considered fully contained if all of its defining atoms and bonds
+     * are present in the fragment, based on the provided atom and bond maps.
+     * </p>
+     *
+     * @param origMol The original molecule containing the stereochemical
+     *                information.
+     * @param fragmentContainer The new fragment where the stereochemical
+     *                          information will be added.
+     * @param origToCpyAtomMap A mapping of atoms from the original molecule to
+     *                         their corresponding atoms in the new fragment.
+     * @param origToCpyBondMap A mapping of bonds from the original molecule to
+     *                         their corresponding bonds in the new fragment.
+     *
+     * <strong>Warning:</strong> The copied stereochemical information may be
+     * chemically invalid. This method copies elements based on the presence of
+     * atoms and bonds, but it does not perform a chemical validation check on
+     * the resulting fragment. For example, a chiral center might be copied even
+     * if the new fragment does not contain the minimum four different
+     * substituents required for chirality. Use caution and consider a separate
+     * validation step.
+     */
+    void attemptCopyStereoInformation(
+            IAtomContainer origMol,
+            IAtomContainer fragmentContainer,
+            Map<IAtom, IAtom> origToCpyAtomMap,
+            Map<IBond, IBond> origToCpyBondMap
+    ) {
+        // adding stereo information if all elements are present in the
+        // new fragment
+        for (IStereoElement<?, ?> elem : origMol.stereoElements()) {
+            boolean allAtomsPresent = true;
+            final IChemObject origFocus = elem.getFocus();
+            if (origFocus instanceof IAtom) {
+                if (!origToCpyAtomMap.containsKey(origFocus)) {
+                    allAtomsPresent = false;
+                }
+            } else if (origFocus instanceof IBond) {
+                if (!origToCpyBondMap.containsKey(origFocus)) {
+                    allAtomsPresent = false;
+                }
+            }
+
+            if (allAtomsPresent) {
+
+                for (IChemObject iChemObject : elem.getCarriers()) {
+                    if (iChemObject instanceof IAtom) {
+                        if (!origToCpyAtomMap.containsKey(iChemObject)) {
+                            allAtomsPresent = false;
+                            break;
+                        }
+                    } else if (iChemObject instanceof IBond) {
+                        if (!origToCpyBondMap.containsKey(iChemObject)) {
+                            allAtomsPresent = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (allAtomsPresent) {
+                fragmentContainer.addStereoElement(elem.map(origToCpyAtomMap, origToCpyBondMap));
+            }
+        }
+    }
+
+    /**
      * Splits and saturates (if specified via {@link #saturationSetting}) a
      * molecule into multiple fragments by removing the specified bonds and
      * making copies of the resulting fragments.
@@ -736,40 +889,13 @@ public class ExhaustiveFragmenter implements IFragmenter {
                         }
                     }
                 }
-                // adding stereo information if all elements are present in the
-                // new fragment
-                for (IStereoElement<?, ?> elem : origMol.stereoElements()) {
-                    boolean allAtomsPresent = true;
-                    IChemObject focus = elem.getFocus();
-                    if (focus instanceof IAtom) {
-                        if (!origToCpyAtomMap.containsKey(focus)) {
-                            allAtomsPresent = false;
-                        }
-                    } else if (focus instanceof IBond) {
-                        if (!origToCpyBondMap.containsKey(focus)) {
-                            allAtomsPresent = false;
-                        }
-                    }
-
-                    if (allAtomsPresent) {
-                        for (IChemObject iChemObject : elem.getCarriers()) {
-                            if (iChemObject instanceof IAtom) {
-                                if (!origToCpyAtomMap.containsKey(iChemObject)) {
-                                    allAtomsPresent = false;
-                                    break;
-                                }
-                            } else if (iChemObject instanceof IBond) {
-                                if (!origToCpyBondMap.containsKey(iChemObject)) {
-                                    allAtomsPresent = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    if (allAtomsPresent) {
-                        fragmentContainer.addStereoElement(elem.map(origToCpyAtomMap, origToCpyBondMap));
-                    }
+                if (this.attemptCopySteroInfo) {
+                    attemptCopyStereoInformation(
+                            origMol,
+                            fragmentContainer,
+                            origToCpyAtomMap,
+                            origToCpyBondMap
+                    );
                 }
                 fragmentList.add(fragmentContainer);
             }
@@ -779,6 +905,12 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
     /**
      * Get the fragments generated as SMILES strings.
+     * <p>
+     * <strong>Note on Stereochemistry:</strong>
+     * Stereochemistry information will only be included in the returned SMILES
+     * strings if the `SmilesGenerator` used by this fragmenter was configured
+     * with the {@link SmiFlavor#Stereo} flag.
+     * </p>
      *
      * @return a String[] of the fragments.
      */

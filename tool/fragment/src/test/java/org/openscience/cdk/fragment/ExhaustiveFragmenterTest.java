@@ -41,7 +41,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * Test exhaustive fragmenter.
  * This test class covers various scenarios for the {@link ExhaustiveFragmenter},
- * including different saturation settings (unsaturated, hydrogen-saturated, R-group saturated)
+ * including different saturation settings:
+ * <ul>
+ * <li>{@link org.openscience.cdk.fragment.ExhaustiveFragmenter.Saturation#UNSATURATED_FRAGMENTS}</li>
+ * <li>{@link org.openscience.cdk.fragment.ExhaustiveFragmenter.Saturation#HYDROGEN_SATURATED_FRAGMENTS}</li>
+ * <li>{@link org.openscience.cdk.fragment.ExhaustiveFragmenter.Saturation#R_SATURATED_FRAGMENTS}</li>
+ * </ul>
  * and minimum fragment size.
  *
  * @see ExhaustiveFragmenter
@@ -54,12 +59,6 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
 
-    private ExhaustiveFragmenter setupFragmenter(ExhaustiveFragmenter.Saturation saturation) {
-        ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter();
-        fragmenter.setSaturationSetting(saturation);
-        return fragmenter;
-    }
-
     // --- Unsaturated Fragments Tests ---
 
     /**
@@ -69,7 +68,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF1Unsaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("CCC");
-        ExhaustiveFragmenter unsaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
+        ExhaustiveFragmenter unsaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
         unsaturatedFragmenter.generateFragments(mol);
         String[] frags = unsaturatedFragmenter.getFragments();
         Assertions.assertEquals(0, frags.length);
@@ -82,7 +81,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF2Unsaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCC1");
-        ExhaustiveFragmenter unsaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
+        ExhaustiveFragmenter unsaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
         unsaturatedFragmenter.generateFragments(mol);
         String[] frags = unsaturatedFragmenter.getFragments();
         Assertions.assertEquals(0, frags.length);
@@ -95,7 +94,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF3Unsaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
-        ExhaustiveFragmenter unsaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
+        ExhaustiveFragmenter unsaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
         unsaturatedFragmenter.generateFragments(mol);
         String[] frags = unsaturatedFragmenter.getFragments();
         Assertions.assertArrayEquals(new String[]{"[CH]1CCCCC1"}, frags);
@@ -108,7 +107,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF4Unsaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1CC");
-        ExhaustiveFragmenter unsaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
+        ExhaustiveFragmenter unsaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
         unsaturatedFragmenter.generateFragments(mol);
         String[] frags = unsaturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -122,7 +121,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF5Unsaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1Cc1ccccc1");
-        ExhaustiveFragmenter unsaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
+        ExhaustiveFragmenter unsaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
         unsaturatedFragmenter.generateFragments(mol);
         String[] frags = unsaturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -143,7 +142,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF6Unsaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1c1ccccc1");
-        ExhaustiveFragmenter unsaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
+        ExhaustiveFragmenter unsaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
         unsaturatedFragmenter.generateFragments(mol);
         String[] frags = unsaturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -165,7 +164,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF7Unsaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
-        ExhaustiveFragmenter unsaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
+        ExhaustiveFragmenter unsaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.UNSATURATED_FRAGMENTS);
         unsaturatedFragmenter.generateFragments(mol);
         String[] frags = unsaturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -197,7 +196,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF1Saturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("CCC");
-        ExhaustiveFragmenter fragmenterSaturated = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter fragmenterSaturated = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         fragmenterSaturated.generateFragments(mol);
         String[] frags = fragmenterSaturated.getFragments();
         Assertions.assertEquals(0, frags.length);
@@ -210,7 +209,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF2Saturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCC1");
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         Assertions.assertEquals(0, frags.length);
@@ -223,7 +222,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF3Saturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         Assertions.assertArrayEquals(new String[]{"C1CCCCC1"}, frags);
@@ -236,7 +235,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF4Saturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1CC");
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -251,7 +250,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF5Saturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1Cc1ccccc1");
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -272,7 +271,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF6Saturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1c1ccccc1");
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -291,7 +290,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF7Saturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -318,7 +317,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF3RestSaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
-        ExhaustiveFragmenter rSaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.R_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter rSaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.R_SATURATED_FRAGMENTS);
         rSaturatedFragmenter.generateFragments(mol);
         String[] frags = rSaturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -332,7 +331,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF5RestSaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1Cc1ccccc1");
-        ExhaustiveFragmenter rSaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.R_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter rSaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.R_SATURATED_FRAGMENTS);
         rSaturatedFragmenter.generateFragments(mol);
         String[] frags = rSaturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -352,7 +351,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF6RestSaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1c1ccccc1");
-        ExhaustiveFragmenter rSaturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.R_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter rSaturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.R_SATURATED_FRAGMENTS);
         rSaturatedFragmenter.generateFragments(mol);
         String[] frags = rSaturatedFragmenter.getFragments();
         Assertions.assertNotNull(frags);
@@ -368,7 +367,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testEF7RestSaturated() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
-        ExhaustiveFragmenter fragmenterRSaturated = setupFragmenter(ExhaustiveFragmenter.Saturation.R_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter fragmenterRSaturated = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.R_SATURATED_FRAGMENTS);
         fragmenterRSaturated.generateFragments(mol);
         String[] frags = fragmenterRSaturated.getFragments();
         Assertions.assertNotNull(frags);
@@ -393,7 +392,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testMinSize() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCC1C2CCCCC2");
-        ExhaustiveFragmenter fragmenterSaturated = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter fragmenterSaturated = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         fragmenterSaturated.setMinimumFragmentSize(6);
         fragmenterSaturated.generateFragments(mol);
         String[] frags = fragmenterSaturated.getFragments();
@@ -409,7 +408,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testMinSizeLowered() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCC1C2CCCCC2");
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.setMinimumFragmentSize(5);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
@@ -431,7 +430,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     void testEqualityOfSmilesAndContainers() throws Exception {
         SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.UseAromaticSymbols | SmiFlavor.Unique);
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1CC(N)C(=O)O"); // Phenylalanine
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] smilesFrags = saturatedFragmenter.getFragments();
         IAtomContainer[] containerFrags = saturatedFragmenter.getFragmentsAsContainers();
@@ -527,7 +526,12 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     void testCustomSmilesGenerator() throws Exception {
         SmilesGenerator customSmilesGen = new SmilesGenerator(SmiFlavor.Unique); // No SmiFlavor.UseAromaticSymbols
         ExhaustiveFragmenter customFragmenter = new ExhaustiveFragmenter(
-                customSmilesGen, 6, ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS, Integer.SIZE - 1);
+                customSmilesGen,
+                6,
+                ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS,
+                Integer.SIZE - 1,
+                false
+        );
         IAtomContainer mol = smilesParser.parseSmiles("c1ccccc1Cc1ccccc1"); // Diphenylmethane
         customFragmenter.generateFragments(mol);
         String[] frags = customFragmenter.getFragments();
@@ -582,7 +586,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
                 standardSmilesGen,
                 4,
                 ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS,
-                Integer.SIZE - 1
+                Integer.SIZE - 1,
+                false
         );
         localFragmenter.setInclusiveMaxTreeDepth(1);
         localFragmenter.generateFragments(mol);
@@ -602,7 +607,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
                 standardSmilesGen,
                 4,
                 ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS,
-                Integer.SIZE - 1
+                Integer.SIZE - 1,
+                false
         );
         localFragmenter.setInclusiveMaxTreeDepth(2);
         localFragmenter.generateFragments(mol);
@@ -628,7 +634,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
                 standardSmilesGen,
                 4,
                 ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS,
-                Integer.SIZE - 1
+                Integer.SIZE - 1,
+                false
         );
         localFragmenter.setInclusiveMaxTreeDepth(3);
         localFragmenter.generateFragments(mol);
@@ -657,7 +664,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     @Test
     void testDoubleBondIssue() throws CDKException {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1=CCC");
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         assertFragsContain(
@@ -678,7 +685,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles(
                 "C(CN(CC(=O)[O-])CC(=O)[O-])N(CC(=O)[O-])CC(=O)[O-].[Na+].[Na+].[Na+].[Na+]"
         ); //Sodium edetate
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         assertFragsContain(
@@ -703,7 +710,9 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smiPar.parseSmiles("CC1=C(C(=CC=C1)NC2=CC=CC=C2C" +
                 "(=O)NC(CCS(=O)C)C(=O)NC(C)C3=CC=C(C=C3)F)C"); //PubChem CID 118705975
 
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(
+                ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS
+        );
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         assertFragsContain(
@@ -727,7 +736,7 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smiPar.parseSmiles("C[C@]12CC[C@](CC1C3=CC(=O)C4[C@]5(CCC(C(C5CC[C@]4([C@@]3(CC2)C)C)(C)C)" +
                 "OC6C(C(C(C(O6)C(=O)N[C@H](CCC(=O)OC)C(=O)OC)O)O)OC7C(C(C(C(O7)C(=O)N[C@H](CCC(=O)OC)C(=O)OC)O)O)O)C)(C)C" +
                 "(=O)N[C@H](CCC(=O)OC)C(=O)OC"); // Pubchem CID 16396833
-        ExhaustiveFragmenter saturatedFragmenter = setupFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
+        ExhaustiveFragmenter saturatedFragmenter = new ExhaustiveFragmenter(ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS);
         saturatedFragmenter.generateFragments(mol);
         String[] frags = saturatedFragmenter.getFragments();
         assertFragsContain(
@@ -782,8 +791,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
     }
 
     /**
-     * Ensures that stereochemical information (chiral centers '@' and double-bond
-     * E/Z markers '/' or '\') is preserved when generating fragment containers.
+     * Ensures that stereochemical information (double-bond E/Z markers '/' or
+     * '\') is preserved when generating fragments.
      */
     @Test
     void testStereoChemistryCopied() throws Exception {
@@ -796,7 +805,8 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
                 smilesGenerator,
                 6,
                 ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS,
-                31
+                31,
+                true
         );
         fragmenter.generateFragments(mol);
 
@@ -823,6 +833,69 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
                 new String[]{
                     "C(F)C/C=C/C"
             }, containerSmiles
+        );
+    }
+
+    /**
+     * Ensures that stereochemical information (chiral centers '@') is
+     * copied if the fragmentation yields a fragment with the same chiral center.
+     */
+    @Test
+    void testTetrahdralStereoChemistryCopied() throws Exception {
+        SmilesGenerator smilesGenerator =
+                new SmilesGenerator(
+                        SmiFlavor.UseAromaticSymbols | SmiFlavor.Stereo
+                );
+        IAtomContainer mol = smilesParser.parseSmiles("[C@@H](Cl)(O)CCCCCC");
+        ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter(
+                smilesGenerator,
+                6,
+                ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS,
+                31,
+                true
+        );
+        fragmenter.generateFragments(mol);
+
+        String[] smilesFrags = fragmenter.getFragments();
+        assertFragsContain(
+                new String[]{
+                        "[C@@H](Cl)(O)CCC",
+                        "CCCCCC",
+                        "[C@@H](Cl)(O)CCCC"
+                }, smilesFrags
+        );
+    }
+
+    /**
+     * Tests a known bug where the stereo information for a chiral center is
+     * incorrectly copied to fragments where the center is no longer chiral.
+     * This occurs when the fragmentation results in two identical substituents,
+     * which should, by definition, remove the chirality from the center.
+     */
+    @Test
+    void testTetrahedralStereoChemistryFalselyCopied() throws Exception {
+        SmilesGenerator smilesGenerator =
+                new SmilesGenerator(
+                        SmiFlavor.UseAromaticSymbols | SmiFlavor.Stereo
+                );
+        IAtomContainer mol = smilesParser.parseSmiles("CC[C@@H](Cl)CCCC");
+        ExhaustiveFragmenter fragmenter = new ExhaustiveFragmenter(
+                smilesGenerator,
+                6,
+                ExhaustiveFragmenter.Saturation.HYDROGEN_SATURATED_FRAGMENTS,
+                31,
+                true
+        );
+        fragmenter.generateFragments(mol);
+
+        String[] smilesFrags = fragmenter.getFragments();
+        assertFragsContain(
+                new String[]{
+                        "C(Cl)CCCC",
+                        // The chemically correct representation would be CCC(Cl)CC
+                        // instead of:
+                        "CC[C@@H](Cl)CC"
+                }, smilesFrags
         );
     }
 
