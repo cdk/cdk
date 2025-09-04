@@ -901,6 +901,22 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
 
     // --utility --
 
+    /**
+     * Asserts that an array of strings contains all the expected elements,
+     * allowing for additional, unexpected elements in the actual array.
+     *
+     * <p>
+     * This assertion is useful for verifying that a collection contains a
+     * specific subset of items. It fails only if an expected element is
+     * missing from the actual array. The failure message will list both
+     * missing elements and any extra, unexpected elements found.
+     * </p>
+     *
+     * @param expected The {@code String} array containing the elements that are
+     *                 expected to be present in the {@code actual} array.
+     * @param actual The {@code String} array containing the elements to be
+     *               tested against the {@code expected} array.
+     */
     private static void assertFragsContain(
             String[] expected,
             String[] actual
