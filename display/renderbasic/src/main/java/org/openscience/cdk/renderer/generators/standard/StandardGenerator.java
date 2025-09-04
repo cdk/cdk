@@ -25,15 +25,12 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
@@ -57,19 +54,15 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 
-import javax.lang.model.element.Element;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,16 +75,12 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  * diagram. These are generated together allowing the bonds to drawn cleanly without overlap. The
  * generate is heavily based on ideas documented in {@cdk.cite Brecher08} and {@cdk.cite Clark13}.
  *
- *
- *
  * Atom symbols are provided as {@link GeneralPath} outlines. This allows the depiction to be
  * independent of the system used to view the diagram (primarily important for vector graphic
  * depictions). The font used to generate the diagram must be provided to the constructor.
  *
  * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. The style of
  * highlight is set with the {@link Highlighting} parameter.
- *
- *
  *
  * The <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki
  * page</a> provides extended details of using and configuring this generator.
@@ -169,7 +158,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          *  HO
          * </pre>
          */
-        Right;
+        Right
     }
 
     /**
@@ -583,7 +572,6 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         final double halfStroke = stroke / 2;
 
         AtomSymbol[] symbols = new AtomSymbol[container.getAtomCount()];
-        IChemObjectBuilder builder = container.getBuilder();
 
         // check if we should annotate attachment point numbers (maxAttach>1)
         // and queue them all up for processing
@@ -673,7 +661,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             String label = null;
             if (!isHidden(atom))
                 label = getAnnotationLabel(atom);
-            if (label != null) {
+            if (label != null && !label.isEmpty()) {
 
                 // to ensure consistent draw distance we need to adjust the annotation distance
                 // depending on whether we are drawing next to an atom symbol or not.
@@ -783,7 +771,6 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                    outline.getCenter().getY() - radius,
                                                    2*radius,
                                                    2*radius);
-                Area area1 = new Area(shape);
                 group.add(GeneralPath.shapeOf(shape, Color.white));
                 group.add(GeneralPath.outlineOf(shape, 0.2*stroke, foreground));
                 group.add(GeneralPath.shapeOf(outline.getOutline(), foreground));
@@ -1091,7 +1078,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     static boolean isPlainBond(IBond bond) {
         return bond.getOrder() == IBond.Order.SINGLE
-                && (bond.getStereo() == IBond.Stereo.NONE || bond.getStereo() == null);
+                && (bond.getDisplay() == IBond.Display.Solid || bond.getDisplay() == null);
     }
 
     /**
@@ -1101,8 +1088,17 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @return the bond is wedge (bold or hashed)
      */
     static boolean isWedged(IBond bond) {
-        return (bond.getStereo() == IBond.Stereo.UP || bond.getStereo() == IBond.Stereo.DOWN
-                || bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED);
+        switch (bond.getDisplay()) {
+            case WedgeBegin:
+            case WedgeEnd:
+            case WedgedHashBegin:
+            case WedgedHashEnd:
+            case HollowWedgeBegin:
+            case HollowWedgeEnd:
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**
@@ -1252,7 +1248,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          */
         @Override
         public Double getDefault() {
-            return 5d;
+            return 3.25;
         }
     }
 
@@ -1266,7 +1262,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          */
         @Override
         public Double getDefault() {
-            return 5d;
+            return 3.25;
         }
     }
 

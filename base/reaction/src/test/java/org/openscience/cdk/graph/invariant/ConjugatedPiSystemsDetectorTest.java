@@ -24,6 +24,8 @@ import java.io.InputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -555,6 +557,31 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
 
         for (int i = 0; i < ac1.getBondCount(); i++) {
             Assertions.assertTrue(mol.contains(ac1.getBond(i)));
+        }
+    }
+
+    /**
+     * Check that a different atom order of the input molecule does not change the detected pi systems. Especially
+     * when the first atom is an allene, this was an issue before
+     * (<a href="https://github.com/cdk/cdk/issues/1210">(CDK GitHub repo issue)</a>).
+     */
+    @Test
+    void testAllenePathDependency() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Canonical);
+        String[][] pairs = {
+                {"C=CC=C=CC=C", "C(=CC=C)=CC=C"},
+                {"CC=C=CC=C", "C(=CC=C)=CC"},
+                {"C=C=CC#N", "C(=C)=CC#N"}};
+        for (String[] pair : pairs) {
+            IAtomContainer mol1 = sp.parseSmiles(pair[0]);
+            IAtomContainer mol2 = sp.parseSmiles(pair[1]);
+            IAtomContainerSet results1 = ConjugatedPiSystemsDetector.detect(mol1);
+            IAtomContainerSet results2 = ConjugatedPiSystemsDetector.detect(mol2);
+            Assertions.assertEquals(results1.getAtomContainerCount(), results2.getAtomContainerCount());
+            for (int i = 0; i < results1.getAtomContainerCount(); i++) {
+                Assertions.assertEquals(sg.create(results1.getAtomContainer(i)), sg.create(results2.getAtomContainer(i)));
+            }
         }
     }
 }

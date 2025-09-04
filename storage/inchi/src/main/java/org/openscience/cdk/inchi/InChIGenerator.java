@@ -313,16 +313,17 @@ public class InChIGenerator {
 
 
             // Check for bond stereo definitions
-            IBond.Stereo display = bond.getStereo();
+            IBond.Display display = bond.getDisplay();
             final InchiBondStereo iDisplay;
             switch (display) {
-                case UP:                  iDisplay = InchiBondStereo.SINGLE_1UP; break;
-                case UP_INVERTED:         iDisplay = InchiBondStereo.SINGLE_2UP; break;
-                case DOWN:                iDisplay = InchiBondStereo.SINGLE_1DOWN; break;
-                case DOWN_INVERTED:       iDisplay = InchiBondStereo.SINGLE_2DOWN; break;
-                case UP_OR_DOWN:          iDisplay = InchiBondStereo.SINGLE_1EITHER; break;
-                case UP_OR_DOWN_INVERTED: iDisplay = InchiBondStereo.SINGLE_2EITHER; break;
-                case E_OR_Z:              iDisplay = InchiBondStereo.DOUBLE_EITHER; break;
+                case WedgeBegin:          iDisplay = InchiBondStereo.SINGLE_1UP; break;
+                case WedgeEnd:            iDisplay = InchiBondStereo.SINGLE_2UP; break;
+                case HollowWedgeBegin:    iDisplay = InchiBondStereo.SINGLE_1UP; break;
+                case HollowWedgeEnd:      iDisplay = InchiBondStereo.SINGLE_2UP; break;
+                case WedgedHashBegin:     iDisplay = InchiBondStereo.SINGLE_1DOWN; break;
+                case WedgedHashEnd:       iDisplay = InchiBondStereo.SINGLE_2DOWN; break;
+                case Crossed:             iDisplay =InchiBondStereo.DOUBLE_EITHER; break;
+                case Wavy:                iDisplay = InchiBondStereo.SINGLE_1EITHER; break;
                 default:                  iDisplay = InchiBondStereo.NONE; break;
             }
 

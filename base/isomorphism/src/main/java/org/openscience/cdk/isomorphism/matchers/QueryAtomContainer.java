@@ -1367,6 +1367,24 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
          */
     }
 
+    @Override
+    public void addBond(int atom1, int atom2, IBond.Order order, IBond.Display display) {
+        IBond bond = getBuilder().newInstance(IBond.class, getAtom(atom1), getAtom(atom2), order);
+        bond.setDisplay(display);
+
+        if (contains(bond)) {
+            return;
+        }
+
+        if (bondCount >= bonds.length) {
+            growBondArray();
+        }
+        addBond(bond);
+        /*
+         * no notifyChanged() here because addBond(bond) does it already
+         */
+    }
+
     /**
      *  Adds a bond to this container.
      *

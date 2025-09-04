@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -2807,10 +2808,31 @@ class SmilesParserTest extends CDKTestCase {
         return parser.parseSmiles(smi);
     }
 
+    @Test
     void testNoTitle() throws InvalidSmilesException {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = parser.parseSmiles("CCC");
         Assertions.assertNull(mol.getProperty("cdk:Title"));
     }
 
+    @Test
+    void testTitleMol() throws InvalidSmilesException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.parseSmiles("CCC a molecule");
+        Assertions.assertEquals("a molecule", mol.getTitle());
+    }
+
+    @Test
+    void testTitleRxn() throws InvalidSmilesException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction r = parser.parseReactionSmiles("CCC>>CCO a reaction");
+        Assertions.assertEquals("a reaction", r.getProperty(CDKConstants.TITLE));
+    }
+
+    @Test
+    void testTitleRxns() throws InvalidSmilesException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReactionSet rs = parser.parseReactionSetSmiles("CCC>>CCO a reaction");
+        Assertions.assertEquals("a reaction", rs.getProperty(CDKConstants.TITLE));
+    }
 }

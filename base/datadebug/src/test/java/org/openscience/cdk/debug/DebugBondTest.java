@@ -45,7 +45,8 @@ class DebugBondTest extends AbstractBondTest {
         Assertions.assertNull(bond.getBegin());
         Assertions.assertNull(bond.getEnd());
         Assertions.assertNull(bond.getOrder());
-        Assertions.assertEquals(IBond.Stereo.NONE, bond.getStereo());
+//        Assertions.assertEquals(IBond.Stereo.NONE, bond.getStereo()); // deprecated
+        Assertions.assertEquals(IBond.Display.Solid, bond.getDisplay());
     }
 
     @Test
@@ -90,7 +91,8 @@ class DebugBondTest extends AbstractBondTest {
         Assertions.assertEquals(c, bond.getBegin());
         Assertions.assertEquals(o, bond.getEnd());
         Assertions.assertEquals(IBond.Order.SINGLE, bond.getOrder());
-        Assertions.assertEquals(IBond.Stereo.NONE, bond.getStereo());
+//        Assertions.assertEquals(IBond.Stereo.NONE, bond.getStereo()); // deprecated
+        Assertions.assertEquals(IBond.Display.Solid, bond.getDisplay());
     }
 
     @Test
@@ -103,8 +105,9 @@ class DebugBondTest extends AbstractBondTest {
         Assertions.assertEquals(2, bond.getAtomCount());
         Assertions.assertEquals(c, bond.getBegin());
         Assertions.assertEquals(o, bond.getEnd());
-        Assertions.assertTrue(bond.getOrder() == IBond.Order.DOUBLE);
-        Assertions.assertEquals(IBond.Stereo.NONE, bond.getStereo());
+        Assertions.assertEquals(IBond.Order.DOUBLE, bond.getOrder());
+//        Assertions.assertEquals(IBond.Stereo.E_Z_BY_COORDINATES, bond.getStereo()); // deprecated
+        Assertions.assertEquals(IBond.Display.Solid, bond.getDisplay());
     }
 
     @Test
@@ -117,7 +120,8 @@ class DebugBondTest extends AbstractBondTest {
         Assertions.assertEquals(2, bond.getAtomCount());
         Assertions.assertEquals(c, bond.getBegin());
         Assertions.assertEquals(o, bond.getEnd());
-        Assertions.assertTrue(bond.getOrder() == IBond.Order.SINGLE);
-        Assertions.assertEquals(IBond.Stereo.UP, bond.getStereo());
+        Assertions.assertEquals(IBond.Order.SINGLE, bond.getOrder());
+//        Assertions.assertEquals(IBond.Stereo.UP, bond.getStereo());
+        Assertions.assertEquals(IBond.Display.Up, bond.getDisplay());
     }
 }

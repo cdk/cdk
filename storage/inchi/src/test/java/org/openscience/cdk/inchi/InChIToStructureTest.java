@@ -21,9 +21,11 @@ package org.openscience.cdk.inchi;
 import net.sf.jniinchi.INCHI_RET;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.MDLV2000Writer;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -37,6 +39,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 import java.io.StringWriter;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,13 +57,13 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void testConstructor_String_IChemObjectBuilder() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/CH4/h1H4", DefaultChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/CH4/h1H4", DefaultChemObjectBuilder.getInstance());
         Assertions.assertNotNull(parser);
     }
 
     @Test
     void testGetAtomContainer() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/CH4/h1H4", DefaultChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/CH4/h1H4", DefaultChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         Assertions.assertNotNull(container);
         Assertions.assertEquals(1, container.getAtomCount());
@@ -69,7 +72,7 @@ class InChIToStructureTest extends CDKTestCase {
     /** @cdk.bug 1293 */
     @Test
     void nonNullAtomicNumbers() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/CH4/h1H4", DefaultChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/CH4/h1H4", DefaultChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         for (IAtom atom : container.atoms()) {
             Assertions.assertNotNull(atom.getAtomicNumber());
@@ -80,7 +83,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void testFixedHydrogens() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H",
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H",
                 DefaultChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         Assertions.assertNotNull(container);
@@ -91,7 +94,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void testGetReturnStatus_EOF() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S", DefaultChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
         INCHI_RET returnStatus = parser.getReturnStatus();
         Assertions.assertNotNull(returnStatus);
@@ -101,7 +104,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void testGetMessage() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
         String message = parser.getMessage();
         Assertions.assertNotNull(message);
@@ -109,7 +112,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void testGetMessageNull() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S", DefaultChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
         String message = parser.getMessage();
         Assertions.assertNull(message);
@@ -117,15 +120,15 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void testGetLog() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
-        String message = parser.getMessage();
-        Assertions.assertNotNull(message);
+        String log = parser.getLog();
+        Assertions.assertNotNull(log);
     }
 
     @Test
     void testGetWarningFlags() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
         parser.getAtomContainer();
         long[][] flags = parser.getWarningFlags();
         Assertions.assertNotNull(flags);
@@ -136,8 +139,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void testGetAtomContainer_IChemObjectBuilder() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/CH5/h1H4", SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         // test if the created IAtomContainer is done with the Silent module...
         // OK, this is not typical use, but maybe the above generate method should be private
@@ -146,8 +148,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void atomicOxygen() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/O", DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/O", SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
         org.hamcrest.MatcherAssert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
@@ -156,8 +157,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void heavyOxygenWater() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/H2O/h1H2/i1+2", DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/H2O/h1H2/i1+2", SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         org.hamcrest.MatcherAssert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));        org.hamcrest.MatcherAssert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
@@ -167,9 +167,8 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void e_bute_2_ene() throws Exception {
-        InChIToStructure parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+",
-                DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+",
+                SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
@@ -181,9 +180,8 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void inchiRadical() throws Exception {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/C2H5/c1-2/h1H2,2H3",
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/C2H5/c1-2/h1H2,2H3",
                                                        SilentChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = parser.getAtomContainer();
         StringWriter sw = new StringWriter();
         try (MDLV2000Writer wtr = new MDLV2000Writer(sw)) {
@@ -194,9 +192,8 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void z_bute_2_ene() throws Exception {
-        InChIToStructure parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-",
-                DefaultChemObjectBuilder.getInstance());
-        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-",
+                SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
         org.hamcrest.MatcherAssert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
@@ -211,7 +208,7 @@ class InChIToStructureTest extends CDKTestCase {
      */
     @Test
     void r_penta_2_3_diene() throws Exception {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1",
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1",
                 SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
 
@@ -232,7 +229,7 @@ class InChIToStructureTest extends CDKTestCase {
      */
     @Test
     void s_penta_2_3_diene() throws Exception {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1",
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1",
                 SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
 
@@ -250,7 +247,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void diazene() throws Exception {
-        InChIToStructure parse = new InChIToStructure("InChI=1S/H2N2/c1-2/h1-2H/b2-1+",
+        InChIToStructure parse = InChIToStructure.fromInChI("InChI=1S/H2N2/c1-2/h1-2H/b2-1+",
                                                       SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = parse.getAtomContainer();
         assertThat(mol.getAtomCount(), is(4));
@@ -273,7 +270,7 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void isotope() throws Exception{
-        InChIToStructure parse = new InChIToStructure("InChI=1S/HI/h1H/p-1/i1-6",
+        InChIToStructure parse = InChIToStructure.fromInChI("InChI=1S/HI/h1H/p-1/i1-6",
                 SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = parse.getAtomContainer();
         assertThat(mol.getAtomCount(), is(1));
@@ -325,11 +322,100 @@ class InChIToStructureTest extends CDKTestCase {
 
     @Test
     void testTc99() throws CDKException {
-        InChIToStructure parser = new InChIToStructure("InChI=1S/Tc/i1+1", DefaultChemObjectBuilder.getInstance());
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/Tc/i1+1", DefaultChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
         Assertions.assertNotNull(container);
         Assertions.assertEquals(1, container.getAtomCount());
         Assertions.assertEquals(43, container.getAtom(0).getAtomicNumber());
         Assertions.assertEquals(99, container.getAtom(0).getMassNumber());
+    }
+
+    @Test
+    void testAuxInfoConstructor_String_IChemObjectBuilder() throws CDKException {
+        String auxInfo = "AuxInfo=1/0/N:1/rA:1nC/rB:/rC:8.775,-3.125,0;";
+        InChIToStructure parser = InChIToStructure.fromAuxInfo(auxInfo, SilentChemObjectBuilder.getInstance());
+        Assertions.assertNotNull(parser);
+    }
+
+    @Test
+    void testAuxInfoGetAtomContainer() throws CDKException {
+        String auxInfo = "AuxInfo=1/0/N:1/rA:1nC/rB:/rC:8.775,-3.125,0;";
+        InChIToStructure parser = InChIToStructure.fromAuxInfo(auxInfo, SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.getAtomContainer();
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(1, mol.getAtomCount());
+    }
+
+    @Test
+    void testAuxInfoNonNullAtomicNumbers() throws CDKException {
+        String auxInfo = "AuxInfo=1/0/N:1/rA:1nC/rB:/rC:8.775,-3.125,0;";
+        InChIToStructure parser = InChIToStructure.fromAuxInfo(auxInfo, SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.getAtomContainer();
+        for (IAtom atom : mol.atoms()) {
+            Assertions.assertNotNull(atom.getAtomicNumber());
+        }
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(1, mol.getAtomCount());
+    }
+
+    @Test
+    void testNullAuxInfo_throwsIllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+            InChIToStructure.fromAuxInfo(null, SilentChemObjectBuilder.getInstance());
+        });
+    }
+
+    @Test
+    void testInvalidAuxInfo_EmptyAtomContainer() throws CDKException {
+        String auxInfo = "INVALID";
+        InChIToStructure parser = InChIToStructure.fromAuxInfo(auxInfo, SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.getAtomContainer();
+        Assertions.assertEquals(0, mol.getAtomCount());
+        Assertions.assertEquals(0, mol.getBondCount());
+    }
+
+    @Test
+    void testAuxInfoAtomStorageOrder() throws CDKException {
+        String auxInfo = "AuxInfo=1/0/N:3,2,5,1,4/it:im/rA:5ClC.oCIBr/rB:p1;s2;s2;N2;/rC:0,-1.54,0;;0,1.54,0;1.54,0,0;-1.54,0,0;";
+        InChIToStructure parser = InChIToStructure.fromAuxInfo(auxInfo, SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.getAtomContainer();
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(5, mol.getAtomCount());
+        Assertions.assertEquals("Cl", mol.getAtom(0).getSymbol());
+        Assertions.assertEquals("C", mol.getAtom(1).getSymbol());
+        Assertions.assertEquals("C", mol.getAtom(2).getSymbol());
+        Assertions.assertEquals("I", mol.getAtom(3).getSymbol());
+        Assertions.assertEquals("Br", mol.getAtom(4).getSymbol());
+    }
+
+    @Test
+    void testAuxInfoStereoTetrahedral() throws CDKException {
+        String auxInfo = "AuxInfo=1/0/N:3,2,5,1,4/it:im/rA:5ClC.oCIBr/rB:p1;s2;s2;N2;/rC:0,-1.54,0;;0,1.54,0;1.54,0,0;-1.54,0,0;";
+        InChIToStructure parser = InChIToStructure.fromAuxInfo(auxInfo, SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.getAtomContainer();
+        Assertions.assertNotNull(mol);
+
+        Assertions.assertEquals(1, ((Collection<?>)mol.stereoElements()).size());
+
+        if (mol.stereoElements().iterator().hasNext()) {
+            IStereoElement<?,?> first = mol.stereoElements().iterator().next();
+            Assertions.assertInstanceOf(TetrahedralChirality.class, first);
+            Assertions.assertEquals("C", ((IAtom)first.getFocus()).getSymbol());
+            Assertions.assertEquals("Cl", ((IAtom)first.getCarriers().get(0)).getSymbol());
+            Assertions.assertEquals("C", ((IAtom)first.getCarriers().get(1)).getSymbol());
+            Assertions.assertEquals("I", ((IAtom)first.getCarriers().get(2)).getSymbol());
+            Assertions.assertEquals("Br", ((IAtom)first.getCarriers().get(3)).getSymbol());
+        }
+    }
+
+    @Test
+    @Disabled("InChI API does not return the cis trans stereochemistry.")
+    void testAuxInfoExtendedCisTrans() throws CDKException {
+        String auxInfo = "AuxInfo=1/0/N:1,2,3,4,5,6,7,8/rA:8nCCCCBrClFI/rB:d1;d1;d2;s3;s4;s4;s3;/rC:8.25,-4.55,0;7.25,-4.55,0;9.25,-4.55,0;6.25,-4.55,0;9.75,-5.416,0;5.75,-3.684,0;5.75,-5.416,0;9.75,-3.684,0;";
+        InChIToStructure parser = InChIToStructure.fromAuxInfo(auxInfo, SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.getAtomContainer();
+
+        Assertions.assertNotNull(mol);
+        Assertions.assertEquals(1, ((Collection<?>)mol.stereoElements()).size());
     }
 }

@@ -374,8 +374,8 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             IAtom atom2 = atoms[indexJ];
 
             Order order = container.getBond(index).getOrder();
-            IBond.Stereo stereo = container.getBond(index).getStereo();
-            bonds[index] = new Bond(atom1, atom2, order, stereo);
+            bonds[index] = newAtomContainer.newBond(atom1, atom2, order);
+            bonds[index].setDisplay(container.getBond(index).getDisplay());
             if (container.getBond(index).getID() != null) {
                 bonds[index].setID(container.getBond(index).getID());
             }
@@ -441,7 +441,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                 assert clone != null;
                 clone.setAtoms(new IAtom[]{map.get(bond.getBegin()), map.get(bond.getEnd())});
                 clone.setOrder(atomContainer.getBond(i).getOrder());
-                clone.setStereo(atomContainer.getBond(i).getStereo());
+                clone.setDisplay(atomContainer.getBond(i).getDisplay());
                 mol.addBond(clone);
             }
         }

@@ -189,7 +189,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         Assertions.assertEquals(2, containersList.size());
         IAtomContainer container = containersList.get(0);
-        Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(0).getStereo());
+        Assertions.assertEquals(IBond.Display.Solid, container.getBond(0).getDisplay());
     }
 
     @Test
@@ -209,10 +209,10 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
         IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
-        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(1).getStereo());
-        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(6).getStereo());
-        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(7).getStereo());
-        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(11).getStereo());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(1).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(6).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(7).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(11).getDisplay());
     }
 
     @Test

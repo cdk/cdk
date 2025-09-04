@@ -615,7 +615,7 @@ public abstract class StereoElementFactory {
                     // we have already previously checked whether 'v' is at the
                     // 'point' and so these must be inverse (fat-end of hatched
                     // wedge is a stereocenter) ala Daylight
-                    if (bond.getStereo() == DOWN || bond.getStereo() == DOWN_INVERTED) {
+                    if (bond.getDisplay() == IBond.Display.WedgedHashBegin || bond.getDisplay() == IBond.Display.WedgedHashEnd) {
 
                         // we stick to the 'point' end convention but can
                         // interpret if the bond isn't connected to another
@@ -633,7 +633,7 @@ public abstract class StereoElementFactory {
                         nonplanar = true;
                     }
                     // stereo at the "fat-end" of the bold wedge?
-                    else if (bond.getStereo() == UP || bond.getStereo() == UP_INVERTED) {
+                    else if (bond.getDisplay() == IBond.Display.WedgeBegin || bond.getDisplay() == IBond.Display.WedgeEnd) {
                         logger.warn("Ignoring inverted up wedge bond connected to atom idx=", w);
                         return null;
                     }
@@ -761,11 +761,13 @@ public abstract class StereoElementFactory {
         }
 
         private static boolean isWedged(IBond bond) {
-            switch (bond.getStereo()) {
-                case UP:
-                case DOWN:
-                case UP_INVERTED:
-                case DOWN_INVERTED:
+            switch (bond.getDisplay()) {
+                case WedgeBegin:
+                case WedgeEnd:
+                case WedgedHashBegin:
+                case WedgedHashEnd:
+                case HollowWedgeBegin:
+                case HollowWedgeEnd:
                     return true;
                 default:
                     return false;
@@ -1044,14 +1046,8 @@ public abstract class StereoElementFactory {
          * @return the bond has unspecified stereochemistry
          */
         private boolean isUnspecified(IBond bond) {
-            switch (bond.getStereo()) {
-                case UP_OR_DOWN:
-                case UP_OR_DOWN_INVERTED:
-                case E_OR_Z:
-                    return true;
-                default:
-                    return false;
-            }
+            return bond.getDisplay() == IBond.Display.Wavy ||
+                   bond.getDisplay() == IBond.Display.Crossed;
         }
 
         /**
@@ -1178,14 +1174,16 @@ public abstract class StereoElementFactory {
          *         planar
          */
         private int elevationOf(IAtom focus, IBond bond) {
-            switch (bond.getStereo()) {
-                case UP:
+            switch (bond.getDisplay()) {
+                case WedgeBegin:
+                case HollowWedgeBegin:
                     return bond.getBegin().equals(focus) ? +1 : 0;
-                case UP_INVERTED:
+                case WedgeEnd:
+                case HollowWedgeEnd:
                     return bond.getEnd().equals(focus) ? +1 : 0;
-                case DOWN:
+                case WedgedHashBegin:
                     return bond.getBegin().equals(focus) ? -1 : 0;
-                case DOWN_INVERTED:
+                case WedgedHashEnd:
                     return bond.getEnd().equals(focus) ? -1 : 0;
             }
             return 0;

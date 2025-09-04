@@ -153,11 +153,17 @@ public class BondTools {
      * @param  to2   second direction to look in.
      * @param  bool  true=angle is 0 to 2PI, false=angel is -PI to PI.
      * @return       The angle in rad.
+     * @deprecated this function should be internal
      */
+    @Deprecated
     public static double giveAngleBothMethods(IAtom from, IAtom to1, IAtom to2, boolean bool) {
         return giveAngleBothMethods(from.getPoint2d(), to1.getPoint2d(), to2.getPoint2d(), bool);
     }
 
+    /**
+     * @deprecated this function should be internal
+     */
+    @Deprecated
     public static double giveAngleBothMethods(Point2d from, Point2d to1, Point2d to2, boolean bool) {
         double[] A = new double[2];
         from.get(A);
@@ -191,6 +197,7 @@ public class BondTools {
      *      configurations are specified (this method ensures that there is
      *      actually the possibility of a double bond configuration)
      * @return                          false=is not end of configuration, true=is
+     * @deprecated Stereochemistry in CDK is now stored with {@link org.openscience.cdk.interfaces.IStereoElement}s.
      */
     private static boolean isEndOfDoubleBond(IAtomContainer container, IAtom atom, IAtom parent,
             boolean[] doubleBondConfiguration) {
@@ -253,7 +260,9 @@ public class BondTools {
      *      configurations are specified (this method ensures that there is
      *      actually the possibility of a double bond configuration)
      * @return                          false=is not start of configuration, true=is
+     * @deprecated Stereochemistry in CDK is now stored with {@link org.openscience.cdk.interfaces.IStereoElement}s.
      */
+    @Deprecated
     private static boolean isStartOfDoubleBond(IAtomContainer container, IAtom a, IAtom parent,
             boolean[] doubleBondConfiguration) {
         int hcount;
@@ -307,7 +316,9 @@ public class BondTools {
      *@param  container  The atomContainer the atom is in
      *@return            0=is not tetrahedral; &gt;1 is a certain depiction of
      *      tetrahedrality (evaluated in parse chain)
+     * @deprecated Stereochemistry in CDK is now stored with {@link org.openscience.cdk.interfaces.IStereoElement}s.
      */
+    @Deprecated
     public static int isTetrahedral(IAtomContainer container, IAtom atom, boolean strict) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
         if (atoms.size() != 4) {
@@ -317,10 +328,10 @@ public class BondTools {
         int up = 0;
         int down = 0;
         for (IBond bond : bonds) {
-            if (bond.getStereo() == IBond.Stereo.NONE || bond.getStereo() == CDKConstants.UNSET) {
-            } else if (bond.getStereo() == IBond.Stereo.UP) {
+            // JWM: should be checking which end of bond we are WedgeEnd etc
+            if (bond.getDisplay() == IBond.Display.WedgeBegin) {
                 up++;
-            } else if (bond.getStereo() == IBond.Stereo.DOWN) {
+            } else if (bond.getDisplay() == IBond.Display.WedgedHashBegin) {
                 down++;
             }
         }
@@ -353,10 +364,12 @@ public class BondTools {
      *  chirality. This method uses wedge bonds. 3D coordinates are not taken into account. If there
      *  are no wedge bonds around a potential stereo center, it will not be found.
      *
-     *@param  atom          The atom which is the center
-     *@param  container  The atomContainer the atom is in
-     *@return            true=is square planar, false=is not
+     * @param  atom          The atom which is the center
+     * @param  container  The atomContainer the atom is in
+     * @return            true=is square planar, false=is not
+     * @deprecated Stereochemistry in CDK is now stored with {@link org.openscience.cdk.interfaces.IStereoElement}s.
      */
+    @Deprecated
     public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
         if (atoms.size() < 5 || atoms.size() > 6) {
@@ -366,10 +379,10 @@ public class BondTools {
         int up = 0;
         int down = 0;
         for (IBond bond : bonds) {
-            if (bond.getStereo() == CDKConstants.UNSET || bond.getStereo() == IBond.Stereo.NONE) {
-            } else if (bond.getStereo() == IBond.Stereo.UP) {
+            // JWM: should be checking which end of bond we are WedgeEnd etc
+            if (bond.getDisplay() == IBond.Display.WedgeBegin) {
                 up++;
-            } else if (bond.getStereo() == IBond.Stereo.DOWN) {
+            } else if (bond.getDisplay() == IBond.Display.WedgedHashBegin) {
                 down++;
             }
         }
@@ -387,10 +400,13 @@ public class BondTools {
      *  This method uses wedge bonds. 3D coordinates are not taken into account. If there
      *  are no wedge bonds around a potential stereo center, it will not be found.
      *
-     *@param  stereoAtom          The atom which is the center
-     *@param  container  The atomContainer the atom is in
-     *@return            true=is a stereo atom, false=is not
+     * @param  stereoAtom          The atom which is the center
+     * @param  container  The atomContainer the atom is in
+     * @return            true=is a stereo atom, false=is not
+     * @deprecated Stereochemistry in CDK is now stored with {@link org.openscience.cdk.interfaces.IStereoElement}s.
+     * and {@link org.openscience.cdk.stereo.Stereocenters} and {@link org.openscience.cdk.stereo.StereoElementFactory}
      */
+    @Deprecated
     public static boolean isStereo(IAtomContainer container, IAtom stereoAtom) {
         List<IAtom> atoms = container.getConnectedAtomsList(stereoAtom);
         if (atoms.size() < 4 || atoms.size() > 6) {
@@ -399,7 +415,11 @@ public class BondTools {
         List<IBond> bonds = container.getConnectedBondsList(stereoAtom);
         int stereo = 0;
         for (IBond bond : bonds) {
-            if (bond.getStereo() != CDKConstants.UNSET && bond.getStereo() != IBond.Stereo.NONE) {
+            // JWM: should be checking which end of bond we are
+            if (bond.getDisplay() == IBond.Display.WedgeBegin ||
+                bond.getDisplay() == IBond.Display.WedgeEnd ||
+                bond.getDisplay() == IBond.Display.WedgedHashBegin ||
+                bond.getDisplay() == IBond.Display.WedgedHashEnd) {
                 stereo++;
             }
         }
@@ -476,10 +496,12 @@ public class BondTools {
      *  This method uses wedge bonds. 3D coordinates are not taken into account. If there
      *  are no wedge bonds around a potential stereo center, it will not be found.
      *
-     *@param  atom          The atom which is the center
-     *@param  container  The atomContainer the atom is in
-     *@return            true=is square planar, false=is not
+     * @param  atom          The atom which is the center
+     * @param  container  The atomContainer the atom is in
+     * @return            true=is square planar, false=is not
+     * @deprecated Stereochemistry in CDK is now stored with {@link org.openscience.cdk.interfaces.IStereoElement}s.
      */
+    @Deprecated
     public static boolean isSquarePlanar(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
         if (atoms.size() != 4) {
@@ -489,10 +511,10 @@ public class BondTools {
         int up = 0;
         int down = 0;
         for (IBond bond : bonds) {
-            if (bond.getStereo() == CDKConstants.UNSET || bond.getStereo() == IBond.Stereo.NONE) {
-            } else if (bond.getStereo() == IBond.Stereo.UP) {
+            // JWM: should be checking which end of bond we are WedgeEnd etc
+            if (bond.getDisplay() == IBond.Display.WedgeBegin) {
                 up++;
-            } else if (bond.getStereo() == IBond.Stereo.DOWN) {
+            } else if (bond.getDisplay() == IBond.Display.WedgedHashBegin) {
                 down++;
             }
         }
@@ -504,10 +526,12 @@ public class BondTools {
      *  opposite or not, i. e.if it's tetrehedral or square planar. The method
      *  does not check if there are four atoms and if two or up and two are down
      *
-     *@param  atom          The atom which is the center
-     *@param  container  The atomContainer the atom is in
-     *@return            true=are opposite, false=are not
+     * @param  atom          The atom which is the center
+     * @param  container  The atomContainer the atom is in
+     * @return            true=are opposite, false=are not
+     * @deprecated Stereochemistry in CDK is now stored with {@link org.openscience.cdk.interfaces.IStereoElement}s.
      */
+    @Deprecated
     public static boolean stereosAreOpposite(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
         TreeMap<Double, Integer> hm = new TreeMap<>();
@@ -515,18 +539,18 @@ public class BondTools {
             hm.put(giveAngle(atom, atoms.get(0), atoms.get(i)), i);
         }
         Object[] ohere = hm.values().toArray();
-        IBond.Stereo stereoOne = container.getBond(atom, atoms.get(0)).getStereo();
-        IBond.Stereo stereoOpposite = container.getBond(atom, atoms.get((Integer) ohere[1])).getStereo();
+        IBond.Display stereoOne = container.getBond(atom, atoms.get(0)).getDisplay();
+        IBond.Display stereoOpposite = container.getBond(atom, atoms.get((Integer) ohere[1])).getDisplay();
         return stereoOpposite == stereoOne;
     }
 
     /**
      *  Calls giveAngleBothMethods with bool = true.
      *
-     *@param  from  the atom to view from
-     *@param  to1   first direction to look in
-     *@param  to2   second direction to look in
-     *@return       The angle in rad from 0 to 2*PI
+     * @param  from  the atom to view from
+     * @param  to1   first direction to look in
+     * @param  to2   second direction to look in
+     * @return       The angle in rad from 0 to 2*PI
      */
     public static double giveAngle(IAtom from, IAtom to1, IAtom to2) {
         return (giveAngleBothMethods(from, to1, to2, true));
@@ -544,6 +568,8 @@ public class BondTools {
         return (giveAngleBothMethods(from, to1, to2, false));
     }
 
+    // JWM: this function cannot be correct since the stereo of the H depends
+    // on where it is positioned!
     public static void makeUpDownBonds(IAtomContainer container) {
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom a = container.getAtom(i);
@@ -554,12 +580,12 @@ public class BondTools {
                 IAtom h = null;
                 for (int k = 0; k < 4; k++) {
                     IAtom conAtom = container.getConnectedAtomsList(a).get(k);
-                    IBond.Stereo stereo = container.getBond(a, conAtom).getStereo();
-                    if (stereo == IBond.Stereo.UP) {
+                    IBond.Display stereo = container.getBond(a, conAtom).getDisplay();
+                    if (stereo == IBond.Display.Up) {
                         up++;
-                    } else if (stereo == IBond.Stereo.DOWN) {
+                    } else if (stereo == IBond.Display.Down) {
                         down++;
-                    } else if (stereo == IBond.Stereo.NONE && conAtom.getAtomicNumber() == IElement.H) {
+                    } else if (stereo == IBond.Display.Solid && conAtom.getAtomicNumber() == IElement.H) {
                         h = conAtom;
                         hs++;
                     } else {
@@ -567,10 +593,10 @@ public class BondTools {
                     }
                 }
                 if (up == 0 && down == 1 && h != null && hs == 1) {
-                    container.getBond(a, h).setStereo(IBond.Stereo.UP);
+                    container.getBond(a, h).setDisplay(IBond.Display.Up);
                 }
                 if (up == 1 && down == 0 && h != null && hs == 1) {
-                    container.getBond(a, h).setStereo(IBond.Stereo.DOWN);
+                    container.getBond(a, h).setDisplay(IBond.Display.Down);
                 }
             }
         }

@@ -335,6 +335,10 @@ final class StandardBondGenerator {
                 return generateBoldWedgeBond(from, to, toBonds);
             case WedgeEnd:
                 return generateBoldWedgeBond(to, from, fromBonds);
+            case HollowWedgeBegin:
+                return generateBoldWedgeBond(from, to, toBonds).outline(stroke);
+            case HollowWedgeEnd:
+                return generateBoldWedgeBond(to, from, fromBonds).outline(stroke);
             case Wavy:
                 return generateWavyBond(from, to);
             case Dash:
@@ -374,7 +378,7 @@ final class StandardBondGenerator {
      * @param toBonds bonds connected to the 'to atom'
      * @return the rendering element
      */
-    IRenderingElement generateBoldWedgeBond(IAtom from, IAtom to, List<IBond> toBonds) {
+    GeneralPath generateBoldWedgeBond(IAtom from, IAtom to, List<IBond> toBonds) {
 
         final Point2d fromPoint = from.getPoint2d();
         final Point2d toPoint = to.getPoint2d();
@@ -690,7 +694,12 @@ final class StandardBondGenerator {
         final IAtom atom1 = outOfOrder ? bond.getEnd() : bond.getBegin();
         final IAtom atom2 = outOfOrder ? bond.getBegin() : bond.getEnd();
 
-        if (IBond.Stereo.E_OR_Z.equals(bond.getStereo())) return generateCrossedDoubleBond(atom1, atom2);
+        // MDL V3000 + ChemDraw use "unspecified" to mean both wavy and crossed
+        // hopefully at this point CDK has parsed it but in-case not we allow it
+        // here
+        if (IBond.Display.Crossed == bond.getDisplay() ||
+            IBond.Display.Wavy == bond.getDisplay())
+            return generateCrossedDoubleBond(atom1, atom2);
 
         final List<IBond> atom1Bonds = refContainer.getConnectedBondsList(atom1);
         final List<IBond> atom2Bonds = refContainer.getConnectedBondsList(atom2);
@@ -789,7 +798,7 @@ final class StandardBondGenerator {
      * @return the bond is plain
      */
     private static boolean isPlainBond(IBond bond) {
-        return SINGLE.equals(bond.getOrder()) && (bond.getStereo() == null || bond.getStereo() == NONE);
+        return SINGLE.equals(bond.getOrder()) && (bond.getDisplay() == null || bond.getDisplay() == IBond.Display.Solid);
     }
 
     /**
@@ -801,16 +810,18 @@ final class StandardBondGenerator {
      * @return the atom is at the wide end of the wedge in the provided bond
      */
     private boolean atWideEndOfWedge(final IAtom atom, final IBond bond) {
-        if (bond.getStereo() == null) return false;
+        if (bond.getDisplay() == null) return false;
         switch (bond.getDisplay()) {
             case Bold:
             case Hash:
                 return true;
             case WedgeBegin:
             case WedgedHashBegin:
+            case HollowWedgeBegin:
                 return bond.getEnd().equals(atom);
             case WedgeEnd:
             case WedgedHashEnd:
+            case HollowWedgeEnd:
                 return bond.getBegin().equals(atom);
             default:
                 return false;

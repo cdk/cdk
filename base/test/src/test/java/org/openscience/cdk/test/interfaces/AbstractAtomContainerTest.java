@@ -5,14 +5,6 @@
  */
 package org.openscience.cdk.test.interfaces;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,11 +29,14 @@ import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import javax.vecmath.Point2d;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -398,7 +393,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         IBond c1c4 = builder.newInstance(IBond.class, c1, c4);
         IBond c1h5 = builder.newInstance(IBond.class, c1, h5);
 
-        c1o2.setStereo(IBond.Stereo.UP);
+        c1o2.setDisplay(IBond.Display.Up);
 
         container.addBond(c1o2);
         container.addBond(c1n3);
@@ -2134,9 +2129,9 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        acetone.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP); // yes this is crap
-        acetone.addBond(1, 3, IBond.Order.DOUBLE, IBond.Stereo.DOWN);
-        acetone.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        acetone.addBond(0, 1, IBond.Order.SINGLE, IBond.Display.Up); // yes this is crap
+        acetone.addBond(1, 3, IBond.Order.DOUBLE, IBond.Display.Down);
+        acetone.addBond(1, 2, IBond.Order.SINGLE);
 
         Assertions.assertEquals(3, acetone.getBondCount());
         for (IBond iBond : acetone.bonds()) Assertions.assertNotNull(iBond);
@@ -2144,15 +2139,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assertions.assertEquals(c1, acetone.getBond(0).getBegin());
         Assertions.assertEquals(c2, acetone.getBond(0).getEnd());
         Assertions.assertEquals(IBond.Order.SINGLE, acetone.getBond(0).getOrder());
-        Assertions.assertEquals(IBond.Stereo.UP, acetone.getBond(0).getStereo());
+        Assertions.assertEquals(IBond.Display.Up, acetone.getBond(0).getDisplay());
         Assertions.assertEquals(c2, acetone.getBond(1).getBegin());
         Assertions.assertEquals(o, acetone.getBond(1).getEnd());
         Assertions.assertEquals(IBond.Order.DOUBLE, acetone.getBond(1).getOrder());
-        Assertions.assertEquals(IBond.Stereo.DOWN, acetone.getBond(1).getStereo());
+        Assertions.assertEquals(IBond.Display.Down, acetone.getBond(1).getDisplay());
         Assertions.assertEquals(c2, acetone.getBond(2).getBegin());
         Assertions.assertEquals(c3, acetone.getBond(2).getEnd());
         Assertions.assertEquals(IBond.Order.SINGLE, acetone.getBond(2).getOrder());
-        Assertions.assertEquals(IBond.Stereo.NONE, acetone.getBond(2).getStereo());
+        Assertions.assertEquals(IBond.Display.Solid, acetone.getBond(2).getDisplay());
     }
 
     @Test

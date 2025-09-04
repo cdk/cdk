@@ -63,7 +63,7 @@ class MDLV2000BondBlockTest {
         String input = "  1  3  1  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
@@ -73,7 +73,7 @@ class MDLV2000BondBlockTest {
         String input = "  1  3  2  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.DOUBLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.E_Z_BY_COORDINATES));
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
@@ -83,7 +83,7 @@ class MDLV2000BondBlockTest {
         String input = "  1  3  3  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.TRIPLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
@@ -92,7 +92,7 @@ class MDLV2000BondBlockTest {
     void aromaticBond() throws Exception {
         String input = "  1  3  4  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertTrue(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertTrue(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
@@ -101,7 +101,7 @@ class MDLV2000BondBlockTest {
     void singleOrDoubleBond() throws Exception {
         String input = "  1  3  5  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
         assertThat(bond, is(instanceOf(QueryBond.class)));
@@ -112,7 +112,7 @@ class MDLV2000BondBlockTest {
     void singleOrAromaticBond() throws Exception {
         String input = "  1  3  6  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
         assertThat(bond, is(instanceOf(QueryBond.class)));
@@ -123,7 +123,7 @@ class MDLV2000BondBlockTest {
     void doubleOrAromaticBond() throws Exception {
         String input = "  1  3  7  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
         assertThat(bond, is(instanceOf(QueryBond.class)));
@@ -134,7 +134,7 @@ class MDLV2000BondBlockTest {
     void anyBond() throws Exception {
         String input = "  1  3  8  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
         assertThat(bond, is(instanceOf(QueryBond.class)));
@@ -146,7 +146,7 @@ class MDLV2000BondBlockTest {
         String input = "  1  3  1  1  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.UP));
+        assertThat(bond.getDisplay(), is(IBond.Display.Up));
     }
 
     @Test
@@ -154,7 +154,7 @@ class MDLV2000BondBlockTest {
         String input = "  1  3  1  6  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.DOWN));
+        assertThat(bond.getDisplay(), is(IBond.Display.Down));
     }
 
     @Test
@@ -162,7 +162,7 @@ class MDLV2000BondBlockTest {
         String input = "  1  3  1  4  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.UP_OR_DOWN));
+        assertThat(bond.getDisplay(), is(IBond.Display.Wavy));
     }
 
     @Test
@@ -170,7 +170,7 @@ class MDLV2000BondBlockTest {
         String input = "  1  3  2  3  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.DOUBLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.E_OR_Z));
+        assertThat(bond.getDisplay(), is(IBond.Display.Crossed));
     }
 
     @Test
@@ -178,7 +178,7 @@ class MDLV2000BondBlockTest {
         String input = "  1  3  2  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
         assertThat(bond.getOrder(), is(IBond.Order.DOUBLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.E_Z_BY_COORDINATES));
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
     }
 
     @Test
@@ -228,7 +228,8 @@ class MDLV2000BondBlockTest {
         assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        // assertThat(bond.getStereo(), is(IBond.Stereo.NONE)); // deprecated
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
@@ -240,7 +241,8 @@ class MDLV2000BondBlockTest {
         assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        // assertThat(bond.getStereo(), is(IBond.Stereo.NONE)); // deprecated
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
@@ -252,7 +254,8 @@ class MDLV2000BondBlockTest {
         assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        // assertThat(bond.getStereo(), is(IBond.Stereo.NONE)); // deprecated
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
@@ -264,7 +267,8 @@ class MDLV2000BondBlockTest {
         assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        // assertThat(bond.getStereo(), is(IBond.Stereo.NONE)); // deprecated
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }
@@ -276,7 +280,8 @@ class MDLV2000BondBlockTest {
         assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        // assertThat(bond.getStereo(), is(IBond.Stereo.NONE)); // deprecated
+        assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         Assertions.assertFalse(bond.getFlag(IChemObject.AROMATIC));
         Assertions.assertFalse(bond.getFlag(IChemObject.SINGLE_OR_DOUBLE));
     }

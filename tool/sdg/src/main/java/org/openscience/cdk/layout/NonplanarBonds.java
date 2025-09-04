@@ -64,16 +64,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.openscience.cdk.interfaces.IBond.Display.*;
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
-import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
-import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
-import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
-import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
-import static org.openscience.cdk.interfaces.IBond.Stereo.UP;
-import static org.openscience.cdk.interfaces.IBond.Stereo.UP_INVERTED;
-import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN;
-import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN_INVERTED;
 
 /**
  * Assigns non-planar labels (wedge/hatch) to the tetrahedral and extended tetrahedral
@@ -159,12 +152,14 @@ final class NonplanarBonds {
         // needed if the atom positions weren't adjusted but we can't guarantee
         // that so it's safe to clear them
         for (IBond bond : container.bonds()) {
-            switch (bond.getStereo()) {
-                case UP:
-                case UP_INVERTED:
-                case DOWN:
-                case DOWN_INVERTED:
-                    bond.setStereo(NONE);
+            switch (bond.getDisplay()) {
+                case WedgeBegin:
+                case WedgeEnd:
+                case WedgedHashBegin:
+                case WedgedHashEnd:
+                case HollowWedgeBegin:
+                case HollowWedgeEnd:
+                    bond.setDisplay(IBond.Display.Solid);
             }
         }
 
@@ -398,10 +393,10 @@ final class NonplanarBonds {
             bond.setFlag(IChemObject.VISITED, false);
 
         snapBondsToPosition(focus, bonds, -60, 60, 120, -120);
-        setBondDisplay(bonds.get(0), focus, DOWN);
-        setBondDisplay(bonds.get(1), focus, DOWN);
-        setBondDisplay(bonds.get(2), focus, UP);
-        setBondDisplay(bonds.get(3), focus, UP);
+        setBondDisplay(bonds.get(0), focus, Down);
+        setBondDisplay(bonds.get(1), focus, Down);
+        setBondDisplay(bonds.get(2), focus, Up);
+        setBondDisplay(bonds.get(3), focus, Up);
     }
 
     private boolean doMirror(List<IAtom> atoms) {
@@ -463,8 +458,8 @@ final class NonplanarBonds {
         } else {
             snapBondsToPosition(focus, bonds, 0, 60, -90, 120, 180);
         }
-        setBondDisplay(bonds.get(1), focus, DOWN);
-        setBondDisplay(bonds.get(3), focus, UP);
+        setBondDisplay(bonds.get(1), focus, Down);
+        setBondDisplay(bonds.get(3), focus, Up);
     }
 
     private void modifyAndLabel(Octahedral oc) {
@@ -510,10 +505,10 @@ final class NonplanarBonds {
         } else {
             snapBondsToPosition(focus, bonds, new double[] { 0.0D, 60.0D, -60.0D, -120.0D, 120.0D, 180.0D });
         }
-        setBondDisplay(bonds.get(1), focus, IBond.Stereo.DOWN);
-        setBondDisplay(bonds.get(2), focus, IBond.Stereo.DOWN);
-        setBondDisplay(bonds.get(3), focus, IBond.Stereo.UP);
-        setBondDisplay(bonds.get(4), focus, IBond.Stereo.UP);
+        setBondDisplay(bonds.get(1), focus, Down);
+        setBondDisplay(bonds.get(2), focus, Down);
+        setBondDisplay(bonds.get(3), focus, Up);
+        setBondDisplay(bonds.get(4), focus, Up);
     }
 
 
@@ -689,44 +684,24 @@ final class NonplanarBonds {
         l.set(j, tmp);
     }
 
-    private IBond.Stereo invert(IBond.Stereo disp) {
+    private IBond.Display invert(IBond.Display disp) {
         switch (disp) {
-            case UP:
-                return DOWN;
-            case DOWN:
-                return UP;
+            case WedgeBegin:
+                return IBond.Display.WedgedHashBegin;
+            case WedgedHashBegin:
+                return IBond.Display.WedgeBegin;
             default:
                 return disp;
         }
     }
 
-
-    private IBond.Stereo flip(IBond.Stereo disp) {
-        switch (disp) {
-            case UP:
-                return UP_INVERTED;
-            case UP_INVERTED:
-                return UP;
-            case DOWN:
-                return DOWN_INVERTED;
-            case DOWN_INVERTED:
-                return DOWN;
-            case UP_OR_DOWN:
-                return UP_OR_DOWN_INVERTED;
-            case UP_OR_DOWN_INVERTED:
-                return UP_OR_DOWN;
-            default:
-                return disp;
-        }
-    }
-
-    private void setBondDisplay(IBond bond, IAtom focus, IBond.Stereo display) {
+    private void setBondDisplay(IBond bond, IAtom focus, IBond.Display display) {
         if (bond == null)
             return;
         if (bond.getBegin().equals(focus))
-            bond.setStereo(display);
+            bond.setDisplay(display);
         else
-            bond.setStereo(flip(display));
+            bond.setDisplay(display.flip());
     }
 
     /**
@@ -753,10 +728,11 @@ final class NonplanarBonds {
      * @param end   the expected end atom (fat end of wedge)
      * @param style the wedge style
      */
-    private void setWedge(IBond bond, IAtom end, IBond.Stereo style) {
+    private void setWedge(IBond bond, IAtom end, IBond.Display style) {
+        // FIXME
         if (!bond.getEnd().equals(end))
             bond.setAtoms(new IAtom[]{bond.getEnd(), bond.getBegin()});
-        bond.setStereo(style);
+        bond.setDisplay(style);
     }
 
     /**
@@ -800,11 +776,11 @@ final class NonplanarBonds {
         p *= sortClockwise(rank, focus, atoms, 4);
 
         // assign all up/down labels to an auxiliary array
-        IBond.Stereo[] labels = new IBond.Stereo[4];
+        IBond.Display[] labels = new IBond.Display[4];
         for (int i = 0; i < 4; i++) {
             int v = rank[i];
             p *= -1;
-            labels[v] = p > 0 ? UP : DOWN;
+            labels[v] = p > 0 ? IBond.Display.WedgeBegin : IBond.Display.WedgedHashBegin;
         }
 
         int[] priority = new int[]{5, 5, 5, 5};
@@ -815,7 +791,7 @@ final class NonplanarBonds {
         for (int v : priority(atomToIndex.get(focus), atoms, 4)) {
             IBond bond = bonds[v];
             if (bond == null) continue;
-            if (bond.getStereo() == NONE && bond.getOrder() == SINGLE) priority[v] = i++;
+            if (bond.getDisplay() == IBond.Display.Solid && bond.getOrder() == SINGLE) priority[v] = i++;
         }
 
         // we now check which side was more favourable and assign two labels
@@ -882,11 +858,11 @@ final class NonplanarBonds {
         p *= sortClockwise(rank, phantom, atoms, 4);
 
         // assign all up/down labels to an auxiliary array
-        IBond.Stereo[] labels = new IBond.Stereo[4];
+        IBond.Display[] labels = new IBond.Display[4];
         for (int i = 0; i < 4; i++) {
             int v = rank[i];
             p *= -1;
-            labels[v] = p > 0 ? UP : DOWN;
+            labels[v] = p > 0 ? IBond.Display.WedgeBegin : IBond.Display.WedgedHashBegin;
         }
 
         int[] priority = new int[]{5, 5, 5, 5};
@@ -897,7 +873,7 @@ final class NonplanarBonds {
         for (int v : new int[]{0, 1, 2, 3}) {
             IBond bond = bonds[v];
             if (bond == null) continue;
-            if (bond.getStereo() == NONE && bond.getOrder() == SINGLE) priority[v] = i++;
+            if (bond.getDisplay() == IBond.Display.Solid && bond.getOrder() == SINGLE) priority[v] = i++;
         }
 
         // we now check which side was more favourable and assign two labels
@@ -905,20 +881,20 @@ final class NonplanarBonds {
         if (priority[0] + priority[1] < priority[2] + priority[3]) {
             if (priority[0] < 5) {
                 bonds[0].setAtoms(new IAtom[]{beg, atoms[0]});
-                bonds[0].setStereo(labels[0]);
+                bonds[0].setDisplay(labels[0]);
             }
             if (priority[1] < 5) {
                 bonds[1].setAtoms(new IAtom[]{beg, atoms[1]});
-                bonds[1].setStereo(labels[1]);
+                bonds[1].setDisplay(labels[1]);
             }
         } else {
             if (priority[2] < 5) {
                 bonds[2].setAtoms(new IAtom[]{end, atoms[2]});
-                bonds[2].setStereo(labels[2]);
+                bonds[2].setDisplay(labels[2]);
             }
             if (priority[3] < 5) {
                 bonds[3].setAtoms(new IAtom[]{end, atoms[3]});
-                bonds[3].setStereo(labels[3]);
+                bonds[3].setDisplay(labels[3]);
             }
         }
 
@@ -988,13 +964,13 @@ final class NonplanarBonds {
         }
 
         // assign all up/down labels to an auxiliary array
-        IBond.Stereo[] labels = new IBond.Stereo[n];
-        IBond.Stereo refWedge = p > 0 ? UP : DOWN;
+        IBond.Display[] labels = new IBond.Display[n];
+        IBond.Display refWedge = p > 0 ? IBond.Display.WedgeBegin : IBond.Display.WedgedHashBegin;
         for (int i = 0; i < n; i++) {
             int v = rank[i];
             // no wedge here (would be ambiguous)
             if (avoid == v)
-                labels[v] = NONE;
+                labels[v] = IBond.Display.Solid;
                 // invert (if D3 acute, or odd index of D4)
             else if (invert == v || (n == 4 && i % 2 == 0))
                 labels[v] = invert(refWedge);
@@ -1003,18 +979,18 @@ final class NonplanarBonds {
         }
 
         // set the label for the highest priority and available bond
-        IBond.Stereo firstlabel = null;
+        IBond.Display firstlabel = null;
         boolean assignTwoLabels = assignTwoLabels(bonds, labels);
         for (int v : priority(atomToIndex.get(focus), atoms, n)) {
             IBond bond = bonds[v];
-            if (bond.getStereo() != NONE || bond.getOrder() != SINGLE)
+            if (bond.getDisplay() != Solid || bond.getOrder() != SINGLE)
                 continue;
-            if (labels[v] == NONE)
+            if (labels[v] == IBond.Display.Solid)
                 continue;
             // first label
             if (firstlabel == null) {
                 bond.setAtoms(new IAtom[]{focus, atoms[v]}); // avoids UP_INVERTED/DOWN_INVERTED
-                bond.setStereo(labels[v]);
+                bond.setDisplay(labels[v]);
                 firstlabel = labels[v];
                 // don't assign a second label when there are only three ligands
                 if (!assignTwoLabels)
@@ -1026,7 +1002,7 @@ final class NonplanarBonds {
                 if (isSp3Carbon(atoms[v], graph[container.indexOf(atoms[v])].length))
                     break;
                 bond.setAtoms(new IAtom[]{focus, atoms[v]}); // avoids UP_INVERTED/DOWN_INVERTED
-                bond.setStereo(labels[v]);
+                bond.setDisplay(labels[v]);
                 break;
             }
         }
@@ -1036,7 +1012,7 @@ final class NonplanarBonds {
             throw new IllegalArgumentException("could not assign non-planar (up/down) labels");
     }
 
-    private boolean assignTwoLabels(IBond[] bonds, IBond.Stereo[] labels) {
+    private boolean assignTwoLabels(IBond[] bonds, IBond.Display[] labels) {
         return labels.length == 4 && countRingBonds(bonds) != 3;
     }
 
@@ -1304,7 +1280,7 @@ final class NonplanarBonds {
                 adj[nAdj++] = container.getAtom(neighbor);
             }
             // conjugated and someone else has marked it as unspecified
-            if (bond.getStereo() == UP_OR_DOWN || bond.getStereo() == UP_OR_DOWN_INVERTED) {
+            if (bond.getDisplay() == Wavy) {
                 return;
             }
         }
@@ -1316,7 +1292,7 @@ final class NonplanarBonds {
                 adj[nAdj++] = container.getAtom(neighbor);
             }
             // conjugated and someone else has marked it as unspecified
-            if (bond.getStereo() == UP_OR_DOWN || bond.getStereo() == UP_OR_DOWN_INVERTED) {
+            if (bond.getDisplay() == Wavy) {
                 return;
             }
         }
@@ -1329,14 +1305,15 @@ final class NonplanarBonds {
             if (doubleBondElements[atomToIndex.get(adj[rank[i]])] == null &&
                     tetrahedralElements[atomToIndex.get(adj[rank[i]])] == null) {
                 edgeToBond.get(atomToIndex.get(focus[rank[i]]),
-                               atomToIndex.get(adj[rank[i]])).setStereo(UP_OR_DOWN);
+                               atomToIndex.get(adj[rank[i]]))
+                          .setDisplay(IBond.Display.Wavy);
                 return;
             }
         }
 
         // we got here and no bond was marked, fortunately we have a fallback and can use
         // crossed bond
-        doubleBond.setStereo(E_OR_Z);
+        doubleBond.setDisplay(Crossed);
     }
 
 
@@ -1646,7 +1623,7 @@ final class NonplanarBonds {
             }
             // single bonds
             else {
-                if (adjBond.getStereo() == UP_OR_DOWN || adjBond.getStereo() == UP_OR_DOWN_INVERTED) {
+                if (adjBond.getDisplay() == Wavy) {
                     return false;
                 }
                 count++;

@@ -23,8 +23,10 @@
 
 package org.openscience.cdk.smiles;
 
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -381,6 +383,27 @@ final class CxSmilesParser {
         return processIntListMap(state.ligandOrdering, iter);
     }
 
+    private static boolean processWedges(CharIter iter, CxSmilesState state, IBond.Display display) {
+        boolean ok = false;
+        while (iter.hasNext()) {
+            if (isDigit(iter.curr())) {
+                final int atmIdx = processUnsignedInt(iter);
+                if (!iter.nextIf('.'))
+                    return false;
+                final int bndIdx = processUnsignedInt(iter);
+                if (state.bondDisplay == null)
+                    state.bondDisplay = new ArrayList<>();
+                state.bondDisplay.add(new AbstractMap.SimpleImmutableEntry<>(new AbstractMap.SimpleImmutableEntry<>(atmIdx, bndIdx),
+                                                                             display));
+                ok = true;
+                iter.nextIf(',');
+            } else {
+                return true;
+            }
+        }
+        return ok;
+    }
+
     /**
      * CXSMILES radicals.
      *
@@ -563,6 +586,20 @@ final class CxSmilesParser {
                     else {
                         // LP, bond connected lone pair?
                         return -1;
+                    }
+                    break;
+                case 'w': // wedges, wD and wU
+                    if (iter.nextIf('D')) {
+                        if (!iter.nextIf(':'))
+                            return -1;
+                        if (!processWedges(iter, state, IBond.Display.WedgeBegin))
+                            return -1;
+                    }
+                    else if (iter.nextIf('U')) {
+                        if (!iter.nextIf(':'))
+                            return -1;
+                        if (!processWedges(iter, state, IBond.Display.WedgedHashBegin))
+                            return -1;
                     }
                     break;
                 default:

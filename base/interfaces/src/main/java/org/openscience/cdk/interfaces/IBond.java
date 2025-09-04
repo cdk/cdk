@@ -75,6 +75,7 @@ public interface IBond extends IElectronContainer {
      * The first atom in the IBond (index = 0) is the <i>start</i> atom, while
      * the second atom (index = 1) is the <i>end</i> atom.
      */
+    @Deprecated
     enum Stereo {
         /**
          * A bond for which there is no stereochemistry.
@@ -142,8 +143,15 @@ public interface IBond extends IElectronContainer {
         Hash,
         /** A bold line. */
         Bold,
-        /** A wavy line. */
+        /**
+         * A wavy line, this is used for undefined stereochemistry, it is
+         * undirected.
+         */
         Wavy,
+        /**
+         * A crossed double bond to indicate unknown configuration.
+         */
+        Crossed,
         /** A dotted line. */
         Dot,
         /**
@@ -167,6 +175,16 @@ public interface IBond extends IElectronContainer {
          */
         WedgeEnd,
         /**
+         * Display as a hollow wedge, with the narrow end
+         * towards the begin atom of the bond ({@link IBond#getBegin()}).
+         */
+        HollowWedgeBegin,
+        /**
+         * Display as a hollow wedge, with the narrow end
+         * towards the end atom of the bond ({@link IBond#getEnd()}).
+         */
+        HollowWedgeEnd,
+        /**
          * Display as an arrow (e.g. co-ordination bond), the arrow points
          * to the begin ({@link IBond#getBegin()}) atom.
          */
@@ -175,7 +193,41 @@ public interface IBond extends IElectronContainer {
          * Display as an arrow (e.g. co-ordination bond), the arrow points
          * to the end ({@link IBond#getEnd()}) atom.
          */
-        ArrowEnd
+        ArrowEnd;
+
+        /**
+         * A (normal) bond is stored as two atoms, 'begin' and 'end'. Some bond
+         * displays are directed towards the begin or end atom. This method
+         * allows you to obtain the 'flipped' display if one exists.
+         * {@link #WedgeBegin} becomes {@link #WedgeEnd},
+         * {@link #WedgedHashBegin} becomes {@link #WedgedHashEnd}, etc..
+         *
+         *
+         * @return the flipped bond display
+         */
+        public Display flip() {
+            switch (this) {
+                case WedgeBegin: return WedgeEnd;
+                case WedgeEnd: return WedgeBegin;
+                case WedgedHashBegin: return WedgedHashEnd;
+                case WedgedHashEnd: return WedgedHashBegin;
+                case HollowWedgeBegin: return HollowWedgeEnd;
+                case HollowWedgeEnd: return HollowWedgeBegin;
+                case ArrowBeg: return ArrowEnd;
+                case ArrowEnd: return ArrowBeg;
+                default: return this;
+            }
+        }
+
+        /**
+         * Convenience name for bold wedge, narrow end at begin atom.
+         */
+        public static final IBond.Display Up = Display.WedgeBegin;
+
+        /**
+         * Convenience name for hashed wedge bond, narrow end at begin atom.
+         */
+        public static final IBond.Display Down = Display.WedgedHashBegin;
     }
 
     /**
@@ -334,6 +386,7 @@ public interface IBond extends IElectronContainer {
      *
      * @return The stereo descriptor for this bond
      * @see #setStereo
+     * @deprecated use {@link #getDisplay}
      */
     IBond.Stereo getStereo();
 
@@ -344,6 +397,7 @@ public interface IBond extends IElectronContainer {
      * @param stereo The stereo descriptor to be assigned to this bond.
      * @see #getStereo
      * @see #setDisplay(Display)
+     * @deprecated use {@link #setDisplay}
      */
     void setStereo(IBond.Stereo stereo);
 

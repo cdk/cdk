@@ -916,12 +916,14 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         boolean wedgeOr3D = false;
         Point3d a3d = atom.getPoint3d();
         for (int n = 0; n < adjc; n++) {
-            IBond.Stereo stereo = mol.getBond(bondAdj[aidx][n]).getStereo();
-            if (stereo == IBond.Stereo.UP || stereo == IBond.Stereo.DOWN) {
+            IBond.Display display = mol.getBond(bondAdj[aidx][n]).getDisplay();
+            if (display == IBond.Display.WedgeBegin ||
+                display == IBond.Display.HollowWedgeBegin ||
+                display == IBond.Display.WedgedHashBegin) {
                 wedgeOr3D = true;
                 break;
             }
-            if (stereo == IBond.Stereo.UP_OR_DOWN) return null; // squiggly line: definitely not
+            if (display == IBond.Display.Wavy) return null; // squiggly line: definitely not
             Point3d o3d = mol.getBond(bondAdj[aidx][n]).getOther(atom).getPoint3d();
             if (a3d != null && o3d != null && a3d.z != o3d.z) {
                 wedgeOr3D = true;
@@ -953,11 +955,12 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                 yp[n] = (float) (o3d.y - y0);
                 zp[n] = (float) (o3d.z - z0);
             } else if (o2d != null) {
-                IBond.Stereo stereo = bond.getStereo();
+                IBond.Display display = bond.getDisplay();
                 xp[n] = (float) (o2d.x - x0);
                 yp[n] = (float) (o2d.y - y0);
-                zp[n] = other.equals(bond.getBegin()) ? 0 : stereo == IBond.Stereo.UP ? 1 : stereo == IBond.Stereo.DOWN ? -1
-                                                                                                                   : 0;
+                zp[n] = other.equals(bond.getBegin()) ? 0 :
+                        display == IBond.Display.Up   ? 1 :
+                        display == IBond.Display.Down ? -1 : 0;
             } else {
                 return null; // no 2D coordinates on some atom
             }

@@ -358,7 +358,7 @@ class CircularFingerprinterTest extends CDKTestCase {
         m.addAtom(atom("C", 3, 3.897, -0.750));
         m.addBond(0, 1, IBond.Order.SINGLE);
         m.addBond(1, 2, IBond.Order.SINGLE);
-        m.addBond(1, 3, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(1, 3, IBond.Order.SINGLE, IBond.Display.Down);
         m.addBond(1, 4, IBond.Order.SINGLE);
         m.addBond(4, 5, IBond.Order.SINGLE);
         CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
@@ -382,7 +382,7 @@ class CircularFingerprinterTest extends CDKTestCase {
 	    mol.addBond(0, 1, IBond.Order.SINGLE);
 	    mol.addBond(0, 2, IBond.Order.SINGLE);
 	    mol.addBond(0, 3, IBond.Order.SINGLE);
-	    mol.getBond(0).setStereo(IBond.Stereo.UP);
+	    mol.getBond(0).setDisplay(IBond.Display.WedgeBegin);
 	    
 	    CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
 	    circ.setPerceiveStereo(true);

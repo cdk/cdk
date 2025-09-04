@@ -18,79 +18,80 @@
  */
 package org.openscience.cdk.inchi;
 
-import io.github.dan2097.jnainchi.InchiAtom;
-import io.github.dan2097.jnainchi.InchiBond;
-import io.github.dan2097.jnainchi.InchiBondStereo;
-import io.github.dan2097.jnainchi.InchiBondType;
-import io.github.dan2097.jnainchi.InchiInput;
-import io.github.dan2097.jnainchi.InchiInputFromInchiOutput;
-import io.github.dan2097.jnainchi.InchiOptions;
-import io.github.dan2097.jnainchi.InchiRadical;
-import io.github.dan2097.jnainchi.InchiStatus;
-import io.github.dan2097.jnainchi.InchiStereo;
-import io.github.dan2097.jnainchi.InchiStereoParity;
-import io.github.dan2097.jnainchi.InchiStereoType;
-import io.github.dan2097.jnainchi.JnaInchi;
+import io.github.dan2097.jnainchi.*;
 import net.sf.jniinchi.INCHI_RET;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import javax.vecmath.Point2d;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
- * <p>This class generates a CDK IAtomContainer from an InChI string.  It places
- * calls to a JNI wrapper for the InChI C++ library.
+ * <p>This class generates a CDK IAtomContainer from an InChI string or an AuxInfo string. It places
+ * calls to a JNI wrapper for the InChI C library.
+ *
+ * <p>
+ * It acts as a wrapper around the JNI-InChI library functions,
+ * parsing the InChI or AuxInfo string to regenerate the molecular structure.
+ * </p>
  *
  * <p>The generated IAtomContainer will have all 2D and 3D coordinates set to 0.0,
- * but may have atom parities set.  Double bond and allene stereochemistry are
+ * in case an InChI string was parsed. If an AuxInfo string was parsed the resulting IAtomContainer
+ * will have the same 2D or 3D coordinates as given in the AuxInfo string. If there are no coordinates
+ * given they are also set to 0.0. If only 2D coordinates are provided the Z-coordinate is 0.0.
+ * but may have atom parities set. Double bond and allene stereochemistry are
  * not currently recorded.
+ * In some cases are no implicit hydrogens returned by the InChI API, if an AuxInfo string is parsed.
+ * To set hydrogens the {@link org.openscience.cdk.atomtype.CDKAtomTypeMatcher} is intended.
+ * </p>
  *
  * <br>
  * <b>Example usage</b>
+ * <br>
  *
- * <code>// Generate factory - throws CDKException if native code does not load</code><br>
- * <code>InChIGeneratorFactory factory = new InChIGeneratorFactory();</code><br>
- * <code>// Get InChIToStructure</code><br>
- * <code>InChIToStructure intostruct = factory.getInChIToStructure(</code><br>
- * <code>  inchi, DefaultChemObjectBuilder.getInstance()</code><br>
- * <code>);</code><br>
- * <code></code><br>
- * <code>INCHI_RET ret = intostruct.getReturnStatus();</code><br>
- * <code>if (ret == INCHI_RET.WARNING) {</code><br>
- * <code>  // Structure generated, but with warning message</code><br>
- * <code>  System.out.println("InChI warning: " + intostruct.getMessage());</code><br>
- * <code>} else if (ret != INCHI_RET.OKAY) {</code><br>
- * <code>  // Structure generation failed</code><br>
- * <code>  throw new CDKException("Structure generation failed failed: " + ret.toString()</code><br>
- * <code>    + " [" + intostruct.getMessage() + "]");</code><br>
- * <code>}</code><br>
- * <code></code><br>
- * <code>IAtomContainer container = intostruct.getAtomContainer();</code><br>
- * <p><br>
+ * <pre>{@code
+ * String inchi = "InChI=1S/CH4/h1H4";
+ * InChIToStructure parser = InInChIToStructure.fromInChI(inchi, SilentChemObjectBuilder.getInstance);
  *
- * @author Sam Adams
+ * if (InChIStatus.SUCCESS.equals(parser.getStatus())
+ *  IAtomContainer structure = parser.getAtomContainer();
+ * else
+ *  System.err.println("Error parsing InChI: " + parser.getMessage());
+ *
+ * --------
+ * 
+ * String auxInfo = "AuxInfo=1/0/N:1/rA:1nC/rB:/rC:10.425,-3.075,0;";
+ * InChIToStructure parser = InInChIToStructure.fromAuxInfo(auxInfo, SilentChemObjectBuilder.getInstance);
+ *
+ * if (InChIStatus.SUCCESS.equals(parser.getStatus())
+ *  IAtomContainer structure = parser.getAtomContainer();
+ * else
+ *  System.err.println("Error parsing AuxInfo: " + parser.getMessage());
+ * }</pre>
+ *
+ * @author Sam Adams, Felix Bänsch
  *
  */
 public class InChIToStructure {
 
-    protected InchiInputFromInchiOutput output;
+    protected InchiInputFromInchiOutput inchiOutput;
+
+    protected InchiInputFromAuxinfoOutput auxinfoOutput;
 
     protected InchiOptions options;
 
-    protected IAtomContainer          molecule;
+    protected IAtomContainer molecule;
+
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(InChIToStructure.class);
 
     // magic number - indicates isotope mass is relative
     private static final int          ISOTOPIC_SHIFT_FLAG = 10000;
@@ -101,8 +102,6 @@ public class InChIToStructure {
      * should be treated as a relative mass.
      */
     private static final int ISOTOPIC_SHIFT_THRESHOLD = ISOTOPIC_SHIFT_FLAG - 100;
-
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(InChIToStructure.class);
 
     /** InChI mass values by atomic numbers - INCHI_BASE/src/util.c */
     private static final int[] defaultElemMass = new int[]{
@@ -123,74 +122,186 @@ public class InChIToStructure {
             285, 278, 289, 289, 293, 297, 294
     };
 
+    private InChIToStructure(){}
+
     /**
-     * Constructor. Generates CDK AtomContainer from InChI.
-     * @param inchi
-     * @throws CDKException
+     * Generates IAtomContainer from InChI string.
+     *
+     * @param inchi String
+     * @param builder {@link IChemObjectBuilder}
+     * @param opts InChIOptions
+     * @return InChIToStructure object
+     * @throws CDKException if parsing the InChI fails.
      */
-    protected InChIToStructure(String inchi, IChemObjectBuilder builder, InchiOptions options) throws CDKException {
+    public static InChIToStructure fromInChI(String inchi, IChemObjectBuilder builder, InchiOptions opts) throws CDKException {
+        InChIToStructure structure = new InChIToStructure();
         if (inchi == null)
             throw new IllegalArgumentException("Null InChI string provided");
-        if (options == null)
+        if (opts == null)
             throw new IllegalArgumentException("Null options provided");
-        this.output = JnaInchi.getInchiInputFromInchi(inchi);
-        this.options = options;
-        generateAtomContainerFromInchi(builder);
+        structure.inchiOutput = JnaInchi.getInchiInputFromInchi(inchi);
+        structure.options = opts;
+        structure.molecule = InChIToStructure.generateAtomContainerFromInChIInput(structure.inchiOutput.getInchiInput(), builder);
+        return structure;
     }
 
     /**
-     * Constructor. Generates CDK AtomContainer from InChI.
-     * @param inchi
-     * @throws CDKException
+     * Generates IAtomContainer from InChI string with default options.
+     *
+     * @param inchi String
+     * @param builder {@link IChemObjectBuilder}
+     * @return InChIToStructure object
+     * @throws CDKException if parsing InChI fails.
      */
-    protected InChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
-        this(inchi, builder, new InchiOptions.InchiOptionsBuilder().build());
+    public static InChIToStructure fromInChI(String inchi, IChemObjectBuilder builder) throws CDKException {
+        return InChIToStructure.fromInChI(inchi, builder, new InchiOptions.InchiOptionsBuilder().build());
     }
 
     /**
-     * Constructor. Generates CMLMolecule from InChI.
-     * @param inchi
-     * @param options
-     * @throws CDKException
+     * Generates IAtomContainer from InChi string.
+     *
+     * @param inchi String
+     * @param builder {@link IChemObjectBuilder}
+     * @param options String
+     * @return InChIToStructure object
+     * @throws CDKException if parsing InChI fails.
      */
-    protected InChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
-        this(inchi, builder, InChIOptionParser.parseString(options));
+    public static InChIToStructure fromInChI(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
+        return InChIToStructure.fromInChI(inchi, builder, InChIOptionParser.parseString(options));
     }
 
     /**
-     * Constructor. Generates CMLMolecule from InChI.
-     * @param inchi
-     * @param options
-     * @throws CDKException
+     * Generates IAtomContainer from InChi string.
+     *
+     * @param inchi String
+     * @param builder {@link IChemObjectBuilder}
+     * @param options List<String>
+     * @return InChIToStructure object
+     * @throws CDKException if parsing InChI fails.
      */
-    protected InChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
-        this(inchi, builder, InChIOptionParser.parseStrings(options));
+    public static InChIToStructure fromInChI(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
+        return InChIToStructure.fromInChI(inchi, builder, InChIOptionParser.parseStrings(options));
     }
 
     /**
-     * Flip the storage order of atoms in a bond.
-     * @param bond the bond
+     * Generates IAtomContainer from AuxInfo string.
+     *
+     * <p>
+     * It should be noted that issues such as the potential absence of hydrogen atoms
+     * may arise during the process of reconversion within the InChI API.
+     * It is important to note that the result should be checked.
+     * </p>
+     * 
+     * @param auxInfo String
+     * @param builder {@link IChemObjectBuilder}
+     * @return InChIToStructure object
+     * @throws CDKException if parsing AuxInfo fails.
      */
-    private void flip(IBond bond) {
-        bond.setAtoms(new IAtom[]{bond.getEnd(), bond.getBegin()});
+    public static InChIToStructure fromAuxInfo(String auxInfo, IChemObjectBuilder builder) throws CDKException {
+        InChIToStructure structure = new InChIToStructure();
+        if (auxInfo == null)
+            throw new IllegalArgumentException("Null AuxInfo string provided");
+        structure.auxinfoOutput = JnaInchi.getInchiInputFromAuxInfo(auxInfo, false, false);
+        structure.molecule = InChIToStructure.generateAtomContainerFromInChIInput(structure.auxinfoOutput.getInchiInput(), builder);
+        return structure;
+    }
+
+
+    /**
+     * Returns generated molecule.
+     * @return An AtomContainer object
+     */
+    public IAtomContainer getAtomContainer() {
+        return (molecule);
     }
 
     /**
-     * Gets structure from InChI, and converts InChI library data structure
+     * Gets return status from InChI process.  OKAY and WARNING indicate
+     * InChI has been generated, in all other cases InChI generation
+     * has failed. This returns the JNI INCHI enum and requires the optional
+     * "cdk-jniinchi-support" module to be loaded (or the full JNI InChI lib
+     * to be on the class path).
+     * @deprecated use getStatus
+     */
+    @Deprecated
+    public INCHI_RET getReturnStatus() {
+        return JniInchiSupport.toJniStatus(inchiOutput.getStatus());
+    }
+
+    /**
+     * Access the status of the InChI output.
+     * @return the status
+     */
+    public InchiStatus getStatus() {
+        return Optional.ofNullable(inchiOutput)
+                .map(InchiInputFromInchiOutput::getStatus)
+                .orElse(Optional.ofNullable(auxinfoOutput)
+                        .map(InchiInputFromAuxinfoOutput::getStatus)
+                        .orElse(null)
+                );
+    }
+
+    /**
+     * Gets generated (error/warning) messages.
+     */
+    public String getMessage() {
+        return Optional.ofNullable(inchiOutput)
+                .map(InchiInputFromInchiOutput::getMessage)
+                .orElse(Optional.ofNullable(auxinfoOutput)
+                        .map(InchiInputFromAuxinfoOutput::getMessage)
+                        .orElse(null)
+                );
+    }
+
+    /**
+     * Gets generated log.
+     *<p>For InChI input only.</p>
+     */
+    public String getLog() {
+        return Optional.ofNullable(inchiOutput)
+                .map(InchiInputFromInchiOutput::getLog)
+                .orElse(null);
+    }
+
+    /**
+     * Returns warning flags, see INCHIDIFF in inchicmp.h.
+     * <p>For InChI input only.</p>
+     *
+     * <p>[x][y]:
+     * <br>x=0 =&gt; Reconnected if present in InChI otherwise Disconnected/Normal
+     * <br>x=1 =&gt; Disconnected layer if Reconnected layer is present
+     * <br>y=1 =&gt; Main layer or Mobile-H
+     * <br>y=0 =&gt; Fixed-H layer
+     */
+    public long[][] getWarningFlags() {
+        return Optional.ofNullable(inchiOutput)
+                .map(InchiInputFromInchiOutput::getWarningFlags)
+                .orElse(null);
+    }
+
+    /**
+     * Returns chiral flag, whether input structure is chiral or not.
+     * <p>For AuxInfo input only.</p>
+     */
+    public Boolean getChiralFlag() {
+        return Optional.ofNullable(auxinfoOutput)
+                .map(InchiInputFromAuxinfoOutput::getChiralFlag)
+                .orElse(null);
+    }
+
+    /**
+     * Gets structure from InChI input, and converts InChI library data structure
      * into an IAtomContainer.
      *
+     * @return IAtomContainer
      * @throws CDKException
      */
-    protected void generateAtomContainerFromInchi(IChemObjectBuilder builder) throws CDKException {
-
-        InchiInput input = output.getInchiInput();
-
-        //molecule = new AtomContainer();
-        molecule = builder.newInstance(IAtomContainer.class);
-
-        Map<InchiAtom, IAtom> inchiCdkAtomMap = new HashMap<>();
+    private static IAtomContainer generateAtomContainerFromInChIInput(InchiInput input, IChemObjectBuilder builder) throws CDKException {
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
+        Map<InchiAtom,IAtom> inchiCdkAtomMap = new HashMap<>();
 
         List<InchiAtom> atoms = input.getAtoms();
+
         for (int i = 0; i < atoms.size(); i++) {
             InchiAtom iAt = atoms.get(i);
             IAtom cAt = builder.newInstance(IAtom.class);
@@ -198,25 +309,32 @@ public class InChIToStructure {
             inchiCdkAtomMap.put(iAt, cAt);
 
             cAt.setID("a" + i);
-            int elem = Elements.ofString(iAt.getElName()).number();
-            cAt.setAtomicNumber(elem);
+            Elements element = Elements.ofString(iAt.getElName());
+            int elemNum = element.number();
+            cAt.setAtomicNumber(elemNum);
+            cAt.setSymbol(element.symbol());
 
+
+            cAt.setPoint2d(new Point2d(iAt.getX(), iAt.getY()));
             // Ignore coordinates - all zero - unless aux info was given... but
             // the CDK doesn't have an API to provide that
 
             // InChI does not have unset properties so we set charge,
             // hydrogen count (implicit) and isotopic mass
             cAt.setFormalCharge(iAt.getCharge());
-            cAt.setImplicitHydrogenCount(iAt.getImplicitHydrogen());
+            if (iAt.getImplicitHydrogen() == -1)
+                cAt.setImplicitHydrogenCount(null);
+            else
+                cAt.setImplicitHydrogenCount(iAt.getImplicitHydrogen());
             int isotopicMass = iAt.getIsotopicMass();
 
             if (isotopicMass != 0) {
                 if (isotopicMass > ISOTOPIC_SHIFT_THRESHOLD) {
                     int delta = isotopicMass - ISOTOPIC_SHIFT_FLAG;
-                    if (elem > 0 && elem < defaultElemMass.length)
-                        cAt.setMassNumber(defaultElemMass[elem] + delta);
+                    if (elemNum > 0 && elemNum < defaultElemMass.length)
+                        cAt.setMassNumber(defaultElemMass[elemNum] + delta);
                     else
-                        logger.error("Cannot set mass delta for element {}, no base mass?", elem);
+                        logger.error("Cannot set mass delta for element {}, no base mass?", elemNum);
                 } else {
                     cAt.setMassNumber(isotopicMass);
                 }
@@ -224,18 +342,19 @@ public class InChIToStructure {
 
             molecule.addAtom(cAt);
             cAt = molecule.getAtom(molecule.getAtomCount()-1);
-            addHydrogenIsotopes(builder, cAt, 2, iAt.getImplicitDeuterium());
-            addHydrogenIsotopes(builder, cAt, 3, iAt.getImplicitTritium());
+            addHydrogenIsotopes(molecule, builder, cAt, 2, iAt.getImplicitDeuterium());
+            addHydrogenIsotopes(molecule, builder, cAt, 3, iAt.getImplicitTritium());
 
             InchiRadical radical = iAt.getRadical();
             if (radical == InchiRadical.DOUBLET) {
                 molecule.addSingleElectron(molecule.indexOf(cAt));
             } else if (radical == InchiRadical.SINGLET ||
-                       radical == InchiRadical.TRIPLET) {
+                    radical == InchiRadical.TRIPLET) {
                 // Information loss - we should make MDL SPIN_MULTIPLICITY avaliable to this API
                 molecule.addSingleElectron(molecule.indexOf(cAt));
                 molecule.addSingleElectron(molecule.indexOf(cAt));
             }
+
         }
 
         List<InchiBond> bonds = input.getBonds();
@@ -268,25 +387,25 @@ public class InChIToStructure {
 
             switch (stereo) {
                 case NONE:
-                    cBo.setStereo(IBond.Stereo.NONE);
+                    cBo.setDisplay(IBond.Display.Solid);
                     break;
                 case SINGLE_1DOWN:
-                    cBo.setStereo(IBond.Stereo.DOWN);
+                    cBo.setDisplay(IBond.Display.WedgedHashBegin);
                     break;
                 case SINGLE_1UP:
-                    cBo.setStereo(IBond.Stereo.UP);
+                    cBo.setDisplay(IBond.Display.WedgeBegin);
                     break;
                 case SINGLE_2DOWN:
-                    cBo.setStereo(IBond.Stereo.DOWN_INVERTED);
+                    cBo.setDisplay(IBond.Display.WedgedHashEnd);
                     break;
                 case SINGLE_2UP:
-                    cBo.setStereo(IBond.Stereo.UP_INVERTED);
+                    cBo.setDisplay(IBond.Display.WedgeEnd);
                     break;
                 case SINGLE_1EITHER:
-                    cBo.setStereo(IBond.Stereo.UP_OR_DOWN);
+                    cBo.setDisplay(IBond.Display.Wavy);
                     break;
                 case SINGLE_2EITHER:
-                    cBo.setStereo(IBond.Stereo.UP_OR_DOWN_INVERTED);
+                    cBo.setDisplay(IBond.Display.Crossed);
                     break;
             }
 
@@ -409,9 +528,10 @@ public class InChIToStructure {
                 }
             }
         }
+        return molecule;
     }
 
-    private void addHydrogenIsotopes(IChemObjectBuilder builder, IAtom cAt, int mass, int count) {
+    private static void addHydrogenIsotopes(IAtomContainer molecule, IChemObjectBuilder builder, IAtom cAt, int mass, int count) {
         for (int j = 0; j < count; j++) {
             IAtom deut = builder.newInstance(IAtom.class);
             deut.setAtomicNumber(1);
@@ -443,59 +563,10 @@ public class InChIToStructure {
     }
 
     /**
-     * Returns generated molecule.
-     * @return An AtomContainer object
+     * Flip the storage order of atoms in a bond.
+     * @param bond the bond
      */
-    public IAtomContainer getAtomContainer() {
-        return (molecule);
+    private static void flip(IBond bond) {
+        bond.setAtoms(new IAtom[]{bond.getEnd(), bond.getBegin()});
     }
-
-    /**
-     * Gets return status from InChI process.  OKAY and WARNING indicate
-     * InChI has been generated, in all other cases InChI generation
-     * has failed. This returns the JNI INCHI enum and requires the optional
-     * "cdk-jniinchi-support" module to be loaded (or the full JNI InChI lib
-     * to be on the class path).
-     * @deprecated use getStatus
-     */
-    @Deprecated
-    public INCHI_RET getReturnStatus() {
-        return JniInchiSupport.toJniStatus(output.getStatus());
-    }
-
-    /**
-     * Access the status of the InChI output.
-     * @return the status
-     */
-    public InchiStatus getStatus() {
-        return output.getStatus();
-    }
-
-    /**
-     * Gets generated (error/warning) messages.
-     */
-    public String getMessage() {
-        return output.getMessage();
-    }
-
-    /**
-     * Gets generated log.
-     */
-    public String getLog() {
-        return output.getLog();
-    }
-
-    /**
-     * <p>Returns warning flags, see INCHIDIFF in inchicmp.h.
-     *
-     * <p>[x][y]:
-     * <br>x=0 =&gt; Reconnected if present in InChI otherwise Disconnected/Normal
-     * <br>x=1 =&gt; Disconnected layer if Reconnected layer is present
-     * <br>y=1 =&gt; Main layer or Mobile-H
-     * <br>y=0 =&gt; Fixed-H layer
-     */
-    public long[][] getWarningFlags() {
-        return output.getWarningFlags();
-    }
-
 }

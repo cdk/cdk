@@ -303,15 +303,19 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     void testUndefinedStereo() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
-        mol.getBond(0).setStereo(IBond.Stereo.UP_OR_DOWN);
-        mol.getBond(1).setStereo(IBond.Stereo.E_OR_Z);
+        // JWM first bond is double, second bond is single, this test was
+        // previously generating inconsistent output
+        Assertions.assertEquals(Order.DOUBLE, mol.getBond(0).getOrder());
+        Assertions.assertEquals(Order.SINGLE, mol.getBond(1).getOrder());
+        mol.getBond(0).setDisplay(IBond.Display.Crossed);
+        mol.getBond(1).setDisplay(IBond.Display.Wavy);
         StringWriter   writer    = new StringWriter();
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(mol);
         mdlWriter.close();
         String output = writer.toString();
-        Assertions.assertTrue(output.contains("1  2  2  4  0  0  0"));
-        Assertions.assertTrue(output.contains("2  3  1  3  0  0  0"));
+        Assertions.assertTrue(output.contains("1  2  2  3  0  0  0"));
+        Assertions.assertTrue(output.contains("2  3  1  4  0  0  0"));
     }
 
     @Test

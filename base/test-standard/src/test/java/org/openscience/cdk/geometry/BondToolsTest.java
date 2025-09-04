@@ -210,7 +210,7 @@ class BondToolsTest extends CDKTestCase {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         BondTools.makeUpDownBonds(mol);
-        Assertions.assertEquals(IBond.Stereo.DOWN, mol.getBond(3).getStereo());
+        Assertions.assertEquals(IBond.Display.Down, mol.getBond(3).getDisplay());
     }
 
     @Test

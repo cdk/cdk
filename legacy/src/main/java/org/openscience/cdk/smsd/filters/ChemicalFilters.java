@@ -869,27 +869,22 @@ public class ChemicalFilters {
      */
     public static int convertBondStereo(IBond bond) {
         int value;
-        switch (bond.getStereo()) {
-            case UP:
+        switch (bond.getDisplay()) {
+            case WedgeBegin:
+            case WedgeEnd:
+            case HollowWedgeBegin:
+            case HollowWedgeEnd:
                 value = 1;
                 break;
-            case UP_INVERTED:
-                value = 1;
-                break;
-            case DOWN:
+            case WedgedHashBegin:
+            case WedgedHashEnd:
                 value = 6;
                 break;
-            case DOWN_INVERTED:
-                value = 6;
-                break;
-            case UP_OR_DOWN:
-                value = 4;
-                break;
-            case UP_OR_DOWN_INVERTED:
-                value = 4;
-                break;
-            case E_OR_Z:
+            case Crossed:
                 value = 3;
+                break;
+            case Wavy:
+                value = 4;
                 break;
             default:
                 value = 0;
@@ -901,24 +896,24 @@ public class ChemicalFilters {
      * Get stereo value as Stereo enum
      * @param stereoValue
      */
-    public static IBond.Stereo convertStereo(int stereoValue) {
-        IBond.Stereo stereo = IBond.Stereo.NONE;
+    public static IBond.Display convertStereo(int stereoValue) {
+        IBond.Display display = IBond.Display.Solid;
         if (stereoValue == 1) {
             // up bond
-            stereo = IBond.Stereo.UP;
+            display = IBond.Display.Up;
         } else if (stereoValue == 6) {
             // down bond
-            stereo = IBond.Stereo.DOWN;
+            display = IBond.Display.Down;
         } else if (stereoValue == 0) {
             // bond has no stereochemistry
-            stereo = IBond.Stereo.NONE;
+            display = IBond.Display.Solid;
         } else if (stereoValue == 4) {
             //up or down bond
-            stereo = IBond.Stereo.UP_OR_DOWN;
+            display = IBond.Display.Wavy;
         } else if (stereoValue == 3) {
             //e or z undefined
-            stereo = IBond.Stereo.E_OR_Z;
+            display = IBond.Display.Crossed;
         }
-        return stereo;
+        return display;
     }
 }

@@ -47,7 +47,9 @@ import javax.vecmath.Point2d;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -72,9 +74,9 @@ class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(2),
                 m.getAtom(3)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.DOWN));
-        assertThat(m.getBond(2).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(1).getDisplay(), is(IBond.Display.Down));
+        assertThat(m.getBond(2).getDisplay(), is(IBond.Display.Solid));
     }
 
     // [C@H](CC)(N)O
@@ -94,10 +96,10 @@ class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(3),
                 m.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(2).getStereo(), is(IBond.Stereo.UP));
-        assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(1).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(2).getDisplay(), is(IBond.Display.Up));
+        assertThat(m.getBond(3).getDisplay(), is(IBond.Display.Solid));
     }
 
     // [C@H](C)(N)O
@@ -114,9 +116,9 @@ class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(2),
                 m.getAtom(3)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.UP));
-        assertThat(m.getBond(2).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(1).getDisplay(), is(IBond.Display.Up));
+        assertThat(m.getBond(2).getDisplay(), is(IBond.Display.Solid));
     }
 
     // [C@H](CC)(N)O
@@ -136,10 +138,10 @@ class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(3),
                 m.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(2).getStereo(), is(IBond.Stereo.DOWN));
-        assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(1).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(2).getDisplay(), is(IBond.Display.Down));
+        assertThat(m.getBond(3).getDisplay(), is(IBond.Display.Solid));
     }
 
     // [C@@](CCC)(C)(N)O
@@ -162,10 +164,10 @@ class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
                 m.getAtom(6)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.UP));
-        assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.DOWN));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(3).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(4).getDisplay(), is(IBond.Display.Up));
+        assertThat(m.getBond(5).getDisplay(), is(IBond.Display.Down));
     }
 
     // [C@@](CCC)(C1)(C)C1 (favour acyclic)
@@ -191,10 +193,10 @@ class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
                 m.getAtom(6)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.UP));
-        assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.DOWN));
-        assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Up));
+        assertThat(m.getBond(3).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(4).getDisplay(), is(IBond.Display.Down));
+        assertThat(m.getBond(5).getDisplay(), is(IBond.Display.Solid));
     }
 
     // [C@](CCC)(C)(N)O
@@ -217,10 +219,10 @@ class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
                 m.getAtom(6)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.DOWN));
-        assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.UP));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(3).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(4).getDisplay(), is(IBond.Display.Down));
+        assertThat(m.getBond(5).getDisplay(), is(IBond.Display.Up));
     }
 
     // [C@](CCC)(C1)(C)C1 (favour acyclic)
@@ -246,10 +248,10 @@ class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
                 m.getAtom(6)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.DOWN));
-        assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.UP));
-        assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Down));
+        assertThat(m.getBond(3).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(4).getDisplay(), is(IBond.Display.Up));
+        assertThat(m.getBond(5).getDisplay(), is(IBond.Display.Solid));
     }
 
     @Test
@@ -263,16 +265,16 @@ class NonPlanarBondsTest {
         m.addAtom(atom("H", 0, 0.92d, 0.74d));
         m.addAtom(atom("H", 0, -1.53d, 2.21d));
         m.addBond(0, 1, IBond.Order.SINGLE);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
-        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.addBond(1, 6, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
         m.addStereoElement(new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4),
                 m.getAtom(5)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getStereo(), is(IBond.Stereo.DOWN));
-        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(), is(IBond.Stereo.UP));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getDisplay(), is(IBond.Display.Down));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getDisplay(), is(IBond.Display.Up));
     }
 
     @Test
@@ -286,16 +288,16 @@ class NonPlanarBondsTest {
         m.addAtom(atom("H", 0, 0.92d, 0.74d));
         m.addAtom(atom("H", 0, -1.53d, 2.21d));
         m.addBond(0, 1, IBond.Order.SINGLE);
-        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
-        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.addBond(1, 6, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
         m.addStereoElement(new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4),
                 m.getAtom(5)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getStereo(), is(IBond.Stereo.UP));
-        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(), is(IBond.Stereo.DOWN));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getDisplay(), is(IBond.Display.Up));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getDisplay(), is(IBond.Display.Down));
     }
 
     @Test
@@ -319,7 +321,7 @@ class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(2), m.getAtom(4), m.getAtom(6),
                 m.getAtom(3),}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(2).getStereo(), is(IBond.Stereo.UP));
+        assertThat(m.getBond(2).getDisplay(), is(IBond.Display.Up));
     }
 
 
@@ -331,7 +333,7 @@ class NonPlanarBondsTest {
         m.addAtom(atom("C", 2, 1.299, -0.750));
         m.addBond(0, 1, IBond.Order.DOUBLE);
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Solid));
     }
 
     /**
@@ -350,9 +352,9 @@ class NonPlanarBondsTest {
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(1, 4, IBond.Order.DOUBLE);
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.NONE));
-        assertThat(m.getBond(2).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(1).getDisplay(), is(IBond.Display.Solid));
+        assertThat(m.getBond(2).getDisplay(), is(IBond.Display.Solid));
     }
 
     /**
@@ -369,7 +371,7 @@ class NonPlanarBondsTest {
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.UP_OR_DOWN));
+        assertThat(m.getBond(0).getDisplay(), is(IBond.Display.Wavy));
     }
 
     /**
@@ -406,7 +408,7 @@ class NonPlanarBondsTest {
                                                          },
                                                          OPPOSITE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.E_OR_Z));
+        assertThat(m.getBond(3).getDisplay(), is(IBond.Display.Crossed));
     }
 
     /**
@@ -431,9 +433,9 @@ class NonPlanarBondsTest {
                                                     ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
 
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
-        assertThat(m.getBond(2).getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
-        assertThat(m.getBond(3).getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
+        assertThat(m.getBond(0).getDisplay(), is(not(IBond.Display.Wavy)));
+        assertThat(m.getBond(2).getDisplay(), is(not(IBond.Display.Wavy)));
+        assertThat(m.getBond(3).getDisplay(), is(not(IBond.Display.Wavy)));
     }
 
     @Test
@@ -453,7 +455,7 @@ class NonPlanarBondsTest {
         m.addBond(0, 5, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
         for (IBond bond : m.bonds()) {
-            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+            assertThat(bond.getDisplay(), is(IBond.Display.Solid));
         }
     }
 
@@ -476,7 +478,7 @@ class NonPlanarBondsTest {
         m.addBond(3, 5, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
         for (IBond bond : m.bonds())
-            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+            assertThat(bond.getDisplay(), is(IBond.Display.Solid));
     }
 
     /**
@@ -507,8 +509,9 @@ class NonPlanarBondsTest {
         m.addBond(8, 9, IBond.Order.SINGLE);
         m.addBond(9, 10, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
-        for (IBond bond : m.bonds())
-            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        for (IBond bond : m.bonds()) {
+            assertThat(bond.getDisplay(), is(IBond.Display.Solid));
+        }
     }
 
     /**
@@ -537,8 +540,9 @@ class NonPlanarBondsTest {
         m.addBond(7, 8, IBond.Order.SINGLE);
         m.addBond(8, 9, IBond.Order.SINGLE);
         NonplanarBonds.assign(m);
-        for (IBond bond : m.bonds())
-            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+        for (IBond bond : m.bonds()) {
+            assertThat(bond.getDisplay(), is(IBond.Display.Solid));
+        }
     }
 
     /**
@@ -569,7 +573,7 @@ class NonPlanarBondsTest {
         NonplanarBonds.assign(m);
         int wavyCount = 0;
         for (IBond bond : m.bonds())
-            if (bond.getStereo() == IBond.Stereo.UP_OR_DOWN)
+            if (bond.getDisplay() == IBond.Display.Wavy)
                 wavyCount++;
         assertThat(wavyCount, is(0));
     }
@@ -602,7 +606,7 @@ class NonPlanarBondsTest {
         NonplanarBonds.assign(m);
         int wavyCount = 0;
         for (IBond bond : m.bonds())
-            if (bond.getStereo() == IBond.Stereo.UP_OR_DOWN)
+            if (bond.getDisplay() == IBond.Display.Wavy)
                 wavyCount++;
         assertThat(wavyCount, is(1));
     }
@@ -618,7 +622,7 @@ class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
         int wedgeCount = 0;
         for (IBond bond : mol.bonds())
-            if (bond.getStereo() == IBond.Stereo.UP || bond.getStereo() == IBond.Stereo.DOWN)
+            if (bond.getDisplay() == IBond.Display.Up || bond.getDisplay() == IBond.Display.Down)
                 wedgeCount++;
         assertThat(wedgeCount, is(7));
     }
@@ -633,8 +637,7 @@ class NonPlanarBondsTest {
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         sdg.generateCoordinates(mol);
         for (IBond bond : mol.bonds()) {
-            assertThat(bond.getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
-            assertThat(bond.getStereo(), is(not(IBond.Stereo.UP_OR_DOWN_INVERTED)));
+            assertThat(bond.getDisplay(), is(not(IBond.Display.Wavy)));
         }
     }
 
@@ -662,8 +665,8 @@ class NonPlanarBondsTest {
         assertThat(bond1.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond2.getOrder(), is(IBond.Order.SINGLE));
 
-        Assertions.assertTrue(bond1.getStereo() == IBond.Stereo.DOWN ||
-                                      bond2.getStereo() == IBond.Stereo.DOWN, "One of the single bonds should have been wedged");
+        Assertions.assertTrue(bond1.getDisplay() == IBond.Display.Down ||
+                                      bond2.getDisplay() == IBond.Display.Down, "One of the single bonds should have been wedged");
 
     }
 
@@ -689,11 +692,13 @@ class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
         int wedgeCount = 0;
         for (IBond bond : mol.bonds()) {
-            switch (bond.getStereo()) {
-                case UP:
-                case DOWN:
-                case UP_INVERTED:
-                case DOWN_INVERTED:
+            switch (bond.getDisplay()) {
+                case WedgeBegin:
+                case WedgeEnd:
+                case WedgedHashBegin:
+                case WedgedHashEnd:
+                case HollowWedgeBegin:
+                case HollowWedgeEnd:
                     wedgeCount++;
                     break;
             }
@@ -710,11 +715,13 @@ class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
         int wedgeCount = 0;
         for (IBond bond : mol.bonds()) {
-            switch (bond.getStereo()) {
-                case UP:
-                case DOWN:
-                case UP_INVERTED:
-                case DOWN_INVERTED:
+            switch (bond.getDisplay()) {
+                case WedgeBegin:
+                case WedgeEnd:
+                case WedgedHashBegin:
+                case WedgedHashEnd:
+                case HollowWedgeBegin:
+                case HollowWedgeEnd:
                     Assertions.assertFalse(bond.isInRing());
                     ++wedgeCount;
                     break;
@@ -732,11 +739,13 @@ class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
         int wedgeCount = 0;
         for (IBond bond : mol.bonds()) {
-            switch (bond.getStereo()) {
-                case UP:
-                case DOWN:
-                case UP_INVERTED:
-                case DOWN_INVERTED:
+            switch (bond.getDisplay()) {
+                case WedgeBegin:
+                case WedgeEnd:
+                case WedgedHashBegin:
+                case WedgedHashEnd:
+                case HollowWedgeBegin:
+                case HollowWedgeEnd:
                     ++wedgeCount;
                     break;
             }
@@ -755,11 +764,13 @@ class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
         int wedgeCount = 0;
         for (IBond bond : mol.bonds()) {
-            switch (bond.getStereo()) {
-                case UP:
-                case DOWN:
-                case UP_INVERTED:
-                case DOWN_INVERTED:
+            switch (bond.getDisplay()) {
+                case WedgeBegin:
+                case WedgeEnd:
+                case WedgedHashBegin:
+                case WedgedHashEnd:
+                case HollowWedgeBegin:
+                case HollowWedgeEnd:
                     ++wedgeCount;
                     break;
             }
@@ -793,11 +804,8 @@ class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
         int count = 0;
         for (IBond bond : mol.bonds()) {
-            switch (bond.getStereo()) {
-                case UP_OR_DOWN:
-                case UP_OR_DOWN_INVERTED:
-                    ++count;
-                    break;
+            if (Objects.requireNonNull(bond.getDisplay()) == IBond.Display.Wavy) {
+                ++count;
             }
         }
         assertThat(count, is(1));
@@ -812,11 +820,8 @@ class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
         int count = 0;
         for (IBond bond : mol.bonds()) {
-            switch (bond.getStereo()) {
-                case UP_OR_DOWN:
-                case UP_OR_DOWN_INVERTED:
-                    ++count;
-                    break;
+            if (Objects.requireNonNull(bond.getDisplay()) == IBond.Display.Wavy) {
+                ++count;
             }
         }
         assertThat(count, is(0));
@@ -831,11 +836,8 @@ class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
         int count = 0;
         for (IBond bond : mol.bonds()) {
-            switch (bond.getStereo()) {
-                case UP_OR_DOWN:
-                case UP_OR_DOWN_INVERTED:
-                    ++count;
-                    break;
+            if (Objects.requireNonNull(bond.getDisplay()) == IBond.Display.Wavy) {
+                ++count;
             }
         }
         assertThat(count, is(1));
@@ -850,11 +852,8 @@ class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
         int count = 0;
         for (IBond bond : mol.bonds()) {
-            switch (bond.getStereo()) {
-                case UP_OR_DOWN:
-                case UP_OR_DOWN_INVERTED:
-                    ++count;
-                    break;
+            if (Objects.requireNonNull(bond.getDisplay()) == IBond.Display.Wavy) {
+                ++count;
             }
         }
         assertThat(count, is(0));

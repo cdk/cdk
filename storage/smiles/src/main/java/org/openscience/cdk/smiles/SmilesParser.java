@@ -26,6 +26,7 @@ package org.openscience.cdk.smiles;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -42,6 +43,7 @@ import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.smiles.CxSmilesState.CxDataSgroup;
 import org.openscience.cdk.smiles.CxSmilesState.CxPolymerSgroup;
+import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -54,6 +56,7 @@ import javax.vecmath.Point3d;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -252,7 +255,7 @@ public final class SmilesParser {
      * <pre>{@code
      * {reactant}>{agent_1}>{product_1}>{agent_2}>{product_2}
      * }</pre>
-     *
+     * <p>
      * Results in a reaction set with two reactions:
      * <pre>{@code
      * {reactant}>{agent_1}>{product_1} step 1
@@ -275,7 +278,7 @@ public final class SmilesParser {
         }
 
         String[] parts = smiles.substring(0, delim).split(">", -1);
-        String   title = smiles.substring(delim).trim();
+        String title = smiles.substring(delim).trim();
 
         if (parts.length < 3 || parts.length % 2 == 0)
             throw new IllegalArgumentException("Unexpected number of parts: " + parts.length + ", should be 3,5,7,..");
@@ -284,7 +287,7 @@ public final class SmilesParser {
         IReaction reaction = builder.newReaction();
 
         for (int i = 0; i < parts.length; i++) {
-            IAtomContainer    mol  = parseSmiles(parts[i], true);
+            IAtomContainer mol = parseSmiles(parts[i], true);
             IAtomContainerSet mols = ConnectivityChecker.partitionIntoMolecules(mol);
             if (i == 0) {
                 // first step's reactants
@@ -342,7 +345,7 @@ public final class SmilesParser {
             // convert the Beam object model to the CDK - note exception thrown
             // if a kekule structure could not be assigned.
             IAtomContainer mol = beamToCDK.toAtomContainer(kekulise ? g.kekule() : g,
-                    kekulise);
+                                                           kekulise);
 
             if (!isRxnPart) {
                 try {
@@ -390,15 +393,18 @@ public final class SmilesParser {
                 // set the correct title
                 mol.setTitle(title.substring(pos));
 
-                final Map<IAtom, IAtomContainer> atomToMol = new HashMap<>(2*mol.getAtomCount());
+                final Map<IAtom, IAtomContainer> atomToMol = new HashMap<>(2 * mol.getAtomCount());
                 final List<IAtom> atoms = new ArrayList<>(mol.getAtomCount());
+                final List<IBond> bonds = new ArrayList<>(mol.getBondCount());
 
                 for (IAtom atom : mol.atoms()) {
                     atoms.add(atom);
                     atomToMol.put(atom, mol);
                 }
+                for (IBond bond : mol.bonds())
+                    bonds.add(bond);
 
-                assignCxSmilesInfo(mol.getBuilder(), mol, atoms, atomToMol, cxstate);
+                assignCxSmilesInfo(mol.getBuilder(), mol, atoms, bonds, atomToMol, cxstate);
             }
         }
     }
@@ -410,6 +416,8 @@ public final class SmilesParser {
      * @param rxns  parsed reactions
      */
     private void parseRxnCXSMILES(String title, IReactionSet rxns) throws InvalidSmilesException {
+        rxns.setProperty(CDKConstants.TITLE, title);
+
         CxSmilesState cxstate;
         int pos;
         if (title != null && title.startsWith("|")) {
@@ -420,6 +428,7 @@ public final class SmilesParser {
 
                 final Map<IAtom, IAtomContainer> atomToMol = new HashMap<>(100);
                 final List<IAtom> atoms = new ArrayList<>();
+                final List<IBond> bonds = new ArrayList<>();
 
                 // collect atom offsets before handling fragment groups
                 Set<IAtomContainer> uniqueMolecules = new HashSet<>();
@@ -428,6 +437,8 @@ public final class SmilesParser {
                         continue;
                     for (IAtom atom : mol.atoms())
                         atoms.add(atom);
+                    for (IBond bond : mol.bonds())
+                        bonds.add(bond);
                 }
 
                 handleFragmentGrouping(rxns, cxstate);
@@ -437,17 +448,25 @@ public final class SmilesParser {
                     for (IAtom atom : mol.atoms())
                         atomToMol.put(atom, mol);
 
-                assignCxSmilesInfo(rxns.getBuilder(), rxns, atoms, atomToMol, cxstate);
+                assignCxSmilesInfo(rxns.getBuilder(), rxns, atoms, bonds, atomToMol, cxstate);
             }
 
             String arrowType = rxns.getProperty(CDKConstants.REACTION_ARROW);
             if (arrowType != null && !arrowType.isEmpty()) {
                 for (IReaction rxn : rxns.reactions()) {
                     switch (arrowType) {
-                        case "RES": rxn.setDirection(IReaction.Direction.RESONANCE); break;
-                        case "EQU": rxn.setDirection(IReaction.Direction.BIDIRECTIONAL); break;
-                        case "RET": rxn.setDirection(IReaction.Direction.RETRO_SYNTHETIC); break;
-                        case "NGO": rxn.setDirection(IReaction.Direction.NO_GO); break;
+                        case "RES":
+                            rxn.setDirection(IReaction.Direction.RESONANCE);
+                            break;
+                        case "EQU":
+                            rxn.setDirection(IReaction.Direction.BIDIRECTIONAL);
+                            break;
+                        case "RET":
+                            rxn.setDirection(IReaction.Direction.RETRO_SYNTHETIC);
+                            break;
+                        case "NGO":
+                            rxn.setDirection(IReaction.Direction.NO_GO);
+                            break;
                     }
                 }
             }
@@ -467,8 +486,8 @@ public final class SmilesParser {
             return; // nothing to do here
 
         final int reactant = 1;
-        final int agent    = 2;
-        final int product  = 3;
+        final int agent = 2;
+        final int product = 3;
 
         Set<IAtomContainer> unique = new HashSet<>();
         List<IAtomContainer> fragments = new ArrayList<>();
@@ -543,7 +562,7 @@ public final class SmilesParser {
 
                 for (IAtomContainer mol : fragments) {
                     List<IReaction> reactions = molToReaction.get(mol);
-                    List<Integer>   roles     = roleMap.get(mol);
+                    List<Integer> roles = roleMap.get(mol);
                     if (roles.isEmpty())
                         continue;
                     for (int i = 0; i < reactions.size(); i++) {
@@ -578,6 +597,7 @@ public final class SmilesParser {
     private void assignCxSmilesInfo(IChemObjectBuilder bldr,
                                     IChemObject chemObj,
                                     List<IAtom> atoms,
+                                    List<IBond> bonds,
                                     Map<IAtom, IAtomContainer> atomToMol,
                                     CxSmilesState cxstate) throws InvalidSmilesException {
 
@@ -668,6 +688,34 @@ public final class SmilesParser {
             }
         }
 
+        if (cxstate.bondDisplay != null) {
+            for (Map.Entry<Map.Entry<Integer, Integer>, IBond.Display> e : cxstate.bondDisplay) {
+                Integer atmIdx = e.getKey().getKey();
+                Integer bndIdx = e.getKey().getValue();
+                IBond.Display style = e.getValue();
+                IAtom atomToWedgeFrom = atmIdx < atoms.size() ? atoms.get(atmIdx) : null;
+                IBond bondToWedge = bndIdx < bonds.size() ? bonds.get(bndIdx) : null;
+                if (bondToWedge == null)
+                    continue;
+                if (atomToWedgeFrom == null)
+                    continue;
+                if (cxstate.atomCoords == null) {
+                  handleRdkitAtropisomerExtension(atomToMol, atomToWedgeFrom, bondToWedge, style);
+                } else {
+                    if (bondToWedge.getBegin().equals(atomToWedgeFrom)) {
+                        bondToWedge.setDisplay(style);
+                    } else if (bondToWedge.getEnd().equals(atomToWedgeFrom)) {
+                        if (style == IBond.Display.WedgeBegin)
+                            bondToWedge.setDisplay(IBond.Display.WedgeEnd);
+                        else if (style == IBond.Display.WedgedHashBegin)
+                            bondToWedge.setDisplay(IBond.Display.WedgedHashEnd);
+                        else
+                            bondToWedge.setDisplay(style);
+                    }
+                }
+            }
+        }
+
         Map<IAtomContainer, List<Sgroup>> sgroupMap = new HashMap<>();
         Map<CxSmilesState.CxSgroup, Sgroup> sgroupRemap = new HashMap<>();
 
@@ -678,11 +726,11 @@ public final class SmilesParser {
                 sgroup.setType(SgroupType.ExtMulticenter);
                 IAtom beg = atoms.get(e.getKey());
                 IAtomContainer mol = atomToMol.get(beg);
-                List<IBond> bonds = mol.getConnectedBondsList(beg);
-                if (bonds.isEmpty())
+                List<IBond> connectedBonds = mol.getConnectedBondsList(beg);
+                if (connectedBonds.isEmpty())
                     continue; // possibly okay
                 sgroup.addAtom(beg);
-                sgroup.addBond(bonds.get(0));
+                sgroup.addBond(connectedBonds.get(0));
                 for (Integer endpt : e.getValue())
                     sgroup.addAtom(atoms.get(endpt));
                 sgroupMap.computeIfAbsent(mol, k -> new ArrayList<>())
@@ -697,10 +745,10 @@ public final class SmilesParser {
                 sgroup.setType(SgroupType.ExtAttachOrdering);
                 IAtom beg = atoms.get(e.getKey());
                 IAtomContainer mol = atomToMol.get(beg);
-                List<IBond> bonds = mol.getConnectedBondsList(beg);
-                if (bonds.isEmpty())
+                List<IBond> connectedBonds = mol.getConnectedBondsList(beg);
+                if (connectedBonds.isEmpty())
                     throw new InvalidSmilesException("CXSMILES LO: no bonds to order");
-                if (bonds.size() != e.getValue().size())
+                if (connectedBonds.size() != e.getValue().size())
                     throw new InvalidSmilesException("CXSMILES LO: bond count and ordering count was different");
                 sgroup.addAtom(beg);
                 for (Integer endpt : e.getValue()) {
@@ -917,7 +965,7 @@ public final class SmilesParser {
                 for (IStereoElement<?, ?> stereo : mol.stereoElements()) {
                     // maybe also Al and AT?
                     if (stereo.getConfigClass() == IStereoElement.TH &&
-                            stereo.getFocus().equals(atm)) {
+                        stereo.getFocus().equals(atm)) {
                         stereo.setGroupInfo(e.getValue());
                     }
                 }
@@ -927,6 +975,140 @@ public final class SmilesParser {
         // assign Sgroups
         for (Map.Entry<IAtomContainer, List<Sgroup>> e : sgroupMap.entrySet())
             e.getKey().setProperty(CDKConstants.CTAB_SGROUPS, new ArrayList<>(e.getValue()));
+    }
+
+
+    /**
+     * This logic is used to allow reading of Atropisomer configurations (e.g.
+     * BiNOL) from CXSMILES.
+     *
+     * @param atomToMol mapping from atom to the containing molecule
+     * @param atomToWedgeFrom atom at small end of wedge
+     * @param bondToWedge the bond being wedged
+     * @param style the wedge style
+     */
+    private void handleRdkitAtropisomerExtension(Map<IAtom, IAtomContainer> atomToMol,
+                                                 IAtom atomToWedgeFrom,
+                                                 IBond bondToWedge,
+                                                 IBond.Display style) {
+        // check for RDKit atropisomers
+        if (!isAtropisomerAtom(atomToWedgeFrom))
+            return;
+
+        // We need ring flags set, this is not cached but
+        // (hopefully) there are only a few wedges
+        Cycles.markRingAtomsAndBonds(atomToMol.get(atomToWedgeFrom));
+
+        // Find the bond to apply the atropisomerism to
+        IBond atropisomerBond = null;
+        for (IBond b : atomToWedgeFrom.bonds()) {
+            if (!b.equals(bondToWedge) &&
+                b.getOrder() == IBond.Order.SINGLE &&
+                isAtropisomerAtom(b.getOther(atomToWedgeFrom)) &&
+                Cycles.smallRingSize(b, 7) == 0) {
+                if (atropisomerBond != null) {
+                    atropisomerBond = null;
+                    break;
+                }
+                atropisomerBond = b;
+            }
+        }
+
+        if (atropisomerBond != null) {
+            IAtom atBeg = atropisomerBond.getBegin();
+            IAtom atEnd = atropisomerBond.getEnd();
+            if (bondToWedge.contains(atBeg) ||
+                bondToWedge.contains(atEnd)) {
+                List<IAtom> storeOrder = new ArrayList<>();
+
+                for (IBond b : atBeg.bonds()) {
+                    if (b.equals(atropisomerBond))
+                        continue;
+                    IAtom nbor = b.getOther(atBeg);
+                    storeOrder.add(nbor);
+                }
+                for (IBond b : atEnd.bonds()) {
+                    if (b.equals(atropisomerBond))
+                        continue;
+                    IAtom nbor = b.getOther(atEnd);
+                    storeOrder.add(nbor);
+                }
+
+                if (storeOrder.size() == 4) {
+
+                    if (storeOrder.get(0).getIndex() > storeOrder.get(1).getIndex())
+                        swap(storeOrder, 0, 1);
+                    if (storeOrder.get(2).getIndex() > storeOrder.get(3).getIndex())
+                        swap(storeOrder, 2, 3);
+
+                    IBond.Display bond1dir = IBond.Display.Solid;
+                    IBond.Display bond2dir = IBond.Display.Solid;
+                    if (bondToWedge.contains(atBeg)) {
+                        if (bondToWedge.contains(storeOrder.get(0))) {
+                            bond1dir = style;
+                        } else if (bondToWedge.contains(storeOrder.get(1))) {
+                            bond1dir = flip(style);
+                        }
+                    } else if (bondToWedge.contains(atEnd)) {
+                        if (bondToWedge.contains(storeOrder.get(2))) {
+                            bond2dir = style;
+                        } else if (bondToWedge.contains(storeOrder.get(3))) {
+                            bond2dir = flip(style);
+                        }
+                    }
+
+                    int cfg = 0;
+                    if (bond1dir == IBond.Display.WedgeBegin ||
+                        bond2dir == IBond.Display.WedgedHashBegin) {
+                        cfg = IStereoElement.LEFT;
+                    } else if (bond1dir == IBond.Display.WedgedHashBegin ||
+                               bond2dir == IBond.Display.WedgeBegin) {
+                        cfg = IStereoElement.RIGHT;
+                    }
+
+                    IAtomContainer mol = atomToMol.get(atomToWedgeFrom);
+                    mol.addStereoElement(new Atropisomeric(atropisomerBond,
+                                                           storeOrder.toArray(new IAtom[4]),
+                                                           cfg));
+                }
+            }
+        }
+    }
+
+    private static void swap(List<IAtom> atoms, int i, int j) {
+        IAtom tmp = atoms.get(i);
+        atoms.set(i, atoms.get(j));
+        atoms.set(j, tmp);
+    }
+
+    private static IBond.Display flip(IBond.Display disp) {
+        if (disp == IBond.Display.WedgeBegin)
+            return IBond.Display.WedgedHashBegin;
+        else if (disp == IBond.Display.WedgeEnd)
+            return IBond.Display.WedgedHashEnd;
+        else if (disp == IBond.Display.WedgedHashBegin)
+            return IBond.Display.WedgeBegin;
+        else if (disp == IBond.Display.WedgedHashEnd)
+            return IBond.Display.WedgeEnd;
+        return IBond.Display.Solid;
+    }
+
+    // Check if an atom can potentially by part of an atropisomer
+    private boolean isAtropisomerAtom(IAtom atom) {
+        if (atom.getBondCount() != 3)
+            return false;
+        if (atom.isAromatic())
+            return true;
+        int dbcount = 0;
+        for (IBond bond : atom.bonds()) {
+            if (bond.getOrder() == IBond.Order.DOUBLE)
+                dbcount++;
+        }
+        return dbcount == 1 || (dbcount == 0 &&
+                                atom.getFormalCharge() == 0 &&
+                                (atom.getAtomicNumber() == IAtom.N ||
+                                 atom.getAtomicNumber() == IAtom.P ||
+                                 atom.getAtomicNumber() == IAtom.As));
     }
 
     /**

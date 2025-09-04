@@ -146,9 +146,9 @@ class SmilesGeneratorTest extends CDKTestCase {
         // 7
         mol1.addBond(0, 1, IBond.Order.SINGLE);
         // 1
-        mol1.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.UP);
+        mol1.addBond(1, 2, IBond.Order.SINGLE, IBond.Display.Up);
         // 2
-        mol1.addBond(1, 3, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        mol1.addBond(1, 3, IBond.Order.SINGLE, IBond.Display.Down);
         // 3
         mol1.addBond(1, 4, IBond.Order.SINGLE);
         // 4
@@ -217,9 +217,9 @@ class SmilesGeneratorTest extends CDKTestCase {
         // 2
         mol1.addAtom(new Atom("H", new Point2d(2, 3)));
         // 3
-        mol1.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        mol1.addBond(0, 2, IBond.Order.SINGLE, IBond.Display.Down);
         // 1
-        mol1.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.UP);
+        mol1.addBond(1, 2, IBond.Order.SINGLE, IBond.Display.Up);
         // 2
         mol1.addBond(2, 3, IBond.Order.SINGLE);
         // 3
@@ -231,9 +231,9 @@ class SmilesGeneratorTest extends CDKTestCase {
         // 6
         mol1.addBond(6, 7, IBond.Order.SINGLE);
         // 3
-        mol1.addBond(7, 8, IBond.Order.SINGLE, IBond.Stereo.UP);
+        mol1.addBond(7, 8, IBond.Order.SINGLE, IBond.Display.Up);
         // 4
-        mol1.addBond(7, 9, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        mol1.addBond(7, 9, IBond.Order.SINGLE, IBond.Display.Down);
         // 5
         mol1.addBond(7, 2, IBond.Order.SINGLE);
         // 6
@@ -299,9 +299,9 @@ class SmilesGeneratorTest extends CDKTestCase {
         mol1.addAtom(new Atom("C", new Point2d(-3, -1))); // 10
         mol1.addAtom(new Atom("C", new Point2d(-1.5, -2))); // 11
 
-        mol1.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        mol1.addBond(1, 0, IBond.Order.SINGLE, IBond.Display.Down);
         mol1.addBond(1, 2, IBond.Order.SINGLE);
-        mol1.addBond(2, 3, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        mol1.addBond(2, 3, IBond.Order.SINGLE, IBond.Display.Down);
 
         mol1.addBond(1, 4, IBond.Order.SINGLE);
         mol1.addBond(4, 5, IBond.Order.SINGLE);

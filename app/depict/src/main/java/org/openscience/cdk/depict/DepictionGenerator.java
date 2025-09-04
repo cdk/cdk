@@ -196,6 +196,11 @@ public final class DepictionGenerator {
     private boolean annotateAtomNum = false;
 
     /**
+     * Flag to indicate bond numbers should be displayed.
+     */
+    private boolean annotateBondNum = false;
+
+    /**
      * Flag to indicate atom values should be displayed.
      */
     private boolean annotateAtomVal = false;
@@ -231,10 +236,7 @@ public final class DepictionGenerator {
      * system font.
      */
     public DepictionGenerator() {
-        this(new Font(getDefaultOsFont(), Font.PLAIN, 13));
-        setParam(BasicSceneGenerator.BondLength.class, 26.1d);
-        setParam(StandardGenerator.HashSpacing.class, 26 / 8d);
-        setParam(StandardGenerator.WaveSpacing.class, 26 / 8d);
+        this(new Font(getDefaultOsFont(), Font.PLAIN, 14));
     }
 
     /**
@@ -272,6 +274,7 @@ public final class DepictionGenerator {
         this.annotateAtomMap = org.annotateAtomMap;
         this.annotateAtomVal = org.annotateAtomVal;
         this.annotateAtomNum = org.annotateAtomNum;
+        this.annotateBondNum = org.annotateBondNum;
         this.highlightAtomMap = org.highlightAtomMap;
         this.atomMapColors = org.atomMapColors;
         this.dimensions = org.dimensions;
@@ -716,7 +719,7 @@ public final class DepictionGenerator {
         }
     }
 
-    private IRenderingElement generate(IAtomContainer molecule, RendererModel model, AtomNumbering atomNumbering) throws CDKException {
+    private IRenderingElement generate(IAtomContainer molecule, RendererModel model, AtomNumbering sequence) throws CDKException {
 
         // tag the atom and bond ids
         String molId = molecule.getProperty(MarkedElement.ID_KEY);
@@ -733,7 +736,14 @@ public final class DepictionGenerator {
                 if (atom.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
                     throw new UnsupportedOperationException("Multiple annotation labels are not supported.");
                 atom.setProperty(StandardGenerator.ANNOTATION_LABEL,
-                                 Integer.toString(atomNumbering.nextId()));
+                                 Integer.toString(sequence.nextId()));
+            }
+        } else if (annotateBondNum) {
+            for (IBond bond : molecule.bonds()) {
+                if (bond.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
+                    throw new UnsupportedOperationException("Multiple annotation labels are not supported.");
+                bond.setProperty(StandardGenerator.ANNOTATION_LABEL,
+                                 Integer.toString(sequence.nextId()));
             }
         } else if (annotateAtomVal) {
             for (IAtom atom : molecule.atoms()) {
@@ -914,10 +924,30 @@ public final class DepictionGenerator {
      * @see StandardGenerator#ANNOTATION_LABEL
      */
     public DepictionGenerator withAtomNumbers() {
-        if (annotateAtomMap || annotateAtomVal)
-            throw new IllegalArgumentException("Can not annotated atom numbers, atom values or maps are already annotated");
+        if (annotateAtomMap || annotateAtomVal || annotateBondNum)
+            throw new IllegalArgumentException("Can not annotated atom numbers - bond numbers, atom values or maps are already annotated");
         DepictionGenerator copy = new DepictionGenerator(this);
         copy.annotateAtomNum = true;
+        return copy;
+    }
+
+    /**
+     * Display bond numbers on the molecule or reaction. The numbers are based on the
+     * ordering of bonds in the molecule data structure and not a systematic system
+     * such as IUPAC numbering.
+     * <p>
+     * Note: A depiction can not have both atom numbers and atom maps visible
+     * (but this can be achieved by manually setting the annotation).
+     *
+     * @return new generator for method chaining
+     * @see #withAtomMapNumbers()
+     * @see StandardGenerator#ANNOTATION_LABEL
+     */
+    public DepictionGenerator withBondNumbers() {
+        if (annotateAtomNum || annotateAtomMap || annotateAtomVal)
+            throw new IllegalArgumentException("Can not annotated bond numbers - atom number,s values or maps are already annotated");
+        DepictionGenerator copy = new DepictionGenerator(this);
+        copy.annotateBondNum = true;
         return copy;
     }
 
@@ -1157,8 +1187,15 @@ public final class DepictionGenerator {
     }
 
     /**
-     * Specify a desired size of margin. The units depend on the output format with
-     * raster images using pixels and vector graphics using millimeters.
+     * Specify a desired size of margin, this margin is a minimum amount of
+     * space around the depiction and the edge of the draw area. If you have
+     * specified {@link #withSize} larger than required the margin will grow
+     * to center the molecule/reaction. If you specify a margin you should also
+     * specify {@link #withPadding} which will default to a multiple of the
+     * margin amount.
+     * <br/>
+     * The units depend on the output format with raster images using pixels
+     * and vector graphics using millimeters.
      *
      * @param m margin
      * @return new generator for method chaining
@@ -1171,8 +1208,8 @@ public final class DepictionGenerator {
 
     /**
      * Specify a desired size of padding for molecule sets and reactions. The units
-     * depend on the output format with raster images using pixels and vector graphics
-     * using millimeters.
+     * depend on the output format with raster images using pixels and
+     * vector graphics using millimeters.
      *
      * @param p padding
      * @return new generator for method chaining
@@ -1202,9 +1239,10 @@ public final class DepictionGenerator {
     }
 
     /**
-     * Resize depictions to fill all available space (only if a size is specified).
-     * This generally isn't wanted as very small molecules (e.g. acetaldehyde) may
-     * become huge.
+     * Resize depictions to fill all available space (only if a size is
+     * specified). This generally isn't wanted as very small molecules (e.g.
+     * acetaldehyde) may become huge and for publication quality work all bond
+     * lengths should be the same size.
      *
      * @return new generator for method chaining
      * @see BasicSceneGenerator.FitToScreen
@@ -1260,6 +1298,16 @@ public final class DepictionGenerator {
         return copy;
     }
 
+    public DepictionGenerator withParams(RendererModel model) {
+        DepictionGenerator copy = new DepictionGenerator(this);
+        for (IGeneratorParameter<?> param : model.getRenderingParameters()) {
+            if (copy.getModel().hasParameter(param.getClass())) {
+                copy.setParam(param.getClass(), param.getValue());
+            }
+        }
+        return copy;
+    }
+
     private double caclModelScale(Collection<IAtomContainer> mols) {
         List<IBond> bonds = new ArrayList<>();
         for (IAtomContainer mol : mols) {
@@ -1304,14 +1352,14 @@ public final class DepictionGenerator {
      */
     private static final class LayoutBackup {
         private final Point2d[] coords;
-        private final IBond.Stereo[] btypes;
+        private final IBond.Display[] disps;
         private final IAtomContainer mol;
 
         public LayoutBackup(IAtomContainer mol) {
             final int numAtoms = mol.getAtomCount();
             final int numBonds = mol.getBondCount();
             this.coords = new Point2d[numAtoms];
-            this.btypes = new IBond.Stereo[numBonds];
+            this.disps = new IBond.Display[numBonds];
             this.mol = mol;
             for (int i = 0; i < numAtoms; i++) {
                 IAtom atom = mol.getAtom(i);
@@ -1321,7 +1369,7 @@ public final class DepictionGenerator {
             }
             for (int i = 0; i < numBonds; i++) {
                 IBond bond = mol.getBond(i);
-                btypes[i] = bond.getStereo();
+                disps[i] = bond.getDisplay();
             }
         }
 
@@ -1331,7 +1379,7 @@ public final class DepictionGenerator {
             for (int i = 0; i < numAtoms; i++)
                 mol.getAtom(i).setPoint2d(coords[i]);
             for (int i = 0; i < numBonds; i++)
-                mol.getBond(i).setStereo(btypes[i]);
+                mol.getBond(i).setDisplay(disps[i]);
         }
     }
 }

@@ -427,7 +427,9 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
      */
     @Override
     public Display getDisplay() {
-        return null;
+        // JWM: could do better here, but really IQueryAtomContainer should
+        // go away
+        return Display.Solid;
     }
 
     /**
@@ -542,7 +544,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
         if (getOrder() != null) {
             resultString.append(", #O:").append(getOrder());
         }
-        resultString.append(", #S:").append(getStereo());
+        resultString.append(", #D:").append(getDisplay());
         if (getAtomCount() > 0) {
             resultString.append(", #A:").append(getAtomCount());
             for (int i = 0; i < atomCount; i++) {

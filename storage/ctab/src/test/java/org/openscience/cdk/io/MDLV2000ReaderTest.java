@@ -681,10 +681,10 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
-        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(1).getStereo());
-        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(6).getStereo());
-        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(7).getStereo());
-        Assertions.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(11).getStereo());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(1).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(6).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(7).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(11).getDisplay());
     }
 
     @Test
@@ -694,7 +694,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
-        Assertions.assertEquals(IBond.Stereo.UP_OR_DOWN, mol.getBond(1).getStereo());
+        Assertions.assertEquals(IBond.Display.Wavy, mol.getBond(1).getDisplay());
     }
 
     /**
@@ -713,7 +713,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         Assertions.assertEquals(1, containersList.size());
         IAtomContainer container = containersList.get(0);
-        Assertions.assertEquals(IBond.Stereo.NONE, container.getBond(0).getStereo());
+        Assertions.assertEquals(IBond.Display.Solid, container.getBond(0).getDisplay());
     }
 
     @Test
@@ -737,8 +737,8 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertNotNull(mol);
         Assertions.assertEquals(9, mol.getAtomCount());
         Assertions.assertEquals(9, mol.getBondCount());
-        Assertions.assertEquals(IBond.Stereo.DOWN, mol.getBond(0).getStereo());
-        Assertions.assertEquals(IBond.Stereo.UP, mol.getBond(3).getStereo());
+        Assertions.assertEquals(IBond.Display.Down, mol.getBond(0).getDisplay());
+        Assertions.assertEquals(IBond.Display.Up, mol.getBond(3).getDisplay());
     }
 
     @Test
@@ -753,8 +753,8 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         Assertions.assertEquals(1, containersList.size());
         IAtomContainer container = containersList.get(0);
-        Assertions.assertEquals(IBond.Stereo.E_Z_BY_COORDINATES, container.getBond(0).getStereo());
-        Assertions.assertEquals(IBond.Stereo.E_OR_Z, container.getBond(2).getStereo());
+        Assertions.assertEquals(IBond.Display.Solid, container.getBond(0).getDisplay());
+        Assertions.assertEquals(IBond.Display.Crossed, container.getBond(2).getDisplay());
     }
 
     /**
@@ -814,9 +814,9 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
             if (bond.getOrder() == IBond.Order.DOUBLE) {
                 Assertions.assertEquals(rGroup.getLabel(), "R32");
-            } else if (bond.getStereo() == IBond.Stereo.DOWN) {
+            } else if (bond.getDisplay() == IBond.Display.Down) {
                 Assertions.assertEquals(rGroup.getLabel(), "R2");
-            } else if (bond.getStereo() == IBond.Stereo.UP) {
+            } else if (bond.getDisplay() == IBond.Display.Up) {
                 Assertions.assertEquals(rGroup.getLabel(), "R20");
             } else
                 Assertions.assertEquals(rGroup.getLabel(), "R5");

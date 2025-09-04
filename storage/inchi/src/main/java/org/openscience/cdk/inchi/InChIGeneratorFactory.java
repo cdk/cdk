@@ -208,7 +208,7 @@ public class InChIGeneratorFactory {
      * @throws CDKException if the generator cannot be instantiated
      */
     public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
-        return (new InChIToStructure(inchi, builder));
+        return InChIToStructure.fromInChI(inchi, builder);
     }
 
     /**
@@ -222,7 +222,7 @@ public class InChIGeneratorFactory {
      */
     public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, String options)
             throws CDKException {
-        return (new InChIToStructure(inchi, builder, options));
+        return InChIToStructure.fromInChI(inchi, builder, options);
     }
 
     /**
@@ -236,6 +236,6 @@ public class InChIGeneratorFactory {
      */
     public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options)
             throws CDKException {
-        return (new InChIToStructure(inchi, builder, options));
+        return InChIToStructure.fromInChI(inchi, builder, options);
     }
 }

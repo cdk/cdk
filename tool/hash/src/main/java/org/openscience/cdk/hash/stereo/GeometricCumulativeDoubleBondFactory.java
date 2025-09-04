@@ -338,14 +338,16 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      *         plane
      */
     static int elevation(IBond bond) {
-        IBond.Stereo stereo = bond.getStereo();
-        if (stereo == null) return 0;
-        switch (stereo) {
-            case UP:
-            case DOWN_INVERTED:
+        IBond.Display display = bond.getDisplay();
+        if (display == null) return 0;
+        switch (display) {
+            case WedgeBegin:
+            case HollowWedgeBegin:
+            case WedgedHashEnd:
                 return +1;
-            case DOWN:
-            case UP_INVERTED:
+            case WedgedHashBegin:
+            case WedgeEnd:
+            case HollowWedgeEnd:
                 return -1;
             default:
                 return 0;

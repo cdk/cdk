@@ -74,8 +74,10 @@ public class ConjugatedPiSystemsDetector {
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
             IAtom firstAtom = ac.getAtom(i);
-            // if this atom was already visited in a previous DFS, continue
-            if (firstAtom.getFlag(IChemObject.VISITED) || checkAtom(ac, firstAtom) == -1) {
+            //if this atom was already visited in a previous DFS, is isolated, or an allene -> continue
+            // (starting with an allene creates issues and path dependencies; it will be visited later as neighbor of other atoms)
+            int initialCheck = checkAtom(ac, firstAtom);
+            if (firstAtom.getFlag(IChemObject.VISITED) || initialCheck == -1 || initialCheck == 1) {
                 continue;
             }
             IAtomContainer piSystem = ac.getBuilder().newInstance(IAtomContainer.class);
