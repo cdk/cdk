@@ -219,9 +219,9 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * default inclusive maximum tree depth of 31. Stereo information is not
      * preserved.
      *
-     * @param minFragSize       Minimum number of atoms in a valid fragment
-     *                          (excluding implicit hydrogen).
-     * @param saturationSetting Determines whether fragments should be saturated
+     * @param minFragSize minimum number of atoms in a valid fragment
+     *                    (excluding implicit hydrogen).
+     * @param saturationSetting determines whether fragments should be saturated
      *                          (with hydrogens or R-atoms) or unsaturated.
      */
     public ExhaustiveFragmenter(int minFragSize, Saturation saturationSetting) {
@@ -241,7 +241,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * inclusive maximum tree depth of 31. Stereo information is not
      * preserved.
      *
-     * @param minFragSize Minimum number of atoms in a valid fragment
+     * @param minFragSize minimum number of atoms in a valid fragment
      *                    (excluding implicit hydrogen).
      */
     public ExhaustiveFragmenter(int minFragSize) {
@@ -283,20 +283,20 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * <li>preservation of stereochemistry information</li>
      * <ul/>
      *
-     * @param smilesGenerator The {@link SmilesGenerator} instance to use for
+     * @param smilesGenerator the {@link SmilesGenerator} instance to use for
      *                        creating SMILES strings
      *                        for fragment deduplication and retrieval.
-     * @param minFragSize Minimum number of atoms in a valid fragment
+     * @param minFragSize minimum number of atoms in a valid fragment
      *                    (excluding implicit hydrogen).
-     * @param saturationSetting Determines whether fragments should be saturated
+     * @param saturationSetting determines whether fragments should be saturated
      *                          (with hydrogens or R-atoms) or unsaturated.
-     * @param inclusiveMaxTreeDepth Represents the maximum number of bonds that
+     * @param inclusiveMaxTreeDepth represents the maximum number of bonds that
      *                              will be split for a fragmentation.
-     * @param preserveStereo Signals whether to attempt to copy stereochemical
-     *                      information from the original molecule to the
-     *                      generated fragments. <strong>Warning:</strong> This
-     *                      process is not reliable and can lead to incorrect
-     *                      stereochemistry in the resulting fragments.
+     * @param preserveStereo signals whether to attempt to copy stereochemical
+     *                       information from the original molecule to the
+     *                       generated fragments. <strong>Warning:</strong> This
+     *                       process is not reliable and can lead to incorrect
+     *                       stereochemistry in the resulting fragments.
      */
     public ExhaustiveFragmenter(
             SmilesGenerator smilesGenerator,
@@ -326,7 +326,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Sets the minimum allowed fragment size. This has to be greater than zero.
      *
-     * @param minFragSize Minimum number of atoms in a valid fragment.
+     * @param minFragSize minimum number of atoms in a valid fragment.
      */
     public void setMinimumFragmentSize(int minFragSize) {
         if (minFragSize <= 0) {
@@ -363,7 +363,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * help manage computational resources for larger molecules.
      * </p>
      *
-     * @param inclusiveMaxTreeDepth The exclusive maximum number of bonds that
+     * @param inclusiveMaxTreeDepth the exclusive maximum number of bonds that
      *                              can be split in one atom container.
      */
     public void setInclusiveMaxTreeDepth(int inclusiveMaxTreeDepth) {
@@ -617,11 +617,11 @@ public class ExhaustiveFragmenter implements IFragmenter {
      *      1        →   3   →  [1, 3]
      * </pre>
      *
-     * @param index An integer whose binary representation determines the subset
+     * @param index an integer whose binary representation determines the subset
      *              elements. A `1` bit at position `j` means `nums[j]` is
      *              included.
-     * @param nums  The array from which to generate subsets. Duplicate values
-     *              in `nums` may result in duplicate subset entries.
+     * @param nums the array from which to generate subsets. Duplicate values
+     *             in `nums` may result in duplicate subset entries.
      * @return An array containing the subset corresponding to `index`.
      */
     protected static int[] generateSubset(int index, int[] nums) {
@@ -673,8 +673,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Creates a copy of an atom and adds it to the specified atom container.
      *
-     * @param originalAtom  The atom to be copied.
-     * @param atomContainer The destination container where the copied atom will
+     * @param originalAtom the atom to be copied.
+     * @param atomContainer the destination container where the copied atom will
      *                      be added.
      * @return A new atom with the same properties as `originalAtom`, added to
      *         `atomContainer`.
@@ -692,13 +692,13 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Creates a copy of a bond and adds it to the specified atom container.
      *
-     * @param cpyCurrentAtom Atom in the new atom container that is connected by
+     * @param cpyCurrentAtom atom in the new atom container that is connected by
      *                       the bond to be copied.
-     * @param cpyNbor        The neighbour of `cpyCurrentAtom` that
-     *                       is connected by the bond one wants to copy.
-     * @param origBond       The bond in the original molecule.
-     * @param atomContainer  The new atom container to which the bond is to
-     *                       be copied.
+     * @param cpyNbor the neighbour of `cpyCurrentAtom` that is connected by the
+     *                bond one wants to copy.
+     * @param origBond the bond in the original molecule.
+     * @param atomContainer the new atom container to which the bond is to
+     *                      be copied.
      * @return The bond in the new atom container.
      */
     private static IBond copyBond(
@@ -741,13 +741,13 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * preserved but the structure is actually not chiral anymore.
      * </p>
      *
-     * @param origMol The original molecule containing the stereochemical
+     * @param origMol the original molecule containing the stereochemical
      *                information.
-     * @param fragmentContainer The new fragment where the stereochemical
+     * @param fragmentContainer the new fragment where the stereochemical
      *                          information will be added.
-     * @param origToCpyAtomMap A mapping of atoms from the original molecule to
+     * @param origToCpyAtomMap a mapping of atoms from the original molecule to
      *                         their corresponding atoms in the new fragment.
-     * @param origToCpyBondMap A mapping of bonds from the original molecule to
+     * @param origToCpyBondMap a mapping of bonds from the original molecule to
      *                         their corresponding bonds in the new fragment.
      */
     private void attemptCopyStereoInformation(
@@ -797,8 +797,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * molecule into multiple fragments by removing the specified bonds and
      * making copies of the resulting fragments.
      *
-     * @param origMol      The molecule to be split.
-     * @param bondsToSplit The bonds that should be removed to create
+     * @param origMol the molecule to be split.
+     * @param bondsToSplit the bonds that should be removed to create
      *                     separate fragments.
      * @return An array of copied molecular fragments resulting from the split.
      */
