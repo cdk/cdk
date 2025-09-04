@@ -292,7 +292,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      *                          (with hydrogens or R-atoms) or unsaturated.
      * @param inclusiveMaxTreeDepth Represents the maximum number of bonds that
      *                              will be split for a fragmentation.
-     * @param preserveStero Signals whether to attempt to copy stereochemical
+     * @param preserveStereo Signals whether to attempt to copy stereochemical
      *                      information from the original molecule to the
      *                      generated fragments. <strong>Warning:</strong> This
      *                      process is not reliable and can lead to incorrect
@@ -303,7 +303,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             int minFragSize,
             Saturation saturationSetting,
             int inclusiveMaxTreeDepth,
-            boolean preserveStero
+            boolean preserveStereo
     ) {
         if (saturationSetting == null) {
             throw new NullPointerException(
@@ -317,7 +317,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             );
         }
         this.smilesGenerator = smilesGenerator;
-        this.preserveStereo = preserveStero;
+        this.preserveStereo = preserveStereo;
         this.setInclusiveMaxTreeDepth(inclusiveMaxTreeDepth);
         this.setMinimumFragmentSize(minFragSize);
         this.fragMap = null;
