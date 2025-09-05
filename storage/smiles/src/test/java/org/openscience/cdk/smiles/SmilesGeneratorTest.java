@@ -1423,6 +1423,95 @@ class SmilesGeneratorTest extends CDKTestCase {
         Assertions.assertEquals("C/C=[C]/CC.[CH3]", smigen.create(mol));
     }
 
+
+    /*
+     * https://github.com/cdk/cdk/issues/1221
+     */
+    @Test
+    public void deletingAtomDoesNotUpdateCisTrans() throws CDKException {
+        String smi = "C[C@@H](O)CC[C@H](C)/C=C(/C)C(=O)O";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        mol.removeAtom(0);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("[CH](O)CC[C@H](C)/C=C(/C)\\C(=O)O", smigen.create(mol));
+    }
+
+    @Test
+    public void deletingAtomDoesNotUpdateExtendedTetrahedral() throws CDKException {
+        String smi = "OCC=[C@]=CC";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        mol.removeAtom(0);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("[CH2]C=[C@]=CC", smigen.create(mol));
+    }
+
+    @Test
+    public void deletingAtomDoesNotUpdateExtendedTetrahedral2() throws CDKException {
+        String smi = "OCC=C=[C@]=C=CC";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        mol.removeAtom(0);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("[CH2]C=C=[C@]=C=CC", smigen.create(mol));
+    }
+
+    @Test
+    public void deletingAtomDoesNotUpdateExtendedCisTrans() throws CDKException {
+        String smi = "OC/C=C=C=C/C";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        mol.removeAtom(0);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("[CH2]/C=C=C=C/C", smigen.create(mol));
+    }
+
+
+    @Test
+    public void deletingAtomUpdatesExtendedTetrahedral() throws CDKException {
+        String smi = "OCC=[C@]=CC";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        mol.removeAtom(2);
+        Assertions.assertFalse(mol.stereoElements().iterator().hasNext());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("O[CH2].[C]=CC", smigen.create(mol));
+    }
+
+    @Test
+    public void deletingAtomUpdatesExtendedTetrahedral2() throws CDKException {
+        String smi = "OCC=C=[C@]=C=CC";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        mol.removeAtom(3);
+        Assertions.assertFalse(mol.stereoElements().iterator().hasNext());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("OC[CH].[C]=C=CC", smigen.create(mol));
+    }
+
+    @Test
+    public void deletingAtomUpdatesExtendedTetrahedral3() throws CDKException {
+        String smi = "OCC=C=[C@]=C=CC";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        mol.removeAtom(2);
+        Assertions.assertFalse(mol.stereoElements().iterator().hasNext());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("O[CH2].[C]=C=C=CC", smigen.create(mol));
+    }
+
+    @Test
+    public void deletingAtomUpdatesExtendedCisTrans() throws CDKException {
+        String smi = "OC/C=C=C=C/C";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        mol.removeAtom(2);
+        Assertions.assertFalse(mol.stereoElements().iterator().hasNext());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("O[CH2].[C]=C=CC", smigen.create(mol));
+    }
+
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
         return new TetrahedralChirality(container.getAtom(central), new IAtom[]{container.getAtom(a1),
                                                                                 container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},
