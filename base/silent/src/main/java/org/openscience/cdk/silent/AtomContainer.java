@@ -1114,19 +1114,26 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                 IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
                 List<IBond> carriers = db.getCarriers();
                 final IAtom common = db.getFocus().getConnectedAtom(removedBond);
-                if (common != null && common.getBondCount() > 1) {
+                if (common != null) {
                     IBond otherBond = null;
-                    for (IBond bond : getConnectedBondsList(common)) {
-                        if (!bond.equals(focus)) {
-                            otherBond = bond;
-                            break;
+                    // we can pick another bond to use
+                    if (common.getBondCount() > 1) {
+                        for (IBond bond : getConnectedBondsList(common)) {
+                            if (!bond.equals(focus)) {
+                                otherBond = bond;
+                                break;
+                            }
                         }
                     }
                     if (otherBond != null)
-                        stereo.set(i, ((IStereoElement<IBond,IBond>)se).updateCarriers(removedBond, otherBond));
-                } else {
-                    invalidated.add(se);
+                        stereo.set(i, ((IStereoElement<IBond, IBond>) se).updateCarriers(removedBond, otherBond));
+                    else
+                        invalidated.add(se); // there is no other bond to switch to
                 }
+            } else if (se.contains(beg) && se.contains(end)) {
+                // we may be able to keep some of these but would need to
+                // reconfigure what is stored
+                invalidated.add(se);
             }
         }
         stereo.removeAll(invalidated);

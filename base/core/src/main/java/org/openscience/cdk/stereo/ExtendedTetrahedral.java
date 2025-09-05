@@ -219,4 +219,36 @@ public final class ExtendedTetrahedral
                                                   int cfg) {
         return new ExtendedTetrahedral(focus, carriers.toArray(new IAtom[4]), cfg);
     }
+
+    @Override
+    public boolean contains(IAtom atom) {
+        if (super.contains(atom))
+            return true;
+
+        // walk along the cumulated bonds to check if the atom is one of those
+        // 'l2 <= l1 <= x => r1 => r2'
+        IAtomContainer container = focus().getContainer();
+        if (container == null)
+            return false;
+        List<IBond> focusBonds = container
+                                        .getConnectedBondsList(focus());
+        if (focusBonds.size() != 2)
+            throw new IllegalArgumentException("focus must have exactly 2 neighbors");
+        IAtom leftPrev  = focus();
+        IAtom rightPrev = focus();
+        IAtom left      = focusBonds.get(0).getOther(focus());
+        IAtom right     = focusBonds.get(1).getOther(focus());
+        IAtom tmp;
+        while (left != null && right != null) {
+            if (left.equals(atom) || right.equals(atom))
+                return true;
+            tmp = getOtherNbr(container, left, leftPrev);
+            leftPrev = left;
+            left     = tmp;
+            tmp = getOtherNbr(container, right, rightPrev);
+            rightPrev = right;
+            right     = tmp;
+        }
+        return false;
+    }
 }
