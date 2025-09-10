@@ -57,6 +57,11 @@ import java.util.Map;
  * <ul>
  * <li>DAT, data Sgroup</li>
  * </ul>
+ * <b>Extensions (things we store as Sgroups but aren't 'MDL' sgroups)</b>
+ * <ul>
+ * <li>Multicenter Bonds</li>
+ * <li>Attach Ordering</li>
+ * </ul>
  */
 public enum SgroupType {
     CtabAbbreviation("SUP"),
@@ -77,7 +82,7 @@ public enum SgroupType {
 
     // extension for handling positional variation and distributed coordination bonds
     ExtMulticenter("_MAP", false),
-    // extension for handling bond attachment, LO: in CXSMILES
+    // extension for handling bond attachment, LO: in CXSMILES and APO in MDL
     ExtAttachOrdering("_APO", false);
 
 
