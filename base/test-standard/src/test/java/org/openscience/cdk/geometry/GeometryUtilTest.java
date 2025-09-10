@@ -857,6 +857,43 @@ class GeometryUtilTest extends CDKTestCase {
     }
 
     @Test
+    void medianBondLengthNoBondsWithDefault() {
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 1.5)));
+        container.addAtom(atomAt(new Point2d(0, -1.5)));
+        container.addAtom(atomAt(new Point2d(0, 5)));
+        assertThat(GeometryUtil.getBondLengthMedian(container, -1), is(-1.0));
+    }
+
+    @Test
+    void medianBondLengthNoPointsWithDefault() {
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 1.5)));
+        container.addAtom(atomAt(null));
+        container.addAtom(atomAt(new Point2d(0, 5)));
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        container.addBond(0, 2, IBond.Order.SINGLE);
+        container.addBond(0, 3, IBond.Order.SINGLE);
+        assertThat(GeometryUtil.getBondLengthMedian(container, -1), is(5.0));
+    }
+
+    @Test
+    void medianBondLengthNoPoints2WithDefault() {
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        container.addAtom(atomAt(null));
+        container.addAtom(atomAt(null));
+        container.addAtom(atomAt(null));
+        container.addAtom(atomAt(null));
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        container.addBond(0, 2, IBond.Order.SINGLE);
+        container.addBond(0, 3, IBond.Order.SINGLE);
+        assertThat(GeometryUtil.getBondLengthMedian(container, -1), is(-1.0));
+    }
+
+
+    @Test
     void medianBondLengthOneBond() {
         IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         container.addAtom(atomAt(new Point2d(0, 0)));

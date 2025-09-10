@@ -1783,18 +1783,69 @@ public final class GeometryUtil {
     }
 
     /**
-     * Calculate the median bond length of an atom container.
+     * Calculate the median bond length of an atom container or returns the
+     * default if there are no bonds.
      *
      * @param container structure representation
      * @return median bond length
-     * @throws java.lang.IllegalArgumentException unset coordinates or no bonds
+     */
+    public static double getBondLengthMedian(final IAtomContainer container,
+                                             double defaultBondLength) {
+        return getBondLengthMedian(container.bonds(), container.getBondCount(),
+                                   defaultBondLength);
+    }
+
+    /**
+     * Calculate the median bond length of an atom container, fails if there
+     * are no bonds or coordinates.
+     *
+     * @param container structure representation
+     * @return median bond length
      */
     public static double getBondLengthMedian(final IAtomContainer container) {
         return getBondLengthMedian(container.bonds(), container.getBondCount());
     }
 
     /**
-     * Calculate the median bond length of some bonds.
+     * Calculate the median bond length, if there are no bonds the default is
+     * returned. Bonds with no coordinates are skipped.
+     *
+     * @param bonds the bonds
+     * @param cap expected number of bonds (optional)
+     * @param defaultBondLength the default bond length if there is no median
+     * @return median bond length
+     * @throws java.lang.IllegalArgumentException unset coordinates or no bonds
+     */
+    public static double getBondLengthMedian(final Iterable<IBond> bonds,
+                                             int cap,
+                                             double defaultBondLength) {
+        Iterator<IBond> iter = bonds.iterator();
+        if (!iter.hasNext())
+            return defaultBondLength;
+        int count = 0;
+        double[] lengths = new double[cap];
+        while (iter.hasNext()) {
+            final IBond bond  = iter.next();
+            final IAtom atom1 = bond.getBegin();
+            final IAtom atom2 = bond.getEnd();
+            Point2d p1 = atom1.getPoint2d();
+            Point2d p2 = atom2.getPoint2d();
+            if (p1 == null || p2 == null)
+                continue;
+            if (p1.x != p2.x || p1.y != p2.y) {
+                if (count == lengths.length)
+                    lengths = Arrays.copyOf(lengths, count);
+                lengths[count++] = p1.distance(p2);
+            }
+        }
+        if (count == 0)
+            return defaultBondLength;
+        Arrays.sort(lengths, 0, count);
+        return lengths[count / 2];
+    }
+
+    /**
+     * Calculate the median bond length of some bonds (strict)
      *
      * @param bonds the bonds
      * @return median bond length
