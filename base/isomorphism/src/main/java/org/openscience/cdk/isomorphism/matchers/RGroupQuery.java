@@ -617,15 +617,17 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
 
         sgroups.removeIf(sgrp -> sgrp.getType() == SgroupType.ExtAttachOrdering);
 
-        for (Map.Entry<IAtom, Map<Integer,IBond>> e : rootAttachmentPoints.entrySet()) {
-            Sgroup sgroup = new Sgroup();
-            sgroup.setType(SgroupType.ExtAttachOrdering);
-            sgroup.addAtom(e.getKey());
-            List<Map.Entry<Integer,IBond>> bmap = new ArrayList<>(e.getValue().entrySet());
-            bmap.sort((o1, o2) -> o1.getKey().compareTo(o2.getKey()));
-            for (Map.Entry<Integer,IBond> bmapEntry : bmap)
-                sgroup.addBond(bmapEntry.getValue());
-            sgroups.add(sgroup);
+        if (rootAttachmentPoints != null) {
+            for (Map.Entry<IAtom, Map<Integer, IBond>> e : rootAttachmentPoints.entrySet()) {
+                Sgroup sgroup = new Sgroup();
+                sgroup.setType(SgroupType.ExtAttachOrdering);
+                sgroup.addAtom(e.getKey());
+                List<Map.Entry<Integer, IBond>> bmap = new ArrayList<>(e.getValue().entrySet());
+                bmap.sort((o1, o2) -> o1.getKey().compareTo(o2.getKey()));
+                for (Map.Entry<Integer, IBond> bmapEntry : bmap)
+                    sgroup.addBond(bmapEntry.getValue());
+                sgroups.add(sgroup);
+            }
         }
 
         rootStructure.setProperty(CDKConstants.CTAB_SGROUPS,
