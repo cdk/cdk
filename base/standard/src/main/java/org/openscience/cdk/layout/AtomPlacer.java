@@ -55,8 +55,8 @@ import java.util.stream.StreamSupport;
  *  be used for Automated Structure Diagram Generation or in the interactive
  *  buildup of molecules by the user.
  *
- *@author      steinbeck
- *@cdk.created 2003-08-29
+ * @author      steinbeck
+ * @cdk.created 2003-08-29
  */
 public class AtomPlacer {
 
@@ -64,6 +64,10 @@ public class AtomPlacer {
     public final static boolean debug = true;
     public static final String PRIORITY = "Weight";
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
+
+    // hint that a substituent is in MacroCycle and it may need to sprout at an
+    // angle that is undesirable
+    public static final String MACROCYCLE_ATOM_HINT = "layout.macrocycle.atom.hint";
 
     /**
      *  The molecule to be laid out. To be assigned from outside
@@ -212,7 +216,7 @@ public class AtomPlacer {
                 markPlaced(unplacedNeighbours);
                 return;
             } else {
-                atom.removeProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT);
+                atom.removeProperty(AtomPlacer.MACROCYCLE_ATOM_HINT);
             }
         }
 
