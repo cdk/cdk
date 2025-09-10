@@ -66,6 +66,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Right;
@@ -740,7 +741,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             for (Sgroup sgroup : sgroups) {
                 if (sgroup.getType() == SgroupType.ExtAttachOrdering) {
                     int number = 1;
-                    for (IBond bond : sgroup.getBonds()) {
+                    Set<IBond> bonds = sgroup.getBonds();
+                    // if there is only a single bond we do not need to annotate
+                    // the ordering.
+                    if (bonds.size() == 1)
+                        continue;
+                    for (IBond bond : bonds) {
                         Point2d beg = bond.getBegin().getPoint2d();
                         Point2d end = bond.getEnd().getPoint2d();
                         Point2d mid = VecmathUtil.midpoint(beg, end);
