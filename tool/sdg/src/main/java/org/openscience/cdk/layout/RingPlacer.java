@@ -263,7 +263,7 @@ public class RingPlacer {
         if (atoms.size() < 4 || atoms.size() > 6)
             return false;
         for (IAtom atom : atoms) {
-            if (atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT) == null)
+            if (atom.getProperty(AtomPlacer.MACROCYCLE_ATOM_HINT) == null)
                 return false;
         }
         int ref = winding(atoms.get(0), atoms.get(1), atoms.get(2));
