@@ -380,6 +380,9 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     RGroup rGroup = new RGroup();
                     rGroup.setGroup(group);
 
+                    IAtom fstAttach = null;
+                    IAtom sndAttach = null;
+
                     //Parse the Rgroup's attachment points (APO)
                     strTk = new StringTokenizer(groupStr, eol);
                     while (strTk.hasMoreTokens()) {
@@ -395,14 +398,14 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                                 IAtom at = group.getAtom(pos - 1);
                                 switch (apo) {
                                     case 1:
-                                        rGroup.setFirstAttachmentPoint(at);
+                                        fstAttach = at;
                                         break;
                                     case 2:
-                                        rGroup.setSecondAttachmentPoint(at);
+                                        sndAttach = at;
                                         break;
                                     case 3: {
-                                        rGroup.setFirstAttachmentPoint(at);
-                                        rGroup.setSecondAttachmentPoint(at);
+                                        fstAttach = at;
+                                        sndAttach = at;
                                     }
                                         break;
                                 }
@@ -410,7 +413,10 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                         }
                     }
 
-                    sproutExplicitAttachments(rGroup);
+                    if (fstAttach != null)
+                        sproutExplicitAttachment(fstAttach, 1);
+                    if (sndAttach != null)
+                        sproutExplicitAttachment(sndAttach, 2);
 
                     IRGroupList rList = rGroupDefinitions.get(rgroupNum);
                     if (rList == null) {
@@ -482,11 +488,6 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
 
         // to support 3D Rgroup... we need to sprout the explicit attachment point
         // with AtomPlacer3D. 3D Rgroup structures are unlikely but possible
-    }
-
-    private void sproutExplicitAttachments(RGroup rGroup) {
-        sproutExplicitAttachment(rGroup.getFirstAttachmentPoint(), 1);
-        sproutExplicitAttachment(rGroup.getSecondAttachmentPoint(), 2);
     }
 
     /**

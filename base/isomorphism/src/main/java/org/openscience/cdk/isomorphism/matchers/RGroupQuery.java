@@ -315,8 +315,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
                                 //Do substitution with the clones
                                 IBond cloneBond = rootClone.getBond(getBondPosition(bond, root));
                                 if (subsAt != null) {
-                                    IAtom subsCloneAtom = rgrpClone.getAtom(getAtomPosition(subsAt,
-                                            substitute.getGroup()));
+                                    IAtom subsCloneAtom = rgrpClone.getAtom(getAtomPosition(subsAt, rgrpCopy));
                                     cloneBond.setAtom(subsCloneAtom, whichAtomInBond);
                                 }
                             }
