@@ -85,6 +85,12 @@ public class DoubleBondStereochemistry
     @Override
     protected IStereoElement<IBond, IBond> create(IBond focus, List<IBond> carriers,
                                                   int cfg) {
+        // Ensure that the constraint carrier[0] connected to focus.getBegin() is satisfied.
+        if (carriers.get(0).getOther(focus.getBegin()) == null) {
+            // Swap carriers if the condition above is not satisfied.
+            return new DoubleBondStereochemistry(focus, new IBond[]{carriers.get(1), carriers.get(0)}, cfg);
+        }
+
         return new DoubleBondStereochemistry(focus, carriers.toArray(new IBond[2]), cfg);
     }
 }
