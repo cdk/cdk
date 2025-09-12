@@ -135,7 +135,6 @@ public class XYZWriter extends DefaultChemObjectWriter {
     */
     public void writeMolecule(IAtomContainer mol) {
 
-        String st;
         try {
             String s1 = "" + mol.getAtomCount();
             writer.write(s1, 0, s1.length());
@@ -147,23 +146,29 @@ public class XYZWriter extends DefaultChemObjectWriter {
             }
             writer.write('\n');
 
+            StringBuilder line = new StringBuilder();
+
             // Loop through the atoms and write them out:
             for (IAtom a : mol.atoms()) {
-                st = a.getSymbol();
+                line.setLength(0);
+                line.append(a.getSymbol());
 
                 Point3d p3 = a.getPoint3d();
                 if (p3 != null) {
-                    st = st + "\t" + (p3.x < 0 ? "" : " ") + fsb.format(p3.x) + "\t" + (p3.y < 0 ? "" : " ")
-                            + fsb.format(p3.y) + "\t" + (p3.z < 0 ? "" : " ") + fsb.format(p3.z);
+                    line.append('\t').append(p3.x < 0 ? "" : " ").append(fsb.format(p3.x))
+                      .append('\t').append(p3.y < 0 ? "" : " ").append(fsb.format(p3.y))
+                      .append('\t').append(p3.y < 0 ? "" : " ").append(fsb.format(p3.z));
                 } else {
-                    st = st + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0);
+                    line.append('\t').append(" 0.000000")
+                      .append('\t').append(" 0.000000")
+                      .append('\t').append(" 0.000000");
                 }
 
                 // write charges
                 double ct = a.getCharge() == CDKConstants.UNSET ? 0.0 : a.getCharge();
-                st = st + "\t" + ct;
+                line.append('\t').append(ct);
 
-                writer.write(st, 0, st.length());
+                writer.write(line.toString());
                 writer.write('\n');
 
             }
