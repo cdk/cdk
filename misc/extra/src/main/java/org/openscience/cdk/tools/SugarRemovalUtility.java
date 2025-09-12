@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Jonas Schaub <jonas.schaub@uni-jena.de>
+ * Copyright (c) 2025 Jonas Schaub <jonas.schaub@uni-jena.de>
  *                    Achim Zielesny <achim.zielesny@w-hs.de>
  *                    Christoph Steinbeck <christoph.steinbeck@uni-jena.de>
  *                    Maria Sorokina <>
@@ -341,7 +341,7 @@ public class SugarRemovalUtility {
      * connected to another aliphatic carbon atom via a single bond. The oxygen
      * atom must not be in a ring to avoid breaking circular sugars.
      */
-    protected static final SmartsPattern ESTER_SMARTS_PATTERN = SmartsPattern.create("[C](=O)-[O!R]-[C]");
+    public static final String ESTER_SMARTS_PATTERN = "[C](=O)-[O!R]-[C]";
 
     /**
      * Daylight SMARTS pattern for matching ether bonds between linear sugars.
@@ -351,7 +351,7 @@ public class SugarRemovalUtility {
      * breaking circular sugars. This pattern also matches ester bonds which is
      * why esters must be detected and processed before ethers.
      */
-    protected static final SmartsPattern ETHER_SMARTS_PATTERN = SmartsPattern.create("[C]-[O!R]-[C]");
+    public static final String ETHER_SMARTS_PATTERN = "[C]-[O!R]-[C]";
 
     /**
      * Daylight SMARTS pattern for matching peroxide bonds between linear
@@ -361,7 +361,7 @@ public class SugarRemovalUtility {
      * tough it is highly unlikely for a peroxide bond to be in a ring, every
      * ring should be preserved.
      */
-    protected static final SmartsPattern PEROXIDE_SMARTS_PATTERN = SmartsPattern.create("[C]-[O!R]-[O!R]-[C]");
+    public static final String PEROXIDE_SMARTS_PATTERN = "[C]-[O!R]-[O!R]-[C]";
 
     /**
      * Logger of this class.
@@ -2137,7 +2137,7 @@ public class SugarRemovalUtility {
         //alternative ideas: SMARTS or matching the biggest patterns first and exclude the matched atoms
         if (!sugarCandidates.isEmpty()) {
             sugarCandidates = this.combineOverlappingCandidates(sugarCandidates);
-            sugarCandidates = this.splitEtherEsterAndPeroxideBonds(sugarCandidates);
+            sugarCandidates = this.splitEtherEsterAndPeroxideBondsExtraction(sugarCandidates);
             this.removeAtomsOfCircularSugarsFromCandidates(sugarCandidates, moleculeParam);
         }
         if (!this.detectLinearSugarsInRingsSetting && !sugarCandidates.isEmpty()) {
@@ -2209,13 +2209,17 @@ public class SugarRemovalUtility {
             boolean isTooSmall = this.isTooSmallToPreserve(component);
             if (isTooSmall) {
                 //note: careful with removing things from sets/lists while
-                // iterating over it! But here it is ok because elements
-                // are not removed from the same set that is iterated
-                for (IAtom atom : component.atoms()) {
+                // iterating over it! Here, using the iterator caused issues,
+                // even though elements are not removed from the same set that is iterated
+                for (int j = 0; j < component.getAtomCount(); j++) {
+                    IAtom atom = component.getAtom(j);
                     //check to avoid exceptions
                     if (moleculeParam.contains(atom)) {
                         moleculeParam.removeAtom(atom);
+                    } else {
+                        continue;
                     }
+                    j = j - 1;
                 }
             }
         }
@@ -2296,7 +2300,7 @@ public class SugarRemovalUtility {
         }
 
         boolean isTerminal;
-        IAtomContainer moleculeCopy = this.copy(parentMolecule);
+        IAtomContainer moleculeCopy = this.basicCopy(parentMolecule);
         if (!ConnectivityChecker.isConnected(moleculeCopy)) {
             //since we are using isConnected() to determine whether the substructure
             // is terminal, the structure to start with needs to be connected; if
@@ -2500,7 +2504,7 @@ public class SugarRemovalUtility {
      * @param molecule atom container to copy
      * @return basic copy of the molecule
      */
-    protected IAtomContainer copy(IAtomContainer molecule) {
+    protected IAtomContainer basicCopy(IAtomContainer molecule) {
         IAtomContainer copy = molecule.getBuilder().newInstance(IAtomContainer.class);
         if (molecule.isEmpty()) {
             return copy;
@@ -2916,7 +2920,7 @@ public class SugarRemovalUtility {
         }
 
         boolean isMoleculeEmptyAfterRemoval;
-        IAtomContainer moleculeCopy = this.copy(moleculeParam);
+        IAtomContainer moleculeCopy = this.basicCopy(moleculeParam);
         float loadFactor = 0.75f;
         int indexToAtomMapInitCapacity = (int)(moleculeCopy.getAtomCount() * (1.0f / loadFactor) + 2.0f);
         HashMap<Integer, IAtom> indexToAtomMap = new HashMap<>(indexToAtomMapInitCapacity, loadFactor);
@@ -3129,7 +3133,7 @@ public class SugarRemovalUtility {
      * @return a new list of candidates where all ether, ester, and peroxide
      *         bonds have been split and disconnected candidates separated
      */
-    protected List<IAtomContainer> splitEtherEsterAndPeroxideBonds(List<IAtomContainer> candidateList) {
+    protected List<IAtomContainer> splitEtherEsterAndPeroxideBondsExtraction(List<IAtomContainer> candidateList) {
         if (candidateList == null ||candidateList.isEmpty()) {
             return new ArrayList<>(0);
         }
@@ -3144,7 +3148,7 @@ public class SugarRemovalUtility {
             // the ether pattern also matches esters
             //note 2: here, which bond is removed is specifically defined. This
             // is not the case for the ether
-            Mappings esterMappings = SugarRemovalUtility.ESTER_SMARTS_PATTERN.matchAll(candidate).uniqueAtoms();
+            Mappings esterMappings = SmartsPattern.create(SugarRemovalUtility.ESTER_SMARTS_PATTERN).matchAll(candidate).uniqueAtoms();
             if (esterMappings.atLeast(1)) {
                 for (IAtomContainer esterGroup : esterMappings.toSubstructures()) {
                     IAtom doubleBondedOxygen = null;
@@ -3166,7 +3170,7 @@ public class SugarRemovalUtility {
 
             //note: which bond is actually removed is 'pseudo-random', i.e. not
             // predictable by a human
-            Mappings etherMappings = SugarRemovalUtility.ETHER_SMARTS_PATTERN.matchAll(candidate).uniqueAtoms();
+            Mappings etherMappings = SmartsPattern.create(SugarRemovalUtility.ETHER_SMARTS_PATTERN).matchAll(candidate).uniqueAtoms();
             if (etherMappings.atLeast(1)) {
                 for (IAtomContainer etherGroup : etherMappings.toSubstructures()) {
                     IAtom carbon1 = null;
@@ -3185,7 +3189,7 @@ public class SugarRemovalUtility {
                 }
             }
 
-            Mappings peroxideMappings = SugarRemovalUtility.PEROXIDE_SMARTS_PATTERN.matchAll(candidate).uniqueAtoms();
+            Mappings peroxideMappings = SmartsPattern.create(SugarRemovalUtility.PEROXIDE_SMARTS_PATTERN).matchAll(candidate).uniqueAtoms();
             if (peroxideMappings.atLeast(1)) {
                 for (IAtomContainer peroxideGroup : peroxideMappings.toSubstructures()) {
                     IAtom oxygen1 = null;
