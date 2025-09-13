@@ -16,25 +16,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.atomtype;
+package org.openscience.cdk.io;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
@@ -50,29 +48,14 @@ import java.util.Objects;
  */
 class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
 
-    @Disabled
-    @Test
-    void testPDBfiles() throws Exception {
-        final String DIRNAME = "data/pdb/";
-        String[] testFiles = {"114D.pdb", "1CRN.pdb", "1D66.pdb", "1IHA.pdb", "1PN8.pdb",};
-        int tested = 0;
-        int failed = 0;
-        ISimpleChemObjectReader reader = new PDBReader();
-        for (String testFile : testFiles) {
-            TestResults results = testFile(DIRNAME, testFile, reader);
-            tested += results.tested;
-            failed += results.failed;
-        }
-        Assertions.assertEquals(tested, (tested - failed), "Could not match all atom types!");
-    }
 
     @Test
     void testMOL2files() throws Exception {
-        final String DIRNAME = "data/mol2/";
+        final String DIRNAME = "org/openscience/cdk/io/";
         String[] testFiles = {"fromWebsite.mol2",};
         int tested = 0;
         int failed = 0;
-        ISimpleChemObjectReader reader = new PDBReader();
+        ISimpleChemObjectReader reader = new Mol2Reader();
         for (String testFile : testFiles) {
             TestResults results = testFile(DIRNAME, testFile, reader);
             tested += results.tested;
@@ -83,11 +66,11 @@ class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
 
     @Test
     void testASNfiles() throws Exception {
-        final String DIRNAME = "data/asn/pubchem/";
+        final String DIRNAME = "org/openscience/cdk/io/";
         String[] testFiles = {"cid1.asn",};
         int tested = 0;
         int failed = 0;
-        ISimpleChemObjectReader reader = new PDBReader();
+        ISimpleChemObjectReader reader = new PCCompoundASNReader();
         for (String testFile : testFiles) {
             TestResults results = testFile(DIRNAME, testFile, reader);
             tested += results.tested;
@@ -100,7 +83,7 @@ class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
     // them all locally for now and perhaps replace with an SDF
     @Test
     void testMDLMolfiles() throws Exception {
-        final String DIRNAME = "data/mdl/";
+        final String DIRNAME = "org/openscience/cdk/io/";
         String[] testFiles = {"2,5-dimethyl-furan.mol", "5SD.mol", "9553.mol", "9554.mol", "ADN.mol", "allmol231.mol",
                 "allmol232.mol", "a-pinene.mol", "azulene.mol", "big.mol", "BremserPredictionTest.mol",
                 "bug1014344-1.mol", "bug1089770-1.mol", "bug1089770-2.mol", "bug1328739.mol", "bug_1750968.mol",
