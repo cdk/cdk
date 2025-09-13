@@ -22,14 +22,25 @@
  *  */
 package org.openscience.cdk.io.cml;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.smiles.InvPair;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -952,5 +963,60 @@ class CML2Test extends CDKTestCase {
         IReaction reaction = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 
         Assertions.assertEquals("3", reaction.getProperty("Ka"));
+    }
+
+    /**
+     * @cdk.bug 1014344
+     */
+    @Test
+    void testStabilityAfterRoundtrip() throws Exception {
+        String filename = "bug1014344-1.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins, IChemObjectReader.Mode.STRICT);
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+        addImplicitHydrogens(mol1);
+        StringWriter output = new StringWriter();
+        CMLWriter cmlWriter = new CMLWriter(output);
+        cmlWriter.write(mol1);
+        CMLReader cmlreader = new CMLReader(new ByteArrayInputStream(output.toString().getBytes()));
+        IAtomContainer mol2 = ((IChemFile) cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0)
+                                                                          .getMoleculeSet().getAtomContainer(0);
+        addImplicitHydrogens(mol2);
+
+        CanonicalLabeler labeler = new CanonicalLabeler();
+        labeler.canonLabel(mol1);
+        labeler.canonLabel(mol2);
+        Iterator<IAtom> atoms1 = mol1.atoms().iterator();
+        Iterator<IAtom> atoms2 = mol2.atoms().iterator();
+        while (atoms1.hasNext()) {
+            IAtom atom1 = atoms1.next();
+            IAtom atom2 = atoms2.next();
+            Assertions.assertEquals(atom1.<Long>getProperty(InvPair.CANONICAL_LABEL), atom2.<Long>getProperty(InvPair.CANONICAL_LABEL));
+        }
+    }
+
+    /**
+     * @cdk.bug 1014344
+     */
+    @Tag("SlowTest")
+    // MDL -> CML (slow) -> SMILES round tripping
+    @Test
+    void testSFBug1014344() throws Exception {
+        String filename = "org/openscience/cdk/cml/bug1014344-1.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins, IChemObjectReader.Mode.STRICT);
+        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+        addImplicitHydrogens(mol1);
+        SmilesGenerator sg = new SmilesGenerator();
+        String molSmiles = sg.create(mol1);
+        StringWriter output = new StringWriter();
+        CMLWriter cmlWriter = new CMLWriter(output);
+        cmlWriter.write(mol1);
+        CMLReader cmlreader = new CMLReader(new ByteArrayInputStream(output.toString().getBytes()));
+        IAtomContainer mol2 = ((IChemFile) cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0)
+                                                                          .getMoleculeSet().getAtomContainer(0);
+        addImplicitHydrogens(mol2);
+        String cmlSmiles = sg.create(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, mol2));
+        Assertions.assertEquals(molSmiles, cmlSmiles);
     }
 }

@@ -19,30 +19,19 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.Iterator;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.ChemFile;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -108,35 +97,6 @@ class CanonicalLabelerTest extends CDKTestCase {
         Assertions.assertEquals(3, ((Long) molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
         Assertions.assertEquals(4, ((Long) molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
         Assertions.assertEquals(5, ((Long) molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-    }
-
-    /**
-     * @cdk.bug 1014344
-     */
-    @Test
-    void testStabilityAfterRoundtrip() throws Exception {
-        String filename = "bug1014344-1.mol";
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins, Mode.STRICT);
-        IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
-        addImplicitHydrogens(mol1);
-        StringWriter output = new StringWriter();
-        CMLWriter cmlWriter = new CMLWriter(output);
-        cmlWriter.write(mol1);
-        CMLReader cmlreader = new CMLReader(new ByteArrayInputStream(output.toString().getBytes()));
-        IAtomContainer mol2 = ((IChemFile) cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0)
-                .getMoleculeSet().getAtomContainer(0);
-        addImplicitHydrogens(mol2);
-
-        labeler.canonLabel(mol1);
-        labeler.canonLabel(mol2);
-        Iterator<IAtom> atoms1 = mol1.atoms().iterator();
-        Iterator<IAtom> atoms2 = mol2.atoms().iterator();
-        while (atoms1.hasNext()) {
-            IAtom atom1 = atoms1.next();
-            IAtom atom2 = atoms2.next();
-            Assertions.assertEquals(atom1.<Long>getProperty(InvPair.CANONICAL_LABEL), atom2.<Long>getProperty(InvPair.CANONICAL_LABEL));
-        }
     }
 
     /**
