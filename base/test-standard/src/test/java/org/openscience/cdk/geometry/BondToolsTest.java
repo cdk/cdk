@@ -22,6 +22,8 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -30,8 +32,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
+import javax.vecmath.Point3d;
 
 /**
  */
@@ -90,22 +93,26 @@ class BondToolsTest extends CDKTestCase {
     }
 
     /**
-     * Make sure the the rebonding is working.
+     * Make sure the rebonding is working.
      */
     @Test
     void testCloseEnoughToBond_IAtom_IAtom_double() throws Exception {
-        String filename = "viagra.xyz";
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        XYZReader reader = new XYZReader(ins);
-        AtomTypeFactory atf = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
-                SilentChemObjectBuilder.getInstance());
-        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
-        IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        for (IAtom iAtom : mol.atoms()) {
-            atf.configure(iAtom);
-        }
-        Assertions.assertTrue(BondTools.closeEnoughToBond(mol.getAtom(0), mol.getAtom(1), 1));
-        Assertions.assertFalse(BondTools.closeEnoughToBond(mol.getAtom(0), mol.getAtom(8), 1));
+        // file: viagra.xyz atom (0,1,2,8)
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+
+        IAtom a = builder.newAtom(); // atom 0
+        IAtom b = builder.newAtom(); // atom 1
+        IAtom c = builder.newAtom(); // atom 8
+        a.setCovalentRadius(0.75);
+        a.setPoint3d(new Point3d(-3.4932, -1.895, 0.1795));
+        b.setCovalentRadius(0.77);
+        b.setPoint3d(new Point3d(-4.9343, -1.8728, 0.3721));
+        c.setCovalentRadius(0.78);
+        c.setPoint3d(new Point3d(-3.0459, -1.5296, 2.7325));
+
+
+        Assertions.assertTrue(BondTools.closeEnoughToBond(a, b, 1));
+        Assertions.assertFalse(BondTools.closeEnoughToBond(a, c, 1));
     }
 
     @Test
