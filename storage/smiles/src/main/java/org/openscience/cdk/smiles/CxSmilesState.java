@@ -65,6 +65,7 @@ final class CxSmilesState {
     static class CxSgroup {
         final Set<CxSgroup> children = new HashSet<>();
         List<Integer> atoms = new ArrayList<>();
+        List<Integer> bonds = new ArrayList<>();
         int id = -1;
     }
 
