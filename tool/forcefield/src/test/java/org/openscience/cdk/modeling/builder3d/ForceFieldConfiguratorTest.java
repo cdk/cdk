@@ -31,6 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -291,6 +292,13 @@ class ForceFieldConfiguratorTest {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
         IAtomContainer bugmol = parser.parseSmiles(smiles);
+
+        // clear ring flags
+        for (IAtom atom : bugmol.atoms())
+            atom.setIsInRing(false);
+        for (IBond bond : bugmol.bonds())
+            bond.setIsInRing(false);
+
         forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
         IAtom nitrogen1 = bugmol.getAtom(2);
         HOSECodeGenerator hscodegen = new HOSECodeGenerator(HOSECodeGenerator.LEGACY_MODE);
