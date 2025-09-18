@@ -135,7 +135,12 @@ final class CxSmilesState {
             this.type = type;
             this.atoms = new ArrayList<>(atomset);
             this.subscript = subscript;
-            this.supscript = supscript;
+            if (supscript.isEmpty() &&
+                !type.equals("c") && !type.equals("mix") &&
+                !type.equals("f") && !type.equals("mod"))
+                this.supscript = "eu";
+            else
+                this.supscript = supscript;
         }
 
         @Override
