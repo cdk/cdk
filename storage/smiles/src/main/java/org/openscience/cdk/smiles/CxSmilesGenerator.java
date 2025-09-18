@@ -351,7 +351,8 @@ public class CxSmilesGenerator {
                 if (cxPolymerSgroup.subscript != null)
                     sb.append(cxPolymerSgroup.subscript);
                 sb.append(':');
-                if (cxPolymerSgroup.supscript != null)
+                if (cxPolymerSgroup.supscript != null &&
+                    !cxPolymerSgroup.supscript.equals("eu"))
                     sb.append(cxPolymerSgroup.supscript.toLowerCase(Locale.ROOT));
             }
         }
