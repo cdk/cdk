@@ -305,34 +305,35 @@ final class CxSmilesParser {
             return false;
 
 
-        String subscript;
-        String supscript;
+        String subscript = "n";
+        String supscript = "";
 
-        if (!iter.nextIf(':'))
-            return false;
+        if (!iter.nextIf(':')) {
+            state.mysgroups.add(new CxSmilesState.CxPolymerSgroup(keyword, atomset, subscript, supscript));
+            return true;
+        }
 
         // "If the subscript equals the keyword of the Sgroup this field can be empty", ergo
         // if omitted it equals the keyword
         beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
+
         subscript = unescape(iter.substr(beg, iter.pos));
         if (subscript.isEmpty())
             subscript = keyword;
 
         // "In the superscript only connectivity and flip information is allowed.", default
         // appears to be "eu" either/unspecified for SRU
-        if (!iter.nextIf(':'))
-            return false;
+        if (!iter.nextIf(':')) {
+            state.mysgroups.add(new CxSmilesState.CxPolymerSgroup(keyword, atomset, subscript, supscript));
+            return true;
+        }
+
         beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
         supscript = unescape(iter.substr(beg, iter.pos));
-        if (supscript.isEmpty() &&
-            !keyword.equals("c")&&!keyword.equals("mix")&&
-            !keyword.equals("f")&&!keyword.equals("mod"))
-            supscript = "eu";
-
         if (iter.nextIf(',') || iter.curr() == '|') {
             state.mysgroups.add(new CxSmilesState.CxPolymerSgroup(keyword, atomset, subscript, supscript));
             return true;
