@@ -395,27 +395,33 @@ final class CxSmilesParser {
     private static boolean processLinkNode(CharIter iter, CxSmilesState state) {
         if (state.mysgroups == null)
             state.mysgroups = new ArrayList<>();
-        final int aidx = processUnsignedInt(iter);
-        if (aidx < 0)
-            return false;
-        if (!iter.nextIf(':'))
-            return false;
-        List<Integer> vals = new ArrayList<>(4);
-        if (!processIntList(iter, DOT_SEPARATOR, vals))
-            return false;
-        if (vals.size() < 2)
-            return false;
-        int lowerBound = vals.get(0);
-        int upperBound = vals.get(1);
-        CxSmilesState.CxPolymerSgroup sgroup = new CxSmilesState.CxPolymerSgroup("n",
-                                                                                 Collections.singletonList(aidx),
-                                                                                 lowerBound + "-" + upperBound,
-                                                                                 "ht");
-        for (int i=2; i<vals.size(); i++) {
-            sgroup.bonds.add(vals.get(i));
+        boolean result = false;
+        while (iter.hasNext()) {
+            final int aidx = processUnsignedInt(iter);
+            if (aidx < 0)
+                return result;
+            if (!iter.nextIf(':'))
+                return false;
+            List<Integer> vals = new ArrayList<>(4);
+            if (!processIntList(iter, DOT_SEPARATOR, vals))
+                return false;
+            if (vals.size() < 2)
+                return false;
+            int lowerBound = vals.get(0);
+            int upperBound = vals.get(1);
+            CxSmilesState.CxPolymerSgroup sgroup = new CxSmilesState.CxPolymerSgroup("n",
+                                                                                     Collections.singletonList(aidx),
+                                                                                     lowerBound + "-" + upperBound,
+                                                                                     "ht");
+            for (int i = 2; i < vals.size(); i++) {
+                sgroup.bonds.add(vals.get(i));
+            }
+            state.mysgroups.add(sgroup);
+            result = true;
+
+            iter.nextIf(',');
         }
-        state.mysgroups.add(sgroup);
-        return true;
+        return result;
     }
 
     private static boolean processWedges(CharIter iter, CxSmilesState state, IBond.Display display) {
