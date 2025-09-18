@@ -806,6 +806,7 @@ public final class SmilesParser {
                     sgroupAtoms.add(atom);
                 }
 
+
                 if (mol == null)
                     continue;
 
@@ -864,6 +865,8 @@ public final class SmilesParser {
                     }
                     for (IAtom atom : sgroupAtoms)
                         sgroup.addAtom(atom);
+                    for (IBond bond : xbonds)
+                        sgroup.addBond(bond);
                 }
 
                 sgroup.setSubscript(psgroup.subscript);
