@@ -497,6 +497,24 @@ class CxSmilesTest {
     }
 
     @Test
+    void testMultipleLinkNode() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("C1NCNC1 |LN:2:1.3,3:1.4|");
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C1NCNC1 |Sg:n:2:1-3:ht,Sg:n:3:1-4:ht|", sg.create(mol));
+    }
+
+    @Test
+    void testLinkNodeAndMore() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("C1NCNC1 |LN:2:1.3,$R1$|");
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("*1NCNC1 |$R1$,Sg:n:2:1-3:ht|", sg.create(mol));
+    }
+
+    @Test
     void testLinkNodeWithAttachedAtoms() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
