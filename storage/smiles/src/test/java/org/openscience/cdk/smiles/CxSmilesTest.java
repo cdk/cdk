@@ -534,6 +534,6 @@ class CxSmilesTest {
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("C1NCNC1 |Sg:n:2|");
         SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default);
-        Assertions.assertEquals("C1NCNC1 |Sg:n:2:n:eu|", sg.create(mol));
+        Assertions.assertEquals("C1NCNC1 |Sg:n:2:n:|", sg.create(mol));
     }
 }
