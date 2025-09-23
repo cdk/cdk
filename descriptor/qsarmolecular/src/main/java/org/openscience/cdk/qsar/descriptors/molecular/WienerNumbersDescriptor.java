@@ -35,27 +35,18 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * This descriptor calculates the Wiener numbers. This includes the Wiener Path number
  * and the Wiener Polarity Number.
- * <BR>
- * Further information is given in
- * Wiener path number: half the sum of all the distance matrix entries; Wiener
- * polarity number: half the sum of all the distance matrix entries with a
- * value of 3. For more information see {@cdk.cite Wiener1947,TOD2000}.
+ * <br>Further information is given in <a href="https://doi.org/10.1021/ja01193a005">Wiener, H. (1947) "Structural Determination of Paraffin Boiling Points"</a>.
+ * <br>Wiener path number (WPATH): half the sum of all the distance matrix entries
+ * <br>Wiener polarity number (WPOL): half the sum of all the distance matrix entries with a
+ * value of 3
  * <p>
  * This descriptor uses no parameters.
  * <p>
  * This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b>
  * or <b>explicit hydrogens</b>.
  *
- * Returns the  following values
- * <ol>
- * <li>WPATH - weiner path number
- * <li>WPOL - weiner polarity number
- * </ol>
- *
- * <p>This descriptor does not have any parameters.
- *
  * @author         mfe4
- * @cdk.created        December 7, 2004
+ * @cdk.created    December 7, 2004
  * @cdk.created    2004-11-03
  * @cdk.dictref    qsar-descriptors:wienerNumbers
  * @cdk.keyword    Wiener number
@@ -64,22 +55,17 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
 
     private static final String[] NAMES            = {"WPATH", "WPOL"};
 
-    double[][]                    matr             = null;
-    DoubleArrayResult             wienerNumbers    = null;
-    ConnectionMatrix              connectionMatrix = new ConnectionMatrix();
-    AtomContainerManipulator      atm              = new AtomContainerManipulator();
-
     /**
-     *  Constructor for the WienerNumbersDescriptor object.
+     * Constructor for the WienerNumbersDescriptor object (does nothing since there are no parameters).
      */
     public WienerNumbersDescriptor() {
-
+        //nothing to do
     }
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
      * is implemented by this class.
-     *
+     * <p></p>
      * These fields are used in the map:
      * <ul>
      * <li>Specification-Reference: refers to an entry in a unique dictionary
@@ -99,13 +85,13 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
     }
 
     /**
-     *  Sets the parameters attribute of the WienerNumbersDescriptor object.
+     * Sets the parameters attribute of the WienerNumbersDescriptor object.
+     * <p></p>
+     * This descriptor does not take any parameters.
      *
-     *  This descriptor does not take any parameters
-     *
-     *@param  params            The new parameters value
-     *@exception  CDKException  This method will not throw any exceptions
-    *@see #getParameters
+     * @param  params            The new parameters value
+     * @exception  CDKException  This method will not throw any exceptions
+     * @see #getParameters
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -113,12 +99,12 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
     }
 
     /**
-     *  Gets the parameters attribute of the WienerNumbersDescriptor object.
+     * Gets the parameters attribute of the WienerNumbersDescriptor object.
+     * <p></p>
+     * This descriptor does not return any parameters.
      *
-     *  This descriptor does not return any parameters
-     *
-     *@return    The parameters value
-     *@see #setParameters
+     * @return The parameters value (null in this case)
+     * @see #setParameters
      */
     @Override
     public Object[] getParameters() {
@@ -135,15 +121,15 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      * Calculate the Wiener numbers.
      *
      *@param  atomContainer   The {@link IAtomContainer} for which this descriptor is to be calculated
-     *@return wiener numbers as array of 2 doubles
+     *@return Wiener numbers as array of 2 doubles
      */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
-        wienerNumbers = new DoubleArrayResult(2);
+        DoubleArrayResult wienerNumbers = new DoubleArrayResult(2);
         double wienerPathNumber = 0; //wienerPath
         double wienerPolarityNumber = 0; //wienerPol
 
-        matr = ConnectionMatrix.getMatrix(AtomContainerManipulator.removeHydrogens(atomContainer));
+        double[][] matr = ConnectionMatrix.getMatrix(AtomContainerManipulator.removeHydrogens(atomContainer));
         int[][] distances = PathTools.computeFloydAPSP(matr);
 
         int partial;
@@ -167,7 +153,7 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
+     * <p></p>
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
@@ -182,11 +168,11 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
     }
 
     /**
-     *  Gets the parameterNames attribute of the WienerNumbersDescriptor object.
+     * Gets the parameterNames attribute of the WienerNumbersDescriptor object.
+     * <p></p>
+     * This descriptor does not return any parameters.
      *
-     * This descriptor does not return any parameters
-     *
-     *@return    The parameterNames value
+     * @return The parameterNames value (null in this case)
      */
     @Override
     public String[] getParameterNames() {
@@ -195,10 +181,10 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
     }
 
     /**
-     *  Gets the parameterType attribute of the WienerNumbersDescriptor object.
+     * Gets the parameterType attribute of the WienerNumbersDescriptor object.
      *
-     *@param  name  Description of the Parameter
-     *@return       An Object of class equal to that of the parameter being requested
+     * @param  name  Description of the Parameter
+     * @return       An Object of class equal to that of the parameter being requested (always null here)
      */
     @Override
     public Object getParameterType(String name) {
