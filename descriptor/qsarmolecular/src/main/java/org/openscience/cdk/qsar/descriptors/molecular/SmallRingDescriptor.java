@@ -76,15 +76,6 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
             "nRings3", "nRings4", "nRings5", "nRings6", "nRings7", "nRings8", "nRings9" // individual breakdown of small rings
                                         };
 
-    private IAtomContainer        mol;
-    private int[][]               atomAdj, bondAdj; // precalculated adjacencies
-    private int[]                 ringBlock;       // ring block identifier; 0=not in a ring
-    private int[][]               smallRings;      // all rings of size 3 through 7
-    private int[]                 bondOrder;       // numeric bond order for easy reference
-    private boolean[]             bondArom; // aromaticity precalculated
-    private boolean[]             piAtom;            // true for all atoms involved in a double bond
-    private int[]                 implicitH;         // hydrogens in addition to those encoded
-
     public SmallRingDescriptor() {}
 
     @Override
@@ -155,13 +146,28 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
      */
     @Override
     public DescriptorValue calculate(IAtomContainer mol) {
-        this.mol = mol;
-        excavateMolecule();
+        // build up an index-based neighbour/edge graph
+        // precalculated adjacencies
+        int[][] atomAdj = new int[mol.getAtomCount()][];
+        int[][] bondAdj = new int[mol.getAtomCount()][];
+        // numeric bond order for easy reference
+        int[] bondOrder = new int[mol.getBondCount()];
+        // hydrogens in addition to those encoded
+        int [] implicitH = new int[mol.getAtomCount()];
+        // ring block identifier; 0=not in a ring
+        int[] ringBlock = new int[mol.getAtomCount()];
+        int[][] smallRings = excavateMolecule(mol, atomAdj, bondAdj, bondOrder, implicitH, ringBlock);
+
+        // true for all atoms involved in a double bond
+        boolean[] piAtom = new boolean[mol.getAtomCount()];
+        boolean[] bondArom = new boolean[mol.getBondCount()];
+        detectStrictAromaticity(mol, piAtom, bondArom, smallRings, bondOrder, atomAdj, bondAdj);
+        detectRelaxedAromaticity(mol, piAtom, bondArom, smallRings, implicitH, bondOrder, atomAdj, bondAdj);
 
         int nSmallRings = smallRings.length;
         int nAromRings = 0;
         int nRingBlocks = 0;
-        int nAromBlocks = countAromaticComponents();
+        int nAromBlocks = countAromaticComponents(mol, bondArom, atomAdj, bondAdj);
         int nRings3 = 0, nRings4 = 0, nRings5 = 0, nRings6 = 0, nRings7 = 0, nRings8 = 0, nRings9 = 0;
 
         // count up the rings individually
@@ -183,7 +189,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
 
             boolean aromatic = true;
             for (int n = 0; n < r.length; n++)
-                if (!bondArom[findBond(r[n], r[n < sz - 1 ? n + 1 : 0])]) {
+                if (!bondArom[findBond(r[n], r[n < sz - 1 ? n + 1 : 0], atomAdj, bondAdj)]) {
                     aromatic = false;
                     break;
                 }
@@ -210,13 +216,9 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     }
 
     // analyze the molecule graph, and build up the desired properties
-    private void excavateMolecule() {
-        final int na = mol.getAtomCount(), nb = mol.getBondCount();
+    private int[][] excavateMolecule(IAtomContainer mol, int[][] atomAdj, int[][] bondAdj, int[] bondOrder, int[] implicitH, int[] ringBlock) {
+        final int na = mol.getAtomCount();
 
-        // build up an index-based neighbour/edge graph
-        atomAdj = new int[na][];
-        bondAdj = new int[na][];
-        bondOrder = new int[nb];
         for (int n = 0; n < mol.getBondCount(); n++) {
             IBond bond = mol.getBond(n);
             if (bond.getAtomCount() != 2) continue; // biconnected bonds only
@@ -242,7 +244,6 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
             }
 
         // calculate implicit hydrogens, using a very conservative formula
-        implicitH = new int[na];
         final String[] HYVALENCE_EL = {"C", "N", "O", "S", "P"};
         final int[] HYVALENCE_VAL = {4, 3, 2, 2, 3};
         for (int n = 0; n < na; n++) {
@@ -264,7 +265,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
             implicitH[n] = Math.max(0, hy);
         }
 
-        markRingBlocks();
+        markRingBlocks(mol, atomAdj, ringBlock);
 
         ArrayList<int[]> rings = new ArrayList<>();
         for (int rsz = 3; rsz <= 7; rsz++) {
@@ -272,19 +273,18 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
             for (int n = 0; n < na; n++)
                 if (ringBlock[n] > 0) {
                     path[0] = n;
-                    recursiveRingFind(path, 1, rsz, ringBlock[n], rings);
+                    recursiveRingFind(path, 1, rsz, ringBlock[n], rings, atomAdj, ringBlock);
                 }
         }
-        smallRings = rings.toArray(new int[rings.size()][]);
+        // all rings of size 3 through 7
+        int[][] smallRings = rings.toArray(new int[rings.size()][]);
 
-        detectStrictAromaticity();
-        detectRelaxedAromaticity();
+        return smallRings;
     }
 
     // assign a ring block ID to each atom (0=not in ring)
-    private void markRingBlocks() {
+    private void markRingBlocks(IAtomContainer mol, int[][] atomAdj, int[] ringBlock) {
         final int na = mol.getAtomCount();
-        ringBlock = new int[na];
 
         boolean[] visited = new boolean[na];
 
@@ -351,7 +351,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     }
 
     // hunt for ring recursively: start with a partially defined path, and go exploring
-    private void recursiveRingFind(int[] path, int psize, int capacity, int rblk, ArrayList<int[]> rings) {
+    private void recursiveRingFind(int[] path, int psize, int capacity, int rblk, ArrayList<int[]> rings, int[][] atomAdj, int[] ringBlock) {
         // not enough atoms yet, so look for new possibilities
         if (psize < capacity) {
             int last = path[psize - 1];
@@ -369,7 +369,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
                     if (psize >= 0)
                         System.arraycopy(path, 0, newPath, 0, psize);
                     newPath[psize] = adj;
-                    recursiveRingFind(newPath, psize + 1, capacity, rblk, rings);
+                    recursiveRingFind(newPath, psize + 1, capacity, rblk, rings, atomAdj, ringBlock);
                 }
             }
             return;
@@ -427,14 +427,11 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     // aromaticity detection: uses a very narrowly defined algorithm, which detects 6-membered rings with alternating double bonds;
     // rings that are chained together (e.g. anthracene) will also be detected by the extended followup; note that this will NOT mark
     // rings such as thiophene, imidazolium, porphyrins, etc.: these systems will be left in their original single/double bond form
-    private void detectStrictAromaticity() {
-        final int na = mol.getAtomCount(), nb = mol.getBondCount();
-        bondArom = new boolean[nb];
+    private void detectStrictAromaticity(IAtomContainer mol, boolean[] piAtom, boolean[] bondArom, int[][] smallRings, int[] bondOrder, int[][] atomAdj, int[][] bondAdj) {
 
         if (smallRings.length == 0) return;
 
-        piAtom = new boolean[na];
-        for (int n = 0; n < nb; n++)
+        for (int n = 0; n < mol.getBondCount(); n++)
             if (bondOrder[n] == 2) {
                 IBond bond = mol.getBond(n);
                 piAtom[mol.indexOf(bond.getBegin())] = true;
@@ -451,7 +448,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
                         consider = false;
                         break;
                     }
-                    int b = findBond(a, r[n == 5 ? 0 : n + 1]);
+                    int b = findBond(a, r[n == 5 ? 0 : n + 1], atomAdj, bondAdj);
                     if (bondOrder[b] != 1 && bondOrder[b] != 2) {
                         consider = false;
                         break;
@@ -469,7 +466,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
                 int[] r = maybe.get(n);
                 boolean phase1 = true, phase2 = true; // has to go 121212 or 212121; already arom=either is OK
                 for (int i = 0; i < 6; i++) {
-                    int b = findBond(r[i], r[i == 5 ? 0 : i + 1]);
+                    int b = findBond(r[i], r[i == 5 ? 0 : i + 1], atomAdj, bondAdj);
                     if (bondArom[b]) continue; // valid for either phase
                     phase1 = phase1 && bondOrder[b] == (2 - (i & 1));
                     phase2 = phase2 && bondOrder[b] == (1 + (i & 1));
@@ -478,7 +475,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
 
                 // the ring is deemed aromatic: mark the flags and remove from the maybe list
                 for (int i = 0; i < r.length; i++) {
-                    bondArom[findBond(r[i], r[i == 5 ? 0 : i + 1])] = true;
+                    bondArom[findBond(r[i], r[i == 5 ? 0 : i + 1], atomAdj, bondAdj)] = true;
                 }
                 maybe.remove(n);
                 anyChange = true;
@@ -489,7 +486,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     }
 
     // supplement the original 'strict' definition of aromaticity with a more inclusive kind, which includes lone pairs
-    private void detectRelaxedAromaticity() {
+    private void detectRelaxedAromaticity(IAtomContainer mol, boolean[] piAtom, boolean[] bondArom, int[][] smallRings, int[] implicitH, int[] bondOrder, int[][] atomAdj, int[][] bondAdj) {
         final int na = mol.getAtomCount(), nb = mol.getBondCount();
 
         final int[] ELEMENT_BLOCKS = {0, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 3, 3, 3, 3, 3, 3,
@@ -526,7 +523,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
                         isInvalid = true;
                         break;
                     }
-                    int b = findBond(r[n], r[n < r.length - 1 ? n + 1 : 0]);
+                    int b = findBond(r[n], r[n < r.length - 1 ? n + 1 : 0], atomAdj, bondAdj);
                     int bo = bondOrder[b];
                     if (bo != 1 && bo != 2) {
                         isInvalid = true;
@@ -546,8 +543,8 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
                 int pairs = 0, maybe = 0;
                 for (int i = 0; i < r.length; i++) {
                     int a = r[i];
-                    int b1 = findBond(r[i], r[i < r.length - 1 ? i + 1 : 0]);
-                    int b2 = findBond(r[i], r[i > 0 ? i - 1 : r.length - 1]);
+                    int b1 = findBond(r[i], r[i < r.length - 1 ? i + 1 : 0], atomAdj, bondAdj);
+                    int b2 = findBond(r[i], r[i > 0 ? i - 1 : r.length - 1], atomAdj, bondAdj);
                     if (bondArom[b1])
                         maybe += 2;
                     else if (bondOrder[b1] == 2)
@@ -566,7 +563,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
                 }
                 if (arom) {
                     for (int i = 0; i < r.length; i++) {
-                        int a = r[i], b = findBond(r[i], r[i < r.length - 1 ? i + 1 : 0]);
+                        int a = r[i], b = findBond(r[i], r[i < r.length - 1 ? i + 1 : 0], atomAdj, bondAdj);
                         bondArom[b] = true;
                     }
                     rings.remove(n);
@@ -580,7 +577,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     }
 
     // rebuild the graph using only aromatic bonds, and count the number of non-singleton connected components
-    private int countAromaticComponents() {
+    private int countAromaticComponents(IAtomContainer mol, boolean[] bondArom, int[][] atomAdj, int[][] bondAdj) {
         final int na = mol.getAtomCount();
         int[][] graph = new int[na][];
         for (int n = 0; n < na; n++) {
@@ -631,7 +628,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     }
 
     // convenience: scans the atom adjacency to grab the bond index
-    private int findBond(int a1, int a2) {
+    private int findBond(int a1, int a2, int[][] atomAdj, int[][] bondAdj) {
         for (int n = atomAdj[a1].length - 1; n >= 0; n--)
             if (atomAdj[a1][n] == a2) return bondAdj[a1][n];
         return -1;
