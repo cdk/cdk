@@ -46,20 +46,17 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
+//TODO: what should sub return if have missing fragment? Just report sum for other fragments?
+// Or report as -9999 and then do not use descriptor if have this value for any chemicals in cluster?
 /**
  * This class calculates ALOGP (Ghose-Crippen LogKow) and the
  * Ghose-Crippen molar refractivity {@cdk.cite GHOSE1986,GHOSE1987}.
- *
- * <b>Note</b> The code assumes that aromaticity has been detected before
+ * <p></p>
+ * <b>Note:</b> The code assumes that aromaticity has been detected before
  * evaluating this descriptor. The code also expects that the molecule
  * will have hydrogens explicitly set. For SD files, this is usually not
  * a problem since hydrogens are explicit. But for the case of molecules
  * obtained from SMILES, hydrogens must be made explicit.
- *
- * <p>TODO: what should sub return if have missing fragment?
- * Just report sum for other fragments? Or report as -9999 and
- * then do not use descriptor if have this  value for any
- * chemicals in cluster?
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -74,14 +71,14 @@ import java.util.List;
  *   </tr>
  * </table>
  *
- * Returns three values
+ * Returns three values:
  * <ol>
  * <li>ALogP  - Ghose-Crippen LogKow
- * <li>ALogP2
- * <li>amr  - molar refractivity
+ * <li>ALogP2  - square of ALogP
+ * <li>AMR  - molar refractivity
  * </ol>
  *
- * @author     Todd Martin
+ * @author Todd Martin
  * @cdk.keyword logP
  * @cdk.keyword lipophilicity
  * @cdk.keyword refractivity
@@ -94,7 +91,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(ALOGPDescriptor.class);
 
     /**
-     * coefficients for alogp model.
+     * Coefficients for ALogP model.
      */
     static final double[] FRAGVAL = new double[121];
 
@@ -223,12 +220,12 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     }
 
     /**
-     * coefficients for refractivity model.
+     * Coefficients for refractivity model.
      */
     static final double[] REFRACVAL = new double[121];
 
     static {
-        // fragments for amr from Viswanadhan et al., 1989
+        // fragments for AMR from Viswanadhan et al., 1989
         REFRACVAL[1] = 2.968;
         REFRACVAL[2] = 2.9116;
         REFRACVAL[3] = 2.8028;
@@ -352,8 +349,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     }
 
     /**
+     * This constructor only tries to get an instance of the {@link AtomicProperties} class to check whether the
+     * descriptor can be calculated and throws an exception if that fails.
      *
-     * @throws CDKException
+     * @throws CDKException if the {@link AtomicProperties} instance cannot be accessed
      */
     public ALOGPDescriptor() throws CDKException {
         try {
@@ -377,23 +376,24 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     }
 
     /**
+     * Calculate ALogP, ALogP2, and AMR for a molecule.
      *
-     * @param atomContainer
-     * @param fragment estate fragments for each atom
-     * @param rs
-     * @return
-     * @throws CDKException
+     * @param atomContainer the molecule to calculate the descriptor for
+     * @param fragment EState fragments (EState atom type) for each atom of the molecule
+     * @param rs the ring set of the molecule
+     * @return double[]{alogp, alogp2, amr}
+     * @throws CDKException if the descriptor cannot be calculated
      */
     private double[] calculate(IAtomContainer atomContainer, String[] fragment, IRingSet rs) throws CDKException {
         double alogp  = 0.0;
         double amr = 0.0;
-        double alogp2 = 0.0;
         // counts of each type of fragment in the molecule
         int[] frags = new int[121];
         // alogp fragments for each atom (used to see which atoms have missing fragments)
         int[] alogpfrag = new int[atomContainer.getAtomCount()];
 
         for (int i = 1; i <= 120; i++) {
+            //TODO: why is frags[0] not set?  -> to prevent a shift in the group numbers?
             frags[i] = 0;
         }
 
@@ -439,13 +439,15 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         LOGGER.debug("\nFound fragments and frequencies ");
 
         for (int i = 1; i <= 120; i++) {
+            //TODO: why is frags[0] not set? -> to prevent a shift in the group numbers?
             alogp += FRAGVAL[i] * frags[i];
             amr += REFRACVAL[i] * frags[i];
             if (frags[i] > 0) {
                 LOGGER.debug("frag " + i + "  --> " + frags[i]);
             }
         }
-        alogp2 = alogp * alogp;
+
+        double alogp2 = alogp * alogp;
 
         String unassignedAtoms = this.findUnassignedAtoms(atomContainer, fragment, alogpfrag);
         if (!unassignedAtoms.isEmpty()) {
@@ -453,7 +455,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
 
         return new double[]{alogp, alogp2, amr};
-
     }
 
     private static boolean isHetero(IAtom atom) {
@@ -480,7 +481,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         if (fragment[i].equals("SsCH3")) {
             List<IAtom> ca    = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
             IAtom       atom  = atomContainer.getAtom(i);
-            int         htype = getHAtomType(atom, ca, atomContainer);
+            int         htype = getHAtomType(atom);
             frags[htype] += atom.getImplicitHydrogenCount();
             for (IAtom iAtom : ca) {
                 if (iAtom.getAtomicNumber() == IElement.C) {
@@ -495,7 +496,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 }
             }
         }
-
     }
 
     private void calcGroup002_006_007(int i, IAtomContainer atomContainer, String[] fragment, int[] alogpfrag, int[] frags) {
@@ -505,20 +505,20 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
             IAtom       atom  = atomContainer.getAtom(i);
             List<IAtom> nbors = atomContainer.getConnectedAtomsList(atom);
-            int         htype = getHAtomType(atom, nbors, atomContainer);
+            int         htype = getHAtomType(atom);
             frags[htype] += atom.getImplicitHydrogenCount();
 
             int         carbonCount = 0;
             int         heteroCount = 0;
-            // logger.debug("here");
             for (IAtom nbor : nbors) {
-                if (nbor.getAtomicNumber() == IElement.C)
+                if (nbor.getAtomicNumber() == IElement.C) {
                     carbonCount++;
-                else if (nbor.getAtomicNumber() == IElement.H) {
+                } else if (nbor.getAtomicNumber() == IElement.H) {
                     frags[htype]++;
                     alogpfrag[atomContainer.indexOf(nbor)] = htype;
-                } else
+                } else {
                     heteroCount++;
+                }
             }
 
             if (carbonCount == 2 && heteroCount == 0) {
@@ -541,22 +541,21 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         if (fragment[i].equals("SsssCH")) {
 
             IAtom atom  = atomContainer.getAtom(i);
-            List  ca    = atomContainer.getConnectedAtomsList(atom);
-            int   htype = getHAtomType(atom, ca, atomContainer);
+            List<IAtom>  ca    = atomContainer.getConnectedAtomsList(atom);
+            int   htype = getHAtomType(atom);
             frags[htype] += atom.getImplicitHydrogenCount();
 
             int carbonCount = 0;
             int heteroCount = 0;
-            // logger.debug("here");
             for (int j = 0; j <= ca.size() - 1; j++) {
-                if (((IAtom) ca.get(j)).getAtomicNumber() == IElement.C)
+                if (ca.get(j).getAtomicNumber() == IElement.C) {
                     carbonCount++;
-                else if (((IAtom) ca.get(j)).getAtomicNumber() == IElement.H) {
+                } else if (ca.get(j).getAtomicNumber() == IElement.H) {
                     frags[htype]++;
-                    alogpfrag[((IAtom) ca.get(j)).getIndex()] = htype;
-                }
-                else
+                    alogpfrag[ca.get(j).getIndex()] = htype;
+                } else {
                     heteroCount++;
+                }
             }
 
             if (carbonCount == 3 && heteroCount == 0) {
@@ -581,12 +580,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     private void calcGroup004_011_to_014(int i, IAtomContainer atomContainer, String[] fragment, int[] alogpfrag, int[] frags) {
         // C in CR4, CR3X, CX4
         if (fragment[i].equals("SssssC")) {
-            List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+            List<IAtom> ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
             int carbonCount = 0;
             int heteroCount = 0;
-            // logger.debug("here");
             for (int j = 0; j <= ca.size() - 1; j++) {
-                if (((IAtom) ca.get(j)).getAtomicNumber() == IElement.C)
+                if (ca.get(j).getAtomicNumber() == IElement.C)
                     carbonCount++;
                 else
                     heteroCount++;
@@ -620,7 +618,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             frags[15]++;
             alogpfrag[i] = 15;
             IAtom atom = atomContainer.getAtom(i);
-            int   htype = getHAtomType(atom, null, atomContainer);
+            int htype = getHAtomType(atom);
             frags[htype] += 2;
             for (IBond bond : atom.bonds()) {
                 IAtom nbr = bond.getOther(atom);
@@ -631,12 +629,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     }
 
     private void calcGroup016_018_036_037(int i, IAtomContainer atomContainer, String[] fragment, int[] alogpfrag, int[] frags) {
-
+        if (!fragment[i].equals("SdsCH"))
+            return;
         IAtom ai = atomContainer.getAtom(i);
-        if (!fragment[i].equals("SdsCH")) return;
-
-        List<IAtom> ca    = atomContainer.getConnectedAtomsList(ai);
-        int         htype = getHAtomType(atomContainer.getAtom(i), ca, atomContainer);
+        List<IAtom> ca = atomContainer.getConnectedAtomsList(ai);
+        int htype = getHAtomType(atomContainer.getAtom(i));
         frags[htype]++;
 
         boolean haveCdX = false;
@@ -657,12 +654,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 if (ca.get(j).getFlag(IChemObject.AROMATIC)) {
                     haveCsAr = true;
                 }
-
-            }
-            else if (atomContainer.getBond(ai, ca.get(j)).getOrder() == IBond.Order.DOUBLE) {
-                if (ca.get(j).getAtomicNumber() != IElement.C) {
-                    haveCdX = true;
-                }
+            } else if (atomContainer.getBond(ai, ca.get(j)).getOrder() == IBond.Order.DOUBLE && ca.get(j).getAtomicNumber() != IElement.C) {
+                haveCdX = true;
             }
         }
 
@@ -675,8 +668,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 frags[36]++;
                 alogpfrag[i] = 36;
             }
-        }
-        else {
+        } else {
             if (haveCsX) {
                 frags[18]++;
                 alogpfrag[i] = 18;
@@ -689,15 +681,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     }
 
     private void calcGroup017_019_020_038_to_041(int i, IAtomContainer atomContainer, String[] fragment, int[] alogpfrag, int[] frags) {
-
-        IAtom ai = atomContainer.getAtom(i);
-
         if (!fragment[i].equals("SdssC") &&
             !fragment[i].equals("SdaaC")) {
             return;
         }
-
-        List<IAtom> ca = atomContainer.getConnectedAtomsList(ai);
+        IAtom ai = atomContainer.getAtom(i);
 
         int rCount = 0;
         int xCount = 0;
@@ -715,10 +703,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 else
                     xCount++;
             }
-            else if (bond.getOrder() == IBond.Order.DOUBLE) {
-                if (isHetero(nbor)) {
-                    haveCdX = true;
-                }
+            else if (bond.getOrder() == IBond.Order.DOUBLE && isHetero(nbor)) {
+                haveCdX = true;
             }
         }
 
@@ -763,7 +749,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 alogpfrag[i] = 20;
             }
         }
-
     }
 
     private void calcGroup021_to_023_040(int i, IAtomContainer atomContainer, String[] fragment, int[] alogpfrag, int[] frags) {
@@ -774,7 +759,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         if (fragment[i].equals("StCH")) {
             frags[21]++;
             alogpfrag[i] = 21;
-            int htype = getHAtomType(atomContainer.getAtom(i), nbors, atomContainer);
+            int htype = getHAtomType(atomContainer.getAtom(i));
             frags[htype]++;
             for (IAtom nbor : nbors) {
                 if (nbor.getAtomicNumber() == 1)
@@ -782,11 +767,13 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
         }
         else if (fragment[i].equals("SddC")) {
-            if (nbors.get(0).getAtomicNumber() == IElement.C && nbors.get(1).getAtomicNumber() == IElement.C) {// R==C==R
+            // R==C==R
+            if (nbors.get(0).getAtomicNumber() == IElement.C && nbors.get(1).getAtomicNumber() == IElement.C) {
                 frags[22]++;
                 alogpfrag[i] = 22;
             }
-            else if (nbors.get(0).getAtomicNumber() != IElement.C && nbors.get(1).getAtomicNumber() != IElement.C) {// X==C==X
+            // X==C==X
+            else if (nbors.get(0).getAtomicNumber() != IElement.C && nbors.get(1).getAtomicNumber() != IElement.C) {
                 frags[40]++;
                 alogpfrag[i] = 40;
             }
@@ -801,10 +788,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     if (nbors.get(j).getAtomicNumber() != IElement.C) {
                         haveCsX = true;
                     }
-                } else if (atomContainer.getBond(ai, nbors.get(j)).getOrder() == IBond.Order.TRIPLE) {
-                    if (nbors.get(j).getAtomicNumber() != IElement.C) {
-                        haveCtX = true;
-                    }
+                } else if (atomContainer.getBond(ai, nbors.get(j)).getOrder() == IBond.Order.TRIPLE && nbors.get(j).getAtomicNumber() != IElement.C) {
+                    haveCtX = true;
                 }
             }
 
@@ -832,7 +817,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         IAtom atom = atomContainer.getAtom(i);
         List<IAtom> nbors = atomContainer.getConnectedAtomsList(atom);
-        int         htype = getHAtomType(atom, nbors, atomContainer);
+        int         htype = getHAtomType(atom);
         frags[htype]++;
         IAtom ca0;
         IAtom ca1;
@@ -862,10 +847,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
 
         // check if both hetero atoms have at least one double bond
-        List bonds = atomContainer.getConnectedBondsList(ca0);
+        List<IBond> bonds = atomContainer.getConnectedBondsList(ca0);
         boolean haveDouble1 = false;
         for (int k = 0; k <= bonds.size() - 1; k++) {
-            if (((IBond) bonds.get(k)).getOrder() == IBond.Order.DOUBLE) {
+            if (bonds.get(k).getOrder() == IBond.Order.DOUBLE) {
                 haveDouble1 = true;
                 break;
             }
@@ -874,7 +859,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         bonds = atomContainer.getConnectedBondsList(ca1);
         boolean haveDouble2 = false;
         for (int k = 0; k <= bonds.size() - 1; k++) {
-            if (((IBond) bonds.get(k)).getOrder() == IBond.Order.DOUBLE) {
+            if (bonds.get(k).getOrder() == IBond.Order.DOUBLE) {
                 haveDouble2 = true;
                 break;
             }
@@ -898,7 +883,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             } else {// R--CH...X
                 frags[33]++;
                 alogpfrag[i] = 33;
-
             }
         }
     }
@@ -915,9 +899,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         // 43: X--CR...X
         // 43: X--CX...X
 
-        if (!fragment[i].equals("SsaaC") && !fragment[i].equals("SaaaC")) return;
+        if (!fragment[i].equals("SsaaC") && !fragment[i].equals("SaaaC"))
+            return;
 
-        IAtom       atm = atomContainer.getAtom(i);
+        IAtom atm = atomContainer.getAtom(i);
         List<IAtom> nbors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
 
         IAtom[] sameringatoms = new IAtom[2];
@@ -928,7 +913,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             if (inSameAromaticRing(atomContainer, atm, nbors.get(j), rs)) {
                 sameringatomscount++;
             }
-
         }
 
         if (sameringatomscount == 2) {
@@ -940,7 +924,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 } else {
                     nonringatom = nbors.get(j);
                 }
-
             }
         } else { // sameringsatomscount==3
             // arbitrarily assign atoms: (no way to decide consistently)
@@ -957,16 +940,15 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
 
         // check if both hetero atoms have at least one double bond
-        List bonds = atomContainer.getConnectedBondsList(sameringatoms[0]);
+        List<IBond> bonds = atomContainer.getConnectedBondsList(sameringatoms[0]);
 
         boolean haveDouble1 = false;
 
         for (int k = 0; k <= bonds.size() - 1; k++) {
-            if (((IBond) bonds.get(k)).getOrder() == IBond.Order.DOUBLE) {
+            if (bonds.get(k).getOrder() == IBond.Order.DOUBLE) {
                 haveDouble1 = true;
                 break;
             }
-
         }
 
         bonds = atomContainer.getConnectedBondsList(sameringatoms[1]);
@@ -974,11 +956,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         boolean haveDouble2 = false;
 
         for (int k = 0; k <= bonds.size() - 1; k++) {
-            if (((IBond) bonds.get(k)).getOrder() == IBond.Order.DOUBLE) {
+            if (bonds.get(k).getOrder() == IBond.Order.DOUBLE) {
                 haveDouble2 = true;
                 break;
             }
-
         }
 
         if (sameringatoms[0].getAtomicNumber() != IElement.C && sameringatoms[1].getAtomicNumber() != IElement.C) {
@@ -990,9 +971,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     frags[32]++;
                     alogpfrag[i] = 32;
                 }
-
             } else {
-
                 if (nonringatom.getAtomicNumber() == IElement.C) { // X--CR..X
                     frags[43]++;
                     alogpfrag[i] = 43;
@@ -1001,7 +980,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     frags[44]++;
                     alogpfrag[i] = 44;
                 }
-
             }
         } else if (sameringatoms[0].getAtomicNumber() == IElement.C && sameringatoms[1].getAtomicNumber() == IElement.C) {
 
@@ -1017,6 +995,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 || (sameringatoms[0].getAtomicNumber() != IElement.C && sameringatoms[1].getAtomicNumber() == IElement.C)) {
 
             if (haveDouble1 && haveDouble2) { // R--CR--X
+
                 if (nonringatom.getAtomicNumber() == IElement.C) {
                     frags[28]++;
                     alogpfrag[i] = 28;
@@ -1059,17 +1038,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         return false;
     }
 
-    private int getHAtomType(IAtom atom, List connectedAtoms, IAtomContainer atomContainer) {
-        //ai is the atom connected to a H atoms.
-        //ai environment determines what is the H atom type
+    private int getHAtomType(IAtom atom) {
+        //atom parameter is the atom connected to a H atoms.
+        //its environment determines what is the H atom type
         //This procedure is applied only for carbons
         //i.e. H atom type 50 is never returned
-
-        List<IAtom> ca;
-        if (connectedAtoms == null)
-            ca = atomContainer.getConnectedAtomsList(atom);
-        else
-            ca = connectedAtoms;
 
         IAtomType.Hybridization hyb;
 
