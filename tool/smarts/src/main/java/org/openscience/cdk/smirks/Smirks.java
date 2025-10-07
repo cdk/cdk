@@ -89,6 +89,19 @@ import java.util.Set;
  * }
  * </pre>
  *
+ * The higher level 'SmirksTransform' will automatically prepare the molecule
+ * for matching (ring flags/aromaticity).
+ *
+ * <pre>
+ * Transform transform = Smirks.compile("[C:1][H]>>[C:1]Cl");
+ * IAtomContainer mol = ...;
+ * if (transform.apply(mol)) {
+ *   // was applied!
+ * } else {
+ *   // was not apply!
+ * }
+ * </pre>
+ *
  * @see org.openscience.cdk.isomorphism.Transform
  * @see org.openscience.cdk.smirks.SmirksTransform
  */
