@@ -72,12 +72,20 @@ import java.util.Set;
  *
  * <pre>
  * {@code
- * Transform transform = new SmirksTransform();
+ * Transform transform = new Transform();
  * if (!Smirks.parse(transform, "[*:1][H]>>[*:1]Cl"))
  *   System.err.println("BAD SMIRKS: " + transform.message());
  *
  * IAtomContainer mol = ...;
- * transform.apply(mol);
+ * if (transform.apply(mol)) {
+ *     // was applied!
+ * } else {
+ *     // was not apply!
+ * }
+ *
+ * // apply to a copy of the input molecule
+ * for (IAtomContainer cpy : transform.apply(mol, Transform.Mode.Exclusive)) {
+ *
  * }
  * </pre>
  *
