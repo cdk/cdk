@@ -49,6 +49,18 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
         return ((cfg >>> 12) & 0xf);
     }
 
+    /**
+     * Hook for subclasses to process carriers before they are stored, e.g., to enforce a constraint.
+     * The default implementation returns the carriers as-is.
+     *
+     * @param focus the focus
+     * @param carriers the carriers
+     * @return the processed carriers
+     */
+    protected C[] processCarriers(F focus, C[] carriers) {
+        return carriers;
+    }
+
     AbstractStereo(F focus, C[] carriers, int value) {
         if (focus == null)
             throw new NullPointerException("Focus of stereochemistry can not be null!");
@@ -56,6 +68,7 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
             throw new NullPointerException("Carriers of the configuration can not be null!");
         if (carriers.length != numCarriers(value))
             throw new IllegalArgumentException("Unexpected number of stereo carriers! expected " + ((value >>> 12) & 0xf) + " was " + carriers.length);
+        carriers = processCarriers(focus, carriers);
         for (C carrier : carriers) {
             if (carrier == null)
                 throw new NullPointerException("A carrier was undefined!");

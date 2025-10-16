@@ -26,26 +26,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 
-/**
- */
 class DoubleBondStereochemistryTest extends CDKTestCase {
 
     private static IAtomContainer molecule;
@@ -55,7 +50,7 @@ class DoubleBondStereochemistryTest extends CDKTestCase {
      * This method creates <i>E</i>-but-2-ene.
      */
     @BeforeAll
-    static void setup() throws Exception {
+    static void setup() {
         molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
@@ -129,7 +124,7 @@ class DoubleBondStereochemistryTest extends CDKTestCase {
     }
 
     @Test
-    void contains() throws Exception {
+    void contains() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
         IAtom c1 = builder.newInstance(IAtom.class, "C");
@@ -182,7 +177,7 @@ class DoubleBondStereochemistryTest extends CDKTestCase {
         mapping.put(c2o4, c2o4clone);
 
         // map the existing element a new element
-        IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, mapping);
+        IDoubleBondStereochemistry mapped = original.map(Collections.<IAtom,IAtom>emptyMap(), mapping);
 
         org.hamcrest.MatcherAssert.assertThat("mapped chiral atom was the same as the original", mapped.getStereoBond(),
                 is(not(sameInstance(original.getStereoBond()))));
@@ -191,19 +186,19 @@ class DoubleBondStereochemistryTest extends CDKTestCase {
         IBond[] originalBonds = original.getBonds();
         IBond[] mappedBonds = mapped.getBonds();
 
-        org.hamcrest.MatcherAssert.assertThat("first bond was te same as the original", mappedBonds[0],
+        org.hamcrest.MatcherAssert.assertThat("first bond was the same as the original", mappedBonds[0],
                 is(not(sameInstance(originalBonds[0]))));
-        org.hamcrest.MatcherAssert.assertThat("first mapped bond was not the clone", mappedBonds[0], is(sameInstance(c1o3clone)));
-        org.hamcrest.MatcherAssert.assertThat("second bond was te same as the original", mappedBonds[1],
+        org.hamcrest.MatcherAssert.assertThat("first mapped bond was not the clone", mappedBonds[0], is(sameInstance(c2o4clone)));
+        org.hamcrest.MatcherAssert.assertThat("second bond was the same as the original", mappedBonds[1],
                 is(not(sameInstance(originalBonds[1]))));
-        org.hamcrest.MatcherAssert.assertThat("second mapped bond was not the clone", mappedBonds[1], is(sameInstance(c2o4clone)));
+        org.hamcrest.MatcherAssert.assertThat("second mapped bond was not the clone", mappedBonds[1], is(sameInstance(c1o3clone)));
 
         org.hamcrest.MatcherAssert.assertThat("stereo was not mapped", mapped.getStereo(), is(original.getStereo()));
 
     }
 
     @Test
-    void testMap_Null_Map() throws CloneNotSupportedException {
+    void testMap_Null_Map() {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {
                                     IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -222,12 +217,12 @@ class DoubleBondStereochemistryTest extends CDKTestCase {
                                                                                                         Conformation.OPPOSITE);
 
                                     // map the existing element a new element - should through an IllegalArgumentException
-                                    IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, null);
+                                    IDoubleBondStereochemistry mapped = original.map(Collections.<IAtom,IAtom>emptyMap(), null);
                                 });
     }
 
     @Test
-    void testMap_Map_Map_EmptyMapping() throws CloneNotSupportedException {
+    void testMap_Map_Map_EmptyMapping() {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
@@ -245,7 +240,7 @@ class DoubleBondStereochemistryTest extends CDKTestCase {
                 Conformation.OPPOSITE);
 
         // map the existing element a new element - should through an IllegalArgumentException
-        IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
+        IDoubleBondStereochemistry mapped = original.map(Collections.<IAtom,IAtom>emptyMap(), Collections.<IBond,IBond>emptyMap());
 
         org.hamcrest.MatcherAssert.assertThat(mapped, is(sameInstance(original)));
     }
@@ -258,4 +253,61 @@ class DoubleBondStereochemistryTest extends CDKTestCase {
         Assertions.assertNotSame(0, stringRepr.length());
         Assertions.assertFalse(stringRepr.contains("\n"));
     }
+
+    @Test
+    void testMapStrictCarrierSwapNecessary() throws CDKException {
+        // arrange
+        SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        final IAtomContainer molecule1 = smilesParser.parseSmiles("CCC\\C(Cl)=C(/C)Cl");
+        final IAtomContainer molecule2 = smilesParser.parseSmiles("ClC(C)=C(Cl)CCC");
+
+        Map<IChemObject,IChemObject> chemObjectMap = new HashMap<>();
+        chemObjectMap.put(molecule1.getBond(2), molecule2.getBond(4)); // carrier
+        chemObjectMap.put(molecule1.getBond(4), molecule2.getBond(2)); // focus
+        chemObjectMap.put(molecule1.getBond(5), molecule2.getBond(1)); // carrier
+        IStereoElement<?,?> stereoElement = molecule1.stereoElements().iterator().next();
+
+        // act
+        IStereoElement<?,?> newStereoElement = stereoElement.mapStrict(chemObjectMap);
+
+        // assert
+        DoubleBondStereochemistry newDoubleBondStereochemistry = (DoubleBondStereochemistry) newStereoElement;
+        Assertions.assertTrue(
+                newDoubleBondStereochemistry.getFocus().getBegin() == newDoubleBondStereochemistry.getCarriers().get(0).getBegin() ||
+                        newDoubleBondStereochemistry.getFocus().getBegin() == newDoubleBondStereochemistry.getCarriers().get(0).getEnd()
+        );
+        Assertions.assertTrue(
+                newDoubleBondStereochemistry.getFocus().getEnd() == newDoubleBondStereochemistry.getCarriers().get(1).getBegin() ||
+                        newDoubleBondStereochemistry.getFocus().getEnd() == newDoubleBondStereochemistry.getCarriers().get(1).getEnd()
+        );
+    }
+
+    @Test
+    void testMapStrictCarrierSwapNotNecessary() throws CDKException {
+        // arrange
+        SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        final IAtomContainer molecule1 = smilesParser.parseSmiles("CCC\\C(Cl)=C(/C)Cl");
+        final IAtomContainer molecule2 = smilesParser.parseSmiles("CCCC(Cl)=C(/C)Cl");
+
+        Map<IChemObject,IChemObject> chemObjectMap = new HashMap<>();
+        chemObjectMap.put(molecule1.getBond(2), molecule2.getBond(2)); // carrier
+        chemObjectMap.put(molecule1.getBond(4), molecule2.getBond(4)); // focus
+        chemObjectMap.put(molecule1.getBond(5), molecule2.getBond(5)); // carrier
+        IStereoElement<?,?> stereoElement = molecule1.stereoElements().iterator().next();
+
+        // act
+        IStereoElement<?,?> newStereoElement = stereoElement.mapStrict(chemObjectMap);
+
+        // assert
+        DoubleBondStereochemistry newDoubleBondStereochemistry = (DoubleBondStereochemistry) newStereoElement;
+        Assertions.assertTrue(
+                newDoubleBondStereochemistry.getFocus().getBegin() == newDoubleBondStereochemistry.getCarriers().get(0).getBegin() ||
+                        newDoubleBondStereochemistry.getFocus().getBegin() == newDoubleBondStereochemistry.getCarriers().get(0).getEnd()
+        );
+        Assertions.assertTrue(
+                newDoubleBondStereochemistry.getFocus().getEnd() == newDoubleBondStereochemistry.getCarriers().get(1).getBegin() ||
+                        newDoubleBondStereochemistry.getFocus().getEnd() == newDoubleBondStereochemistry.getCarriers().get(1).getEnd()
+        );
+    }
+
 }

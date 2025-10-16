@@ -54,6 +54,27 @@ public class DoubleBondStereochemistry
         super(stereoBond, ligandBonds, CT | (CFG_MASK & config));
     }
 
+    /**
+     * Processes the given carrier bonds to ensure the first carrier is connected to the
+     * beginning atom of the focus bond. Swaps the carriers if this condition is not met.
+     *
+     * @param focus the focus bond whose beginning atom should be connected to the first carrier bond
+     * @param carriers an array of two carrier bonds associated with the stereochemistry,
+     *                 where the first bond should connect to the beginning atom of the focus bond
+     * @return an array of carrier bonds where the above constraint is satisfied
+     */
+    @Override
+    protected IBond[] processCarriers(IBond focus, IBond[] carriers) {
+        // Ensure that the constraint carrier[0] connected to focus.getBegin()
+        // is satisfied
+        if (carriers[0] != null && focus != null && focus.getBegin() != null &&
+            carriers[0].getOther(focus.getBegin()) == null) {
+            // Swap carriers if the condition above is not satisfied.
+            return new IBond[]{carriers[1], carriers[0]};
+        }
+        return carriers;
+    }
+
     public void setBuilder(IChemObjectBuilder builder) {
         super.setBuilder(builder);
     }
