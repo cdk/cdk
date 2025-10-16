@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -486,5 +485,55 @@ class CxSmilesTest {
         Atropisomeric at = findAtropisomerStereo(mol);
         assertNotNull(at);
         assertEquals(IStereoElement.RIGHT, at.getConfigOrder());
+    }
+
+    @Test
+    void testSimpleLinkNode() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("C1NCNC1 |LN:2:1.3|");
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C1NCNC1 |Sg:n:2:1-3:ht|", sg.create(mol));
+    }
+
+    @Test
+    void testMultipleLinkNode() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("C1NCNC1 |LN:2:1.3,3:1.4|");
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C1NCNC1 |Sg:n:2:1-3:ht,Sg:n:3:1-4:ht|", sg.create(mol));
+    }
+
+    @Test
+    void testLinkNodeAndMore() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("C1NCNC1 |LN:2:1.3,$R1$|");
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("*1NCNC1 |$R1$,Sg:n:2:1-3:ht|", sg.create(mol));
+    }
+
+    @Test
+    void testLinkNodeWithAttachedAtoms() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+
+        // xbonds are implied due to the ring bonds
+        IAtomContainer mol = smipar.parseSmiles("C1NC(O)NC1 |LN:2:1.3|");
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C1NC(O)NC1 |Sg:n:2,3:1-3:ht|", sg.create(mol));
+
+        mol = smipar.parseSmiles("C1NC(O)NC1 |LN:2:1.3.1.3|");
+        Assertions.assertEquals("C1NC(O)NC1 |Sg:n:2,3:1-3:ht|", sg.create(mol));
+    }
+
+    @Test
+    void testTerseSgroup() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("C1NCNC1 |Sg:n:2|");
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default);
+        Assertions.assertEquals("C1NCNC1 |Sg:n:2:n:|", sg.create(mol));
     }
 }

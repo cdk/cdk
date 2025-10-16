@@ -25,9 +25,12 @@ package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -302,34 +305,35 @@ final class CxSmilesParser {
             return false;
 
 
-        String subscript;
-        String supscript;
+        String subscript = "n";
+        String supscript = "";
 
-        if (!iter.nextIf(':'))
-            return false;
+        if (!iter.nextIf(':')) {
+            state.mysgroups.add(new CxSmilesState.CxPolymerSgroup(keyword, atomset, subscript, supscript));
+            return true;
+        }
 
         // "If the subscript equals the keyword of the Sgroup this field can be empty", ergo
         // if omitted it equals the keyword
         beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
+
         subscript = unescape(iter.substr(beg, iter.pos));
         if (subscript.isEmpty())
             subscript = keyword;
 
         // "In the superscript only connectivity and flip information is allowed.", default
         // appears to be "eu" either/unspecified for SRU
-        if (!iter.nextIf(':'))
-            return false;
+        if (!iter.nextIf(':')) {
+            state.mysgroups.add(new CxSmilesState.CxPolymerSgroup(keyword, atomset, subscript, supscript));
+            return true;
+        }
+
         beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
         supscript = unescape(iter.substr(beg, iter.pos));
-        if (supscript.isEmpty() &&
-            !keyword.equals("c")&&!keyword.equals("mix")&&
-            !keyword.equals("f")&&!keyword.equals("mod"))
-            supscript = "eu";
-
         if (iter.nextIf(',') || iter.curr() == '|') {
             state.mysgroups.add(new CxSmilesState.CxPolymerSgroup(keyword, atomset, subscript, supscript));
             return true;
@@ -381,6 +385,44 @@ final class CxSmilesParser {
         if (state.ligandOrdering == null)
             state.ligandOrdering = new TreeMap<>();
         return processIntListMap(state.ligandOrdering, iter);
+    }
+
+    /**
+     * Link Nodes are used for repeats in query structures.
+     * @param iter the character iterator
+     * @param state the state
+     * @return the link node is valid or not
+     */
+    private static boolean processLinkNode(CharIter iter, CxSmilesState state) {
+        if (state.mysgroups == null)
+            state.mysgroups = new ArrayList<>();
+        boolean result = false;
+        while (iter.hasNext()) {
+            final int aidx = processUnsignedInt(iter);
+            if (aidx < 0)
+                return result;
+            if (!iter.nextIf(':'))
+                return false;
+            List<Integer> vals = new ArrayList<>(4);
+            if (!processIntList(iter, DOT_SEPARATOR, vals))
+                return false;
+            if (vals.size() < 2)
+                return false;
+            int lowerBound = vals.get(0);
+            int upperBound = vals.get(1);
+            CxSmilesState.CxPolymerSgroup sgroup = new CxSmilesState.CxPolymerSgroup("n",
+                                                                                     Collections.singletonList(aidx),
+                                                                                     lowerBound + "-" + upperBound,
+                                                                                     "ht");
+            for (int i = 2; i < vals.size(); i++) {
+                sgroup.bonds.add(vals.get(i));
+            }
+            state.mysgroups.add(sgroup);
+            result = true;
+
+            iter.nextIf(',');
+        }
+        return result;
     }
 
     private static boolean processWedges(CharIter iter, CxSmilesState state, IBond.Display display) {
@@ -583,7 +625,13 @@ final class CxSmilesParser {
                         if (!processLigandOrdering(iter, state))
                             return -1;
                     }
-                    else {
+                    // LN, Link Node
+                    else if (iter.nextIf('N')) {
+                        if (!iter.nextIf(':'))
+                            return -1;
+                        if (!processLinkNode(iter, state))
+                            return -1;
+                    } else {
                         // LP, bond connected lone pair?
                         return -1;
                     }

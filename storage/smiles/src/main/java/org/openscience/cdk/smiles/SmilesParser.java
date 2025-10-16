@@ -54,9 +54,11 @@ import uk.ac.ebi.beam.Graph;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -200,7 +202,7 @@ public final class SmilesParser {
 
         final String reactants = smiles.substring(0, first);
         final String agents = smiles.substring(first + 1, second);
-        final String products = smiles.substring(second + 1, smiles.length());
+        final String products = smiles.substring(second + 1);
 
         IReaction reaction = builder.newInstance(IReaction.class);
 
@@ -346,6 +348,7 @@ public final class SmilesParser {
             // if a kekule structure could not be assigned.
             IAtomContainer mol = beamToCDK.toAtomContainer(kekulise ? g.kekule() : g,
                                                            kekulise);
+            Cycles.markRingAtomsAndBonds(mol);
 
             if (!isRxnPart) {
                 try {
@@ -772,8 +775,23 @@ public final class SmilesParser {
                 CxPolymerSgroup psgroup = (CxPolymerSgroup) cxsgroup;
                 Sgroup sgroup = new Sgroup();
 
-                Set<IAtom> atomset = new HashSet<>();
+                Set<IAtom> sgroupAtoms = new HashSet<>();
+                Set<IBond> xbonds = new HashSet<>();
+
                 IAtomContainer mol = null;
+                for (Integer idx : psgroup.bonds) {
+                    if (idx >= atoms.size())
+                        continue;
+                    IBond bond = bonds.get(idx);
+                    IAtomContainer bmol = atomToMol.get(bond.getBegin());
+                    if (mol == null)
+                        mol = bmol;
+                    else if (bmol != mol)
+                        continue PolySgroup;
+                    xbonds.add(bond);
+                }
+
+
                 for (Integer idx : psgroup.atoms) {
                     if (idx >= atoms.size())
                         continue;
@@ -785,34 +803,70 @@ public final class SmilesParser {
                     else if (amol != mol)
                         continue PolySgroup;
 
-                    atomset.add(atom);
+                    sgroupAtoms.add(atom);
                 }
+
 
                 if (mol == null)
                     continue;
 
-                for (IAtom atom : atomset) {
-                    for (IBond bond : mol.getConnectedBondsList(atom)) {
-                        IAtom nbor = bond.getOther(atom);
-                        if (!atomset.contains(nbor)) {
-                            boolean crossing = true;
+                // special case, if we have a single atom it may have been a link
+                // node if there is exactly 2 ring bonds we shouldn't need users
+                // to specify what the repeat pattern was
+                if (sgroupAtoms.size() == 1 && xbonds.isEmpty()) {
 
-                            // check for variable attachments see https://github.com/cdk/depict/issues/36
-                            if (cxstate.positionVar != null) {
-                                List<Integer> ends = cxstate.positionVar.get(mol.indexOf(nbor));
-                                if (ends != null) {
-                                    for (Integer end : ends) {
-                                        if (atomset.contains(mol.getAtom(end)))
-                                            crossing = false;
+                    IAtom atom = sgroupAtoms.iterator().next();
+                    for (IBond bond : atom.bonds()) {
+                        if (bond.isInRing())
+                            xbonds.add(bond);
+                    }
+
+                    if (xbonds.size() != 2)
+                        xbonds.clear();
+                }
+
+                // crossing bonds are implied
+                if (xbonds.isEmpty()) {
+                    for (IAtom atom : sgroupAtoms) {
+                        for (IBond bond : mol.getConnectedBondsList(atom)) {
+                            IAtom nbor = bond.getOther(atom);
+                            if (!sgroupAtoms.contains(nbor)) {
+                                boolean crossing = true;
+
+                                // check for variable attachments see https://github.com/cdk/depict/issues/36
+                                if (cxstate.positionVar != null) {
+                                    List<Integer> ends = cxstate.positionVar.get(mol.indexOf(nbor));
+                                    if (ends != null) {
+                                        for (Integer end : ends) {
+                                            if (sgroupAtoms.contains(mol.getAtom(end)))
+                                                crossing = false;
+                                        }
                                     }
                                 }
-                            }
 
-                            if (crossing)
-                                sgroup.addBond(bond);
+                                if (crossing)
+                                    sgroup.addBond(bond);
+                            }
+                        }
+                        sgroup.addAtom(atom);
+                    }
+                } else {
+                    Deque<IAtom> queue = new ArrayDeque<>(sgroupAtoms);
+                    while (!queue.isEmpty()) {
+                        IAtom atom = queue.poll();
+                        for (IBond bond : atom.bonds()) {
+                            if (xbonds.contains(bond))
+                                continue;
+                            IAtom nbor = bond.getOther(atom);
+                            if (sgroupAtoms.add(nbor)) {
+                                queue.add(nbor);
+                            }
                         }
                     }
-                    sgroup.addAtom(atom);
+                    for (IAtom atom : sgroupAtoms)
+                        sgroup.addAtom(atom);
+                    for (IBond bond : xbonds)
+                        sgroup.addBond(bond);
                 }
 
                 sgroup.setSubscript(psgroup.subscript);
@@ -994,10 +1048,6 @@ public final class SmilesParser {
         // check for RDKit atropisomers
         if (!isAtropisomerAtom(atomToWedgeFrom))
             return;
-
-        // We need ring flags set, this is not cached but
-        // (hopefully) there are only a few wedges
-        Cycles.markRingAtomsAndBonds(atomToMol.get(atomToWedgeFrom));
 
         // Find the bond to apply the atropisomerism to
         IBond atropisomerBond = null;

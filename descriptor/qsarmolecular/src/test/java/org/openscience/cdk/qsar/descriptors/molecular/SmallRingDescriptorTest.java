@@ -53,9 +53,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test for small rings descriptor.
- *
  */
-
 class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmallRingDescriptorTest.class);
@@ -69,7 +67,7 @@ class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     void testDescriptors() throws Exception {
-        logger.info("CircularFingerprinter test: loading source materials");
+        logger.info("SmallRingDescriptor test: loading source materials");
 
         String fnzip = "data/cdd/aromring_validation.zip";
         logger.info("Loading source content: " + fnzip);
@@ -92,7 +90,8 @@ class SmallRingDescriptorTest extends MolecularDescriptorTest {
         HashMap<String, byte[]> content = new HashMap<>();
         while (true) {
             ZipEntry ze = zip.getNextEntry();
-            if (ze == null) break;
+            if (ze == null)
+                break;
             String fn = ze.getName();
             ByteArrayOutputStream buff = new ByteArrayOutputStream();
             while (true) {
@@ -110,7 +109,8 @@ class SmallRingDescriptorTest extends MolecularDescriptorTest {
             while (basefn.length() < 6)
                 basefn = "0" + basefn;
             byte[] molBytes = content.get(basefn + ".mol");
-            if (molBytes == null) break;
+            if (molBytes == null)
+                break;
 
             IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
             MDLV2000Reader mdl = new MDLV2000Reader(new ByteArrayInputStream(molBytes));
@@ -166,5 +166,4 @@ class SmallRingDescriptorTest extends MolecularDescriptorTest {
             }
         }
     }
-
 }

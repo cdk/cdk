@@ -339,7 +339,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
         } else {
             sb.append(" fill='none'");
             sb.append(getStroke(elem.color));
-            sb.append(" stroke-width='").append(toStr(scaled(elem.stroke)));
+            sb.append(" stroke-width='").append(toStr(scaled(elem.stroke))).append("'");
         }
         sb.append("/>\n");
     }
