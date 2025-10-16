@@ -65,8 +65,10 @@ public class DoubleBondStereochemistry
      */
     @Override
     protected IBond[] processCarriers(IBond focus, IBond[] carriers) {
-        // Ensure that the constraint carrier[0] connected to focus.getBegin() is satisfied.
-        if (carriers[0].getOther(focus.getBegin()) == null) {
+        // Ensure that the constraint carrier[0] connected to focus.getBegin()
+        // is satisfied
+        if (carriers[0] != null && focus != null && focus.getBegin() != null &&
+            carriers[0].getOther(focus.getBegin()) == null) {
             // Swap carriers if the condition above is not satisfied.
             return new IBond[]{carriers[1], carriers[0]};
         }
