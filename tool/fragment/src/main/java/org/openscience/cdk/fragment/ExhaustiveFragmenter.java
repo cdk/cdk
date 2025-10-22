@@ -57,7 +57,7 @@ import java.util.Set;
  * <li>Fragments smaller than 6 atoms (excluding implicit hydrogen) are not
  *     returned.</li>
  * <li>Fragments are returned with open valences, where a bond has been split.</li>
- * <li>The fragmentation splits at a maximum tree depth of 31, meaning that
+ * <li>The fragmentation splits at a maximum tree depth of 27, meaning that
  *     maximum 27 bonds are split in one run.</li>
  * <li>The SMILES code of the fragments is generated with {@link SmiFlavor#Unique}
  *     and {@link SmiFlavor#UseAromaticSymbols}.</li>
@@ -202,7 +202,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * <li>{@link Saturation#UNSATURATED_FRAGMENTS}</li>
      * <li>Default {@link SmilesGenerator}
      *     ({@link SmiFlavor#Unique} | {@link SmiFlavor#UseAromaticSymbols})</li>
-     * <li>inclusive maximum tree depth of 31</li>
+     * <li>inclusive maximum tree depth of 27</li>
      * <li>stereo information is not preserved</li>
      * </ul>
      */
@@ -219,7 +219,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment
      * size and saturation setting. Uses the default {@link SmilesGenerator} and
-     * default inclusive maximum tree depth of 31. Stereo information is not
+     * default inclusive maximum tree depth of 27. Stereo information is not
      * preserved.
      *
      * @param minFragSize minimum number of atoms in a valid fragment
@@ -241,7 +241,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * Constructs an ExhaustiveFragmenter with a user-defined minimum fragment
      * size. Saturation defaults to {@link Saturation#UNSATURATED_FRAGMENTS}.
      * Uses the default {@link SmilesGenerator} and the default
-     * inclusive maximum tree depth of 31. Stereo information is not
+     * inclusive maximum tree depth of 27. Stereo information is not
      * preserved.
      *
      * @param minFragSize minimum number of atoms in a valid fragment
@@ -260,7 +260,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Constructs an ExhaustiveFragmenter with a user-defined saturation setting.
      * Minimum fragment size defaults to 6. Uses the default {@link SmilesGenerator}
-     * and the default inclusive maximum tree depth of 31. Stereo information is
+     * and the default inclusive maximum tree depth of 27. Stereo information is
      * not preserved.
      *
      * @param saturation how open valences should be treated after the
