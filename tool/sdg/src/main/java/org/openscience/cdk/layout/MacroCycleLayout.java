@@ -52,10 +52,7 @@ final class MacroCycleLayout {
     // Macrocycle templates
     private static final IdentityTemplateLibrary TEMPLATES            = IdentityTemplateLibrary.loadFromResource("macro.smi");
 
-    // Hint for placing substituents
-    public static final String                  MACROCYCLE_ATOM_HINT = "layout.macrocycle.atom.hint";
-
-    // (counter)clockwise
+        // (counter)clockwise
     private static final int CW  = -1;
     private static final int CCW = +1;
 
@@ -97,7 +94,7 @@ final class MacroCycleLayout {
         for (int i = 0; i < macrocycle.getAtomCount(); i++) {
             macrocycle.getAtom(i).setPoint2d(best[(bestOffset + i) % macrocycle.getAtomCount()]);
             macrocycle.getAtom(i).setFlag(PLACED, true);
-            macrocycle.getAtom(i).setProperty(MACROCYCLE_ATOM_HINT, true);
+            macrocycle.getAtom(i).setProperty(AtomPlacer.MACROCYCLE_ATOM_HINT, true);
         }
         macrocycle.setFlag(PLACED, true);
 

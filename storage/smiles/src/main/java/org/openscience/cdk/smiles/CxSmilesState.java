@@ -65,6 +65,7 @@ final class CxSmilesState {
     static class CxSgroup {
         final Set<CxSgroup> children = new HashSet<>();
         List<Integer> atoms = new ArrayList<>();
+        List<Integer> bonds = new ArrayList<>();
         int id = -1;
     }
 
@@ -134,7 +135,12 @@ final class CxSmilesState {
             this.type = type;
             this.atoms = new ArrayList<>(atomset);
             this.subscript = subscript;
-            this.supscript = supscript;
+            if ((supscript == null || supscript.isEmpty()) &&
+                !type.equals("c") && !type.equals("mix") &&
+                !type.equals("f") && !type.equals("mod"))
+                this.supscript = "eu";
+            else
+                this.supscript = supscript;
         }
 
         @Override

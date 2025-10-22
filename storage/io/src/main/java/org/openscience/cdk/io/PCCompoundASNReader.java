@@ -298,6 +298,10 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
             // assume this is the first block in the atom block
             logger.debug("ASN atoms element found");
             processAtomElements();
+        } else if (command.equals("charge")) {
+            // assume this is the first block in the atom block
+            logger.debug("ASN atoms element found");
+            processCharges();
         } else {
             logger.warn("Skipping atom block block: " + command);
             skipBlock();
@@ -316,6 +320,10 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
             // assume this is the first block in the atom block
             logger.debug("ASN bonds aid2 found");
             processBondAtomIDs(1);
+        } else if (command.equals("order")) {
+            // assume this is the first block in the atom block
+            logger.debug("ASN bonds aid2 found");
+            processBondOrders();
         } else {
             logger.warn("Skipping atom block block: " + command);
             skipBlock();
@@ -365,6 +373,28 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         }
     }
 
+    private void processBondOrders() throws Exception {
+
+        Map<String,IBond.Order> map = new HashMap<>();
+        map.put("single", IBond.Order.SINGLE);
+        map.put("double", IBond.Order.DOUBLE);
+        map.put("triple", IBond.Order.TRIPLE);
+
+        String line = input.readLine();
+        int bondIndex = 0;
+        while (input.ready() && line != null) {
+            if (line.indexOf('}') != -1) {
+                break;
+            } else {
+                IBond bond = getBond(bondIndex);
+                String order = getValue(line);
+                bond.setOrder(map.get(order));
+                bondIndex++;
+            }
+            line = input.readLine();
+        }
+    }
+
     private void processAtomElements() throws Exception {
         String line = input.readLine();
         int atomIndex = 0;
@@ -378,6 +408,33 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
                 IAtom atom = getAtom(atomIndex);
                 atom.setSymbol(toSymbol(getValue(line)));
                 atomIndex++;
+            }
+            line = input.readLine();
+        }
+    }
+
+    private void processCharges() throws Exception {
+        String line = input.readLine();
+        int atomIndex = 0;
+        int depth = 1;
+        while (input.ready() && line != null) {
+            if (line.indexOf('{') != -1) {
+                ++depth;
+            } else if (line.indexOf('}') != -1) {
+                if (--depth == 0)
+                    break;
+            } else {
+                String[] parts = line.trim().split(" ");
+                if ("aid".equals(parts[0])) {
+                    atomIndex = Integer.parseInt(getValue(parts[1]));
+                } else if ("value".equals(parts[0])) {
+                    int q = Integer.parseInt(getValue(parts[1]));
+                    if (atomIndex >= 0)
+                        molecule.getAtom(atomIndex-1).setFormalCharge(q);
+                    atomIndex = -1;
+                } else {
+                    throw new IllegalStateException(line);
+                }
             }
             line = input.readLine();
         }

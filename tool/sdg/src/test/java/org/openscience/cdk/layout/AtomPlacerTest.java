@@ -22,29 +22,29 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
 /**
  * @author maclean
+ * @author john 
  */
-class AtomPlacerTest extends CDKTestCase {
+class AtomPlacerTest {
 
     @Test
     void emptyAtomsListTest() {
@@ -152,5 +152,87 @@ class AtomPlacerTest extends CDKTestCase {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(hCount);
         return a;
+    }
+
+    static IAtom atom(String symbol, int hCount, double x, double y) {
+        IAtom a = new Atom(symbol);
+        a.setImplicitHydrogenCount(hCount);
+        a.setPoint2d(new Point2d(x, y));
+        return a;
+    }
+
+    @Test
+    public void testPlaceAtOrigin() {
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        m.addAtom(atom("C", 4));
+        AtomPlacer placer = new AtomPlacer(m);
+        Assertions.assertTrue(placer.place(m.getAtom(0)));
+        Assertions.assertEquals(new Point2d(0.0, 0.0),
+                                m.getAtom(0).getPoint2d());
+    }
+
+    @Test
+    public void testPlaceReject() {
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        m.addAtom(atom("C", 4));
+        m.getAtom(0).setPoint2d(new Point2d(5.0, 5.0));
+        AtomPlacer placer = new AtomPlacer(m);
+        Assertions.assertFalse(placer.place(m.getAtom(0)));
+    }
+
+    @Test
+    public void testPlaceReject2() {
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        m.addAtom(atom("C", 4));
+        AtomPlacer placer = new AtomPlacer(m);
+        // atom 'not in a container'
+        IAtom rawAtom = AtomRef.deref(m.getAtom(0));
+        Assertions.assertFalse(placer.place(rawAtom));
+    }
+
+    @Test
+    public void testPlaceAtCenter2d() {
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        m.addAtom(atom("C", 0));
+        m.addAtom(atom("C", 3, 0, 2.5));
+        m.addAtom(atom("C", 3, 1.5, 1.5));
+        m.addAtom(atom("C", 3, 0, 2.5));
+        m.addAtom(atom("C", 3, 1.5, 1.5));
+
+        m.newBond(m.getAtom(0), m.getAtom(1));
+        m.newBond(m.getAtom(0), m.getAtom(2));
+        m.newBond(m.getAtom(0), m.getAtom(3));
+        m.newBond(m.getAtom(0), m.getAtom(4));
+
+        AtomPlacer placer = new AtomPlacer(m);
+        Assertions.assertTrue(placer.place(m.getAtom(0)));
+        Assertions.assertEquals(0.75, m.getAtom(0).getPoint2d().x, 0.1);
+        Assertions.assertEquals(2.0, m.getAtom(0).getPoint2d().y, 0.1);
+    }
+
+    @Test
+    public void testPlaceSproutFromChain() {
+        IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        m.addAtom(atom("C", 3, 2.5, 2.5));
+        m.addAtom(atom("C", 2, 3.36, 2.0));
+        m.addAtom(atom("C", 1, 3.36, 1.0));
+        m.addAtom(atom("C", 2, 4.23, 0.49));
+        m.addAtom(atom("C", 3, 4.23, -0.50));
+
+        m.newBond(m.getAtom(0), m.getAtom(1));
+        m.newBond(m.getAtom(1), m.getAtom(2));
+        m.newBond(m.getAtom(2), m.getAtom(3));
+        m.newBond(m.getAtom(3), m.getAtom(4));
+
+        AtomPlacer placer = new AtomPlacer(m);
+        Vector2d v = new Vector2d(Math.cos(Math.PI / 6), Math.sin(-Math.PI /6));
+
+        // sprout a new bond
+        m.addAtom(atom("C", 3));
+        m.newBond(m.getAtom(2), m.getAtom(5));
+
+        Assertions.assertTrue(placer.place(m.getAtom(5)));
+        Assertions.assertEquals(2.5, m.getAtom(5).getPoint2d().x, 0.1);
+        Assertions.assertEquals(0.5, m.getAtom(5).getPoint2d().y, 0.1);
     }
 }

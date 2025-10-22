@@ -45,7 +45,7 @@ final class INChIContentProcessorTool {
         public IAtomContainer processFormula(IAtomContainer parsedContent, String atomsEncoding) {
             logger.debug("Parsing atom data: ", atomsEncoding);
 
-            Pattern pattern   = Pattern.compile("([A-Z][a-z]?)(\\d+)?(.*)");
+            Pattern pattern   = Pattern.compile("([A-Z][a-z]?)(\\d++)?(.*+)");
             String  remainder = atomsEncoding;
             while (remainder.length() > 0) {
                 logger.debug("Remaining: ", remainder);
@@ -105,7 +105,7 @@ final class INChIContentProcessorTool {
                         remainder = "";
                     }
                 } else {
-                    Pattern pattern = Pattern.compile("^(\\d+)-?(.*)");
+                    Pattern pattern = Pattern.compile("^(\\d++)-?(.*+)");
                     Matcher matcher = pattern.matcher(remainder);
                     if (matcher.matches()) {
                         String targetStr = matcher.group(1);

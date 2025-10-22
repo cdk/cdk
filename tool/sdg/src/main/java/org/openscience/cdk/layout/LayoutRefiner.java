@@ -456,7 +456,7 @@ final class LayoutRefiner {
             IAtom atom = mol.getAtom(v);
             if (!atom.isInRing() || adjList[v].length == 2)
                 continue;
-            if (atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT) == null)
+            if (atom.getProperty(AtomPlacer.MACROCYCLE_ATOM_HINT) == null)
                 continue;
             final List<IBond> acyclic = new ArrayList<>(2);
             final List<IBond> cyclic = new ArrayList<>(2);

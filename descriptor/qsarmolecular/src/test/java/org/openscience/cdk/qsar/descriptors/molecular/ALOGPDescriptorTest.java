@@ -32,21 +32,18 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * Test suite for the alogp descriptor
- *
+ * Test suite for the alogp descriptor.
  */
 class ALOGPDescriptorTest extends MolecularDescriptorTest {
-
-    private CDKHydrogenAdder hydrogenAdder;
 
     @BeforeEach
     void setUp() throws Exception {
         setDescriptor(ALOGPDescriptor.class);
-        hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
     }
 
     /**
-     * This test is actually testing 1-cholorpropane.
+     * TODO: This test is actually testing 1-cholorpropane.
+     *
      * @cdk.inchi InChI=1S/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
@@ -65,6 +62,7 @@ class ALOGPDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(new Bond(c3, cl));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
+                //TODO: doesn't the descriptor need explicit hydrogens?
                         .addImplicitHydrogens(mol);
 
         DescriptorValue v = descriptor.calculate(mol);

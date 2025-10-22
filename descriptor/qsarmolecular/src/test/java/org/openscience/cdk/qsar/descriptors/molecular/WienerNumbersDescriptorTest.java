@@ -1,4 +1,4 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2025  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,6 +28,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
+ * Test suite for the Wiener numbers descriptor.
  */
 class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
 
@@ -38,22 +39,25 @@ class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
         setDescriptor(WienerNumbersDescriptor.class);
     }
 
+    /**
+     * Test if the descriptor returns the same results with and without explicit hydrogens; without here and with below.
+     */
     @Test
-    void testWienerNumbersDescriptor() throws Exception {
+    void testWienerNumbersDescriptorWithoutHydrogens() throws Exception {
         double[] testResult = {18, 2};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
-        AtomContainerManipulator.removeHydrogens(mol);
+        mol = AtomContainerManipulator.removeHydrogens(mol);
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
         Assertions.assertEquals(testResult[0], retval.get(0), 0.0001);
         Assertions.assertEquals(testResult[1], retval.get(1), 0.0001);
     }
 
     /**
-     * Test if the descriptor returns the same results with and without explicit hydrogens.
+     * Test if the descriptor returns the same results with and without explicit hydrogens; with here and without above.
      */
     @Test
-    void testWithExplicitHydrogens() throws Exception {
+    void testWienerNumbersDescriptorWithExplicitHydrogens() throws Exception {
         double[] testResult = {18, 2};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");

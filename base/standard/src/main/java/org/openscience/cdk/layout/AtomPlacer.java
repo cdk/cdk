@@ -55,8 +55,8 @@ import java.util.stream.StreamSupport;
  *  be used for Automated Structure Diagram Generation or in the interactive
  *  buildup of molecules by the user.
  *
- *@author      steinbeck
- *@cdk.created 2003-08-29
+ * @author      steinbeck
+ * @cdk.created 2003-08-29
  */
 public class AtomPlacer {
 
@@ -64,6 +64,10 @@ public class AtomPlacer {
     public final static boolean debug = true;
     public static final String PRIORITY = "Weight";
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
+
+    // hint that a substituent is in MacroCycle and it may need to sprout at an
+    // angle that is undesirable
+    public static final String MACROCYCLE_ATOM_HINT = "layout.macrocycle.atom.hint";
 
     /**
      *  The molecule to be laid out. To be assigned from outside
@@ -74,6 +78,15 @@ public class AtomPlacer {
      *  Constructor for the AtomPlacer object
      */
     public AtomPlacer() {}
+
+
+    /**
+     * Constructor for the AtomPlacer providing a molecule
+     * @param molecule the molecule being laid-out
+     */
+    public AtomPlacer(IAtomContainer molecule) {
+        this.molecule = molecule;
+    }
 
     /**
      *  Return the molecule the AtomPlacer currently works with
@@ -212,7 +225,7 @@ public class AtomPlacer {
                 markPlaced(unplacedNeighbours);
                 return;
             } else {
-                atom.removeProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT);
+                atom.removeProperty(AtomPlacer.MACROCYCLE_ATOM_HINT);
             }
         }
 
@@ -420,6 +433,71 @@ public class AtomPlacer {
         for (int i = 0, n = atomContainer.getAtomCount(); i < n; i++) {
             atomContainer.getAtom(i).setImplicitHydrogenCount(numh[i]);
         }
+    }
+
+    /**
+     * Convenience method to place a single atom. This function will first find
+     * a placed neighbour (for this function - one with coordinates defined,
+     * {@link IChemObject#PLACED} does not need to be set) and then place this
+     * new atoms considering the neighbour's neighbours. Essentially this
+     * utility is useful for sprouting a new atom to an already placed
+     * structure.
+     *
+     * @param atom the atom to place
+     * @param bondLength the default bond length if no bonds in the container
+     * @return the atom was placed or not
+     */
+    public boolean place(IAtom atom, double bondLength) {
+
+        // we do not belong to a molecule
+        if (atom.getContainer() == null)
+            return false;
+
+        // we already have coordinates
+        if (atom.getPoint2d() != null)
+            return false;
+
+        List<IAtom> candidates = new ArrayList<>();
+        for (IBond bond : atom.bonds()) {
+            IAtom nbor = bond.getOther(atom);
+            if (nbor.getPoint2d() != null)
+                candidates.add(nbor);
+        }
+
+        if (candidates.isEmpty()) {
+            atom.setPoint2d(new Point2d(0,0));
+        } else if (candidates.size() == 1) {
+
+            IAtom ref = candidates.get(0);
+
+            IAtomContainer placed = atom.getBuilder().newAtomContainer();
+            IAtomContainer unplaced = atom.getBuilder().newAtomContainer();
+            unplaced.addAtom(atom);
+            for (IBond bond : ref.bonds()) {
+                IAtom nbor = bond.getOther(ref);
+                if (nbor.getPoint2d() != null) {
+                    placed.addAtom(nbor);
+                }
+            }
+
+            bondLength = GeometryUtil.getBondLengthMedian(atom.getContainer(),
+                                                          bondLength);
+
+            distributePartners(ref,
+                               placed,
+                               GeometryUtil.get2DCenter(placed),
+                               unplaced,
+                               bondLength);
+        } else {
+            // not great but simply place at the center of the existing atoms
+            atom.setPoint2d(GeometryUtil.get2DCenter(candidates));
+        }
+
+        return true;
+    }
+
+    public boolean place(IAtom atom) {
+        return place(atom, 1.5); // default bond length
     }
 
     private boolean isTerminalD4(IAtom atom) {

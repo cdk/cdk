@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.io;
 
+import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,11 +33,14 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -50,8 +54,14 @@ import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
 import org.openscience.cdk.isomorphism.matchers.RGroup;
 import org.openscience.cdk.isomorphism.matchers.RGroupList;
 import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
+import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Tuple2d;
+import javax.vecmath.Vector2d;
 
 /**
  * A reader for Symyx' Rgroup files (RGFiles).
@@ -370,6 +380,9 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     RGroup rGroup = new RGroup();
                     rGroup.setGroup(group);
 
+                    IAtom fstAttach = null;
+                    IAtom sndAttach = null;
+
                     //Parse the Rgroup's attachment points (APO)
                     strTk = new StringTokenizer(groupStr, eol);
                     while (strTk.hasMoreTokens()) {
@@ -385,20 +398,26 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                                 IAtom at = group.getAtom(pos - 1);
                                 switch (apo) {
                                     case 1:
-                                        rGroup.setFirstAttachmentPoint(at);
+                                        fstAttach = at;
                                         break;
                                     case 2:
-                                        rGroup.setSecondAttachmentPoint(at);
+                                        sndAttach = at;
                                         break;
                                     case 3: {
-                                        rGroup.setFirstAttachmentPoint(at);
-                                        rGroup.setSecondAttachmentPoint(at);
+                                        fstAttach = at;
+                                        sndAttach = at;
                                     }
                                         break;
                                 }
                             }
                         }
                     }
+
+                    if (fstAttach != null)
+                        sproutExplicitAttachment(fstAttach, 1);
+                    if (sndAttach != null)
+                        sproutExplicitAttachment(sndAttach, 2);
+
                     IRGroupList rList = rGroupDefinitions.get(rgroupNum);
                     if (rList == null) {
                         throw new CDKException("R" + rgroupNum + " not defined but referenced in $RGP.");
@@ -436,6 +455,39 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw new CDKException(error, exception);
         }
+    }
+
+    private static boolean hasExplicitAttachment(IAtom atom) {
+        for (IBond bond : atom.bonds()) {
+            IAtom nbor = bond.getOther(atom);
+            if (nbor instanceof IPseudoAtom && ((IPseudoAtom) nbor).getAttachPointNum() != 0)
+                return true;
+        }
+        return false;
+    }
+
+    private void sproutExplicitAttachment(IAtom atom, int id) {
+        if (atom == null || hasExplicitAttachment(atom))
+            return;
+        IAtomContainer container = atom.getContainer();
+
+        IChemObjectBuilder bldr = container.getBuilder();
+        container.addAtom(bldr.newInstance(IPseudoAtom.class));
+        IPseudoAtom attach = (IPseudoAtom)container.getAtom(container.getAtomCount()-1);
+        attach.setAtomicNumber(IAtom.Wildcard);
+        attach.setImplicitHydrogenCount(0);
+        attach.setAttachPointNum(id);
+
+        if (atom.getImplicitHydrogenCount() != null &&
+            atom.getImplicitHydrogenCount() > 0)
+            atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount()-1);
+
+        atom.getContainer().newBond(atom, attach, IBond.Order.SINGLE);
+        if (atom.getPoint2d() != null)
+            new AtomPlacer(atom.getContainer()).place(attach);
+
+        // to support 3D Rgroup... we need to sprout the explicit attachment point
+        // with AtomPlacer3D. 3D Rgroup structures are unlikely but possible
     }
 
     /**

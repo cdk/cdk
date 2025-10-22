@@ -26,6 +26,11 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+
+import java.util.List;
 
 /**
  * Represents a single substitute structure in an {@link RGroupList}. <P>
@@ -56,26 +61,95 @@ public class RGroup implements IRGroup {
         return "(R" + rgroupNum + ")";
     }
 
-    IAtom          firstAttachmentPoint;
-    IAtom          secondAttachmentPoint;
     IAtomContainer group;
 
+    private static boolean isAttachmentPoint(IAtom atom, int num) {
+        return atom.getAtomicNumber() == IAtom.Wildcard &&
+               (atom instanceof IPseudoAtom) &&
+               ((IPseudoAtom) atom).getAttachPointNum() == num;
+    }
+
+    private IAtom getAttachmentAtom(int num) {
+        for (IAtom atom : group.atoms()) {
+            if (isAttachmentPoint(atom, num)) {
+                List<IAtom> atoms = group.getConnectedAtomsList(atom);
+                if (atoms.size() == 1)
+                    return atoms.get(0);
+                break;
+            }
+        }
+        return null;
+    }
+
+    private void setAttachmentAtom(IAtom attachTo, int num) {
+        IAtom apo = null;
+        IBond bond = null;
+        for (IAtom atom : group.atoms()) {
+            if (isAttachmentPoint(atom, 1)) {
+                apo = atom;
+                List<IBond> bonds = group.getConnectedBondsList(atom);
+                if (bonds.size() != 1)
+                    throw new IllegalArgumentException();
+                bond = bonds.get(0);
+                break;
+            }
+        }
+
+        if (apo != null && bond != null) {
+            // move exist attachment point
+            if (bond.getEnd().equals(apo))
+                bond.setAtom(attachTo, 0); // setBegin
+            else if (bond.getBegin().equals(apo))
+                bond.setAtom(attachTo, 1); // setEnd
+            else
+                throw new IllegalStateException();
+        } else {
+            assert apo == null;
+            // create a new attachment point + bond
+            apo = group.getBuilder().newInstance(IPseudoAtom.class);
+            apo.setAtomicNumber(IElement.Wildcard);
+            ((IPseudoAtom)apo).setAttachPointNum(num);
+            group.addAtom(apo);
+            group.newBond(attachTo, apo);
+        }
+    }
+
+    /**
+     * This function is used to set/move the attachment point on an RGroup.
+     * It does not set coordinates or adjust hydrogen counts and will modifying
+     * the underlying structure add/move bonds and atoms.
+     *
+     * @param firstAttachmentPoint the atom ato attach to
+     * @deprecated use IPseudoAtom with attachNum to explicitly indicate
+     *             attachment
+     */
+    @Deprecated
     public void setFirstAttachmentPoint(IAtom firstAttachmentPoint) {
-        this.firstAttachmentPoint = firstAttachmentPoint;
+        setAttachmentAtom(firstAttachmentPoint, 1);
     }
 
     @Override
     public IAtom getFirstAttachmentPoint() {
-        return firstAttachmentPoint;
+        return getAttachmentAtom(1);
     }
 
+    /**
+     * This function is used to set/move the attachment point on an RGroup.
+     * It does not set coordinates or adjust hydrogen counts and will modifying
+     * the underlying structure add/move bonds and atoms.
+     *
+     * @param secondAttachmentPoint the atom ato attach to
+     * @deprecated use IPseudoAtom with attachNum to explicitly indicate
+     *             attachment
+     */
+    @Deprecated
     public void setSecondAttachmentPoint(IAtom secondAttachmentPoint) {
-        this.secondAttachmentPoint = secondAttachmentPoint;
+        setAttachmentAtom(secondAttachmentPoint, 2);
     }
 
     @Override
     public IAtom getSecondAttachmentPoint() {
-        return secondAttachmentPoint;
+        return getAttachmentAtom(2);
     }
 
     public void setGroup(IAtomContainer group) {

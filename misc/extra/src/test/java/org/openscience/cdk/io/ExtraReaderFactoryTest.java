@@ -73,16 +73,6 @@ class ExtraReaderFactoryTest {
     }
 
     @Test
-    void testINChI() throws Exception {
-        expectReader("org/openscience/cdk/io/guanine.inchi.xml", INChIFormat.getInstance());
-    }
-
-    @Test
-    void testINChIPlainText() throws Exception {
-        expectReader("org/openscience/cdk/io/guanine.inchi", INChIPlainTextFormat.getInstance());
-    }
-
-    @Test
     void testVASP() throws Exception {
         expectReader("org/openscience/cdk/io/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance());
     }

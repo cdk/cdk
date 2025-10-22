@@ -20,7 +20,6 @@ package org.openscience.cdk.atomtype;
 
 import static org.hamcrest.CoreMatchers.is;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,14 +31,17 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.io.Mol2Reader;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.atomtype.AbstractAtomTypeTest;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -47,8 +49,43 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * CDK atom type perception and mapping of CDK atom types to Sybyl
  * atom types.
  *
+ * @cdk.bug 1890702
  */
-class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
+class SybylAtomTypeMatcherTest extends AbstractAtomTypeTest {
+
+    private final static String ATOMTYPE_LIST = "sybyl-atom-types.owl";
+
+    final static AtomTypeFactory factory = AtomTypeFactory
+            .getInstance("org/openscience/cdk/dict/data/"
+                         + ATOMTYPE_LIST,
+                         SilentChemObjectBuilder.getInstance());
+
+    @Override
+    public String getAtomTypeListName() {
+        return ATOMTYPE_LIST;
+    }
+
+    @Override
+    public AtomTypeFactory getFactory() {
+        return factory;
+    }
+
+    @Override
+    public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
+        return SybylAtomTypeMatcher.getInstance(builder);
+    }
+
+    @Override
+    public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol)
+            throws Exception {
+        Assertions.assertEquals(expectedTypes.length, mol.getAtomCount(), "The number of expected atom types is unequal to the number of atoms");
+        IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
+        for (int i = 0; i < expectedTypes.length; i++) {
+            IAtom testedAtom = mol.getAtom(i);
+            IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom);
+            assertAtomType(testedAtomTypes, "Incorrect perception for atom " + i, expectedTypes[i], foundType);
+        }
+    }
 
     private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
@@ -63,7 +100,6 @@ class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         testedAtomTypes.put("Het", 1);
         testedAtomTypes.put("Hev", 1);
         testedAtomTypes.put("X", 1);
-        testedAtomTypes.put("Het", 1);
         testedAtomTypes.put("H.t3p", 1);
         testedAtomTypes.put("H.spc", 1);
         testedAtomTypes.put("O.t3p", 1);
@@ -87,27 +123,79 @@ class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     void testFindMatchingAtomType_IAtomContainer() throws Exception {
-        String filename = "atomtyping.mol2";
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
+        // String filename = "atomtyping.mol2";
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer molecule = builder.newAtomContainer();
+        IAtom a0 = molecule.newAtom(IElement.O);
+        a0.setAtomTypeName("O.2");
+        IAtom a1 = molecule.newAtom(IElement.O);
+        a1.setAtomTypeName("O.2");
+        IAtom a2 = molecule.newAtom(IElement.C);
+        a2.setAtomTypeName("C.2");
+        IAtom a3 = molecule.newAtom(IElement.C);
+        a3.setAtomTypeName("C.2");
+        IAtom a4 = molecule.newAtom(IElement.C);
+        a4.setAtomTypeName("C.2");
+        IAtom a5 = molecule.newAtom(IElement.C);
+        a5.setAtomTypeName("C.2");
+        IAtom a6 = molecule.newAtom(IElement.C);
+        a6.setAtomTypeName("C.2");
+        IAtom a7 = molecule.newAtom(IElement.C);
+        a7.setAtomTypeName("C.2");
+        IAtom a8 = molecule.newAtom(IElement.C);
+        a8.setAtomTypeName("C.3");
+        molecule.newBond(a0, a2, IBond.Order.DOUBLE);
+        molecule.newBond(a1, a7, IBond.Order.DOUBLE);
+        molecule.newBond(a2, a4);
+        molecule.newBond(a5, a7);
+        molecule.newBond(a6, a7);
+        molecule.newBond(a3, a5, IBond.Order.DOUBLE);
+        molecule.newBond(a2, a3);
+        molecule.newBond(a3, a8);
+        molecule.newBond(a4, a6, IBond.Order.DOUBLE);
 
         // just check consistency; other methods do perception testing
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
-        IAtomType[] types = matcher.findMatchingAtomTypes(mol);
+        IAtomType[] types = matcher.findMatchingAtomTypes(molecule);
         for (int i = 0; i < types.length; i++) {
-            IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
+            IAtomType type = matcher.findMatchingAtomType(molecule, molecule.getAtom(i));
             Assertions.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
         }
     }
 
     @Test
     void testAtomTyping() throws Exception {
-        String filename = "atomtyping.mol2";
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
-        Assertions.assertNotNull(molecule);
+        // String filename = "atomtyping.mol2";
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer molecule = builder.newAtomContainer();
+        IAtom a0 = molecule.newAtom(IElement.O);
+        a0.setAtomTypeName("O.2");
+        IAtom a1 = molecule.newAtom(IElement.O);
+        a1.setAtomTypeName("O.2");
+        IAtom a2 = molecule.newAtom(IElement.C);
+        a2.setAtomTypeName("C.2");
+        IAtom a3 = molecule.newAtom(IElement.C);
+        a3.setAtomTypeName("C.2");
+        IAtom a4 = molecule.newAtom(IElement.C);
+        a4.setAtomTypeName("C.2");
+        IAtom a5 = molecule.newAtom(IElement.C);
+        a5.setAtomTypeName("C.2");
+        IAtom a6 = molecule.newAtom(IElement.C);
+        a6.setAtomTypeName("C.2");
+        IAtom a7 = molecule.newAtom(IElement.C);
+        a7.setAtomTypeName("C.2");
+        IAtom a8 = molecule.newAtom(IElement.C);
+        a8.setAtomTypeName("C.3");
+        molecule.newBond(a0, a2, IBond.Order.DOUBLE);
+        molecule.newBond(a1, a7, IBond.Order.DOUBLE);
+        molecule.newBond(a2, a4);
+        molecule.newBond(a5, a7);
+        molecule.newBond(a6, a7);
+        molecule.newBond(a3, a5, IBond.Order.DOUBLE);
+        molecule.newBond(a2, a3);
+        molecule.newBond(a3, a8);
+        molecule.newBond(a4, a6, IBond.Order.DOUBLE);
+
         IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
@@ -164,11 +252,57 @@ class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     void testAtomTyping4() throws Exception {
-        String filename = "atomtyping4.mol2";
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
-        Assertions.assertNotNull(molecule);
+//        String filename = "atomtyping4.mol2";
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer molecule = builder.newAtomContainer();
+        IAtom a0 = molecule.newAtom(IElement.C);
+        a0.setAtomTypeName("C.ar");
+        a0.setIsAromatic(true);
+        IAtom a1 = molecule.newAtom(IElement.C);
+        a1.setAtomTypeName("C.ar");
+        a1.setIsAromatic(true);
+        IAtom a2 = molecule.newAtom(IElement.C);
+        a2.setAtomTypeName("C.ar");
+        a2.setIsAromatic(true);
+        IAtom a3 = molecule.newAtom(IElement.C);
+        a3.setAtomTypeName("C.ar");
+        a3.setIsAromatic(true);
+        IAtom a4 = molecule.newAtom(IElement.C);
+        a4.setAtomTypeName("C.ar");
+        a4.setIsAromatic(true);
+        IAtom a5 = molecule.newAtom(IElement.C);
+        a5.setAtomTypeName("C.ar");
+        a5.setIsAromatic(true);
+        IAtom a6 = molecule.newAtom(IElement.N);
+        a6.setFormalCharge(1);
+        a6.setAtomTypeName("N.4");
+        IAtom a7 = molecule.newAtom(IElement.Br);
+        a7.setAtomTypeName("Br");
+        IAtom a8 = molecule.newAtom(IElement.C);
+        a8.setAtomTypeName("C.3");
+        IAtom a9 = molecule.newAtom(IElement.C);
+        a9.setAtomTypeName("C.3");
+        IAtom a10 = molecule.newAtom(IElement.C);
+        a10.setAtomTypeName("C.3");
+        IAtom a11 = molecule.newAtom(IElement.C);
+        a11.setAtomTypeName("C.3");
+        molecule.newBond(a0, a1);
+        molecule.getBond(0).setIsAromatic(true);
+        molecule.newBond(a0, a2);
+        molecule.getBond(1).setIsAromatic(true);
+        molecule.newBond(a1, a3);
+        molecule.getBond(2).setIsAromatic(true);
+        molecule.newBond(a2, a4);
+        molecule.getBond(3).setIsAromatic(true);
+        molecule.newBond(a2, a8);
+        molecule.newBond(a3, a5);
+        molecule.getBond(5).setIsAromatic(true);
+        molecule.newBond(a4, a5);
+        molecule.getBond(6).setIsAromatic(true);
+        molecule.newBond(a6, a8);
+        molecule.newBond(a6, a9);
+        molecule.newBond(a6, a10);
+        molecule.newBond(a6, a11);
         IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
@@ -198,17 +332,70 @@ class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     void testAtomTyping2() throws Exception {
-        String filename = "atomtyping2.mol2";
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
-        Assertions.assertNotNull(molecule);
-        IAtomContainer reference = molecule.clone();
+//        String filename = "atomtyping2.mol2";
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer m = builder.newAtomContainer();
+        IAtom a0 = m.newAtom(IElement.Cl);
+        a0.setAtomTypeName("Cl");
+        IAtom a1 = m.newAtom(IElement.C);
+        a1.setAtomTypeName("C.ar");
+        a1.setIsAromatic(true);
+        IAtom a2 = m.newAtom(IElement.C);
+        a2.setAtomTypeName("C.ar");
+        a2.setIsAromatic(true);
+        IAtom a3 = m.newAtom(IElement.C);
+        a3.setAtomTypeName("C.ar");
+        a3.setIsAromatic(true);
+        IAtom a4 = m.newAtom(IElement.C);
+        a4.setAtomTypeName("C.ar");
+        a4.setIsAromatic(true);
+        IAtom a5 = m.newAtom(IElement.C);
+        a5.setAtomTypeName("C.ar");
+        a5.setIsAromatic(true);
+        IAtom a6 = m.newAtom(IElement.C);
+        a6.setAtomTypeName("C.ar");
+        a6.setIsAromatic(true);
+        IAtom a7 = m.newAtom(IElement.O);
+        a7.setAtomTypeName("O.3");
+        IAtom a8 = m.newAtom(IElement.N);
+        a8.setAtomTypeName("N.pl3");
+        IAtom a9 = m.newAtom(IElement.O);
+        a9.setAtomTypeName("O.3");
+        IAtom a10 = m.newAtom(IElement.O);
+        a10.setAtomTypeName("O.2");
+        IAtom a11 = m.newAtom(IElement.N);
+        a11.setAtomTypeName("N.pl3");
+        IAtom a12 = m.newAtom(IElement.O);
+        a12.setAtomTypeName("O.3");
+        IAtom a13 = m.newAtom(IElement.O);
+        a13.setAtomTypeName("O.2");
+        m.newBond(a0, a3);
+        m.newBond(a1, a3);
+        m.getBond(1).setIsAromatic(true);
+        m.newBond(a1, a2);
+        m.getBond(2).setIsAromatic(true);
+        m.newBond(a2, a4);
+        m.getBond(3).setIsAromatic(true);
+        m.newBond(a2, a11);
+        m.newBond(a3, a5);
+        m.getBond(5).setIsAromatic(true);
+        m.newBond(a4, a6);
+        m.getBond(6).setIsAromatic(true);
+        m.newBond(a5, a6);
+        m.getBond(7).setIsAromatic(true);
+        m.newBond(a5, a7);
+        m.newBond(a6, a8);
+        m.newBond(a8, a9);
+        m.newBond(a8, a10, IBond.Order.DOUBLE);
+        m.newBond(a11, a12);
+        m.newBond(a11, a13, IBond.Order.DOUBLE);
+
+        IAtomContainer reference = m.clone();
 
         // test if the perceived atom types match that
-        percieveAtomTypesAndConfigureAtoms(molecule);
+        percieveAtomTypesAndConfigureAtoms(m);
         Iterator<IAtom> refAtoms = reference.atoms().iterator();
-        Iterator<IAtom> atoms = molecule.atoms().iterator();
+        Iterator<IAtom> atoms = m.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
@@ -218,17 +405,72 @@ class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     void testAtomTyping3() throws Exception {
-        String filename = "atomtyping3.mol2";
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
-        Assertions.assertNotNull(molecule);
-        IAtomContainer reference = molecule.clone();
+        // String filename = "atomtyping3.mol2";
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer m = builder.newAtomContainer();
+        IAtom a0 = m.newAtom(IElement.C);
+        a0.setAtomTypeName("C.3");
+        IAtom a1 = m.newAtom(IElement.C);
+        a1.setAtomTypeName("C.2");
+        IAtom a2 = m.newAtom(IElement.C);
+        a2.setAtomTypeName("C.ar");
+        a2.setIsAromatic(true);
+        IAtom a3 = m.newAtom(IElement.N);
+        a3.setAtomTypeName("N.2");
+        IAtom a4 = m.newAtom(IElement.N);
+        a4.setAtomTypeName("N.am");
+        a4.setIsAromatic(true);
+        IAtom a5 = m.newAtom(IElement.O);
+        a5.setAtomTypeName("O.2");
+        IAtom a6 = m.newAtom(IElement.C);
+        a6.setAtomTypeName("C.3");
+        IAtom a7 = m.newAtom(IElement.C);
+        a7.setAtomTypeName("C.ar");
+        a7.setIsAromatic(true);
+        IAtom a8 = m.newAtom(IElement.C);
+        a8.setAtomTypeName("C.ar");
+        a8.setIsAromatic(true);
+        IAtom a9 = m.newAtom(IElement.C);
+        a9.setAtomTypeName("C.ar");
+        a9.setIsAromatic(true);
+        IAtom a10 = m.newAtom(IElement.C);
+        a10.setAtomTypeName("C.ar");
+        a10.setIsAromatic(true);
+        IAtom a11 = m.newAtom(IElement.C);
+        a11.setAtomTypeName("C.ar");
+        a11.setIsAromatic(true);
+        IAtom a12 = m.newAtom(IElement.C);
+        a12.setAtomTypeName("C.ar");
+        a12.setIsAromatic(true);
+        m.newBond(a0, a1);
+        m.newBond(a0, a2);
+        m.newBond(a1, a3, IBond.Order.DOUBLE);
+        m.newBond(a1, a6);
+        m.newBond(a2, a5, IBond.Order.DOUBLE);
+        m.newBond(a2, a4);
+        m.getBond(5).setIsAromatic(true);
+        m.newBond(a3, a4);
+        m.newBond(a4, a7);
+        m.newBond(a7, a8);
+        m.getBond(8).setIsAromatic(true);
+        m.newBond(a7, a12);
+        m.getBond(9).setIsAromatic(true);
+        m.newBond(a8, a9);
+        m.getBond(10).setIsAromatic(true);
+        m.newBond(a9, a10);
+        m.getBond(11).setIsAromatic(true);
+        m.newBond(a10, a11);
+        m.getBond(12).setIsAromatic(true);
+        m.newBond(a11, a12);
+        m.getBond(13).setIsAromatic(true);
+
+        Assertions.assertNotNull(m);
+        IAtomContainer reference = m.clone();
 
         // test if the perceived atom types match that
-        percieveAtomTypesAndConfigureAtoms(molecule);
+        percieveAtomTypesAndConfigureAtoms(m);
         Iterator<IAtom> refAtoms = reference.atoms().iterator();
-        Iterator<IAtom> atoms = molecule.atoms().iterator();
+        Iterator<IAtom> atoms = m.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
@@ -301,8 +543,8 @@ class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
         String[] expectedTypes = {"C.1", "C.1", "C.3"};
         assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
-    } 
-    
+    }
+
     @Test
     void testAllene() throws Exception {
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
@@ -610,7 +852,7 @@ class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addBond(b16);
 
         String[] expectedTypes = {"Si", "O.3", "O.3", "O.3", "C.3", "C.3", "C.3", "H", "H", "H", "H", "H", "H", "H",
-                "H", "H", "H"};
+                                  "H", "H", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -726,7 +968,7 @@ class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         ferrocene.addBond(9, 5, Order.SINGLE);
 
         String[] expectedTypes = new String[]{"C.2", "C.2", "C.2", "C.2", "Any", "C.2", "C.2", "C.2", "C.2", "Any",
-                "Fe"};
+                                              "Fe"};
         assertAtomTypes(testedAtomTypes, expectedTypes, ferrocene);
     }
 

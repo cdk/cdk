@@ -138,4 +138,35 @@ public final class ExtendedCisTrans
                                                   int cfg) {
         return new ExtendedCisTrans(focus, carriers.toArray(new IBond[2]), cfg);
     }
+
+    @Override
+    public boolean contains(IAtom atom) {
+        if (super.contains(atom))
+            return true;
+
+        // walk along the cumulated bonds to check if the atom is one of those
+        // 'a2 <= a1 <= a=b => b1 => b2'
+        IAtomContainer container = getFocus().getContainer();
+        if (container == null)
+            return false;
+        IBond focus = getFocus();
+
+        IAtom a = focus.getBegin();
+        IAtom b = focus.getEnd();
+        IAtom aPrev = a, bPrev = b;
+        IAtom aNext, bNext;
+        aNext = getOtherAtom(container, a, b);
+        bNext = getOtherAtom(container, b, a);
+        while (aNext != null && bNext != null) {
+            if (aNext.equals(atom) || bNext.equals(atom))
+                return true;
+            IAtom tmp = getOtherAtom(container, aNext, aPrev);
+            aPrev = aNext;
+            aNext = tmp;
+            tmp = getOtherAtom(container, bNext, bPrev);
+            bPrev = bNext;
+            bNext = tmp;
+        }
+        return false;
+    }
 }

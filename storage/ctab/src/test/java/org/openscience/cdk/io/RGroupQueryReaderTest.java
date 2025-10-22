@@ -55,6 +55,7 @@ import java.util.Map;
 /**
  * JUnit tests for {@link org.openscience.cdk.io.RGroupQueryReader}.
  * @author Mark Rijnbeek
+ * @author John Mayfield
  */
 class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 

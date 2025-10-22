@@ -25,9 +25,14 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,9 +45,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Represents information contained in a Symyx RGfile (R-group query file).<br>
@@ -84,11 +93,6 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
      */
     private Map<Integer, IRGroupList>        rGroupDefinitions;
 
-    /**
-     * For each Rgroup Atom there may be a map containing (number,bond),
-     * being the attachment order (1,2) and the bond to attach to.
-     */
-    private Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints;
 
     public RGroupQuery(IChemObjectBuilder builder) {
         super(builder);
@@ -189,6 +193,13 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
         return true;
     }
 
+    private static boolean isAttachmentPoint(IAtom atom) {
+        if (atom.getAtomicNumber() != IElement.Wildcard)
+            return false;
+        return atom instanceof IPseudoAtom &&
+               ((IPseudoAtom) atom).getAttachPointNum() != 0;
+    }
+
     @Override
     public List<IAtomContainer> getAllConfigurations() throws CDKException {
 
@@ -258,6 +269,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
             IAtomContainer rootClone;
             try {
                 rootClone = root.clone();
+                rootClone.setProperty(CDKConstants.CTAB_SGROUPS, Collections.emptyList());
             } catch (CloneNotSupportedException e) {
                 //Abort with CDK exception
                 throw new CDKException("clone() failed; could not perform R-group substitution.");
@@ -273,14 +285,17 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
                     IAtom rAtom = this.getRgroupQueryAtoms(rNum).get(pos);
                     if (substitute != null) {
 
-                        IAtomContainer rgrpClone;
-                        try {
-                            rgrpClone = substitute.getGroup().clone();
-                        } catch (CloneNotSupportedException e) {
-                            throw new CDKException("clone() failed; could not perform R-group substitution.");
-                        }
+                        // make a copy without the explicit attachment points
+                        IAtomContainer rgrpCopy = getBuilder().newAtomContainer();
+                        AtomContainerManipulator.copy(rgrpCopy, substitute.getGroup(), a -> !isAttachmentPoint(a));
 
-                        //root cloned, substitute cloned. These now need to be attached to each other..
+                        // root cloned, substitute clond. These now need to be attached to each other..
+                        IAtomContainer rgrpClone = null;
+                        try {
+                            rgrpClone = rgrpCopy.clone();
+                        } catch (CloneNotSupportedException e) {
+                            throw new RuntimeException(e);
+                        }
                         rootClone.add(rgrpClone);
 
                         Map<Integer, IBond> rAttachmentPoints = this.getRootAttachmentPoints().get(rAtom);
@@ -300,8 +315,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
                                 //Do substitution with the clones
                                 IBond cloneBond = rootClone.getBond(getBondPosition(bond, root));
                                 if (subsAt != null) {
-                                    IAtom subsCloneAtom = rgrpClone.getAtom(getAtomPosition(subsAt,
-                                            substitute.getGroup()));
+                                    IAtom subsCloneAtom = rgrpClone.getAtom(getAtomPosition(subsAt, rgrpCopy));
                                     cloneBond.setAtom(subsCloneAtom, whichAtomInBond);
                                 }
                             }
@@ -328,10 +342,12 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
                         IAtom discarded = rootClone.getAtom(getAtomPosition(rAtom, root));
                         for (IBond r0Bond : rootClone.bonds()) {
                             if (r0Bond.contains(discarded)) {
-                                for (IAtom atInBond : r0Bond.atoms()) {
-                                    atInBond.setProperty(CDKConstants.REST_H, this.getRGroupDefinitions().get(rNum)
-                                            .isRestH());
-                                }
+                                IAtom atInBond = r0Bond.getOther(discarded);
+                                atInBond.setProperty(CDKConstants.REST_H, this.getRGroupDefinitions().get(rNum)
+                                                                              .isRestH());
+                                if (atInBond.getImplicitHydrogenCount() != null)
+                                    atInBond.setImplicitHydrogenCount(atInBond.getImplicitHydrogenCount() +
+                                                                      r0Bond.getOrder().numeric());
                             }
                         }
                     }
@@ -592,12 +608,51 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
 
     @Override
     public void setRootAttachmentPoints(Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints) {
-        this.rootAttachmentPoints = rootAttachmentPoints;
+
+        List<Sgroup> sgroups = rootStructure.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null)
+            sgroups = new ArrayList<>();
+        else
+            sgroups = new ArrayList<>(sgroups);
+
+        sgroups.removeIf(sgrp -> sgrp.getType() == SgroupType.ExtAttachOrdering);
+
+        if (rootAttachmentPoints != null) {
+            for (Map.Entry<IAtom, Map<Integer, IBond>> e : rootAttachmentPoints.entrySet()) {
+                Sgroup sgroup = new Sgroup();
+                sgroup.setType(SgroupType.ExtAttachOrdering);
+                sgroup.addAtom(e.getKey());
+                List<Map.Entry<Integer, IBond>> bmap = new ArrayList<>(e.getValue().entrySet());
+                bmap.sort((o1, o2) -> o1.getKey().compareTo(o2.getKey()));
+                for (Map.Entry<Integer, IBond> bmapEntry : bmap)
+                    sgroup.addBond(bmapEntry.getValue());
+                sgroups.add(sgroup);
+            }
+        }
+
+        rootStructure.setProperty(CDKConstants.CTAB_SGROUPS,
+                                  sgroups);
     }
 
     @Override
     public Map<IAtom, Map<Integer, IBond>> getRootAttachmentPoints() {
-        return rootAttachmentPoints;
+        List<Sgroup> sgroups = rootStructure.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null)
+            return Collections.emptyMap();
+
+        Map<IAtom, Map<Integer,IBond>> result = new HashMap<>();
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getType() == SgroupType.ExtAttachOrdering &&
+                sgroup.getAtoms().size() == 1) {
+                IAtom atom = sgroup.getAtoms().iterator().next();
+                Map<Integer,IBond> val = new LinkedHashMap<>();
+                for (IBond bond : sgroup.getBonds())
+                    val.put(val.size()+1, bond);
+                result.put(atom, val);
+            }
+        }
+
+        return result;
     }
 
     @Override

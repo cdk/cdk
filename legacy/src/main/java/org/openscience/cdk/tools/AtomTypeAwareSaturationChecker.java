@@ -49,7 +49,9 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.created 2012-04-13
  *
  * @cdk.keyword bond order
+ * @deprecated replaced with {@link org.openscience.cdk.aromaticity.Kekulization}
  */
+@Deprecated
 public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceBondOrderTool {
 
     final SaturationChecker           staturationChecker;
