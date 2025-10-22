@@ -31,7 +31,6 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -500,57 +499,43 @@ class ExhaustiveFragmenterTest extends CDKTestCase {
         // index = 1 (0001) -> {nums[0]}
         Assertions.assertArrayEquals(
                 new int[]{10},
-                ExhaustiveFragmenter.generateSubset(BigInteger.valueOf(1), nums)
+                ExhaustiveFragmenter.generateSubset(1, nums)
         );
 
         // index = 2 (0010) -> {nums[1]}
         Assertions.assertArrayEquals(
                 new int[]{20},
-                ExhaustiveFragmenter.generateSubset(BigInteger.valueOf(2), nums)
+                ExhaustiveFragmenter.generateSubset(2, nums)
         );
 
         // index = 3 (0011) -> {nums[0], nums[1]}
         Assertions.assertArrayEquals(
                 new int[]{10, 20},
-                ExhaustiveFragmenter.generateSubset(BigInteger.valueOf(3), nums)
+                ExhaustiveFragmenter.generateSubset(3, nums)
         );
 
         // index = 4 (0100) -> {nums[2]}
         Assertions.assertArrayEquals(
                 new int[]{30},
-                ExhaustiveFragmenter.generateSubset(BigInteger.valueOf(4), nums)
+                ExhaustiveFragmenter.generateSubset(4, nums)
         );
 
         // index = 5 (0101) -> {nums[0], nums[2]}
         Assertions.assertArrayEquals(
                 new int[]{10, 30},
-                ExhaustiveFragmenter.generateSubset(BigInteger.valueOf(5), nums)
+                ExhaustiveFragmenter.generateSubset(5, nums)
         );
 
         // index = 7 (0111) -> {nums[0], nums[1], nums[2]}
         Assertions.assertArrayEquals(
                 new int[]{10, 20, 30},
-                ExhaustiveFragmenter.generateSubset(BigInteger.valueOf(7), nums)
+                ExhaustiveFragmenter.generateSubset(7, nums)
         );
 
         // index = 15 (1111) -> {nums[0], nums[1], nums[2], nums[3]}
         Assertions.assertArrayEquals(
                 new int[]{10, 20, 30, 40},
-                ExhaustiveFragmenter.generateSubset(BigInteger.valueOf(15), nums)
-        );
-
-        int[] longRange = new int[100];
-        for (int i = 0; i < longRange.length; i++) {
-            longRange[i] = i;
-        }
-
-        // index = 70 (1000... and 67 more zeros) -> {nums[70]}
-        Assertions.assertArrayEquals(
-                new int[] {70},
-                ExhaustiveFragmenter.generateSubset(
-                        BigInteger.ONE.shiftLeft(70),
-                        longRange
-                )
+                ExhaustiveFragmenter.generateSubset(15, nums)
         );
     }
 

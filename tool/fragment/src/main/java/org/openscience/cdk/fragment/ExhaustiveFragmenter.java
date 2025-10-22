@@ -36,7 +36,6 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.math.BigInteger;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,12 +58,14 @@ import java.util.Set;
  *     returned.</li>
  * <li>Fragments are returned with open valences, where a bond has been split.</li>
  * <li>The fragmentation splits at a maximum tree depth of 31, meaning that
- *     maximum 31 bonds are split in one run.</li>
+ *     maximum 27 bonds are split in one run.</li>
  * <li>The SMILES code of the fragments is generated with {@link SmiFlavor#Unique}
  *     and {@link SmiFlavor#UseAromaticSymbols}.</li>
  * <li>Stereo information is disregarded</li>
  * </ul>
- * However, users can modify these settings.
+ * However, users can modify these settings, with the exception, that the
+ * maximum tree depth can not be higher than 31 (Java's limitation caused by
+ * integer indexing).
  * <p>
  * <strong>Warning on preservation of stereo information:</strong> This process
  * is not reliable and can lead to incorrect stereochemistry in the resulting
@@ -179,7 +180,10 @@ public class ExhaustiveFragmenter implements IFragmenter {
             new SmilesGenerator(
                     SmiFlavor.Unique | SmiFlavor.UseAromaticSymbols
             );
-    private static final int DEFAULT_INCLUSIVE_MAX_TREE_DEPTH = 31;
+    // assuming each fragment is unique (as if there was no deduplication)
+    // 27 would be the maximum tree depth to hold all fragments in the
+    // hashmap.
+    private static final int DEFAULT_INCLUSIVE_MAX_TREE_DEPTH = 27;
     private static final boolean DEFAULT_COPY_STEREO_INFO = false;
 
     private Map<String, IAtomContainer> fragMap;
@@ -355,18 +359,21 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * Sets the maximum number of bonds that can be simultaneously split in a
      * single fragmentation event.
      * <p>
-     * This is a practical limit to prevent combinatorial explosion and
-     * out-of-memory errors for very large molecules. The value must be
-     * a positive integer.
+     * Must be within the range {@code 0 < inclusiveMaxTreeDepth < 32}. This
+     * limit is important due to the combinatorial explosion of fragments
+     * (which scales with 2^n, where n is the number of splittable bonds) and
+     * Java's use of 32-bit integers for indexing. Setting a lower limit can
+     * help manage computational resources for larger molecules.
      * </p>
      *
      * @param inclusiveMaxTreeDepth the exclusive maximum number of bonds that
      *                              can be split in one atom container.
      */
     public void setInclusiveMaxTreeDepth(int inclusiveMaxTreeDepth) {
-        if (inclusiveMaxTreeDepth <= 0) {
+        if (inclusiveMaxTreeDepth <= 0 || inclusiveMaxTreeDepth >= 32) {
             throw new IllegalArgumentException(
-                    "Inclusive max tree depth must be greater than zero"
+                    "Inclusive max tree depth must be grater then zero and " +
+                    "smaller then 32. Provided: " + inclusiveMaxTreeDepth
             );
         }
         this.inclusiveMaxTreeDepth = inclusiveMaxTreeDepth;
@@ -464,9 +471,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
         // Compute the number of possible bond subsets (excluding the empty set):
         // 2^n - 1
-        BigInteger numberOfIterations = BigInteger.ONE.shiftLeft(
-                splittableBonds.length
-        ).subtract(BigInteger.ONE);
+        int numberOfIterations = (1 << splittableBonds.length) - 1;
 
         // Store indices of splittable bonds for subset generation
         int[] splittableBondIndices = new int[splittableBonds.length];
@@ -474,17 +479,10 @@ public class ExhaustiveFragmenter implements IFragmenter {
             splittableBondIndices[i] = splittableBonds[i].getIndex();
         }
 
-        if (numberOfIterations.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) >= 0) {
-            this.fragMap = new HashMap<>(Integer.MAX_VALUE);
-        } else {
-            this.fragMap = new HashMap<>(numberOfIterations.intValue());
-        }
+        this.fragMap = new HashMap<>(numberOfIterations);
 
         // Iterate over all non-empty subsets of splittable bonds
-        for (BigInteger i = BigInteger.ONE;
-             i.compareTo(numberOfIterations) <= 0;
-             i = i.add(BigInteger.ONE)
-        ) {
+        for (int i = 1; i <= numberOfIterations; i++) {
             int[] subset = generateSubset(i, splittableBondIndices);
             int subsetSize = subset.length;
 
@@ -533,14 +531,20 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * fragmentation. This method is especially useful to determine if it is
      * even possible to split a specific molecule exhaustively. The number of
      * fragments is 2^n - 1 with n being the number of splittable bonds.
-     *
-     * <p>
-     * Due to the combinatorial explosion, the number of fragments can grow
-     * extremely large, potentially leading to out-of-memory errors or
-     * excessively long processing times. Consider using the
-     * {@link #setInclusiveMaxTreeDepth(int)} method to limit the number of
-     * simultaneous bond splits.
-     * </p>
+     * It is impossible to generate all possible fragment combinations for a molecule
+     * with more than 31 splittable bonds, as this would exceed the maximum tree depth
+     * of 31 due to the combinatorial explosion. For molecules with more than 31
+     * splittable bonds, the fragmentation will still occur, but it will be limited
+     * to a maximum of {@code inclusiveMaxTreeDepth} bonds per fragmentation step.
+     * To mitigate this one can check this with this function, for example:
+     * <pre>
+     *     {@code
+     *     ExhaustiveFragmenter exhFragmenter = new Exhaustive Fragmenter;
+     *     if (exhFragmenter.getSplittableBonds(mol) > Integer.SIZE - 1) {
+     *         // handle the case, where it is impossible to entirely split the
+     *         // molecule
+     *     }}
+     * </pre>
      *
      * @param atomContainer the container which contains the molecule in question.
      * @return the bonds which would be split by the exhaustive fragmentation.
@@ -594,9 +598,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * elements does not matter (i.e., `[1, 2]` and `[2, 1]` are equivalent).
      *
      * <p>The total number of possible subsets is (2^n) - 1, where `n` is the
-     * length of `nums`. Subsets are generated using bitwise operations on the
-     * provided {@link BigInteger}, where each `1` bit in `index` selects the
-     * corresponding element from `nums`.</p>
+     * length of `nums`. Subsets are generated using bitwise operations, where
+     * each `1` bit in `index` selects the corresponding element from `nums`.</p>
      *
      * <p>Example output for `nums = [1, 2, 3]`:</p>
      * <pre>
@@ -624,15 +627,15 @@ public class ExhaustiveFragmenter implements IFragmenter {
      *             in `nums` may result in duplicate subset entries.
      * @return An array containing the subset corresponding to `index`.
      */
-    protected static int[] generateSubset(BigInteger index, int[] nums) {
+    protected static int[] generateSubset(int index, int[] nums) {
         // allocate subset array based on the number of 1-bits in index.
-        int[] subset = new int[index.bitCount()];
+        int[] subset = new int[Integer.bitCount(index)];
         int subsetIndex = 0;
 
-        // only iterate through set bits
-        while (index.compareTo(BigInteger.ZERO) != 0) {
+        // process using bit manipulation - only iterate through set bits
+        while (index != 0) {
             // find position of lowest set bit
-            int lowestBitPos = index.getLowestSetBit();
+            int lowestBitPos = Integer.numberOfTrailingZeros(index);
 
             // add the corresponding element from nums if within bounds
             if (lowestBitPos < nums.length) {
@@ -640,8 +643,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 subsetIndex++;
             }
 
-            // clear the lowest set bit and continue
-            index = index.clearBit(lowestBitPos);
+            // Clear the lowest set bit and continue
+            index = index & (index - 1);
         }
 
         return subset;
