@@ -87,7 +87,11 @@ public class DfPattern extends Pattern {
         this.src = src;
         this.query = query;
         determineFilters(query);
-        state = new DfState(query);
+        if (super.hasVarAttach) {
+          state = new DfState(query, VarAttachFilter.getAttachAtoms(query));
+        } else {
+          state = new DfState(query);
+        }
     }
 
     private static void checkCompatibleAPI(IAtom atom) {
@@ -122,7 +126,7 @@ public class DfPattern extends Pattern {
      */
     @Override
     public Mappings matchAll(IAtomContainer mol) {
-        if (mol.getAtomCount() < query.getAtomCount())
+        if (!state.checkMatchPossible(mol))
             return new Mappings(src, mol, Collections.emptySet());
         if (mol.getAtomCount() > 0)
             checkCompatibleAPI(mol.getAtom(0));

@@ -32,9 +32,10 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -392,6 +393,51 @@ class SmartsPatternTest {
     void testInsaturationOnTriple() throws Exception {
         assertMatch("[Ci]~[Ci]O", "C#CO", 1, 1);
         assertMatch("[Ci2]~[Ci2]O", "C#CO", 1, 1);
+    }
+
+    @Test
+    void testVariableAttachment() throws Exception {
+        assertMatch("N1CCCCC1.*Cl |m:6:0.1.2.3.4.5|", "ClN1CCCCC1", 2, 1);
+        assertMatch("N1CCCCC1.*Cl |m:6:0.1.2.3.4.5|", "N1C(Cl)CCCC1", 2, 1);
+        assertMatch("N1CCCCC1.*Cl |m:6:0.1.2.3.4.5|", "N1CC(Cl)CCC1", 2, 1);
+        assertMatch("N1CCCCC1.*Cl |m:6:0.1.2.3.4.5|", "N1CCC(Cl)CC1", 2, 1);
+        assertMatch("N1CCCCC1.*Cl |m:6:0.1.2.3.4.5|", "N1CCCC(Cl)C1", 2, 1);
+        assertMatch("N1CCCCC1.*Cl |m:6:0.1.2.3.4.5|", "N1CCCCC1Cl", 2, 1);
+    }
+
+    @Test
+    void testNestedVariableAttachment() throws Exception {
+        // query=(chloro-pyrid-2-yl)-indole
+        assertMatch("n1ccc2c1cccc2.*c1ncccc1.*Cl |m:9:0.1.2.3.4.5.6.7.8,16:10.11.12.13.14.15|",
+                    "Cn1c(-c2ccc(Cl)cn2)c(C2CCCC2)c2ccc(C(=O)NC3(C(=O)Nc4ccc(/C=C/C(=O)O)cc4)CCCC3)cc21 CHEMBL2181621", 1, 1);
+        assertMatch("n1ccc2c1cccc2.*c1ncccc1.*Cl |m:9:0.1.2.3.4.5.6.7.8,16:10.11.12.13.14.15|",
+                    "O=C(O)/C=C/c1cn(-c2ncc(C(F)(F)F)cc2Cl)c2ccccc12 CHEMBL1431337", 1, 1);
+        assertMatch("n1ccc2c1cccc2.*c1ncccc1.*Cl |m:9:0.1.2.3.4.5.6.7.8,16:10.11.12.13.14.15|",
+                    "Clc1c(-c2c(-c3ccccc3)[nH]c3ccccc23)nc2ccccc2c1-c1ccccc1 CHEMBL4545966", 1, 1);
+        // pyrid-2-yl should not match pyrid-3-yl...
+        assertMatch("n1ccc2c1cccc2.*c1ncccc1.*Cl |m:9:0.1.2.3.4.5.6.7.8,16:10.11.12.13.14.15|",
+                    "Cn1c(-c2ccc(Cl)nc2)c(C2CCCC2)c2ccc(C(=O)NC3(C(=O)Nc4ccc(/C=C/C(=O)O)cc4)CCCC3)cc21 3-pyridine", 0, 0);
+        // ...but with a doubled-ended (e.g. (chloro-pyridyl)-indole) attachment it should!
+        assertMatch("n1ccc2c1cccc2.**.c1ncccc1.*Cl |m:9:0.1.2.3.4.5.6.7.8,10:11.12.13.14.15.16,17:11.12.13.14.15.16|",
+                    "Cn1c(-c2ccc(Cl)nc2)c(C2CCCC2)c2ccc(C(=O)NC3(C(=O)Nc4ccc(/C=C/C(=O)O)cc4)CCCC3)cc21 3-pyridine", 2, 1);
+    }
+
+    @Test
+    void testNestedVariableAttachmentRing() throws Exception {
+        assertMatch("c1ccccc1CCCC* |m:10:0.1.2.3.4|",
+                    "c1cccc2c1CCCC2", 4, 1);
+    }
+
+    @Test
+    void testNestedVariableAttachmentOverlapping() throws Exception {
+        assertMatch("**.**.n1ccccc1.n1ccccc1 |m:0:5.6.7.8.9,1:11.12.13.14.15,2:5.6.8.7.9,3:11.12.13.14.15|",
+                    "n1c2c3ccc1.n1c-2c-3ccc1", 8, 1);
+    }
+
+    @Test
+    void testNestedVariableAttachmentStereo() throws Exception {
+        assertMatch("N1CCCCC1.*[C@H](O)C |m:6:0.1.2.3.4.5|", "N1CCCCC1[C@H](O)C", 2, 1);
+        assertMatch("N1CCCCC1.*[C@H](O)C |m:6:0.1.2.3.4.5|", "N1CCCCC1[C@@H](O)C",0, 0);
     }
 
     IAtomContainer smi(String smi) throws Exception {
