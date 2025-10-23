@@ -40,8 +40,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 /**
- * This filter is used as a post-processing mappings from substructure searches
- * and checking variable attachment/positional variation bonds.
+ * This filter is used to filter and post-process mappings from substructure
+ * searches, it checks variable attachment (aka positional variation) bonds.
  * <br/>
  * We match the subgraph skipping any '*' variable attachment atoms, these will
  * be left as "UNMAPPED (-1)" in our atom mapping bijection. This class then
