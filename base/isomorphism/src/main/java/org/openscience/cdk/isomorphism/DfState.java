@@ -23,17 +23,23 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * Internals of the DF ("Depth-First" {@cdk.cite Jeliazkova18}) substructure
@@ -72,6 +78,7 @@ final class DfState implements Iterable<int[]> {
 
     private final IAtomContainer query;
     private final IQueryBond[]   qbonds;
+    private final List<IQueryAtom> qatoms;
     private final int            numAtoms;
     private       int            numBonds;
     private int                  numMapped;
@@ -96,11 +103,14 @@ final class DfState implements Iterable<int[]> {
         private StackFrame() {}
     }
 
-    private int          sptr;
+    private int                sptr;
     private final StackFrame[] stack;
 
     DfState(IAtomContainer query) {
+        this(query, Collections.emptySet());
+    }
 
+    DfState(IAtomContainer query, Set<IAtom> skip) {
         IChemObjectBuilder builder = query.getBuilder();
         if (builder == null) {
             builder = findBuilder();
@@ -111,12 +121,19 @@ final class DfState implements Iterable<int[]> {
 
         IAtomContainer tmp = builder.newInstance(IAtomContainer.class, query);
         this.qbonds = new IQueryBond[tmp.getBondCount()];
+        this.qatoms = new ArrayList<>();
         this.amap = new int[query.getAtomCount()];
+
+        // skip = Collections.singleton(query.getAtom(6));
+        for (IAtom atom : skip) {
+            amap[query.indexOf(atom)] = -2;
+        }
 
         int stackSize = 0;
         for (IAtom atom : tmp.atoms()) {
             if (atom instanceof IQueryAtom) {
                 if (amap[atom.getIndex()] == 0) {
+                    qatoms.add((IQueryAtom)atom);
                     stackSize += prepare(atom, null) + 1;
                 }
             } else
@@ -128,7 +145,7 @@ final class DfState implements Iterable<int[]> {
         for (int i = 0; i < stack.length; i++)
             this.stack[i] = new StackFrame();
 
-        this.numAtoms = amap.length;
+        this.numAtoms = amap.length - skip.size();
         this.query = tmp;
     }
 
@@ -141,6 +158,7 @@ final class DfState implements Iterable<int[]> {
     DfState(DfState state) {
         // only need shallow copy of the query bonds
         this.qbonds = Arrays.copyOf(state.qbonds, state.qbonds.length);
+        this.qatoms = state.qatoms;
         this.query = state.query;
         this.numBonds = state.numBonds;
         this.numAtoms = state.numAtoms;
@@ -185,10 +203,16 @@ final class DfState implements Iterable<int[]> {
             if (bond == prev)
                 continue;
             IAtom nbr = bond.getOther(atom);
+
+            // corner case from the pcore matcher
+            if (nbr == null)
+                continue;
+
             if (amap[nbr.getIndex()] == 0) {
                 qbonds[numBonds++] = (IQueryBond) bond;
                 count += prepare(nbr, bond) + 1;
-            } else if (nbr.getIndex() < atom.getIndex()) {
+            } else if (amap[nbr.getIndex()] == 1 &&
+                       nbr.getIndex() < atom.getIndex()) {
                 ++count; // ring closure
                 qbonds[numBonds++] = (IQueryBond) bond;
             }
@@ -207,6 +231,11 @@ final class DfState implements Iterable<int[]> {
         this.avisit = new boolean[mol.getAtomCount()];
         sptr = 0;
         store(0, null);
+    }
+
+    boolean checkMatchPossible(IAtomContainer mol) {
+        return mol.getAtomCount() >= numAtoms &&
+               mol.getBondCount() >= numBonds;
     }
 
     /**
@@ -333,12 +362,12 @@ final class DfState implements Iterable<int[]> {
                     return true;
 
                 // handle disconnected atoms
-                for (IAtom qatom : query.atoms()) {
+                for (IQueryAtom qatom : qatoms) {
                     if (amap[qatom.getIndex()] == UNMAPPED) {
                         Iterator<IAtom> iter = atoms();
                         while (iter.hasNext()) {
                             IAtom atom = iter.next();
-                            if (feasible(bidx, (IQueryAtom) qatom, atom))
+                            if (feasible(bidx, qatom, atom))
                                 continue main;
                         }
                         break;
