@@ -520,7 +520,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 // Store the fragment if it meets the size requirement and is
                 // unique
                 if (numberOfAtoms >= minFragSize) {
-                    if (fragMap.size() == HashMap.) {
+                    if (fragMap.size() == Integer.MAX_VALUE) {
                         throw new ArithmeticException(
                             "The maximum size to store the current amount of " +
                             "molecules would exceed the maximum value for an " +
