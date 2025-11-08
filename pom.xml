@@ -33,6 +33,8 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <maven-surefire.version>3.5.4</maven-surefire.version>
+        <maven-compiler.version>3.14.1</maven-compiler.version>
+        <maven-shade.version>3.6.1</maven-shade.version>
     </properties>
     <licenses>
         <license>
@@ -614,7 +616,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.0</version>
+                <version>${maven-compiler.version}</version>
                 <configuration>
                     <release>8</release>
                 </configuration>
