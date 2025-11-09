@@ -31,6 +31,20 @@
         <!--suppress UnresolvedMavenProperty -->
         <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/bundle/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+        <maven-surefire.version>3.5.4</maven-surefire.version>
+        <maven-compiler.version>3.14.1</maven-compiler.version>
+        <maven-jar.version>3.4.2</maven-jar.version>
+        <maven-javadoc.version>3.12.0</maven-javadoc.version>
+        <maven-shade.version>3.6.1</maven-shade.version>
+        <maven-pmd.version>3.28.0</maven-pmd.version>
+        <jacoco.version>0.8.14</jacoco.version>
+
+        <junit.version>5.14.1</junit.version>
+        <mockito.version>4.11.0</mockito.version>
+
+        <log4j.version>2.25.2</log4j.version>
+        <cmlxom.version>4.14</cmlxom.version>
     </properties>
     <licenses>
         <license>
@@ -58,6 +72,7 @@
         <repository>
             <id>central</id>
             <url>https://central.sonatype.com/</url>
+            <layout>default</layout>
         </repository>
         <!-- site is staged and then copied to a sub-folder of gh-pages, no
              url is provided but the field is needed to stage the site. -->
@@ -489,17 +504,17 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
-                <version>5.13.4</version>
+                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-params</artifactId>
-                <version>5.13.4</version>
+                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.13.4</version>
+                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
@@ -519,12 +534,12 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>4.11.0</version>
+                <version>${mockito.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-junit-jupiter</artifactId>
-                <version>4.11.0</version>
+                <version>${mockito.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.vecmath</groupId>
@@ -554,17 +569,17 @@
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
-                <version>2.25.1</version>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
-                <version>2.25.1</version>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-1.2-api</artifactId>
-                <version>2.25.1</version>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>xerces</groupId>
@@ -584,7 +599,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.13</version>
+                    <version>${jacoco.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -592,7 +607,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.6.2</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -612,7 +627,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.0</version>
+                <version>${maven-compiler.version}</version>
                 <configuration>
                     <release>8</release>
                 </configuration>
@@ -620,7 +635,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.3</version>
+                <version>${maven-surefire.version}</version>
                 <configuration>
                     <!-- prevent the annoying ForkedBooter process from stealing
                          window focus on Mac OS -->
@@ -637,7 +652,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>${maven-jar.version}</version>
                 <inherited>true</inherited>
                 <configuration>
                     <archive>
@@ -652,7 +667,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11.2</version>
+                <version>${maven-javadoc.version}</version>
                 <configuration>
                     <tags>
                         <!--cdk.depends and cdk.builddepends no longer used-->
@@ -768,7 +783,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.27.0</version>
+                <version>${maven-pmd.version}</version>
                 <configuration>
                     <rulesets>
                         <ruleset>/pmd/custom.xml</ruleset>
@@ -807,7 +822,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.9.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -826,7 +841,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11.2</version>
+                <version>${maven-javadoc.version}</version>
                 <reportSets>
                     <reportSet>
                         <id>default</id>
@@ -845,7 +860,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.27.0</version>
+                <version>${maven-pmd.version}</version>
                 <configuration>
                     <rulesets>
                         <ruleset>/pmd/custom.xml</ruleset>
@@ -870,6 +885,7 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
                         <executions>
                             <execution>
                                 <id>prepare-agent</id>
@@ -911,7 +927,7 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.8.0</version>
+                        <version>0.9.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
