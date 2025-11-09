@@ -39,6 +39,8 @@
         <maven-shade.version>3.6.1</maven-shade.version>
         <maven-pmd.version>3.28.0</maven-pmd.version>
         <jacoco.version>0.8.14</jacoco.version>
+
+        <log4j.version>2.25.2</log4j.version>
     </properties>
     <licenses>
         <license>
@@ -563,17 +565,17 @@
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
-                <version>2.25.1</version>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
-                <version>2.25.1</version>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-1.2-api</artifactId>
-                <version>2.25.1</version>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>xerces</groupId>
