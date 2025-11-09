@@ -34,8 +34,11 @@
 
         <maven-surefire.version>3.5.4</maven-surefire.version>
         <maven-compiler.version>3.14.1</maven-compiler.version>
+        <maven-jar.version>3.4.2</maven-jar.version>
+        <maven-javadoc.version>3.12.0</maven-javadoc.version>
         <maven-shade.version>3.6.1</maven-shade.version>
         <maven-pmd.version>3.28.0</maven-pmd.version>
+        <jacoco.version>0.8.14</jacoco.version>
     </properties>
     <licenses>
         <license>
@@ -589,7 +592,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.13</version>
+                    <version>${jacoco.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -597,7 +600,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.6.2</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -642,7 +645,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>${maven-jar.version}</version>
                 <inherited>true</inherited>
                 <configuration>
                     <archive>
@@ -657,7 +660,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11.2</version>
+                <version>${maven-javadoc.version}</version>
                 <configuration>
                     <tags>
                         <!--cdk.depends and cdk.builddepends no longer used-->
@@ -812,7 +815,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.9.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -831,7 +834,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11.2</version>
+                <version>${maven-javadoc.version}</version>
                 <reportSets>
                     <reportSet>
                         <id>default</id>
@@ -875,6 +878,7 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
                         <executions>
                             <execution>
                                 <id>prepare-agent</id>
