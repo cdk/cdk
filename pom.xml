@@ -44,6 +44,7 @@
         <mockito.version>4.11.0</mockito.version>
 
         <log4j.version>2.25.2</log4j.version>
+        <cmlxom.version>4.14</cmlxom.version>
     </properties>
     <licenses>
         <license>
