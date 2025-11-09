@@ -66,6 +66,7 @@
         <repository>
             <id>central</id>
             <url>https://central.sonatype.com/</url>
+            <layout>default</layout>
         </repository>
         <!-- site is staged and then copied to a sub-folder of gh-pages, no
              url is provided but the field is needed to stage the site. -->
