@@ -35,6 +35,7 @@
         <maven-surefire.version>3.5.4</maven-surefire.version>
         <maven-compiler.version>3.14.1</maven-compiler.version>
         <maven-shade.version>3.6.1</maven-shade.version>
+        <maven-pmd.version>3.28.0</maven-pmd.version>
     </properties>
     <licenses>
         <license>
@@ -772,7 +773,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.27.0</version>
+                <version>${maven-pmd.version}</version>
                 <configuration>
                     <rulesets>
                         <ruleset>/pmd/custom.xml</ruleset>
@@ -849,7 +850,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.27.0</version>
+                <version>${maven-pmd.version}</version>
                 <configuration>
                     <rulesets>
                         <ruleset>/pmd/custom.xml</ruleset>
