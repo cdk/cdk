@@ -40,7 +40,7 @@
         <maven-pmd.version>3.28.0</maven-pmd.version>
         <jacoco.version>0.8.14</jacoco.version>
 
-        <junit.version>5.13.4</junit.version>
+        <junit.version>5.14.1</junit.version>
         <mockito.version>4.11.0</mockito.version>
 
         <log4j.version>2.25.2</log4j.version>
