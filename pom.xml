@@ -40,6 +40,9 @@
         <maven-pmd.version>3.28.0</maven-pmd.version>
         <jacoco.version>0.8.14</jacoco.version>
 
+        <junit.version>5.13.4</junit.version>
+        <mockito.version>4.11.0</mockito.version>
+
         <log4j.version>2.25.2</log4j.version>
     </properties>
     <licenses>
@@ -500,17 +503,17 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
-                <version>5.13.4</version>
+                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-params</artifactId>
-                <version>5.13.4</version>
+                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.13.4</version>
+                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
@@ -530,12 +533,12 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>4.11.0</version>
+                <version>${mockito.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-junit-jupiter</artifactId>
-                <version>4.11.0</version>
+                <version>${mockito.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.vecmath</groupId>
