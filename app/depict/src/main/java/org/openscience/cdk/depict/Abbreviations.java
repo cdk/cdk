@@ -129,9 +129,9 @@ public class Abbreviations implements Iterable<String> {
          */
         AUTO_CONTRACT_HETERO,
         /**
-         * Automatically contract on terminal atoms, e.g. -CMe3.
-         * This will also allow contraction of symmetric abbreviations around
-         * a bond, e.g. Ph-Ph => Ph2
+         * Automatically contract on terminal carbon atoms, e.g. allow -CHEt2.
+         * This normally isn't sensible since it will make items like -CH2NH2
+         * or -CH=NH which isn't really better than just drawing it out.
          */
         AUTO_CONTRACT_TERMINAL,
         /**
@@ -670,7 +670,7 @@ public class Abbreviations implements Iterable<String> {
         }
 
         if (!options.contains(Option.AUTO_CONTRACT_HETERO) &&
-                !options.contains(Option.AUTO_CONTRACT_TERMINAL))
+            !options.contains(Option.AUTO_CONTRACT_TERMINAL))
             return newSgroups;
 
         // collect adjacency info and terminal crossing bonds
@@ -689,15 +689,22 @@ public class Abbreviations implements Iterable<String> {
                     || attach.getAtomicNumber() <= IAtom.He)
                 continue;
 
+            int effectiveDegree = effectiveDegree(attach, allCrossingBonds);
+
             boolean okay = false;
             if (attach.getAtomicNumber() != IAtom.C &&
                 attach.getAtomicNumber() != IAtom.H &&
                 attach.getAtomicNumber() != 0 &&
                 options.contains(Option.AUTO_CONTRACT_HETERO))
                 okay = true;
-            else if (effectiveDegree(attach, allCrossingBonds) <= 1 &&
-                    options.contains(Option.AUTO_CONTRACT_TERMINAL))
-                okay = true;
+            else {
+                if ((effectiveDegree <= 1 &&
+                     options.contains(Option.AUTO_CONTRACT_TERMINAL)) ||
+                        (effectiveDegree == 0 &&
+                         options.contains(Option.ALLOW_SINGLETON)))
+                    okay = true;
+            }
+
             if (!okay)
                 continue;
 
@@ -721,7 +728,6 @@ public class Abbreviations implements Iterable<String> {
                                             k -> new AdjacentGroup(sgroup))
                            .add(sgroup);
             }
-
 
             for (IBond bond : mol.getConnectedBondsList(attach)) {
                 if (!xbonds.contains(bond)) {
@@ -783,7 +789,8 @@ public class Abbreviations implements Iterable<String> {
                     newbonds.size() == 1 && newbonds.iterator().next().getOrder() != IBond.Order.SINGLE)
                 continue;
 
-            if (isCC(attach, xbonds, adjGroupMap))
+
+            if (isBlocked(attach, xbonds, adjGroupMap, effectiveDegree))
                 continue;
 
             // avoid contracting completely unless requested to
@@ -852,8 +859,7 @@ public class Abbreviations implements Iterable<String> {
             usedAtoms.addAll(xatoms);
         }
 
-        if (options.contains(Option.ALLOW_SINGLETON) &&
-                options.contains(Option.AUTO_CONTRACT_TERMINAL)) {
+        if (options.contains(Option.ALLOW_SINGLETON)) {
 
             // recompute the adjacency and crossing bond info
             sgroupAdjs = getSgroupAdjacency(allSgroups);
@@ -989,11 +995,22 @@ public class Abbreviations implements Iterable<String> {
 
 
     // Avoid CH2-Me => CH2Me and -C#CH -CCH
-    private static boolean isCC(IAtom attach, Set<IBond> xbonds, Map<String, AdjacentGroup> nbrSymbols) {
-        return attach.getAtomicNumber() == IAtom.C &&
-                nbrSymbols.size() == 1 &&
-                (nbrSymbols.values().iterator().next().symbol.equals("Me") ||
-                        nbrSymbols.values().iterator().next().symbol.equals("CH"));
+    // also block NH-NH2 => NHNH2 etc
+    private static boolean isBlocked(IAtom attach,
+                                     Set<IBond> xbonds,
+                                     Map<String, AdjacentGroup> nbrSymbols,
+                                     int effectiveDegree) {
+        if (attach.getAtomicNumber() == IAtom.C &&
+            nbrSymbols.size() == 1 &&
+            (nbrSymbols.values().iterator().next().symbol.equals("Me") ||
+             nbrSymbols.values().iterator().next().symbol.equals("CH"))) {
+            return true;
+        }
+        if (effectiveDegree > 0 &&
+            nbrSymbols.size() == 1 &&
+            nbrSymbols.values().iterator().next().symbol.startsWith(attach.getSymbol()))
+            return true;
+        return false;
     }
 
     private int effectiveDegree(IAtom attach, Set<IBond> xbonds) {
