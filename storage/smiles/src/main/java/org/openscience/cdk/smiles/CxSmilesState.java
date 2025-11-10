@@ -47,6 +47,8 @@ final class CxSmilesState {
     Map<Integer, List<Integer>> positionVar = null;
     List<Map.Entry<Map.Entry<Integer,Integer>,IBond.Display>> bondDisplay = null;
     List<CxSgroup>              mysgroups   = null;
+    List<Integer>               atomHighlight = null;
+    List<Integer>               bongHighlight = null;
     boolean                     coordFlag   = false;
     boolean                     racemic     = false;
     List<Integer> racemicFrags = null;

@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.depict;
 
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -46,6 +47,7 @@ import org.openscience.cdk.renderer.generators.standard.SelectionVisibility;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.DelocalisedDonutsBondDisplay;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.ForceDelocalisedBondDisplay;
+import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -731,6 +733,13 @@ public final class DepictionGenerator {
                 setIfMissing(bond, MarkedElement.ID_KEY, molId + "bnd" + ++bondid);
         }
 
+        // if the molecule has an IChemObjectSelection set and the renderer
+        // has no selection, then this take priority
+        IChemObjectSelection selection = molecule.getProperty(CDKConstants.SELECTION);
+        boolean localSelection = model.getSelection() == null && selection != null;
+        if (localSelection)
+            model.setSelection(selection);
+
         if (annotateAtomNum) {
             for (IAtom atom : molecule.atoms()) {
                 if (atom.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
@@ -773,6 +782,9 @@ public final class DepictionGenerator {
                 atom.removeProperty(StandardGenerator.ANNOTATION_LABEL);
             }
         }
+
+        if (localSelection)
+            model.setSelection(null);
 
         return grp;
     }
