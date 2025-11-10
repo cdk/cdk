@@ -493,6 +493,11 @@ public class CDKConstants {
      */
     public static final Object      RENDER_BOUNDS                 =  "cdk:RenderBounds";
 
+    /**
+     * Used to attach an {@link org.openscience.cdk.renderer.selection.IChemObjectSelection}
+     */
+    public static final Object      SELECTION                     =  "cdk:Selection";
+
 
     /* **************************************
      * Some predefined property names for * AtomTypes *
