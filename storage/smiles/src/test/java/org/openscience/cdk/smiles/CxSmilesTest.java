@@ -29,12 +29,14 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -535,5 +537,16 @@ class CxSmilesTest {
         IAtomContainer mol = smipar.parseSmiles("C1NCNC1 |Sg:n:2|");
         SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default);
         Assertions.assertEquals("C1NCNC1 |Sg:n:2:n:|", sg.create(mol));
+    }
+
+    @Test
+    void testEpamHighlight() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("C1NCNC1 |ha:0,1,3,hb:2,4|");
+        Assertions.assertNotNull(mol.getProperty(CDKConstants.SELECTION));
+        IChemObjectSelection selection = mol.getProperty(CDKConstants.SELECTION);
+        Assertions.assertEquals(3, selection.elements(IAtom.class).size());
+        Assertions.assertEquals(2, selection.elements(IBond.class).size());
     }
 }

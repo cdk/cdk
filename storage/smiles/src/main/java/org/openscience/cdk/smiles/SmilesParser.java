@@ -38,6 +38,8 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.renderer.selection.AtomBondSelection;
+import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -1029,6 +1031,17 @@ public final class SmilesParser {
         // assign Sgroups
         for (Map.Entry<IAtomContainer, List<Sgroup>> e : sgroupMap.entrySet())
             e.getKey().setProperty(CDKConstants.CTAB_SGROUPS, new ArrayList<>(e.getValue()));
+
+        if (cxstate.atomHighlight != null || cxstate.bongHighlight != null) {
+            AtomBondSelection selection = new AtomBondSelection();
+            if (cxstate.atomHighlight != null)
+                for (Integer idx : cxstate.atomHighlight)
+                    selection.select(atoms.get(idx));
+            if (cxstate.bongHighlight != null)
+                for (Integer idx : cxstate.bongHighlight)
+                    selection.select(bonds.get(idx));
+            chemObj.setProperty(CDKConstants.SELECTION, selection);
+        }
     }
 
 

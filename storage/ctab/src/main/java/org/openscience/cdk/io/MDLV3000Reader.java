@@ -35,6 +35,8 @@ import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.isomorphism.matchers.*;
+import org.openscience.cdk.renderer.selection.AtomBondSelection;
+import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.StereoElementFactory;
@@ -177,6 +179,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         // true if the molecule has query features, false otherwise
         boolean isQuery = false;
         Map<Integer,Integer> stereoflags = null;
+        AtomBondSelection selection = null;
         final Map<IAtom,Integer> stereo0d = new HashMap<>();
 
         // atom/bond ids need not be sequential, we could use map but more
@@ -327,6 +330,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         // skip infering and setting stereo chemistry if atom container has query features or aromatic bond
         if (!isQueryOrAromaticBond)
             finalizeStereochemistry(state, readAtomContainer);
+        if (state.selection != null)
+            readAtomContainer.setProperty(CDKConstants.SELECTION, state.selection);
 
         return readAtomContainer;
     }
@@ -497,13 +502,84 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 val = 10 * val + (ch - '0');
                 i++;
             }
-            // val-1 since we store atom index instead of atom number
+            // we don't do -1 (idx) as we use atom.getID() to access later on
             if (val > 0)
                 flags.put(val, type);
             while (i < len && str.charAt(i) == ' ')
                 i++;
             if (i < len && str.charAt(i) == ')')
                 break;
+        }
+    }
+
+    private void parseSelection(AtomBondSelection selection,
+                                IAtomContainer mol,
+                                String str) throws CDKException {
+        int i   = "MDLV30/HILITE".length();
+        int len = str.length();
+        char ch;
+
+        while (i < len) {
+
+            // skip space
+            while (i < len && str.charAt(i) == ' ')
+                i++;
+
+            // start of atom list
+            if (str.startsWith("ATOMS=(", i)) {
+                i += "ATOMS=(".length();
+
+                // skip the count since we're storing in map
+                while (i < len && isDigit(str.charAt(i)))
+                    i++;
+                while (i < len && str.charAt(i) == ' ')
+                    i++;
+
+                // parse the atoms
+                while (i < len) {
+                    int val = 0;
+                    while (i < len && isDigit(ch = str.charAt(i))) {
+                        val = 10 * val + (ch - '0');
+                        i++;
+                    }
+                    if (val >= 0 && val < mol.getAtomCount())
+                        selection.select(mol.getAtom(val-1));
+                    while (i < len && str.charAt(i) == ' ')
+                        i++;
+                    if (i < len && str.charAt(i) == ')') {
+                        i++;
+                        break;
+                    }
+                }
+            } else if (str.startsWith("BONDS=(", i)) {
+                i += "BONDS=(".length();
+
+                // skip the count since we're storing in map
+                while (i < len && isDigit(str.charAt(i)))
+                    i++;
+                while (i < len && str.charAt(i) == ' ')
+                    i++;
+
+                // parse the atoms
+                while (i < len) {
+                    int val = 0;
+                    while (i < len && isDigit(ch = str.charAt(i))) {
+                        val = 10 * val + (ch - '0');
+                        i++;
+                    }
+                    if (val >= 0 && val < mol.getBondCount())
+                        selection.select(mol.getBond(val-1));
+                    while (i < len && str.charAt(i) == ' ')
+                        i++;
+                    if (i < len && str.charAt(i) == ')') {
+                        i++;
+                        break;
+                    }
+                }
+            } else {
+                handleError("Error while parsing stereo group: Expected an atom collection.");
+                return;
+            }
         }
     }
 
@@ -526,6 +602,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 parseStereoGroup(state.stereoflags, command, IStereoElement.GRP_REL);
             } else if (command.startsWith("MDLV30/STEABS")) {
                 parseStereoGroup(state.stereoflags, command, IStereoElement.GRP_ABS);
+            } else if (command.startsWith("MDLV30/HILITE")) {
+                if (state.selection == null)
+                    state.selection = new AtomBondSelection();
+                parseSelection(state.selection, state.mol, command);
             }
         }
     }
@@ -1194,5 +1274,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             }
         }
     }
+
 
 }

@@ -25,8 +25,6 @@ package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.sgroup.Sgroup;
-import org.openscience.cdk.sgroup.SgroupType;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -509,7 +507,11 @@ final class CxSmilesParser {
 
         while (iter.hasNext()) {
             switch (iter.next()) {
-                case '$': // atom labels and values
+              case '|': // end of CX
+                // consume optional separators
+                if (!iter.nextIf(' ')) iter.nextIf('\t');
+                return iter.pos;
+              case '$': // atom labels and values
                     // dest is atom labels by default
                     Map<Integer, String> dest;
 
@@ -551,6 +553,19 @@ final class CxSmilesParser {
                     if (!processStereoGrps(state, iter, IStereoElement.GRP_ABS))
                         return -1;
                     break;
+                case 'h': // EPAM extensions, ha: and hb: for highlighting atoms/bonds
+                    if (iter.nextIf('a')) {
+                      if (!processEpamIndigoHighlight(state, iter,
+                                                      state.atomHighlight = new ArrayList<>()))
+                        return -1;
+                    } else if (iter.nextIf('b')) {
+                      if (!processEpamIndigoHighlight(state, iter,
+                                                      state.bongHighlight = new ArrayList<>()))
+                        return -1;
+                    } else
+                      return -1;
+                    break;
+
                 case 'r': // relative (actually racemic) stereochemistry ignored
                     if (iter.nextIf(':')) {
                         state.racemicFrags = new ArrayList<>();
@@ -613,10 +628,6 @@ final class CxSmilesParser {
                         iter.nextIf(',');
                     }
                     break;
-                case '|': // end of CX
-                    // consume optional separators
-                    if (!iter.nextIf(' ')) iter.nextIf('\t');
-                    return iter.pos;
                 case 'L':
                     // LO, Ligand Ordering
                     if (iter.nextIf('O')) {
@@ -676,6 +687,14 @@ final class CxSmilesParser {
             state.stereoGrps.put(idx, grp);
         }
         return true;
+    }
+
+
+    // An EPAM Indigo extension, ha: / hb: for atom/bond highlights
+    private static boolean processEpamIndigoHighlight(CxSmilesState state, CharIter iter, List<Integer> dest) {
+      if (!iter.nextIf(':'))
+        return false;
+      return processIntList(iter, ',',dest);
     }
 
 
