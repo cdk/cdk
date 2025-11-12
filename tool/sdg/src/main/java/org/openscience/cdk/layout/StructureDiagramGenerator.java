@@ -1526,7 +1526,6 @@ public class StructureDiagramGenerator {
         // note: y-axis has 0 at the bottom
         for (int i = yOffsets.length - 2; i >= 0; i--)
             yOffsets[i] += yOffsets[i + 1];
-        System.err.println(Arrays.toString(yOffsets));
 
         for (int i = 0; i < limits.size(); i++) {
             final int row = i / nCol;
