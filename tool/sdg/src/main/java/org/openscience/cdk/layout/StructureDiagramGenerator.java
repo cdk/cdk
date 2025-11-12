@@ -1430,9 +1430,9 @@ public class StructureDiagramGenerator {
         minmax[2] = maxX;
         minmax[3] = maxY;
         double minXAdjust = adjustForHydrogen(boundedAtoms[0], mol);
-        double maxXAdjust = adjustForHydrogen(boundedAtoms[1], mol);
+        double maxXAdjust = adjustForHydrogen(boundedAtoms[2], mol);
         if (minXAdjust < 0) minmax[0] += minXAdjust;
-        if (maxXAdjust > 0) minmax[1] += maxXAdjust;
+        if (maxXAdjust > 0) minmax[2] += maxXAdjust;
         return minmax;
     }
 
@@ -1508,7 +1508,7 @@ public class StructureDiagramGenerator {
         for (int i = 0; i < numFragments; i++) {
             // +1 because first offset is always 0
             int col = 1 + i % nCol;
-            int row = 1 + i / nCol;
+            int row = i / nCol;
 
             double[] minmax = limits.get(i);
             final double width = spacing + (minmax[2] - minmax[0]);
@@ -1523,12 +1523,13 @@ public class StructureDiagramGenerator {
         // cumulative counts
         for (int i = 1; i < xOffsets.length; i++)
             xOffsets[i] += xOffsets[i - 1];
-        for (int i = 1; i < yOffsets.length; i++)
-            yOffsets[i] += yOffsets[i - 1];
+        // note: y-axis has 0 at the bottom
+        for (int i = yOffsets.length - 2; i >= 0; i--)
+            yOffsets[i] += yOffsets[i + 1];
+        System.err.println(Arrays.toString(yOffsets));
 
-        // translate the molecules, note need to flip y axis
         for (int i = 0; i < limits.size(); i++) {
-            final int row = nRow - (i / nCol) - 1;
+            final int row = i / nCol;
             final int col = i % nCol;
             Point2d dest = new Point2d((xOffsets[col] + xOffsets[col + 1]) / 2,
                                        (yOffsets[row] + yOffsets[row + 1]) / 2);
