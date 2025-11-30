@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElement;
@@ -51,6 +52,8 @@ import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -1376,5 +1379,51 @@ class StructureDiagramGeneratorTest extends CDKTestCase {
         for (IAtomContainer ring : rset.atomContainers()) {
             assertConvex(AtomContainerManipulator.getAtomArray(ring));
         }
+    }
+
+    @Test
+    void testAssignWedges() throws CDKException {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(builder);
+        IAtomContainer mol = smipar.parseSmiles("C[C@H](O)Cl |(0.97,0.56,;-0.32,1.31,;-1.62,0.56,;-0.32,2.81,)|");
+        assertWedges(mol, 0);
+        new StructureDiagramGenerator().generateWedges(mol);
+        assertWedges(mol, 1);
+    }
+
+    @Test
+    void testAssignWedgesReaction() throws CDKException {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(builder);
+        IReaction reaction = smipar.parseReactionSmiles("C[C@H](Cl)[CH3]C(=O)O.CCO>[H+]>CCOC(=O)[CH3][C@@H](Cl)C.O |(-4.55,1.13,;-3.25,1.88,;-1.95,1.12,;-3.25,3.38,;-1.95,4.12,;-1.95,5.62,;-0.65,3.37,;0.65,1.12,;-0.65,1.87,;-1.95,1.13,;,,;1.95,3.37,;0.65,4.12,;-0.65,3.37,;-1.95,4.12,;-1.95,5.62,;-3.25,3.38,;-4.55,4.13,;-4.55,5.63,;-5.85,3.38,;,,)|\n");
+        assertWedges(reaction, 0);
+        new StructureDiagramGenerator().generateWedges(reaction);
+        assertWedges(reaction, 2);
+    }
+
+    private static void assertWedges(IAtomContainer mol, int expected) {
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds()) {
+            if (bond.getDisplay() == IBond.Display.WedgeBegin ||
+                bond.getDisplay() == IBond.Display.WedgeEnd ||
+                bond.getDisplay() == IBond.Display.WedgedHashBegin ||
+                bond.getDisplay() == IBond.Display.WedgedHashEnd)
+                wedgeCount++;
+        }
+        Assertions.assertEquals(expected, wedgeCount);
+    }
+
+    private static void assertWedges(IReaction reaction, int expected) {
+        int wedgeCount = 0;
+        for (IAtomContainer mol : reaction) {
+            for (IBond bond : mol.bonds()) {
+                if (bond.getDisplay() == IBond.Display.WedgeBegin ||
+                    bond.getDisplay() == IBond.Display.WedgeEnd ||
+                    bond.getDisplay() == IBond.Display.WedgedHashBegin ||
+                    bond.getDisplay() == IBond.Display.WedgedHashEnd)
+                    wedgeCount++;
+            }
+        }
+        Assertions.assertEquals(expected, wedgeCount);
     }
 }
