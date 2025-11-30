@@ -61,7 +61,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-import java.awt.Color;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -78,7 +77,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Stack;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -895,7 +893,7 @@ public class StructureDiagramGenerator {
 
         // stereo must be after refinement (due to flipping!)
         if (!isSubLayout)
-            assignStereochem(molecule);
+            generateWedges(molecule);
 
     }
 
@@ -1078,7 +1076,17 @@ public class StructureDiagramGenerator {
         return numRings;
     }
 
-    private void assignStereochem(IAtomContainer molecule) {
+    /**
+     * Generate up/down wedges bonds for a molecule which already has
+     * coordinates assigned. This function is called automatically at the
+     * end of a layout. Any existing wedges are removed.
+     * <br>
+     * Note for inorganic stereochemistry (octahedral etc) this function
+     * may make some adjustments to the coordinates to depict things correctly.
+     *
+     * @param molecule the molecule
+     */
+    public void generateWedges(IAtomContainer molecule) {
         // XXX: can't check this unless we store 'unspecified' double bonds
         // if (!molecule.stereoElements().iterator().hasNext())
         //     return;
@@ -1086,6 +1094,21 @@ public class StructureDiagramGenerator {
         // assign up/down labels, this doesn't not alter layout and could be
         // done on-demand (e.g. when writing a MDL Molfile)
         NonplanarBonds.assign(molecule);
+    }
+
+    /**
+     * Generate up/down wedges bonds for all molecules in a reaction which
+     * already has coordinates assigned. This function is called automatically
+     * at the end of a layout. Any existing wedges are removed.
+     * <br>
+     * Note for inorganic stereochemistry (octahedral etc) this function
+     * may make some adjustments to the coordinates to depict things correctly.
+     *
+     * @param reaction the molecule
+     */
+    public void generateWedges(IReaction reaction) {
+        for (IAtomContainer molecule : reaction)
+            generateWedges(molecule);
     }
 
     private void refinePlacement(IAtomContainer molecule) {
@@ -1521,7 +1544,7 @@ public class StructureDiagramGenerator {
             CorrectGeometricConfiguration.correct(mol);
 
         // finalize
-        assignStereochem(mol);
+        generateWedges(mol);
         finalizeLayout(mol);
 
         // rollback temporary ionic bonds
