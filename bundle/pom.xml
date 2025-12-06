@@ -299,7 +299,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler.version}</version>
                 <configuration>
                     <release>8</release>
                 </configuration>
@@ -307,7 +306,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>${maven-shade.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -383,7 +381,6 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${jacoco.version}</version>
                         <executions>
                             <execution>
                                 <id>aggregate-report</id>
