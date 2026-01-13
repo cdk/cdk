@@ -336,7 +336,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             program = line;
             line = input.readLine();
             linecount++;
-            if (line.length() > 0) {
+            if (line != null && line.length() > 0) {
                 remark = line;
             }
 
@@ -345,7 +345,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             // if the line is empty we have a problem - either a malformed
             // molecule entry or just extra new lines at the end of the file
-            if (line.length() == 0) {
+            if (line == null || line.length() == 0) {
                 handleError("Unexpected empty line", linecount, 0, 0);
                 // read till the next $$$$ or EOF
                 while (true) {
