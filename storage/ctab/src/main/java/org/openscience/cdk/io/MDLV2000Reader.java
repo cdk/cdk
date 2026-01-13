@@ -1885,7 +1885,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         } else if ("L".equals(element)) {
             atom = builder.newInstance(IPseudoAtom.class, element);
         } else if (element.startsWith("R")) {
-            logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
+            logger.debug("Atom ", element, " is not a regular element. Creating a PseudoAtom.");
             //check if the element is R
             String[] rGroup = element.split("^R");
             if (rGroup.length > 1) {
