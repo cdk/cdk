@@ -39,9 +39,9 @@ import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.geom.AffineTransform;
-import java.math.BigDecimal;
-import java.math.MathContext;
+import java.awt.geom.Point2D;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -278,9 +278,15 @@ final class SvgDrawVisitor implements IDrawVisitor {
 
     private void visit(String id, String cls, GeneralPath elem) {
         appendIdent();
+        if (elem.textString != null) {
+            drawTextString(elem);
+            return;
+        }
         sb.append("<path");
-        if (id != null) sb.append(" id='").append(id).append("'");
-        if (cls != null) sb.append(" class='").append(cls).append("'");
+        if (id != null)
+            sb.append(" id='").append(id).append("'");
+        if (cls != null)
+            sb.append(" class='").append(cls).append("'");
         sb.append(" d='");
         double[] points = new double[6];
         double xCurr = 0, yCurr = 0;
@@ -342,6 +348,57 @@ final class SvgDrawVisitor implements IDrawVisitor {
             sb.append(" stroke-width='").append(toStr(scaled(elem.stroke))).append("'");
         }
         sb.append("/>\n");
+    }
+
+    private void drawTextString(GeneralPath path) {
+        Bounds b = new Bounds(path, transform);
+        path.textString.setScale(transform);
+        Point2D dxy = path.textString.getTextPosition(b.minX, b.minY);
+        appendTextFont(path.textString.getText(), 
+                dxy.getX(), dxy.getY(), 
+                path.color,
+                path.textString.getFont(), 0);
+    }
+
+    private void appendTextFont(String text, double px, double py, Color color, Font font, double stroke) {
+        sb.append("<text");
+        if (font != null) {
+            int fstyle = font.getStyle();
+            String style = null;
+            String weight = null;
+            if ((fstyle & Font.BOLD) != 0) {
+                weight = "bold";
+            }
+            if ((fstyle & Font.ITALIC) != 0) {
+                style = "italic";
+            }
+            sb.append(" font-family='").append(getCSSFontFamilyName(font.getFamily()));
+            if (weight != null)
+                sb.append("' font-weight='").append(weight);
+            if (style != null)
+                sb.append("' font-style='").append(style);
+            sb.append("' stroke-width='").append(toStr(scaled(stroke)));
+            sb.append("' font-size='").append(font.getSize2D()).append("'");
+        }
+        sb.append(" x='").append(toStr(px)).append("'");
+        sb.append(" y='").append(toStr(py)).append("'");
+        sb.append(" fill='").append(toStr(color)).append("'");
+        // todo need font manager for scaling...
+        sb.append(">");
+        appendEscaped(sb, text);
+        sb.append("</text>\n");
+    }
+
+    private static String getCSSFontFamilyName(String family) {
+        family = family.toLowerCase();
+        if (family.equals("sansserif") 
+                || family.equals("helvetica") 
+                || family.equals("dialog")
+                || family.equals("dialoginput"))
+            family = "Arial";
+        else if (family.equals("monospaced"))
+            family = "monospace";
+        return family;
     }
 
     private void visit(LineElement elem) {
