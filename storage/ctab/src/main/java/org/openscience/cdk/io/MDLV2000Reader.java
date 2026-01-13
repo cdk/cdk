@@ -328,7 +328,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             if (line.startsWith(SDF_RECORD_DELIMITER))
                 return molecule;
 
-            if (line.length() > 0) {
+            if (!line.isEmpty()) {
                 title = line;
             }
             line = input.readLine();
@@ -336,7 +336,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             program = line;
             line = input.readLine();
             linecount++;
-            if (line != null && line.length() > 0) {
+            if (line != null && !line.isEmpty()) {
                 remark = line;
             }
 
@@ -345,7 +345,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             // if the line is empty we have a problem - either a malformed
             // molecule entry or just extra new lines at the end of the file
-            if (line == null || line.length() == 0) {
+            if (line == null || line.isEmpty()) {
                 handleError("Unexpected empty line", linecount, 0, 0);
                 // read till the next $$$$ or EOF
                 while (true) {
@@ -1884,7 +1884,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             atom = builder.newInstance(IPseudoAtom.class, element);
         } else if ("L".equals(element)) {
             atom = builder.newInstance(IPseudoAtom.class, element);
-        } else if (element.equals("R") || (element.length() > 0 && element.charAt(0) == 'R')) {
+        } else if (element.equals("R") || (!element.isEmpty() && element.charAt(0) == 'R')) {
             logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
             //check if the element is R
             String[] rGroup = element.split("^R");
