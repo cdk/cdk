@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk) [![build](https://github.com/cdk/cdk/actions/workflows/maven.yml/badge.svg)](https://github.com/cdk/cdk/actions/workflows/maven.yml) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=cdk&metric=bugs)](https://sonarcloud.io/summary/overall?id=cdk)
+[![Maven Central Version](https://img.shields.io/maven-central/v/org.openscience.cdk/cdk-bundle)](https://mvnrepository.com/artifact/org.openscience.cdk/cdk-bundle) [![build](https://github.com/cdk/cdk/actions/workflows/maven.yml/badge.svg)](https://github.com/cdk/cdk/actions/workflows/maven.yml) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=cdk&metric=bugs)](https://sonarcloud.io/summary/overall?id=cdk)
 
 
 # The Chemistry Development Kit (CDK)
