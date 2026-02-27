@@ -539,6 +539,21 @@ class CxSmilesTest {
         Assertions.assertEquals("C1NCNC1 |Sg:n:2:n:|", sg.create(mol));
     }
 
+
+    @Test
+    void testTerseSgroupDataParsingOnReactions() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IReaction rxn = smipar.parseReactionSmiles("C1=CC=CC=C1C(Br)C(=O)Cl>O=C(O)c1ccccc1O>C=1C=CC=C(C1)C(C(=O)OC=2C(=CC=CC2)C(O)=O)Br |SgD::solvent:DIPEA|");
+        List<Sgroup> sgroups = rxn.getProperty(CDKConstants.CTAB_SGROUPS);
+        Assertions.assertEquals(1, sgroups.size());
+        Assertions.assertEquals("DIPEA", sgroups.get(0).getValue(SgroupKey.Data));
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols + SmiFlavor.CxDataSgroups);
+        Assertions.assertEquals("C1=CC=CC=C1C(Br)C(=O)Cl>O=C(O)c1ccccc1O>C=1C=CC=C(C1)C(C(=O)OC=2C(=CC=CC2)C(O)=O)Br |SgD::solvent:DIPEA::|",
+                                sg.create(rxn));
+    }
+
+
     @Test
     void testEpamHighlight() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();

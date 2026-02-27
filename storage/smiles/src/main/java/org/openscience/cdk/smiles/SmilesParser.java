@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.renderer.selection.AtomBondSelection;
-import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -59,7 +58,6 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -243,6 +241,7 @@ public final class SmilesParser {
             rset.addReaction(reaction);
             parseRxnCXSMILES(title, rset);
             reaction.setProperty(CDKConstants.TITLE, rset.getProperty(CDKConstants.TITLE));
+            reaction.setProperty(CDKConstants.CTAB_SGROUPS, rset.getProperty(CDKConstants.CTAB_SGROUPS));
         } catch (Exception e) {
             throw new InvalidSmilesException("Error parsing CXSMILES", e);
         }
@@ -356,16 +355,20 @@ public final class SmilesParser {
                 try {
                     // CXSMILES layer
                     parseMolCXSMILES(g.getTitle(), mol);
+                } catch (InvalidSmilesException e) {
+                    throw new InvalidSmilesException("Error parsing CXSMILES:", e);
                 } catch (Exception e) {
-                    throw new InvalidSmilesException("Error parsing CXSMILES", e);
+                    throw new InvalidSmilesException("Unexpected error parsing CXSMILES:", e);
                 }
             }
 
             return mol;
         } catch (IOException e) {
             throw new InvalidSmilesException("could not parse '" + smiles + "', " + e.getMessage());
+        } catch (InvalidSmilesException e) {
+            throw e;
         } catch (Exception e) {
-            throw new InvalidSmilesException("could not parse '" + smiles + "'");
+            throw new InvalidSmilesException("Unexpected error for '" + smiles + "'", e);
         }
     }
 
@@ -623,7 +626,7 @@ public final class SmilesParser {
                     pseudo = bldr.newInstance(IPseudoAtom.class);
                     IAtomContainer mol = atomToMol.get(old);
                     AtomContainerManipulator.replaceAtomByAtom(mol, old, pseudo);
-                    atomToMol.put(pseudo, mol);
+                    atomToMol.put(mol.getAtom(old.getIndex()), mol);
                     atoms.set(e.getKey(), mol.getAtom(old.getIndex()));
                 }
 
@@ -721,7 +724,7 @@ public final class SmilesParser {
             }
         }
 
-        Map<IAtomContainer, List<Sgroup>> sgroupMap = new HashMap<>();
+        Map<IChemObject, List<Sgroup>> sgroupMap = new HashMap<>();
         Map<CxSmilesState.CxSgroup, Sgroup> sgroupRemap = new HashMap<>();
 
         // positional-variation
@@ -971,8 +974,8 @@ public final class SmilesParser {
                     if (mol != null)
                         sgroupMap.computeIfAbsent(mol, k -> new ArrayList<>())
                                  .add(cdkSgroup);
-                    else if (chemObj instanceof IAtomContainer)
-                        sgroupMap.computeIfAbsent((IAtomContainer) chemObj, k -> new ArrayList<>())
+                    else
+                        sgroupMap.computeIfAbsent(chemObj, k -> new ArrayList<>())
                                  .add(cdkSgroup);
                 }
             }
@@ -1028,8 +1031,9 @@ public final class SmilesParser {
             }
         }
 
+
         // assign Sgroups
-        for (Map.Entry<IAtomContainer, List<Sgroup>> e : sgroupMap.entrySet())
+        for (Map.Entry<IChemObject, List<Sgroup>> e : sgroupMap.entrySet())
             e.getKey().setProperty(CDKConstants.CTAB_SGROUPS, new ArrayList<>(e.getValue()));
 
         if (cxstate.atomHighlight != null || cxstate.bongHighlight != null) {
