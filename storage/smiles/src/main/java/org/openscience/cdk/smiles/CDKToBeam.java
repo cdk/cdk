@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -285,7 +286,10 @@ final class CDKToBeam {
     private static Bond toBeamEdgeLabel(IBond b, int flavour) throws CDKException {
 
         if (SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && b.isAromatic()) {
-            if (!b.getBegin().isAromatic() || !b.getEnd().isAromatic())
+            IAtom beg = b.getBegin();
+            IAtom end = b.getEnd();
+            if ((!beg.isAromatic() && beg.getAtomicNumber() != IElement.Wildcard) ||
+                (!end.isAromatic() && end.getAtomicNumber() != IElement.Wildcard))
                 throw new IllegalStateException("Aromatic bond connects non-aromatic atomic atoms");
             return Bond.AROMATIC;
         }
