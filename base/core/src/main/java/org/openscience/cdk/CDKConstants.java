@@ -390,21 +390,25 @@ public class CDKConstants {
      */
     public static final String      RELEVANT_RINGS               = "cdk:RelevantRings";
 
+    public static final String      COMPONENT_GROUP              = "cdk:ComponentGroup";
+
     /**
-     * Property used for reactions when converted to/from molecules. It defines what role and atom
-     * has an a reaction.
+     * Property used for reactions when converted to/from molecules. It defines
+     * what role and atom has in a reaction.
      *
      * Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
      */
     public static final String      REACTION_ROLE                = "cdk:ReactionRole";
 
+
     /**
-     * Property used for reactions when converted to/from molecules. It defines fragment grouping, for example
-     * when handling ionic components.
-     *
+     * Property used for reactions when converted to/from molecules. It defines
+     * fragment grouping, for example when handling ionic components.
+     * <p/>
      * Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
      */
-    public static final String      REACTION_GROUP               = "cdk:ReactionGroup";
+    public static final String      REACTION_GROUP               = COMPONENT_GROUP;
+
 
     /**
      * The Z-Order controls the relative ordering in 2D depictions when bonds
