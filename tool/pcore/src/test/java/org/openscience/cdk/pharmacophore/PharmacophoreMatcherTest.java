@@ -331,6 +331,31 @@ class PharmacophoreMatcherTest {
     }
 
     @Test
+    void testAngleMatch2False() throws Exception {
+        String filename = "cnssmarts.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
+        IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
+
+        PharmacophoreQuery query = new PharmacophoreQuery();
+        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n3 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAngleBond b1 = new PharmacophoreQueryAngleBond(n1, n2, n3, 87.14);
+        query.addAtom(n1);
+        query.addAtom(n2);
+        query.addAtom(n3);
+        query.addBond(b1);
+
+        reader.hasNext();
+        IAtomContainer mol = reader.next();
+        reader.close();
+
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
+        boolean status = matcher.matches(mol);
+        Assertions.assertFalse(status);
+    }
+
+    @Test
     void testAngleMatch3() throws Exception {
         Assertions.assertNotNull(conformers);
 

@@ -203,11 +203,12 @@ final class DfState implements Iterable<int[]> {
             if (bond == prev)
                 continue;
             IAtom nbr = bond.getOther(atom);
-
-            // corner case from the pcore matcher
+            // if the bond has more than 2 atoms there is not one single
+            // neighbour so we ignore it here - a case where this happens is the
+            // pharmacophore matching when testing angles, skipping here we still
+            // see correct logic
             if (nbr == null)
                 continue;
-
             if (amap[nbr.getIndex()] == 0) {
                 qbonds[numBonds++] = (IQueryBond) bond;
                 count += prepare(nbr, bond) + 1;
