@@ -1046,6 +1046,156 @@ public final class SmilesParser {
                     selection.select(bonds.get(idx));
             chemObj.setProperty(CDKConstants.SELECTION, selection);
         }
+
+        // append R-Groups, currently only for molecules... I'm not sure
+        // where we would put them on a reaction or even how they are specified
+        // in CXSMILES!
+        if (cxstate.rgrps != null && chemObj instanceof IAtomContainer) {
+
+            IAtomContainer rootStructure = (IAtomContainer)chemObj;
+
+            Map<String,List<IPseudoAtom>> rLabToAtom = new HashMap<>();
+            for (IAtom atom : atomToMol.keySet()) {
+                if (atom instanceof IPseudoAtom &&
+                    ((IPseudoAtom) atom).getLabel() != null) {
+                    rLabToAtom.computeIfAbsent(((IPseudoAtom) atom).getLabel(),
+                                               k -> new ArrayList<>())
+                              .add(((IPseudoAtom) atom));
+                }
+            }
+
+            Set<String> rGrpVisit = new HashSet<>();
+
+            int compGroupId = 1, nextGroupId = 2;
+            for (Map.Entry<String,List<String>> e : cxstate.rgrps.entrySet()) {
+
+                String rLabel = e.getKey();
+                List<IPseudoAtom> rAtoms = rLabToAtom.getOrDefault(rLabel,
+                                                                   Collections.emptyList());
+
+                List<IBond.Order> bondOrders = getIncomingBondOrders(rAtoms);
+                for (String rGrpSmiles : e.getValue()) {
+
+                    IAtomContainer rDef = parseSmiles(rGrpSmiles);
+
+                    ensureNonOverlappingDefinitions(rDef, rGrpVisit);
+
+                    // verify attachment points are present and add them if
+                    // required
+                    if (bondOrders != null) {
+                        List<IPseudoAtom> attachmentPoints = new ArrayList<>();
+                        for (IAtom atom : rDef.atoms()) {
+                            if ((atom instanceof IPseudoAtom &&
+                                 ((IPseudoAtom) atom).getAttachPointNum() > 0) &&
+                                atom.getProperty(CDKConstants.RGROUP_MEMBERSHIP) == null) {
+                                attachmentPoints.add((IPseudoAtom) atom);
+                            }
+                        }
+
+                        // empty attachments imply we attach to the first atom
+                        if (attachmentPoints.isEmpty()) {
+                            IAtom first = rDef.getAtom(0);
+                            int num = 1;
+                            int hAdjust = 0;
+                            for (IBond.Order order : bondOrders) {
+                                hAdjust += order.numeric();
+                                IPseudoAtom attach = rootStructure.getBuilder().newInstance(IPseudoAtom.class);
+                                attach.setAttachPointNum(num++);
+                                rDef.addAtom(attach);
+                                rDef.newBond(first, attach, order);
+                                attachmentPoints.add(attach);
+                            }
+                            Integer implH = first.getImplicitHydrogenCount();
+                            if (implH != null)
+                                first.setImplicitHydrogenCount(Math.max(0, implH - hAdjust));
+                        }
+
+                        if (attachmentPoints.size() != bondOrders.size())
+                            throw new InvalidSmilesException("Number of attachments does not match! " + attachmentPoints.size() + " " + bondOrders.size());
+                    }
+
+                    // tag any atoms that aren't already part of an R-Group
+                    // as part of this R-Group and synchronise the component
+                    // grouping id's
+                    for (IAtom atom : rDef.atoms()) {
+                        if (atom.getProperty(CDKConstants.RGROUP_MEMBERSHIP) == null)
+                            atom.setProperty(CDKConstants.RGROUP_MEMBERSHIP, rLabel);
+                        Integer grpId = atom.getProperty(CDKConstants.REACTION_GROUP);
+                        if (grpId != null) {
+                            atom.setProperty(CDKConstants.REACTION_GROUP, compGroupId + grpId);
+                            nextGroupId = Math.max(nextGroupId, compGroupId + grpId + 1);
+                        }
+                        else
+                            atom.setProperty(CDKConstants.REACTION_GROUP, compGroupId);
+                    }
+
+                    compGroupId = nextGroupId++;
+
+                    rootStructure.add(rDef);
+
+                    List<Sgroup> childSgroups = rDef.getProperty(CDKConstants.CTAB_SGROUPS);
+                    if (childSgroups != null) {
+                        List<Sgroup> mainSgroups = rootStructure.getProperty(CDKConstants.CTAB_SGROUPS);
+                        mainSgroups = mainSgroups != null ? new ArrayList<>(mainSgroups) : new ArrayList<>();
+                        mainSgroups.addAll(childSgroups);
+                        rootStructure.setProperty(CDKConstants.CTAB_SGROUPS, mainSgroups);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Since we store RGroups in a flatten'd manner we need to ensure
+     * @param rDef a new Rgroup definition being added
+     * @param seen if we have seen it already
+     */
+    private static void ensureNonOverlappingDefinitions(IAtomContainer rDef,
+                                                        Set<String> seen) {
+        for (IAtom atom : rDef.atoms()) {
+            String label = null;
+            if (atom instanceof IPseudoAtom)
+                label = ((IPseudoAtom) atom).getLabel();
+            if (label != null && !seen.add(label) && label.matches("R\\d*")) {
+                // find a new unique label
+                int rnum = label.length() > 1 ? Integer.parseInt(label.substring(1)) : 0;
+                String newLabel = "R" + rnum;
+                for (; rnum < 999; ++rnum) {
+                    newLabel = "R" + rnum;
+                    if (seen.add(newLabel))
+                        break;
+                }
+                ((IPseudoAtom) atom).setLabel(newLabel);
+                for (IAtom tmp : rDef.atoms()) {
+                    String rMember = tmp.getProperty(CDKConstants.RGROUP_MEMBERSHIP);
+                    if (label.equals(rMember))
+                        tmp.setProperty(CDKConstants.RGROUP_MEMBERSHIP, newLabel);
+                }
+            }
+        }
+    }
+
+    private static List<IBond.Order> getIncomingBondOrders(List<IPseudoAtom> rAtoms) throws InvalidSmilesException {
+        List<IBond.Order> result = null;
+        for (IPseudoAtom atom : rAtoms) {
+            if (result == null) {
+                result = new ArrayList<>(4);
+                for (IBond bond : atom.bonds()) {
+                    result.add(bond.getOrder());
+                }
+                Collections.sort(result);
+            } else {
+                List<IBond.Order> tmp = new ArrayList<>(4);
+                for (IBond bond : atom.bonds())
+                    tmp.add(bond.getOrder());
+                Collections.sort(tmp);
+                if (!tmp.equals(result))
+                    throw new InvalidSmilesException("R-Group " + atom.getLabel() +
+                                                     " have different incoming bond orders: "
+                                                     + result + " != " + tmp);
+            }
+        }
+        return result;
     }
 
 

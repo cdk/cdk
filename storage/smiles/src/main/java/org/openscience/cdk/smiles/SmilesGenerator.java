@@ -26,16 +26,21 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectedComponents;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.invariant.Canon;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.isomorphism.matchers.IRGroup;
+import org.openscience.cdk.isomorphism.matchers.IRGroupList;
+import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.smiles.CxSmilesState.CxPolymerSgroup;
@@ -500,6 +505,38 @@ public final class SmilesGenerator {
     }
 
     /**
+     * Create a SMILES for an {@link IRGroupQuery} - this really only makes
+     * sense when emitting CXSMILES so make sure that flavour is enabled.
+     *
+     * @param rGrpQry the rGroup query
+     * @return the SMILES string for the RGroup query
+     * @throws CDKException could not create the SMILES for the RGroup query
+     */
+    public String create(IRGroupQuery rGrpQry) throws CDKException {
+
+        String main = create(rGrpQry.getRootStructure());
+
+        // create the RG layer which we will insert into the base CXSMILES
+        // RG:_R1={def1},{def2},_R2={def3},{def4}
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Integer, IRGroupList> e : rGrpQry.getRGroupDefinitions().entrySet()) {
+            sb.append("_R").append(e.getKey()).append('=');
+            for (IRGroup rGroup : e.getValue().getRGroups()) {
+                sb.append('{').append(create(rGroup.getGroup())).append("},");
+            }
+        }
+        if (sb.charAt(sb.length()-1) == ',')
+            sb.setLength(sb.length()-1);
+
+        if (main == null) throw new IllegalStateException("No root structure defined/found");
+        int idx = main.indexOf('|');
+        if (idx < 0) return main; // no CXSMILES so we just return the root structure
+        idx = main.indexOf('|', idx+1);
+
+        return main.substring(0, idx) + ",RG:" + sb + main.substring(idx);
+    }
+
+    /**
      * Create a SMILES for a reaction.
      *
      * @param reaction CDK reaction instance
@@ -895,8 +932,11 @@ public final class SmilesGenerator {
                                 throw new IllegalArgumentException("Attach ordering in inconsistent state!");
                             ends.add(nbr);
                         }
-                        state.ligandOrdering.put(ensureNotNull(atomidx.get(beg)),
-                                                 toAtomIdxs(ends, atomidx));
+                        // from MDL RGroup files we may have ligand ordered
+                        // even when we don't need it - skip these
+                        if (ends.size() > 1)
+                            state.ligandOrdering.put(ensureNotNull(atomidx.get(beg)),
+                                                     toAtomIdxs(ends, atomidx));
                         }
                         break;
                     case CtabAbbreviation:
