@@ -25,6 +25,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -91,7 +92,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
      * Rgroup definitions, each a list of possible substitutes for the
      * given R number.
      */
-    private Map<Integer, IRGroupList>        rGroupDefinitions;
+    private Map<Integer, IRGroupList>        rGroupDefinitions = Collections.emptyMap();
 
 
     public RGroupQuery(IChemObjectBuilder builder) {
