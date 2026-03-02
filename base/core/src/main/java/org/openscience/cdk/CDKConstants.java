@@ -409,6 +409,11 @@ public class CDKConstants {
      */
     public static final String      REACTION_GROUP               = COMPONENT_GROUP;
 
+    /**
+     * This property is set on atoms of an RGroup substitute definition to
+     * indicate which RGroup the definition is for.
+     */
+    public static final String     RGROUP_MEMBERSHIP             = "cdk:RGroupMembership";
 
     /**
      * The Z-Order controls the relative ordering in 2D depictions when bonds
