@@ -661,12 +661,59 @@ final class CxSmilesParser {
                             return -1;
                     }
                     break;
+                case 'R': // RG R-groups
+                    if (!iter.nextIf("G:"))
+                        return -1;
+                    if (state.rgrps == null)
+                        state.rgrps = new HashMap<>();
+                    if (!processRGroups(iter, state.rgrps))
+                        return -1;
+                    break;
                 default:
                     return -1;
             }
         }
 
         return -1;
+    }
+
+    private static boolean processRGroups(CharIter iter, Map<String,List<String>> rgrps) {
+
+        String lab = null;
+        StringBuilder sb = new StringBuilder();
+
+        while (iter.hasNext()) {
+            if (iter.nextIf('_')) {
+                sb.setLength(0);
+                while (iter.hasNext() && isAlphaNum(iter.curr()))
+                    sb.append(iter.next());
+                lab = sb.toString();
+                if (!iter.nextIf("="))
+                    return false;
+            } else if (iter.nextIf('{')) {
+                if (lab == null)
+                    return false;
+                sb.setLength(0);
+                int depth = 1;
+                while (iter.hasNext()) {
+                    char ch = iter.next();
+                    if (ch == '{')  depth++;
+                    else if (ch == '}') depth--;
+                    if (depth == 0)
+                        break;
+                    sb.append(ch);
+                }
+                if (depth != 0)
+                    return false;
+                iter.nextIf(',');
+                rgrps.computeIfAbsent(lab, k -> new ArrayList<>())
+                     .add(sb.toString());
+            } else {
+                break;
+            }
+        }
+
+        return !rgrps.isEmpty();
     }
 
     private static boolean processStereoGrps(CxSmilesState state, CharIter iter, int grp) {
@@ -733,6 +780,11 @@ final class CxSmilesParser {
         }
     }
 
+    private static boolean isAlphaNum(char c) {
+        return ((c >= 'A') && (c <= 'Z')) ||
+               ((c >= 'a') && (c <= 'z')) ||
+               isDigit(c);
+    }
 
     private static boolean isDigit(char c) {
         return c >= '0' && c <= '9';
