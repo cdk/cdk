@@ -80,10 +80,10 @@ final class LayoutRefiner {
     private static final double MIN_SCORE = 1 / (MIN_DIST * MIN_DIST);
 
     // How much do we add to a bond when making it longer.
-    private static final double STRETCH_STEP = 0.32 * BOND_LENGTH;
+    private static final double STRETCH_STEP = 0.25 * BOND_LENGTH;
 
     // How much we bend bonds by
-    private static final double BEND_STEP = Math.toRadians(10);
+    private static final double BEND_STEP = Math.toRadians(7.5);
 
     // Ensure we don't stretch bonds too long.
     private static final double MAX_BOND_LENGTH = 2 * BOND_LENGTH;
@@ -644,6 +644,7 @@ final class LayoutRefiner {
                     stackBackup.copyFrom(stack);
                     min = congestion.score();
                 }
+                restoreCoords(stack, backup);
 
                 // bend other way
                 if (begPriority < endPriority)

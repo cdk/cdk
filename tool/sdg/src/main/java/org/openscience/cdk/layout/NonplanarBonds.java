@@ -1153,6 +1153,33 @@ final class NonplanarBonds {
         if (tetrahedralElements[i] == null && tetrahedralElements[j] != null) return true;
         if (tetrahedralElements[i] != null && tetrahedralElements[j] == null) return false;
 
+        if (isBridgeHead(container.getAtom(focus))) {
+
+            // if we are a bridgehead we prefer wedging to non
+            // bridgeheads
+            boolean bridgeHeadI = isBridgeHead(container.getAtom(i));
+            boolean bridgeHeadJ = isBridgeHead(container.getAtom(j));
+            if (bridgeHeadI != bridgeHeadJ)
+                return !bridgeHeadI;
+
+            // prefer getting the wedges to face each other
+            int numStereoBridgeHeadI = 0;
+            int numStereoBridgeHeadJ = 0;
+            for (IBond bond : container.getAtom(i).bonds()) {
+                IAtom atom = bond.getOther(container.getAtom(i));
+                if (isBridgeHead(atom) && tetrahedralElements[atom.getIndex()] != null)
+                    numStereoBridgeHeadI++;
+            }
+            for (IBond bond : container.getAtom(j).bonds()) {
+                IAtom atom = bond.getOther(container.getAtom(j));
+                if (isBridgeHead(atom) && tetrahedralElements[atom.getIndex()] != null)
+                    numStereoBridgeHeadJ++;
+            }
+            int cmp = Integer.compare(numStereoBridgeHeadI, numStereoBridgeHeadJ);
+            if (cmp != 0)
+                return cmp > 0;
+        }
+
         // prioritise acyclic bonds
         boolean iCyclic = focus >= 0 ? ringSearch.cyclic(focus, i) : ringSearch.cyclic(i);
         boolean jCyclic = focus >= 0 ? ringSearch.cyclic(focus, j) : ringSearch.cyclic(j);
@@ -1191,6 +1218,15 @@ final class NonplanarBonds {
         if (iDegree > jDegree) return false;
 
         return false;
+    }
+
+    private boolean isBridgeHead(IAtom atom) {
+        int numRings = 0;
+        for (IBond bond : atom.bonds()) {
+            if (bond.isInRing())
+                numRings++;
+        }
+        return numRings == 3;
     }
 
     /**
