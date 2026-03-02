@@ -470,6 +470,11 @@ final class LayoutRefiner {
             if (cyclic.size() > 2)
                 continue;
 
+            // do not reflect if there are multiple as it is rarely better
+            // e.g. SO2
+            if (acyclic.size() > 1)
+                continue;
+
             for (IBond bond : acyclic) {
                 if (bfix.contains(bond))
                     continue;
