@@ -1999,8 +1999,8 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     public static void assertHydrogenConversion(String input, String expected, HydrogenState type) throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(input);
-        AtomContainerManipulator.normalizeHydrogens(mol, type);
         Cycles.markRingAtomsAndBonds(mol);
+        AtomContainerManipulator.normalizeHydrogens(mol, type);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.AtomAtomMap);
         Assertions.assertEquals(expected, smigen.create(mol));
     }
@@ -2089,7 +2089,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         assertHydrogenConversion("C1CCC[C@H]2[C@H]1CCCC2",
                                  "C1CCC[C@]2([C@]1(CCCC2)[H])[H]", HydrogenState.Stereo);
         assertHydrogenConversion("C1CCC[C@H]2[C@H]1CCCC2",
-                                 "C1CCC[C@H]2[C@H]1CCCC2", HydrogenState.Depiction);
+                                 "C1CCC[C@]2([C@]1(CCCC2)[H])[H]", HydrogenState.Depiction);
     }
 
     @Test
