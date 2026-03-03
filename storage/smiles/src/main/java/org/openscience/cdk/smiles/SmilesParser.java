@@ -273,7 +273,7 @@ public final class SmilesParser {
             throws InvalidSmilesException {
 
         int delim = smiles.length();
-        for (int i = smiles.lastIndexOf('>'); i < smiles.length(); i++) {
+        for (int i = 0; i < smiles.length(); i++) {
             if (smiles.charAt(i) == ' ' || smiles.charAt(i) == '\t') {
                 delim = i;
                 break;

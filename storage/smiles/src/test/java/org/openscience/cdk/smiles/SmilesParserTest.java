@@ -2835,4 +2835,11 @@ class SmilesParserTest extends CDKTestCase {
         IReactionSet rs = parser.parseReactionSetSmiles("CCC>>CCO a reaction");
         Assertions.assertEquals("a reaction", rs.getProperty(CDKConstants.TITLE));
     }
+
+    @Test
+    void testTitleRxns2() throws InvalidSmilesException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReactionSet rs = parser.parseReactionSetSmiles("CCC>>CCO <a reaction>");
+        Assertions.assertEquals("<a reaction>", rs.getProperty(CDKConstants.TITLE));
+    }
 }
