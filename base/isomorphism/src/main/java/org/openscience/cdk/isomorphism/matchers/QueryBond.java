@@ -43,7 +43,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     /**
      * The bond order of this query bond.
      */
-    protected IQueryBond.Order  order     = (Order) CDKConstants.UNSET;
+    protected IQueryBond.Order  order     = null;
 
     /**
      * Number of atoms contained by this object.
