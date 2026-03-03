@@ -213,7 +213,7 @@ public abstract class IsotopeFactory {
             if (major != null)
                 this.majorIsotope[elem] = major;
             else {
-                logger.error("Could not find major isotope for: ", elem);
+                logger.warn("Could not find major isotope for: ", elem);
                 // Note for SAChem:
                 // Major (most abundant) isotope means something specific and in general
                 // you shouldn't assign it to a structure unless you're working with mass
