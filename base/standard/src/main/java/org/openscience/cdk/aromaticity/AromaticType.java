@@ -29,6 +29,8 @@ enum AromaticType {
     B2,
     /** {@code *B(*)* } */
     B3,
+    /** {@code *[B-](*)=* } */
+    B3_MINUS,
     /** {@code *[C-]=* } */
     C2_MINUS,
     /** {@code *[C+]=* } */

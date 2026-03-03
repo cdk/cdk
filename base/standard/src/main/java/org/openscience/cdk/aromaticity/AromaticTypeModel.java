@@ -112,6 +112,7 @@ final class AromaticTypeModel extends ElectronDonation {
     static final List<Map.Entry<AromaticType, Integer>> OPEN_SMILES
             = extend(DAYLIGHT,
                      entry(B2, 1),
+                     entry(B3_MINUS, 1),
                      entry(B3, 0),
                      entry(S3_OXIDE_PLUS, 2), // Sp3 but makes sense if you allow S2_OXIDE
                      entry(Se3_OXIDE_PLUS, 2), // Sp3 but makes sense if you allow Se2_OXIDE
