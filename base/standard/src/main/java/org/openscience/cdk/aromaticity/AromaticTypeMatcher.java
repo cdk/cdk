@@ -138,10 +138,15 @@ final class AromaticTypeMatcher {
         int q;
         switch (atom.getAtomicNumber()) {
             case IElement.B:
-                if (charge(atom) == 0) {
+                q = charge(atom);
+                if (q == 0) {
                     switch (binfo(atom)) {
                         case 0x0011: return AromaticType.B2;
                         case 0x0003: return AromaticType.B3;
+                    }
+                } else if (q == -1) {
+                    if (binfo(atom) == 0x0012) {
+                        return AromaticType.B3_MINUS;
                     }
                 }
                 break;
