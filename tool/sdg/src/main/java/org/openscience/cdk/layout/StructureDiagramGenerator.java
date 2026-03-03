@@ -125,6 +125,16 @@ public class StructureDiagramGenerator {
     private static final ILoggingTool               logger                   = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
 
     public static final Comparator<IAtomContainer> COMPONENT_ORDER = new Comparator<IAtomContainer>() {
+
+        int netCharge(IAtomContainer mol) {
+            int charge = 0;
+            for (IAtom atom : mol.atoms()) {
+                if (atom.getFormalCharge() != null)
+                    charge += atom.getFormalCharge();
+            }
+            return charge;
+        }
+
         @Override
         public int compare(IAtomContainer o1, IAtomContainer o2) {
 
@@ -136,9 +146,17 @@ public class StructureDiagramGenerator {
                 String label2 = getRgrpLabel(o2);
                 if (label1 != null && label2 != null)
                     return label1.compareTo(label2);
-                return Boolean.compare(label1 != null, label2 != null);
+                int cmp = Boolean.compare(label1 != null, label2 != null);
+                if (cmp != 0)
+                    return cmp;
             }
 
+            // net charge +ve => -ve
+            int cmp = Integer.compare(netCharge(o1), netCharge(o2));
+            if (cmp != 0)
+                return -cmp;
+
+            // used to sort by size big to small
             return 0; // return Integer.compare(o2.getBondCount(), o1.getBondCount());
         }
     };
@@ -1930,6 +1948,11 @@ public class StructureDiagramGenerator {
         for (int i = 0; i < cations.size(); i++) {
             final IAtom beg = cations.get(i);
             final IAtom end = anions.get(i);
+
+            // do not create the ionic bond if the ions are D<3 - otherwise
+            // we are very likely to have an overlap
+            if (beg.getBondCount() > 2 || end.getBondCount() > 2)
+                continue;
 
             boolean unique = true;
             for (IBond bond : ionicBonds)
