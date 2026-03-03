@@ -101,6 +101,9 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      */
     private String                    identifier           = null;
 
+    protected AtomType() {
+    }
+
     /**
      * Constructor for the AtomType object.
      *

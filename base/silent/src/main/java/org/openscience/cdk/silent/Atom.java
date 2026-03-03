@@ -113,7 +113,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * Constructs an completely unset Atom.
      */
     public Atom() {
-        super((String) null);
     }
 
     /**
@@ -143,7 +142,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @param fchg formal charge
      */
     public Atom(int elem, int hcnt, int fchg) {
-        super((String)null);
         setAtomicNumber(elem);
         setSymbol(Elements.ofNumber(elem).symbol());
         setImplicitHydrogenCount(hcnt);
@@ -172,7 +170,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @param symbol string with the element symbol
      */
     public Atom(String symbol) {
-        super((String)null);
         if (!parseAtomSymbol(this, symbol))
             throw new IllegalArgumentException("Cannot pass atom symbol: " + symbol);
     }
