@@ -6,13 +6,11 @@ on:
   pull_request:
     branches: [ main ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         java: [ 8, 11, 17, 21, 25]
@@ -32,6 +30,8 @@ jobs:
   build-sonarcloud:
     name: Build sonarcloud and codecov.io
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
