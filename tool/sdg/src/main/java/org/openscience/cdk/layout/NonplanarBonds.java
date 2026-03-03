@@ -1153,7 +1153,8 @@ final class NonplanarBonds {
         if (tetrahedralElements[i] == null && tetrahedralElements[j] != null) return true;
         if (tetrahedralElements[i] != null && tetrahedralElements[j] == null) return false;
 
-        if (isBridgeHead(container.getAtom(focus))) {
+        // focus = -1 is used for double bonds
+        if (focus >= 0 && isBridgeHead(container.getAtom(focus))) {
 
             // if we are a bridgehead we prefer wedging to non
             // bridgeheads
