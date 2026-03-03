@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>cdk-jniinchi-support</name>
     <artifactId>cdk-jniinchi-support</artifactId>
     <description>This module provides backwards compatibility support for the JNI based InChI APIs</description>
 

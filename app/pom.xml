@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>cdk-app</name>
     <artifactId>cdk-app</artifactId>
     <packaging>pom</packaging>
 
