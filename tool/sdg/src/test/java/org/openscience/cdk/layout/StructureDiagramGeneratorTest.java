@@ -1001,8 +1001,10 @@ class StructureDiagramGeneratorTest extends CDKTestCase {
             Assertions.assertNotNull(atom.getPoint2d());
         assertThat(mol.getAtom(0).getAtomicNumber(), is(17));
         assertThat(mol.getAtom(15).getAtomicNumber(), is(7));
-        assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(15).getPoint2d()),
-                   closeTo(1.5*SDG.getBondLength(), 0.001));
+        // Cl should be placed to the right, we used to bond these
+        // but N+ with 4 bonds and is allready congested
+        assertThat(mol.getAtom(0).getPoint2d().x,
+                   greaterThan(mol.getAtom(15).getPoint2d().x + 1.5));
     }
 
     @Test
