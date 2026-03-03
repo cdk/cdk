@@ -166,16 +166,20 @@ class InChIGeneratorFactoryTest {
     @Test
     void testGetInChIToStructure_String_IChemObjectBuilder_NullString() throws CDKException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            String opts = null;
             InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
-                                                                    DefaultChemObjectBuilder.getInstance());
+                                                                    DefaultChemObjectBuilder.getInstance(),
+                                                                    opts);
         });
     }
 
     @Test
     void testGetInChIToStructure_String_IChemObjectBuilder_NullList() throws CDKException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            List<String> opts = null;
             InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
-                                                                    DefaultChemObjectBuilder.getInstance());
+                                                                    DefaultChemObjectBuilder.getInstance(),
+                                                                    opts);
         });
     }
 
