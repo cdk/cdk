@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
@@ -2094,22 +2095,23 @@ public class StructureDiagramGenerator {
         final IRing first = RingSetManipulator.getMostComplexRing(rs);
 
         final boolean macro         = isMacroCycle(first, rs);
-        final boolean macroDbStereo = macro && first.stereoElements().iterator().hasNext();
         int result = 0;
 
         // Check for an exact match (identity) on the entire ring system
-        if (!macroDbStereo) {
-            if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
+        if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
+            if (hasCorrectDoubleBondConfig(first)) {
                 for (IAtomContainer container : rs.atomContainers())
                     container.setFlag(IChemObject.PLACED, true);
                 rs.setFlag(IChemObject.PLACED, true);
                 return macro ? 2 : 1;
-            } else {
-                // attempt ring peeling and retemplate
-                final IRingSet core = getRingSetCore(rs);
-                if (core.getAtomContainerCount() > 0 &&
-                    core.getAtomContainerCount() < rs.getAtomContainerCount() &&
-                    lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+            }
+        } else {
+            // attempt ring peeling and re-template
+            final IRingSet core = getRingSetCore(rs);
+            if (core.getAtomContainerCount() > 0 &&
+                core.getAtomContainerCount() < rs.getAtomContainerCount() &&
+                lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+                if (hasCorrectDoubleBondConfig(first)) {
                     for (IAtomContainer container : core.atomContainers())
                         container.setFlag(IChemObject.PLACED, true);
                 }
@@ -2152,6 +2154,17 @@ public class StructureDiagramGenerator {
         } while (!allPlaced(rs));
 
         return result;
+    }
+
+    private boolean hasCorrectDoubleBondConfig(IAtomContainer container) {
+        for (IStereoElement<?,?> se : container.stereoElements()) {
+            if (se instanceof IDoubleBondStereochemistry) {
+                IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
+                if (db.getStereo() != CorrectGeometricConfiguration.getConformation2d(db))
+                    return false;
+            }
+        }
+        return true;
     }
 
     /**
