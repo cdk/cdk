@@ -624,6 +624,7 @@ public final class SmilesParser {
                 } else {
                     // possibly a warning, is "CCO |$R$|" valid?
                     pseudo = bldr.newInstance(IPseudoAtom.class);
+                    pseudo.setImplicitHydrogenCount(0);
                     IAtomContainer mol = atomToMol.get(old);
                     AtomContainerManipulator.replaceAtomByAtom(mol, old, pseudo);
                     atomToMol.put(mol.getAtom(old.getIndex()), mol);
@@ -1100,6 +1101,7 @@ public final class SmilesParser {
                             for (IBond.Order order : bondOrders) {
                                 hAdjust += order.numeric();
                                 IPseudoAtom attach = rootStructure.getBuilder().newInstance(IPseudoAtom.class);
+                                attach.setImplicitHydrogenCount(0);
                                 attach.setAttachPointNum(num++);
                                 rDef.addAtom(attach);
                                 rDef.newBond(first, attach, order);
