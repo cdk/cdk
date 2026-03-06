@@ -247,6 +247,14 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
             //Write the root's LOG lines
             for (Integer rgrpNum : rGroupQuery.getRGroupDefinitions().keySet()) {
                 IRGroupList rgList = rGroupQuery.getRGroupDefinitions().get(rgrpNum);
+
+                // skip LOG for empty definitions
+                if (rgList.getRGroups().isEmpty() &&
+                    !rgList.isRestH() &&
+                    rgList.getOccurrence().equals(">0") &&
+                    rgList.getRequiredRGroupNumber() == 0)
+                    continue;
+
                 int restH = rgList.isRestH() ? 1 : 0;
                 String logLine = "M  LOG" + MDLV2000Writer.formatMDLInt(1, 3) + MDLV2000Writer.formatMDLInt(rgrpNum, 4)
                         + MDLV2000Writer.formatMDLInt(rgList.getRequiredRGroupNumber(), 4)
