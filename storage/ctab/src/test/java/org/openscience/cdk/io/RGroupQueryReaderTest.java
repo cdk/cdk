@@ -260,11 +260,11 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         RGroupQuery rGroupQuery = reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
         Assertions.assertNotNull(rGroupQuery);
-        Assertions.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 1);
-        Assertions.assertEquals(rGroupQuery.getRootStructure().getAtomCount(), 10);
-        Assertions.assertEquals(rGroupQuery.getRootAttachmentPoints().size(), 2);
+        Assertions.assertEquals(2, rGroupQuery.getRGroupDefinitions().size(), 2);
+        Assertions.assertEquals(10, rGroupQuery.getRootStructure().getAtomCount(), 10);
+        Assertions.assertEquals(2, rGroupQuery.getRootAttachmentPoints().size(), 2);
 
-        Assertions.assertEquals(rGroupQuery.getAllConfigurations().size(), 8);
+        Assertions.assertEquals(8, rGroupQuery.getAllConfigurations().size());
 
         //Test correctness AAL lines
         for (IAtom at : rGroupQuery.getRgroupQueryAtoms(1)) {

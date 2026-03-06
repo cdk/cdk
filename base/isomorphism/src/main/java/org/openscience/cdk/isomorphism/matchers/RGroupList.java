@@ -113,12 +113,11 @@ public class RGroupList implements IRGroupList {
 
     /**
      * Setter for rGroupNumber, checks for valid range.
-     * Spec: "value from 1 to 32 *, labels position of Rgroup on root."
+     * Spec: "value from 0 to 32 *, labels position of Rgroup on root."
      * @param rGroupNumber R-Group number
      */
     public void setRGroupNumber(int rGroupNumber) {
-
-        if (rGroupNumber < 1 || rGroupNumber > 32) {
+        if (rGroupNumber < 0 || rGroupNumber > 32) {
             throw new RuntimeException("Rgroup number must be between 1 and 32.");
         }
         this.rGroupNumber = rGroupNumber;

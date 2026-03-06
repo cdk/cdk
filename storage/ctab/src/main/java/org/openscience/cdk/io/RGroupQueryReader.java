@@ -331,7 +331,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                 if (atom instanceof IPseudoAtom) {
                     IPseudoAtom rGroup = (IPseudoAtom) atom;
                     if (RGroupQuery.isValidRgroupQueryLabel(rGroup.getLabel())) {
-                        int rgroupNum = Integer.parseInt(rGroup.getLabel().substring(1));
+                        int rgroupNum = rGroup.getLabel().length() > 1 ? Integer.parseInt(rGroup.getLabel().substring(1)) : 0;
                         RGroupList rgroupList = new RGroupList(rgroupNum);
                         if (!rGroupDefinitions.containsKey(rgroupNum)) {
                             logger.info("Define Rgroup R" + rgroupNum);
