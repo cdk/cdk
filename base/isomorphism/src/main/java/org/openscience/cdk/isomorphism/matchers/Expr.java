@@ -193,6 +193,8 @@ public final class Expr {
     }
 
     private static boolean isInSmallRingSize(IAtom atom, int size) {
+        // invariant this function is only called on atoms in rings
+        // if (!atom.isInRing()) return false;
         IAtomContainer mol    = atom.getContainer();
         int[]          distTo = new int[mol.getAtomCount()];
         Arrays.fill(distTo, 1 + distTo.length);
@@ -204,6 +206,7 @@ public final class Expr {
             IAtom a    = queue.poll();
             int   dist = 1 + distTo[a.getIndex()];
             for (IBond b : a.bonds()) {
+                if (!b.isInRing()) continue;
                 IAtom nbr = b.getOther(a);
                 if (dist < distTo[nbr.getIndex()]) {
                     distTo[nbr.getIndex()] = dist;

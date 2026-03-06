@@ -440,6 +440,15 @@ class SmartsPatternTest {
         assertMatch("N1CCCCC1.*[C@H](O)C |m:6:0.1.2.3.4.5|", "N1CCCCC1[C@@H](O)C",0, 0);
     }
 
+    // https://github.com/cdk/cdk/issues/1271
+    @Test
+    void testRingSizeCheck() throws Exception {
+        assertMatch("[N&r5]", "C1CC1N2CCOCC2", 0, 0);
+        assertMatch("[N&r6]", "C1CC1N2CCOCC2", 1, 1);
+        assertMatch("[r6]", "C1CC1N2CCOCC2", 6, 6);
+        assertMatch("[r3]", "C1CC1N2CCOCC2", 3, 3);
+    }
+
     IAtomContainer smi(String smi) throws Exception {
         return new SmilesParser(bldr).parseSmiles(smi);
     }
