@@ -1547,4 +1547,14 @@ class SmirksTest {
                         "[NH0:1]C(OC(C)(C)C)=O>>[NH1:1]",
                         "N1CCCCC1");
     }
+
+    @Test
+    void testExpandHydrogens() throws Exception {
+        assertNoMatch("CC",
+                      "[*:1].[*:2]>>([*:1]-[*:2])");
+        assertTransform("CC",
+                        "[*:1].[*:2]>>([*:1]-[*:2])",
+                        "C12(C3([H][H]1)[H][H]3)[H][H]2",
+                        SmirksOption.EXPAND_HYDROGENS);
+    }
 }
