@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+//TODO wording: always use center atom and radius
+//TODO: check SDU for other necessary funcationalities
 /**
  * Extracts atom-centered circular / spherical fragments from a molecule,
  * analogous to HOSE codes, circular Morgan-type
@@ -46,21 +48,20 @@ import java.util.Set;
  * <em>deep copies</em> of the originals, so modifying them does not
  * affect the source molecule.</p>
  *
- * TODO: remove the two properties?
- * <p>The property key {@link #FRAGMENT_CENTER_IDX_PROPERTY} is set on each
- * fragment container and holds the zero-based index of the atom that was used
- * as center of that fragment in the original molecule. Similarly, the
- * property key {@link #FRAGMENT_RADIUS_PROPERTY} records the radius with which
- * the fragment was generated.</p>
- *
- * <h2>Usage example</h2>
+ * <p><b>Usage example:</b>
  * <pre>{@code
  * IAtomContainer molecule = ...; // fully configured molecule
  * CircularFragmenter fragmenter = new CircularFragmenter(3); //radius 3
  * List<IAtomContainer> fragments = fragmenter.getCircularFragments(molecule);
- * }</pre>
+ * }</pre></p>
  *
- * <p>Note that the resulting fragments are not deduplicated!</p>
+ * <p>The list index of each fragment corresponds to the index of the center atom (also called
+ * "root") in the original atom container. But note that <code>fragments.get(i).contains(mol.getAtom(i))</code>
+ * will produce <code>false</code> because the atoms (and bonds) are copied at fragment extraction.</p>
+ *
+ * <p>Note that the resulting fragments are not deduplicated! So, if you, e.g., fragment benzene
+ * with a radius of 3, you will get six benzene "fragments" as a result, since a radius of three
+ * includes the entire molecule, independent of which atom is taken as the center.</p>
  *
  * @author Jonas Schaub (jonas.schaub@uni-jena.de | jonas-schaub@gmx.de | <a href="https://github.com/JonasSchaub">JonasSchaub on GitHub</a>)
  * @author Claude Sonnet 4.6
@@ -71,24 +72,14 @@ import java.util.Set;
  * @cdk.keyword spherical environment
  */
 public class CircularFragmenter {
-
     /**
-     * Property key set on every generated fragment container.
-     * The value is the zero-based index of the center atom in the original
-     * molecule.
+     * Default radius used when no explicit value is given (= 3 bonds).
      */
-    public static final String FRAGMENT_CENTER_IDX_PROPERTY = "CircularFragmenter.centerAtomIdx";
-
-    /**
-     * Property key set on every generated fragment container.
-     * The value is the radius (in bonds) used to generate the fragment.
-     */
-    public static final String FRAGMENT_RADIUS_PROPERTY = "CircularFragmenter.radius";
-
-    /** Default radius used when no explicit value is given. */
     public static final int DEFAULT_RADIUS = 3;
 
-    /** Radius of the circular neighbourhood to extract (number of bonds). */
+    /**
+     * Radius of the circular neighbourhood to extract (number of bonds).
+     */
     private int radius;
 
     /**
@@ -103,35 +94,36 @@ public class CircularFragmenter {
      * Creates a new {@code CircularFragmenter} with the given radius.
      *
      * @param radius the number of bonds to expand from each center atom;
-     *               must be >= 0. A radius of 0 produces a fragment
-     *               containing only the center atom itself.
+     *               must be >= 0; a radius of 0 produces fragments
+     *               containing only the respective center atom itself
      * @throws IllegalArgumentException if {@code radius} is negative
      */
     public CircularFragmenter(int radius) {
-        if (radius < 0)
+        if (radius < 0) {
             throw new IllegalArgumentException("Radius must be >= 0, got: " + radius);
+        }
         this.radius = radius;
     }
 
     /**
-     * Returns the current radius setting.
+     * Returns the current radius setting for atom environment extraction.
      *
-     * @return radius in bonds
+     * @return radius in nr. of bonds
      */
     public int getRadius() {
         return this.radius;
     }
 
     /**
-     * Sets the radius to use for subsequent calls to
-     * {@link #getCircularFragments(IAtomContainer)}.
+     * Sets the radius for atom environment extraction.
      *
-     * @param radius must be >= 0
+     * @param radius in nr. of bonds; must be >= 0
      * @throws IllegalArgumentException if {@code radius} is negative
      */
     public void setRadius(int radius) {
-        if (radius < 0)
+        if (radius < 0) {
             throw new IllegalArgumentException("Radius must be >= 0, got: " + radius);
+        }
         this.radius = radius;
     }
 
@@ -142,23 +134,18 @@ public class CircularFragmenter {
      * reachable from atom {@code i} within at most {@link #getRadius()} bonds,
      * together with all bonds between those atoms.</p>
      *
-     * <p>Each returned container carries two properties:</p>
-     * <ul>
-     *   <li>{@link #FRAGMENT_CENTER_IDX_PROPERTY} – the index of the center
-     *       atom in the original molecule</li>
-     *   <li>{@link #FRAGMENT_RADIUS_PROPERTY} – the radius used</li>
-     * </ul>
+     * <p>The list index of each fragment corresponds to the index of the center atom
+     * in the input atom container.</p>
      *
      * <p>Note that the resulting fragments are not deduplicated!</p>
      *
-     * @param molecule the input molecule; must not be {@code null} and should
-     *                 have atoms already added to it. The method does not
-     *                 modify the molecule.
+     * @param molecule the input molecule; must not be {@code null}; an empty input
+     *                 molecule yields an empty return list; the method does not
+     *                 modify the molecule
      * @return a list of {@link IAtomContainer} objects, one per atom in
-     *         {@code molecule}, in atom-index order; never {@code null}
+     *         {@code molecule}, in atom-index order; never {@code null} but can be
+     *         empty if the input molecule is empty
      * @throws NullPointerException if {@code molecule} is {@code null}
-     * @throws IllegalArgumentException if the molecule's atoms or bonds cannot
-     *                 be cloned
      */
     public List<IAtomContainer> getCircularFragments(IAtomContainer molecule) {
         Objects.requireNonNull(molecule, "Input molecule must not be null.");
@@ -171,10 +158,11 @@ public class CircularFragmenter {
         }
 
         IChemObjectBuilder builder = molecule.getBuilder();
+        int tmpRadius = this.radius;
 
         for (int centerIdx = 0; centerIdx < atomCount; centerIdx++) {
-            IAtomContainer fragment = this.extractFragment(molecule, centerIdx, builder);
-            fragments.add(fragment);
+            IAtomContainer fragment = CircularFragmenter.extractFragment(molecule, centerIdx, builder, tmpRadius);
+            fragments.add(centerIdx, fragment);
         }
 
         return fragments;
@@ -186,8 +174,7 @@ public class CircularFragmenter {
      *
      * <p>The same algorithm as in
      * {@link #getCircularFragments(IAtomContainer)} is applied, but for only
-     * one center atom. This is useful when only a subset of fragments is
-     * needed.</p>
+     * one center atom.</p>
      *
      * @param molecule  the source molecule; must not be {@code null}
      * @param centerIdx zero-based index of the center atom in {@code molecule}
@@ -202,9 +189,10 @@ public class CircularFragmenter {
                     "centerIdx " + centerIdx + " is out of range [0, " + molecule.getAtomCount() + ").");
         }
         IChemObjectBuilder builder = molecule.getBuilder();
-        return this.extractFragment(molecule, centerIdx, builder);
+        return CircularFragmenter.extractFragment(molecule, centerIdx, builder, this.radius);
     }
 
+    //TODO: can this be optimized? ask Gemini
     /**
      * Core BFS-based fragment extraction.
      *
@@ -213,18 +201,22 @@ public class CircularFragmenter {
      * set of atoms and all bonds <em>between collected atoms</em>, then builds
      * a new {@link IAtomContainer} from deep copies of those atoms and bonds.</p>
      *
+     * <p>No parameter checks are performed, they must be conducted by the calling code!</p>
+     *
      * @param molecule  source molecule
      * @param centerIdx index of the center atom
      * @param builder   {@link IChemObjectBuilder} obtained from the molecule
+     *                  or the builder that should be used to construct the fragment
+     * @param radius    in nr. of bonds; must be >= 0
      * @return fragment container (deep copy)
      */
-    private IAtomContainer extractFragment(IAtomContainer molecule, int centerIdx, IChemObjectBuilder builder) {
+    protected static IAtomContainer extractFragment(IAtomContainer molecule, int centerIdx, IChemObjectBuilder builder, int radius) {
 
         // --- 1. BFS to collect atoms within radius bonds ---
 
         // Tracks which atom indices have been visited
         Set<Integer> visitedIndices = new HashSet<>();
-        // Stores collected atoms in BFS order (first entry is always the center)
+        // Stores collected atoms in BFS order (first entry is always the center atom)
         List<IAtom> collectedAtoms = new ArrayList<>();
 
         // BFS queue entries: (atom, current depth)
@@ -240,7 +232,7 @@ public class CircularFragmenter {
             int currentIdx = entry[0];
             int currentDepth = entry[1];
 
-            if (currentDepth >= this.radius) {
+            if (currentDepth >= radius) {
                 // Do not expand further, but the atom itself is already collected
                 continue;
             }
@@ -307,11 +299,6 @@ public class CircularFragmenter {
                         "A bond in the molecule does not support cloning.", e);
             }
         }
-
-        // --- 4. Annotate the fragment with provenance properties ---
-
-        fragment.setProperty(FRAGMENT_CENTER_IDX_PROPERTY, centerIdx);
-        fragment.setProperty(FRAGMENT_RADIUS_PROPERTY, this.radius);
 
         return fragment;
     }

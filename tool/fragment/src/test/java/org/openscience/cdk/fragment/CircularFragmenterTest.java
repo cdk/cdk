@@ -193,7 +193,7 @@ class CircularFragmenterTest extends CDKTestCase {
                     "Radius-1 benzene fragment " + i + " must contain 3 atoms.");
             Assertions.assertEquals(2, frag.getBondCount(),
                     "Radius-1 benzene fragment " + i + " must contain 2 bonds.");
-            //TODO: fix saturation, give option of R saturation
+            //TODO: fix saturation, give options of R saturation, H saturation, or no saturation
             Assertions.assertEquals("ccc", smiGen.create(frag));
         }
     }
@@ -287,7 +287,7 @@ class CircularFragmenterTest extends CDKTestCase {
         }
     }
 
-    //TODO: does this need adjustment?
+    //TODO: does this need adjustment? Use deep copy methods of SDU
     /**
      * Atoms in the returned fragments must be distinct objects from the
      * original molecule (deep copies, not the same references).
@@ -397,49 +397,23 @@ class CircularFragmenterTest extends CDKTestCase {
     }
 
     /**
-     * Every fragment must carry the
-     * {@link CircularFragmenter#FRAGMENT_CENTER_IDX_PROPERTY} property with
-     * the correct center-atom index.
+     * Tests whether each fragment contains the atom from the original molecule
+     * corresponding to its index in the returned list.
      *
      * @throws CDKException if SMILES parsing fails
      */
     @Test
-    void testCenterIdxPropertyIsSet() throws CDKException {
+    void testFragmentAtIdxContainsAtomAtIdx() throws CDKException {
         SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smiPar.parseSmiles("CCCCC");
         CircularFragmenter fragmenter = new CircularFragmenter(2);
         List<IAtomContainer> fragments = fragmenter.getCircularFragments(mol);
 
         for (int i = 0; i < fragments.size(); i++) {
-            Object prop = fragments.get(i).getProperty(CircularFragmenter.FRAGMENT_CENTER_IDX_PROPERTY);
-            Assertions.assertNotNull(prop,
-                    "FRAGMENT_CENTER_IDX_PROPERTY must be set on fragment " + i + ".");
-            Assertions.assertEquals(i, (int) prop,
-                    "FRAGMENT_CENTER_IDX_PROPERTY must equal the atom index " + i + ".");
-        }
-    }
-
-    /**
-     * Every fragment must carry the
-     * {@link CircularFragmenter#FRAGMENT_RADIUS_PROPERTY} property with the
-     * correct radius value.
-     *
-     * @throws CDKException if SMILES parsing fails
-     */
-    @Test
-    void testRadiusPropertyIsSet() throws CDKException {
-        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer mol = smiPar.parseSmiles("CCCCC");
-        int expectedRadius = 3;
-        CircularFragmenter fragmenter = new CircularFragmenter(expectedRadius);
-        List<IAtomContainer> fragments = fragmenter.getCircularFragments(mol);
-
-        for (int i = 0; i < fragments.size(); i++) {
-            Object prop = fragments.get(i).getProperty(CircularFragmenter.FRAGMENT_RADIUS_PROPERTY);
-            Assertions.assertNotNull(prop,
-                    "FRAGMENT_RADIUS_PROPERTY must be set on fragment " + i + ".");
-            Assertions.assertEquals(expectedRadius, (int) prop,
-                    "FRAGMENT_RADIUS_PROPERTY must equal the configured radius.");
+            Assertions.assertTrue(fragments.get(i).contains(mol.getAtom(i)),
+                    "The list index must correspond to the center atom index in " +
+                            "the original molecule, but fragment " + i + " does not contain " +
+                            "the corresponding atom.");
         }
     }
 
@@ -500,9 +474,6 @@ class CircularFragmenterTest extends CDKTestCase {
                     "Atom count mismatch at index " + i);
             Assertions.assertEquals(allFragments.get(i).getBondCount(), single.getBondCount(),
                     "Bond count mismatch at index " + i);
-            Assertions.assertEquals(i,
-                    (int) single.getProperty(CircularFragmenter.FRAGMENT_CENTER_IDX_PROPERTY),
-                    "Center idx property mismatch at index " + i);
         }
     }
 
