@@ -35,6 +35,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+//TODO: rework the tests, add more examples, remove unnecessary tests
 //TODO: test for preservation of all bond and atom properties that are encoded in HOSE codes (rings, aromaticity, bond multiplicities, charges, stereochem?)
 /**
  * Unit tests for {@link CircularFragmenter}.

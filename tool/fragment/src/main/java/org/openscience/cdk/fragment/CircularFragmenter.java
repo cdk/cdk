@@ -159,9 +159,10 @@ public class CircularFragmenter {
 
         IChemObjectBuilder builder = molecule.getBuilder();
         int tmpRadius = this.radius;
+        int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, molecule.getAtomCount());
 
         for (int centerIdx = 0; centerIdx < atomCount; centerIdx++) {
-            IAtomContainer fragment = CircularFragmenter.extractFragment(molecule, centerIdx, builder, tmpRadius);
+            IAtomContainer fragment = CircularFragmenter.extractFragment(molecule, centerIdx, builder, tmpRadius, initCollectionSize);
             fragments.add(centerIdx, fragment);
         }
 
@@ -189,7 +190,33 @@ public class CircularFragmenter {
                     "centerIdx " + centerIdx + " is out of range [0, " + molecule.getAtomCount() + ").");
         }
         IChemObjectBuilder builder = molecule.getBuilder();
-        return CircularFragmenter.extractFragment(molecule, centerIdx, builder, this.radius);
+        int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, molecule.getAtomCount());
+        return CircularFragmenter.extractFragment(molecule, centerIdx, builder, this.radius, initCollectionSize);
+    }
+
+    /**
+     * Utility function to estimate the necessary initial collection size to possibly avoid resizing and rehashing.
+     *
+     * <p>No parameter checks are performed here!</p>
+     *
+     * @param radius in nr. of bonds
+     * @return initial collection size = (1 + 4 * (3^(radius - 1) + 1)) / 2 or the atom count if it is smaller than the result
+     */
+    protected static int calculateInitCollectionSize(int radius, int atomCount) {
+        // radius = 0, initCollectionSize = 1 (-> the center atom)
+        int initCollectionSize = 1;
+        if (radius == 1) {
+            // radius = 1, initCollectionSize = 5 (-> the center atom, presumably carbon, plus up to 4 neighbors)
+            initCollectionSize += 4;
+        } else if (radius > 1) {
+            // radius >= 2, initCollectionSize = 1 + 4 * (3^(radius - 1) + 1)
+            // (-> presuming all are carbon atoms and each has 4 neighbors, i.e. 3 more atoms in each
+            // iteration per atom in the last sphere)
+            initCollectionSize +=  (4 * ((int)Math.pow(3, (double) radius - 1) + 1));
+        }
+        //for most small molecules, there will be rings and implicit hydrogens that minimize the required collection space
+        initCollectionSize = (int) Math.ceil((double) initCollectionSize / 2);
+        return Math.min(initCollectionSize, atomCount);
     }
 
     //TODO: can this be optimized? ask Gemini
@@ -198,7 +225,7 @@ public class CircularFragmenter {
      *
      * <p>Starting from the center atom, the algorithm performs a
      * breadth-first expansion up to {@link #radius} bonds. It collects the
-     * set of atoms and all bonds <em>between collected atoms</em>, then builds
+     * set of atoms and all bonds between collected atoms, then builds
      * a new {@link IAtomContainer} from deep copies of those atoms and bonds.</p>
      *
      * <p>No parameter checks are performed, they must be conducted by the calling code!</p>
@@ -210,17 +237,24 @@ public class CircularFragmenter {
      * @param radius    in nr. of bonds; must be >= 0
      * @return fragment container (deep copy)
      */
-    protected static IAtomContainer extractFragment(IAtomContainer molecule, int centerIdx, IChemObjectBuilder builder, int radius) {
+    protected static IAtomContainer extractFragment(
+            IAtomContainer molecule,
+            int centerIdx,
+            IChemObjectBuilder builder,
+            int radius,
+            int initCollectionSize) {
 
         // --- 1. BFS to collect atoms within radius bonds ---
 
         // Tracks which atom indices have been visited
-        Set<Integer> visitedIndices = new HashSet<>();
+        Set<Integer> visitedIndices = new HashSet<>((int) Math.ceil(initCollectionSize * 1.4));
         // Stores collected atoms in BFS order (first entry is always the center atom)
-        List<IAtom> collectedAtoms = new ArrayList<>();
+        List<IAtom> collectedAtoms = new ArrayList<>(initCollectionSize);
+        //note visitedIndices and collectedAtoms will contain the same atoms but the lookup is faster in the hash set;
+        // that is why both exist in parallel
 
-        // BFS queue entries: (atom, current depth)
-        Deque<int[]> queue = new ArrayDeque<>(); // [atomIndex, depth]
+        // BFS queue entries, [atomIndex, depth]
+        Deque<int[]> queue = new ArrayDeque<>(initCollectionSize);
 
         IAtom centerAtom = molecule.getAtom(centerIdx);
         visitedIndices.add(centerIdx);
@@ -257,9 +291,9 @@ public class CircularFragmenter {
 
         // --- 2. Collect all bonds whose both endpoints are in the fragment ---
 
-        // Map from original atom -> cloned atom (built in step 3)
+        // Map from original atom -> copied atom (built in step 3)
         // We collect the bonds first by checking the index set.
-        List<IBond> collectedBonds = new ArrayList<>();
+        List<IBond> collectedBonds = new ArrayList<>(initCollectionSize);
         for (IBond bond : molecule.bonds()) {
             int idx0 = molecule.indexOf(bond.getBegin());
             int idx1 = molecule.indexOf(bond.getEnd());
@@ -272,14 +306,14 @@ public class CircularFragmenter {
 
         IAtomContainer fragment = builder.newAtomContainer();
 
-        // Map: original IAtom reference -> cloned IAtom in the fragment
-        Map<IAtom, IAtom> atomMap = new HashMap<>(collectedAtoms.size() * 2);
+        // Map: original IAtom reference -> copied IAtom in the fragment
+        Map<IAtom, IAtom> originalAtomToCopyAtomMap = new HashMap<>((int) Math.ceil(collectedAtoms.size() * 1.4));
 
         for (IAtom origAtom : collectedAtoms) {
             try {
-                IAtom clonedAtom = origAtom.clone();
-                atomMap.put(origAtom, clonedAtom);
-                fragment.addAtom(clonedAtom);
+                IAtom copiedAtom = origAtom.clone();
+                originalAtomToCopyAtomMap.put(origAtom, copiedAtom);
+                fragment.addAtom(copiedAtom);
             } catch (CloneNotSupportedException e) {
                 throw new IllegalArgumentException(
                         "Atom at index " + molecule.indexOf(origAtom) + " does not support cloning.", e);
@@ -288,12 +322,12 @@ public class CircularFragmenter {
 
         for (IBond origBond : collectedBonds) {
             try {
-                IBond clonedBond = origBond.clone();
-                // Re-wire the cloned bond to the cloned atom instances
-                IAtom clonedBegin = atomMap.get(origBond.getBegin());
-                IAtom clonedEnd = atomMap.get(origBond.getEnd());
-                clonedBond.setAtoms(new IAtom[]{clonedBegin, clonedEnd});
-                fragment.addBond(clonedBond);
+                IBond copiedBond = origBond.clone();
+                // Re-wire the copied bond to the copied atom instances
+                IAtom copiedBegin = originalAtomToCopyAtomMap.get(origBond.getBegin());
+                IAtom copiedEnd = originalAtomToCopyAtomMap.get(origBond.getEnd());
+                copiedBond.setAtoms(new IAtom[]{copiedBegin, copiedEnd});
+                fragment.addBond(copiedBond);
             } catch (CloneNotSupportedException e) {
                 throw new IllegalArgumentException(
                         "A bond in the molecule does not support cloning.", e);
