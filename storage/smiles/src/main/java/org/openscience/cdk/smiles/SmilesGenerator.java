@@ -717,7 +717,7 @@ public final class SmilesGenerator {
      */
     private static int[] labels(int flavour, final IAtomContainer molecule) throws CDKException {
         // FIXME: use SmiOpt.InChiLabelling
-        long[] labels = SmiFlavor.isSet(flavour, SmiFlavor.Isomeric) ? inchiNumbers(molecule)
+        long[] labels = SmiFlavor.isSet(flavour, SmiFlavor.Stereo) ? inchiNumbers(molecule)
                 : Canon.label(molecule,
                               GraphUtil.toAdjList(molecule),
                               createComparator(molecule, flavour));
@@ -1106,9 +1106,17 @@ public final class SmilesGenerator {
                 //      ties, but will change the current canonical labelling!
 
                 // extra 1) atomic mass
-                if (SmiFlavor.isSet(flavor, SmiFlavor.Isomeric)
-                    && (cmp = Integer.compare(a.getMassNumber(), b.getMassNumber())) != 0)
-                    return cmp;
+                if (SmiFlavor.isSet(flavor, SmiFlavor.AtomicMass)) {
+                    if (a.getMassNumber() == null && b.getMassNumber() != null)
+                        return -1;
+                    else if (a.getMassNumber() != null && b.getMassNumber() == null)
+                        return +1;
+                    else if (a.getMassNumber() != null && b.getMassNumber() != null) {
+                        cmp = Integer.compare(a.getMassNumber(), b.getMassNumber());
+                        if (cmp != 0)
+                            return cmp;
+                    }
+                }
                 // extra 2) atom map
                 if (SmiFlavor.isSet(flavor, SmiFlavor.AtomAtomMap) &&
                     (flavor & SmiFlavor.AtomAtomMapRenumber) != SmiFlavor.AtomAtomMapRenumber) {

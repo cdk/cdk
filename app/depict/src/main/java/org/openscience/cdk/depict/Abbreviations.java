@@ -49,6 +49,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -151,7 +152,7 @@ public class Abbreviations implements Iterable<String> {
     private final Map<String, String> disconnectedAbbreviations = new LinkedHashMap<>();
     private final Set<String> labels = new LinkedHashSet<>();
     private final Set<String> disabled = new HashSet<>();
-    private final SmilesGenerator usmigen = SmilesGenerator.unique();
+    private final SmilesGenerator usmigen = new SmilesGenerator(SmiFlavor.Unique + SmiFlavor.AtomicMass);
 
     private final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
     private final Set<Option> options = EnumSet.of(Option.AUTO_CONTRACT_HETERO);
@@ -615,18 +616,6 @@ public class Abbreviations implements Iterable<String> {
 
         for (IAtomContainer frag : fragments) {
             try {
-
-                // for now - we can't handle isotopes as our canonical key
-                // (unique smiles) ignores them
-                boolean okay = true;
-                for (IAtom atom : frag.atoms()) {
-                    if (atom.getMassNumber() != null && atom.getMassNumber() != 0) {
-                        okay = false;
-                        break;
-                    }
-                }
-                if (!okay)
-                    continue;
 
                 final String smi = usmigen.create(AtomContainerManipulator.copyAndSuppressedHydrogens(frag));
                 final String label = connectedAbbreviations.get(smi);
@@ -1266,7 +1255,7 @@ public class Abbreviations implements Iterable<String> {
 
     private boolean addDisconnectedAbbreviation(IAtomContainer mol, String label) {
         try {
-            String cansmi = SmilesGenerator.unique().create(mol);
+            String cansmi = new SmilesGenerator(SmiFlavor.Unique).create(mol);
             disconnectedAbbreviations.put(cansmi, label);
             labels.add(label);
             return true;
