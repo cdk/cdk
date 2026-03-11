@@ -26,7 +26,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,7 +46,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * @see org.openscience.cdk.tools.SaturationChecker
  */
 @Disabled("Limitations actually cause failing tests")
-public class SaturationCheckerTest extends CDKTestCase {
+public class SaturationCheckerTest {
 
     private static SaturationChecker satcheck = null;
 

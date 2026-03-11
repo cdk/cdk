@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -36,7 +35,7 @@ import org.openscience.cdk.exception.CDKException;
  * in particular setting valid 'occurrence' strings.
  *
  */
-class RGroupListTest extends CDKTestCase {
+class RGroupListTest {
 
     @BeforeAll
     static void setUp() {}

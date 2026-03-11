@@ -25,7 +25,6 @@ import java.io.InputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -47,7 +46,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @cdk.created September 4, 2003
  * @cdk.require java1.4+
  */
-class TemplateHandlerTest extends CDKTestCase {
+class TemplateHandlerTest {
 
     public boolean                           standAlone = false;
     private static final ILoggingTool              logger     = LoggingToolFactory

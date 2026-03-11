@@ -21,7 +21,6 @@ package org.openscience.cdk.rinchi;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.stream.Stream;
@@ -31,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Uli Fechner
  */
-class RInChIHashTest extends CDKTestCase {
+class RInChIHashTest {
 
     static Stream<Arguments> generateSha2TestMethodSource() {
         return Stream.of(

@@ -26,7 +26,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -37,7 +36,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @author maclean
  */
-class BondDiscretePartitionRefinerTest extends CDKTestCase {
+class BondDiscretePartitionRefinerTest {
 
     private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

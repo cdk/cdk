@@ -22,12 +22,8 @@
  */
 package org.openscience.cdk.geometry.cip.rules;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.cip.CIPTool;
 import org.openscience.cdk.geometry.cip.ILigand;
 import org.openscience.cdk.geometry.cip.ImplicitHydrogenLigand;
@@ -37,9 +33,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  */
-class CIPLigandRuleTest extends CDKTestCase {
+class CIPLigandRuleTest {
 
     private static final SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
 

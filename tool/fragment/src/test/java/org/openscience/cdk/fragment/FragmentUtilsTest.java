@@ -22,7 +22,6 @@ package org.openscience.cdk.fragment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
@@ -49,7 +48,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Test fragment utils
  *
  */
-class FragmentUtilsTest extends CDKTestCase {
+class FragmentUtilsTest {
 
     private static SmilesParser smilesParser;
 

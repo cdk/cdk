@@ -21,23 +21,24 @@ package org.openscience.cdk.charges;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.HydrogenState;
 
-import java.util.List;
 import java.io.InputStream;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -49,7 +50,7 @@ import static org.hamcrest.CoreMatchers.not;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
+class GasteigerMarsiliPartialChargesTestå {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -70,8 +71,9 @@ class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        CDKHydrogenAdder.getInstance(molecule.getBuilder()).addImplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         lpcheck.saturate(molecule);
 
         peoe.calculateCharges(molecule);
@@ -95,8 +97,9 @@ class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        CDKHydrogenAdder.getInstance(molecule.getBuilder()).addImplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         lpcheck.saturate(molecule);
 
         peoe.assignGasteigerMarsiliSigmaPartialCharges(molecule, true);
@@ -121,7 +124,7 @@ class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
         molecule.getAtom(1).setCharge(0.0);
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
         for (IAtom atom : molecule.atoms())
@@ -241,11 +244,11 @@ class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
         IAtomContainer ac = cList.get(0);
 
         Assertions.assertNotNull(ac);
-        addExplicitHydrogens(ac);
+        AtomContainerManipulator.normalizeHydrogens(ac, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
         Aromaticity.cdkLegacy().apply(ac);
 
-        addExplicitHydrogens(ac);
+        AtomContainerManipulator.normalizeHydrogens(ac, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
         lpcheck.saturate(ac);
 

@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -36,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Egon Willighagen
  * @cdk.require ant1.6
  */
-class ParserTest extends CDKTestCase {
+class ParserTest {
 
     private static final class InvalidSmarts extends Exception {
         InvalidSmarts(String message) {

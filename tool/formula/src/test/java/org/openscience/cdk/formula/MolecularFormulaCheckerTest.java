@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.formula.rules.ChargeRule;
@@ -39,7 +38,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Checks the functionality of the MolecularFormulaChecker.
  *
  */
-class MolecularFormulaCheckerTest extends CDKTestCase {
+class MolecularFormulaCheckerTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private IsotopeFactory                  ifac;

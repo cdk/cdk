@@ -24,13 +24,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 
 /**
  */
-class Geometry3DValidatorTest extends CDKTestCase {
+class Geometry3DValidatorTest {
 
     @Test
     void testEthane() throws Exception {

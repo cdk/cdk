@@ -20,7 +20,6 @@ package org.openscience.cdk.dict;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the DefaultHanlder class.
@@ -28,7 +27,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DefaultHanlder
  */
-class DictionaryTest extends CDKTestCase {
+class DictionaryTest {
 
     @Test
     void testDefaultHanlder() {
