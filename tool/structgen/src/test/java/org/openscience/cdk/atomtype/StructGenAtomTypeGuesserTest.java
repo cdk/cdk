@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -32,7 +31,7 @@ import java.util.List;
 
 /**
  */
-class StructGenAtomTypeGuesserTest extends CDKTestCase {
+class StructGenAtomTypeGuesserTest {
 
     @Test
     void testPossibleAtomTypes_IAtomContainer_IAtom() throws java.lang.Exception {

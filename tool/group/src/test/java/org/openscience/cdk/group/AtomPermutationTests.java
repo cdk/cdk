@@ -2,7 +2,6 @@ package org.openscience.cdk.group;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -11,7 +10,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * @author maclean
  */
-class AtomPermutationTests extends CDKTestCase {
+class AtomPermutationTests {
 
     private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

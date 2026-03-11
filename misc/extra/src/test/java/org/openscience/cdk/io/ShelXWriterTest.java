@@ -30,13 +30,12 @@ import javax.vecmath.Vector3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Crystal;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.ICrystal;
 
 /**
  */
-class ShelXWriterTest extends CDKTestCase {
+class ShelXWriterTest {
 
     @Test
     void testRoundTrip() throws Exception {

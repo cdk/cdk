@@ -23,22 +23,24 @@
  */
 package org.openscience.cdk.structgen;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.List;
 
 /**
  */
-class VicinitySamplerTest extends CDKTestCase {
+class VicinitySamplerTest {
 
     private static SmilesParser parser;
 
@@ -52,7 +54,8 @@ class VicinitySamplerTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makeEthylPropylPhenantren();
 
         Isotopes.getInstance().configureAtoms(mol);
-        addImplicitHydrogens(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
 
         IAtomContainer temp;
         List structures = VicinitySampler.sample(mol);
@@ -73,7 +76,8 @@ class VicinitySamplerTest extends CDKTestCase {
         IAtomContainer mol = parser.parseSmiles("C=CC=C");
 
         Isotopes.getInstance().configureAtoms(mol);
-        addImplicitHydrogens(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
 
         IAtomContainer temp;
         List structures = VicinitySampler.sample(mol);

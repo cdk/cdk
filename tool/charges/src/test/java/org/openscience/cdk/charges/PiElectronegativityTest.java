@@ -21,19 +21,19 @@ package org.openscience.cdk.charges;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.HydrogenState;
 
 /**
 * TestSuite that runs all tests.
 *
 */
-class PiElectronegativityTest extends CDKTestCase {
+class PiElectronegativityTest {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -85,7 +85,7 @@ class PiElectronegativityTest extends CDKTestCase {
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
@@ -116,7 +116,7 @@ class PiElectronegativityTest extends CDKTestCase {
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 

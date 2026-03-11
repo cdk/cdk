@@ -20,39 +20,38 @@
 
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.vecmath.Point3d;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.HydrogenState;
 
-import org.junit.jupiter.api.BeforeAll;
+import javax.vecmath.Point3d;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Tests for AtomPlacer3D
  *
  */
-class AtomPlacer3DTest extends CDKTestCase {
+class AtomPlacer3DTest {
 
     private boolean standAlone = false;
 
@@ -151,7 +150,7 @@ class AtomPlacer3DTest extends CDKTestCase {
         reader.close();
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         IAtomContainer ac = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, containersList.get(0));
-        addExplicitHydrogens(ac);
+        AtomContainerManipulator.normalizeHydrogens(ac, HydrogenState.Explicit);
         IAtomContainer chain = ac.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 16; i < 25; i++) {
             chain.addAtom(ac.getAtom(i));

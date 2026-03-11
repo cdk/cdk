@@ -52,12 +52,9 @@ import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smiles.SmiFlavor;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -89,7 +86,7 @@ import static org.hamcrest.Matchers.lessThan;
  *@author     steinbeck
  *@cdk.created    August 29, 2003
  */
-class StructureDiagramGeneratorTest extends CDKTestCase {
+class StructureDiagramGeneratorTest {
 
     private static final StructureDiagramGenerator SDG = new StructureDiagramGenerator();
 
@@ -1270,12 +1267,12 @@ class StructureDiagramGeneratorTest extends CDKTestCase {
         mol.setProperty(CDKConstants.CTAB_SGROUPS, Collections.singletonList(sgroup));
         layout(mol);
         for (int i = 0; i < 6; i++) {
-            assertEquals(mol.getAtom(i).getPoint2d(),
-                         mol.getAtom(i + 6).getPoint2d(),
-                         0.01);
-            assertEquals(mol.getAtom(i).getPoint2d(),
-                         mol.getAtom(i + 12).getPoint2d(),
-                         0.01);
+            Assertions2d.assertEquals(mol.getAtom(i).getPoint2d(),
+                                      mol.getAtom(i + 6).getPoint2d(),
+                                      0.01);
+            Assertions2d.assertEquals(mol.getAtom(i).getPoint2d(),
+                                      mol.getAtom(i + 12).getPoint2d(),
+                                      0.01);
         }
     }
 

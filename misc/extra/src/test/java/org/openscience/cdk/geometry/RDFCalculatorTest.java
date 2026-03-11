@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * This class defines regression tests that should ensure that the source code
@@ -37,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.geometry.RDFCalculator
  */
-class RDFCalculatorTest extends CDKTestCase {
+class RDFCalculatorTest {
 
     @Test
     void testRDFCalculator_double_double_double_double() {

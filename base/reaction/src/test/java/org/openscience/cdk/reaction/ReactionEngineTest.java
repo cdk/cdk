@@ -20,7 +20,6 @@ package org.openscience.cdk.reaction;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.reaction.type.AdductionProtonLPReaction;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 
@@ -28,7 +27,7 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  * Tests for ReactionEngine implementations.
  *
  */
-class ReactionEngineTest extends CDKTestCase {
+class ReactionEngineTest {
 
     /**
      *  Constructor for the ReactionEngineTest object.

@@ -20,7 +20,6 @@ package org.openscience.cdk.reaction;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -30,7 +29,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * Tests for IReactionChain implementations.
  *
  */
-class ReactionChainTest extends CDKTestCase {
+class ReactionChainTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

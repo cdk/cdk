@@ -26,12 +26,11 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author maclean
  */
-public class EquitablePartitionRefinerTest extends CDKTestCase {
+public class EquitablePartitionRefinerTest {
 
     MockRefinable makeExampleTable() {
         int[][] table = new int[4][];

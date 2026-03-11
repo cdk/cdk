@@ -23,7 +23,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,7 +39,7 @@ import javax.vecmath.Point3d;
  *@cdk.created       2004-11-04
  */
 
-class InductivePartialChargesTest extends CDKTestCase {
+class InductivePartialChargesTest {
 
     private static IAtomContainer mol;
 

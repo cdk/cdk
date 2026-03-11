@@ -21,13 +21,12 @@ package org.openscience.cdk.reaction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Tests for IReactionProcess implementations.
  *
  */
-public abstract class ReactionMechanismTest extends CDKTestCase {
+public abstract class ReactionMechanismTest {
 
     private static IReactionMechanism reactionMechanism;
 
