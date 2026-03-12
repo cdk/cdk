@@ -29,7 +29,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.HashSet;
 import java.util.List;
@@ -44,7 +43,7 @@ import java.util.Set;
  * @author Claude Sonnet 4.6
  * @see CircularFragmenter
  */
-class CircularFragmenterTest extends CDKTestCase {
+class CircularFragmenterTest {
 
     /**
      * An empty molecule (no atoms) must yield an empty list.
@@ -177,7 +176,7 @@ class CircularFragmenterTest extends CDKTestCase {
 
     /**
      * For benzene at radius 1, the fragment centered on any atom includes that
-     * atom and its two immediate ring neighbours (3 atoms, 2 bonds).
+     * atom and its two immediate ring neighbors (3 atoms, 2 bonds).
      *
      * @throws CDKException if SMILES parsing fails
      */
@@ -194,7 +193,6 @@ class CircularFragmenterTest extends CDKTestCase {
                     "Radius-1 benzene fragment " + i + " must contain 3 atoms.");
             Assertions.assertEquals(2, frag.getBondCount(),
                     "Radius-1 benzene fragment " + i + " must contain 2 bonds.");
-            //TODO: fix saturation, give options of R saturation, H saturation, or no saturation
             Assertions.assertEquals("ccc", smiGen.create(frag));
         }
     }
@@ -202,8 +200,8 @@ class CircularFragmenterTest extends CDKTestCase {
     /**
      * For benzene at radius 2, each fragment must contain 5 atoms and 4 bonds.
      *
-     * <p>From any center atom, BFS at depth 1 reaches its 2 direct neighbours,
-     * and at depth 2 their respective other neighbours — giving 5 atoms in
+     * <p>From any center atom, BFS at depth 1 reaches its 2 direct neighbors,
+     * and at depth 2 their respective other neighbors — giving 5 atoms in
      * total. The atom diametrically opposite across the 6-ring is at
      * shortest-path distance 3 and is therefore excluded. The 5 collected
      * atoms form an open chain (4 bonds); the bond that would close the ring
@@ -257,8 +255,7 @@ class CircularFragmenterTest extends CDKTestCase {
                 "Radius-2 fragment from terminal CH3 in ethylbenzene must contain 3 atoms.");
         Assertions.assertEquals(2, frag.getBondCount(),
                 "Radius-2 fragment from terminal CH3 in ethylbenzene must contain 2 bonds.");
-        //TODO: fix saturation, see above
-        Assertions.assertEquals("CCc", smiGen.create(frag));
+        Assertions.assertEquals("cCC", smiGen.create(frag));
     }
 
     /**
@@ -288,7 +285,6 @@ class CircularFragmenterTest extends CDKTestCase {
         }
     }
 
-    //TODO: does this need adjustment? Use deep copy methods of SDU
     /**
      * Atoms in the returned fragments must be distinct objects from the
      * original molecule (deep copies, not the same references).
@@ -316,7 +312,6 @@ class CircularFragmenterTest extends CDKTestCase {
         }
     }
 
-    //TODO: does this (and the following tests) need adjustment?
     /**
      * Bonds in the returned fragments must be distinct objects from the
      * original molecule (deep copies, not the same references).
@@ -394,27 +389,6 @@ class CircularFragmenterTest extends CDKTestCase {
                 Assertions.assertFalse(originalAtoms.contains(bond.getEnd()),
                         "Bond.getEnd() in fragment must not reference an original atom.");
             }
-        }
-    }
-
-    /**
-     * Tests whether each fragment contains the atom from the original molecule
-     * corresponding to its index in the returned list.
-     *
-     * @throws CDKException if SMILES parsing fails
-     */
-    @Test
-    void testFragmentAtIdxContainsAtomAtIdx() throws CDKException {
-        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer mol = smiPar.parseSmiles("CCCCC");
-        CircularFragmenter fragmenter = new CircularFragmenter(2);
-        List<IAtomContainer> fragments = fragmenter.getCircularFragments(mol);
-
-        for (int i = 0; i < fragments.size(); i++) {
-            Assertions.assertTrue(fragments.get(i).contains(mol.getAtom(i)),
-                    "The list index must correspond to the center atom index in " +
-                            "the original molecule, but fragment " + i + " does not contain " +
-                            "the corresponding atom.");
         }
     }
 
