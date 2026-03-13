@@ -21,6 +21,7 @@ package org.openscience.cdk.fragment;
 
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.exception.NoSuchBondException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -53,12 +54,12 @@ import java.util.Set;
  * <em>deep copies</em> of the originals, so modifying them does not
  * affect the source molecule.</p>
  *
- * <p><b>Usage example:</b>
+ * <p><b>Usage example:</b></p>
  * <pre>{@code
  * IAtomContainer molecule = ...; // fully configured molecule
  * CircularFragmenter fragmenter = new CircularFragmenter(3); //radius 3
  * List<IAtomContainer> fragments = fragmenter.getCircularFragments(molecule);
- * }</pre></p>
+ * }</pre>
  *
  * <p>The list index of each fragment corresponds to the index of the center atom (also called
  * "root") in the original atom container. But note that <code>fragments.get(i).contains(mol.getAtom(i))</code>
@@ -289,7 +290,7 @@ public class CircularFragmenter {
      * @param centerIdx zero-based index of the center atom in {@code molecule}
      * @return a deep-copied {@link IAtomContainer} of the circular environment
      * @throws NullPointerException      if {@code molecule} is {@code null}
-     * @throws IndexOutOfBoundsException if {@code centerIdx} is out of range (< 0 or >= atom count of molecule)
+     * @throws IndexOutOfBoundsException if {@code centerIdx} is out of range (below than 0 or above/equal to atom count of molecule)
      */
     public IAtomContainer getCircularFragment(IAtomContainer molecule, int centerIdx) {
         Objects.requireNonNull(molecule, "Input molecule must not be null.");
@@ -474,7 +475,7 @@ public class CircularFragmenter {
             for (IStereoElement elem : molecule.stereoElements()) {
                 try {
                     fragment.addStereoElement(elem.map(originalAtomToCopyAtomMap, originalBondToCopyBondMap));
-                } catch (NoSuchAtomException exception) {
+                } catch (NoSuchAtomException | NoSuchBondException exception) {
                     //catch those because they appear if not all stereo carriers are present in the fragment
                 }
             }
