@@ -60,7 +60,7 @@ class CircularFragmenterTest {
      * The number of returned fragments must equal the number of atoms in the
      * input molecule (one fragment per atom).
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testFragmentCountEqualsAtomCount() throws CDKException {
@@ -80,7 +80,7 @@ class CircularFragmenterTest {
     /**
      * At radius 0, every fragment must contain exactly 1 atom (the root/center) and 0 bonds.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testRadius0SingleAtomFragments() throws CDKException {
@@ -103,7 +103,7 @@ class CircularFragmenterTest {
      *   <li>radius 2: C1, C2, C3, C4, C5 (5 atoms, 4 bonds, the whole molecule)</li>
      * </ul>
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testLinearChainCenterAtomRadius1and2() throws CDKException {
@@ -134,7 +134,7 @@ class CircularFragmenterTest {
      * For a linear pentane chain (C1–C2–C3–C4–C5), the fragment centered/rooted on C1
      * (index 0) should only contain C1 and C2 (two atoms, one bond).
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testLinearChainTerminalAtomRadius1() throws CDKException {
@@ -156,7 +156,7 @@ class CircularFragmenterTest {
      * atom and its two immediate ring neighbors (3 atoms, 2 bonds). It is also tested whether
      * aromaticity flags on atoms and bonds are preserved.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testBenzeneRadius1() throws CDKException {
@@ -193,7 +193,7 @@ class CircularFragmenterTest {
      * atoms form an open chain (4 bonds); the bond that would close the ring
      * is absent because one of its endpoints was not collected.</p>
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testBenzeneRadius2() throws CDKException {
@@ -217,7 +217,7 @@ class CircularFragmenterTest {
      * atom must include all 6 atoms and all 6 bonds (the entire ring is
      * reachable within 3 bonds).
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testBenzeneRadius3AllAtoms() throws CDKException {
@@ -250,7 +250,7 @@ class CircularFragmenterTest {
      * excluded. The resulting fragment is the propyl stub C–C–c with
      * 3 atoms and 2 bonds.</p>
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testEthylbenzeneTerminalRadius2AtomAndBondCount() throws CDKException {
@@ -272,7 +272,7 @@ class CircularFragmenterTest {
      * For ethylbenzene (8 atoms, 8 bonds) radius 5 must give the full molecule because of the symmetry
      * of the ring.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testEthylbenzeneRadius5FullMolecule() throws CDKException {
@@ -297,7 +297,7 @@ class CircularFragmenterTest {
      * Atoms in the returned fragments must be distinct objects from the
      * original molecule (deep copies, not the same references).
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testFragmentAtomsAreDeepCopies() throws CDKException {
@@ -322,7 +322,7 @@ class CircularFragmenterTest {
      * Bonds in the returned fragments must be distinct objects from the
      * original molecule (deep copies, not the same references).
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testFragmentBondsAreDeepCopies() throws CDKException {
@@ -346,7 +346,7 @@ class CircularFragmenterTest {
      * Modifying an atom symbol in a copied fragment must not affect the
      * corresponding atom in the original molecule.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testMutatingFragmentDoesNotAffectOriginal() throws CDKException {
@@ -367,7 +367,7 @@ class CircularFragmenterTest {
      * {@code bond.getEnd()}) must be the copied atom instances inside the
      * fragment, not the originals.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testFragmentBondsReferenceCopiedAtoms() throws CDKException {
@@ -393,7 +393,7 @@ class CircularFragmenterTest {
     /**
      * Bond orders of copied bonds must match those in the original molecule.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testBondOrderPreservedInFragment() throws CDKException {
@@ -416,7 +416,7 @@ class CircularFragmenterTest {
      * bond completing the ring must be extracted as well, even though it is not part
      * of the radius anymore, technically.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testRingExtractionCyclopentane() throws CDKException {
@@ -437,7 +437,7 @@ class CircularFragmenterTest {
      * <p>At radius 5, every fragment captures the whole five-atom molecule,
      * so both charged atoms ({@code NH3+} and {@code O−}) must be present.</p>
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testChargePreservationGlycine() throws CDKException {
@@ -464,7 +464,7 @@ class CircularFragmenterTest {
      * missing any ligand atom. The resulting fragment must have at least one
      * stereo element.</p>
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testStereoElementsPreservedWhenFlagTrue() throws CDKException {
@@ -482,8 +482,10 @@ class CircularFragmenterTest {
     /**
      * When {@link CircularFragmenter#isPreserveStereo()} is {@code false}
      * (the default), no stereo elements must appear in the fragment.
+     * Uses the same molecule and center atom as {@link #testStereoElementsPreservedWhenFlagTrue}
+     * to make the two tests directly comparable.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testStereoElementsAbsentWhenFlagFalse() throws CDKException {
@@ -491,16 +493,20 @@ class CircularFragmenterTest {
         SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols | SmiFlavor.Stereo);
         IAtomContainer alanine = smiPar.parseSmiles("[C@@H](C(O)=O)(C)N");
         CircularFragmenter fragmenter = new CircularFragmenter(5, false); // preserveStereo=false (default)
-        IAtomContainer frag = fragmenter.getCircularFragment(alanine, 1);
+        IAtomContainer frag = fragmenter.getCircularFragment(alanine, 0); // same center as the true-stereo test
         Assertions.assertFalse(frag.stereoElements().iterator().hasNext(),
                 "Stereo elements must NOT be present in the fragment when preserveStereo=false.");
         Assertions.assertEquals("CC(C(=O)O)N", smiGen.create(frag));
     }
 
     /**
-     * Tests the pseudo atom saturation on alanine with radius one.
+     * When {@link CircularFragmenter#isMarkAttachments()} is {@code true}, every broken bond at
+     * the fragment boundary is replaced by a bond to an {@link org.openscience.cdk.interfaces.IPseudoAtom}
+     * labelled {@code "*"}.
+     * This test verifies the SMILES representation of all radius-1 fragments of alanine,
+     * including correct pseudo-atom bond orders (single and double) and charge/element preservation.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testPseudoAtomSaturation() throws CDKException {
@@ -510,8 +516,7 @@ class CircularFragmenterTest {
         CircularFragmenter fragmenter = new CircularFragmenter(1, false, true);
         List<IAtomContainer> fragments = fragmenter.getCircularFragments(alanine);
         String[] expectedFragments = new String[] {
-                //note that the pseudo atom is also double-bonded
-                "*C(=*)C(N)C",
+                "*C(=*)C(N)C",            // pseudo atom is double-bonded (mirrors the C=O of the carboxyl group)
                 "*C(*)C(=O)O",
                 "*C(=*)O",
                 "*C(*)=O",
@@ -534,7 +539,7 @@ class CircularFragmenterTest {
     /**
      * Tests the correct fragmentation of the aromatic L-tryptophan zwitter ion.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testLTryptophanZwitterIonRadius1() throws CDKException {
@@ -578,9 +583,12 @@ class CircularFragmenterTest {
     }
 
     /**
-     * Tests the correct fragmentation of the aromatic L-tryptophan zwitter ion.
+     * Tests the correct fragmentation of the aromatic L-tryptophan zwitterion at radius 2.
+     * At radius 2, fragments span two bond shells from each center atom, capturing larger
+     * substructures including partial ring systems and the stereo center with its full
+     * immediate chemical environment.
      *
-     * @throws CDKException if SMILES parsing fails
+     * @throws CDKException if SMILES parsing or generation fails
      */
     @Test
     void testLTryptophanZwitterIonRadius2() throws CDKException {

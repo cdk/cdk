@@ -68,8 +68,7 @@ import java.util.Set;
  * with a radius of 3, you will get six benzene "fragments" as a result, since a radius of three
  * includes the entire molecule, independent of which atom is taken as the center.</p>
  *
- * Scaling:
- * Let <em>n</em> be the number of atoms in the input molecule and <em>r</em> be the radius.
+ * <p>Scaling: Let <em>n</em> be the number of atoms and <em>r</em> the radius.
  * A single fragment extraction scales with the number of atoms <em>k</em> in the fragment
  * (approx. min(<em>n</em>, 3<sup><em>r</em></sup>)).
  * Extracting all fragments takes <em>O</em>(<em>n</em>&middot;<em>k</em>).
@@ -77,8 +76,6 @@ import java.util.Set;
  * for large radii covering the whole molecule, it is <em>O</em>(<em>n</em><sup>2</sup>).</p>
  *
  * @author Jonas Schaub (jonas.schaub@uni-jena.de | jonas-schaub@gmx.de | <a href="https://github.com/JonasSchaub">JonasSchaub on GitHub</a>)
- * @author Claude Sonnet 4.6
- * @author Gemini 3 Pro
  * @cdk.keyword fragment
  * @cdk.keyword circular fingerprint
  * @cdk.keyword HOSE code
@@ -261,7 +258,7 @@ public class CircularFragmenter {
             return fragments;
         }
 
-        // Build map for O(1) lookups during BFS
+        // Pre-build atom→index map once for O(1) lookups in both the BFS and bond-collection steps
         Map<IAtom, Integer> atomIndexMap = new HashMap<>((int) (atomCount * 1.4));
         for (int i = 0; i < atomCount; i++) {
             atomIndexMap.put(molecule.getAtom(i), i);
@@ -301,7 +298,7 @@ public class CircularFragmenter {
                     "centerIdx " + centerIdx + " is out of range [0, " + molecule.getAtomCount() + ").");
         }
         
-        // Build map for O(1) lookups during BFS
+        // Pre-build atom→index map once for O(1) lookups in both the BFS and bond-collection steps
         int atomCount = molecule.getAtomCount();
         Map<IAtom, Integer> atomIndexMap = new HashMap<>((int) (atomCount * 1.4));
         for (int i = 0; i < atomCount; i++) {
@@ -371,12 +368,11 @@ public class CircularFragmenter {
 
         // --- 1. BFS to collect atoms within radius bonds ---
 
-        // Tracks which atom indices have been visited
+        // Tracks which atom indices have been visited (O(1) membership test)
         Set<Integer> visitedIndices = new HashSet<>((int) Math.ceil(initCollectionSize * 1.4));
-        // Stores collected atoms in BFS order (first entry is always the center atom)
+        // Stores collected atoms in BFS order; first entry is always the center atom.
+        // Both collections are kept in parallel: visitedIndices for fast lookup, collectedAtoms for ordered iteration.
         List<IAtom> collectedAtoms = new ArrayList<>(initCollectionSize);
-        //note: visitedIndices and collectedAtoms will contain the same atoms but the lookup is faster in the hash set;
-        // that is why both exist in parallel
 
         // BFS queue entries, [atomIndex, depth]
         Deque<int[]> queue = new ArrayDeque<>(initCollectionSize);
