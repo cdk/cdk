@@ -45,6 +45,8 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -1023,18 +1025,98 @@ public class AtomContainerManipulator {
         }
     }
 
+
+    /**
+     * Configure the atom types of a container and set the implicit hydrogen
+     * count of the atoms, this function does not overwrite properties the
+     * original atoms - use {@link #reconfigure} to do that<br>
+     *
+     * @param mol the container
+     * @return the molecule was fully configured, if false one or more atoms
+     *         could not be configured
+     * @see #reconfigure(IAtomContainer)
+     */
+    public static boolean configure(IAtomContainer mol) {
+        return configure(mol, false);
+    }
+
+    /**
+     * Reconfigure the atom types of a container and set the implicit hydrogen
+     * count of the atoms, this function overwrites properties the
+     * original atoms - use {@link #configure} to <b>not</b> do that<br>
+     *
+     * @param mol the container
+     * @return the molecule was fully configured, if false one or more atoms
+     *         could not be configured
+     * @see #configure(IAtomContainer)
+     */
+    public static boolean reconfigure(IAtomContainer mol) {
+        return configure(mol, true);
+    }
+
+
+    /**
+     * Configure the atom types of a container and set the implicit hydrogen
+     * count of the atoms, this function does not reconfigure properties the
+     * original atoms unless you provide the optional second argument
+     * (reconfigure) as true.<br>
+     *
+     * @param mol the container
+     * @param reconfigure if the existing atom types/hydrogen counts should be
+     *                  overwritten or not
+     * @return the molecule was fully configured, if false one or more atoms
+     *         could not be configured
+     */
+    private static boolean configure(IAtomContainer mol, boolean reconfigure) {
+        boolean result = true;
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        for (IAtom atom : mol.atoms()) {
+            IAtomType atype = null;
+
+            if (!reconfigure)
+                atype = matcher.getAtomTypeUnsafe(atom.getAtomTypeName());
+
+            try {
+                atype = matcher.findMatchingAtomType(mol, atom);
+            } catch (CDKException ex) {
+                LoggingToolFactory.createLoggingTool(CDKAtomTypeMatcher.class)
+                                  .warn(ex.getMessage());
+                result = false;
+            }
+
+            if (atype != null) {
+                if (reconfigure)
+                    AtomTypeManipulator.configure(atom, atype);
+                else
+                    AtomTypeManipulator.configureUnsetProperties(atom, atype);
+            }
+
+            Integer implH = atom.getImplicitHydrogenCount();
+            if (implH == null || reconfigure) {
+                Integer expectDegree = atom.getFormalNeighbourCount();
+                if (expectDegree != null) {
+                    int actualDegree = mol.getConnectedBondsCount(atom);
+                    atom.setImplicitHydrogenCount(expectDegree - actualDegree);
+                } else {
+                    atom.setImplicitHydrogenCount(0);
+                }
+            }
+        }
+        return result;
+    }
+
     /**
      * This method will reset all atom configuration to UNSET.
      * <br>
-     * This method is the reverse of {@link #percieveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IAtomContainer)}
+     * This method is the reverse of {@link #configure(org.openscience.cdk.interfaces.IAtomContainer)}
      * and after a call to this method all atoms will be "unconfigured".
      * <br>
-     * Note that it is not a complete reversal of {@link #percieveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IAtomContainer)}
+     * Note that it is not a complete reversal of {@link #configure(org.openscience.cdk.interfaces.IAtomContainer)}
      * since the atomic symbol of the atoms remains unchanged. Also, all the flags that were set
      * by the configuration method (such as IS_HYDROGENBOND_ACCEPTOR or ISAROMATIC) will be set to False.
      *
      * @param container The molecule whose atoms are to be unconfigured
-     * @see #percieveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IAtomContainer)
+     * @see #configure(org.openscience.cdk.interfaces.IAtomContainer)
      */
     public static void clearAtomConfigurations(IAtomContainer container) {
         for (IAtom atom : container.atoms()) {

@@ -300,28 +300,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         return mol;
     }
 
-    /**
-     * Convenience method to perceive atom types for all <code>IAtom</code>s in the
-     * <code>IAtomContainer</code>, using the <code>CDKAtomTypeMatcher</code>. If the
-     * matcher finds atom matching atom type, the <code>IAtom</code> will be configured
-     * to have the same properties as the <code>IAtomType</code>. If no matching atom
-     * type is found, no configuration is performed.
-     * @param container
-     * @throws CDKException
-     */
-    public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        for (IAtom atom : container.atoms()) {
-            if (!(atom instanceof IPseudoAtom)) {
-
-                IAtomType matched = matcher.findMatchingAtomType(container, atom);
-                if (matched != null) {
-                    AtomTypeManipulator.configure(atom, matched);
-                }
-
-            }
-        }
-    }
 
     private static IAtom[] copyAtoms(IAtomContainer container, IAtomContainer newAtomContainer) {
         int atomCount = container.getAtomCount();
