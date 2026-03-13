@@ -20,6 +20,7 @@
 package org.openscience.cdk.fragment;
 
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -447,7 +448,11 @@ public class CircularFragmenter {
         // stereo elements
         if (preserveStereo) {
             for (IStereoElement elem : molecule.stereoElements()) {
-                fragment.addStereoElement(elem.map(originalAtomToCopyAtomMap, originalBondToCopyBondMap));
+                try {
+                    fragment.addStereoElement(elem.map(originalAtomToCopyAtomMap, originalBondToCopyBondMap));
+                } catch (NoSuchAtomException exception) {
+                    //catch those because they appear if not all stereo carriers are present in the fragment
+                }
             }
         }
 
