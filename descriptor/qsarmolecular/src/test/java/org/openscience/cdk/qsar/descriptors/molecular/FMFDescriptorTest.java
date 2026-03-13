@@ -44,7 +44,7 @@ class FMFDescriptorTest extends MolecularDescriptorTest {
     void testClenbuterol() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Clc1cc(cc(Cl)c1N)C(O)CNC(C)(C)C");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
         Assertions.assertEquals(0.353, result.doubleValue(), 0.01);
@@ -54,7 +54,7 @@ class FMFDescriptorTest extends MolecularDescriptorTest {
     void testCarbinoxamine() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CN(C)CCOC(C1=CC=C(Cl)C=C1)C1=CC=CC=N1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
         Assertions.assertEquals(0.65, result.doubleValue(), 0.01);
@@ -64,7 +64,7 @@ class FMFDescriptorTest extends MolecularDescriptorTest {
     void testIsamoltane() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
         Assertions.assertEquals(0.55, result.doubleValue(), 0.01);
@@ -74,7 +74,7 @@ class FMFDescriptorTest extends MolecularDescriptorTest {
     void testPirenperone() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
         Assertions.assertEquals(0.862, result.doubleValue(), 0.001);

@@ -74,7 +74,7 @@ class SMARTSSearchTest extends CDKTestCase {
 
     static IAtomContainer smilesAtomTyped(String smiles) throws CDKException {
         IAtomContainer molecule = smiles(smiles, false);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         return molecule;
     }
 
@@ -1368,7 +1368,7 @@ class SMARTSSearchTest extends CDKTestCase {
         SMARTSQueryTool sqt = smarts("[#7,C;+0,+1]");
         IAtomContainer smi = smiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
         sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet()));
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(smi);
+        AtomContainerManipulator.configure(smi);
         int[] results = match(sqt, smi);
         Assertions.assertEquals(8, results[0]);
     }
@@ -1804,7 +1804,7 @@ class SMARTSSearchTest extends CDKTestCase {
         // remove the flags and reassign them correctly
         for (IBond bond : m.bonds())
             bond.setFlag(IChemObject.AROMATIC, false);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
+        AtomContainerManipulator.configure(m);
         Aromaticity.cdkLegacy().apply(m);
 
         results = match(smarts("c-c"), m);

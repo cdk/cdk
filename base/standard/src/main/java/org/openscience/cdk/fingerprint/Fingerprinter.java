@@ -169,7 +169,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         logger.debug("Starting Aromaticity Detection");
         long before = System.currentTimeMillis();
         if (!hasPseudoAtom(container.atoms())) {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+            AtomContainerManipulator.configure(container);
             Aromaticity.cdkLegacy().apply(container);
         }
         long after = System.currentTimeMillis();
@@ -194,7 +194,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer container) throws CDKException {
         if (!hasPseudoAtom(container.atoms())) {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+            AtomContainerManipulator.configure(container);
             Aromaticity.cdkLegacy().apply(container);
         }
         Map<String,Integer> rawFp = new HashMap<>();

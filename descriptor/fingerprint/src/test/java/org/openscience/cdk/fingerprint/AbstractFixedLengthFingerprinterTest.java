@@ -67,8 +67,8 @@ abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinte
         IAtomContainer superStructure = bug706786_1();
         IAtomContainer subStructure = bug706786_2();
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
+        AtomContainerManipulator.configure(superStructure);
+        AtomContainerManipulator.configure(subStructure);
         addImplicitHydrogens(superStructure);
         addImplicitHydrogens(subStructure);
 
@@ -98,8 +98,8 @@ abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinte
         // these molecules are different resonance forms of the same molecule
         // make sure aromaticity is detected. although some fingerprinters do this
         // one should not expected all implementations to do so.
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superstructure);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(substructure);
+        AtomContainerManipulator.configure(superstructure);
+        AtomContainerManipulator.configure(substructure);
         Aromaticity.cdkLegacy().apply(superstructure);
         Aromaticity.cdkLegacy().apply(substructure);
 
@@ -122,8 +122,8 @@ abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinte
         IAtomContainer superStructure = bug934819_2();
         IAtomContainer subStructure = bug934819_1();
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
+        AtomContainerManipulator.configure(superStructure);
+        AtomContainerManipulator.configure(subStructure);
         addImplicitHydrogens(superStructure);
         addImplicitHydrogens(subStructure);
 
@@ -155,8 +155,8 @@ abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinte
         // these molecules are different resonance forms of the same molecule
         // make sure aromaticity is detected. although some fingerprinters do this
         // one should not expected all implementations to do so.
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure2);
+        AtomContainerManipulator.configure(structure1);
+        AtomContainerManipulator.configure(structure2);
         Aromaticity.cdkLegacy().apply(structure1);
         Aromaticity.cdkLegacy().apply(structure2);
         addImplicitHydrogens(structure1);
@@ -197,8 +197,8 @@ abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinte
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer structure2 = reader.read(builder.newAtomContainer());
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure2);
+        AtomContainerManipulator.configure(structure1);
+        AtomContainerManipulator.configure(structure2);
 
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet bs1 = fingerprinter.getBitFingerprint(structure1).asBitSet();

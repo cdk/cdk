@@ -135,7 +135,7 @@ class SMARTSQueryToolTest extends CDKTestCase {
     void testUniqueQueries() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1CCCNCCCc1ccccc1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+        AtomContainerManipulator.configure(atomContainer);
         Aromaticity.cdkLegacy().apply(atomContainer);
         SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", DefaultChemObjectBuilder.getInstance());
 
@@ -153,7 +153,7 @@ class SMARTSQueryToolTest extends CDKTestCase {
     void testQuery() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+        AtomContainerManipulator.configure(atomContainer);
         Aromaticity.cdkLegacy().apply(atomContainer);
         SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", DefaultChemObjectBuilder.getInstance());
 
@@ -180,7 +180,7 @@ class SMARTSQueryToolTest extends CDKTestCase {
 
         IAtomContainer indole = TestMoleculeFactory.makeIndole();
         addImplicitHydrogens(indole);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(indole);
+        AtomContainerManipulator.configure(indole);
         Aromaticity.cdkLegacy().apply(indole);
         SmilesGenerator generator = new SmilesGenerator().aromatic();
         String indoleSmiles = generator.create(indole);
@@ -221,7 +221,7 @@ class SMARTSQueryToolTest extends CDKTestCase {
 
         IAtomContainer furan = smiles("O1C=CC=C1");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(furan);
+        AtomContainerManipulator.configure(furan);
 
         sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.mcb()));
         Assertions.assertTrue(sqt.matches(furan, true));

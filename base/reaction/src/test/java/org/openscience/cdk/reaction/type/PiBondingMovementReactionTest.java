@@ -99,7 +99,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         molecule.addBond(5, 0, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         makeSureAtomTypesAreRecognized(molecule);
 
         IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -153,7 +153,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         molecule.addBond(7, 0, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         makeSureAtomTypesAreRecognized(molecule);
 
         IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -192,7 +192,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         molecule2.addBond(7, 0, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        AtomContainerManipulator.reconfigure(molecule2);
         makeSureAtomTypesAreRecognized(molecule2);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
@@ -263,7 +263,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         molecule2.addBond(9, 4, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        AtomContainerManipulator.reconfigure(molecule2);
         makeSureAtomTypesAreRecognized(molecule2);
 
         // order depends on ring perception order (may change between versions) we check both
@@ -356,7 +356,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         try {
             addExplicitHydrogens(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (Exception e) {
             LoggingToolFactory.createLoggingTool(getClass())
@@ -404,7 +404,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         try {
             addExplicitHydrogens(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (Exception e) {
             LoggingToolFactory.createLoggingTool(getClass())

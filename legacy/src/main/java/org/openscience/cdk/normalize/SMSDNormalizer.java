@@ -141,7 +141,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         try {
             // figure out which atoms are in aromatic rings:
             //            printAtoms(atomContainer);
-            SMSDNormalizer.percieveAtomTypesAndConfigureAtoms(mol);
+            SMSDNormalizer.configure(mol);
             //            printAtoms(atomContainer);
             Aromaticity.cdkLegacy().apply(mol);
             //            printAtoms(atomContainer);

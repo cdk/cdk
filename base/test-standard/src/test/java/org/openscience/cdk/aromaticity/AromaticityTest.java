@@ -220,7 +220,7 @@ class AromaticityTest {
                 "C(C=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C(C=C1)" +
                 "C1=CC=C(C=C1)C1=CC=C(C=C1)C1=CC=C2C=C1)C345");
         Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(), Cycles.or(Cycles.all(), Cycles.essential()));
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+        AtomContainerManipulator.configure(atomContainer);
         Intractable error = Assertions.assertThrows(Intractable.class,
                                                     () -> {
             	aromaticity.apply(atomContainer);
@@ -236,7 +236,7 @@ class AromaticityTest {
     }
 
     static IAtomContainer type(IAtomContainer molecule) throws Exception {
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         return molecule;
     }
 }

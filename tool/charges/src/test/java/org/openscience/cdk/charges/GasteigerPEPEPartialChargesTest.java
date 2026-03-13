@@ -66,7 +66,7 @@ class GasteigerPEPEPartialChargesTest {
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         peoe.calculateCharges(molecule);
@@ -87,10 +87,10 @@ class GasteigerPEPEPartialChargesTest {
         String smiles1 = "c1ccccc1";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles(smiles1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.configure(mol1);
         Aromaticity.cdkLegacy().apply(mol1);
         AtomContainerManipulator.normalizeHydrogens(mol1, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.configure(mol1);
         lpcheck.saturate(mol1);
 
         List<Boolean> oldBondOrders = new ArrayList<>();
@@ -118,17 +118,17 @@ class GasteigerPEPEPartialChargesTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles(smiles1);
         IAtomContainer mol2 = sp.parseSmiles(smiles2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
 
         AtomContainerManipulator.normalizeHydrogens(mol1, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.configure(mol1);
         lpcheck.saturate(mol1);
 
         AtomContainerManipulator.normalizeHydrogens(mol2, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol2);
         lpcheck.saturate(mol2);
 
         peoe.calculateCharges(mol1);
@@ -155,7 +155,7 @@ class GasteigerPEPEPartialChargesTest {
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         peoe.assignGasteigerPiPartialCharges(molecule, true);
@@ -252,8 +252,9 @@ class GasteigerPEPEPartialChargesTest {
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule,
+                                                    HydrogenState.Explicit);
         lpcheck.saturate(molecule);
         for (IAtom iAtom : molecule.atoms()) iAtom.setCharge(0.0);
 
@@ -261,8 +262,9 @@ class GasteigerPEPEPartialChargesTest {
         set.addAtomContainer(molecule);
         set.addAtomContainer(molecule);
 
-        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule,
+                                                    HydrogenState.Explicit);
         lpcheck.saturate(molecule);
 
         Assertions.assertNotNull(peoe.assignrPiMarsilliFactors(set));

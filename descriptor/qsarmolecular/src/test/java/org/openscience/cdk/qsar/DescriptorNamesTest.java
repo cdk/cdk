@@ -59,7 +59,7 @@ class DescriptorNamesTest extends CDKTestCase {
         ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        AtomContainerManipulator.configure(ac);
         Isotopes.getInstance().configureAtoms(ac);
         engine.process(ac);
 

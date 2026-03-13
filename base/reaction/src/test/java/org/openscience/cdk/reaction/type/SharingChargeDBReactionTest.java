@@ -258,7 +258,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
         try {
             addExplicitHydrogens(molecule);
 
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             lpcheck.saturate(molecule);
         } catch (Exception e) {
             LoggingToolFactory.createLoggingTool(getClass())
@@ -287,7 +287,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
         try {
             addExplicitHydrogens(molecule);
 
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             lpcheck.saturate(molecule);
         } catch (Exception e) {
             LoggingToolFactory.createLoggingTool(getClass())

@@ -110,7 +110,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.addBond(1, 6, IBond.Order.SINGLE);
         molecule.addBond(2, 7, IBond.Order.SINGLE);
         molecule.addBond(2, 8, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
 
         molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
         molecule.getAtom(2).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -154,7 +154,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         expected1.addBond(1, 6, IBond.Order.SINGLE);
         expected1.addBond(2, 7, IBond.Order.SINGLE);
         expected1.addBond(2, 8, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -163,7 +163,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         //Smiles("C[C-][C+]")
         expected1.getAtom(1).setFormalCharge(-1);
         expected1.getAtom(2).setFormalCharge(+1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         product1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -209,7 +209,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 4, IBond.Order.SINGLE);
         molecule.addBond(2, 5, IBond.Order.SINGLE);
         molecule.addBond(2, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
 
         molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
         molecule.getAtom(2).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -249,7 +249,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 4, IBond.Order.SINGLE);
         expected1.addBond(2, 5, IBond.Order.SINGLE);
         expected1.addBond(2, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -258,7 +258,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         //Smiles("C=[C-][C+]")
         expected1.getAtom(1).setFormalCharge(-1);
         expected1.getAtom(2).setFormalCharge(+1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         product1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -291,7 +291,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 4, IBond.Order.SINGLE);
         molecule.addBond(0, 5, IBond.Order.SINGLE);
         molecule.addBond(2, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
 
         molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
         molecule.getAtom(2).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -331,7 +331,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 4, IBond.Order.SINGLE);
         expected1.addBond(0, 5, IBond.Order.SINGLE);
         expected1.addBond(2, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assertions.assertTrue(uiTester.isIsomorph(product1, queryAtom));
@@ -339,7 +339,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         //Smiles("C[C-]=[C+]")
         expected1.getAtom(1).setFormalCharge(-1);
         expected1.getAtom(2).setFormalCharge(+1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         product1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -373,7 +373,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 5, IBond.Order.SINGLE);
         molecule.addBond(2, 6, IBond.Order.SINGLE);
         molecule.addBond(2, 7, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -416,7 +416,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 5, IBond.Order.SINGLE);
         expected1.addBond(2, 6, IBond.Order.SINGLE);
         expected1.addBond(2, 7, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -440,7 +440,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 1, IBond.Order.TRIPLE);
         molecule.addAtom(builder.newInstance(IAtom.class, "H"));
         molecule.addBond(1, 2, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -473,7 +473,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 1, IBond.Order.DOUBLE);
         expected1.addAtom(builder.newInstance(IAtom.class, "H"));
         expected1.addBond(1, 2, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -499,7 +499,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "H"));
         molecule.addBond(1, 2, IBond.Order.SINGLE);
         molecule.addBond(1, 3, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -534,7 +534,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         expected1.addAtom(builder.newInstance(IAtom.class, "H"));
         expected1.addBond(1, 2, IBond.Order.SINGLE);
         expected1.addBond(1, 3, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -561,7 +561,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 1, IBond.Order.DOUBLE);
         addExplicitHydrogens(molecule);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
         setOfReactants.addAtomContainer(molecule);
 
@@ -667,7 +667,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
 
         /* initiate */
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         makeSureAtomTypesAreRecognized(molecule);
 
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
@@ -695,7 +695,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 1, IBond.Order.DOUBLE);
         try {
             addExplicitHydrogens(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             lpcheck.saturate(molecule);
         } catch (Exception e) {
             LoggingToolFactory.createLoggingTool(getClass())

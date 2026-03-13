@@ -81,7 +81,7 @@ import java.util.Queue;
  * SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
  * IAtomContainer inputMol = smiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)" +
  *         "C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
- * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(inputMol);
+ * AtomContainerManipulator.configure(inputMol);
  * Aromaticity aromaticity = new Aromaticity(Aromaticity.Model.CDK_1x,
  *         Cycles.cdkAromaticSet());
  * aromaticity.apply(inputMol);

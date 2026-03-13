@@ -120,7 +120,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
 
         if (!isCachedAtomContainer(container)) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+                AtomContainerManipulator.configure(container);
 
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(container);

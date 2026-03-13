@@ -143,7 +143,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         try {
             // figure out which atoms are in aromatic rings:
             //            printAtoms(atomContainer);
-            ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+            ExtAtomContainerManipulator.configure(mol);
             //            printAtoms(atomContainer);
             Aromaticity.cdkLegacy().apply(mol);
             //            printAtoms(atomContainer);

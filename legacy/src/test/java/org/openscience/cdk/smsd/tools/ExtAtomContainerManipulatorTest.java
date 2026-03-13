@@ -210,7 +210,7 @@ class ExtAtomContainerManipulatorTest {
     }
 
     /**
-     * Test of percieveAtomTypesAndConfigureAtoms method, of class ExtAtomContainerManipulator.
+     * Test of configure method, of class ExtAtomContainerManipulator.
      * @throws Exception
      */
     @Test
@@ -218,7 +218,7 @@ class ExtAtomContainerManipulatorTest {
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+        ExtAtomContainerManipulator.configure(atomContainer);
         Assertions.assertNotNull(atomContainer);
     }
 }

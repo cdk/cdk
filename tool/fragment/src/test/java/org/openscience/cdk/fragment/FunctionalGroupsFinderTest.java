@@ -79,7 +79,7 @@ class FunctionalGroupsFinderTest {
         SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer inputMol = smiPar.parseSmiles("C[C@@H]1CN(C[C@H](C)N1)" +
                 "C2=C(C(=C3C(=C2F)N(C=C(C3=O)C(=O)O)C4CC4)N)F"); //PubChem CID 5257
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(inputMol);
+        AtomContainerManipulator.configure(inputMol);
         Aromaticity aromaticity = new Aromaticity(Aromaticity.Model.CDK_1x,
                 Cycles.cdkAromaticSet());
         aromaticity.apply(inputMol);
@@ -669,7 +669,7 @@ class FunctionalGroupsFinderTest {
         SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smiPar.parseSmiles("CC1=C(C(=CC=C1)NC2=CC=CC=C2C" +
                 "(=O)NC(CCS(=O)C)C(=O)NC(C)C3=CC=C(C=C3)F)C"); //PubChem CID 118705975
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity aromaticity = new Aromaticity(Aromaticity.Model.CDK_1x,
                 Cycles.cdkAromaticSet());
         aromaticity.apply(mol);
@@ -733,7 +733,7 @@ class FunctionalGroupsFinderTest {
         // prepare input
         SmilesParser tmpSmilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = tmpSmilesParser.parseSmiles(aMoleculeSmiles);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         anAromaticityModel.apply(mol);
         // find functional groups
         FunctionalGroupsFinder tmpFGFinder = new FunctionalGroupsFinder(aFunctionalGroupEnvironmentEnvironment);

@@ -99,7 +99,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         reactant.addBond(3, 5, IBond.Order.SINGLE);
         reactant.addBond(5, 6, IBond.Order.SINGLE);
         addExplicitHydrogens(reactant);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+        AtomContainerManipulator.reconfigure(reactant);
         lpcheck.saturate(reactant);
 
         for (IAtom atom : reactant.atoms()) {
@@ -160,7 +160,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         reactant.addBond(3, 5, IBond.Order.SINGLE);
         reactant.addBond(5, 6, IBond.Order.SINGLE);
         addExplicitHydrogens(reactant);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+        AtomContainerManipulator.reconfigure(reactant);
         lpcheck.saturate(reactant);
 
         IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -206,7 +206,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 4, IBond.Order.SINGLE);
         molecule.addBond(1, 5, IBond.Order.SINGLE);
         molecule.addBond(1, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -245,7 +245,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 4, IBond.Order.SINGLE);
         expected1.addBond(1, 5, IBond.Order.SINGLE);
         expected1.addBond(1, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
@@ -275,7 +275,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 2, IBond.Order.SINGLE);
         molecule.addBond(1, 3, IBond.Order.SINGLE);
         molecule.addBond(1, 4, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -311,7 +311,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 2, IBond.Order.SINGLE);
         expected1.addBond(1, 3, IBond.Order.SINGLE);
         expected1.addBond(1, 4, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
@@ -342,7 +342,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         molecule.addBond(1, 2, IBond.Order.SINGLE);
         molecule.addBond(1, 3, IBond.Order.SINGLE);
         molecule.addBond(1, 4, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -378,7 +378,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         expected1.addBond(1, 2, IBond.Order.SINGLE);
         expected1.addBond(1, 3, IBond.Order.SINGLE);
         expected1.addBond(1, 4, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
@@ -485,7 +485,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 3, IBond.Order.SINGLE);
 
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             lpcheck.saturate(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (CDKException e) {

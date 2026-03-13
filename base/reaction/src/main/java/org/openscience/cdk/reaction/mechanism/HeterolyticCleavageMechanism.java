@@ -95,7 +95,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism {
         atom1C.setFormalCharge(charge + 1);
         // check if resulting atom type is reasonable
         atom1C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 
@@ -104,7 +104,8 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism {
         reactantCloned.addLonePair(atom1C.getBuilder().newInstance(ILonePair.class, atom2C));
         // check if resulting atom type is reasonable: an acceptor atom cannot be charged positive*/
         atom2C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom2C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 

@@ -198,7 +198,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         IAtomContainer ac;
         try {
             ac = atomContainer.clone();
-            AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(ac);
+            AtomContainerManipulator.configure(ac);
             CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(ac.getBuilder());
             hAdder.addImplicitHydrogens(ac);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(ac);

@@ -71,7 +71,7 @@ class GasteigerMarsiliPartialChargesTestå {
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         CDKHydrogenAdder.getInstance(molecule.getBuilder()).addImplicitHydrogens(molecule);
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         lpcheck.saturate(molecule);
@@ -97,7 +97,7 @@ class GasteigerMarsiliPartialChargesTestå {
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         CDKHydrogenAdder.getInstance(molecule.getBuilder()).addImplicitHydrogens(molecule);
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         lpcheck.saturate(molecule);
@@ -125,7 +125,7 @@ class GasteigerMarsiliPartialChargesTestå {
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
         for (IAtom atom : molecule.atoms())
             atom.setCharge(0.0);
@@ -245,11 +245,11 @@ class GasteigerMarsiliPartialChargesTestå {
 
         Assertions.assertNotNull(ac);
         AtomContainerManipulator.normalizeHydrogens(ac, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        AtomContainerManipulator.configure(ac);
         Aromaticity.cdkLegacy().apply(ac);
 
         AtomContainerManipulator.normalizeHydrogens(ac, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        AtomContainerManipulator.configure(ac);
         lpcheck.saturate(ac);
 
         GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();

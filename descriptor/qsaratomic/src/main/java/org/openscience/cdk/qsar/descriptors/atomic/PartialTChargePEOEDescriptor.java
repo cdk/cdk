@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -157,11 +158,10 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
         Double originalBondOrderSum = atom.getBondOrderSum();
         Order originalMaxBondOrder = atom.getMaxBondOrder();
         if (!isCachedAtomContainer(ac)) {
-            try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-            } catch (CDKException e) {
+
+            if (!AtomContainerManipulator.configure(ac)) {
                 new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), NAMES, e);
+                        Double.NaN), NAMES, new NoSuchAtomTypeException("Could not configure molecule"));
             }
 
             if (lpeChecker) {
