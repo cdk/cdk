@@ -41,8 +41,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-//TODO wording: always use center atom and radius
-//TODO: check SDU for other necessary functionalities
 /**
  * Extracts atom-centered circular / spherical fragments from a molecule,
  * analogous to HOSE codes, circular Morgan-type
@@ -70,10 +68,17 @@ import java.util.Set;
  * with a radius of 3, you will get six benzene "fragments" as a result, since a radius of three
  * includes the entire molecule, independent of which atom is taken as the center.</p>
  *
- * TODO: add a note on scaling
+ * Scaling:
+ * Let <em>n</em> be the number of atoms in the input molecule and <em>r</em> be the radius.
+ * A single fragment extraction scales with the number of atoms <em>k</em> in the fragment
+ * (approx. min(<em>n</em>, 3<sup><em>r</em></sup>)).
+ * Extracting all fragments takes <em>O</em>(<em>n</em>&middot;<em>k</em>).
+ * For typical small radii, this is effectively linear <em>O</em>(<em>n</em>);
+ * for large radii covering the whole molecule, it is <em>O</em>(<em>n</em><sup>2</sup>).</p>
  *
  * @author Jonas Schaub (jonas.schaub@uni-jena.de | jonas-schaub@gmx.de | <a href="https://github.com/JonasSchaub">JonasSchaub on GitHub</a>)
  * @author Claude Sonnet 4.6
+ * @author Gemini 3 Pro
  * @cdk.keyword fragment
  * @cdk.keyword circular fingerprint
  * @cdk.keyword HOSE code
@@ -256,13 +261,19 @@ public class CircularFragmenter {
             return fragments;
         }
 
+        // Build map for O(1) lookups during BFS
+        Map<IAtom, Integer> atomIndexMap = new HashMap<>((int) (atomCount * 1.4));
+        for (int i = 0; i < atomCount; i++) {
+            atomIndexMap.put(molecule.getAtom(i), i);
+        }
+
         int tmpRadius = this.radius;
         boolean tmpPreserveStereo = this.preserveStereo;
         boolean tmpMarkAttachments = this.markAttachments;
-        int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, molecule.getAtomCount());
+        int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, atomCount);
 
         for (int centerIdx = 0; centerIdx < atomCount; centerIdx++) {
-            IAtomContainer fragment = this.extractFragment(molecule, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
+            IAtomContainer fragment = this.extractFragment(molecule, atomIndexMap, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
             fragments.add(centerIdx, fragment);
         }
 
@@ -289,11 +300,19 @@ public class CircularFragmenter {
             throw new IndexOutOfBoundsException(
                     "centerIdx " + centerIdx + " is out of range [0, " + molecule.getAtomCount() + ").");
         }
-        int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, molecule.getAtomCount());
+        
+        // Build map for O(1) lookups during BFS
+        int atomCount = molecule.getAtomCount();
+        Map<IAtom, Integer> atomIndexMap = new HashMap<>((int) (atomCount * 1.4));
+        for (int i = 0; i < atomCount; i++) {
+            atomIndexMap.put(molecule.getAtom(i), i);
+        }
+        
+        int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, atomCount);
         int tmpRadius = this.radius;
         boolean tmpPreserveStereo = this.preserveStereo;
         boolean tmpMarkAttachments = this.markAttachments;
-        return this.extractFragment(molecule, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
+        return this.extractFragment(molecule, atomIndexMap, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
     }
 
     /**
@@ -302,6 +321,7 @@ public class CircularFragmenter {
      * <p>No parameter checks are performed here!</p>
      *
      * @param radius in nr. of bonds
+     * @param atomCount total number of atoms in the molecule
      * @return initial collection size = (1 + 4 * (3^(radius - 1) + 1)) / 2 or the atom count if it is smaller than the result
      */
     protected static int calculateInitCollectionSize(int radius, int atomCount) {
@@ -321,7 +341,6 @@ public class CircularFragmenter {
         return Math.min(initCollectionSize, atomCount);
     }
 
-    //TODO: can this be optimized? ask Gemini
     /**
      * Core BFS-based fragment extraction.
      *
@@ -333,13 +352,17 @@ public class CircularFragmenter {
      * <p>No parameter checks are performed, they must be conducted by the calling code!</p>
      *
      * @param molecule  source molecule
+     * @param atomIndexMap pre-calculated map for O(1) lookups of atom indices in the source molecule
      * @param centerIdx index of the center atom
      * @param radius    in nr. of bonds; must be >= 0
+     * @param initCollectionSize estimated number of atoms in the fragment for collection sizing
      * @param preserveStereo whether to preserve stereochemistry annotations during fragmentation
+     * @param markAttachments whether to mark attachment points of broken bonds with pseudo atoms
      * @return fragment container (deep copy)
      */
     protected IAtomContainer extractFragment(
             IAtomContainer molecule,
+            Map<IAtom, Integer> atomIndexMap,
             int centerIdx,
             int radius,
             int initCollectionSize,
@@ -375,13 +398,11 @@ public class CircularFragmenter {
 
             IAtom currentAtom = molecule.getAtom(currentIdx);
 
-            // Iterate over all bonds of the current atom
             for (IBond bond : currentAtom.bonds()) {
                 IAtom neighbor = bond.getOther(currentAtom);
-                int neighborIdx = molecule.indexOf(neighbor);
-                if (neighborIdx < 0) {
-                    // Safety guard: atom not in this molecule
-                    continue;
+                Integer neighborIdx = atomIndexMap.get(neighbor);
+                if (neighborIdx == null) {
+                    continue; // Safety: atom not in molecule (should not happen if map is correct)
                 }
                 if (!visitedIndices.contains(neighborIdx)) {
                     visitedIndices.add(neighborIdx);
@@ -392,15 +413,22 @@ public class CircularFragmenter {
         }
 
         // --- 2. Collect all bonds whose both endpoints are in the fragment ---
-
-        // Map from original atom -> copied atom (built in step 3)
-        // We collect the bonds first by checking the index set.
+        
         List<IBond> collectedBonds = new ArrayList<>(initCollectionSize);
-        for (IBond bond : molecule.bonds()) {
-            int idx0 = molecule.indexOf(bond.getBegin());
-            int idx1 = molecule.indexOf(bond.getEnd());
-            if (visitedIndices.contains(idx0) && visitedIndices.contains(idx1)) {
-                collectedBonds.add(bond);
+        //set for faster look-up whether bond was already collected
+        Set<IBond> bondsInFragment = new HashSet<>(initCollectionSize);
+
+        for (IAtom atom : collectedAtoms) {
+            for (IBond bond : atom.bonds()) {
+                if (bondsInFragment.contains(bond)) {
+                    continue;
+                }
+                IAtom other = bond.getOther(atom);
+                Integer otherIdx = atomIndexMap.get(other);
+                if (otherIdx != null && visitedIndices.contains(otherIdx)) {
+                    collectedBonds.add(bond);
+                    bondsInFragment.add(bond);
+                }
             }
         }
 
