@@ -627,4 +627,54 @@ class CircularFragmenterTest {
                     "Fragment SMILES " + smiGen.create(frag) + " does not match any expected fragment.");
         }
     }
+
+    /**
+     * Tests for the presence of the depth properties on the fragment atoms and shows how to generate SMILES codes
+     * containing them as atom mappings.
+     *
+     * @throws CDKException if SMILES parsing or generation fails
+     */
+    @Test
+    void testDepthAnnotationsInFragments() throws CDKException {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        //note the additional smi flavor atom-atom-map
+        SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols | SmiFlavor.AtomAtomMap);
+        IAtomContainer tryptophan = smiPar.parseSmiles("[NH3+][C@@H](Cc1c[nH]c2ccccc12)C(=O)[O-]");
+        CircularFragmenter fragmenter = new CircularFragmenter(2, false, false);
+        List<IAtomContainer> fragments = fragmenter.getCircularFragments(tryptophan);
+        String[] expectedFragments = new String[] {
+                //note that the center atom has no map index because that seems to ignore index 0
+                // (but in the end an equally good way to mark the center)
+                "[CH3:2][CH:1]([CH3:2])[NH3+]",
+                "[O:2]=[C:1]([O-:2])C([NH3+:1])[CH2:1][cH2:2]",
+                "[cH2:2][c:1]([cH2:2])C[CH:1]([CH3:2])[NH3+:2]",
+                "[cH2:2][c:1]1[cH:2][nH:2][cH:1]c1[CH2:1][CH3:2]",
+                "c1[nH:1][cH:2][cH:2][c:1]1[CH3:2]",
+                "[cH2:2][c:1]1[cH:2][cH:2][cH:1][nH]1",
+                "[cH2:2][cH:1]c1[nH:1][cH:2][cH:2][c:1]1[cH2:2]",
+                "[cH2:2][cH:1]c[c:1]([cH2:2])[nH2:2]",
+                "[cH2:2][cH:1]c[cH:1][cH2:2]",
+                "[cH2:2][cH:1]c[cH:1][cH2:2]",
+                "[cH2:2][cH:1]c[c:1]([cH2:2])[cH2:2]",
+                "[cH2:2][cH:1]c1[c:1]([cH2:2])[nH:2][cH:2][c:1]1[CH3:2]",
+                "[O:1]=C([O-:1])[CH:1]([CH3:2])[NH3+:2]",
+                "O=[C:1]([O-:2])[CH3:2]",
+                "[O:2]=[C:1]([O-])[CH3:2]"
+        };
+        Assertions.assertEquals(expectedFragments.length, fragments.size());
+        for (IAtomContainer frag : fragments) {
+            for (IAtom atom : frag.atoms()) {
+                //set map index according to the depth property
+                atom.setMapIdx(atom.getProperty(CircularFragmenter.FRAGMENT_ATOM_DEPTH_PROPERTY_KEY));
+            }
+            Assertions.assertTrue(Arrays.stream(expectedFragments).anyMatch(expected -> {
+                        try {
+                            return expected.equals(smiGen.create(frag));
+                        } catch (CDKException e) {
+                            throw new AssertionError("Could not generate SMILES string for fragment.");
+                        }
+                    }),
+                    "Fragment SMILES " + smiGen.create(frag) + " does not match any expected fragment.");
+        }
+    }
 }

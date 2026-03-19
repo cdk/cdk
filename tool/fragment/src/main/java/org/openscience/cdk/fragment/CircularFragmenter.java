@@ -65,6 +65,15 @@ import java.util.Set;
  * "root") in the original atom container. But note that <code>fragments.get(i).contains(mol.getAtom(i))</code>
  * will produce <code>false</code> because the atoms (and bonds) are copied at fragment extraction.</p>
  *
+ * <p>Each atom in a fragment has the property with key {@link CircularFragmenter#FRAGMENT_ATOM_DEPTH_PROPERTY_KEY}
+ * set, which contains the depth (sphere nr. / level / height) of the respective atom in the respective fragment.
+ * 0 stands for the center atom. These can, e.g., be used to generate SMILES strings of a fragment with atom-atom-mappings
+ * corresponding to the respective depth of each atom.</p>
+ *
+ * <p>Additional configuration options (to the radius) include the saturation of the fragments where bonds were broken
+ * (either, per default, with implicit hydrogen atoms or alternatively with pseudo atoms to mark the attachment points)
+ * and whether stereochemistry annotations should be preserved in the fragments.</p>
+ *
  * <p>Note that the resulting fragments are not deduplicated! So, if you, e.g., fragment benzene
  * with a radius of 3, you will get six benzene "fragments" as a result, since a radius of three
  * includes the entire molecule, independent of which atom is taken as the center.</p>
@@ -98,6 +107,12 @@ public class CircularFragmenter {
      * Default value for whether to mark attachment points of broken bonds with pseudo atoms (= false).
      */
     public static final boolean DEFAULT_MARK_ATTACHMENTS = false;
+
+    /**
+     * Property key to retrieve the depth (sphere nr. / level / height) of a fragment atom in the
+     * respective circular fragment. 0 stands for the center atom.
+     */
+    public static final String FRAGMENT_ATOM_DEPTH_PROPERTY_KEY = "CircularFragmenter:atomDepth";
 
     /**
      * Radius of the circular neighborhood to extract (number of bonds).
@@ -374,6 +389,9 @@ public class CircularFragmenter {
         // Stores collected atoms in BFS order; first entry is always the center atom.
         // Both collections are kept in parallel: visitedIndices for fast lookup, collectedAtoms for ordered iteration.
         List<IAtom> collectedAtoms = new ArrayList<>(initCollectionSize);
+        //holds mapping of atoms from the original molecule to their depth (sphere nr. / level / height) in the fragment
+        // to later add this as a property to the copy atoms in the fragment atom container
+        Map<IAtom, Integer> originalAtomToDepthMap = new HashMap<>((int) Math.ceil(initCollectionSize * 1.4));
 
         // BFS queue entries, [atomIndex, depth]
         Deque<int[]> queue = new ArrayDeque<>(initCollectionSize);
@@ -382,6 +400,7 @@ public class CircularFragmenter {
         visitedIndices.add(centerIdx);
         collectedAtoms.add(centerAtom);
         queue.add(new int[]{centerIdx, 0});
+        originalAtomToDepthMap.put(centerAtom, 0);
 
         while (!queue.isEmpty()) {
             int[] entry = queue.poll();
@@ -405,6 +424,7 @@ public class CircularFragmenter {
                     visitedIndices.add(neighborIdx);
                     collectedAtoms.add(neighbor);
                     queue.add(new int[]{neighborIdx, currentDepth + 1});
+                    originalAtomToDepthMap.put(neighbor, currentDepth + 1);
                 }
             }
         }
@@ -440,6 +460,7 @@ public class CircularFragmenter {
 
         for (IAtom origAtom : collectedAtoms) {
             IAtom copiedAtom = this.deeperCopy(origAtom, fragment);
+            copiedAtom.setProperty(CircularFragmenter.FRAGMENT_ATOM_DEPTH_PROPERTY_KEY, originalAtomToDepthMap.get(origAtom));
             originalAtomToCopyAtomMap.put(origAtom, copiedAtom);
             fragment.addAtom(copiedAtom);
         }
