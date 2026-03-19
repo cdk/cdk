@@ -57,7 +57,7 @@ import java.util.Set;
  * <p><b>Usage example:</b></p>
  * <pre>{@code
  * IAtomContainer molecule = ...; // fully configured molecule
- * CircularFragmenter fragmenter = new CircularFragmenter(3); //radius 3
+ * CircularFragmenter fragmenter = new CircularFragmenter(3); //radius 3, also the default
  * List<IAtomContainer> fragments = fragmenter.getCircularFragments(molecule);
  * }</pre>
  *
@@ -71,8 +71,8 @@ import java.util.Set;
  * corresponding to the respective depth of each atom.</p>
  *
  * <p>Additional configuration options (to the radius) include the saturation of the fragments where bonds were broken
- * (either, per default, with implicit hydrogen atoms or alternatively with pseudo atoms to mark the attachment points)
- * and whether stereochemistry annotations should be preserved in the fragments.</p>
+ * (either, per default, with implicit hydrogen atoms or, alternatively, with pseudo atoms to mark the attachment points)
+ * and whether stereochemistry annotations should be preserved in the fragments (default: false).</p>
  *
  * <p>Note that the resulting fragments are not deduplicated! So, if you, e.g., fragment benzene
  * with a radius of 3, you will get six benzene "fragments" as a result, since a radius of three
@@ -96,17 +96,17 @@ public class CircularFragmenter {
     /**
      * Default radius used when no explicit value is given (= 3 bonds).
      */
-    public static final int DEFAULT_RADIUS = 3;
+    private static final int DEFAULT_RADIUS = 3;
 
     /**
      * Default value for whether to preserve stereochemistry annotations during fragmentation (= false).
      */
-    public static final boolean DEFAULT_PRESERVE_STEREO = false;
+    private static final boolean DEFAULT_PRESERVE_STEREO = false;
 
     /**
      * Default value for whether to mark attachment points of broken bonds with pseudo atoms (= false).
      */
-    public static final boolean DEFAULT_MARK_ATTACHMENTS = false;
+    private static final boolean DEFAULT_MARK_ATTACHMENTS = false;
 
     /**
      * Property key to retrieve the depth (sphere nr. / level / height) of a fragment atom in the
@@ -130,9 +130,10 @@ public class CircularFragmenter {
     private boolean markAttachments;
 
     /**
-     * Creates a new {@code CircularFragmenter} with the {@link #DEFAULT_RADIUS}
-     * (= {@value #DEFAULT_RADIUS}), the {@link #DEFAULT_PRESERVE_STEREO} (= {@value #DEFAULT_PRESERVE_STEREO}),
-     * and the {@link #DEFAULT_MARK_ATTACHMENTS} (= {@value #DEFAULT_MARK_ATTACHMENTS}).
+     * Creates a new {@code CircularFragmenter} with the default radius
+     * (= 3 bonds), the default stereochemistry setting (= false, no preservation of stereochemistry),
+     * and the default attachment point marking setting (= false, no marking of attachment points;
+     * saturation with implicit hydrogen atoms instead).
      */
     public CircularFragmenter() {
         this(CircularFragmenter.DEFAULT_RADIUS, CircularFragmenter.DEFAULT_PRESERVE_STEREO, CircularFragmenter.DEFAULT_MARK_ATTACHMENTS);
@@ -140,8 +141,9 @@ public class CircularFragmenter {
 
     /**
      * Creates a new {@code CircularFragmenter} with the given radius,
-     * the {@link #DEFAULT_PRESERVE_STEREO} (= {@value #DEFAULT_PRESERVE_STEREO}),
-     * and the {@link #DEFAULT_MARK_ATTACHMENTS} (= {@value #DEFAULT_MARK_ATTACHMENTS}).
+     * the default stereochemistry setting (= false, no preservation of stereochemistry),
+     * and the default attachment point marking setting (= false, no marking of attachment points;
+     * saturation with implicit hydrogen atoms instead).
      *
      * @param radius the number of bonds to expand from each center atom;
      *               must be >= 0; a radius of 0 produces fragments
@@ -154,7 +156,8 @@ public class CircularFragmenter {
 
     /**
      * Creates a new {@code CircularFragmenter} with the given radius and stereochemistry setting
-     * and the {@link #DEFAULT_MARK_ATTACHMENTS} (= {@value #DEFAULT_MARK_ATTACHMENTS}).
+     * and the default attachment point marking setting (= false, no marking of attachment points;
+     * saturation with implicit hydrogen atoms instead).
      *
      * @param radius the number of bonds to expand from each center atom;
      *               must be >= 0; a radius of 0 produces fragments
@@ -214,7 +217,7 @@ public class CircularFragmenter {
      * @return whether to preserve stereochemistry annotations during fragmentation
      */
     public boolean isPreserveStereo() {
-        return preserveStereo;
+        return this.preserveStereo;
     }
 
     /**
@@ -232,7 +235,7 @@ public class CircularFragmenter {
      * @return whether to mark attachment points of broken bonds with pseudo atoms
      */
     public boolean isMarkAttachments() {
-        return markAttachments;
+        return this.markAttachments;
     }
 
     /**
@@ -337,7 +340,7 @@ public class CircularFragmenter {
      * @param atomCount total number of atoms in the molecule
      * @return initial collection size = (1 + 4 * (3^(radius - 1) + 1)) / 2 or the atom count if it is smaller than the result
      */
-    protected static int calculateInitCollectionSize(int radius, int atomCount) {
+    private static int calculateInitCollectionSize(int radius, int atomCount) {
         // radius = 0, initCollectionSize = 1 (-> the center atom)
         int initCollectionSize = 1;
         if (radius == 1) {
@@ -373,7 +376,7 @@ public class CircularFragmenter {
      * @param markAttachments whether to mark attachment points of broken bonds with pseudo atoms
      * @return fragment container (deep copy)
      */
-    protected IAtomContainer extractFragment(
+    private IAtomContainer extractFragment(
             IAtomContainer molecule,
             Map<IAtom, Integer> atomIndexMap,
             int centerIdx,
@@ -535,7 +538,7 @@ public class CircularFragmenter {
      * @param container the container to add the copied atom to
      * @return the copied atom
      */
-    protected IAtom deeperCopy(IAtom atom, IAtomContainer container) {
+    private IAtom deeperCopy(IAtom atom, IAtomContainer container) {
         IAtom cpyAtom = container.newAtom(atom.getAtomicNumber(),
                 atom.getImplicitHydrogenCount());
         cpyAtom.setIsAromatic(atom.isAromatic());
@@ -581,7 +584,7 @@ public class CircularFragmenter {
      * @param end the end atom of the bond in the copy(!)
      * @return the copied bond
      */
-    protected IBond deeperCopy(IBond bond, IAtom begin, IAtom end) {
+    private IBond deeperCopy(IBond bond, IAtom begin, IAtom end) {
         //using begin.getContainer().newBond() here caused weird issues sometimes
         IBond newBond = new Bond(begin, end, bond.getOrder());
         newBond.setIsAromatic(bond.isAromatic());
@@ -613,7 +616,7 @@ public class CircularFragmenter {
      * @param originalBond The original bond that was broken during the extraction process.
      *                     Used for determining the bond order of the new pseudo atom bond
      */
-    protected void saturate(
+    private void saturate(
             IAtom copyAtomToSaturate,
             IAtomContainer copyContainer,
             boolean markAttachments,
