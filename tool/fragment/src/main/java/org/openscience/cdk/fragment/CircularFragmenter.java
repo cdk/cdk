@@ -20,8 +20,6 @@
 package org.openscience.cdk.fragment;
 
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.exception.NoSuchBondException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -406,8 +404,8 @@ public class CircularFragmenter {
             int radius,
             int initCollectionSize,
             boolean preserveStereo,
-            boolean markAttachments) {
-
+            boolean markAttachments
+    ) {
         // --- 1. BFS to collect atoms within radius bonds ---
 
         // Tracks the depth (sphere nr. / level / height) of each atom and whether it has been visited already
@@ -420,9 +418,8 @@ public class CircularFragmenter {
         // BFS queue entries, [atomIndex, depth]
         Deque<Integer> queue = new ArrayDeque<>(initCollectionSize);
 
-        IAtom centerAtom = molecule.getAtom(centerIdx);
         depths[centerIdx] = 0;
-        collectedAtoms.add(centerAtom);
+        collectedAtoms.add(molecule.getAtom(centerIdx));
         queue.add(centerIdx);
 
         while (!queue.isEmpty()) {
@@ -438,7 +435,7 @@ public class CircularFragmenter {
 
             for (IBond bond : currentAtom.bonds()) {
                 IAtom neighbor = bond.getOther(currentAtom);
-                Integer neighborIdx = neighbor.getIndex();
+                int neighborIdx = neighbor.getIndex();
                 if (depths[neighborIdx] == -1) {
                     depths[neighborIdx] = currentDepth + 1;
                     collectedAtoms.add(neighbor);
@@ -459,8 +456,8 @@ public class CircularFragmenter {
                     continue;
                 }
                 IAtom other = bond.getOther(atom);
-                Integer otherIdx = other.getIndex();
-                if (otherIdx != null && depths[otherIdx] != -1) {
+                int otherIdx = other.getIndex();
+                if (depths[otherIdx] != -1) {
                     collectedBonds.add(bond);
                     bondsInFragment.add(bond);
                 }
@@ -469,20 +466,67 @@ public class CircularFragmenter {
 
         // --- 3. Deep-copy atoms and bonds into a new container ---
 
-        IAtomContainer fragment = molecule.getBuilder().newAtomContainer();
+        return this.copyCollectedAtomsAndBondsToNewFragmentContainer(molecule, collectedAtoms, collectedBonds, depths, preserveStereo, markAttachments);
+    }
 
+    /**
+     * Builds a new {@link IAtomContainer} fragment by deep-copying the given lists of collected atoms and bonds
+     * from a source molecule and applying post-processing (stereo transfer, saturation).
+     *
+     * <p>This is the third and final stage of fragment extraction, called by
+     * {@link #extractFragment} after the BFS atom collection and bond collection stages.
+     * It performs the following steps:
+     * <ol>
+     *   <li>Deep-copies each atom via {@link #deeperCopy(IAtom, IAtomContainer)} and annotates
+     *       it with its BFS depth via {@link #FRAGMENT_ATOM_DEPTH_PROPERTY_KEY}.</li>
+     *   <li>Deep-copies each internal bond via {@link #deeperCopy(IBond, IAtom, IAtom)},
+     *       re-wiring its endpoints to the copied atom instances.</li>
+     *   <li>Transfers single electrons and lone pairs whose carrier atoms are part of the fragment.</li>
+     *   <li>If {@code preserveStereo} is {@code true}, transfers stereo elements whose focus
+     *       <em>and</em> all carriers are fully contained in the fragment; incomplete stereo
+     *       elements (missing atoms or bonds) are silently skipped.</li>
+     *   <li>Saturates every atom at a cut bond: either by increasing the implicit hydrogen count
+     *       (default) or by adding a pseudo atom at the attachment point, depending on
+     *       {@code markAttachments}.</li>
+     * </ol>
+     * </p>
+     *
+     * <p>No parameter checks are performed; all validation must be done by the calling code.</p>
+     *
+     * <p>Note: properties of the original atom container itself are not copied to the fragment.</p>
+     *
+     * @param molecule        the source molecule; used to access stereo elements,
+     *                        single electrons, lone pairs, and connected bonds for saturation
+     * @param collectedAtoms  the BFS-ordered list of atoms to include in the fragment
+     * @param collectedBonds  the list of bonds whose both endpoints are in {@code collectedAtoms}
+     * @param depths          atom-index-keyed array of BFS depths; {@code -1} means the atom
+     *                        was not collected; used to set {@link #FRAGMENT_ATOM_DEPTH_PROPERTY_KEY}
+     * @param preserveStereo  if {@code true}, fully contained stereo elements are copied to the fragment
+     * @param markAttachments if {@code true}, broken bonds are replaced by bonds to pseudo atoms;
+     *                        if {@code false}, the implicit hydrogen count of the boundary atom is increased
+     * @return a new {@link IAtomContainer} containing the deep-copied fragment
+     */
+    private IAtomContainer copyCollectedAtomsAndBondsToNewFragmentContainer(
+            IAtomContainer molecule, 
+            List<IAtom> collectedAtoms, 
+            List<IBond> collectedBonds, 
+            int[] depths, 
+            boolean preserveStereo,
+            boolean markAttachments
+    ) {
+        IAtomContainer fragment = molecule.getBuilder().newAtomContainer();
         // Map: original IAtom reference -> copied IAtom in the fragment
         Map<IAtom, IAtom> originalAtomToCopyAtomMap = new HashMap<>((int) Math.ceil(collectedAtoms.size() * 1.4));
         // Map: original IBond reference -> copied IBond in the fragment
         Map<IBond, IBond> originalBondToCopyBondMap = new HashMap<>((int) Math.ceil(collectedBonds.size() * 1.4));
-
+        // atoms
         for (IAtom origAtom : collectedAtoms) {
             IAtom copiedAtom = this.deeperCopy(origAtom, fragment);
             copiedAtom.setProperty(CircularFragmenter.FRAGMENT_ATOM_DEPTH_PROPERTY_KEY, depths[origAtom.getIndex()]);
             originalAtomToCopyAtomMap.put(origAtom, copiedAtom);
             fragment.addAtom(copiedAtom);
         }
-
+        // bonds
         for (IBond origBond : collectedBonds) {
             // Re-wire the copied bond to the copied atom instances
             IAtom copiedBegin = originalAtomToCopyAtomMap.get(origBond.getBegin());
@@ -494,7 +538,6 @@ public class CircularFragmenter {
             originalBondToCopyBondMap.put(origBond, copiedBond);
             fragment.addBond(copiedBond);
         }
-
         // single electrons
         for (ISingleElectron se : molecule.singleElectrons()) {
             IAtom atom = originalAtomToCopyAtomMap.get(se.getAtom());
@@ -511,24 +554,8 @@ public class CircularFragmenter {
         }
         // stereo elements
         if (preserveStereo) {
-            for (IStereoElement elem : molecule.stereoElements()) {
-                boolean skip = false;
-                if (!originalAtomToCopyAtomMap.containsKey(elem.getFocus()) && !originalBondToCopyBondMap.containsKey(elem.getFocus())) {
-                    continue;
-                }
-                for (Object carrier : elem.getCarriers()) {
-                    if (!originalAtomToCopyAtomMap.containsKey(carrier) && !originalBondToCopyBondMap.containsKey(carrier)) {
-                        skip = true;
-                        break;
-                    }
-                }
-                if (skip) {
-                    continue;
-                }
-                fragment.addStereoElement(elem.map(originalAtomToCopyAtomMap, originalBondToCopyBondMap));
-            }
+            this.mapStereoElements(molecule, fragment, originalAtomToCopyAtomMap, originalBondToCopyBondMap);
         }
-
         //saturation
         for (Map.Entry<IAtom, IAtom> entry : originalAtomToCopyAtomMap.entrySet()) {
             for (IBond originalBond : molecule.getConnectedBondsList(entry.getKey())) {
@@ -537,12 +564,9 @@ public class CircularFragmenter {
                 }
             }
         }
-
-        //note: properties of the original atom container are not copied.
-
         return fragment;
     }
-
+    
     /**
      *  Creates a relatively deep ("deeper" than cloning but not as extensive) copy of the given atom and adds it to the given container.
      *  Copies:
@@ -675,6 +699,41 @@ public class CircularFragmenter {
             copyAtomToSaturate.setImplicitHydrogenCount(
                     copyAtomToSaturate.getImplicitHydrogenCount()
                             + effectiveOrder.numeric());
+        }
+    }
+
+    /**
+     * Transfers stereo elements from the source molecule to the fragment, skipping any element
+     * that is not fully contained in the fragment.
+     *
+     * <p>No parameter checks are performed; all validation must be done by the calling code.</p>
+     *
+     * @param molecule                  the source molecule whose stereo elements are inspected
+     * @param fragment                  the target fragment container to which passing stereo elements are added
+     * @param originalAtomToCopyAtomMap mapping from original atoms to their deep-copied counterparts in the fragment
+     * @param originalBondToCopyBondMap mapping from original bonds to their deep-copied counterparts in the fragment
+     */
+    void mapStereoElements(
+            IAtomContainer molecule, 
+            IAtomContainer fragment, 
+            Map<IAtom, IAtom> originalAtomToCopyAtomMap, 
+            Map<IBond, IBond> originalBondToCopyBondMap
+    ) {
+        for (IStereoElement elem : molecule.stereoElements()) {
+            boolean skip = false;
+            if (!originalAtomToCopyAtomMap.containsKey(elem.getFocus()) && !originalBondToCopyBondMap.containsKey(elem.getFocus())) {
+                continue;
+            }
+            for (Object carrier : elem.getCarriers()) {
+                if (!originalAtomToCopyAtomMap.containsKey(carrier) && !originalBondToCopyBondMap.containsKey(carrier)) {
+                    skip = true;
+                    break;
+                }
+            }
+            if (skip) {
+                continue;
+            }
+            fragment.addStereoElement(elem.map(originalAtomToCopyAtomMap, originalBondToCopyBondMap));
         }
     }
 }
