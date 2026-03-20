@@ -677,4 +677,17 @@ class CircularFragmenterTest {
                     "Fragment SMILES " + smiGen.create(frag) + " does not match any expected fragment.");
         }
     }
+
+    //TODO:removed this or finish it to be a proper test
+    @Test
+    void testHydroxyAziridine() throws CDKException {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols);
+        IAtomContainer hydroxyAziridine = smiPar.parseSmiles("ON1CC1");
+        CircularFragmenter fragmenter = new CircularFragmenter(1);
+        List<IAtomContainer> fragments = fragmenter.getCircularFragments(hydroxyAziridine);
+        for (IAtomContainer frag : fragments) {
+            System.out.println(smiGen.create(frag));
+        }
+    }
 }

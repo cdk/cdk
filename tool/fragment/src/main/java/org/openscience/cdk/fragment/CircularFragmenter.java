@@ -42,6 +42,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+//TODO: add note on prior aromaticity detection
+//TODO: add test for previous CDK HOSE code generator bug
 /**
  * Extracts atom-centered circular / spherical fragments from a molecule,
  * analogous to HOSE codes, circular Morgan-type
@@ -277,19 +279,13 @@ public class CircularFragmenter {
             return fragments;
         }
 
-        // Pre-build atom→index map once for O(1) lookups in both the BFS and bond-collection steps
-        Map<IAtom, Integer> atomIndexMap = new HashMap<>((int) (atomCount * 1.4));
-        for (int i = 0; i < atomCount; i++) {
-            atomIndexMap.put(molecule.getAtom(i), i);
-        }
-
         int tmpRadius = this.radius;
         boolean tmpPreserveStereo = this.preserveStereo;
         boolean tmpMarkAttachments = this.markAttachments;
         int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, atomCount);
 
         for (int centerIdx = 0; centerIdx < atomCount; centerIdx++) {
-            IAtomContainer fragment = this.extractFragment(molecule, atomIndexMap, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
+            IAtomContainer fragment = this.extractFragment(molecule, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
             fragments.add(centerIdx, fragment);
         }
 
@@ -317,18 +313,11 @@ public class CircularFragmenter {
                     "centerIdx " + centerIdx + " is out of range [0, " + molecule.getAtomCount() + ").");
         }
         
-        // Pre-build atom→index map once for O(1) lookups in both the BFS and bond-collection steps
-        int atomCount = molecule.getAtomCount();
-        Map<IAtom, Integer> atomIndexMap = new HashMap<>((int) (atomCount * 1.4));
-        for (int i = 0; i < atomCount; i++) {
-            atomIndexMap.put(molecule.getAtom(i), i);
-        }
-        
-        int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, atomCount);
+        int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, molecule.getAtomCount());
         int tmpRadius = this.radius;
         boolean tmpPreserveStereo = this.preserveStereo;
         boolean tmpMarkAttachments = this.markAttachments;
-        return this.extractFragment(molecule, atomIndexMap, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
+        return this.extractFragment(molecule, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
     }
 
     /**
@@ -368,7 +357,6 @@ public class CircularFragmenter {
      * <p>No parameter checks are performed, they must be conducted by the calling code!</p>
      *
      * @param molecule  source molecule
-     * @param atomIndexMap pre-calculated map for O(1) lookups of atom indices in the source molecule
      * @param centerIdx index of the center atom
      * @param radius    in nr. of bonds; must be >= 0
      * @param initCollectionSize estimated number of atoms in the fragment for collection sizing
@@ -378,7 +366,6 @@ public class CircularFragmenter {
      */
     private IAtomContainer extractFragment(
             IAtomContainer molecule,
-            Map<IAtom, Integer> atomIndexMap,
             int centerIdx,
             int radius,
             int initCollectionSize,
@@ -419,7 +406,7 @@ public class CircularFragmenter {
 
             for (IBond bond : currentAtom.bonds()) {
                 IAtom neighbor = bond.getOther(currentAtom);
-                Integer neighborIdx = atomIndexMap.get(neighbor);
+                Integer neighborIdx = neighbor.getIndex();
                 if (neighborIdx == null) {
                     continue; // Safety: atom not in molecule (should not happen if map is correct)
                 }
@@ -444,7 +431,7 @@ public class CircularFragmenter {
                     continue;
                 }
                 IAtom other = bond.getOther(atom);
-                Integer otherIdx = atomIndexMap.get(other);
+                Integer otherIdx = other.getIndex();
                 if (otherIdx != null && visitedIndices.contains(otherIdx)) {
                     collectedBonds.add(bond);
                     bondsInFragment.add(bond);
