@@ -293,31 +293,66 @@ public class CircularFragmenter {
     }
 
     /**
-     * Extracts a single circular fragment centered on the atom at
-     * {@code centerIdx} in {@code molecule}.
+     * Extracts a single circular fragment centered on the given atom from the molecule the atom is a part of.
+     *
+     * <p>The same algorithm as in
+     * {@link #getCircularFragments(IAtomContainer)} is applied, but for only
+     * one center atom.</p>
+     *
+     * <p>This method will only work if the atom has been accessed
+     * in the context of an {@link IAtomContainer}, for example:
+     *
+     * <pre>{@code
+     * IAtomContainer mol  = new AtomContainer();
+     * IAtom          atom = new Atom(6);
+     *
+     * atom.getContainer(); // null
+     * mol.add(atom);
+     * atom.getContainer(); // still null
+     * mol.getAtom(0).getContainer(); // not-null, returns 'mol'
+     * }</pre></p>
+     *
+     * @param atom the center atom; must not be {@code null} and must be accessed in the context of an {@link IAtomContainer}
+     * @return a deep-copied {@link IAtomContainer} of the circular environment
+     * @throws NullPointerException      if {@code atom} is {@code null}
+     * @throws IllegalArgumentException  if {@code atom} is not accessed in the context of an {@link IAtomContainer}
+     */
+    public IAtomContainer getCircularFragment(IAtom atom) {
+        IAtomContainer molecule = atom.getContainer();
+        if (molecule == null) {
+            throw new IllegalArgumentException(
+                    "Given atom is not part of a molecule or was not accessed correctly!");
+        }
+        return this.getCircularFragment(molecule, atom);
+    }
+
+    /**
+     * Extracts a single circular fragment centered on the given atom from the given molecule.
      *
      * <p>The same algorithm as in
      * {@link #getCircularFragments(IAtomContainer)} is applied, but for only
      * one center atom.</p>
      *
      * @param molecule  the source molecule; must not be {@code null}
-     * @param centerIdx zero-based index of the center atom in {@code molecule}
+     * @param atom      the center atom; must not be {@code null} and must be part of {@code molecule}
      * @return a deep-copied {@link IAtomContainer} of the circular environment
-     * @throws NullPointerException      if {@code molecule} is {@code null}
-     * @throws IndexOutOfBoundsException if {@code centerIdx} is out of range (below than 0 or above/equal to atom count of molecule)
+     * @throws NullPointerException      if {@code molecule} or {@code atom} is {@code null}
+     * @throws IllegalArgumentException  if {@code atom } is not part of {@code molecule}
      */
-    public IAtomContainer getCircularFragment(IAtomContainer molecule, int centerIdx) {
+    public IAtomContainer getCircularFragment(IAtomContainer molecule, IAtom atom) {
         Objects.requireNonNull(molecule, "Input molecule must not be null.");
-        if (centerIdx < 0 || centerIdx >= molecule.getAtomCount()) {
-            throw new IndexOutOfBoundsException(
-                    "centerIdx " + centerIdx + " is out of range [0, " + molecule.getAtomCount() + ").");
+        Objects.requireNonNull(atom, "Input atom must not be null.");
+
+        if (!molecule.contains(atom)) {
+            throw new IllegalArgumentException(
+                    "Given atom is not part of the given molecule!");
         }
         
         int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, molecule.getAtomCount());
         int tmpRadius = this.radius;
         boolean tmpPreserveStereo = this.preserveStereo;
         boolean tmpMarkAttachments = this.markAttachments;
-        return this.extractFragment(molecule, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
+        return this.extractFragment(molecule, atom.getIndex(), tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
     }
 
     /**

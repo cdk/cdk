@@ -39,7 +39,6 @@ import java.util.Set;
  * Unit tests for {@link CircularFragmenter}.
  *
  * @author Jonas Schaub (jonas.schaub@uni-jena.de | jonas-schaub@gmx.de | <a href="https://github.com/JonasSchaub">JonasSchaub on GitHub</a>)
- * @author Claude Sonnet 4.6
  * @see CircularFragmenter
  */
 class CircularFragmenterTest {
@@ -473,7 +472,7 @@ class CircularFragmenterTest {
         // L-alanine: [C@@H] at index 0
         IAtomContainer alanine = smiPar.parseSmiles("[C@@H](C(O)=O)(C)N");
         CircularFragmenter fragmenter = new CircularFragmenter(5, true); // preserveStereo=true
-        IAtomContainer frag = fragmenter.getCircularFragment(alanine, 0);
+        IAtomContainer frag = fragmenter.getCircularFragment(alanine, alanine.getAtom(0)); // center on stereo carbon
         Assertions.assertTrue(frag.stereoElements().iterator().hasNext(),
                 "Stereo elements must be present in the fragment when preserveStereo=true.");
         Assertions.assertEquals("C[C@@H](C(=O)O)N", smiGen.create(frag));
@@ -493,7 +492,7 @@ class CircularFragmenterTest {
         SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols | SmiFlavor.Stereo);
         IAtomContainer alanine = smiPar.parseSmiles("[C@@H](C(O)=O)(C)N");
         CircularFragmenter fragmenter = new CircularFragmenter(5, false); // preserveStereo=false (default)
-        IAtomContainer frag = fragmenter.getCircularFragment(alanine, 0); // same center as the true-stereo test
+        IAtomContainer frag = fragmenter.getCircularFragment(alanine, alanine.getAtom(0)); // same center as the true-stereo test
         Assertions.assertFalse(frag.stereoElements().iterator().hasNext(),
                 "Stereo elements must NOT be present in the fragment when preserveStereo=false.");
         Assertions.assertEquals("CC(C(=O)O)N", smiGen.create(frag));
@@ -675,6 +674,52 @@ class CircularFragmenterTest {
                         }
                     }),
                     "Fragment SMILES " + smiGen.create(frag) + " does not match any expected fragment.");
+        }
+    }
+
+    /**
+     * Tests that {@link CircularFragmenter#getCircularFragment(IAtom)} correctly
+     * extracts a fragment when the atom is properly accessed via its container
+     * (i.e., via {@link IAtomContainer#getAtom(int)}).
+     *
+     * <p>For pentane (CCCCC) at radius 1, the center atom (index 2) must yield
+     * a 3-atom, 2-bond fragment (CCC).</p>
+     *
+     * @throws CDKException if SMILES parsing or generation fails
+     */
+    @Test
+    void testGetCircularFragmentByAtomBasicUsage() throws CDKException {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols);
+        IAtomContainer pentane = smiPar.parseSmiles("CCCCC");
+        CircularFragmenter fragmenter = new CircularFragmenter(1);
+        IAtomContainer frag = fragmenter.getCircularFragment(pentane.getAtom(2));
+        Assertions.assertEquals(3, frag.getAtomCount(),
+                "Radius-1 fragment from chain center (index 2) must contain 3 atoms.");
+        Assertions.assertEquals(2, frag.getBondCount(),
+                "Radius-1 fragment from chain center (index 2) must contain 2 bonds.");
+        Assertions.assertEquals("CCC", smiGen.create(frag));
+    }
+
+    /**
+     * Tests that {@link CircularFragmenter#getCircularFragment(IAtom)} produces
+     * the same result (by canonical SMILES) as the corresponding entry returned by
+     * {@link CircularFragmenter#getCircularFragments(IAtomContainer)} for every atom
+     * in ethylbenzene at radius 2.
+     *
+     * @throws CDKException if SMILES parsing or generation fails
+     */
+    @Test
+    void testGetCircularFragmentByAtomEquivalentToBatchMethod() throws CDKException {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols);
+        IAtomContainer mol = smiPar.parseSmiles("CCc1ccccc1");
+        CircularFragmenter fragmenter = new CircularFragmenter(2);
+        List<IAtomContainer> allFragments = fragmenter.getCircularFragments(mol);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            IAtomContainer singleFrag = fragmenter.getCircularFragment(mol.getAtom(i));
+            Assertions.assertEquals(smiGen.create(allFragments.get(i)), smiGen.create(singleFrag),
+                    "Single-atom overload result must equal batch method result for atom index " + i + ".");
         }
     }
 
