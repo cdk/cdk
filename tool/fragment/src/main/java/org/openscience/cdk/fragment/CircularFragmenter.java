@@ -512,11 +512,20 @@ public class CircularFragmenter {
         // stereo elements
         if (preserveStereo) {
             for (IStereoElement elem : molecule.stereoElements()) {
-                try {
-                    fragment.addStereoElement(elem.map(originalAtomToCopyAtomMap, originalBondToCopyBondMap));
-                } catch (NoSuchAtomException | NoSuchBondException exception) {
-                    //catch those because they appear if not all stereo carriers are present in the fragment
+                boolean skip = false;
+                if (!originalAtomToCopyAtomMap.containsKey(elem.getFocus()) && !originalBondToCopyBondMap.containsKey(elem.getFocus())) {
+                    continue;
                 }
+                for (Object carrier : elem.getCarriers()) {
+                    if (!originalAtomToCopyAtomMap.containsKey(carrier) && !originalBondToCopyBondMap.containsKey(carrier)) {
+                        skip = true;
+                        break;
+                    }
+                }
+                if (skip) {
+                    continue;
+                }
+                fragment.addStereoElement(elem.map(originalAtomToCopyAtomMap, originalBondToCopyBondMap));
             }
         }
 
