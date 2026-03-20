@@ -34,6 +34,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -409,23 +410,20 @@ public class CircularFragmenter {
 
         // --- 1. BFS to collect atoms within radius bonds ---
 
-        // Tracks which atom indices have been visited (O(1) membership test)
-        Set<Integer> visitedIndices = new HashSet<>((int) Math.ceil(initCollectionSize * 1.4));
+        // Tracks the depth (sphere nr. / level / height) of each atom and whether it has been visited already
+        int[] depths = new int[molecule.getAtomCount()];
+        Arrays.fill(depths, -1);
         // Stores collected atoms in BFS order; first entry is always the center atom.
-        // Both collections are kept in parallel: visitedIndices for fast lookup, collectedAtoms for ordered iteration.
+        // Both collections are kept in parallel: depths for fast lookup, collectedAtoms for ordered iteration.
         List<IAtom> collectedAtoms = new ArrayList<>(initCollectionSize);
-        //holds mapping of atoms from the original molecule to their depth (sphere nr. / level / height) in the fragment
-        // to later add this as a property to the copy atoms in the fragment atom container
-        Map<IAtom, Integer> originalAtomToDepthMap = new HashMap<>((int) Math.ceil(initCollectionSize * 1.4));
 
         // BFS queue entries, [atomIndex, depth]
         Deque<int[]> queue = new ArrayDeque<>(initCollectionSize);
 
         IAtom centerAtom = molecule.getAtom(centerIdx);
-        visitedIndices.add(centerIdx);
+        depths[centerIdx] = 0;
         collectedAtoms.add(centerAtom);
         queue.add(new int[]{centerIdx, 0});
-        originalAtomToDepthMap.put(centerAtom, 0);
 
         while (!queue.isEmpty()) {
             int[] entry = queue.poll();
@@ -445,11 +443,10 @@ public class CircularFragmenter {
                 if (neighborIdx == null) {
                     continue; // Safety: atom not in molecule (should not happen if map is correct)
                 }
-                if (!visitedIndices.contains(neighborIdx)) {
-                    visitedIndices.add(neighborIdx);
+                if (depths[neighborIdx] == -1) {
+                    depths[neighborIdx] = currentDepth + 1;
                     collectedAtoms.add(neighbor);
                     queue.add(new int[]{neighborIdx, currentDepth + 1});
-                    originalAtomToDepthMap.put(neighbor, currentDepth + 1);
                 }
             }
         }
@@ -467,7 +464,7 @@ public class CircularFragmenter {
                 }
                 IAtom other = bond.getOther(atom);
                 Integer otherIdx = other.getIndex();
-                if (otherIdx != null && visitedIndices.contains(otherIdx)) {
+                if (otherIdx != null && depths[otherIdx] != -1) {
                     collectedBonds.add(bond);
                     bondsInFragment.add(bond);
                 }
@@ -485,7 +482,7 @@ public class CircularFragmenter {
 
         for (IAtom origAtom : collectedAtoms) {
             IAtom copiedAtom = this.deeperCopy(origAtom, fragment);
-            copiedAtom.setProperty(CircularFragmenter.FRAGMENT_ATOM_DEPTH_PROPERTY_KEY, originalAtomToDepthMap.get(origAtom));
+            copiedAtom.setProperty(CircularFragmenter.FRAGMENT_ATOM_DEPTH_PROPERTY_KEY, depths[origAtom.getIndex()]);
             originalAtomToCopyAtomMap.put(origAtom, copiedAtom);
             fragment.addAtom(copiedAtom);
         }
