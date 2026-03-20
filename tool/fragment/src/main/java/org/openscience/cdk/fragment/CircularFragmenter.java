@@ -418,17 +418,16 @@ public class CircularFragmenter {
         List<IAtom> collectedAtoms = new ArrayList<>(initCollectionSize);
 
         // BFS queue entries, [atomIndex, depth]
-        Deque<int[]> queue = new ArrayDeque<>(initCollectionSize);
+        Deque<Integer> queue = new ArrayDeque<>(initCollectionSize);
 
         IAtom centerAtom = molecule.getAtom(centerIdx);
         depths[centerIdx] = 0;
         collectedAtoms.add(centerAtom);
-        queue.add(new int[]{centerIdx, 0});
+        queue.add(centerIdx);
 
         while (!queue.isEmpty()) {
-            int[] entry = queue.poll();
-            int currentIdx = entry[0];
-            int currentDepth = entry[1];
+            int currentIdx = queue.poll();
+            int currentDepth = depths[currentIdx];
 
             if (currentDepth >= radius) {
                 // Do not expand further, but the atom itself is already collected
@@ -440,13 +439,10 @@ public class CircularFragmenter {
             for (IBond bond : currentAtom.bonds()) {
                 IAtom neighbor = bond.getOther(currentAtom);
                 Integer neighborIdx = neighbor.getIndex();
-                if (neighborIdx == null) {
-                    continue; // Safety: atom not in molecule (should not happen if map is correct)
-                }
                 if (depths[neighborIdx] == -1) {
                     depths[neighborIdx] = currentDepth + 1;
                     collectedAtoms.add(neighbor);
-                    queue.add(new int[]{neighborIdx, currentDepth + 1});
+                    queue.add(neighborIdx);
                 }
             }
         }
