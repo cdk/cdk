@@ -305,7 +305,7 @@ public class CircularFragmenter {
      * one center atom.</p>
      *
      * <p>This method will only work if the atom has been accessed
-     * in the context of an {@link IAtomContainer}, for example:
+     * in the context of an {@link IAtomContainer}, for example:</p>
      *
      * <pre>{@code
      * IAtomContainer mol  = new AtomContainer();
@@ -315,7 +315,7 @@ public class CircularFragmenter {
      * mol.add(atom);
      * atom.getContainer(); // still null
      * mol.getAtom(0).getContainer(); // not-null, returns 'mol'
-     * }</pre></p>
+     * }</pre>
      *
      * @param atom the center atom; must not be {@code null} and must be accessed in the context of an {@link IAtomContainer}
      * @return a deep-copied {@link IAtomContainer} of the circular environment
