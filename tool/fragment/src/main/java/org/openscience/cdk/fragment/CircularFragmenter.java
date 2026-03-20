@@ -137,7 +137,9 @@ public class CircularFragmenter {
      * saturation with implicit hydrogen atoms instead).
      */
     public CircularFragmenter() {
-        this(CircularFragmenter.DEFAULT_RADIUS, CircularFragmenter.DEFAULT_PRESERVE_STEREO, CircularFragmenter.DEFAULT_MARK_ATTACHMENTS);
+        this(CircularFragmenter.DEFAULT_RADIUS,
+                CircularFragmenter.DEFAULT_PRESERVE_STEREO,
+                CircularFragmenter.DEFAULT_MARK_ATTACHMENTS);
     }
 
     /**
@@ -284,7 +286,8 @@ public class CircularFragmenter {
         int initCollectionSize = CircularFragmenter.calculateInitCollectionSize(this.radius, atomCount);
 
         for (int centerIdx = 0; centerIdx < atomCount; centerIdx++) {
-            IAtomContainer fragment = this.extractFragment(molecule, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
+            IAtomContainer fragment = this.extractFragment(
+                    molecule, centerIdx, tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
             fragments.add(centerIdx, fragment);
         }
 
@@ -351,7 +354,8 @@ public class CircularFragmenter {
         int tmpRadius = this.radius;
         boolean tmpPreserveStereo = this.preserveStereo;
         boolean tmpMarkAttachments = this.markAttachments;
-        return this.extractFragment(molecule, atom.getIndex(), tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
+        return this.extractFragment(
+                molecule, atom.getIndex(), tmpRadius, initCollectionSize, tmpPreserveStereo, tmpMarkAttachments);
     }
 
     /**
@@ -466,7 +470,8 @@ public class CircularFragmenter {
 
         // --- 3. Deep-copy atoms and bonds into a new container ---
 
-        return this.copyCollectedAtomsAndBondsToNewFragmentContainer(molecule, collectedAtoms, collectedBonds, depths, preserveStereo, markAttachments);
+        return this.copyCollectedAtomsAndBondsToNewFragmentContainer(
+                molecule, collectedAtoms, collectedBonds, depths, preserveStereo, markAttachments);
     }
 
     /**
@@ -531,7 +536,8 @@ public class CircularFragmenter {
             // Re-wire the copied bond to the copied atom instances
             IAtom copiedBegin = originalAtomToCopyAtomMap.get(origBond.getBegin());
             IAtom copiedEnd = originalAtomToCopyAtomMap.get(origBond.getEnd());
-            if (copiedBegin == null || copiedEnd == null || copiedBegin.getContainer() != copiedEnd.getContainer()) {
+            if (copiedBegin == null || copiedEnd == null
+                    || copiedBegin.getContainer() != copiedEnd.getContainer()) {
                 continue;
             }
             IBond copiedBond = this.deeperCopy(origBond, copiedBegin, copiedEnd);
@@ -541,14 +547,14 @@ public class CircularFragmenter {
         // single electrons
         for (ISingleElectron se : molecule.singleElectrons()) {
             IAtom atom = originalAtomToCopyAtomMap.get(se.getAtom());
-            if (!Objects.isNull(atom)) {
+            if (atom != null) {
                 atom.getContainer().addSingleElectron(atom.getIndex());
             }
         }
         // lone pairs
         for (ILonePair lp : molecule.lonePairs()) {
             IAtom atom = originalAtomToCopyAtomMap.get(lp.getAtom());
-            if (!Objects.isNull(atom)) {
+            if (atom != null) {
                 atom.getContainer().addLonePair(atom.getIndex());
             }
         }
@@ -568,8 +574,8 @@ public class CircularFragmenter {
     }
     
     /**
-     *  Creates a relatively deep ("deeper" than cloning but not as extensive) copy of the given atom and adds it to the given container.
-     *  Copies:
+     *  Creates a relatively deep ("deeper" than cloning but not as extensive) copy of the given atom
+     *  and adds it to the given container. Copies:
      *  <br>- atomic number
      *  <br>- implicit hydrogen count
      *  <br>- aromaticity flag
@@ -579,8 +585,9 @@ public class CircularFragmenter {
      *  <br>- point 2D and 3D coordinates
      *  <br>- flags
      *  <br>- some primitive-based properties (String, Integer, Boolean)
-     * <br>Note: atom types and isotopes of the original atoms are not copied and hence, some properties will be unset in the copies.
-     * If you need atom types and their defining properties, you need to re-perceive them after copying.
+     * <br>Note: atom types and isotopes of the original atoms are not copied and hence, some properties
+     * will be unset in the copies. If you need atom types and their defining properties, you need to
+     * re-perceive them after copying.
      *
      * @param atom the atom to copy
      * @param container the container to add the copied atom to
@@ -602,8 +609,10 @@ public class CircularFragmenter {
         }
         cpyAtom.setFlags(atom.getFlags());
         //fractional point 3D (location in a crystal unit cell) is deliberately not copied; add if needed
-        //fields related to atom type (max bond order, bond order sum, covalent radius, hybridization, formal neighbor count) are deliberately not copied; add if needed
-        //fields related to isotope (exact mass, natural abundance, mass number) are deliberately not copied; add if needed
+        //fields related to atom type (max bond order, bond order sum, covalent radius, hybridization, formal
+        // neighbor count) are deliberately not copied; add if needed
+        //fields related to isotope (exact mass, natural abundance, mass number) are deliberately not copied;
+        // add if needed
         //properties:
         for (Map.Entry<Object, Object> entry : atom.getProperties().entrySet()) {
             if ((entry.getKey() instanceof String || entry.getKey() instanceof Integer || entry.getKey() instanceof Boolean)
@@ -615,8 +624,8 @@ public class CircularFragmenter {
     }
 
     /**
-     * Creates a relatively deep ("deeper" than cloning but not as extensive) copy of the given bond between the given begin and end atoms.
-     * Copies:
+     * Creates a relatively deep ("deeper" than cloning but not as extensive) copy of the given bond
+     * between the given begin and end atoms. Copies:
      * <br>- order
      * <br>- aromaticity flag
      * <br>- display
@@ -651,7 +660,8 @@ public class CircularFragmenter {
     }
 
     /**
-     * Saturates a broken bond at an attachment point by either adding a pseudo atom or increasing the implicit hydrogen count.
+     * Saturates a broken bond at an attachment point by either adding a pseudo atom or increasing
+     * the implicit hydrogen count.
      * <p>
      * No checks are performed!
      *
@@ -721,11 +731,13 @@ public class CircularFragmenter {
     ) {
         for (IStereoElement elem : molecule.stereoElements()) {
             boolean skip = false;
-            if (!originalAtomToCopyAtomMap.containsKey(elem.getFocus()) && !originalBondToCopyBondMap.containsKey(elem.getFocus())) {
+            if (!originalAtomToCopyAtomMap.containsKey(elem.getFocus())
+                    && !originalBondToCopyBondMap.containsKey(elem.getFocus())) {
                 continue;
             }
             for (Object carrier : elem.getCarriers()) {
-                if (!originalAtomToCopyAtomMap.containsKey(carrier) && !originalBondToCopyBondMap.containsKey(carrier)) {
+                if (!originalAtomToCopyAtomMap.containsKey(carrier)
+                        && !originalBondToCopyBondMap.containsKey(carrier)) {
                     skip = true;
                     break;
                 }
