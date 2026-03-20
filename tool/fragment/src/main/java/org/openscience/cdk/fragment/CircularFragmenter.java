@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IStereoElement;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,8 +42,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-//TODO: add note on prior aromaticity detection
-//TODO: add test for previous CDK HOSE code generator bug
 /**
  * Extracts atom-centered circular / spherical fragments from a molecule,
  * analogous to HOSE codes, circular Morgan-type
@@ -78,6 +77,10 @@ import java.util.Set;
  * <p>Note that the resulting fragments are not deduplicated! So, if you, e.g., fragment benzene
  * with a radius of 3, you will get six benzene "fragments" as a result, since a radius of three
  * includes the entire molecule, independent of which atom is taken as the center.</p>
+ *
+ * <p>Also note that whether you have done an aromaticity perception or not on your input molecule before using this
+ * fragmentation routine influences the results, especially when analyzing a whole collection of molecules and
+ * deduplicating the fragments afterward.</p>
  *
  * <p>Scaling: Let <em>n</em> be the number of atoms and <em>r</em> the radius.
  * A single fragment extraction scales with the number of atoms <em>k</em> in the fragment

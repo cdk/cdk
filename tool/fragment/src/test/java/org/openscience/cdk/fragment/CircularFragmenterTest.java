@@ -723,6 +723,25 @@ class CircularFragmenterTest {
         }
     }
 
+    /**
+     * Makes sure that this implementation does not have the same issues as were previously
+     * reported for the CDK HOSE code generator.
+     * <br>See <a href="https://github.com/cdk/cdk/issues/588">#588</a> and
+     * <a href="https://github.com/cdk/cdk/pull/828">#828</a>.
+     *
+     * @throws CDKException if SMILES parsing or generation fails
+     */
+    @Test
+    void testPreviousCDKHOSECodeGeneratorBugOnOxabenzochrysenone() throws CDKException {
+        SmilesParser smiPar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.UseAromaticSymbols);
+        //5-Methoxy-6-oxa-benzo[def]chrysen-3-one -> PubChem CID 636441
+        IAtomContainer mol = smiPar.parseSmiles("COC1=C2C3=C(C=CC4=C3C(=C1)C(=O)C=C4)C5=CC=CC=C5O2");
+        CircularFragmenter fragmenter = new CircularFragmenter(2);
+        IAtomContainer fragment = fragmenter.getCircularFragment(mol, mol.getAtom(4));
+        Assertions.assertEquals("OC(=C)C(C(=C)C)=C(C)C", smiGen.create(fragment));
+    }
+
     //TODO:removed this or finish it to be a proper test
     @Test
     void testHydroxyAziridine() throws CDKException {
