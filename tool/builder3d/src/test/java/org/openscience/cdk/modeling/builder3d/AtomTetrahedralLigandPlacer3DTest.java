@@ -18,22 +18,21 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import javax.vecmath.Point3d;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+import javax.vecmath.Point3d;
 
 /**
  * Tests for AtomPlacer3D
  *
  */
-class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase {
+class AtomTetrahedralLigandPlacer3DTest {
 
     @Test
     void testAdd3DCoordinatesForSinglyBondedLigands_IAtomContainer() throws Exception {

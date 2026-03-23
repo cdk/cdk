@@ -24,7 +24,6 @@ package org.openscience.cdk.group;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,7 +34,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @author maclean
  */
-class BondGroupTests extends CDKTestCase {
+class BondGroupTests {
 
     private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

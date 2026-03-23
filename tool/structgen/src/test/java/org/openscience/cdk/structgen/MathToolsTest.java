@@ -21,11 +21,10 @@ package org.openscience.cdk.structgen;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class MathToolsTest extends CDKTestCase {
+class MathToolsTest {
 
     MathToolsTest() {
         super();

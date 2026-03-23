@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Isotope;
@@ -56,7 +55,7 @@ import static org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator.
  * Checks the functionality of the MolecularFormulaManipulator.
  *
  */
-class MolecularFormulaManipulatorTest extends CDKTestCase {
+class MolecularFormulaManipulatorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private IsotopeFactory                  ifac;

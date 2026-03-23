@@ -19,6 +19,18 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.fingerprint.IBitFingerprint;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.isomorphism.matchers.QueryChemObject;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,26 +39,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.fingerprint.IBitFingerprint;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.isomorphism.matchers.QueryChemObject;
-import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.templates.TestMoleculeFactory;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
 /**
  *
  * @author      chhoppe
  * @author      Christoph Steinbeck
  * @cdk.created 2004-11-04
  */
-class TemplateHandler3DTest extends CDKTestCase {
+class TemplateHandler3DTest {
 
     @Test
     void testGetInstance() throws Exception {

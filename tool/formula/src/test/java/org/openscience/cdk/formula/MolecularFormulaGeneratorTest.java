@@ -20,7 +20,6 @@ package org.openscience.cdk.formula;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -37,7 +36,7 @@ import java.time.Duration;
  * Checks the functionality of the MolecularFormulaGenerator.
  *
  */
-class MolecularFormulaGeneratorTest extends CDKTestCase {
+class MolecularFormulaGeneratorTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder
             .getInstance();

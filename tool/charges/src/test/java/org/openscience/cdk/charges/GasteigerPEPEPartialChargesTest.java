@@ -21,19 +21,19 @@ package org.openscience.cdk.charges;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.HydrogenState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.List;
  * @author Miguel Rojas
  * @cdk.created 2008-18-05
  */
-class GasteigerPEPEPartialChargesTest extends CDKTestCase {
+class GasteigerPEPEPartialChargesTest {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -65,7 +65,7 @@ class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
@@ -89,7 +89,7 @@ class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         IAtomContainer mol1 = sp.parseSmiles(smiles1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         Aromaticity.cdkLegacy().apply(mol1);
-        addExplicitHydrogens(mol1);
+        AtomContainerManipulator.normalizeHydrogens(mol1, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         lpcheck.saturate(mol1);
 
@@ -123,11 +123,11 @@ class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
 
-        addExplicitHydrogens(mol1);
+        AtomContainerManipulator.normalizeHydrogens(mol1, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         lpcheck.saturate(mol1);
 
-        addExplicitHydrogens(mol2);
+        AtomContainerManipulator.normalizeHydrogens(mol2, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         lpcheck.saturate(mol2);
 
@@ -154,7 +154,7 @@ class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
@@ -252,7 +252,7 @@ class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
         for (IAtom iAtom : molecule.atoms()) iAtom.setCharge(0.0);
@@ -261,7 +261,7 @@ class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         set.addAtomContainer(molecule);
         set.addAtomContainer(molecule);
 
-        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 
