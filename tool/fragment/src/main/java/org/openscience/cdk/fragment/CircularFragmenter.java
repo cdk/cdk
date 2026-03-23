@@ -597,8 +597,11 @@ public class CircularFragmenter {
      * @return the copied atom
      */
     private IAtom deeperCopy(IAtom atom, IAtomContainer container) {
-        IAtom cpyAtom = container.newAtom(atom.getAtomicNumber(),
-                atom.getImplicitHydrogenCount());
+        Integer hCount = atom.getImplicitHydrogenCount();
+        int implicitHs = (hCount == null) ? 0 : hCount;
+        Integer atomicNumber = atom.getAtomicNumber();
+        int element = (atomicNumber == null) ? 0 : atomicNumber;
+        IAtom cpyAtom = container.newAtom(element, implicitHs);
         cpyAtom.setIsAromatic(atom.isAromatic());
         cpyAtom.setValency(atom.getValency());
         cpyAtom.setAtomTypeName(atom.getAtomTypeName());
