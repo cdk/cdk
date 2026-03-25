@@ -26,6 +26,7 @@ package org.openscience.cdk.smiles;
 import org.openscience.cdk.interfaces.IBond;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +48,11 @@ final class CxSmilesState {
     Map<Integer, List<Integer>> positionVar = null;
     List<Map.Entry<Map.Entry<Integer,Integer>,IBond.Display>> bondDisplay = null;
     List<CxSgroup>              mysgroups   = null;
+    List<Integer>               atomHighlight = null;
+    List<Integer>               bongHighlight = null;
     boolean                     coordFlag   = false;
     boolean                     racemic     = false;
+    Map<String, List<String>>  rgrps;
     List<Integer> racemicFrags = null;
     Map<Integer,Integer> stereoGrps = null;
 

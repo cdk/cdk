@@ -24,7 +24,6 @@ package org.openscience.cdk.io.random;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -40,7 +39,7 @@ import java.io.InputStream;
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  */
-class RandomAccessTest extends CDKTestCase {
+class RandomAccessTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RandomAccessTest.class);
 

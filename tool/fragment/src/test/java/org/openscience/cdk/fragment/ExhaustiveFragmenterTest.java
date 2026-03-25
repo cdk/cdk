@@ -29,7 +29,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -51,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  *
  * @see ExhaustiveFragmenter
  */
-class ExhaustiveFragmenterTest extends CDKTestCase {
+class ExhaustiveFragmenterTest {
     private static SmilesParser smilesParser;
 
     @BeforeAll

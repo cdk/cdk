@@ -78,6 +78,10 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     /** The mass number for this isotope. */
     private Integer           massNumber;
 
+    protected Isotope() {
+        super();
+    }
+
     /**
      *  Constructor for the Isotope object.
      *

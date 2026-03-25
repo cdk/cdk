@@ -20,13 +20,12 @@ package org.openscience.cdk.qsar;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *
  */
-class DescriptorExceptionTest extends CDKTestCase {
+class DescriptorExceptionTest {
 
     @Test
     void testConstructor() {

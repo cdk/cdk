@@ -92,8 +92,8 @@ class InChIGeneratorFactoryTest {
         IAtom a = new Atom("Cl");
         a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
-        InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(ac, (String) null);
-        Assertions.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        InChIGenerator gen = InChIGeneratorFactory.getInChIGenerator(ac);
+        Assertions.assertEquals(InchiStatus.SUCCESS, gen.getStatus());
         Assertions.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
     }
     
@@ -166,16 +166,20 @@ class InChIGeneratorFactoryTest {
     @Test
     void testGetInChIToStructure_String_IChemObjectBuilder_NullString() throws CDKException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            String opts = null;
             InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
-                                                                    DefaultChemObjectBuilder.getInstance(), (String) null);
+                                                                    DefaultChemObjectBuilder.getInstance(),
+                                                                    opts);
         });
     }
 
     @Test
     void testGetInChIToStructure_String_IChemObjectBuilder_NullList() throws CDKException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            List<String> opts = null;
             InChIGeneratorFactory.getInstance().getInChIToStructure("InChI=1/ClH/h1H",
-                                                                    DefaultChemObjectBuilder.getInstance(), (List<String>) null);
+                                                                    DefaultChemObjectBuilder.getInstance(),
+                                                                    opts);
         });
     }
 

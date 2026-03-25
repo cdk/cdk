@@ -25,8 +25,6 @@ package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.sgroup.Sgroup;
-import org.openscience.cdk.sgroup.SgroupType;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -509,7 +507,11 @@ final class CxSmilesParser {
 
         while (iter.hasNext()) {
             switch (iter.next()) {
-                case '$': // atom labels and values
+              case '|': // end of CX
+                // consume optional separators
+                if (!iter.nextIf(' ')) iter.nextIf('\t');
+                return iter.pos;
+              case '$': // atom labels and values
                     // dest is atom labels by default
                     Map<Integer, String> dest;
 
@@ -551,6 +553,19 @@ final class CxSmilesParser {
                     if (!processStereoGrps(state, iter, IStereoElement.GRP_ABS))
                         return -1;
                     break;
+                case 'h': // EPAM extensions, ha: and hb: for highlighting atoms/bonds
+                    if (iter.nextIf('a')) {
+                      if (!processEpamIndigoHighlight(state, iter,
+                                                      state.atomHighlight = new ArrayList<>()))
+                        return -1;
+                    } else if (iter.nextIf('b')) {
+                      if (!processEpamIndigoHighlight(state, iter,
+                                                      state.bongHighlight = new ArrayList<>()))
+                        return -1;
+                    } else
+                      return -1;
+                    break;
+
                 case 'r': // relative (actually racemic) stereochemistry ignored
                     if (iter.nextIf(':')) {
                         state.racemicFrags = new ArrayList<>();
@@ -613,10 +628,6 @@ final class CxSmilesParser {
                         iter.nextIf(',');
                     }
                     break;
-                case '|': // end of CX
-                    // consume optional separators
-                    if (!iter.nextIf(' ')) iter.nextIf('\t');
-                    return iter.pos;
                 case 'L':
                     // LO, Ligand Ordering
                     if (iter.nextIf('O')) {
@@ -650,12 +661,59 @@ final class CxSmilesParser {
                             return -1;
                     }
                     break;
+                case 'R': // RG R-groups
+                    if (!iter.nextIf("G:"))
+                        return -1;
+                    if (state.rgrps == null)
+                        state.rgrps = new HashMap<>();
+                    if (!processRGroups(iter, state.rgrps))
+                        return -1;
+                    break;
                 default:
                     return -1;
             }
         }
 
         return -1;
+    }
+
+    private static boolean processRGroups(CharIter iter, Map<String,List<String>> rgrps) {
+
+        String lab = null;
+        StringBuilder sb = new StringBuilder();
+
+        while (iter.hasNext()) {
+            if (iter.nextIf('_')) {
+                sb.setLength(0);
+                while (iter.hasNext() && isAlphaNum(iter.curr()))
+                    sb.append(iter.next());
+                lab = sb.toString();
+                if (!iter.nextIf("="))
+                    return false;
+            } else if (iter.nextIf('{')) {
+                if (lab == null)
+                    return false;
+                sb.setLength(0);
+                int depth = 1;
+                while (iter.hasNext()) {
+                    char ch = iter.next();
+                    if (ch == '{')  depth++;
+                    else if (ch == '}') depth--;
+                    if (depth == 0)
+                        break;
+                    sb.append(ch);
+                }
+                if (depth != 0)
+                    return false;
+                iter.nextIf(',');
+                rgrps.computeIfAbsent(lab, k -> new ArrayList<>())
+                     .add(sb.toString());
+            } else {
+                break;
+            }
+        }
+
+        return !rgrps.isEmpty();
     }
 
     private static boolean processStereoGrps(CxSmilesState state, CharIter iter, int grp) {
@@ -676,6 +734,14 @@ final class CxSmilesParser {
             state.stereoGrps.put(idx, grp);
         }
         return true;
+    }
+
+
+    // An EPAM Indigo extension, ha: / hb: for atom/bond highlights
+    private static boolean processEpamIndigoHighlight(CxSmilesState state, CharIter iter, List<Integer> dest) {
+      if (!iter.nextIf(':'))
+        return false;
+      return processIntList(iter, ',',dest);
     }
 
 
@@ -714,6 +780,11 @@ final class CxSmilesParser {
         }
     }
 
+    private static boolean isAlphaNum(char c) {
+        return ((c >= 'A') && (c <= 'Z')) ||
+               ((c >= 'a') && (c <= 'z')) ||
+               isDigit(c);
+    }
 
     private static boolean isDigit(char c) {
         return c >= '0' && c <= '9';

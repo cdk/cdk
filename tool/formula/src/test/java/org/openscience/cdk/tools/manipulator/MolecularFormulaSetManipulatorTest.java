@@ -20,7 +20,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.formula.MolecularFormulaSet;
@@ -34,7 +33,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * Checks the functionality of the MolecularFormulaSetManipulator.
  *
  */
-class MolecularFormulaSetManipulatorTest extends CDKTestCase {
+class MolecularFormulaSetManipulatorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

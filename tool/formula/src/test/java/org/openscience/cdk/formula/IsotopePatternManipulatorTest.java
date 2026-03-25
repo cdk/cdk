@@ -4,13 +4,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Class testing the IsotopePatternManipulator class.
  *
  */
-class IsotopePatternManipulatorTest extends CDKTestCase {
+class IsotopePatternManipulatorTest {
 
     IsotopePatternManipulatorTest() {
         super();

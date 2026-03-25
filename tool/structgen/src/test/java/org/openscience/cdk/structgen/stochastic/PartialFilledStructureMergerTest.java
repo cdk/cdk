@@ -20,7 +20,6 @@ package org.openscience.cdk.structgen.stochastic;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -30,7 +29,7 @@ import org.openscience.cdk.tools.SaturationChecker;
 
 /**
  */
-class PartialFilledStructureMergerTest extends CDKTestCase {
+class PartialFilledStructureMergerTest {
 
     @Test
     void testGenerate_IAtomContainerSet() throws Exception {

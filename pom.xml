@@ -6,7 +6,7 @@
     <artifactId>cdk</artifactId>
     <name>cdk</name>
     <description>Modular library for Cheminformatics</description>
-    <version>2.12-SNAPSHOT</version>
+    <version>2.13-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://sourceforge.net/projects/cdk/</url>
     <modules>
@@ -40,11 +40,11 @@
         <maven-pmd.version>3.28.0</maven-pmd.version>
         <jacoco.version>0.8.14</jacoco.version>
 
-        <junit.version>5.14.1</junit.version>
+        <junit.version>5.14.3</junit.version>
         <mockito.version>4.11.0</mockito.version>
 
-        <log4j.version>2.25.2</log4j.version>
-        <cmlxom.version>4.14</cmlxom.version>
+        <log4j.version>2.25.3</log4j.version>
+        <cmlxom.version>4.15</cmlxom.version>
     </properties>
     <licenses>
         <license>
@@ -529,7 +529,7 @@
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.27.4</version>
+                <version>3.27.7</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
@@ -600,6 +600,31 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${maven-pmd.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

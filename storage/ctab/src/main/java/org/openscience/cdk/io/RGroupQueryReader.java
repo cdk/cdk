@@ -35,8 +35,10 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.exception.CDKException;
@@ -49,6 +51,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.RGroupQueryFormat;
+import org.openscience.cdk.isomorphism.matchers.IRGroup;
 import org.openscience.cdk.isomorphism.matchers.IRGroupList;
 import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
 import org.openscience.cdk.isomorphism.matchers.RGroup;
@@ -308,7 +311,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                                 }
                             }
                         }
-                        if (bondMap.size() != 0) {
+                        if (!bondMap.isEmpty()) {
                             attachmentPoints.put(rGroup, bondMap);
                         }
                     }
@@ -328,7 +331,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                 if (atom instanceof IPseudoAtom) {
                     IPseudoAtom rGroup = (IPseudoAtom) atom;
                     if (RGroupQuery.isValidRgroupQueryLabel(rGroup.getLabel())) {
-                        int rgroupNum = Integer.parseInt(rGroup.getLabel().substring(1));
+                        int rgroupNum = rGroup.getLabel().length() > 1 ? Integer.parseInt(rGroup.getLabel().substring(1)) : 0;
                         RGroupList rgroupList = new RGroupList(rgroupNum);
                         if (!rGroupDefinitions.containsKey(rgroupNum)) {
                             logger.info("Define Rgroup R" + rgroupNum);
@@ -441,6 +444,10 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
 
             rGroupQuery.setRGroupDefinitions(rGroupDefinitions);
             logger.info("Number of lines was " + lineCount);
+
+            if (mode == Mode.STRICT)
+                verifyRgroupDefinitions(rGroupQuery);
+
             return rGroupQuery;
 
         } catch (CDKException exception) {
@@ -457,17 +464,56 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
         }
     }
 
-    private static boolean hasExplicitAttachment(IAtom atom) {
+    private static void verifyRgroupDefinitions(IRGroupQuery rGroupQuery) throws CDKException {
+        Set<String> errors = new HashSet<>();
+
+        Map<String,Integer> numConnections = new HashMap<>();
+        // synchronise definitions
+        for (Map.Entry<IAtom, Map<Integer, IBond>> e : rGroupQuery.getRootAttachmentPoints().entrySet()) {
+            String label = ((IPseudoAtom) e.getKey()).getLabel();
+            Integer other = numConnections.get(label);
+            int numberOfConnections = e.getValue().size();
+            if (other == null)
+                numConnections.put(label, numberOfConnections);
+            else if (other != numberOfConnections)
+                errors.add("RGroup: " + label + " must have a fixed number of attachments");
+
+            int rnum = label.matches("R\\d+") ? Integer.parseInt(label.substring(1)) : 0;
+            IRGroupList rGroupList = rGroupQuery.getRGroupDefinitions().get(rnum);
+
+            if (rGroupList == null) {
+                errors.add("RGroup: " + label + " missing definition");
+                continue;
+            }
+
+            for (IRGroup rGroup : rGroupList.getRGroups()) {
+                int rGroupAttachments = 0;
+                if (rGroup.getFirstAttachmentPoint() != null)
+                    rGroupAttachments++;
+                if (rGroup.getSecondAttachmentPoint() != null)
+                    rGroupAttachments++;
+                if (rGroupAttachments != numberOfConnections) {
+                    errors.add("RGroup: " + label + " atom neighbour count must match number of RGroup attachments");
+                }
+            }
+        }
+
+        if (!errors.isEmpty()) {
+            throw new CDKException(String.join("; ", errors));
+        }
+    }
+
+    private static boolean hasExplicitAttachment(IAtom atom, int id) {
         for (IBond bond : atom.bonds()) {
             IAtom nbor = bond.getOther(atom);
-            if (nbor instanceof IPseudoAtom && ((IPseudoAtom) nbor).getAttachPointNum() != 0)
+            if (nbor instanceof IPseudoAtom && ((IPseudoAtom) nbor).getAttachPointNum() == id)
                 return true;
         }
         return false;
     }
 
     private void sproutExplicitAttachment(IAtom atom, int id) {
-        if (atom == null || hasExplicitAttachment(atom))
+        if (atom == null || hasExplicitAttachment(atom, id))
             return;
         IAtomContainer container = atom.getContainer();
 

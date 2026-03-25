@@ -67,7 +67,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     /**
      * The bond order of this bond.
      */
-    protected IBond.Order     order            = (Order) CDKConstants.UNSET;
+    protected IBond.Order     order            = null;
 
     /**
      * Number of atoms contained by this object.

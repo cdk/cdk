@@ -29,13 +29,12 @@ import java.util.TreeSet;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author maclean
  *
  */
-class PartitionTest extends CDKTestCase {
+class PartitionTest {
 
     @Test
     void emptyConstructor() {

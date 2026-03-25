@@ -177,6 +177,10 @@ public final class Bounds implements IRenderingElement {
                     stack.add(child);
             } else if (element instanceof MarkedElement) {
                 stack.add(((MarkedElement)element).element());
+            } else if (element instanceof RectangleElement) {
+                RectangleElement rect = (RectangleElement) element;
+                add(rect.xCoord, rect.yCoord);
+                add(rect.xCoord + rect.width, rect.yCoord + rect.height);
             } else {
                 // ignored from bounds calculation, we don't really
                 // care but log we skipped it

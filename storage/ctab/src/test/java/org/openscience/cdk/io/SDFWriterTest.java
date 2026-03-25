@@ -622,7 +622,7 @@ class SDFWriterTest extends ChemObjectWriterTest {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
         assertThat(sw.toString(), containsString("M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEREL1 ATOMS=(1)\n" +
+                "M  V30 MDLV30/STEREL1 ATOMS=(1 1)\n" +
                 "M  V30 END COLLECTION"));
     }
 
@@ -674,8 +674,8 @@ class SDFWriterTest extends ChemObjectWriterTest {
         }
         assertThat(sw.toString(), containsString("M  V30 COUNTS 11 11 0 0 0"));
         assertThat(sw.toString(), containsString("M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEABS ATOMS=(4)\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(2)\n" +
+                "M  V30 MDLV30/STEABS ATOMS=(1 4)\n" +
+                "M  V30 MDLV30/STERAC1 ATOMS=(1 2)\n" +
                 "M  V30 END COLLECTION"));
     }
 }

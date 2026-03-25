@@ -197,36 +197,28 @@ public class AtomPlacer {
             return;
         }
 
-        if (doAngleSnap(atom, placedNeighbours)) {
-
-            int numTerminal = 0;
-            for (IAtom unplaced : unplacedNeighbours.atoms())
-                if (molecule.getConnectedBondsCount(unplaced) == 1)
-                    numTerminal++;
-
-            if (numTerminal == unplacedNeighbours.getAtomCount()) {
-                final Vector2d a = newVector(placedNeighbours.getAtom(0).getPoint2d(), atom.getPoint2d());
-                final Vector2d b = newVector(placedNeighbours.getAtom(1).getPoint2d(), atom.getPoint2d());
-                final double d1 = GeometryUtil.getAngle(a.x, a.y);
-                final double d2 = GeometryUtil.getAngle(b.x, b.y);
-                double sweep = a.angle(b);
-                if (sweep < Math.PI) {
-                    sweep = 2 * Math.PI - sweep;
-                }
-                startAngle = d2;
-                if (d1 > d2 && d1 - d2 < Math.PI || d2 - d1 >= Math.PI) {
-                    startAngle = d1;
-                }
-                sweep /= (1 + unplacedNeighbours.getAtomCount());
-                populatePolygonCorners(StreamSupport.stream(unplacedNeighbours.atoms().spliterator(), false)
-                                                    .collect(Collectors.toList()),
-                                       atom.getPoint2d(), startAngle, sweep, bondLength);
-
-                markPlaced(unplacedNeighbours);
-                return;
-            } else {
-                atom.removeProperty(AtomPlacer.MACROCYCLE_ATOM_HINT);
+        // simple case when we have only two neighbours, note we ignore the
+        // shared atoms center as this leads to odd results in macro cycles
+        if (placedNeighbours.getAtomCount() == 2) {
+            final Vector2d a = newVector(placedNeighbours.getAtom(0).getPoint2d(), atom.getPoint2d());
+            final Vector2d b = newVector(placedNeighbours.getAtom(1).getPoint2d(), atom.getPoint2d());
+            final double d1 = GeometryUtil.getAngle(a.x, a.y);
+            final double d2 = GeometryUtil.getAngle(b.x, b.y);
+            double sweep = a.angle(b);
+            if (sweep < Math.PI) {
+                sweep = 2 * Math.PI - sweep;
             }
+            startAngle = d2;
+            if (d1 > d2 && d1 - d2 < Math.PI || d2 - d1 >= Math.PI) {
+                startAngle = d1;
+            }
+            sweep /= (1 + unplacedNeighbours.getAtomCount());
+            populatePolygonCorners(StreamSupport.stream(unplacedNeighbours.atoms().spliterator(), false)
+                                                .collect(Collectors.toList()),
+                                   atom.getPoint2d(), startAngle, sweep, bondLength);
+
+            markPlaced(unplacedNeighbours);
+            return;
         }
 
         /*
@@ -317,26 +309,6 @@ public class AtomPlacer {
         //        }
         logger.debug("After check: distributePartners->startAngle: " + startAngle);
         populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, radius);
-    }
-
-    private boolean doAngleSnap(IAtom atom, IAtomContainer placedNeighbours) {
-        if (placedNeighbours.getAtomCount() != 2)
-            return false;
-        IBond b1 = molecule.getBond(atom, placedNeighbours.getAtom(0));
-        if (!b1.isInRing())
-            return false;
-        IBond b2 = molecule.getBond(atom, placedNeighbours.getAtom(1));
-        if (!b2.isInRing())
-            return false;
-
-        Point2d p1 = atom.getPoint2d();
-        Point2d p2 = placedNeighbours.getAtom(0).getPoint2d();
-        Point2d p3 = placedNeighbours.getAtom(1).getPoint2d();
-
-        Vector2d v1 = newVector(p2, p1);
-        Vector2d v2 = newVector(p3, p1);
-
-        return Math.abs(v2.angle(v1) - ANGLE_120) < 0.01;
     }
 
     /**

@@ -24,6 +24,7 @@
 package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,7 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
+import org.openscience.cdk.renderer.selection.AtomBondSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -41,6 +43,7 @@ import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -663,7 +666,7 @@ class MDLV3000WriterTest {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
         assertThat(sw.toString(), containsString("M  V30 BEGIN COLLECTION\n" +
-                                                 "M  V30 MDLV30/STEREL1 ATOMS=(1)\n" +
+                                                 "M  V30 MDLV30/STEREL1 ATOMS=(1 1)\n" +
                                                  "M  V30 END COLLECTION"));
     }
 
@@ -715,8 +718,8 @@ class MDLV3000WriterTest {
         }
         assertThat(sw.toString(), containsString("M  V30 COUNTS 11 11 0 0 0"));
         assertThat(sw.toString(), containsString("M  V30 BEGIN COLLECTION\n" +
-                                                 "M  V30 MDLV30/STEABS ATOMS=(4)\n" +
-                                                 "M  V30 MDLV30/STERAC1 ATOMS=(2)\n" +
+                                                 "M  V30 MDLV30/STEABS ATOMS=(1 4)\n" +
+                                                 "M  V30 MDLV30/STERAC1 ATOMS=(1 2)\n" +
                                                  "M  V30 END COLLECTION"));
     }
 
@@ -1458,4 +1461,23 @@ class MDLV3000WriterTest {
         assertThat(actual, is(MDLV3000Writer.MDLQueryProperty.RING));
     }
 
+
+    @Test
+    void testSelectionWrittenAsHILITE() throws Exception {
+        IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
+        AtomBondSelection selection = new AtomBondSelection();
+        selection.select(mol.getBond(1));
+        selection.select(mol.getAtom(1));
+        selection.select(mol.getAtom(2));
+        selection.select(mol.getAtom(3));
+        selection.select(mol.getAtom(4));
+        mol.setProperty(CDKConstants.SELECTION, selection);
+        StringWriter sw = new StringWriter();
+        try (MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        // note the order will change as it is a set
+        MatcherAssert.assertThat(sw.toString(), containsString("ATOMS=(4 "));
+        MatcherAssert.assertThat(sw.toString(), containsString("BONDS=(1 2)"));
+    }
 }

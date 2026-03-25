@@ -61,6 +61,12 @@ public class ElementGroup implements IRenderingElement, Iterable<IRenderingEleme
         }
     }
 
+    public void add(List<IRenderingElement> elements) {
+        for (IRenderingElement element : elements) {
+            add(element);
+        }
+    }
+
     /**
      * Visit the members of the group.
      *

@@ -1,9 +1,9 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk) [![build](https://github.com/cdk/cdk/actions/workflows/maven.yml/badge.svg)](https://github.com/cdk/cdk/actions/workflows/maven.yml) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=cdk&metric=bugs)](https://sonarcloud.io/summary/overall?id=cdk)
+[![Maven Central Version](https://img.shields.io/maven-central/v/org.openscience.cdk/cdk-bundle)](https://mvnrepository.com/artifact/org.openscience.cdk/cdk-bundle) [![build](https://github.com/cdk/cdk/actions/workflows/maven.yml/badge.svg)](https://github.com/cdk/cdk/actions/workflows/maven.yml) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=cdk&metric=bugs)](https://sonarcloud.io/summary/overall?id=cdk)
 
 
 # The Chemistry Development Kit (CDK)
  
-Copyright &copy; 1997-2025 The CDK Development Team
+Copyright &copy; 1997-2026 The CDK Development Team
 
 License: LGPL v2, see LICENSE.txt
 
@@ -38,8 +38,8 @@ You can also download a pre-built library JAR from [releases](https://github.com
 Include the main JAR on the Java classpath when compiling and running your code:
 
 ```bash
-$ javac -cp cdk-2.11.jar MyClass.java
-$ java -cp cdk-2.11.jar:. MyClass
+$ javac -cp cdk-2.12.jar MyClass.java
+$ java -cp cdk-2.12.jar:. MyClass
 ```
 
 If you are using Maven, you can use the **uber** ``cdk-bundle`` to grab 
@@ -49,7 +49,7 @@ everything, note it is much more efficient to use include the modules you need:
 <dependency>
   <artifactId>cdk-bundle</artifactId>
   <groupId>org.openscience.cdk</groupId>
-  <version>2.11</version>
+  <version>2.12</version>
 </dependency>
 ```
 

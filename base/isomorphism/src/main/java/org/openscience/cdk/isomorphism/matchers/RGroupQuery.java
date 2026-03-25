@@ -25,6 +25,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -91,7 +92,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
      * Rgroup definitions, each a list of possible substitutes for the
      * given R number.
      */
-    private Map<Integer, IRGroupList>        rGroupDefinitions;
+    private Map<Integer, IRGroupList>        rGroupDefinitions = Collections.emptyMap();
 
 
     public RGroupQuery(IChemObjectBuilder builder) {
@@ -145,11 +146,9 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
         Matcher matcher = validLabelPattern.matcher(Rxx);
         if (matcher.find()) {
             int groupNumber = Integer.parseInt(Rxx.substring(1));
-            if (groupNumber >= 1 && groupNumber <= 32) {
-                return true;
-            }
+            return groupNumber >= 0 && groupNumber <= 32;
         }
-        return false;
+        return Rxx.equals("R"); // R without a number is also OK
     }
 
     @Override
@@ -229,12 +228,10 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
         if (rGroupNumItr.hasNext()) {
             while (rGroupNumItr.hasNext()) {
                 int r = rGroupNumItr.next();
-                rGroupNumbers.add(r);
                 List<Integer> validOcc = rGroupDefinitions.get(r).matchOccurence(getRgroupQueryAtoms(r).size());
-                if (validOcc.size() == 0) {
-                    throw new CDKException("Occurrence '" + rGroupDefinitions.get(r).getOccurrence()
-                            + "' defined for Rgroup " + r + " results in no subsititute options for this R-group.");
-                }
+                if (validOcc.isEmpty())
+                    continue;
+                rGroupNumbers.add(r);
                 occurrences.add(validOcc);
                 occurIndexes.add(0);
             }

@@ -7,7 +7,7 @@
     <parent>
         <artifactId>cdk-storage</artifactId>
         <groupId>org.openscience.cdk</groupId>
-        <version>2.12-SNAPSHOT</version>
+        <version>2.13-SNAPSHOT</version>
     </parent>
 
     <artifactId>cdk-libiomd</artifactId>
@@ -87,13 +87,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-io</artifactId>
             <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-test</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
         </dependency>
     </dependencies>
 

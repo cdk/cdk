@@ -67,7 +67,7 @@ public abstract class AbstractLoggingToolTest extends CDKTestCase {
     @Test
     public void testDebug_ExceptionWithNullMessage() throws Exception {
         ILoggingTool logger = getLoggingTool();
-        Exception exc = new Exception((String) null);
+        Exception exc = new Exception();
         logger.debug(exc);
     }
 

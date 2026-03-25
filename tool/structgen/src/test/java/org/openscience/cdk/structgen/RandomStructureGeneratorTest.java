@@ -20,7 +20,6 @@ package org.openscience.cdk.structgen;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -31,7 +30,7 @@ import java.util.Vector;
 
 /**
  */
-class RandomStructureGeneratorTest extends CDKTestCase {
+class RandomStructureGeneratorTest {
 
     private final boolean debug      = false;
     private boolean        standAlone = false;

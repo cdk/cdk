@@ -30,9 +30,11 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +53,7 @@ import java.util.Set;
  * <p>A disconnected AtomContainer can be fragmented into connected
  * fragments by using code like:
  * <pre>
- *   MoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(disconnectedContainer);
+ *   IAtomContainerSet fragments = ConnectivityChecker.partitionIntoMolecules(disconnectedContainer);
  *   int fragmentCount = fragments.getAtomContainerCount();
  * </pre>
  *
@@ -76,19 +78,110 @@ public class ConnectivityChecker {
     }
 
     /**
-     * Partitions the atoms in an AtomContainer into covalently connected components.
+     * Partitions the atoms in an AtomContainer into covalently connected
+     * components. This function ignores and variable/multi attachment bonds
+     * and any explicit component grouping giving you strictly
+     * connected components in a graph-theoretic sense.
      *
-     * @param   container  The AtomContainer to be partitioned into connected components, i.e. molecules
-     * @return                 A MoleculeSet.
+     * @param   container  The AtomContainer to be partitioned into connected
+     *                     components, i.e. molecules
+     * @return             The set of molecules
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
      */
     public static IAtomContainerSet partitionIntoMolecules(IAtomContainer container) {
+        return partitionIntoMolecules(container, true, true);
+    }
+
+    private static void relabel(int[] components, int from, int to) {
+        if (from == to) return;
+        for (int i=0; i<components.length; i++) {
+            if (components[i] == from)
+                components[i] = to;
+        }
+    }
+
+    /**
+     * Partitions the atoms in an AtomContainer into covalently connected
+     * components. This function lets you specify if you should ignore
+     * variable/multi attachment bonds and any explicit component grouping.
+     * <p/>
+     * When both of these properties are ignored the splitting is considered
+     * <b>strict</b>. The table below summarises what the outputs are when
+     * using CXSMILES to specify variable attachment and component grouping.
+     * <p/>
+     * <table>
+     *     <tr><th>No. Strict Components</th><th>No. Loose Components</th><th>SMILES</th></tr>
+     *     <tr><td>2</td><td>2</td><td><pre>c1ccccc1.Cl</pre></td></tr>
+     *     <tr><td>2</td><td>1</td><td><pre>c1ccccc1.*Cl |m:6:0.1.2.3.4.5|</pre></td></tr>
+     *     <tr><td>4</td><td>2</td><td><pre>c1ccccc1.*Cl.n1ccccc1.*Br |m:6:0.1.2.3.4.5,14:8.9.10.11.12.13|</pre></td></tr>
+     *     <tr><td>2</td><td>1</td><td><pre>c1ccccc1[O-].[Na+]>> |f:0.1|</pre></td></tr>
+     *     <tr><td>5</td><td>2</td><td><pre>c1ccccc1[O-].[Na+]>[K+].[K+].[O-]C(=O)[O-]> |f:0.1,2.3.4|</pre></td></tr>
+     * </table>
+     *
+     * @param container  The AtomContainer to be partitioned into connected
+     *                   components, i.e. molecules
+     * @param ignoreMulticenterBonds ignore any positional/multi-attach bonds
+     *                               specified as Sgroups
+     * @param ignoreComponentGrouping ignore any explicit grouping specified by
+     *                                the group id stored in {@link CDKConstants#REACTION_GROUP}
+     *                                on atoms
+     * @return The set of molecules
+     *
+     * @cdk.dictref   blue-obelisk:graphPartitioning
+     */
+    public static IAtomContainerSet partitionIntoMolecules(IAtomContainer container,
+                                                           boolean ignoreMulticenterBonds,
+                                                           boolean ignoreComponentGrouping) {
         ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(container));
         if (cc.nComponents() == 1) {
             return singleton(container);
         }
-        return partitionIntoMolecules(container, cc.components());
+
+        int[] parts = cc.components();
+        if (!ignoreMulticenterBonds) {
+            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            if (sgroups != null) {
+                for (Sgroup sgroup : sgroups) {
+                    if (sgroup.getType() == SgroupType.ExtMulticenter) {
+                        if (sgroup.getBonds().isEmpty())
+                            continue;
+                        IBond bond = sgroup.getBonds().iterator().next();
+                        IAtom attach = null;
+                        if (sgroup.getAtoms().contains(bond.getBegin())) {
+                            attach = bond.getBegin();
+                        } else if (sgroup.getAtoms().contains(bond.getEnd())) {
+                            attach = bond.getEnd();
+                        }
+                        if (attach != null) {
+                            for (IAtom a : sgroup.getAtoms()) {
+                                relabel(parts,
+                                        parts[container.indexOf(attach)],
+                                        parts[container.indexOf(a)]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!ignoreComponentGrouping) {
+
+            int[] canonicalGroup = new int[cc.nComponents()+2];
+            for (IAtom atom : container.atoms()) {
+                Integer compId = atom.getProperty(CDKConstants.REACTION_GROUP);
+                if (compId == null)
+                    continue;
+                if (compId >= canonicalGroup.length)
+                    canonicalGroup = Arrays.copyOf(canonicalGroup, compId+1);
+                if (canonicalGroup[compId] == 0)
+                    canonicalGroup[compId] = parts[atom.getIndex()];
+                else
+                    relabel(parts, parts[atom.getIndex()], canonicalGroup[compId]);
+            }
+        }
+
+        return partitionIntoMolecules(container, parts);
     }
 
     private static IAtomContainerSet singleton(IAtomContainer container) {
@@ -222,7 +315,7 @@ public class ConnectivityChecker {
         // split Sgroups, only keep if all atoms/bond in the sgroup
         // are consistent and in the same container
         List<Sgroup> sgroups = SgroupManipulator.copy(container.getProperty(CDKConstants.CTAB_SGROUPS),
-                                                       new HashMap<>());
+                                                      new HashMap<>());
         if (sgroups != null) {
             Map<Sgroup,IAtomContainer> sgroupMap = new HashMap<>();
             for (Sgroup sgroup : sgroups) {
@@ -243,8 +336,10 @@ public class ConnectivityChecker {
         }
 
         // create our AtomContainerSet
-        for (int i = 1; i < containers.length; i++)
-            containerSet.addAtomContainer(containers[i]);
+        for (int i = 1; i < containers.length; i++) {
+            if (!containers[i].isEmpty())
+                containerSet.addAtomContainer(containers[i]);
+        }
         return containerSet;
     }
 }

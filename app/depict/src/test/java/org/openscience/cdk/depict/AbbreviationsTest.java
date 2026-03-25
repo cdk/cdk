@@ -27,6 +27,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -885,6 +886,18 @@ class AbbreviationsTest {
         IAtomContainer mol = smi(smi);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(0));
+    }
+
+    @Test
+    void testIsotopesInAbbreviation() throws Exception {
+        String smi = "c1ccccc1OC([2H])([2H])[2H]";
+        Abbreviations factory = new Abbreviations();
+        factory.add("*OC([2H])([2H])[2H] OCD3");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        IAtomContainer mol = smi(smi);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
     }
 
     @Test

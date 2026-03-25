@@ -83,37 +83,36 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *  A 2D point specifying the location of this atom in a 2D coordinate
      *  space.
      */
-    protected Point2d         point2d           = (Point2d) CDKConstants.UNSET;
+    protected Point2d         point2d           = null;
     /**
      *  A 3 point specifying the location of this atom in a 3D coordinate
      *  space.
      */
-    protected Point3d         point3d           = (Point3d) CDKConstants.UNSET;
+    protected Point3d         point3d           = null;
     /**
      *  A 3 point specifying the location of this atom in a crystal unit cell.
      */
-    protected Point3d         fractionalPoint3d = (Point3d) CDKConstants.UNSET;
+    protected Point3d         fractionalPoint3d = null;
     /**
      *  The number of implicitly bound hydrogen atoms for this atom.
      */
-    protected Integer         hydrogenCount     = (Integer) CDKConstants.UNSET;
+    protected Integer         hydrogenCount     = null;
     /**
      *  A stereo parity descriptor for the stereochemistry of this atom.
      */
-    protected Integer         stereoParity      = (Integer) CDKConstants.UNSET;
+    protected Integer         stereoParity      = null;
     /**
      *  The partial charge of the atom.
      *
      * The default value is {@link CDKConstants#UNSET} and serves to provide a check whether the charge has been
      * set or not
      */
-    protected Double          charge            = (Double) CDKConstants.UNSET;
+    protected Double          charge            = null;
 
     /**
      * Constructs an completely unset Atom.
      */
     public Atom() {
-        super((String) null);
     }
 
     /**
@@ -143,7 +142,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @param fchg formal charge
      */
     public Atom(int elem, int hcnt, int fchg) {
-        super((String)null);
         setAtomicNumber(elem);
         setSymbol(Elements.ofNumber(elem).symbol());
         setImplicitHydrogenCount(hcnt);
@@ -172,7 +170,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @param symbol string with the element symbol
      */
     public Atom(String symbol) {
-        super((String)null);
         if (!parseAtomSymbol(this, symbol))
             throw new IllegalArgumentException("Cannot pass atom symbol: " + symbol);
     }
