@@ -325,10 +325,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         molecule.addAtom(new Atom("C"));
         molecule.addBond(new Bond(molecule.getAtom(0), molecule.getAtom(1), Order.QUADRUPLE));
         MDLV2000Writer mdlWriter = new MDLV2000Writer(new StringWriter());
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    mdlWriter.write(molecule);
-                                });
+        Assertions.assertThrows(CDKException.class, () -> mdlWriter.write(molecule));
         mdlWriter.close();
     }
 
@@ -811,7 +808,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    void aromaticBondTypes() throws Exception {
+    void aromaticBondTypes() {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -1138,5 +1135,124 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
         assertThat(sw.toString(), containsString("  7  7  0  0  1  0"));
+    }
+
+    @Test
+    void reactingCenterStatus_validValueMinusOne_test() throws CDKException {
+        // arrange
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atomOne = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomOne.setSymbol("C");
+        IAtom atomTwo = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomTwo.setSymbol("C");
+        molecule.addAtom(atomOne);
+        molecule.addAtom(atomTwo);
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond();
+        bond.setAtoms(new IAtom[] {atomOne, atomTwo});
+        bond.setOrder(IBond.Order.SINGLE);
+        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, CDKConstants.REACTING_CENTER_STATUS_NOT_CENTER);
+        molecule.addBond(bond);
+        String expected =
+                "\n" +
+                "  CDK     0325261633\n" +
+                "\n" +
+                "  2  1  0  0  0  0  0  0  0  0999 V2000\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0 -1\n" +
+                "M  END";
+        StringWriter writer = new StringWriter();
+
+        // act
+        MDLV2000Writer mdlv2000Writer = new MDLV2000Writer(writer);
+        mdlv2000Writer.write(molecule);
+
+        // assert
+        assertMolfile(writer.toString(), expected);
+    }
+
+    @Test
+    void reactingCenterStatus_validValueOne_test() throws CDKException {
+        // arrange
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atomOne = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomOne.setSymbol("C");
+        IAtom atomTwo = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomTwo.setSymbol("C");
+        molecule.addAtom(atomOne);
+        molecule.addAtom(atomTwo);
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond();
+        bond.setAtoms(new IAtom[] {atomOne, atomTwo});
+        bond.setOrder(IBond.Order.SINGLE);
+        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, CDKConstants.REACTING_CENTER_STATUS_CENTER);
+        molecule.addBond(bond);
+        String expected =
+                "\n" +
+                "  CDK     0325261633\n" +
+                "\n" +
+                "  2  1  0  0  0  0  0  0  0  0999 V2000\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  1\n" +
+                "M  END";
+        StringWriter writer = new StringWriter();
+
+        // act
+        MDLV2000Writer mdlv2000Writer = new MDLV2000Writer(writer);
+        mdlv2000Writer.write(molecule);
+
+        // assert
+        assertMolfile(writer.toString(), expected);
+    }
+
+    @Test
+    void reactingCenterStatus_invalidValueSix_test() throws CDKException {
+        // arrange
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atomOne = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomOne.setSymbol("C");
+        IAtom atomTwo = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomTwo.setSymbol("C");
+        molecule.addAtom(atomOne);
+        molecule.addAtom(atomTwo);
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond();
+        bond.setAtoms(new IAtom[] {atomOne, atomTwo});
+        bond.setOrder(IBond.Order.SINGLE);
+        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, 6);
+        molecule.addBond(bond);
+        String expected =
+                "\n" +
+                "  CDK     0325261633\n" +
+                "\n" +
+                "  2  1  0  0  0  0  0  0  0  0999 V2000\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  0\n" +
+                "M  END";
+        StringWriter writer = new StringWriter();
+
+        // act
+        MDLV2000Writer mdlv2000Writer = new MDLV2000Writer(writer);
+        mdlv2000Writer.write(molecule);
+
+        // assert
+        assertMolfile(writer.toString(), expected);
+    }
+
+    private void assertMolfile(String actual, String expected) {
+        String[] actualLines = actual.split("\\R");
+        String[] expectedLines = expected.split("\\R");
+
+        assertThat(actualLines.length, is(expectedLines.length));
+        for (int index = 0; index < actualLines.length; index++) {
+            if (index == 1) {
+                // IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR
+                // ignore timestamp
+                assertThat(actualLines[index].substring(0, 10), is(expectedLines[index].substring(0, 10)));
+                assertThat(actualLines[index].substring(20), is(expectedLines[index].substring(20)));
+            } else {
+                assertThat(actualLines[index], is(expectedLines[index]));
+            }
+        }
     }
 }

@@ -328,7 +328,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             if (line.startsWith(SDF_RECORD_DELIMITER))
                 return molecule;
 
-            if (line.length() > 0) {
+            if (!line.isEmpty()) {
                 title = line;
             }
             line = input.readLine();
@@ -336,7 +336,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             program = line;
             line = input.readLine();
             linecount++;
-            if (line.length() > 0) {
+            if (!line.isEmpty()) {
                 remark = line;
             }
 
@@ -345,7 +345,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             // if the line is empty we have a problem - either a malformed
             // molecule entry or just extra new lines at the end of the file
-            if (line.length() == 0) {
+            if (line.isEmpty()) {
                 handleError("Unexpected empty line", linecount, 0, 0);
                 // read till the next $$$$ or EOF
                 while (true) {
@@ -567,7 +567,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     private boolean is3Dfile(String program) {
-        return program.length() >= 22 && program.substring(20, 22).equals("3D");
+        return program.length() >= 22 && program.startsWith("3D", 20);
     }
 
     /**
@@ -821,10 +821,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         int length = length(line);
         if (length > 21) length = 21;
 
-        int u, v, type, stereo = 0;
+        int u, v, type, stereo = 0, reactingCenterStatus = 0;
 
         switch (length) {
-            case 21: // ccc: reaction centre status
+            case 21: // ccc: reacting center status
+                reactingCenterStatus = readMolfileInt(line, 18);
             case 18: // rrr: bond topology
             case 15: // xxx: not used
             case 12: // sss: stereo
@@ -889,7 +890,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
 
         if (isQuery && bond.getClass() != QueryBond.class) {
-            IBond.Order order = bond.getOrder();
             Expr expr;
             if (bond.isAromatic()) {
                 expr = new Expr(Expr.Type.IS_AROMATIC);
@@ -898,6 +898,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                                 bond.getOrder().numeric());
             }
             bond = new QueryBond(atoms[u], atoms[v], expr);
+        }
+
+        if (reactingCenterStatus != 0) {
+            if (CDKConstants.REACTING_CENTER_STATUS_VALID_VALUES.contains(reactingCenterStatus)) {
+                bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, reactingCenterStatus);
+            } else {
+                logger.warn("Ignoring invalid value of reacting center status: " + reactingCenterStatus);
+            }
         }
 
         return bond;
@@ -988,7 +996,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     boolean negate = line.charAt(3) == 'T' ||
                             line.charAt(4) == 'T';
                     Expr expr = new Expr(Expr.Type.TRUE);
-                    StringBuilder sb = new StringBuilder();
                     for (int i = 11; i < line.length(); i+=4) {
                         int atomicNumber = readUInt(line, i, 3);
                         expr.or(new Expr(Expr.Type.ELEMENT, atomicNumber));
@@ -2241,7 +2248,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 st.nextToken();
                 //Process the R group numbers as defined in RGP line.
                 while (st.hasMoreTokens()) {
-                    Integer position = Integer.valueOf(st.nextToken());
+                    int position = Integer.parseInt(st.nextToken());
                     int rNumber = Integer.parseInt(st.nextToken());
                     // the container may have already had atoms before the new atoms were read
                     int index = container.getAtomCount() - nAtoms + position - 1;
@@ -2252,7 +2259,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
             }
             if (line.startsWith("V  ")) {
-                Integer atomNumber = Integer.valueOf(line.substring(3, 6).trim());
+                int atomNumber = Integer.parseInt(line.substring(3, 6).trim());
                 IAtom atomWithComment = container.getAtom(atomNumber - 1);
                 atomWithComment.setProperty(CDKConstants.COMMENT, line.substring(7));
             }

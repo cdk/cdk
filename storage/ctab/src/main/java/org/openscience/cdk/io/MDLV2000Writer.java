@@ -577,6 +577,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // write Bond block
         for (IBond bond : container.bonds()) {
             line.setLength(0);
+
+            // write first and second atom number 111222
+            // 111222tttsssxxxrrrccc
+            // ||||||
             if (bond.getAtomCount() != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {
@@ -591,8 +595,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     line.append(formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3));
                 }
 
+                // write bond type ttt
+                // 111222tttsssxxxrrrccc
+                //       |||
                 int bondType = 0;
-
                 if (bond instanceof QueryBond) {
                     QueryBond qbond = ((QueryBond)bond);
                     Expr e = qbond.getExpression();
@@ -657,8 +663,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
                 if (bondType == 0)
                     throw new CDKException("Bond at idx=" + container.indexOf(bond) + " is not supported by Molfile, bond=" + bond.getOrder());
-
                 line.append(formatMDLInt(bondType, 3));
+
+                // write bond stereo sss
+                // 111222tttsssxxxrrrccc
+                //          |||
                 line.append("  ");
                 switch (bond.getDisplay()) {
                     case WedgeBegin:
@@ -680,8 +689,21 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     default:
                         line.append("0");
                 }
-                if (writeTrailingZeros.isSet())
+
+                // write reacting center status ccc
+                // 111222tttsssxxxrrrccc
+                //                   |||
+                if (bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class) != null && bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class) != 0) {
+                    if (CDKConstants.REACTING_CENTER_STATUS_VALID_VALUES.contains(bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class))) {
+                        line.append("  0  0");
+                        line.append(formatMDLInt(bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class), 3));
+                    } else {
+                        logger.warn("Bond "+ bond + "with invalid reacting center status value: " + bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class));
+                        line.append("  0  0  0");
+                    }
+                } else if (writeTrailingZeros.isSet()) {
                     line.append("  0  0  0");
+                }
                 line.append('\n');
                 writer.write(line.toString());
             }
@@ -692,7 +714,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             IAtom atom = container.getAtom(i);
             if (atom.getProperty(CDKConstants.COMMENT) != null
                 && atom.getProperty(CDKConstants.COMMENT) instanceof String
-                && !((String) atom.getProperty(CDKConstants.COMMENT)).trim().equals("")) {
+                && !((String) atom.getProperty(CDKConstants.COMMENT)).trim().isEmpty()) {
                 writer.write("V  ");
                 writer.write(formatMDLInt(i + 1, 3));
                 writer.write(" ");
@@ -1296,7 +1318,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(' ');
                         writer.write(name);
                         writer.write(pad, 0, 30-name.length());
-                        if (fmt != null && fmt.length()>0 &&
+                        if (fmt != null && !fmt.isEmpty() &&
                             (fmt.charAt(0) == 'N' ||
                              fmt.charAt(0) == 'F' ||
                              fmt.charAt(0) == 'T')) {

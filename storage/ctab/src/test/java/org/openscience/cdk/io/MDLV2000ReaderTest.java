@@ -67,7 +67,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -898,7 +897,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         IAtom oxygen = result.getAtom(0);
         Assertions.assertEquals(IElement.O, (int) oxygen.getAtomicNumber());
-        Assertions.assertEquals(oxygen.getProperty(CDKConstants.COMMENT), "Oxygen comment");
+        Assertions.assertEquals("Oxygen comment", oxygen.getProperty(CDKConstants.COMMENT));
     }
 
     @Test
@@ -1054,7 +1053,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        Assertions.assertTrue(molecule.getAtom(4) instanceof IPseudoAtom);
+        Assertions.assertInstanceOf(IPseudoAtom.class, molecule.getAtom(4));
         Assertions.assertEquals("R", molecule.getAtom(4).getSymbol());
         IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(4);
         Assertions.assertEquals("Gln", pa.getLabel());
@@ -1285,25 +1284,24 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     void readNonStructuralData() throws Exception {
-        StringBuilder sb = new StringBuilder();
-        sb.append("> 29 <DENSITY>").append('\n');
-        sb.append("0.9132 - 20.0").append('\n');
-        sb.append('\n');
-        sb.append("> 29 <BOILING.POINT>").append('\n');
-        sb.append("63.0 (737 MM)").append('\n');
-        sb.append("79.0 (42 MM)").append('\n');
-        sb.append('\n');
-        sb.append("> 29 <ALTERNATE.NAMES>").append('\n');
-        sb.append("SYLVAN").append('\n');
-        sb.append('\n');
-        sb.append("> 29 <DATE>").append('\n');
-        sb.append("09-23-1980").append('\n');
-        sb.append('\n');
-        sb.append("> 29 <CRC.NUMBER>").append('\n');
-        sb.append("F-0213").append('\n');
-        sb.append('\n');
+        String sb = "> 29 <DENSITY>" + '\n' +
+                "0.9132 - 20.0" + '\n' +
+                '\n' +
+                "> 29 <BOILING.POINT>" + '\n' +
+                "63.0 (737 MM)" + '\n' +
+                "79.0 (42 MM)" + '\n' +
+                '\n' +
+                "> 29 <ALTERNATE.NAMES>" + '\n' +
+                "SYLVAN" + '\n' +
+                '\n' +
+                "> 29 <DATE>" + '\n' +
+                "09-23-1980" + '\n' +
+                '\n' +
+                "> 29 <CRC.NUMBER>" + '\n' +
+                "F-0213" + '\n' +
+                '\n';
 
-        BufferedReader input = new BufferedReader(new StringReader(sb.toString()));
+        BufferedReader input = new BufferedReader(new StringReader(sb));
         IAtomContainer mock = mock(IAtomContainer.class);
 
         MDLV2000Reader.readNonStructuralData(input, mock);
@@ -1318,18 +1316,17 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void readNonStructuralData_emtpy() throws Exception {
         // a single space is read as a property
-        StringBuilder sb = new StringBuilder();
-        sb.append("> <ONE_SPACE>").append('\n');
-        sb.append(" ").append('\n');
-        sb.append('\n');
-        // empty entries are read as non-null - so m.getProperty() does not
-        // return null
-        sb.append("> <EMTPY_LINES>").append('\n');
-        sb.append('\n');
-        sb.append('\n');
-        sb.append('\n');
+        String sb = "> <ONE_SPACE>" + '\n' +
+                " " + '\n' +
+                '\n' +
+                // empty entries are read as non-null - so m.getProperty() does not
+                // return null
+                "> <EMTPY_LINES>" + '\n' +
+                '\n' +
+                '\n' +
+                '\n';
 
-        BufferedReader input = new BufferedReader(new StringReader(sb.toString()));
+        BufferedReader input = new BufferedReader(new StringReader(sb));
         IAtomContainer mock = mock(IAtomContainer.class);
 
         MDLV2000Reader.readNonStructuralData(input, mock);
@@ -1340,14 +1337,13 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     void readNonStructuralData_wrap() throws Exception {
-        StringBuilder sb = new StringBuilder();
-        sb.append("> <LONG_PROPERTY>").append('\n');
-        sb.append("This is a long property which should be wrapped when stored as field in an SDF D");
-        sb.append('\n');
-        sb.append("ata entry");
-        sb.append('\n');
+        String sb = "> <LONG_PROPERTY>" + '\n' +
+                "This is a long property which should be wrapped when stored as field in an SDF D" +
+                '\n' +
+                "ata entry" +
+                '\n';
 
-        BufferedReader input = new BufferedReader(new StringReader(sb.toString()));
+        BufferedReader input = new BufferedReader(new StringReader(sb));
         IAtomContainer mock = mock(IAtomContainer.class);
 
         MDLV2000Reader.readNonStructuralData(input, mock);
@@ -1463,10 +1459,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         String filename = "chemsketch-all-labelled.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-                                });
+        Assertions.assertThrows(CDKException.class, () -> reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer()));
     }
 
     /**
@@ -2239,5 +2232,56 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("chebi_48572.sdf"))) {
             mdlr.read(bldr.newAtomContainer());
         }
+    }
+
+    @Test
+    void reactingCenterStatusValidValueMinusOneTest() throws CDKException, IOException {
+        // arrange
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer actual;
+        // act
+        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueMinusOne.mol"))) {
+            actual = mdlv2000Reader.read(builder.newAtomContainer());
+        }
+        // assert
+        org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isEqualTo(-1);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
+    }
+
+    @Test
+    void reactingCenterStatusValidValueOneTest() throws CDKException, IOException {
+        // arrange
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer actual;
+        // act
+        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueOne.mol"))) {
+            actual = mdlv2000Reader.read(builder.newAtomContainer());
+        }
+        // assert
+        org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isEqualTo(1);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
+    }
+
+    @Test
+    void reactingCenterStatusInvalidValueSevenTest() throws CDKException, IOException {
+        // arrange
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer actual;
+        // act
+        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueSeven.mol"))) {
+            actual = mdlv2000Reader.read(builder.newAtomContainer());
+        }
+        // assert
+        org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
     }
 }

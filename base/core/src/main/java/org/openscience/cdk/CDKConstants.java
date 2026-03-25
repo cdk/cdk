@@ -26,6 +26,10 @@ package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.IBond;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 /**
  * An interface providing predefined values for a number of
  * constants used throughout the CDK. Classes using these constants should
@@ -46,24 +50,28 @@ public class CDKConstants {
      *
      * @deprecated Use {@link IBond.Order} SINGLE directly.
      */
+    @Deprecated
     public final static IBond.Order BONDORDER_SINGLE             = IBond.Order.SINGLE;
 
     /** A bond of degree 2.0.
      *
      * @deprecated Use {@link IBond.Order} DOUBLE directly.
      */
+    @Deprecated
     public final static IBond.Order BONDORDER_DOUBLE             = IBond.Order.DOUBLE;
 
     /** A bond of degree 3.0.
      *
      * @deprecated Use {@link IBond.Order} TRIPLE directly.
      */
+    @Deprecated
     public final static IBond.Order BONDORDER_TRIPLE             = IBond.Order.TRIPLE;
 
     /** A bond of degree 4.0.
     *
     * @deprecated Use {@link IBond.Order} QUADRUPLE directly.
     */
+    @Deprecated
     public final static IBond.Order BONDORDER_QUADRUPLE          = IBond.Order.QUADRUPLE;
 
     /** A positive atom parity. */
@@ -517,4 +525,26 @@ public class CDKConstants {
     /** Used as property key for indicating the number of single electrons on the atom type. */
     public static final String      SINGLE_ELECTRON_COUNT        = "cdk:Single Electron Count";
 
+    /* ***************************************
+     * Predefined property names for * Bonds *
+     * ***************************************
+     */
+
+    /**
+     * Used as a property key for indicating the reacting center status of a bond as defined by the CTFile format.
+     */
+    public static final String REACTING_CENTER_STATUS = "cdk:Reacting Center Status";
+
+    /* ***************************************************************
+     * Values for Reacting Center Status as defined by CTFile format *
+     * ***************************************************************
+     */
+
+    public static final int REACTING_CENTER_STATUS_UNMARKED             = 0x0000;
+    public static final int REACTING_CENTER_STATUS_NOT_CENTER           = -0x0001;
+    public static final int REACTING_CENTER_STATUS_CENTER               = 0x0001;
+    public static final int REACTING_CENTER_STATUS_NO_CHANGE            = 0x0002;
+    public static final int REACTING_CENTER_STATUS_BOND_MADE_BROKEN     = 0x0004;
+    public static final int REACTING_CENTER_STATUS_BOND_ORDER_CHANGES   = 0x0008;
+    public static final Set<Integer> REACTING_CENTER_STATUS_VALID_VALUES = new LinkedHashSet<>(Arrays.asList(-1, 0, 1, 2, 4, 5, 8, 9, 12, 13));
 }
