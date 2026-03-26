@@ -216,7 +216,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      *
      * @param object The object that subclasses IChemObject
      * @return The IChemObject read
-     * @throws CDKException
+     * @throws CDKException thrown if provided object is not supported
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -260,8 +260,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             while ((m = readAtomContainer(builder.newInstance(IAtomContainer.class))) != null) {
                 sequence.addChemModel(newModel(m));
             }
-        } catch (CDKException e) {
-            throw e;
+        } catch (CDKException exception) {
+            throw exception;
         } catch (IllegalArgumentException exception) {
             String error = "Error while parsing SDF";
             logger.error(error);
@@ -901,10 +901,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
 
         if (reactingCenterStatus != 0) {
-            if (CDKConstants.REACTING_CENTER_STATUS_VALID_VALUES.contains(reactingCenterStatus)) {
+            try {
+                MDLReactingCenterStatus mdlReactingCenterStatus = MDLReactingCenterStatus.fromValue(reactingCenterStatus);
                 bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, reactingCenterStatus);
-            } else {
-                logger.warn("Ignoring invalid value of reacting center status: " + reactingCenterStatus);
+            }
+            catch(IllegalArgumentException exception) {
+                logger.warn("Encountered issue with reading reacting center status: " + exception.getMessage());
             }
         }
 
@@ -1505,7 +1507,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     /**
-     * Convert an MDL V2000 stereo value to the CDK {@link IBond.Stereo}. The
+     * Convert an MDL V2000 stereo value to the CDK {@link IBond.Display}. The
      * method should only be invoked for single/double bonds. If strict mode is
      * enabled irrational bond stereo/types cause errors (e.g. up double bond).
      *
