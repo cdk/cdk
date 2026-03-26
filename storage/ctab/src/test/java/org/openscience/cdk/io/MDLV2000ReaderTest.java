@@ -108,11 +108,12 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void testAccepts() {
-        MDLV2000Reader reader = new MDLV2000Reader();
-        Assertions.assertTrue(reader.accepts(ChemFile.class));
-        Assertions.assertTrue(reader.accepts(ChemModel.class));
-        Assertions.assertTrue(reader.accepts(IAtomContainer.class));
+    void testAccepts() throws IOException {
+        try (MDLV2000Reader reader = new MDLV2000Reader()) {
+            Assertions.assertTrue(reader.accepts(ChemFile.class));
+            Assertions.assertTrue(reader.accepts(ChemModel.class));
+            Assertions.assertTrue(reader.accepts(IAtomContainer.class));
+        }
     }
 
     /**
@@ -2246,9 +2247,9 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         // assert
         org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
         org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
-        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
-        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isEqualTo(-1);
-        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isEqualTo(MDLReactingCenterStatus.NOT_REACTING_CENTER);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
     }
 
     @Test
@@ -2263,9 +2264,9 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         // assert
         org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
         org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
-        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
-        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isEqualTo(1);
-        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isEqualTo(MDLReactingCenterStatus.GENERIC_REACTING_CENTER);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
     }
 
     @Test
@@ -2280,8 +2281,8 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         // assert
         org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
         org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
-        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
-        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
-        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, Integer.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
     }
 }
