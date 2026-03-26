@@ -2,6 +2,9 @@ package org.openscience.cdk.io;
 
 import java.util.Arrays;
 
+/**
+ * Represents the status of a reacting center in an MDL reaction.
+ */
 public enum MDLReactingCenterStatus {
     NOT_REACTING_CENTER(-1),
     UNMARKED(0),
@@ -20,10 +23,20 @@ public enum MDLReactingCenterStatus {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the enum.
+     * @return the value
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * Returns the enum value corresponding to the given value.
+     * @param value the value
+     * @return the enum value
+     * @throws IllegalArgumentException if the value is not valid
+     */
     public static MDLReactingCenterStatus fromValue(int value) {
         return Arrays.stream(values())
                 .filter(status -> status.getValue() == value)
