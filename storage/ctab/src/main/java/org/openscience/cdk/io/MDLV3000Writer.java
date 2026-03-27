@@ -527,6 +527,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                     break;
             }
 
+            if (bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class) != null) {
+                writer.write(" RXCTR=").write(bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class).getValue());
+            }
+
             if (queryProperty != MDLQueryProperty.getDefaultValue()) {
                 writer.write(" TOPO=").write(queryProperty.getValue());
             }
@@ -549,11 +553,11 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * for implicit hydrogens. Old applications (Symyx Draw) seem to push any
      * hydrogen to (implied) the last position but newer applications
      * (Accelrys/BioVia Draw) only do so for implicit hydrogens (makes more sense).
-     * 
+     * <p>
      * To avoid the ambiguity for those who read 0D stereo (bad anyways) we
      * actually do push all hydrogens atoms to the back of the atom list giving
      * them the highest value (4) when writing parity values.
-     *
+     * </p>
      * @param mol       molecule
      * @param atomToIdx mapping that will be filled with the output index
      * @return the output order of atoms

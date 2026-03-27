@@ -29,19 +29,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.listener.PropertiesListener;
-import org.openscience.cdk.renderer.selection.AtomBondSelection;
-import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -62,9 +52,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 
@@ -327,10 +315,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         molecule.addAtom(new Atom("C"));
         molecule.addBond(new Bond(molecule.getAtom(0), molecule.getAtom(1), Order.QUADRUPLE));
         MDLV2000Writer mdlWriter = new MDLV2000Writer(new StringWriter());
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    mdlWriter.write(molecule);
-                                });
+        Assertions.assertThrows(CDKException.class, () -> mdlWriter.write(molecule));
         mdlWriter.close();
     }
 
@@ -813,7 +798,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    void aromaticBondTypes() throws Exception {
+    void aromaticBondTypes() {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -1140,5 +1125,125 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
         assertThat(sw.toString(), containsString("  7  7  0  0  1  0"));
+    }
+
+    @Test
+    void reactingCenterStatus_validValueMinusOne_test() throws CDKException {
+        // arrange
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atomOne = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomOne.setSymbol("C");
+        IAtom atomTwo = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomTwo.setSymbol("C");
+        molecule.addAtom(atomOne);
+        molecule.addAtom(atomTwo);
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond();
+        bond.setAtoms(new IAtom[] {atomOne, atomTwo});
+        bond.setOrder(IBond.Order.SINGLE);
+        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.NOT_REACTING_CENTER);
+        molecule.addBond(bond);
+        String expected =
+                "\n" +
+                "  CDK     0325261633\n" +
+                "\n" +
+                "  2  1  0  0  0  0  0  0  0  0999 V2000\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0 -1\n" +
+                "M  END";
+        StringWriter writer = new StringWriter();
+
+        // act
+        MDLV2000Writer mdlv2000Writer = new MDLV2000Writer(writer);
+        mdlv2000Writer.write(molecule);
+
+        // assert
+        assertMolfile(writer.toString(), expected);
+    }
+
+    @Test
+    void reactingCenterStatus_validValueOne_test() throws CDKException {
+        // arrange
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atomOne = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomOne.setSymbol("C");
+        IAtom atomTwo = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomTwo.setSymbol("C");
+        molecule.addAtom(atomOne);
+        molecule.addAtom(atomTwo);
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond();
+        bond.setAtoms(new IAtom[] {atomOne, atomTwo});
+        bond.setOrder(IBond.Order.SINGLE);
+        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.GENERIC_REACTING_CENTER);
+        molecule.addBond(bond);
+        String expected =
+                "\n" +
+                "  CDK     0325261633\n" +
+                "\n" +
+                "  2  1  0  0  0  0  0  0  0  0999 V2000\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  1\n" +
+                "M  END";
+        StringWriter writer = new StringWriter();
+
+        // act
+        MDLV2000Writer mdlv2000Writer = new MDLV2000Writer(writer);
+        mdlv2000Writer.write(molecule);
+
+        // assert
+        assertMolfile(writer.toString(), expected);
+    }
+
+    @Test
+    void reactingCenterStatus_validValueThirteen_test() throws CDKException {
+        // arrange
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atomOne = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomOne.setSymbol("C");
+        IAtom atomTwo = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomTwo.setSymbol("C");
+        molecule.addAtom(atomOne);
+        molecule.addAtom(atomTwo);
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond();
+        bond.setAtoms(new IAtom[] {atomOne, atomTwo});
+        bond.setOrder(IBond.Order.SINGLE);
+        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.GENERIC_REACTING_CENTER_AND_BOND_MADE_OR_BROKEN_AND_BOND_ORDER_CHANGES);
+        molecule.addBond(bond);
+        String expected =
+                "\n" +
+                "  CDK     0325261633\n" +
+                "\n" +
+                "  2  1  0  0  0  0  0  0  0  0999 V2000\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0 13\n" +
+                "M  END";
+        StringWriter writer = new StringWriter();
+
+        // act
+        MDLV2000Writer mdlv2000Writer = new MDLV2000Writer(writer);
+        mdlv2000Writer.write(molecule);
+
+        // assert
+        assertMolfile(writer.toString(), expected);
+    }
+
+    private void assertMolfile(String actual, String expected) {
+        String[] actualLines = actual.split("\\R");
+        String[] expectedLines = expected.split("\\R");
+
+        assertThat(actualLines.length, is(expectedLines.length));
+        for (int index = 0; index < actualLines.length; index++) {
+            if (index == 1) {
+                // ignore timestamp in comparison
+                // IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR
+                //           ||||||||||
+                assertThat(actualLines[index].substring(0, 10), is(expectedLines[index].substring(0, 10)));
+                assertThat(actualLines[index].substring(20), is(expectedLines[index].substring(20)));
+            } else {
+                assertThat(actualLines[index], is(expectedLines[index]));
+            }
+        }
     }
 }

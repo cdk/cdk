@@ -46,24 +46,28 @@ public class CDKConstants {
      *
      * @deprecated Use {@link IBond.Order} SINGLE directly.
      */
+    @Deprecated
     public final static IBond.Order BONDORDER_SINGLE             = IBond.Order.SINGLE;
 
     /** A bond of degree 2.0.
      *
      * @deprecated Use {@link IBond.Order} DOUBLE directly.
      */
+    @Deprecated
     public final static IBond.Order BONDORDER_DOUBLE             = IBond.Order.DOUBLE;
 
     /** A bond of degree 3.0.
      *
      * @deprecated Use {@link IBond.Order} TRIPLE directly.
      */
+    @Deprecated
     public final static IBond.Order BONDORDER_TRIPLE             = IBond.Order.TRIPLE;
 
     /** A bond of degree 4.0.
     *
     * @deprecated Use {@link IBond.Order} QUADRUPLE directly.
     */
+    @Deprecated
     public final static IBond.Order BONDORDER_QUADRUPLE          = IBond.Order.QUADRUPLE;
 
     /** A positive atom parity. */
@@ -531,4 +535,13 @@ public class CDKConstants {
     /** Used as property key for indicating the number of single electrons on the atom type. */
     public static final String      SINGLE_ELECTRON_COUNT        = "cdk:Single Electron Count";
 
+    /* ***************************************
+     * Predefined property names for * Bonds *
+     * ***************************************
+     */
+
+    /**
+     * Used as a property key for indicating the reacting center status of a bond as defined by the CTFile format.
+     */
+    public static final String REACTING_CENTER_STATUS = "cdk:ReactingCenterStatus";
 }
