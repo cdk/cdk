@@ -462,7 +462,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         IAtom atom = mol.getAtom(0);
-        Assertions.assertTrue(atom instanceof IPseudoAtom);
+        Assertions.assertInstanceOf(IPseudoAtom.class, atom);
         Assertions.assertEquals("R\\1", ((IPseudoAtom) atom).getLabel());
     }
 
@@ -623,10 +623,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertFalse((containersList.get(0)).getAtom(2) instanceof IPseudoAtom);
     }
 
-    /**
-     *
-     * @throws Exception
-     */
     @Test
     void testReadRadical() throws Exception {
         String filename = "332727182.radical.mol";
@@ -780,13 +776,13 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 rGroup = (IPseudoAtom) bond.getEnd();
             }
             if (partner.getAtomicNumber() == IElement.N) {
-                Assertions.assertEquals(rGroup.getLabel(), "R4");
+                Assertions.assertEquals("R4", rGroup.getLabel());
             } else if (partner.getAtomicNumber() == IElement.P) {
-                Assertions.assertEquals(rGroup.getLabel(), "R1");
+                Assertions.assertEquals("R1", rGroup.getLabel());
             } else if (partner.getAtomicNumber() == IElement.As) {
-                Assertions.assertEquals(rGroup.getLabel(), "R4");
+                Assertions.assertEquals("R4", rGroup.getLabel());
             } else if (partner.getAtomicNumber() == IElement.Si) {
-                Assertions.assertEquals(rGroup.getLabel(), "R");
+                Assertions.assertEquals("R", rGroup.getLabel());
             }
         }
     }
@@ -813,13 +809,13 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 rGroup = (IPseudoAtom) bond.getEnd();
 
             if (bond.getOrder() == IBond.Order.DOUBLE) {
-                Assertions.assertEquals(rGroup.getLabel(), "R32");
+                Assertions.assertEquals("R32", rGroup.getLabel());
             } else if (bond.getDisplay() == IBond.Display.Down) {
-                Assertions.assertEquals(rGroup.getLabel(), "R2");
+                Assertions.assertEquals("R2", rGroup.getLabel());
             } else if (bond.getDisplay() == IBond.Display.Up) {
-                Assertions.assertEquals(rGroup.getLabel(), "R20");
+                Assertions.assertEquals("R20", rGroup.getLabel());
             } else
-                Assertions.assertEquals(rGroup.getLabel(), "R5");
+                Assertions.assertEquals("R5", rGroup.getLabel());
         }
     }
 
@@ -855,8 +851,8 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         Assertions.assertNotNull(mol);
-        Assertions.assertEquals(mol.getAtomCount(), 5);
-        Assertions.assertEquals(mol.getBondCount(), 4);
+        Assertions.assertEquals(5, mol.getAtomCount());
+        Assertions.assertEquals(4, mol.getBondCount());
     }
 
     @Test
@@ -2241,7 +2237,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer actual;
         // act
-        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueMinusOne.mol"))) {
+        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueMinusOne_V2000.mol"))) {
             actual = mdlv2000Reader.read(builder.newAtomContainer());
         }
         // assert
@@ -2258,7 +2254,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer actual;
         // act
-        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueOne.mol"))) {
+        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueOne_V2000.mol"))) {
             actual = mdlv2000Reader.read(builder.newAtomContainer());
         }
         // assert
@@ -2275,7 +2271,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer actual;
         // act
-        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueSeven.mol"))) {
+        try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueSeven_V2000.mol"))) {
             actual = mdlv2000Reader.read(builder.newAtomContainer());
         }
         // assert

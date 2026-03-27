@@ -29,6 +29,7 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.listener.PropertiesListener;
@@ -1479,5 +1480,140 @@ class MDLV3000WriterTest {
         // note the order will change as it is a set
         MatcherAssert.assertThat(sw.toString(), containsString("ATOMS=(4 "));
         MatcherAssert.assertThat(sw.toString(), containsString("BONDS=(1 2)"));
+    }
+
+    @Test
+    void reactingCenterStatus_validValueMinusOne_test() throws CDKException, IOException {
+        // arrange
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atomOne = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomOne.setSymbol("C");
+        IAtom atomTwo = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomTwo.setSymbol("C");
+        molecule.addAtom(atomOne);
+        molecule.addAtom(atomTwo);
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond();
+        bond.setAtoms(new IAtom[] {atomOne, atomTwo});
+        bond.setOrder(IBond.Order.SINGLE);
+        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.NOT_REACTING_CENTER);
+        molecule.addBond(bond);
+        String expected =
+                "\n" +
+                        "  CDK     0327261356\n" +
+                        "\n" +
+                        "  0  0  0     0  0            999 V3000\n" +
+                        "M  V30 BEGIN CTAB\n" +
+                        "M  V30 COUNTS 2 1 0 0 0\n" +
+                        "M  V30 BEGIN ATOM\n" +
+                        "M  V30 1 C 0 0 0 0 VAL=1\n" +
+                        "M  V30 2 C 0 0 0 0 VAL=1\n" +
+                        "M  V30 END ATOM\n" +
+                        "M  V30 BEGIN BOND\n" +
+                        "M  V30 1 1 1 2 RXCTR=-1\n" +
+                        "M  V30 END BOND\n" +
+                        "M  V30 END CTAB\n" +
+                        "M  END\n";
+
+        // act
+        String actual = writeToStr(molecule);
+
+        // assert
+        assertMolfile(actual, expected);
+    }
+
+    @Test
+    void reactingCenterStatus_validValueOne_test() throws CDKException, IOException {
+        // arrange
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atomOne = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomOne.setSymbol("C");
+        IAtom atomTwo = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomTwo.setSymbol("C");
+        molecule.addAtom(atomOne);
+        molecule.addAtom(atomTwo);
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond();
+        bond.setAtoms(new IAtom[] {atomOne, atomTwo});
+        bond.setOrder(IBond.Order.SINGLE);
+        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.GENERIC_REACTING_CENTER);
+        molecule.addBond(bond);
+        String expected =
+                "\n" +
+                        "  CDK     0327261355\n" +
+                        "\n" +
+                        "  0  0  0     0  0            999 V3000\n" +
+                        "M  V30 BEGIN CTAB\n" +
+                        "M  V30 COUNTS 2 1 0 0 0\n" +
+                        "M  V30 BEGIN ATOM\n" +
+                        "M  V30 1 C 0 0 0 0 VAL=1\n" +
+                        "M  V30 2 C 0 0 0 0 VAL=1\n" +
+                        "M  V30 END ATOM\n" +
+                        "M  V30 BEGIN BOND\n" +
+                        "M  V30 1 1 1 2 RXCTR=1\n" +
+                        "M  V30 END BOND\n" +
+                        "M  V30 END CTAB\n" +
+                        "M  END";
+
+        // act
+        String actual = writeToStr(molecule);
+
+        // assert
+        assertMolfile(actual, expected);
+    }
+
+    @Test
+    void reactingCenterStatus_validValueThirteen_test() throws CDKException, IOException {
+        // arrange
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atomOne = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomOne.setSymbol("C");
+        IAtom atomTwo = DefaultChemObjectBuilder.getInstance().newAtom();
+        atomTwo.setSymbol("C");
+        molecule.addAtom(atomOne);
+        molecule.addAtom(atomTwo);
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond();
+        bond.setAtoms(new IAtom[] {atomOne, atomTwo});
+        bond.setOrder(IBond.Order.SINGLE);
+        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.GENERIC_REACTING_CENTER_AND_BOND_MADE_OR_BROKEN_AND_BOND_ORDER_CHANGES);
+        molecule.addBond(bond);
+        String expected =
+                "\n" +
+                        "  CDK     0327261354\n" +
+                        "\n" +
+                        "  0  0  0     0  0            999 V3000\n" +
+                        "M  V30 BEGIN CTAB\n" +
+                        "M  V30 COUNTS 2 1 0 0 0\n" +
+                        "M  V30 BEGIN ATOM\n" +
+                        "M  V30 1 C 0 0 0 0 VAL=1\n" +
+                        "M  V30 2 C 0 0 0 0 VAL=1\n" +
+                        "M  V30 END ATOM\n" +
+                        "M  V30 BEGIN BOND\n" +
+                        "M  V30 1 1 1 2 RXCTR=13\n" +
+                        "M  V30 END BOND\n" +
+                        "M  V30 END CTAB\n" +
+                        "M  END";
+
+        // act
+        String actual = writeToStr(molecule);
+
+        // assert
+        assertMolfile(actual, expected);
+    }
+
+    private void assertMolfile(String actual, String expected) {
+        String[] actualLines = actual.split("\\R");
+        String[] expectedLines = expected.split("\\R");
+
+        assertThat(actualLines.length, is(expectedLines.length));
+        for (int index = 0; index < actualLines.length; index++) {
+            if (index == 1) {
+                // ignore timestamp in comparison
+                // IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR
+                //           ||||||||||
+                assertThat(actualLines[index].substring(0, 10), is(expectedLines[index].substring(0, 10)));
+                assertThat(actualLines[index].substring(20), is(expectedLines[index].substring(20)));
+            } else {
+                assertThat(actualLines[index], is(expectedLines[index]));
+            }
+        }
     }
 }

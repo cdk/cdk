@@ -96,9 +96,10 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void testAccepts() {
-        MDLV3000Reader reader = new MDLV3000Reader();
-        Assertions.assertTrue(reader.accepts(AtomContainer.class));
+    void testAccepts() throws IOException {
+        try (MDLV3000Reader reader = new MDLV3000Reader()) {
+            Assertions.assertTrue(reader.accepts(AtomContainer.class));
+        }
     }
 
     /**
@@ -916,6 +917,53 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             Assertions.assertEquals(1, selection.elements(IBond.class).size());
         } catch (IOException | CDKException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void reactingCenterStatusValidValueMinusOneTest() throws CDKException, IOException {
+        // arrange
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer actual;
+        // act
+        try (MDLV3000Reader mdlv3000Reader = new MDLV3000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueMinusOne_V3000.mol"))) {
+            actual = mdlv3000Reader.read(builder.newAtomContainer());
+        }
+        // assert
+        org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isEqualTo(MDLReactingCenterStatus.NOT_REACTING_CENTER);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+    }
+
+    @Test
+    void reactingCenterStatusValidValueOneTest() throws CDKException, IOException {
+        // arrange
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer actual;
+        // act
+        try (MDLV3000Reader mdlv3000Reader = new MDLV3000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueOne_V3000.mol"))) {
+            actual = mdlv3000Reader.read(builder.newAtomContainer());
+        }
+        // assert
+        org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isEqualTo(MDLReactingCenterStatus.GENERIC_REACTING_CENTER);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+    }
+
+    @Test
+    void reactingCenterStatusInvalidValueSevenTest() throws IOException {
+        // arrange
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+
+        // act & assert
+        try (MDLV3000Reader mdlv3000Reader = new MDLV3000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueSeven_V3000.mol"))) {
+            org.assertj.core.api.Assertions.assertThatThrownBy(() -> mdlv3000Reader.read(builder.newAtomContainer()))
+                    .isInstanceOf(CDKException.class)
+                    .hasMessage("Error while parsing key/value RXCTR=7: Invalid value 7, line='M  V30 2 1 2 3 RXCTR=7'");
         }
     }
 }
