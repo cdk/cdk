@@ -906,7 +906,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, mdlReactingCenterStatus);
             }
             catch(IllegalArgumentException exception) {
-                logger.warn("Encountered issue with reading reacting center status: " + exception.getMessage());
+                handleError("Encountered issue with reading reacting center status.", exception);
             }
         }
 
