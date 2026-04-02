@@ -333,19 +333,6 @@
     </build>
     <profiles>
         <profile>
-            <id>jdk11-plus</id>
-            <activation>
-                <jdk>[11,)</jdk>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>cdk-iordf</artifactId>
-                    <version>${project.parent.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
             <id>jacoco</id>
             <build>
                 <plugins>

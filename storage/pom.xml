@@ -24,16 +24,5 @@
         <module>smiles</module>
     </modules>
     <packaging>pom</packaging>
-    <artifactId>cdk-storage</artifactId>
-    <profiles>
-        <profile>
-            <id>jdk11-plus</id>
-            <activation>
-                <jdk>[11,)</jdk>
-            </activation>
-            <modules>
-                <module>iordf</module>
-            </modules>
-        </profile>
-    </profiles>
+    <artifactId>cdk-storage</artifactId>    
 </project>
