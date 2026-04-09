@@ -224,7 +224,7 @@ class SMSDBondSensitiveTest {
     //
     //        IAtomContainer mol2 = Molecules.create4Toluene();
     //
-    //        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+    //        ExtAtomContainerManipulator.configure(mol2);
     //        Aromaticity.cdkLegacy().apply(mol2);
     //
     //        boolean bondSensitive = true;
@@ -254,8 +254,8 @@ class SMSDBondSensitiveTest {
         IAtomContainer mol1 = sp.parseSmiles(adp);
         IAtomContainer mol2 = sp.parseSmiles(atp);
 
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        ExtAtomContainerManipulator.configure(mol1);
+        ExtAtomContainerManipulator.configure(mol2);
 
         //	Calling the main algorithm to perform MCS cearch
 
@@ -292,8 +292,8 @@ class SMSDBondSensitiveTest {
         IAtomContainer mol1 = sp.parseSmiles(c03374);
         IAtomContainer mol2 = sp.parseSmiles(c05787);
 
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        ExtAtomContainerManipulator.configure(mol1);
+        ExtAtomContainerManipulator.configure(mol2);
 
         IAtomContainer source = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol1);
         IAtomContainer target = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol2);

@@ -94,8 +94,8 @@ class TanimotoTest extends CDKTestCase {
         addImplicitHydrogens(mol1);
         addImplicitHydrogens(mol2);
         LingoFingerprinter fingerprinter = new LingoFingerprinter();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
         Map<String, Integer> feat1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> feat2 = fingerprinter.getRawFingerprint(mol2);
         float tanimoto = Tanimoto.calculate(feat1, feat2);

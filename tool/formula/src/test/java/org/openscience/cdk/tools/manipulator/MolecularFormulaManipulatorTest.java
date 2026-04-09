@@ -977,7 +977,7 @@ class MolecularFormulaManipulatorTest {
         mol.addAtom(new Atom("C"));
 
         // previously performed inside SmilesParser
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance()).addImplicitHydrogens(mol);
 
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(mol);
@@ -1130,7 +1130,7 @@ class MolecularFormulaManipulatorTest {
         List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
         IAtomContainer mol = mols.get(0);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder ha = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
         ha.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
@@ -1180,7 +1180,7 @@ class MolecularFormulaManipulatorTest {
         Assertions.assertEquals("C6", getString(f));
 
         Assertions.assertEquals(6, mol.getAtomCount());
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         adder.addImplicitHydrogens(mol);
         Assertions.assertEquals(6, mol.getAtomCount());
         f = MolecularFormulaManipulator.getMolecularFormula(mol);

@@ -1543,7 +1543,7 @@ class SmilesParserTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("c1c(C)c(N)cnc1");
         assertAtomTypesPerceived(mol);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         boolean isaromatic = Aromaticity.cdkLegacy().apply(mol);
         Assertions.assertTrue(isaromatic);
     }
@@ -2793,7 +2793,7 @@ class SmilesParserTest extends CDKTestCase {
             if (atom.getFlag(IChemObject.AROMATIC)) aromatic.add(atom);
         }
         // helpfully clears aromatic flags...
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         for (IAtom atom : aromatic)
             atom.setFlag(IChemObject.AROMATIC, true);
     }

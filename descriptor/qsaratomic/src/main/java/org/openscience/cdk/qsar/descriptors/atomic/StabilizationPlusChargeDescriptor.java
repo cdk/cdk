@@ -20,6 +20,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.charges.StabilizationCharges;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
@@ -123,8 +124,15 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
         try {
             clone = container.clone();
             localAtom = clone.getAtom(container.indexOf(atom));
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
-        } catch (CDKException | CloneNotSupportedException e) {
+            if (!AtomContainerManipulator.configure(clone)) {
+                return new DescriptorValue(getSpecification(),
+                                           getParameterNames(),
+                                           getParameters(),
+                                           new DoubleResult(Double.NaN),
+                                           NAMES,
+                                           new NoSuchAtomException("Could not configure molecule"));
+            }
+        } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     Double.NaN), NAMES, e);
         }

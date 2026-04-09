@@ -54,10 +54,10 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * A fingerprint is generated for an AtomContainer with this code:
  * It is recommended to use atomtyped container before generating the fingerprints.
  *
- * For example: AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+ * For example: AtomContainerManipulator.configure(atomContainer);
  *
  *   AtomContainer molecule = new AtomContainer();
- *   AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+ *   AtomContainerManipulator.configure(atomContainer);
  *   IFingerprinter fingerprinter = new ShortestPathFingerprinter();
  *   IBitFingerprint fingerprint = fingerprinter.getFingerprint(molecule);
  *   fingerprint.fingerprintLength(); // returns 1024 by default

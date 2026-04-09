@@ -91,7 +91,7 @@ public class HomolyticCleavageMechanism implements IReactionMechanism {
 
         reactantCloned.addSingleElectron(bond1.getBuilder().newInstance(ISingleElectron.class, atom1C));
         reactantCloned.addSingleElectron(bond1.getBuilder().newInstance(ISingleElectron.class, atom2C));
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        AtomContainerManipulator.reconfigure(reactantCloned);
 
         // check if resulting atom type is reasonable
         atom1C.setHybridization(null);

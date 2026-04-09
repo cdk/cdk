@@ -50,7 +50,7 @@ import java.util.Set;
  * any compatible class. For example:
  * <pre>
  * Molecule molecule = MoleculeFactory.makePyridineOxide();
- * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+ * AtomContainerManipulator.configure(molecule);
  * Aromaticity.cdkLegacy().apply(molecule);
  * </pre>
  *

@@ -123,7 +123,7 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
         IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
         IAtomContainer reactant = reactants.getAtomContainer(0);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+        AtomContainerManipulator.reconfigure(reactant);
         Aromaticity.cdkLegacy().apply(reactant);
         AllRingsFinder arf = new AllRingsFinder();
         IRingSet ringSet = arf.findAllRings(reactant);

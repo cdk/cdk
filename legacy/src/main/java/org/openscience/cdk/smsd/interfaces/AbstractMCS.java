@@ -46,7 +46,7 @@ public abstract class AbstractMCS {
      * @param source query mol
      * @param target target mol
      * @param removeHydrogen true if remove H (implicit) before mapping
-     * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc
+     * @param cleanAndConfigureMolecule eg: configure, detect aromaticity etc
      * @throws CDKException
      */
     public abstract void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen,
@@ -57,7 +57,7 @@ public abstract class AbstractMCS {
      *
      * Note: Here its assumed that hydrogens are implicit
      * and user has called these two methods
-     * percieveAtomTypesAndConfigureAtoms and CDKAromicityDetector
+     * configure and CDKAromicityDetector
      * before initializing calling this method.
      *
      * @param source query mol

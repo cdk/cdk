@@ -209,7 +209,7 @@ class SMSDNormalizerTest {
     }
 
     /**
-     * Test of percieveAtomTypesAndConfigureAtoms method, of class SMSDNormalizer.
+     * Test of configure method, of class SMSDNormalizer.
      * @throws Exception
      */
     @Test
@@ -217,7 +217,7 @@ class SMSDNormalizerTest {
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
-        SMSDNormalizer.percieveAtomTypesAndConfigureAtoms(atomContainer);
+        SMSDNormalizer.configure(atomContainer);
         Assertions.assertNotNull(atomContainer);
     }
 }

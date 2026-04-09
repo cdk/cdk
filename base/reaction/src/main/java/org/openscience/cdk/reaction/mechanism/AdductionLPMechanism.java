@@ -93,14 +93,16 @@ public class AdductionLPMechanism implements IReactionMechanism {
         List<ILonePair> lps = reactantCloned.getConnectedLonePairsList(atom1C);
         reactantCloned.removeLonePair(lps.get(lps.size() - 1));
         atom1C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom1C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 
         charge = atom2C.getFormalCharge();
         atom2C.setFormalCharge(charge - 1);
         atom2C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom2C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 

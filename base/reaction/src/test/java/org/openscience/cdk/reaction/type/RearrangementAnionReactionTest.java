@@ -291,7 +291,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 
         addExplicitHydrogens(molecule);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -332,7 +332,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         molecule2.addBond(6, 1, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        AtomContainerManipulator.reconfigure(molecule2);
         lpcheck.saturate(molecule2);
         makeSureAtomTypesAreRecognized(molecule2);
         assertEquals(molecule2, product1);
@@ -359,7 +359,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         molecule3.addBond(6, 1, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule3);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule3);
+        AtomContainerManipulator.reconfigure(molecule3);
         lpcheck.saturate(molecule3);
         makeSureAtomTypesAreRecognized(molecule3);
         assertEquals(molecule3, product2);
@@ -373,7 +373,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
     @Test
     void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
+        AtomContainerManipulator.reconfigure(moleculeTest);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
     }
@@ -384,7 +384,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
     @Test
     void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
+        AtomContainerManipulator.reconfigure(moleculeTest);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
     }

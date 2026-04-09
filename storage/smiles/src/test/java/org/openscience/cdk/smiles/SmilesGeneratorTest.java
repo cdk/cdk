@@ -516,7 +516,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         molecule.addBond(3, 4, IBond.Order.SINGLE);
         molecule.addBond(4, 5, IBond.Order.SINGLE);
         molecule.addBond(5, 0, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         smiles = sg.create(molecule);
         Assertions.assertEquals("c1ccccc1", smiles);
@@ -859,7 +859,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         m.newBond(a15, a16, IBond.Order.DOUBLE);
         m.newBond(a15, a17);
         m.newBond(a17, a1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
+        AtomContainerManipulator.configure(m);
         addImplicitHydrogens(m);
         Assertions.assertTrue(Aromaticity.cdkLegacy().apply(m));
 
@@ -957,7 +957,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void testIndole() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
@@ -969,7 +969,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void testPyrrole() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         Aromaticity.cdkLegacy().apply(mol);
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
@@ -984,7 +984,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     void testDoubleBracketProblem() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         mol.getAtom(1).setFormalCharge(-1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         addImplicitHydrogens(mol);
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
@@ -999,7 +999,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     void testHydrogenOnChargedNitrogen() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         mol.getAtom(1).setFormalCharge(-1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
@@ -1148,7 +1148,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
         SmilesGenerator sg = new SmilesGenerator().aromatic();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
+        AtomContainerManipulator.configure(benzene);
         Aromaticity.cdkLegacy().apply(benzene);
         String smileswitharomaticity = sg.create(benzene);
         Assertions.assertEquals("c1ccccc1", smileswitharomaticity);
@@ -1157,7 +1157,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void outputOrder() throws Exception {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine);
+        AtomContainerManipulator.configure(adenine);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(adenine);
 
         SmilesGenerator sg = SmilesGenerator.generic();
@@ -1173,7 +1173,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         // read in the SMILES
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer adenine2 = sp.parseSmiles(smi);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine2);
+        AtomContainerManipulator.configure(adenine2);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(adenine2);
 
         // check atom types
@@ -1185,7 +1185,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     @Test
     void outputCanOrder() throws Exception {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine);
+        AtomContainerManipulator.configure(adenine);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(adenine);
 
         SmilesGenerator sg = SmilesGenerator.unique();
@@ -1201,7 +1201,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         // read in the SMILES
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer adenine2 = sp.parseSmiles(smi);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine2);
+        AtomContainerManipulator.configure(adenine2);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(adenine2);
 
         // check atom types
