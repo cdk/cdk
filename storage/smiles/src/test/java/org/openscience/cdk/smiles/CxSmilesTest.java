@@ -680,4 +680,17 @@ class CxSmilesTest {
         Assertions.assertEquals("*c1ncccc1 |$R1$,RG:_R1={C(=O)(*)* |$;;R2;_AP1$|},{C(=N)(*)* |$;;R3;_AP1$|},{C(=CC)(*)* |$;;;R4;_AP1$|},_R2={O(C)* |$;;_AP1$|},{N* |$;_AP1$|},_R3={O(CC)* |$;;;_AP1$|},{C(F)(F)(F)* |$;;;;_AP1$|},_R4={N(CC)* |$;;;_AP1$|},{C(F)(F)* |$;;;_AP1$|}|",
                                 actual);
     }
+
+    @Test
+    public void testDativeBonds() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
+        Assertions.assertEquals("N[Pt][PH3]", smigen.create(smipar.parseSmiles("N[Pt]P |C:1.1|")));
+        Assertions.assertEquals("[NH3][Pt]P", smigen.create(smipar.parseSmiles("N[Pt]P |C:1.0|")));
+        Assertions.assertEquals("[NH3][Pt][PH3]", smigen.create(smipar.parseSmiles("N[Pt]P |C:1.0,1.1|")));
+        // the semantics here don't quite match ChemAxon, they seem to ignore/overwrite the labelled hydrogen count
+        Assertions.assertEquals("[NH3][Pt][PH3]", smigen.create(smipar.parseSmiles("[NH3][Pt][PH3] |C:1.0|")));
+        Assertions.assertEquals("[NH3][Pt][PH3]", smigen.create(smipar.parseSmiles("[NH3][Pt][PH3] |C:1.0,1.1|")));
+    }
 }

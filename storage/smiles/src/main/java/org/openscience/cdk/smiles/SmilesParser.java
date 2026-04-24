@@ -697,6 +697,27 @@ public final class SmilesParser {
             }
         }
 
+        if (cxstate.coordBonds != null) {
+            for (Map.Entry<Integer,List<Integer>> e : cxstate.coordBonds.entrySet()) {
+                IAtom beg = atoms.get(e.getKey());
+                for (Integer bndIdx : e.getValue()) {
+                    IBond bond = bonds.get(bndIdx);
+                    IAtom end = bond.getOther(beg);
+                    int bord = bond.getOrder().numeric();
+                    if (!beg.is(IChemObject.PLACED))
+                        beg.setImplicitHydrogenCount(Math.max(0,beg.getImplicitHydrogenCount()+bord));
+                    if (!end.is(IChemObject.PLACED))
+                        end.setImplicitHydrogenCount(Math.max(0,end.getImplicitHydrogenCount()+bord));
+                    if (bond.getBegin().equals(beg))
+                        bond.setDisplay(IBond.Display.ArrowEnd);
+                    else
+                        bond.setDisplay(IBond.Display.ArrowBeg);
+                    // bond.setOrder(IBond.Order.UNSET);
+                }
+
+            }
+        }
+
         if (cxstate.bondDisplay != null) {
             for (Map.Entry<Map.Entry<Integer, Integer>, IBond.Display> e : cxstate.bondDisplay) {
                 Integer atmIdx = e.getKey().getKey();

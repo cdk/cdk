@@ -44,6 +44,7 @@ final class CxSmilesState {
     List<double[]>              atomCoords  = null;
     List<List<Integer>>         fragGroups  = null;
     Map<Integer, Radical>       atomRads    = null;
+    Map<Integer, List<Integer>> coordBonds  = null;
     Map<Integer, List<Integer>> ligandOrdering = null;
     Map<Integer, List<Integer>> positionVar = null;
     List<Map.Entry<Map.Entry<Integer,Integer>,IBond.Display>> bondDisplay = null;

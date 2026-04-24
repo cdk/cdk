@@ -490,6 +490,24 @@ final class CxSmilesParser {
         return true;
     }
 
+    private static boolean processCoordinateBonds(CharIter iter, Map<Integer,List<Integer>> map) {
+        boolean ok = false;
+        while (iter.hasNext()) {
+            if (isDigit(iter.curr())) {
+                final int atmIdx = processUnsignedInt(iter);
+                if (!iter.nextIf('.'))
+                    return false;
+                final int bndIdx = processUnsignedInt(iter);
+                map.computeIfAbsent(atmIdx, k -> new ArrayList<>(2)).add(bndIdx);
+                ok = true;
+                iter.nextIf(',');
+            } else {
+                return true;
+            }
+        }
+        return ok;
+    }
+
     /**
      * Parse an string possibly containing CXSMILES into an intermediate state
      * ({@link CxSmilesState}) representation.
@@ -619,6 +637,12 @@ final class CxSmilesParser {
                         return -1;
                     break;
                 case 'C':
+                    if (!iter.nextIf(':'))
+                        return -1;
+                    if (!processCoordinateBonds(iter,
+                                                state.coordBonds = new HashMap<>()))
+                        return -1;
+                    break;
                 case 'H': // coordination and hydrogen bonding ignored
                     if (!iter.nextIf(':'))
                         return -1;
