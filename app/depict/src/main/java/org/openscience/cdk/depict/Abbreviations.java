@@ -1255,7 +1255,7 @@ public class Abbreviations implements Iterable<String> {
 
     private boolean addDisconnectedAbbreviation(IAtomContainer mol, String label) {
         try {
-            String cansmi = new SmilesGenerator(SmiFlavor.Unique).create(mol);
+            String cansmi = usmigen.create(mol);
             disconnectedAbbreviations.put(cansmi, label);
             labels.add(label);
             return true;

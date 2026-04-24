@@ -901,6 +901,19 @@ class AbbreviationsTest {
     }
 
     @Test
+    void testIsotopesInAbbreviationDisconnecte() throws Exception {
+        String smi = "[2H]OC([2H])([2H])[2H]";
+        Abbreviations factory = new Abbreviations();
+        factory.add("[2H]C([2H])([2H])O[2H] CD3OD");
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_TERMINAL);
+        factory.with(Abbreviations.Option.AUTO_CONTRACT_HETERO);
+        factory.with(Abbreviations.Option.ALLOW_SINGLETON);
+        IAtomContainer mol = smi(smi);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+    }
+
+    @Test
     void loadFromFile() throws Exception {
         Abbreviations factory = new Abbreviations();
         assertThat(factory.loadFromFile("obabel_superatoms.smi"), is(27));
