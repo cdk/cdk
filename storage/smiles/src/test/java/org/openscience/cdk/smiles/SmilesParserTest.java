@@ -2763,6 +2763,15 @@ class SmilesParserTest extends CDKTestCase {
         Assertions.assertEquals(">[Au]>", smigen.create(reactions.getReaction(2)));
     }
 
+    @Test
+    void testValencySetting() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("N[Pt][NH2]");
+        Assertions.assertFalse(mol.getAtom(0).is(IChemObject.PLACED));
+        Assertions.assertTrue(mol.getAtom(1).is(IChemObject.PLACED));
+        Assertions.assertTrue(mol.getAtom(2).is(IChemObject.PLACED));
+    }
+
     /**
      * Counts aromatic atoms in a molecule.
      * @param mol molecule for which to count aromatic atoms.
