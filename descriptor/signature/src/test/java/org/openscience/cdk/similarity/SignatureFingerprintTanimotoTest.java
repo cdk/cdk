@@ -26,7 +26,6 @@ package org.openscience.cdk.similarity;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.fingerprint.ICountFingerprint;
@@ -42,7 +41,7 @@ import java.util.Map;
 
 /**
  */
-class SignatureFingerprintTanimotoTest extends CDKTestCase {
+class SignatureFingerprintTanimotoTest {
 
     /**
      * @throws Exception

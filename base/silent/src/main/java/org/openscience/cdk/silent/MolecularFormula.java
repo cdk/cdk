@@ -56,7 +56,7 @@ public class MolecularFormula implements IMolecularFormula {
     /**
      *  The partial charge of the molecularFormula. The default value is Double.NaN.
      */
-    private Integer                charge           = (Integer) CDKConstants.UNSET;
+    private Integer                charge           = null;
 
     /**
      *  A hashtable for the storage of any kind of properties of this IChemObject.

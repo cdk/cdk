@@ -21,7 +21,6 @@ package org.openscience.cdk.charges;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -33,7 +32,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-class PolarizabilityTest extends CDKTestCase {
+class PolarizabilityTest {
 
     /**
      *  A unit test for JUnit

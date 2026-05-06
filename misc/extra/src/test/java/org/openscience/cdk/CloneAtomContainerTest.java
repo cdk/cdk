@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the AtomContainer class.
@@ -35,7 +34,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author  Christoph Steinbeck
  * @cdk.created 2001-08-09
  */
-class CloneAtomContainerTest extends CDKTestCase {
+class CloneAtomContainerTest {
 
     @Test
     void testClone() throws Exception {

@@ -5,12 +5,11 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author maclean
  */
-public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
+public class AbstractDiscretePartitionRefinerTest {
 
     public class Graph {
 

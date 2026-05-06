@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -615,17 +616,21 @@ public abstract class StereoElementFactory {
                     // we have already previously checked whether 'v' is at the
                     // 'point' and so these must be inverse (fat-end of hatched
                     // wedge is a stereocenter) ala Daylight
-                    if (bond.getDisplay() == IBond.Display.WedgedHashBegin || bond.getDisplay() == IBond.Display.WedgedHashEnd) {
+                    if (bond.getDisplay() == IBond.Display.WedgedHashBegin ||
+                        bond.getDisplay() == IBond.Display.WedgedHashEnd) {
+
 
                         // we stick to the 'point' end convention but can
                         // interpret if the bond isn't connected to another
                         // stereocenter - otherwise it's ambiguous!
                         if (stereocenters.stereocenterType(w) != Stereocenters.Stereocenter.Non) {
                             stereocenters.checkSymmetry();
-                            if (stereocenters.isStereocenter(w)) {
+                            if (stereocenters.isStereocenter(w) && stereocenters.isStereocenter(v)) {
                                 logger.error("Ambiguous down wedge bond between atom indexes ", w, " and ", v);
                                 return null;
                             }
+                            if (!stereocenters.isStereocenter(v))
+                                continue;
                         }
 
                         logger.warn("Inverse wedge bond used for stereo at atom index ", v);

@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
@@ -61,7 +62,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-import java.awt.Color;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -78,7 +78,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Stack;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -125,10 +124,40 @@ public class StructureDiagramGenerator {
     private static final double                     RAD_30                   = Math.toRadians(-30);
     private static final ILoggingTool               logger                   = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
 
-    public static final Comparator<IAtomContainer> LARGEST_FIRST_COMPARATOR = new Comparator<IAtomContainer>() {
+    public static final Comparator<IAtomContainer> COMPONENT_ORDER = new Comparator<IAtomContainer>() {
+
+        int netCharge(IAtomContainer mol) {
+            int charge = 0;
+            for (IAtom atom : mol.atoms()) {
+                if (atom.getFormalCharge() != null)
+                    charge += atom.getFormalCharge();
+            }
+            return charge;
+        }
+
         @Override
         public int compare(IAtomContainer o1, IAtomContainer o2) {
-            return Integer.compare(o2.getBondCount(), o1.getBondCount());
+
+            // for laying out R-Groups we want the root structure first
+            // followed by R1, R2, R3, etc... the labels are annotated
+            // on the atoms
+            if (o1.getAtomCount() > 0 && o2.getAtomCount() > 0) {
+                String label1 = getRgrpLabel(o1);
+                String label2 = getRgrpLabel(o2);
+                if (label1 != null && label2 != null)
+                    return label1.compareTo(label2);
+                int cmp = Boolean.compare(label1 != null, label2 != null);
+                if (cmp != 0)
+                    return cmp;
+            }
+
+            // net charge +ve => -ve
+            int cmp = Integer.compare(netCharge(o1), netCharge(o2));
+            if (cmp != 0)
+                return -cmp;
+
+            // used to sort by size big to small
+            return 0; // return Integer.compare(o2.getBondCount(), o1.getBondCount());
         }
     };
 
@@ -843,14 +872,28 @@ public class StructureDiagramGenerator {
 
         // intercept fragment molecules and lay them out in a grid
         if (!isConnected) {
-            final IAtomContainerSet frags = ConnectivityChecker.partitionIntoMolecules(molecule);
-            if (frags.getAtomContainerCount() > 1) {
+            IAtomContainerSet frags = isSubLayout ? ConnectivityChecker.partitionIntoMolecules(molecule, true, true)
+                                                  : ConnectivityChecker.partitionIntoMolecules(molecule, false, false);
+
+            boolean multipart = frags.getAtomContainerCount() > 1;
+            if (!multipart && !isSubLayout) {
+                frags = ConnectivityChecker.partitionIntoMolecules(molecule, true, true);
+                multipart = frags.getAtomContainerCount() > 1;
+            }
+
+            if (multipart) {
                 IAtomContainer rollback = molecule;
 
+                // root structure, R1, R2, R3 etc
                 // large => small (e.g. salt will appear on the right)
                 List<IAtomContainer> fragList = toList(frags);
-                fragList.sort(LARGEST_FIRST_COMPARATOR);
-                generateFragmentCoordinates(molecule, fragList);
+                fragList.sort(COMPONENT_ORDER);
+
+                if (isMarkush(fragList) && !isSubLayout) {
+                    layoutMarkush(molecule, fragList);
+                } else {
+                    layoutGrid(molecule, fragList, true);
+                }
 
                 // don't call set molecule as it wipes x,y coordinates!
                 // this looks like a self assignment but actually the fragment
@@ -895,8 +938,11 @@ public class StructureDiagramGenerator {
 
         // stereo must be after refinement (due to flipping!)
         if (!isSubLayout)
-            assignStereochem(molecule);
+            generateWedges(molecule);
+    }
 
+    private static boolean isMarkush(List<IAtomContainer> fragList) {
+        return getRgrpLabel(fragList.get(fragList.size() - 1)) != null;
     }
 
     /**
@@ -1078,7 +1124,17 @@ public class StructureDiagramGenerator {
         return numRings;
     }
 
-    private void assignStereochem(IAtomContainer molecule) {
+    /**
+     * Generate up/down wedges bonds for a molecule which already has
+     * coordinates assigned. This function is called automatically at the
+     * end of a layout. Any existing wedges are removed.
+     * <br>
+     * Note for inorganic stereochemistry (octahedral etc) this function
+     * may make some adjustments to the coordinates to depict things correctly.
+     *
+     * @param molecule the molecule
+     */
+    public void generateWedges(IAtomContainer molecule) {
         // XXX: can't check this unless we store 'unspecified' double bonds
         // if (!molecule.stereoElements().iterator().hasNext())
         //     return;
@@ -1086,6 +1142,21 @@ public class StructureDiagramGenerator {
         // assign up/down labels, this doesn't not alter layout and could be
         // done on-demand (e.g. when writing a MDL Molfile)
         NonplanarBonds.assign(molecule);
+    }
+
+    /**
+     * Generate up/down wedges bonds for all molecules in a reaction which
+     * already has coordinates assigned. This function is called automatically
+     * at the end of a layout. Any existing wedges are removed.
+     * <br>
+     * Note for inorganic stereochemistry (octahedral etc) this function
+     * may make some adjustments to the coordinates to depict things correctly.
+     *
+     * @param reaction the molecule
+     */
+    public void generateWedges(IReaction reaction) {
+        for (IAtomContainer molecule : reaction)
+            generateWedges(molecule);
     }
 
     private void refinePlacement(IAtomContainer molecule) {
@@ -1374,7 +1445,7 @@ public class StructureDiagramGenerator {
      * @param mol molecule
      * @return the min/max x and y bounds
      */
-    private final double[] getAprxBounds(IAtomContainer mol) {
+    private double[] getAprxBounds(IAtomContainer mol) {
         double maxX = -Double.MAX_VALUE;
         double maxY = -Double.MAX_VALUE;
         double minX = Double.MAX_VALUE;
@@ -1407,13 +1478,65 @@ public class StructureDiagramGenerator {
         minmax[2] = maxX;
         minmax[3] = maxY;
         double minXAdjust = adjustForHydrogen(boundedAtoms[0], mol);
-        double maxXAdjust = adjustForHydrogen(boundedAtoms[1], mol);
+        double maxXAdjust = adjustForHydrogen(boundedAtoms[2], mol);
         if (minXAdjust < 0) minmax[0] += minXAdjust;
-        if (maxXAdjust > 0) minmax[1] += maxXAdjust;
+        if (maxXAdjust > 0) minmax[2] += maxXAdjust;
+
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null && !sgroups.isEmpty()) {
+            // TODO better logic we can place the bracket then work out the
+            //  bounds!
+            boolean hasBracket = false;
+            for (Sgroup sgroup : sgroups) {
+                if (!hasBrackets(sgroup))
+                    continue;
+                hasBracket = true;
+            }
+            if (hasBracket) {
+                // consider potential Sgroup brackets
+                minmax[0] -= SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                minmax[1] -= SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                minmax[2] += SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                minmax[3] += SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+            }
+        }
+
+        if (minmax[2] - minmax[0] < bondLength) {
+            minmax[2] += bondLength/2;
+            minmax[0] -= bondLength/2;
+        }
+        if (minmax[3] - minmax[1] < bondLength) {
+            minmax[3] += bondLength/2;
+            minmax[1] -= bondLength/2;
+        }
+
         return minmax;
     }
 
-    private void generateFragmentCoordinates(IAtomContainer mol, List<IAtomContainer> frags) throws CDKException {
+    private double[] getAprxBounds(List<IAtomContainer> mols) {
+        double maxX = -Double.MAX_VALUE;
+        double maxY = -Double.MAX_VALUE;
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+        for (IAtomContainer mol : mols) {
+            double[] bounds = getAprxBounds(mol);
+            minX = Math.min(bounds[0], minX);
+            minY = Math.min(bounds[1], minY);
+            maxX = Math.max(bounds[2], maxX);
+            maxY = Math.max(bounds[3], maxY);
+        }
+        double[] minmax = new double[4];
+        minmax[0] = minX;
+        minmax[1] = minY;
+        minmax[2] = maxX;
+        minmax[3] = maxY;
+        return minmax;
+    }
+
+    private void layoutGrid(IAtomContainer mol,
+                            List<IAtomContainer> frags,
+                            boolean finalize) throws CDKException {
+        // FIXME: This may not be correct any more
         final List<IBond> ionicBonds = makeIonicBonds(frags);
 
         // add tmp bonds and re-fragment
@@ -1431,42 +1554,12 @@ public class StructureDiagramGenerator {
         Set<IAtom> afixbackup = new HashSet<>(afix);
         Set<IBond> bfixbackup = new HashSet<>(bfix);
 
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-
         // generate the sub-layouts
         for (IAtomContainer fragment : frags) {
             setMolecule(fragment, false, afix, bfix);
-            generateCoordinates(DEFAULT_BOND_VECTOR, true, true);
+            generateCoordinates(DEFAULT_BOND_VECTOR, false, true);
             lengthenIonicBonds(ionicBonds, fragment);
-            double[] aprxBounds = getAprxBounds(fragment);
-
-            if (sgroups != null && sgroups.size() > 0) {
-                boolean hasBracket = false;
-                for (Sgroup sgroup : sgroups) {
-                    if (!hasBrackets(sgroup))
-                        continue;
-                    boolean contained = true;
-                    Set<IAtom> aset = sgroup.getAtoms();
-                    for (IAtom atom : sgroup.getAtoms()) {
-                        if (!aset.contains(atom))
-                            contained = false;
-                    }
-                    if (contained) {
-                        hasBracket = true;
-                        break;
-                    }
-                }
-
-                if (hasBracket) {
-                    // consider potential Sgroup brackets
-                    aprxBounds[0] -= SGROUP_BRACKET_PADDING_FACTOR * bondLength;
-                    aprxBounds[1] -= SGROUP_BRACKET_PADDING_FACTOR * bondLength;
-                    aprxBounds[2] += SGROUP_BRACKET_PADDING_FACTOR * bondLength;
-                    aprxBounds[3] += SGROUP_BRACKET_PADDING_FACTOR * bondLength;
-                }
-            }
-
-            limits.add(aprxBounds);
+            limits.add(getAprxBounds(fragment));
         }
 
         // restore
@@ -1485,7 +1578,7 @@ public class StructureDiagramGenerator {
         for (int i = 0; i < numFragments; i++) {
             // +1 because first offset is always 0
             int col = 1 + i % nCol;
-            int row = 1 + i / nCol;
+            int row = i / nCol;
 
             double[] minmax = limits.get(i);
             final double width = spacing + (minmax[2] - minmax[0]);
@@ -1500,12 +1593,12 @@ public class StructureDiagramGenerator {
         // cumulative counts
         for (int i = 1; i < xOffsets.length; i++)
             xOffsets[i] += xOffsets[i - 1];
-        for (int i = 1; i < yOffsets.length; i++)
-            yOffsets[i] += yOffsets[i - 1];
+        // note: y-axis has 0 at the bottom
+        for (int i = yOffsets.length - 2; i >= 0; i--)
+            yOffsets[i] += yOffsets[i + 1];
 
-        // translate the molecules, note need to flip y axis
         for (int i = 0; i < limits.size(); i++) {
-            final int row = nRow - (i / nCol) - 1;
+            final int row = i / nCol;
             final int col = i % nCol;
             Point2d dest = new Point2d((xOffsets[col] + xOffsets[col + 1]) / 2,
                                        (yOffsets[row] + yOffsets[row + 1]) / 2);
@@ -1515,19 +1608,86 @@ public class StructureDiagramGenerator {
                                      dest.x - curr.x, dest.y - curr.y);
         }
 
-        // correct double-bond stereo, this changes the layout and in reality
-        // should be done during the initial placement
-        if (mol.stereoElements().iterator().hasNext())
-            CorrectGeometricConfiguration.correct(mol);
-
         // finalize
-        assignStereochem(mol);
-        finalizeLayout(mol);
+        if (finalize) {
+            // correct double-bond stereo, this changes the layout and in reality
+            // should be done during the initial placement
+            if (mol.stereoElements().iterator().hasNext())
+                CorrectGeometricConfiguration.correct(mol);
+            generateWedges(mol);
+            finalizeLayout(mol);
+        }
 
         // rollback temporary ionic bonds
         int numBonds = mol.getBondCount();
         while (numBonds-- > rollback)
             mol.removeBond(numBonds);
+    }
+
+    private void layoutMarkush(IAtomContainer mol, List<IAtomContainer> parts) throws CDKException {
+
+        // the input fragments should already be sorted, Core structure < R1 < R2 < R3 etc
+        // we now partition them into sets and lay each one out in a grid
+        List<List<IAtomContainer>> groups = new ArrayList<>();
+        List<IAtomContainer> tmp = new ArrayList<>();
+        String currLabel = null;
+        for (IAtomContainer part : parts) {
+            String label = getRgrpLabel(part);
+            if (!Objects.equals(currLabel, label)) {
+                groups.add(tmp);
+                currLabel = label;
+                tmp = new ArrayList<>();
+            }
+            tmp.add(part);
+        }
+        if (!tmp.isEmpty())
+            groups.add(tmp);
+
+        List<double[]> bounds = new ArrayList<>();
+        for (List<IAtomContainer> group : groups) {
+            layoutGrid(mol, group, false);
+            bounds.add(getAprxBounds(group));
+        }
+
+        final double[] yOffsets = new double[groups.size() + 1];
+
+        // calc the max widths/height of each row, we also add some
+        // spacing
+        double spacing = bondLength;
+        for (int row=0; row<groups.size(); row++) {
+            double[] minmax = bounds.get(row);
+            final double width = spacing + (minmax[2] - minmax[0]);
+            final double height = spacing + (minmax[3] - minmax[1]);
+            if (height > yOffsets[row])
+                yOffsets[row] = height;
+        }
+
+        // cumulative counts
+        // note: y-axis has 0 at the bottom
+        for (int i = yOffsets.length - 2; i >= 0; i--)
+            yOffsets[i] += yOffsets[i + 1];
+
+        for (int row = 0; row < groups.size(); row++) {
+            Point2d dest = new Point2d(0, (yOffsets[row] + yOffsets[row + 1]) / 2);
+            double[] minmax = bounds.get(row);
+            Point2d curr = new Point2d((minmax[0] + minmax[2]) / 2, (minmax[1] + minmax[3]) / 2);
+            for (IAtomContainer part : groups.get(row)) {
+                GeometryUtil.translate2D(part, dest.x - curr.x, dest.y - curr.y);
+            }
+        }
+
+        // correct double-bond stereo, this changes the layout and in reality
+        // should be done during the initial placement
+        if (mol.stereoElements().iterator().hasNext())
+            CorrectGeometricConfiguration.correct(mol);
+        generateWedges(mol);
+        finalizeLayout(mol);
+    }
+
+    private static String getRgrpLabel(IAtomContainer part) {
+        return part.isEmpty() ? null
+                              : part.getAtom(0)
+                                    .getProperty(CDKConstants.RGROUP_MEMBERSHIP);
     }
 
     private void lengthenIonicBonds(List<IBond> ionicBonds, IAtomContainer fragment) {
@@ -1789,6 +1949,11 @@ public class StructureDiagramGenerator {
             final IAtom beg = cations.get(i);
             final IAtom end = anions.get(i);
 
+            // do not create the ionic bond if the ions are D<3 - otherwise
+            // we are very likely to have an overlap
+            if (beg.getBondCount() > 2 || end.getBondCount() > 2)
+                continue;
+
             boolean unique = true;
             for (IBond bond : ionicBonds)
                 if (bond.getBegin().equals(beg) && bond.getEnd().equals(end) ||
@@ -1953,22 +2118,23 @@ public class StructureDiagramGenerator {
         final IRing first = RingSetManipulator.getMostComplexRing(rs);
 
         final boolean macro         = isMacroCycle(first, rs);
-        final boolean macroDbStereo = macro && first.stereoElements().iterator().hasNext();
         int result = 0;
 
         // Check for an exact match (identity) on the entire ring system
-        if (!macroDbStereo) {
-            if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
+        if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
+            if (hasCorrectDoubleBondConfig(first)) {
                 for (IAtomContainer container : rs.atomContainers())
                     container.setFlag(IChemObject.PLACED, true);
                 rs.setFlag(IChemObject.PLACED, true);
                 return macro ? 2 : 1;
-            } else {
-                // attempt ring peeling and retemplate
-                final IRingSet core = getRingSetCore(rs);
-                if (core.getAtomContainerCount() > 0 &&
-                    core.getAtomContainerCount() < rs.getAtomContainerCount() &&
-                    lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+            }
+        } else {
+            // attempt ring peeling and re-template
+            final IRingSet core = getRingSetCore(rs);
+            if (core.getAtomContainerCount() > 0 &&
+                core.getAtomContainerCount() < rs.getAtomContainerCount() &&
+                lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+                if (hasCorrectDoubleBondConfig(first)) {
                     for (IAtomContainer container : core.atomContainers())
                         container.setFlag(IChemObject.PLACED, true);
                 }
@@ -2011,6 +2177,17 @@ public class StructureDiagramGenerator {
         } while (!allPlaced(rs));
 
         return result;
+    }
+
+    private boolean hasCorrectDoubleBondConfig(IAtomContainer container) {
+        for (IStereoElement<?,?> se : container.stereoElements()) {
+            if (se instanceof IDoubleBondStereochemistry) {
+                IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
+                if (db.getStereo() != CorrectGeometricConfiguration.getConformation2d(db))
+                    return false;
+            }
+        }
+        return true;
     }
 
     /**

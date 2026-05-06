@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -33,11 +32,13 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.HydrogenState;
 
 import javax.vecmath.Point2d;
 import java.io.InputStream;
 
-class HydrogenPlacerTest extends CDKTestCase {
+class HydrogenPlacerTest {
 
     public boolean       standAlone = false;
     private final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(HydrogenPlacerTest.class);
@@ -105,7 +106,7 @@ class HydrogenPlacerTest extends CDKTestCase {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("H"));
         ac.getAtom(0).setPoint2d(new Point2d(0, 0));
-        addExplicitHydrogens(ac);
+        AtomContainerManipulator.normalizeHydrogens(ac, HydrogenState.Explicit);
         HydrogenPlacer hPlacer = new HydrogenPlacer();
         hPlacer.placeHydrogens2D(ac, 36);
         for (int i = 0; i < ac.getAtomCount(); i++) {
@@ -144,9 +145,9 @@ class HydrogenPlacerTest extends CDKTestCase {
         // generate new coords
         hydrogenPlacer.placeHydrogens2D(dichloromethane, carbon);
         // check that previously set coordinates are kept
-        assertEquals(carbonPos, carbon.getPoint2d(), 0.01);
-        assertEquals(cl1Pos, cl1.getPoint2d(), 0.01);
-        assertEquals(cl2Pos, cl2.getPoint2d(), 0.01);
+        Assertions2d.assertEquals(carbonPos, carbon.getPoint2d(), 0.01);
+        Assertions2d.assertEquals(cl1Pos, cl1.getPoint2d(), 0.01);
+        Assertions2d.assertEquals(cl2Pos, cl2.getPoint2d(), 0.01);
         Assertions.assertNotNull(h1.getPoint2d());
         Assertions.assertNotNull(h2.getPoint2d());
     }
@@ -169,7 +170,7 @@ class HydrogenPlacerTest extends CDKTestCase {
         double bondLength = GeometryUtil.getBondLengthAverage(mol);
         logger.debug("Read Reserpine");
         logger.debug("Starting addition of H's");
-        addExplicitHydrogens(mol);
+        AtomContainerManipulator.normalizeHydrogens(mol, HydrogenState.Explicit);
         logger.debug("ended addition of H's");
         hydrogenPlacer.placeHydrogens2D(mol, bondLength);
     }

@@ -59,6 +59,7 @@ class AromaticTypeMatcherTest {
     void boronTypes() throws InvalidSmilesException {
         assertAtomType("B1=NB=NB=N1", AromaticType.B2);
         assertAtomType("B1NBNBN1", AromaticType.B3);
+        assertAtomType("[B-]1(Cl)=[NH+][B-](Cl)=[NH+][B-](Cl)=[NH+]1", AromaticType.B3_MINUS);
         assertAtomType("B", AromaticType.UNKNOWN);
         assertAtomType("B(N)N", AromaticType.UNKNOWN);
     }

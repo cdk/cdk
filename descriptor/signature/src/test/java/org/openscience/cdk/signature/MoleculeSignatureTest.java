@@ -31,7 +31,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -48,7 +47,7 @@ import signature.AbstractVertexSignature;
  * @author maclean
  *
  */
-class MoleculeSignatureTest extends CDKTestCase {
+class MoleculeSignatureTest {
 
     private SmilesParser       parser;
 

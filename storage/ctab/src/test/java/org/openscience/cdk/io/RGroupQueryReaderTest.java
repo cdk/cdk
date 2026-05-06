@@ -28,6 +28,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
@@ -54,12 +56,14 @@ import java.util.Map;
 
 /**
  * JUnit tests for {@link org.openscience.cdk.io.RGroupQueryReader}.
+ *
  * @author Mark Rijnbeek
  * @author John Mayfield
  */
 class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
-    RGroupQueryReaderTest() {}
+    RGroupQueryReaderTest() {
+    }
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReaderTest.class);
 
@@ -199,7 +203,7 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                         Assertions.assertEquals(rGroups.get(1).getSecondAttachmentPoint().getSymbol(), "O");
                         Assertions.assertFalse(rList.isRestH());
                     }
-                        break;
+                    break;
                     case 2: {
                         IRGroupList rList = rGroupQuery.getRGroupDefinitions().get(2);
                         Assertions.assertEquals(rList.getRGroups().size(), 2);
@@ -207,7 +211,7 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                         Assertions.assertEquals(rList.getRequiredRGroupNumber(), 11);
                         Assertions.assertFalse(rList.isRestH());
                     }
-                        break;
+                    break;
                     case 11: {
                         IRGroupList rList = rGroupQuery.getRGroupDefinitions().get(11);
                         Assertions.assertEquals(rList.getRGroups().size(), 1);
@@ -218,7 +222,7 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                         Assertions.assertEquals(rGroups.get(0).getFirstAttachmentPoint().getSymbol(), "Pt");
                         Assertions.assertNull(rGroups.get(0).getSecondAttachmentPoint());
                     }
-                        break;
+                    break;
                 }
             }
         }
@@ -256,11 +260,11 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         RGroupQuery rGroupQuery = reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
         Assertions.assertNotNull(rGroupQuery);
-        Assertions.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 1);
-        Assertions.assertEquals(rGroupQuery.getRootStructure().getAtomCount(), 10);
-        Assertions.assertEquals(rGroupQuery.getRootAttachmentPoints().size(), 2);
+        Assertions.assertEquals(2, rGroupQuery.getRGroupDefinitions().size(), 2);
+        Assertions.assertEquals(10, rGroupQuery.getRootStructure().getAtomCount(), 10);
+        Assertions.assertEquals(2, rGroupQuery.getRootAttachmentPoints().size(), 2);
 
-        Assertions.assertEquals(rGroupQuery.getAllConfigurations().size(), 8);
+        Assertions.assertEquals(8, rGroupQuery.getAllConfigurations().size());
 
         //Test correctness AAL lines
         for (IAtom at : rGroupQuery.getRgroupQueryAtoms(1)) {
@@ -368,10 +372,10 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
     }
 
-                                /**
+    /**
      * Test parsing of RGFile rgfile.7.mol.
      * This RGFile has APO lines with value 3: both attachment points.<P>
-     *
+     * <p>
      * Also, R32 appears twice, but with different numbers of attachment.
      * The parser should not trip over this, and make nice configurations.
      */
@@ -387,7 +391,26 @@ class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 1);
         Assertions.assertEquals(rGroupQuery.getRootStructure().getAtomCount(), 9);
         Assertions.assertEquals(rGroupQuery.getAllConfigurations().size(), 20);
+    }
 
+    @Test
+    void testRgroupQueryFile5Strict() throws Exception {
+        String filename = "rgfile.5.mol";
+        try (RGroupQueryReader reader = new RGroupQueryReader(this.getClass().getResourceAsStream(filename))) {
+            reader.setReaderMode(IChemObjectReader.Mode.STRICT);
+            Assertions.assertThrows(CDKException.class,
+                                    () -> reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance())));
+        }
+    }
+
+    @Test
+    void testRgroupQueryFile7Strict() throws Exception {
+        String filename = "rgfile.7.mol";
+        try (RGroupQueryReader reader = new RGroupQueryReader(this.getClass().getResourceAsStream(filename))) {
+            reader.setReaderMode(IChemObjectReader.Mode.STRICT);
+            Assertions.assertThrows(CDKException.class,
+                                    () -> reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance())));
+        }
     }
 
 }

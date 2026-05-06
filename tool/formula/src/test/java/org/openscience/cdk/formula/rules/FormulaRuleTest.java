@@ -21,7 +21,6 @@ package org.openscience.cdk.formula.rules;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Isotope;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 
@@ -29,7 +28,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  * Tests for formula restriction rules.
  *
  */
-abstract class FormulaRuleTest extends CDKTestCase {
+abstract class FormulaRuleTest {
 
     private static IRule rule;
     private static Class<? extends IRule> ruleClass;

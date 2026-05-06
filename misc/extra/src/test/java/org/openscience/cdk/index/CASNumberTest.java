@@ -21,7 +21,6 @@ package org.openscience.cdk.index;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Tests CDK's CAS Number class.
@@ -33,7 +32,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.created    2003-07-01
  * @cdk.require java1.4+
  */
-class CASNumberTest extends CDKTestCase {
+class CASNumberTest {
 
     @Test
     void testValidNumbers() {

@@ -29,7 +29,6 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -49,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-class IteratingSDFReaderTest extends CDKTestCase {
+class IteratingSDFReaderTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSDFReaderTest.class);
 

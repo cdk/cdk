@@ -2,13 +2,12 @@ package org.openscience.cdk.formula;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Class testing the IsotopePattern class.
  *
  */
-class IsotopePatternTest extends CDKTestCase {
+class IsotopePatternTest {
 
     IsotopePatternTest() {
         super();

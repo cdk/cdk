@@ -35,6 +35,7 @@ import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.isomorphism.matchers.*;
+import org.openscience.cdk.renderer.selection.AtomBondSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.StereoElementFactory;
@@ -88,7 +89,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     // e.g. CHG=-1
     private static final Pattern keyValueTuple = Pattern.compile("\\s*(\\w+)=([^\\s]*)(.*)");
     // e.g. ATOMS=(1 31)
-    private static final Pattern keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)");
+    private static final Pattern keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^)]*)\\)(.*)");
     public static final String M_END = "M  END";
 
     private BooleanIOSetting optForce3d;
@@ -176,19 +177,19 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         boolean chiral = false;
         // true if the molecule has query features, false otherwise
         boolean isQuery = false;
-        Map<Integer,Integer> stereoflags = null;
-        final Map<IAtom,Integer> stereo0d = new HashMap<>();
+        Map<Integer, Integer> stereoflags = null;
+        AtomBondSelection selection = null;
+        final Map<IAtom, Integer> stereo0d = new HashMap<>();
 
         // atom/bond ids need not be sequential, we could use map but more
         // common is the ids will be sequential
         IAtom[] atomById = new IAtom[64];
         IBond[] bondById = new IBond[64];
 
-        <T> T[] grow(T[] arr, int req)
-        {
+        <T> T[] grow(T[] arr, int req) {
             int cap = arr.length;
             return Arrays.copyOf(arr, Math.max(cap + cap >> 1,
-                                               req + 1));
+                    req + 1));
         }
 
         void addAtom(int id, IAtom atom) {
@@ -327,6 +328,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         // skip infering and setting stereo chemistry if atom container has query features or aromatic bond
         if (!isQueryOrAromaticBond)
             finalizeStereochemistry(state, readAtomContainer);
+        if (state.selection != null)
+            readAtomContainer.setProperty(CDKConstants.SELECTION, state.selection);
 
         return readAtomContainer;
     }
@@ -334,7 +337,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     /**
      * Finalizes the stereochemistry of the molecule based on the ReadState object.
      *
-     * @param state the ReadState object containing the molecule and other relevant information
+     * @param state    the ReadState object containing the molecule and other relevant information
      * @param readData the IAtomContainer representing the molecule to finalize the stereochemistry
      */
     private void finalizeStereochemistry(ReadState state, IAtomContainer readData) {
@@ -342,16 +345,16 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
             if (state.dimensions == 3) { // has 3D coordinates
                 readData.setStereoElements(StereoElementFactory.using3DCoordinates(readData)
-                                                               .createAll());
+                        .createAll());
             } else if (state.dimensions == 2) { // has 2D coordinates (set as 2D coordinates)
                 readData.setStereoElements(StereoElementFactory.using2DCoordinates(readData)
-                                                               .createAll());
+                        .createAll());
             } else if (state.dimensions == 0 && optStereo0d.isSet()) {
                 // technically if a molecule is 2D/3D and has the CFG=1 or CFG=2
                 // specified this gives us hints information but it's safer to
                 // just use the coordinates or wedge bonds
                 for (Map.Entry<IAtom, Integer> e : state.stereo0d.entrySet()) {
-                    final IStereoElement<IAtom,IAtom> stereoElement
+                    final IStereoElement<IAtom, IAtom> stereoElement
                             = MDLV2000Reader.createStereo0d(state.mol, e.getKey(), e.getValue());
                     if (stereoElement != null)
                         state.mol.addStereoElement(stereoElement);
@@ -457,12 +460,12 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * Parses and extracts stereo group information from a given string.
      *
      * @param flags a map to store the stereo group flags
-     * @param str the string to parse for stereo group information
-     * @param type the type of stereo element to associate with the flags
+     * @param str   the string to parse for stereo group information
+     * @param type  the type of stereo element to associate with the flags
      * @throws CDKException if there is an error while parsing the stereo group
      */
-    private void parseStereoGroup(Map<Integer,Integer> flags, String str, int type) throws CDKException {
-        int i   = "MDLV30/STE???".length();
+    private void parseStereoGroup(Map<Integer, Integer> flags, String str, int type) throws CDKException {
+        int i = "MDLV30/STE???".length();
         final int len = str.length();
         int num = 0;
         char ch;
@@ -497,13 +500,84 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 val = 10 * val + (ch - '0');
                 i++;
             }
-            // val-1 since we store atom index instead of atom number
+            // we don't do -1 (idx) as we use atom.getID() to access later on
             if (val > 0)
                 flags.put(val, type);
             while (i < len && str.charAt(i) == ' ')
                 i++;
             if (i < len && str.charAt(i) == ')')
                 break;
+        }
+    }
+
+    private void parseSelection(AtomBondSelection selection,
+                                IAtomContainer mol,
+                                String str) throws CDKException {
+        int i = "MDLV30/HILITE".length();
+        int len = str.length();
+        char ch;
+
+        while (i < len) {
+
+            // skip space
+            while (i < len && str.charAt(i) == ' ')
+                i++;
+
+            // start of atom list
+            if (str.startsWith("ATOMS=(", i)) {
+                i += "ATOMS=(".length();
+
+                // skip the count since we're storing in map
+                while (i < len && isDigit(str.charAt(i)))
+                    i++;
+                while (i < len && str.charAt(i) == ' ')
+                    i++;
+
+                // parse the atoms
+                while (i < len) {
+                    int val = 0;
+                    while (i < len && isDigit(ch = str.charAt(i))) {
+                        val = 10 * val + (ch - '0');
+                        i++;
+                    }
+                    if (val >= 0 && val < mol.getAtomCount())
+                        selection.select(mol.getAtom(val - 1));
+                    while (i < len && str.charAt(i) == ' ')
+                        i++;
+                    if (i < len && str.charAt(i) == ')') {
+                        i++;
+                        break;
+                    }
+                }
+            } else if (str.startsWith("BONDS=(", i)) {
+                i += "BONDS=(".length();
+
+                // skip the count since we're storing in map
+                while (i < len && isDigit(str.charAt(i)))
+                    i++;
+                while (i < len && str.charAt(i) == ' ')
+                    i++;
+
+                // parse the atoms
+                while (i < len) {
+                    int val = 0;
+                    while (i < len && isDigit(ch = str.charAt(i))) {
+                        val = 10 * val + (ch - '0');
+                        i++;
+                    }
+                    if (val >= 0 && val < mol.getBondCount())
+                        selection.select(mol.getBond(val - 1));
+                    while (i < len && str.charAt(i) == ' ')
+                        i++;
+                    if (i < len && str.charAt(i) == ')') {
+                        i++;
+                        break;
+                    }
+                }
+            } else {
+                handleError("Error while parsing stereo group: Expected an atom collection.");
+                return;
+            }
         }
     }
 
@@ -526,6 +600,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 parseStereoGroup(state.stereoflags, command, IStereoElement.GRP_REL);
             } else if (command.startsWith("MDLV30/STEABS")) {
                 parseStereoGroup(state.stereoflags, command, IStereoElement.GRP_ABS);
+            } else if (command.startsWith("MDLV30/HILITE")) {
+                if (state.selection == null)
+                    state.selection = new AtomBondSelection();
+                parseSelection(state.selection, state.mol, command);
             }
         }
     }
@@ -699,7 +777,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                     atom.setProperty(CDKConstants.SPIN_MULTIPLICITY, spinMultiplicity);
                                     while (numElectons-- > 0) {
                                         readData.addSingleElectron(readData.getBuilder()
-                                                                           .newInstance(ISingleElectron.class, atom));
+                                                .newInstance(ISingleElectron.class, atom));
                                     }
                                     break;
                                 case "MASS":
@@ -740,7 +818,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // store atom
                 atom.setID(id);
                 readData.addAtom(atom);
-                state.addAtom(Integer.parseInt(id), readData.getAtom(readData.getAtomCount()-1));
+                state.addAtom(Integer.parseInt(id), readData.getAtom(readData.getAtomCount() - 1));
                 logger.debug("Added atom: " + atom);
             }
         }
@@ -881,6 +959,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                 case "ATTACH":
                                     attach = value;
                                     break;
+                                // reacting center status
+                                case "RXCTR":
+                                    int reactingCenterStatus = Integer.parseInt(value);
+                                    if (reactingCenterStatus != 0) {
+                                        MDLReactingCenterStatus mdlReactingCenterStatus = MDLReactingCenterStatus.fromValue(reactingCenterStatus);
+                                        bond.setProperty(CDKConstants.REACTING_CENTER_STATUS, mdlReactingCenterStatus);
+                                    }
+                                    break;
                                 // query property, bond topology
                                 case "TOPO":
                                     // key is only valid if bond is a query bond
@@ -942,7 +1028,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // storing bond
                 readData.addBond(bond);
                 state.addBond(Integer.parseInt(bond.getID()),
-                              readData.getBond(readData.getBondCount()-1));
+                        readData.getBond(readData.getBondCount() - 1));
 
                 // storing positional variation
                 if ("ANY".equals(attach)) {
@@ -1194,5 +1280,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             }
         }
     }
+
 
 }

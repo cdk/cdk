@@ -485,7 +485,7 @@ public final class InChITautomerGenerator {
             List<IAtom> atomsInNeedOfFix = new ArrayList<>();
             for (IAtom atom : tautomerSkeleton.atoms()) {
                 if (atom.getValency() - atom.getFormalCharge() != atom.getImplicitHydrogenCount()
-                        + getConnectivity(atom, tautomerSkeleton)) atomsInNeedOfFix.add(atom);
+                        + getConnectivity(atom)) atomsInNeedOfFix.add(atom);
             }
             List<Integer> dblBondPositions = tryDoubleBondCombinations(tautomerSkeleton, 0, 0, doubleBondCount,
                     atomsInNeedOfFix);
@@ -576,7 +576,7 @@ public final class InChITautomerGenerator {
                 IAtom atom = findAtomByPosition(skeleton, pos);
                 if (atom == null)
                     throw new IllegalStateException("Could not find H atom at position=" + pos);
-                int conn = getConnectivity(atom, skeleton);
+                int conn = getConnectivity(atom);
                 int hCnt = 0;
                 for (int t : taken)
                     if (t == pos) hCnt++;
@@ -617,77 +617,81 @@ public final class InChITautomerGenerator {
      *
      * @param container
      * @param dblBondsAdded counts double bonds added so far
-     * @param bondOffSet offset for next double bond position to consider
+     * @param offset offset for next double bond position to consider
      * @param doubleBondMax maximum number of double bonds to add
      * @param atomsInNeedOfFix atoms that require more bonds
      * @return a list of double bond positions (index) that make a valid combination, null if none found
      */
-    private List<Integer> tryDoubleBondCombinations(IAtomContainer container, int dblBondsAdded, int bondOffSet,
-            int doubleBondMax, List<IAtom> atomsInNeedOfFix) {
-
-        int offSet = bondOffSet;
+    private List<Integer> tryDoubleBondCombinations(IAtomContainer container,
+                                                    int dblBondsAdded,
+                                                    int offset,
+                                                    int doubleBondMax,
+                                                    List<IAtom> atomsInNeedOfFix) {
         List<Integer> dblBondPositions = null;
-
-        while (offSet < container.getBondCount() && dblBondPositions == null) {
-            IBond bond = container.getBond(offSet);
-            if (atomsInNeedOfFix.contains(bond.getBegin()) && atomsInNeedOfFix.contains(bond.getEnd())) {
-                bond.setOrder(IBond.Order.DOUBLE);
-                dblBondsAdded = dblBondsAdded + 1;
-                if (dblBondsAdded == doubleBondMax) {
-                    boolean validDoubleBondConfig = true;
-                    CHECK: for (IAtom atom : container.atoms()) {
-                        if (atom.getValency() != atom.getImplicitHydrogenCount() + getConnectivity(atom, container)) {
-                            validDoubleBondConfig = false;
-                            break CHECK;
-                        }
-                    }
-                    if (validDoubleBondConfig) {
-                        dblBondPositions = new ArrayList<>();
-                        for (int idx = 0; idx < container.getBondCount(); idx++) {
-                            if (container.getBond(idx).getOrder().equals(IBond.Order.DOUBLE))
-                                dblBondPositions.add(idx);
-                        }
-                        return dblBondPositions;
-                    }
-                } else {
-                    dblBondPositions = tryDoubleBondCombinations(container, dblBondsAdded, offSet + 1, doubleBondMax,
-                            atomsInNeedOfFix);
+        if (dblBondsAdded == doubleBondMax) {
+            for (IAtom atom : container.atoms()) {
+                if (atom.getValency() != atom.getImplicitHydrogenCount() + getConnectivity(atom)) {
+                    return null;
                 }
-
-                bond.setOrder(IBond.Order.SINGLE);
-                dblBondsAdded = dblBondsAdded - 1;
             }
-            offSet++;
+            dblBondPositions = new ArrayList<>();
+            for (int idx = 0; idx < container.getBondCount(); idx++) {
+                if (container.getBond(idx).getOrder().equals(IBond.Order.DOUBLE))
+                    dblBondPositions.add(idx);
+            }
+            return dblBondPositions;
         }
-        return dblBondPositions;
+
+        if (offset >= container.getBondCount())
+            return null;
+
+        IBond bond = container.getBond(offset);
+        if (atomsInNeedOfFix.contains(bond.getBegin()) &&
+            atomsInNeedOfFix.contains(bond.getEnd())) {
+            bond.setOrder(IBond.Order.DOUBLE);
+
+            // these atoms no longer need a double-bond
+            atomsInNeedOfFix.remove(bond.getBegin());
+            atomsInNeedOfFix.remove(bond.getEnd());
+
+            dblBondPositions = tryDoubleBondCombinations(container, dblBondsAdded + 1, offset + 1, doubleBondMax,
+                                                         atomsInNeedOfFix);
+
+            atomsInNeedOfFix.add(bond.getBegin());
+            atomsInNeedOfFix.add(bond.getEnd());
+
+            if (dblBondPositions != null)
+                return dblBondPositions;
+        }
+
+        bond.setOrder(IBond.Order.SINGLE);
+        return tryDoubleBondCombinations(container, dblBondsAdded, offset + 1, doubleBondMax,
+                                         atomsInNeedOfFix);
     }
 
     /**
      * Sums the number of bonds (counting order) an atom is hooked up with.
      * @param atom an atom in the container
-     * @param container the container
      * @return valence (bond order sum) of the atom
      */
-    private int getConnectivity(IAtom atom, IAtomContainer container) {
+    private int getConnectivity(IAtom atom) {
         int connectivity = 0;
-        for (IBond bond : container.bonds()) {
-            if (bond.contains(atom)) {
-                switch (bond.getOrder()) {
-                    case SINGLE:
-                        connectivity++;
-                        break;
-                    case DOUBLE:
-                        connectivity += 2;
-                        break;
-                    case TRIPLE:
-                        connectivity += 3;
-                        break;
-                    case QUADRUPLE:
-                        connectivity += 4;
-                        break;
-                    default:
-                        connectivity += 10;
-                }
+        for (IBond bond : atom.bonds()) {
+            switch (bond.getOrder()) {
+                case SINGLE:
+                    connectivity++;
+                    break;
+                case DOUBLE:
+                    connectivity += 2;
+                    break;
+                case TRIPLE:
+                    connectivity += 3;
+                    break;
+                case QUADRUPLE:
+                    connectivity += 4;
+                    break;
+                default:
+                    connectivity += 10;
             }
         }
         return connectivity;

@@ -556,14 +556,11 @@ final class CxSmartsParser {
                     return iter.pos;
                 case 'L':
                     // LO, Ligand Ordering
-                    if (iter.nextIf('O')) {
-                        if (!iter.nextIf(':'))
-                            return -1;
+                    if (iter.nextIf("O:")) {
                         if (!processLigandOrdering(iter, state))
                             return -1;
-                    }
-                    else {
-                        // LP, bond connected lone pair?
+                    } else {
+                        // LP, bond connected lone pair - fail
                         return -1;
                     }
                     break;

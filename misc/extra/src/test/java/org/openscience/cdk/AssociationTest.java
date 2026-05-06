@@ -22,7 +22,6 @@ package org.openscience.cdk;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the Association class.
@@ -30,7 +29,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.Association
  */
-class AssociationTest extends CDKTestCase {
+class AssociationTest {
 
     @Test
     void testAssociation() {

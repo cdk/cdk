@@ -20,11 +20,10 @@ package org.openscience.cdk.reaction;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class ReactionSpecificationTest extends CDKTestCase {
+class ReactionSpecificationTest {
 
     ReactionSpecificationTest() {
         super();

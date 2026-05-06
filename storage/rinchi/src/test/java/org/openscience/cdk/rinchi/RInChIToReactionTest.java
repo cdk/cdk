@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Uli Fechner
  */
-class RInChIToReactionTest extends CDKTestCase {
+class RInChIToReactionTest {
     private final SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Canonical);
 
     @Test

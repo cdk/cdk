@@ -24,14 +24,13 @@ package org.openscience.cdk.geometry.cip;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  */
-class ImplicitHydrogenLigandTest extends CDKTestCase {
+class ImplicitHydrogenLigandTest {
 
     @Test
     void testConstructorAndGetMethods() throws Exception {

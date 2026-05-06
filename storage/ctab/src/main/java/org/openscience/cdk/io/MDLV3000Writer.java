@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -43,6 +42,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
+import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -527,6 +527,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                     break;
             }
 
+            if (bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class) != null) {
+                writer.write(" RXCTR=").write(bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class).getValue());
+            }
+
             if (queryProperty != MDLQueryProperty.getDefaultValue()) {
                 writer.write(" TOPO=").write(queryProperty.getValue());
             }
@@ -549,11 +553,11 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * for implicit hydrogens. Old applications (Symyx Draw) seem to push any
      * hydrogen to (implied) the last position but newer applications
      * (Accelrys/BioVia Draw) only do so for implicit hydrogens (makes more sense).
-     * 
+     * <p>
      * To avoid the ambiguity for those who read 0D stereo (bad anyways) we
      * actually do push all hydrogens atoms to the back of the atom list giving
      * them the highest value (4) when writing parity values.
-     *
+     * </p>
      * @param mol       molecule
      * @param atomToIdx mapping that will be filled with the output index
      * @return the output order of atoms
@@ -785,8 +789,9 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         writeAtomBlock(mol, atoms, idxs, atomToStereo);
         writeBondBlock(mol, idxs);
         writeSgroupBlock(sgroups, idxs);
-        if (chiralFlag > 1)
-            writeEnhancedStereo(mol, idxs);
+        IChemObjectSelection selection = mol.getProperty(CDKConstants.SELECTION);
+        if (chiralFlag > 1 || selection != null)
+            writeCollections(mol, idxs, selection);
 
         writer.write("END CTAB\n");
         writer.writeDirect("M  END\n");
@@ -801,7 +806,9 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         writer.writer.flush();
     }
 
-    private void writeEnhancedStereo(IAtomContainer mol, Map<IChemObject, Integer> idxs) throws IOException {
+    private void writeCollections(IAtomContainer mol,
+                                  Map<IChemObject, Integer> idxs,
+                                  IChemObjectSelection selection) throws IOException {
         // group together
         final Map<Integer,List<IAtom>> groups = new TreeMap<>();
         for (IStereoElement<?,?> se : mol.stereoElements()) {
@@ -833,13 +840,39 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                     throw new IllegalStateException("Unexpected ");
             }
             writer.write(" ATOMS=(");
-            writer.write(idxs.get(atoms.get(0)));
-            for (int i=1; i<atoms.size(); i++) {
+            writer.write(atoms.size());
+            for (IAtom atom : atoms) {
                 writer.write(' ');
-                writer.write(idxs.get(atoms.get(i)));
+                writer.write(idxs.get(atom));
             }
             writer.write(")\n");
         }
+
+        if (selection != null) {
+            writer.write("MDLV30/HILITE");
+            Collection<IAtom> atoms = selection.elements(IAtom.class);
+            if (!atoms.isEmpty()) {
+                writer.write(" ATOMS=(");
+                writer.write(atoms.size());
+                for (IAtom atom : atoms) {
+                    writer.write(' ');
+                    writer.write(idxs.get(atom));
+                }
+                writer.write(")");
+            }
+            Collection<IBond> bonds = selection.elements(IBond.class);
+            if (!bonds.isEmpty()) {
+                writer.write(" BONDS=(");
+                writer.write(bonds.size());
+                for (IBond bond : bonds) {
+                    writer.write(' ');
+                    writer.write(idxs.get(bond));
+                }
+                writer.write(")");
+            }
+            writer.write("\n");
+        }
+
         writer.write("END COLLECTION\n");
     }
 

@@ -36,6 +36,8 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.HydrogenState;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -57,13 +59,23 @@ final class TransformPlan {
             = LoggingToolFactory.createLoggingTool(TransformPlan.class);
     private static final String SMIRKS_NEWSTEREO = "smirks.newstereo";
 
+    private final List<TransformOp> preprocessing;
     private final List<TransformOp> ops;
     private final int numNewAtoms;
 
     TransformPlan(List<TransformOp> ops) {
         // determine strategy/plan params
         this.numNewAtoms = numNewAtoms(ops);
-        this.ops = new ArrayList<>(ops);
+        this.preprocessing = new ArrayList<>(1);
+        this.ops = new ArrayList<>();
+
+        for (TransformOp op : ops) {
+            if (op.getPriority() < 0) {
+                this.preprocessing.add(op);
+            } else {
+                this.ops.add(op);
+            }
+        }
 
         // ensure op-codes are run in a specific order, bonds must be deleted
         // before atoms, atoms must be created before bonds. We also prioritize
@@ -890,5 +902,18 @@ final class TransformPlan {
     private void undo(IAtomContainer mol, IAtom[] amap, int n) {
         for (int i = n - 1; i >= 0; i--)
             undo(mol, amap, ops.get(i));
+    }
+
+    /**
+     * Apply any preprocessing op-codes to the provided molecule.
+     * @param mol the molecule
+     */
+    void preprocess(IAtomContainer mol) {
+        for (TransformOp op : preprocessing) {
+            if (op.type() == TransformOp.Type.ExpandHydrogens) {
+                AtomContainerManipulator.normalizeHydrogens(mol,
+                                                            HydrogenState.Explicit);
+            }
+        }
     }
 }

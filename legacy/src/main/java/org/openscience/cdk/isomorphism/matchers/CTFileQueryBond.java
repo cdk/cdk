@@ -51,7 +51,7 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
     /**
      * The type of this bond.
      */
-    protected Type type = (Type) CDKConstants.UNSET;
+    protected Type type = null;
 
     /**
      * Getter for bond type

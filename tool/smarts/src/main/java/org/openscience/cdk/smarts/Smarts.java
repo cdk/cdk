@@ -37,6 +37,8 @@ import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
@@ -2455,6 +2457,28 @@ public final class Smarts {
                     mol.getAtom(i).setPoint2d(new Point2d(xyz));
             }
         }
+
+        List<Sgroup> sgroups = new ArrayList<>();
+
+        // positional-variation
+        if (cxstate.positionVar != null) {
+            for (Map.Entry<Integer, List<Integer>> e : cxstate.positionVar.entrySet()) {
+                Sgroup sgroup = new Sgroup();
+                sgroup.setType(SgroupType.ExtMulticenter);
+                IAtom beg = mol.getAtom(e.getKey());
+                List<IBond> connectedBonds = mol.getConnectedBondsList(beg);
+                if (connectedBonds.isEmpty())
+                    continue; // possibly okay
+                sgroup.addAtom(beg);
+                sgroup.addBond(connectedBonds.get(0));
+                for (Integer endpt : e.getValue())
+                    sgroup.addAtom(mol.getAtom((endpt)));
+                sgroups.add(sgroup);
+            }
+        }
+
+        if (!sgroups.isEmpty())
+            mol.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
     }
 
     /**

@@ -23,8 +23,6 @@ package org.openscience.cdk.graph.invariant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,7 +42,7 @@ import java.io.InputStream;
  * @author      Luis F. de Figueiredo
  * @cdk.created 2003-09-26
  */
-class EquivalentClassPartitionerTest extends CDKTestCase {
+class EquivalentClassPartitionerTest {
 
     @Test
     void testEquivalent() throws Exception {

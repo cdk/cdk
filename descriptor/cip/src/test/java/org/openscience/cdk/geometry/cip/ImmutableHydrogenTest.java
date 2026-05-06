@@ -30,7 +30,6 @@ import javax.vecmath.Point3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -39,7 +38,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  */
-class ImmutableHydrogenTest extends CDKTestCase {
+class ImmutableHydrogenTest {
 
     // FIXME: think about how to cover all other IAtom methods that are not implemented...
 

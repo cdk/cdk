@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.test.CDKTestCase;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -43,7 +42,7 @@ import java.io.InputStream;
  * Checks the functionality of the IsotopeFactory
  *
  */
-class XMLIsotopeFactoryTest extends CDKTestCase {
+class XMLIsotopeFactoryTest {
 
     private final boolean standAlone = false;
     final static AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());

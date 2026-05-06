@@ -61,12 +61,14 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Right;
@@ -210,7 +212,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             annFontSize                            = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
             sgroupFontScale                        = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes(),
             forceDelocalised                       = new ForceDelocalisedBondDisplay(), delocaliseDonuts = new DelocalisedDonutsBondDisplay(),
-            deuteriumSymbol                        = new DeuteriumSymbol(), pseudoFontStyle = new PseudoFontStyle();
+            deuteriumSymbol                        = new DeuteriumSymbol(), pseudoFontStyle = new PseudoFontStyle(),
+            rGroupBoxColors                        = new RGroupBoxColors();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -433,6 +436,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         // Annotations are added to the front layer.
         frontLayer.add(annotations);
 
+        backLayer.add(generateRGrpLabels(container, bondElements, parameters, font, foreground, scale, 2*stroke));
+
         ElementGroup group = new ElementGroup();
 
         group.add(backLayer);
@@ -457,9 +462,83 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
             group.add(GeneralPath.shapeOf(chiralInfo.getOutline(), foreground));
         }
-
-
         return MarkedElement.markupMol(group, container);
+    }
+
+    private List<IRenderingElement> generateRGrpLabels(IAtomContainer container,
+                                                       IRenderingElement[] bondElements,
+                                                       RendererModel model,
+                                                       Font font,
+                                                       Color foreground,
+                                                       double scale,
+                                                       double padding) {
+        List<IRenderingElement> renderingElements = new ArrayList<>();
+
+        Map<String,Bounds> rGrpsBounds = new TreeMap<>();
+        for (IAtom atom : container.atoms()) {
+            if (isHidden(atom))
+                continue;
+            String rlabel = atom.getProperty(CDKConstants.RGROUP_MEMBERSHIP);
+            if (rlabel != null) {
+                Bounds atomBounds = atom.getProperty(CDKConstants.RENDER_BOUNDS);
+                Bounds rGrpBounds = rGrpsBounds.computeIfAbsent(rlabel, k -> new Bounds());
+                if (atomBounds != null)
+                    rGrpBounds.add(atomBounds);
+                else
+                    rGrpBounds.add(atom.getPoint2d().x, atom.getPoint2d().y);
+                // consider the bounds of connected bonds as well
+                for (IBond bond : container.getConnectedBondsList(atom)) {
+                    if (bondElements[container.indexOf(bond)] != null)
+                        rGrpBounds.add(bondElements[container.indexOf(bond)]);
+                }
+            }
+        }
+
+        int colorIndex = 0;
+        Color[] boxColors = model.getParameter(RGroupBoxColors.class)
+                                 .getValue();
+
+        for (Map.Entry<String,Bounds> e : rGrpsBounds.entrySet()) {
+            Bounds bounds = e.getValue();
+            String rLab = e.getKey();
+            ElementGroup rText = createRGroupLabel(model, font, foreground,
+                                                   scale, padding, rLab, bounds);
+            if (boxColors != null) {
+                Shape s = new RoundRectangle2D.Double(bounds.minX - 2 * padding,
+                                                      bounds.minY - 2 * padding,
+                                                      bounds.width() + 4 * padding,
+                                                      bounds.height() + 4 * padding,
+                                                      8 * padding, 8 * padding);
+                Color boxColor = boxColors[colorIndex++ % boxColors.length];
+                renderingElements.add(GeneralPath.shapeOf(s, boxColor));
+            }
+            renderingElements.add(rText);
+        }
+        return renderingElements;
+    }
+
+    private ElementGroup createRGroupLabel(RendererModel model,
+                                           Font font,
+                                           Color foreground,
+                                           double scale,
+                                           double padding,
+                                           String label,
+                                           Bounds b) {
+        AtomSymbol symbol = atomGenerator.generatePseudoSymbol(label, Right, model)
+                                         .resize(1 / scale, -1 / scale);
+        TextOutline isText = new TextOutline("is", font).resize(1 / scale, -1 / scale);
+        Rectangle2D symbolBounds = symbol.getBounds();
+        isText = isText.translate(b.minX - isText.getBounds().getMaxX() - 4 * padding,
+                                  ((b.minY + b.maxY) / 2) - isText.getBounds().getCenterY());
+        symbol = symbol.translate(isText.getBounds().getMinX() - symbolBounds.getMaxX() - 2 * padding,
+                                  isText.getBounds().getMinY() - symbolBounds.getMinY());
+
+        ElementGroup rText = new ElementGroup();
+        rText.add(GeneralPath.shapeOf(isText.getOutline(), foreground));
+        for (Shape s : symbol.getOutlines()) {
+            rText.add(GeneralPath.shapeOf(s, foreground));
+        }
+        return rText;
     }
 
     private static boolean isOuterglow(HighlightStyle style) {
@@ -690,6 +769,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             double maxRadius = 0;
 
             for (IPseudoAtom atom : attachPoints) {
+                if (isHidden(atom))
+                    continue;
                 int attachNum = atom.getAttachPointNum();
 
                 // to ensure consistent draw distance we need to adjust the annotation distance
@@ -874,7 +955,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
                              hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
                              annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes, forceDelocalised, delocaliseDonuts,
-                             deuteriumSymbol, pseudoFontStyle);
+                             deuteriumSymbol, pseudoFontStyle, rGroupBoxColors);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
@@ -1473,6 +1554,26 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         @Override
         public Integer getDefault() {
             return 3; // Font.BOLD|Font.ITALIC;
+        }
+    }
+
+    /**
+     * This set of colors is used to add a colored the background box
+     * around R-Group definitions. The colours are cycled so adding a single
+     * color means all R-Groups will be coloured like that, setting it to null
+     * will mean the box is omitted completely.
+     */
+    public static final class RGroupBoxColors
+            extends AbstractGeneratorParameter<Color[]> {
+
+        /**{@inheritDoc} */
+        @Override
+        public Color[] getDefault() {
+            return new Color[]{new Color(230, 237, 255),
+                               new Color(233, 255, 232),
+                               new Color(255, 240, 214),
+                               new Color(255, 224, 224),
+                               new Color(254, 217, 255)};
         }
     }
 }

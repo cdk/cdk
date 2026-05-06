@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -41,7 +40,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
  * @author     steinbeck
  * @cdk.created    2002-11-16
  */
-class BremserPredictorTest extends CDKTestCase {
+class BremserPredictorTest {
 
     static boolean standAlone = false;
 

@@ -23,7 +23,6 @@ import java.util.Iterator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the DictionaryDatabase class.
@@ -31,7 +30,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictionaryDatabase
  */
-class DictDBTest extends CDKTestCase {
+class DictDBTest {
 
     @Test
     void testDictionaryDatabase() {

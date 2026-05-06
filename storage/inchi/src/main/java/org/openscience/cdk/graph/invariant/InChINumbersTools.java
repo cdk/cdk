@@ -137,24 +137,30 @@ public class InChINumbersTools {
             Arrays.fill(first, -1);
 
             if ((index = aux.indexOf("/F:")) >= 0) {
-                String[] fixedHNumbers = aux.substring(index + 3, aux.indexOf('/', index + 3)).split(";");
+                int fEnd = aux.indexOf('/', index + 3);
+                if (fEnd < 0) fEnd = aux.length();
+                String[] fixedHNumbers = aux.substring(index + 3, fEnd).split(";");
+                int b = 0; // independent base-component cursor
                 for (int i = 0; i < fixedHNumbers.length; i++) {
                     String component = fixedHNumbers[i];
 
                     // m, 2m, 3m ... need to lookup number in the base numbering
                     if (component.charAt(component.length() - 1) == 'm') {
-                        int n = component.length() > 1 ? Integer
-                                .parseInt(component.substring(0, component.length() - 1)) : 1;
-                        for (int j = 0; j < n; j++) {
-                            String[] numbering = baseNumbers[i + j].split(",");
-                            first[i + j] = Integer.parseInt(numbering[0]) - 1;
+                        int n = component.length() > 1
+                                ? Integer.parseInt(component.substring(0, component.length() - 1))
+                                : 1;
+                        for (int j = 0; j < n && (b + j) < baseNumbers.length ; j++) {
+                            String[] numbering = baseNumbers[b + j].split(",");
+                            first[b + j] = Integer.parseInt(numbering[0]) - 1;
                             for (String number : numbering)
                                 numbers[Integer.parseInt(number) - 1] = label++;
                         }
+                        b += n;
                     } else {
                         String[] numbering = component.split(",");
                         for (String number : numbering)
                             numbers[Integer.parseInt(number)-1] = label++;
+                        b++;
                     }
                 }
             } else {

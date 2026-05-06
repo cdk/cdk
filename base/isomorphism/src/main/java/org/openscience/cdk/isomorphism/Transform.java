@@ -210,6 +210,9 @@ public class Transform {
         if (status == Status.ERROR)
             return Collections.emptyList();
 
+        // apply any pre-processing ops
+        plan.preprocess(mol);
+
         if (mode == Mode.Exclusive) {
             IAtomContainer cpy = copyOf(mol);
             if (apply(cpy, limit))

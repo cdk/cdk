@@ -21,7 +21,6 @@ package org.openscience.cdk.config.isotopes;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IIsotope;
 
@@ -33,7 +32,7 @@ import java.util.List;
  * Checks the functionality of the IsotopeFactory
  *
  */
-class IsotopeReaderTest extends CDKTestCase {
+class IsotopeReaderTest {
 
     @Test
     void testIsotopeReader_InputStream_IChemObjectBuilder() {

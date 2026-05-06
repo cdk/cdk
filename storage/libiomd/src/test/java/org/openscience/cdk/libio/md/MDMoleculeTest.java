@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -51,7 +50,7 @@ import org.xmlcml.cml.element.CMLAtom;
 
 /**
  */
-class MDMoleculeTest extends CDKTestCase {
+class MDMoleculeTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDMoleculeTest.class);
 

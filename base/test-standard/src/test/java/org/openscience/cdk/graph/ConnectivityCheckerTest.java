@@ -47,9 +47,12 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -164,11 +167,11 @@ class ConnectivityCheckerTest extends CDKTestCase {
         // we don't know which partition contains the LP and which the electron
         Assertions.assertTrue(moleculeSet.getAtomContainer(0).getConnectedSingleElectronsCount(
                 moleculeSet.getAtomContainer(0).getAtom(0)) == 0
-                || moleculeSet.getAtomContainer(1).getConnectedSingleElectronsCount(
+                              || moleculeSet.getAtomContainer(1).getConnectedSingleElectronsCount(
                 moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
         Assertions.assertTrue(moleculeSet.getAtomContainer(0).getConnectedLonePairsCount(
                 moleculeSet.getAtomContainer(0).getAtom(0)) == 0
-                || moleculeSet.getAtomContainer(1).getConnectedLonePairsCount(
+                              || moleculeSet.getAtomContainer(1).getConnectedLonePairsCount(
                 moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
     }
 
@@ -424,4 +427,58 @@ class ConnectivityCheckerTest extends CDKTestCase {
         Assertions.assertTrue(found);
     }
 
+    static void assertSplit(String smi,
+                            boolean strict,
+                            String... expected) throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
+        List<String> actual = new ArrayList<>();
+        IAtomContainer mol = smi.contains(">") ? ReactionManipulator.toMolecule(smipar.parseReactionSmiles(smi)) : smipar.parseSmiles(smi);
+        for (IAtomContainer part : ConnectivityChecker.partitionIntoMolecules(mol, strict, strict)) {
+            actual.add(smigen.create(part));
+        }
+        Assertions.assertEquals(Arrays.asList(expected), actual);
+    }
+
+    static void assertStrictSplit(String smi,
+                                  String... expected) throws CDKException {
+        assertSplit(smi, true, expected);
+    }
+
+    static void assertNonStrictSplit(String smi,
+                                  String... expected) throws CDKException {
+        assertSplit(smi, false, expected);
+    }
+
+    @Test
+    public void strictSplittingMulticenterBonds() throws CDKException {
+        assertStrictSplit("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|",
+                    "c1ccccc1", "*Cl");
+        assertStrictSplit("c1ccccc1.*Cl.n1ccccc1.*Br |m:6:0.1.2.3.4.5,14:8.9.10.11.12.13|",
+                    "c1ccccc1", "*Cl", "n1ccccc1", "*Br");
+    }
+
+    @Test
+    public void nonStrictSplittingMulticenterBonds() throws CDKException {
+        assertNonStrictSplit("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|",
+                             "c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
+        assertNonStrictSplit("c1ccccc1.*Cl.n1ccccc1.*Br |m:6:0.1.2.3.4.5,14:8.9.10.11.12.13|",
+                             "c1ccccc1.*Cl |m:6:0.1.2.3.4.5|", "n1ccccc1.*Br |m:6:0.1.2.3.4.5|");
+    }
+
+    @Test
+    public void strictSplittingComponentGrouping() throws CDKException {
+        assertStrictSplit("c1ccccc1[O-].[Na+]>> |f:0.1|",
+                    "c1ccccc1[O-]", "[Na+]");
+        assertStrictSplit("c1ccccc1[O-].[Na+]>[K+].[K+].[O-]C(=O)[O-]> |f:0.1,2.3.4|",
+                    "c1ccccc1[O-]", "[Na+]", "[K+]", "[K+]", "[O-]C(=O)[O-]");
+    }
+
+    @Test
+    public void nonStrictSplittingComponentGrouping() throws CDKException {
+        assertNonStrictSplit("c1ccccc1[O-].[Na+]>> |f:0.1|",
+                             "c1ccccc1[O-].[Na+]");
+        assertNonStrictSplit("c1ccccc1[O-].[Na+]>[K+].[K+].[O-]C(=O)[O-]> |f:0.1,2.3.4|",
+                             "c1ccccc1[O-].[Na+]", "[K+].[K+].[O-]C(=O)[O-]");
+    }
 }

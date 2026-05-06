@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
@@ -47,7 +46,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Test Murcko fragmenter.
  *
  */
-class MurckoFragmenterTest extends CDKTestCase {
+class MurckoFragmenterTest {
 
     private static MurckoFragmenter fragmenter;
     private static SmilesParser     smilesParser;

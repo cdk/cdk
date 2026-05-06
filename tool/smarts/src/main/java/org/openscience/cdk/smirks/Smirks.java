@@ -19,6 +19,7 @@
 
 package org.openscience.cdk.smirks;
 
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.config.Elements;
@@ -295,10 +296,17 @@ public class Smirks {
             }
         }
 
+        // add the pre/post processing op-codes
+        if (state.opts.contains(SmirksOption.EXPAND_HYDROGENS) &&
+            matchesExplicitHydrogen(query)) {
+             ops.add(0, new TransformOp(TransformOp.Type.ExpandHydrogens, 0));
+        }
+
         if (state.opts.contains(SmirksOption.REMOVE_UNMAPPED_FRAGMENTS))
             ops.add(new TransformOp(TransformOp.Type.RemoveUnmapped, 0));
         if (state.opts.contains(SmirksOption.RECOMPUTE_HYDROGENS))
             ops.add(new TransformOp(TransformOp.Type.RecomputeHydrogens, 0));
+
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(Smarts.generate(query));
@@ -309,6 +317,50 @@ public class Smirks {
         transform.init(DfPattern.findSubstructure(query), ops, state.getMessage());
 
         return true;
+    }
+
+    /**
+     * Checks if any atom in this query can match an explicit hydrogen.
+     * @param query the query
+     * @return the query can match an explicit hydrogen
+     */
+    private static boolean matchesExplicitHydrogen(QueryAtomContainer query) {
+        for (IAtom atom : query.atoms()) {
+            if (matchesExplicitHydrogen(((QueryAtom)AtomRef.deref(atom)).getExpression()))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if an atom expression can match an explicit hydrogen.
+     * @param expr the query expressions
+     * @return the expression can match an explicit hydrogen
+     */
+    private static boolean matchesExplicitHydrogen(Expr expr) {
+        switch (expr.type()) {
+            case AND:
+                return matchesExplicitHydrogen(expr.left()) &&
+                       matchesExplicitHydrogen(expr.right());
+            case OR:
+                return matchesExplicitHydrogen(expr.left()) ||
+                       matchesExplicitHydrogen(expr.right());
+            case NOT:
+                return !matchesExplicitHydrogen(expr.left());
+            case FALSE:
+                return false;
+            case ELEMENT:
+            case AROMATIC_ELEMENT:
+            case ALIPHATIC_ELEMENT:
+            case PERIODIC_GROUP:
+                return expr.value() == 1;
+            case IS_HETERO: // !C!H
+            case IS_ALIPHATIC_HETERO: // !C!H
+                return false;
+            default:
+                // by default every other expressions is presumed to match
+                return true;
+        }
     }
 
     private static void markParts(QueryAtomContainer query) {

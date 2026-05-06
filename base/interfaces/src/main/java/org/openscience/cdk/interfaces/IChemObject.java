@@ -98,6 +98,13 @@ public interface IChemObject extends ICDKObject {
     int SINGLE_OR_DOUBLE = 0x1000;
 
     /**
+     * Flag to indicate a flattened molecule holds a Markush structure, you
+     * can work on it as is or it might make more sense to repack into
+     * something sensible like a RGroupQuery.
+     */
+    int MARKUSH = 0x2000;
+
+    /**
      * Use this to add yourself to this IChemObject as a listener. In order to do
      * so, you must implement the ChemObjectListener Interface.
      *

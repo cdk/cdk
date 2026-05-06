@@ -46,34 +46,34 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * The default value is {@link CDKConstants#UNSET} and serves to provide a check whether the charge has been
      * set or not
      */
-    protected Double charge = (Double) CDKConstants.UNSET;
+    protected Double charge = null;
 
     /**
      * A 2D point specifying the location of this atom in a 2D coordinate
      * space.
      */
-    protected Point2d point2d = (Point2d) CDKConstants.UNSET;
+    protected Point2d point2d = null;
 
     /**
      * A 3 point specifying the location of this atom in a 3D coordinate
      * space.
      */
-    protected Point3d point3d = (Point3d) CDKConstants.UNSET;
+    protected Point3d point3d = null;
 
     /**
      * A 3 point specifying the location of this atom in a crystal unit cell.
      */
-    protected Point3d fractionalPoint3d = (Point3d) CDKConstants.UNSET;
+    protected Point3d fractionalPoint3d = null;
 
     /**
      * The number of implicitly bound hydrogen atoms for this atom.
      */
-    protected Integer hydrogenCount = (Integer) CDKConstants.UNSET;
+    protected Integer hydrogenCount = null;
 
     /**
      * A stereo parity descriptor for the stereochemistry of this atom.
      */
-    protected Integer stereoParity = (Integer) CDKConstants.UNSET;
+    protected Integer stereoParity = null;
 
     /**
      * The maximum bond order allowed for this atom type.
@@ -82,12 +82,12 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     /**
      * The maximum sum of all bond orders allowed for this atom type.
      */
-    Double bondOrderSum = (Double) CDKConstants.UNSET;
+    Double bondOrderSum = null;
 
     /**
      * The covalent radius of this atom type.
      */
-    Double covalentRadius = (Double) CDKConstants.UNSET;
+    Double covalentRadius = null;
 
     /**
      * The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
@@ -95,30 +95,30 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Note that some constructors e.g. ({@link org.openscience.cdk.silent.AtomType#AtomType(String)} and
      * {@link org.openscience.cdk.silent.AtomType#AtomType(String, String)} ) will explicitly set this field to 0
      */
-    protected Integer formalCharge = (Integer) CDKConstants.UNSET;
+    protected Integer formalCharge = null;
 
     /**
      * The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
      * as default.
      */
-    protected IAtomType.Hybridization hybridization = (Hybridization) CDKConstants.UNSET;
+    protected IAtomType.Hybridization hybridization = null;
 
     /**
      * The electron Valency of this atom with CDKConstants.UNSET as default.
      */
-    protected Integer electronValency = (Integer) CDKConstants.UNSET;
+    protected Integer electronValency = null;
 
     /**
      * The formal number of neighbours this atom type can have with CDKConstants_UNSET
      * as default. This includes explicitely and implicitely connected atoms, including
      * implicit hydrogens.
      */
-    protected Integer formalNeighbourCount = (Integer) CDKConstants.UNSET;
+    protected Integer formalNeighbourCount = null;
 
     /**
      * String representing the identifier for this atom type with null as default.
      */
-    private String identifier = (String) CDKConstants.UNSET;
+    private String identifier = null;
 
     /**
      * Exact mass of this isotope.
@@ -143,7 +143,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     /**
      * The atomic number for this element giving their position in the periodic table.
      */
-    protected Integer atomicNumber = (Integer) CDKConstants.UNSET;
+    protected Integer atomicNumber = null;
 
     /**
      * Atom Expression

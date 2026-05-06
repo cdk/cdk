@@ -46,24 +46,28 @@ public class CDKConstants {
      *
      * @deprecated Use {@link IBond.Order} SINGLE directly.
      */
+    @Deprecated
     public final static IBond.Order BONDORDER_SINGLE             = IBond.Order.SINGLE;
 
     /** A bond of degree 2.0.
      *
      * @deprecated Use {@link IBond.Order} DOUBLE directly.
      */
+    @Deprecated
     public final static IBond.Order BONDORDER_DOUBLE             = IBond.Order.DOUBLE;
 
     /** A bond of degree 3.0.
      *
      * @deprecated Use {@link IBond.Order} TRIPLE directly.
      */
+    @Deprecated
     public final static IBond.Order BONDORDER_TRIPLE             = IBond.Order.TRIPLE;
 
     /** A bond of degree 4.0.
     *
     * @deprecated Use {@link IBond.Order} QUADRUPLE directly.
     */
+    @Deprecated
     public final static IBond.Order BONDORDER_QUADRUPLE          = IBond.Order.QUADRUPLE;
 
     /** A positive atom parity. */
@@ -390,21 +394,30 @@ public class CDKConstants {
      */
     public static final String      RELEVANT_RINGS               = "cdk:RelevantRings";
 
+    public static final String      COMPONENT_GROUP              = "cdk:ComponentGroup";
+
     /**
-     * Property used for reactions when converted to/from molecules. It defines what role and atom
-     * has an a reaction.
+     * Property used for reactions when converted to/from molecules. It defines
+     * what role and atom has in a reaction.
      *
      * Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
      */
     public static final String      REACTION_ROLE                = "cdk:ReactionRole";
 
+
     /**
-     * Property used for reactions when converted to/from molecules. It defines fragment grouping, for example
-     * when handling ionic components.
-     *
+     * Property used for reactions when converted to/from molecules. It defines
+     * fragment grouping, for example when handling ionic components.
+     * <p/>
      * Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
      */
-    public static final String      REACTION_GROUP               = "cdk:ReactionGroup";
+    public static final String      REACTION_GROUP               = COMPONENT_GROUP;
+
+    /**
+     * This property is set on atoms of an RGroup substitute definition to
+     * indicate which RGroup the definition is for.
+     */
+    public static final String     RGROUP_MEMBERSHIP             = "cdk:RGroupMembership";
 
     /**
      * The Z-Order controls the relative ordering in 2D depictions when bonds
@@ -493,6 +506,11 @@ public class CDKConstants {
      */
     public static final Object      RENDER_BOUNDS                 =  "cdk:RenderBounds";
 
+    /**
+     * Used to attach an {@link org.openscience.cdk.renderer.selection.IChemObjectSelection}
+     */
+    public static final Object      SELECTION                     =  "cdk:Selection";
+
 
     /* **************************************
      * Some predefined property names for * AtomTypes *
@@ -517,4 +535,13 @@ public class CDKConstants {
     /** Used as property key for indicating the number of single electrons on the atom type. */
     public static final String      SINGLE_ELECTRON_COUNT        = "cdk:Single Electron Count";
 
+    /* ***************************************
+     * Predefined property names for * Bonds *
+     * ***************************************
+     */
+
+    /**
+     * Used as a property key for indicating the reacting center status of a bond as defined by the CTFile format.
+     */
+    public static final String REACTING_CENTER_STATUS = "cdk:ReactingCenterStatus";
 }

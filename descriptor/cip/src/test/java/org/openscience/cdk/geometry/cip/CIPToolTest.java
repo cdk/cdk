@@ -34,8 +34,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.geometry.cip.CIPTool.CIP_CHIRALITY;
 import org.openscience.cdk.interfaces.IAtom;
@@ -66,7 +64,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  */
-class CIPToolTest extends CDKTestCase {
+class CIPToolTest {
 
     private static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     private static IAtomContainer molecule;

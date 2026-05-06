@@ -29,7 +29,6 @@ import java.io.StringWriter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -47,7 +46,7 @@ import org.openscience.cdk.protein.data.PDBPolymer;
  * TestCase for the {@link PDBAtomCustomizer} class.
  *
  */
-class PDBAtomCustomizerTest extends CDKTestCase {
+class PDBAtomCustomizerTest {
 
     /**
      * A roundtripping test to see of PDB atom customization works.

@@ -27,6 +27,7 @@ package org.openscience.cdk.renderer.generators.standard;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -252,5 +253,18 @@ final class AtomSymbol {
      */
     AtomSymbol translate(double x, double y) {
         return transform(AffineTransform.getTranslateInstance(x, y));
+    }
+
+
+    Rectangle2D getBounds() {
+        Rectangle2D rect = null;
+        for (Shape s : getOutlines()) {
+            Rectangle2D sBounds = s.getBounds2D();
+            if (rect == null)
+                rect = new Rectangle2D.Double(sBounds.getX(), sBounds.getY(), sBounds.getWidth(), sBounds.getHeight());
+            else
+                rect.add(sBounds);
+        }
+        return rect;
     }
 }

@@ -2,7 +2,6 @@ package org.openscience.cdk.formula;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -12,7 +11,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * Class testing the IsotopePatternSimilarity class.
  *
  */
-class IsotopePatternSimilarityTest extends CDKTestCase {
+class IsotopePatternSimilarityTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

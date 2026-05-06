@@ -26,11 +26,10 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class AtomicPropertiesTest extends CDKTestCase {
+class AtomicPropertiesTest {
 
     @Test
     void testGetInstance() throws IOException {

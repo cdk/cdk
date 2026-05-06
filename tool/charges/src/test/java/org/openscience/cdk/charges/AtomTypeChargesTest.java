@@ -21,13 +21,12 @@ package org.openscience.cdk.charges;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author      egonw
  * @cdk.created 2008-01-04
  */
-class AtomTypeChargesTest extends CDKTestCase {
+class AtomTypeChargesTest {
 
     /**
      * Tests the initial assignment of partial charges of

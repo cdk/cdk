@@ -31,7 +31,6 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +50,7 @@ import static org.openscience.cdk.rinchi.StatusMessagesOutput.Status.*;
  * @author Nikolay Kochev
  * @author Uli Fechner
  */
-class RInChIGeneratorTest extends CDKTestCase {
+class RInChIGeneratorTest {
 
     enum Messages {
         ELEMENT_R_NOT_RECOGNISED("InChIGenerator did not return status success: Element name R is not recognised."),

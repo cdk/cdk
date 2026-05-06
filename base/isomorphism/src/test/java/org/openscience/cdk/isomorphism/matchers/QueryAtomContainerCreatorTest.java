@@ -21,7 +21,6 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,7 +32,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * Checks the functionality of the <code>QueryAtomContainerCreator</code>.
  *
  */
-class QueryAtomContainerCreatorTest extends CDKTestCase {
+class QueryAtomContainerCreatorTest {
 
     @BeforeAll
     static void setUp() {}

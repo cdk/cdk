@@ -192,7 +192,11 @@ public final class TransformOp implements Comparable<TransformOp> {
         /**
          * Recalculate hydrogens on changed atoms.
          */
-        RecomputeHydrogens
+        RecomputeHydrogens,
+        /**
+         * Expand hydrogens from implicit to explicit.
+         */
+        ExpandHydrogens
     }
 
     final Type type;
@@ -325,6 +329,7 @@ public final class TransformOp implements Comparable<TransformOp> {
                 return Math.max(Math.max(a, b), Math.max(c, d));
             case RemoveUnmapped:
             case RecomputeHydrogens:
+            case ExpandHydrogens:
                 return 0;
             default:
                 throw new IllegalStateException(type + " atom index?");
@@ -358,14 +363,17 @@ public final class TransformOp implements Comparable<TransformOp> {
                 return Math.min(Math.min(a, b), Math.min(c, d));
             case RemoveUnmapped:
             case RecomputeHydrogens:
+            case ExpandHydrogens:
                 return 0;
             default:
                 throw new IllegalStateException();
         }
     }
 
-    private int getPriority() {
+    int getPriority() {
         switch (type) {
+            case ExpandHydrogens:
+                return -1; // pre-processing
             case NewAtom:
             case NewBond:
             case OverwriteBond:
@@ -468,6 +476,7 @@ public final class TransformOp implements Comparable<TransformOp> {
                 return type + "{" + c + "/" + a + "=" + b + "\\" + d + "}";
             case RemoveUnmapped:
             case RecomputeHydrogens:
+            case ExpandHydrogens:
                 return type.toString();
             default:
                 throw new IllegalStateException("Unknown op:" + type);

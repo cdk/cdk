@@ -127,7 +127,7 @@ public class EventCMLHandler extends CMLHandler {
             numberOfAtoms++;
         } else if (objectType.equals("Bond")) {
             bond_id = null;
-            bond_display = (IBond.Display) CDKConstants.UNSET;
+            bond_display = null;
         }
     }
 

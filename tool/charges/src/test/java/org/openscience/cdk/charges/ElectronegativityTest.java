@@ -21,19 +21,20 @@ package org.openscience.cdk.charges;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.HydrogenState;
 
 /**
 * TestSuite that runs all tests.
 *
 */
-class ElectronegativityTest extends CDKTestCase {
+class ElectronegativityTest {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -85,8 +86,10 @@ class ElectronegativityTest extends CDKTestCase {
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        CDKHydrogenAdder.getInstance(molecule.getBuilder()).addImplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
+
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++)
@@ -112,13 +115,13 @@ class ElectronegativityTest extends CDKTestCase {
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        CDKHydrogenAdder.getInstance(molecule.getBuilder()).addImplicitHydrogens(molecule);
+        AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             Assertions.assertEquals(testResult[i], pe.calculateSigmaElectronegativity(molecule, molecule.getAtom(i), 6, 50), 0.001);
-
         }
     }
 

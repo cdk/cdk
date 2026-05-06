@@ -22,13 +22,12 @@ package org.openscience.cdk.config.isotopes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the IsotopeFactory
  *
  */
-class IsotopeHandlerTest extends CDKTestCase {
+class IsotopeHandlerTest {
 
     // serious testing is done in IsotopeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:

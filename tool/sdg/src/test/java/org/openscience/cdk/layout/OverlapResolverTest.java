@@ -23,7 +23,6 @@ import java.util.Vector;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -42,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@cdk.created    September 4, 2003
  * @cdk.require java1.4+
  */
-class OverlapResolverTest extends CDKTestCase {
+class OverlapResolverTest {
 
     /**
      *  Description of the Field

@@ -26,7 +26,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * @author Uli Fechner
  */
-class RInChIDecompositionTest extends CDKTestCase {
+class RInChIDecompositionTest {
 
     static Stream<Arguments> rinchiCharacterToDirectionArgumentsProvider() {
         return Stream.of(

@@ -27,13 +27,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author maclean
  *
  */
-class PermutationGroupTest extends CDKTestCase {
+class PermutationGroupTest {
 
     // the first 7 factorials
     private final static int[] lookup = {1, 1, 2, 6, 24, 120, 720, 5040};

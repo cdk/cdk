@@ -21,7 +21,6 @@ package org.openscience.cdk.formula;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -39,7 +38,7 @@ import static org.hamcrest.CoreMatchers.is;
  * @author         Miguel Rojas
  * @cdk.created    2007-03-01
  */
-class IsotopePatternGeneratorTest extends CDKTestCase {
+class IsotopePatternGeneratorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

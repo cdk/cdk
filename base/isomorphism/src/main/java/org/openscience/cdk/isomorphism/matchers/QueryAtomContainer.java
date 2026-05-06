@@ -1735,8 +1735,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             Expr expr;
             if (atom instanceof IQueryAtom) {
                 expr = ((QueryAtom)AtomRef.deref(atom)).getExpression();
+
                 IStereoElement se = stereos.get(atom);
                 if (se != null) qstereo.add(se);
+
+                expr = strip(expr, optset);
             } else {
                 expr = new Expr();
 
@@ -1745,80 +1748,80 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
                     expr.and(new Expr(ISOTOPE, atom.getMassNumber()));
 
                 if (atom.getAtomicNumber() != null &&
-                        atom.getAtomicNumber() != 0) {
+                    atom.getAtomicNumber() != 0) {
                     if (atom.isAromatic()) {
                         if (optset.contains(AROMATIC_ELEMENT)) {
                             expr.and(new Expr(AROMATIC_ELEMENT,
-                                    atom.getAtomicNumber()));
+                                              atom.getAtomicNumber()));
                         } else {
                             if (optset.contains(IS_AROMATIC)) {
                                 if (optset.contains(ELEMENT))
                                     expr.and(new Expr(AROMATIC_ELEMENT,
-                                            atom.getAtomicNumber()));
+                                                      atom.getAtomicNumber()));
                                 else
                                     expr.and(new Expr(Expr.Type.IS_AROMATIC));
                             } else if (optset.contains(ELEMENT)) {
                                 expr.and(new Expr(ELEMENT,
-                                        atom.getAtomicNumber()));
+                                                  atom.getAtomicNumber()));
                             }
                         }
                     } else {
                         if (optset.contains(ALIPHATIC_ELEMENT)) {
                             expr.and(new Expr(ALIPHATIC_ELEMENT,
-                                    atom.getAtomicNumber()));
+                                              atom.getAtomicNumber()));
                         } else {
                             if (optset.contains(IS_ALIPHATIC)) {
                                 if (optset.contains(ELEMENT))
                                     expr.and(new Expr(ALIPHATIC_ELEMENT,
-                                            atom.getAtomicNumber()));
+                                                      atom.getAtomicNumber()));
                                 else
                                     expr.and(new Expr(Expr.Type.IS_ALIPHATIC));
                             } else if (optset.contains(ELEMENT)) {
                                 expr.and(new Expr(ELEMENT,
-                                        atom.getAtomicNumber()));
+                                                  atom.getAtomicNumber()));
                             }
                         }
                     }
                 }
-
-                if (optset.contains(DEGREE))
-                    expr.and(new Expr(DEGREE,
-                            atom.getBondCount()));
-                if (optset.contains(TOTAL_DEGREE))
-                    expr.and(new Expr(TOTAL_DEGREE,
-                            atom.getBondCount() + atom.getImplicitHydrogenCount()));
-                if (optset.contains(IS_IN_RING) && atom.isInRing())
-                    expr.and(new Expr(IS_IN_RING));
-                if (optset.contains(IS_IN_CHAIN) && !atom.isInRing())
-                    expr.and(new Expr(IS_IN_CHAIN));
-                if (optset.contains(IMPL_H_COUNT))
-                    expr.and(new Expr(IMPL_H_COUNT, atom.getImplicitHydrogenCount()));
-                if (optset.contains(TOTAL_H_COUNT)) {
-                    int hcount = atom.getImplicitHydrogenCount();
-                    for (IBond bond : src.getConnectedBondsList(atom))
-                        if (bond.getOther(atom).getAtomicNumber() == AtomRef.H)
-                            hcount++;
-                    expr.and(new Expr(TOTAL_H_COUNT, hcount));
-                }
-                if (optset.contains(RING_BOND_COUNT)) {
-                    int rbonds = 0;
-                    for (IBond bond : src.getConnectedBondsList(atom))
-                        if (bond.isInRing())
-                            rbonds++;
-
-                    expr.and(new Expr(RING_BOND_COUNT, rbonds));
-                }
-                if (optset.contains(FORMAL_CHARGE) && atom.getFormalCharge() != null)
-                    expr.and(new Expr(FORMAL_CHARGE, atom.getFormalCharge()));
-
-                IStereoElement se = stereos.get(atom);
-                if (se != null &&
-                        se.getConfigClass() == IStereoElement.TH &&
-                        optset.contains(STEREOCHEMISTRY)) {
-                    expr.and(new Expr(STEREOCHEMISTRY, se.getConfigOrder()));
-                    qstereo.add(se);
-                }
             }
+
+
+            if (optset.contains(DEGREE))
+                expr.and(new Expr(DEGREE,
+                        atom.getBondCount()));
+            if (optset.contains(TOTAL_DEGREE))
+                expr.and(new Expr(TOTAL_DEGREE,
+                        atom.getBondCount() + atom.getImplicitHydrogenCount()));
+            if (optset.contains(IS_IN_RING) && atom.isInRing())
+                expr.and(new Expr(IS_IN_RING));
+            if (optset.contains(IS_IN_CHAIN) && !atom.isInRing())
+                expr.and(new Expr(IS_IN_CHAIN));
+            if (optset.contains(IMPL_H_COUNT) && atom.getImplicitHydrogenCount() != null)
+                expr.and(new Expr(IMPL_H_COUNT, atom.getImplicitHydrogenCount()));
+            if (optset.contains(TOTAL_H_COUNT)) {
+                Integer totH = atom.getTotalHydrogenCount();
+                if (totH != null)
+                    expr.and(new Expr(TOTAL_H_COUNT, totH));
+            }
+            if (optset.contains(RING_BOND_COUNT)) {
+                int rbonds = 0;
+                for (IBond bond : src.getConnectedBondsList(atom))
+                    if (bond.isInRing())
+                        rbonds++;
+
+                expr.and(new Expr(RING_BOND_COUNT, rbonds));
+            }
+            if (optset.contains(FORMAL_CHARGE) && atom.getFormalCharge() != null)
+                expr.and(new Expr(FORMAL_CHARGE, atom.getFormalCharge()));
+
+            IStereoElement se = stereos.get(atom);
+            if (se != null &&
+                    se.getConfigClass() == IStereoElement.TH &&
+                    optset.contains(STEREOCHEMISTRY)) {
+                expr.and(new Expr(STEREOCHEMISTRY, se.getConfigOrder()));
+                qstereo.add(se);
+            }
+
 
             QueryAtom qatom = new QueryAtom(expr);
             qatom.setIsInRing(atom.isInRing());
@@ -1896,6 +1899,39 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 
         for (IStereoElement se : qstereo)
             dst.addStereoElement(se.map(mapping));
+    }
+
+    private static Expr strip(Expr expr, Set<Expr.Type> optset) {
+        switch (expr.type()) {
+            case AND:
+                return strip(expr.left(), optset).and(strip(expr.right(), optset));
+            case OR:
+                return strip(expr.left(), optset).or(strip(expr.right(), optset));
+            case NOT:
+                return strip(expr.left(), optset).negate();
+            case AROMATIC_ELEMENT:
+                if (optset.contains(expr.type()) ||
+                    (optset.contains(ELEMENT) && optset.contains(IS_AROMATIC)))
+                    return expr;
+                if (optset.contains(ELEMENT))
+                    return new Expr(ELEMENT, expr.value());
+                if (optset.contains(IS_AROMATIC))
+                    return new Expr(IS_AROMATIC);
+                return new Expr(TRUE);
+            case ALIPHATIC_ELEMENT:
+                if (optset.contains(expr.type()) ||
+                    (optset.contains(ELEMENT) && optset.contains(IS_ALIPHATIC)))
+                    return expr;
+                if (optset.contains(ELEMENT))
+                    return new Expr(ELEMENT, expr.value());
+                if (optset.contains(IS_ALIPHATIC))
+                    return new Expr(IS_ALIPHATIC);
+                return new Expr(TRUE);
+            default:
+                if (optset.contains(expr.type()))
+                    return expr;
+                return new Expr(TRUE);
+        }
     }
 
     /**

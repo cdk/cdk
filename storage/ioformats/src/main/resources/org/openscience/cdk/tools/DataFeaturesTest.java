@@ -21,7 +21,6 @@ package org.openscience.cdk.tools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Included so that CoreCoverageTest won't complain. The class does not have
@@ -30,7 +29,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.CDKConstants
  */
-class DataFeaturesTest extends CDKTestCase {
+class DataFeaturesTest {
 
     @Test
     void testDataFeatures() {

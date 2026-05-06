@@ -24,9 +24,11 @@
 
 package org.openscience.cdk.smiles;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -659,6 +661,12 @@ final class BeamToCDK {
         if (beamAtom.aromatic()) cdkAtom.setIsAromatic(true);
 
         if (beamAtom.atomClass() > 0) cdkAtom.setProperty(ATOM_ATOM_MAPPING, beamAtom.atomClass());
+
+        // if the atom is not a subset atom, it's hydrogen count is fixed
+        // so we set the 'PLACED' flag, this is needed so down stream calls can
+        // know if the hydrogen count 'floats' or not
+        if (!beamAtom.subset())
+            cdkAtom.set(IChemObject.PLACED);
 
         return cdkAtom;
     }

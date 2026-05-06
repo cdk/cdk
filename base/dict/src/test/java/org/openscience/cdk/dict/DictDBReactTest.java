@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the dictionary reaction-processes class.
@@ -32,7 +31,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictionaryDatabase
  */
-class DictDBReactTest extends CDKTestCase {
+class DictDBReactTest {
 
     @Test
     void testDictDBReact() {

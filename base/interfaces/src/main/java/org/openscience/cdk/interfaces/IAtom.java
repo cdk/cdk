@@ -80,7 +80,7 @@ public interface IAtom extends IAtomType {
             return null;
         for (final IAtom nbor : neighbors()) {
             Integer elem = nbor.getAtomicNumber();
-            if (elem != null && elem == IAtom.H)
+            if (elem != null && elem == IElement.H)
                 count++;
         }
         return count;

@@ -467,6 +467,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.addBond(c2c3);
         container.addBond(c1c4);
 
+        // note the carrier order is now swapped when it is created
         IDoubleBondStereochemistry dbStereo = new DoubleBondStereochemistry(c1c2, new IBond[]{c2c3, c1c4},
                 IDoubleBondStereochemistry.Conformation.OPPOSITE);
 
@@ -491,8 +492,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertThat("not enough ligands", ligands.length, is(2));
 
         // test same instance - reference equality '=='
-        assertThat("expected same c2-c3 instance", ligands[0], sameInstance(clone.getBond(1)));
-        assertThat("expected same c1-c4 instance", ligands[1], sameInstance(clone.getBond(2)));
+        assertThat("expected same c1-c4 instance", ligands[0], is(clone.getBond(2)));
+        assertThat("expected same c2-c3 instance", ligands[1], is(clone.getBond(1)));
 
         assertThat("incorrect stereo", clonedDBStereo.getStereo(),
                 sameInstance(IDoubleBondStereochemistry.Conformation.OPPOSITE));

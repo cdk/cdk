@@ -22,13 +22,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.Map;
 
 /**
  */
-class AminoAcidsTest extends CDKTestCase {
+class AminoAcidsTest {
 
     @Test
     void testCreateBondMatrix() {

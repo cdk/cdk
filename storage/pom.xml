@@ -7,7 +7,7 @@
     <parent>
         <artifactId>cdk</artifactId>
         <groupId>org.openscience.cdk</groupId>
-        <version>2.12-SNAPSHOT</version>
+        <version>2.13-SNAPSHOT</version>
     </parent>
     <name>cdk-storage</name>
     <modules>
@@ -24,16 +24,5 @@
         <module>smiles</module>
     </modules>
     <packaging>pom</packaging>
-    <artifactId>cdk-storage</artifactId>
-    <profiles>
-        <profile>
-            <id>jdk11-plus</id>
-            <activation>
-                <jdk>[11,)</jdk>
-            </activation>
-            <modules>
-                <module>iordf</module>
-            </modules>
-        </profile>
-    </profiles>
+    <artifactId>cdk-storage</artifactId>    
 </project>

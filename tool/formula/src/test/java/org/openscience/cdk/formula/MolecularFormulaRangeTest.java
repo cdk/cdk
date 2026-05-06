@@ -23,7 +23,6 @@ import java.util.Iterator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -34,7 +33,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  *
  * @see MolecularFormula
  */
-class MolecularFormulaRangeTest extends CDKTestCase {
+class MolecularFormulaRangeTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

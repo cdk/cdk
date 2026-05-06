@@ -96,7 +96,7 @@ import java.util.stream.Collectors;
  * writer.write((IAtomContainer)molecule);
  * writer.close();
  * </pre>
- * 
+ *
  * <p>The writer has two IO settings: one for writing 2D coordinates, even if
  * 3D coordinates are given for the written data; the second writes aromatic
  * bonds as bond type 4, which is, strictly speaking, a query bond type, but
@@ -119,13 +119,13 @@ import java.util.stream.Collectors;
 public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     public static final String OptForceWriteAs2DCoordinates = "ForceWriteAs2DCoordinates";
-    public static final String OptWriteMajorIsotopes        = "WriteMajorIsotopes";
-    public static final String OptWriteAromaticBondTypes    = "WriteAromaticBondTypes";
+    public static final String OptWriteMajorIsotopes = "WriteMajorIsotopes";
+    public static final String OptWriteAromaticBondTypes = "WriteAromaticBondTypes";
     public static final String OptWriteQueryFormatValencies = "WriteQueryFormatValencies";
-    public static final String OptWriteDefaultProperties    = "WriteDefaultProperties";
-    public static final String OptProgramName               = "ProgramName";
+    public static final String OptWriteDefaultProperties = "WriteDefaultProperties";
+    public static final String OptProgramName = "ProgramName";
     public static final String OptWriteData = "writeProperties";
-    public static final String OptTruncateLongData  = "TruncateLongData";
+    public static final String OptTruncateLongData = "TruncateLongData";
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
     private static final int MAX_SDTAG_LENGTH = 200;
@@ -195,7 +195,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     }
 
     // number of entries on line; value = 1 to 8
-    private static final int NN8   = 8;
+    private static final int NN8 = 8;
     // spacing between entries on line
     private static final int WIDTH = 3;
 
@@ -367,7 +367,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             if (container.getProperty(CDKConstants.REMARK) != null) {
                 if (bigPile.getProperty(CDKConstants.REMARK) != null)
                     bigPile.setProperty(CDKConstants.REMARK, bigPile.getProperty(CDKConstants.REMARK) + "; "
-                                                             + container.getProperty(CDKConstants.REMARK));
+                            + container.getProperty(CDKConstants.REMARK));
                 else
                     bigPile.setProperty(CDKConstants.REMARK, container.getProperty(CDKConstants.REMARK));
             }
@@ -431,8 +431,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write('\n');
 
         // index stereo elements for setting atom parity values
-        Map<IAtom,ITetrahedralChirality> atomstereo = new HashMap<>();
-        Map<IAtom,Integer> atomindex = new HashMap<>();
+        Map<IAtom, ITetrahedralChirality> atomstereo = new HashMap<>();
+        Map<IAtom, Integer> atomindex = new HashMap<>();
         for (IStereoElement element : container.stereoElements())
             if (element instanceof ITetrahedralChirality)
                 atomstereo.put(((ITetrahedralChirality) element).getChiralAtom(), (ITetrahedralChirality) element);
@@ -540,7 +540,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     }
                 }
 
-            } else if(atomLists.containsKey(f)) {
+            } else if (atomLists.containsKey(f)) {
                 line.append(formatMDLString("L", 3));
             } else {
 
@@ -556,9 +556,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             atomprops[9] = determineAtomMap(atom);
             line.append(formatMDLInt(atomprops[0], 2)); // dd (mass-number)
             line.append(formatMDLInt(atomprops[1], 3)); // ccc (charge)
-            int last = atomprops.length-1;
-            if (!writeTrailingZeros.isSet())
-            {
+            int last = atomprops.length - 1;
+            if (!writeTrailingZeros.isSet()) {
                 while (last >= 0) {
                     if (atomprops[last] != 0)
                         break;
@@ -577,12 +576,16 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // write Bond block
         for (IBond bond : container.bonds()) {
             line.setLength(0);
+
+            // write first and second atom number 111222
+            // 111222tttsssxxxrrrccc
+            // ||||||
             if (bond.getAtomCount() != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {
                 if (bond.getDisplay() == IBond.Display.WedgeEnd ||
-                    bond.getDisplay() == IBond.Display.WedgedHashEnd ||
-                    bond.getDisplay() == IBond.Display.HollowWedgeEnd) {
+                        bond.getDisplay() == IBond.Display.WedgedHashEnd ||
+                        bond.getDisplay() == IBond.Display.HollowWedgeEnd) {
                     // turn around atom coding to correct for inv stereo
                     line.append(formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3));
                     line.append(formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3));
@@ -591,10 +594,12 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     line.append(formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3));
                 }
 
+                // write bond type ttt
+                // 111222tttsssxxxrrrccc
+                //       |||
                 int bondType = 0;
-
                 if (bond instanceof QueryBond) {
-                    QueryBond qbond = ((QueryBond)bond);
+                    QueryBond qbond = ((QueryBond) bond);
                     Expr e = qbond.getExpression();
                     switch (e.type()) {
                         case ALIPHATIC_ORDER:
@@ -619,15 +624,15 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         case OR:
                             // SINGLE_OR_DOUBLE
                             if (e.equals(new Expr(Expr.Type.ALIPHATIC_ORDER, 1).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 2))) ||
-                                e.equals(new Expr(Expr.Type.ALIPHATIC_ORDER, 2).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 1))))
+                                    e.equals(new Expr(Expr.Type.ALIPHATIC_ORDER, 2).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 1))))
                                 bondType = 5;
-                            // SINGLE_OR_AROMATIC
+                                // SINGLE_OR_AROMATIC
                             else if (e.equals(new Expr(Expr.Type.ALIPHATIC_ORDER, 1).or(new Expr(Expr.Type.IS_AROMATIC))) ||
-                                e.equals(new Expr(Expr.Type.IS_AROMATIC).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 1))))
+                                    e.equals(new Expr(Expr.Type.IS_AROMATIC).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 1))))
                                 bondType = 6;
-                            // DOUBLE_OR_AROMATIC
+                                // DOUBLE_OR_AROMATIC
                             else if (e.equals(new Expr(Expr.Type.ALIPHATIC_ORDER, 2).or(new Expr(Expr.Type.IS_AROMATIC))) ||
-                                     e.equals(new Expr(Expr.Type.IS_AROMATIC).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 2))))
+                                    e.equals(new Expr(Expr.Type.IS_AROMATIC).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 2))))
                                 bondType = 6;
                             break;
                         default:
@@ -657,8 +662,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
                 if (bondType == 0)
                     throw new CDKException("Bond at idx=" + container.indexOf(bond) + " is not supported by Molfile, bond=" + bond.getOrder());
-
                 line.append(formatMDLInt(bondType, 3));
+
+                // write bond stereo sss
+                // 111222tttsssxxxrrrccc
+                //          |||
                 line.append("  ");
                 switch (bond.getDisplay()) {
                     case WedgeBegin:
@@ -680,8 +688,22 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     default:
                         line.append("0");
                 }
-                if (writeTrailingZeros.isSet())
+
+                if (bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class) != null) {
+                    // write not used (xxx) and bond topology (rrr)
+                    // 111222tttsssxxxrrrccc
+                    //             ||||||
+                    line.append("  0  0");
+                    // write reacting center status (ccc)
+                    // 111222tttsssxxxrrrccc
+                    //                   |||
+                    line.append(formatMDLInt(bond.getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class).getValue(), 3));
+                } else if (writeTrailingZeros.isSet()) {
+                    // write not used (xxx), bond topology (rrr) and reacting center status (ccc)
+                    // 111222tttsssxxxrrrccc
+                    //             |||||||||
                     line.append("  0  0  0");
+                }
                 line.append('\n');
                 writer.write(line.toString());
             }
@@ -691,8 +713,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom atom = container.getAtom(i);
             if (atom.getProperty(CDKConstants.COMMENT) != null
-                && atom.getProperty(CDKConstants.COMMENT) instanceof String
-                && !((String) atom.getProperty(CDKConstants.COMMENT)).trim().equals("")) {
+                    && atom.getProperty(CDKConstants.COMMENT) instanceof String
+                    && !((String) atom.getProperty(CDKConstants.COMMENT)).trim().isEmpty()) {
                 writer.write("V  ");
                 writer.write(formatMDLInt(i + 1, 3));
                 writer.write(" ");
@@ -759,7 +781,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             if (!(atom instanceof IPseudoAtom)) {
                 Integer atomicMass = atom.getMassNumber();
                 if (!writeMajorIsotopes.isSet() &&
-                    isMajorIsotope(atom))
+                        isMajorIsotope(atom))
                     atomicMass = null;
                 if (atomicMass != null) {
                     writer.write("M  ISO  1 ");
@@ -828,10 +850,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // write non-structural data (mol properties in our case)
         if (writeDataOpt.isSet()) {
             MDLV2000Writer.writeNonStructuralData(writer,
-                                                  container,
-                                                  SD_TAGS_TO_IGNORE,
-                                                  acceptedSdTags,
-                                                  truncateDataOpt.isSet());
+                    container,
+                    SD_TAGS_TO_IGNORE,
+                    acceptedSdTags,
+                    truncateDataOpt.isSet());
         }
 
         writer.flush();
@@ -879,33 +901,33 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         List<String> legacyLines = new ArrayList<>(atomLists.size());
         List<String> alsLines = new ArrayList<>(atomLists.size());
 
-        for(Map.Entry<Integer, IAtom> entry : atomLists.entrySet()){
+        for (Map.Entry<Integer, IAtom> entry : atomLists.entrySet()) {
             QueryAtom qa = (QueryAtom) AtomRef.deref(entry.getValue());
             //atom lists are limited to just a list of ELEMENTS OR'ed together
             //with the whole expression possibly negated
 
             Expr expression = qa.getExpression();
-            List<String> elements=getAtomList(expression);
+            List<String> elements = getAtomList(expression);
             StringBuilder legacyBuilder = new StringBuilder(80);
             StringBuilder alsBuilder = new StringBuilder(80);
             alsBuilder.append("M  ALS ");
-            alsBuilder.append(formatMDLInt(entry.getKey()+1, 3));
+            alsBuilder.append(formatMDLInt(entry.getKey() + 1, 3));
             alsBuilder.append(formatMDLInt(elements.size(), 3));
 
-            legacyBuilder.append(formatMDLInt(entry.getKey()+1, 3));
+            legacyBuilder.append(formatMDLInt(entry.getKey() + 1, 3));
             //root expression type is either OR or NOT
-            if(expression.type() == Expr.Type.NOT){
+            if (expression.type() == Expr.Type.NOT) {
                 alsBuilder.append(" T ");
                 legacyBuilder.append(" T    ");
-            }else {
+            } else {
                 alsBuilder.append(" F ");
                 legacyBuilder.append(" F    ");
             }
-            for(String symbol : elements){
+            for (String symbol : elements) {
                 alsBuilder.append(formatMDLString(symbol, 4));
             }
             legacyBuilder.append(formatMDLInt(elements.size(), 1));
-            for(Integer atomicNumber : getAtomListNumbers(expression)){
+            for (Integer atomicNumber : getAtomListNumbers(expression)) {
                 legacyBuilder.append(" ").append(formatMDLInt(atomicNumber, 3));
             }
             alsBuilder.append('\n');
@@ -914,22 +936,22 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             alsLines.add(alsBuilder.toString());
             legacyLines.add(legacyBuilder.toString());
         }
-        for(String line: legacyLines){
+        for (String line : legacyLines) {
             writer.write(line);
         }
-        for(String line: alsLines){
+        for (String line : alsLines) {
             writer.write(line);
         }
     }
 
-    private static boolean isValidAtomListExpression(Expr exp){
+    private static boolean isValidAtomListExpression(Expr exp) {
 
         Expr rootToCheck;
-        if(Expr.Type.NOT==exp.type()){
+        if (Expr.Type.NOT == exp.type()) {
             rootToCheck = exp.left();
-        }else if(Expr.Type.OR==exp.type()){
+        } else if (Expr.Type.OR == exp.type()) {
             rootToCheck = exp;
-        }else{
+        } else {
             //not a list
             return false;
         }
@@ -937,21 +959,23 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
         return allOrsOfAllowedTypes(rootToCheck, allowedTypes);
     }
-    private static boolean allOrsOfAllowedTypes(Expr expr, Set<Expr.Type> allowedTypes){
-        if(expr.type() == Expr.Type.OR){
+
+    private static boolean allOrsOfAllowedTypes(Expr expr, Set<Expr.Type> allowedTypes) {
+        if (expr.type() == Expr.Type.OR) {
             return allOrsOfAllowedTypes(expr.left(), allowedTypes) && allOrsOfAllowedTypes(expr.right(), allowedTypes);
         }
         return allowedTypes.contains(expr.type());
     }
 
-    private static List<String> getAtomList(Expr exp){
+    private static List<String> getAtomList(Expr exp) {
         List<Expr> elist = new ArrayList<>();
         getLeafNodes(exp, elist);
-        return elist.stream().map(expr->Elements.ofNumber(expr.value()).symbol())
-                    .collect(Collectors.toList());
+        return elist.stream().map(expr -> Elements.ofNumber(expr.value()).symbol())
+                .collect(Collectors.toList());
 
     }
-    private static List<Integer> getAtomListNumbers(Expr exp){
+
+    private static List<Integer> getAtomListNumbers(Expr exp) {
         List<Expr> elist = new ArrayList<>();
         getLeafNodes(exp, elist);
         return elist.stream().map(Expr::value)
@@ -959,16 +983,17 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     }
 
-    private static void getLeafNodes(Expr exr, List<Expr> elist){
-        if(exr.type().equals(Expr.Type.OR) || exr.type().equals(Expr.Type.AND)){
+    private static void getLeafNodes(Expr exr, List<Expr> elist) {
+        if (exr.type().equals(Expr.Type.OR) || exr.type().equals(Expr.Type.AND)) {
             getLeafNodes(exr.left(), elist);
             getLeafNodes(exr.right(), elist);
-        }else if(exr.type().equals(Expr.Type.NOT)){
+        } else if (exr.type().equals(Expr.Type.NOT)) {
             getLeafNodes(exr.left(), elist);
-        }else{
+        } else {
             elist.add(exr);
         }
     }
+
     // 0 = uncharged or value other than these, 1 = +3, 2 = +2, 3 = +1,
     // 4 = doublet radical, 5 = -1, 6 = -2, 7 = -3
     private int determineCharge(IAtomContainer mol, IAtom atom) {
@@ -976,22 +1001,28 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         if (q == null)
             q = 0;
         switch (q) {
-            case -3: return 7;
-            case -2: return 6;
-            case -1: return 5;
+            case -3:
+                return 7;
+            case -2:
+                return 6;
+            case -1:
+                return 5;
             case 0:
                 if (mol.getConnectedSingleElectronsCount(atom) == 1)
                     return 4;
                 return 0;
-            case +1:  return 3;
-            case +2:  return 2;
-            case +3:  return 1;
+            case +1:
+                return 3;
+            case +2:
+                return 2;
+            case +3:
+                return 1;
         }
         return 0;
     }
 
     private int determineIsotope(IAtom atom) {
-        Integer  mass  = atom.getMassNumber();
+        Integer mass = atom.getMassNumber();
         IIsotope major = null;
         if (mass == null)
             return 0;
@@ -1001,17 +1032,18 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             // ignored
         }
         if (!writeMajorIsotopes.isSet() &&
-            major != null &&
-            mass.equals(major.getMassNumber()))
+                major != null &&
+                mass.equals(major.getMassNumber()))
             mass = null;
         if (mass != null) {
             mass -= major != null ? major.getMassNumber() : 0;
             return mass >= -3 && mass <= 4 ? mass : 0;
-        } return 0;
+        }
+        return 0;
     }
 
     private int determineAtomMap(IAtom atom) {
-        Object amap   = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+        Object amap = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
         if (amap == null)
             return 0;
         if (amap instanceof Integer)
@@ -1025,7 +1057,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 }
             }
             logger.warn("Skipping non-integer atom map: " + amap +
-                        " type:" + amap);
+                    " type:" + amap);
             return 0;
         }
     }
@@ -1063,7 +1095,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         if (tc == null)
             return 0;
         int parity = tc.getStereo() == ITetrahedralChirality.Stereo.CLOCKWISE ? 1 : 2;
-        IAtom   focus    = tc.getChiralAtom();
+        IAtom focus = tc.getChiralAtom();
         IAtom[] carriers = tc.getLigands();
 
         int hidx = -1;
@@ -1092,7 +1124,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         return parity;
     }
 
-    private boolean isMajorIsotope(IAtom atom)  {
+    private boolean isMajorIsotope(IAtom atom) {
         if (atom.getMassNumber() == null)
             return false;
         try {
@@ -1103,7 +1135,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         }
     }
 
-    private void writeSgroups(IAtomContainer container, BufferedWriter writer, Map<IAtom,Integer> atomidxs) throws IOException {
+    private void writeSgroups(IAtomContainer container, BufferedWriter writer, Map<IAtom, Integer> atomidxs) throws IOException {
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null)
             return;
@@ -1115,7 +1147,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // remove non-ctab Sgroups
         sgroups.removeIf(sgroup -> !sgroup.getType().isCtabStandard());
 
-        List<Map.Entry<Sgroup,Sgroup>> parentList = new ArrayList<>();
+        List<Map.Entry<Sgroup, Sgroup>> parentList = new ArrayList<>();
 
         // collect parents
         for (Sgroup sgroup : sgroups) {
@@ -1137,14 +1169,14 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         }
 
         // Sgroup Parent List
-        for (List<Map.Entry<Sgroup,Sgroup>> parents : wrap(parentList, 8)) {
+        for (List<Map.Entry<Sgroup, Sgroup>> parents : wrap(parentList, 8)) {
             writer.write("M  SPL");
             writer.write(formatMDLInt(parents.size(), 3));
-            for (Map.Entry<Sgroup,Sgroup> e : parents) {
+            for (Map.Entry<Sgroup, Sgroup> e : parents) {
                 writer.write(' ');
-                writer.write(formatMDLInt(1+sgroups.indexOf(e.getKey()), 3));
+                writer.write(formatMDLInt(1 + sgroups.indexOf(e.getKey()), 3));
                 writer.write(' ');
-                writer.write(formatMDLInt(1+sgroups.indexOf(e.getValue()), 3));
+                writer.write(formatMDLInt(1 + sgroups.indexOf(e.getValue()), 3));
             }
             writer.write('\n');
         }
@@ -1160,7 +1192,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(formatMDLInt(atoms.size(), 3));
                 for (IAtom atom : atoms) {
                     writer.write(' ');
-                    writer.write(formatMDLInt(1+atomidxs.get(atom), 3));
+                    writer.write(formatMDLInt(1 + atomidxs.get(atom), 3));
                 }
                 writer.write('\n');
             }
@@ -1172,7 +1204,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(formatMDLInt(bonds.size(), 3));
                 for (IBond bond : bonds) {
                     writer.write(' ');
-                    writer.write(formatMDLInt(1+container.indexOf(bond), 3));
+                    writer.write(formatMDLInt(1 + container.indexOf(bond), 3));
                 }
                 writer.write('\n');
             }
@@ -1246,7 +1278,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             writer.write(formatMDLInt(atoms.size(), 3));
                             for (IAtom atom : atoms) {
                                 writer.write(' ');
-                                writer.write(formatMDLInt(1+atomidxs.get(atom), 3));
+                                writer.write(formatMDLInt(1 + atomidxs.get(atom), 3));
                             }
                             writer.write('\n');
                         }
@@ -1295,11 +1327,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(formatMDLInt(id, 3));
                         writer.write(' ');
                         writer.write(name);
-                        writer.write(pad, 0, 30-name.length());
-                        if (fmt != null && fmt.length()>0 &&
-                            (fmt.charAt(0) == 'N' ||
-                             fmt.charAt(0) == 'F' ||
-                             fmt.charAt(0) == 'T')) {
+                        writer.write(pad, 0, 30 - name.length());
+                        if (fmt != null && !fmt.isEmpty() &&
+                                (fmt.charAt(0) == 'N' ||
+                                        fmt.charAt(0) == 'F' ||
+                                        fmt.charAt(0) == 'T')) {
                             writer.write(fmt.charAt(0) + " ");
                         } else {
                             writer.write("  ");
@@ -1326,7 +1358,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         List<T> list = new ArrayList<>(set);
         if (set.size() <= lim) {
             if (!list.isEmpty())
-             wrapped.add(list);
+                wrapped.add(list);
         } else {
             int i = 0;
             for (; (i + lim) < set.size(); i += lim) {
@@ -1376,7 +1408,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             val = "0";
         int off = n - val.length();
         for (int i = 0; i < val.length(); i++)
-            buf[off+i] = val.charAt(i);
+            buf[off + i] = val.charAt(i);
         return new String(buf);
     }
 
@@ -1388,7 +1420,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * @return The String to be written into the connectiontable
      */
     protected static String formatMDLFloat(float fl) {
-        String s, fs = "";
+        String s;
+        StringBuilder stringBuilder = new StringBuilder();
         int l;
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
         nf.setMinimumIntegerDigits(1);
@@ -1402,9 +1435,9 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             s = nf.format(fl);
         l = 10 - s.length();
         for (int f = 0; f < l; f++)
-            fs += " ";
-        fs += s;
-        return fs;
+            stringBuilder.append(" ");
+        stringBuilder.append(s);
+        return stringBuilder.toString();
     }
 
     /**
@@ -1419,8 +1452,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         if (s.length() > le) return s.substring(0, le);
         int l;
         l = le - s.length();
+        StringBuilder stringBuilder = new StringBuilder(s);
         for (int f = 0; f < l; f++)
-            s += " ";
+            stringBuilder.append(" ");
+        s = stringBuilder.toString();
         return s;
     }
 
@@ -1452,7 +1487,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         if (sdFields == null)
             return;
 
-        for (Map.Entry<Object,Object> e : sdFields.entrySet()) {
+        for (Map.Entry<Object, Object> e : sdFields.entrySet()) {
 
             final String key = e.getKey().toString();
             if (reject != null && reject.contains(key))
@@ -1463,13 +1498,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             final String cleanHeaderKey = replaceInvalidHeaderChars(key);
             if (!cleanHeaderKey.equals(key))
                 logger.info("Replaced characters in SDfile data header: ",
-                            key, " written as: ", cleanHeaderKey);
+                        key, " written as: ", cleanHeaderKey);
 
             final Object val = e.getValue();
             if (!isPrimitiveDataValue(val)) {
                 logger.info("Skipped property " + key,
-                            " because only primitive and string properties",
-                            " can be written by SDFWriter");
+                        " because only primitive and string properties",
+                        " can be written by SDFWriter");
                 continue;
             }
 
@@ -1505,27 +1540,27 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      */
     private void initIOSettings() {
         forceWriteAs2DCoords = addSetting(new BooleanIOSetting(OptForceWriteAs2DCoordinates, IOSetting.Importance.LOW,
-                                                               "Should coordinates always be written as 2D?", "false"));
+                "Should coordinates always be written as 2D?", "false"));
         writeMajorIsotopes = addSetting(new BooleanIOSetting(OptWriteMajorIsotopes, IOSetting.Importance.LOW,
-                                                             "Write atomic mass of any non-null atomic mass including major isotopes (e.g. [12]C)", "true"));
+                "Write atomic mass of any non-null atomic mass including major isotopes (e.g. [12]C)", "true"));
         writeAromaticBondTypes = addSetting(new BooleanIOSetting(OptWriteAromaticBondTypes, IOSetting.Importance.LOW,
-                                                                 "Should aromatic bonds be written as bond type 4?", "false"));
+                "Should aromatic bonds be written as bond type 4?", "false"));
         writeQueryFormatValencies = addSetting(new BooleanIOSetting(OptWriteQueryFormatValencies,
-                                                                    IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
+                IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
         writeTrailingZeros = addSetting(new BooleanIOSetting(OptWriteDefaultProperties,
-                                                             IOSetting.Importance.LOW,
-                                                             "Write trailing zero's on atom/bond property blocks even if they're not used.",
-                                                             "true"));
+                IOSetting.Importance.LOW,
+                "Write trailing zero's on atom/bond property blocks even if they're not used.",
+                "true"));
         programNameOpt = addSetting(new StringIOSetting(OptProgramName,
-                                                        IOSetting.Importance.LOW,
-                                                        "Program name to write at the top of the molfile header, should be exactly 8 characters long",
-                                                        "CDK"));
+                IOSetting.Importance.LOW,
+                "Program name to write at the top of the molfile header, should be exactly 8 characters long",
+                "CDK"));
         writeDataOpt = addSetting(new BooleanIOSetting(OptWriteData,
-                                                       IOSetting.Importance.LOW,
-                                                       "Should molecule properties be written as non-structural data", "false"));
+                IOSetting.Importance.LOW,
+                "Should molecule properties be written as non-structural data", "false"));
         truncateDataOpt = addSetting(new BooleanIOSetting(OptTruncateLongData,
-                                                          IOSetting.Importance.LOW,
-                                                          "Truncate long data files >200 characters", "false"));
+                IOSetting.Importance.LOW,
+                "Truncate long data files >200 characters", "false"));
     }
 
     /**

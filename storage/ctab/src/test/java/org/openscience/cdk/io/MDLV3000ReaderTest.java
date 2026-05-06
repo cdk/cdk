@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
+import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.AtomContainer;
@@ -95,9 +96,10 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void testAccepts() {
-        MDLV3000Reader reader = new MDLV3000Reader();
-        Assertions.assertTrue(reader.accepts(AtomContainer.class));
+    void testAccepts() throws IOException {
+        try (MDLV3000Reader reader = new MDLV3000Reader()) {
+            Assertions.assertTrue(reader.accepts(AtomContainer.class));
+        }
     }
 
     /**
@@ -864,6 +866,104 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
             Assertions.assertNotNull(mol);
+        }
+    }
+
+    @Test
+    void readHiliteAsSelection() {
+        String molfile = "\n" +
+                         "  CDK     1110251134\n" +
+                         "\n" +
+                         "  0  0  0     0  0            999 V3000\n" +
+                         "M  V30 BEGIN CTAB\n" +
+                         "M  V30 COUNTS 10 11 0 0 0\n" +
+                         "M  V30 BEGIN ATOM\n" +
+                         "M  V30 1 C 0 0 0 0\n" +
+                         "M  V30 2 C 0 0 0 0 VAL=3\n" +
+                         "M  V30 3 C 0 0 0 0 VAL=2\n" +
+                         "M  V30 4 C 0 0 0 0 VAL=3\n" +
+                         "M  V30 5 C 0 0 0 0 VAL=2\n" +
+                         "M  V30 6 C 0 0 0 0 VAL=3\n" +
+                         "M  V30 7 C 0 0 0 0 VAL=1\n" +
+                         "M  V30 8 C 0 0 0 0\n" +
+                         "M  V30 9 C 0 0 0 0 VAL=1\n" +
+                         "M  V30 10 C 0 0 0 0 VAL=1\n" +
+                         "M  V30 END ATOM\n" +
+                         "M  V30 BEGIN BOND\n" +
+                         "M  V30 1 2 1 2\n" +
+                         "M  V30 2 1 2 3\n" +
+                         "M  V30 3 1 3 4\n" +
+                         "M  V30 4 1 4 5\n" +
+                         "M  V30 5 1 5 6\n" +
+                         "M  V30 6 1 6 1\n" +
+                         "M  V30 7 1 1 7\n" +
+                         "M  V30 8 1 4 8\n" +
+                         "M  V30 9 1 6 8\n" +
+                         "M  V30 10 1 8 9\n" +
+                         "M  V30 11 1 8 10\n" +
+                         "M  V30 END BOND\n" +
+                         "M  V30 BEGIN COLLECTION\n" +
+                         "M  V30 MDLV30/HILITE ATOMS=(4 2 3 5 4) BONDS=(1 2)\n" +
+                         "M  V30 END COLLECTION\n" +
+                         "M  V30 END CTAB\n" +
+                         "M  END";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(molfile))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Assertions.assertNotNull(mol);
+            Assertions.assertNotNull(mol.getProperty(CDKConstants.SELECTION));
+            IChemObjectSelection selection = mol.getProperty(CDKConstants.SELECTION);
+            Assertions.assertEquals(4, selection.elements(IAtom.class).size());
+            Assertions.assertEquals(1, selection.elements(IBond.class).size());
+        } catch (IOException | CDKException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void reactingCenterStatusValidValueMinusOneTest() throws CDKException, IOException {
+        // arrange
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer actual;
+        // act
+        try (MDLV3000Reader mdlv3000Reader = new MDLV3000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueMinusOne_V3000.mol"))) {
+            actual = mdlv3000Reader.read(builder.newAtomContainer());
+        }
+        // assert
+        org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isEqualTo(MDLReactingCenterStatus.NOT_REACTING_CENTER);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+    }
+
+    @Test
+    void reactingCenterStatusValidValueOneTest() throws CDKException, IOException {
+        // arrange
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer actual;
+        // act
+        try (MDLV3000Reader mdlv3000Reader = new MDLV3000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueOne_V3000.mol"))) {
+            actual = mdlv3000Reader.read(builder.newAtomContainer());
+        }
+        // assert
+        org.assertj.core.api.Assertions.assertThat(actual).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBondCount()).isEqualTo(3);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(0).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(1).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isEqualTo(MDLReactingCenterStatus.GENERIC_REACTING_CENTER);
+        org.assertj.core.api.Assertions.assertThat(actual.getBond(2).getProperty(CDKConstants.REACTING_CENTER_STATUS, MDLReactingCenterStatus.class)).isNull();
+    }
+
+    @Test
+    void reactingCenterStatusInvalidValueSevenTest() throws IOException {
+        // arrange
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+
+        // act & assert
+        try (MDLV3000Reader mdlv3000Reader = new MDLV3000Reader(getClass().getResourceAsStream("reactingCenterStatus_valueSeven_V3000.mol"))) {
+            org.assertj.core.api.Assertions.assertThatThrownBy(() -> mdlv3000Reader.read(builder.newAtomContainer()))
+                    .isInstanceOf(CDKException.class)
+                    .hasMessage("Error while parsing key/value RXCTR=7: Invalid value 7, line='M  V30 2 1 2 3 RXCTR=7'");
         }
     }
 }

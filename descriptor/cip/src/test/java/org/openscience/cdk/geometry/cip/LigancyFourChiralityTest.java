@@ -22,15 +22,11 @@
  */
 package org.openscience.cdk.geometry.cip;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -38,9 +34,12 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  */
-class LigancyFourChiralityTest extends CDKTestCase {
+class LigancyFourChiralityTest {
 
     private static IAtomContainer molecule;
     private static ILigand[]      ligands;

@@ -20,13 +20,12 @@ package org.openscience.cdk.reaction.type.parameters;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Tests for ParameterReact implementations.
  *
  */
-class ParameterReactTest extends CDKTestCase {
+class ParameterReactTest {
 
     /**
      *  Constructor for the ParameterReactTest object.

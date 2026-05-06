@@ -19,21 +19,10 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -49,6 +38,16 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.HydrogenState;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  Description of the Class
@@ -57,9 +56,25 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-class ModelBuilder3DTest extends CDKTestCase {
+class ModelBuilder3DTest {
 
     private boolean standAlone = false;
+
+    /**
+     * Compares two Point3d objects, and asserts that the XY coordinates
+     * are identical within the given error.
+     *
+     * @param p1    first Point3d
+     * @param p2    second Point3d
+     * @param error maximal allowed error
+     */
+    public void assertEquals(Point3d p1, Point3d p2, double error) {
+        Assertions.assertNotNull(p1, "The expected Point3d is null");
+        Assertions.assertNotNull(p2, "The tested Point3d is null");
+        Assertions.assertEquals(p1.x, p2.x, error);
+        Assertions.assertEquals(p1.y, p2.y, error);
+        Assertions.assertEquals(p1.z, p2.z, error);
+    }
 
     /**
      *  Sets the standAlone attribute
@@ -82,7 +97,7 @@ class ModelBuilder3DTest extends CDKTestCase {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CF");
-        addExplicitHydrogens(mol);
+        AtomContainerManipulator.normalizeHydrogens(mol, HydrogenState.Explicit);
         //mb3d.setTemplateHandler();
         mol = mb3d.generate3DCoordinates(mol, false);
         assertEquals(c_coord, mol.getAtom(0).getPoint3d(), 0.0001);
@@ -99,7 +114,7 @@ class ModelBuilder3DTest extends CDKTestCase {
         String smile = "CccccC";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(smile);
-        addExplicitHydrogens(mol);
+        AtomContainerManipulator.normalizeHydrogens(mol, HydrogenState.Explicit);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
@@ -110,13 +125,11 @@ class ModelBuilder3DTest extends CDKTestCase {
 
     @Test
     void testModelBuilder3D_c1ccccc1C0() throws Exception {
-        Assumptions.assumeTrue(runSlowTests());
-
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "c1ccccc1C=O";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(smile);
-        addExplicitHydrogens(mol);
+        AtomContainerManipulator.normalizeHydrogens(mol, HydrogenState.Explicit);
         mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
@@ -127,13 +140,12 @@ class ModelBuilder3DTest extends CDKTestCase {
     @Test
     @Tag("SlowTest")
     void testModelBuilder3D_Konstanz() throws Exception {
-        Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(smile);
-        addExplicitHydrogens(mol);
+        AtomContainerManipulator.normalizeHydrogens(mol, HydrogenState.Explicit);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
@@ -143,13 +155,12 @@ class ModelBuilder3DTest extends CDKTestCase {
 
     @Test
     void xtestModelBuilder3D_Konstanz2() throws Exception {
-        Assumptions.assumeTrue(runSlowTests());
 
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(smile);
-        addExplicitHydrogens(mol);
+        AtomContainerManipulator.normalizeHydrogens(mol, HydrogenState.Explicit);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
@@ -159,13 +170,11 @@ class ModelBuilder3DTest extends CDKTestCase {
 
     @Test
     void testModelBuilder3D_C1CCCCCCC1CC() throws Exception {
-        Assumptions.assumeTrue(runSlowTests());
-
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "C1CCCCCCC1CC";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(smile);
-        addExplicitHydrogens(mol);
+        AtomContainerManipulator.normalizeHydrogens(mol, HydrogenState.Explicit);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
@@ -180,8 +189,6 @@ class ModelBuilder3DTest extends CDKTestCase {
      */
     @Test
     void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception {
-        Assumptions.assumeTrue(runSlowTests());
-
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String smile = "CCCCCCCCCC";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -189,7 +196,7 @@ class ModelBuilder3DTest extends CDKTestCase {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             mol.getAtom(i).setPoint2d(new Point2d(1, 1));
         }
-        addExplicitHydrogens(mol);
+        AtomContainerManipulator.normalizeHydrogens(mol, HydrogenState.Explicit);
         mol = mb3d.generate3DCoordinates(mol, false);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             Assertions.assertNotNull(mol.getAtom(i).getPoint3d());
@@ -203,8 +210,6 @@ class ModelBuilder3DTest extends CDKTestCase {
     @Test
     @Tag("SlowTest")
     void testModelBuilder3D_232() throws Exception {
-        Assumptions.assumeTrue(runSlowTests());
-
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String filename = "allmol232.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -213,7 +218,7 @@ class ModelBuilder3DTest extends CDKTestCase {
         reader.close();
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         IAtomContainer ac = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, containersList.get(0));
-        addExplicitHydrogens(ac);
+        AtomContainerManipulator.normalizeHydrogens(ac, HydrogenState.Explicit);
         ac = mb3d.generate3DCoordinates(ac, false);
         Assertions.assertNotNull(ac.getAtom(0).getPoint3d());
         checkAverageBondLength(ac);
@@ -230,8 +235,6 @@ class ModelBuilder3DTest extends CDKTestCase {
 
     @Test
     void testModelBuilder3D_231() throws Exception {
-        Assumptions.assumeTrue(runSlowTests());
-
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String filename = "allmol231.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -240,7 +243,7 @@ class ModelBuilder3DTest extends CDKTestCase {
         reader.close();
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         IAtomContainer ac = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, containersList.get(0));
-        addExplicitHydrogens(ac);
+        AtomContainerManipulator.normalizeHydrogens(ac, HydrogenState.Explicit);
         ac = mb3d.generate3DCoordinates(ac, false);
         for (int i = 0; i < ac.getAtomCount(); i++) {
             Assertions.assertNotNull(ac.getAtom(i).getPoint3d());
@@ -291,8 +294,6 @@ class ModelBuilder3DTest extends CDKTestCase {
      */
     @Test
     void testModel3D_bug_1610997() throws Exception {
-        Assumptions.assumeTrue(runSlowTests());
-
         boolean notCalculatedResults = false;
         List<IAtomContainer> inputList = new ArrayList<>();
 

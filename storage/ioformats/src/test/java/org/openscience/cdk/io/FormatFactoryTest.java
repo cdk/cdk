@@ -34,7 +34,6 @@ import java.util.zip.GZIPInputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.formats.ABINITFormat;
 import org.openscience.cdk.io.formats.ADFFormat;
 import org.openscience.cdk.io.formats.Aces2Format;
@@ -70,7 +69,7 @@ import org.openscience.cdk.io.formats.XYZFormat;
  * TestCase for the instantiation and functionality of the {@link FormatFactory}.
  *
  */
-class FormatFactoryTest extends CDKTestCase {
+class FormatFactoryTest {
 
     private static FormatFactory factory;
 

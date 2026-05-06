@@ -20,13 +20,12 @@ package org.openscience.cdk.tools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  */
-class ProteinBuilderToolTest extends CDKTestCase {
+class ProteinBuilderToolTest {
 
     @Test
     void testCreateProtein() throws Exception {
