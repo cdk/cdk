@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.stereo.ExtendedCisTrans;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import java.util.Arrays;
@@ -46,12 +47,11 @@ import java.util.Map;
  * overlaps). This method finds double bonds with incorrect depicted
  * configuration and reflects one side to correct the configuration.
  * <b>IMPORTANT: should be invoked before labelling up/down bonds. Cyclic
- * double-bonds with a configuration can not be corrected (error logged).</b>
+ * double-bonds with a configuration cannot be corrected properly (warn logged).</b>
  *
  * @author John May
  */
 final class CorrectGeometricConfiguration {
-
     /** The structure we are assigning labels to. */
     private final IAtomContainer      container;
 
@@ -177,6 +177,8 @@ final class CorrectGeometricConfiguration {
 
         if (ringSearch.cyclic(atomToIndex.get(left), atomToIndex.get(right))) {
             db.setDisplay(IBond.Display.Crossed);
+            LoggingToolFactory.createLoggingTool(getClass())
+                  .warn("Cyclic double-bonds with a configuration cannot be corrected properly");
             return;
         }
 
