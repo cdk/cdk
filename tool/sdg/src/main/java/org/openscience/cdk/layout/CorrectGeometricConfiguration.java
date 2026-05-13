@@ -47,7 +47,7 @@ import java.util.Map;
  * overlaps). This method finds double bonds with incorrect depicted
  * configuration and reflects one side to correct the configuration.
  * <b>IMPORTANT: should be invoked before labelling up/down bonds. Cyclic
- * double-bonds with a configuration cannot be corrected properly (warn logged).</b>
+ * double-bonds with a configuration cannot be depicted correctly (warn logged).</b>
  *
  * @author John May
  */
@@ -178,7 +178,7 @@ final class CorrectGeometricConfiguration {
         if (ringSearch.cyclic(atomToIndex.get(left), atomToIndex.get(right))) {
             db.setDisplay(IBond.Display.Crossed);
             LoggingToolFactory.createLoggingTool(getClass())
-                  .warn("Cyclic double-bonds with a configuration cannot be corrected properly");
+                  .warn("Cyclic double-bonds with a configuration cannot be depicted correctly");
             return;
         }
 
