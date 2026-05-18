@@ -20,6 +20,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.charges.Electronegativity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
@@ -136,8 +137,15 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
         try {
             clone = ac.clone();
             localAtom = clone.getAtom(ac.indexOf(atom));
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
-        } catch (CDKException | CloneNotSupportedException e) {
+            if (!AtomContainerManipulator.configure(clone)) {
+                return new DescriptorValue(getSpecification(),
+                                           getParameterNames(),
+                                           getParameters(),
+                                           new DoubleResult(Double.NaN),
+                                           NAMES,
+                                           new NoSuchAtomException("Could not configure molecule"));
+            }
+        } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     Double.NaN), NAMES, e);
         }

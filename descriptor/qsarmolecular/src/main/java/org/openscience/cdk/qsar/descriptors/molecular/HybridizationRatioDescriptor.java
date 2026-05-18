@@ -22,6 +22,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -117,7 +118,9 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
     public DescriptorValue calculate(IAtomContainer container) {
         try {
             IAtomContainer clone = container.clone();
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
+            if (!AtomContainerManipulator.configure(clone)) {
+                return getDummyDescriptorValue(new NoSuchAtomTypeException("Could not configure molecule"));
+            }
             int nsp2 = 0;
             int nsp3 = 0;
             for (IAtom atom : clone.atoms()) {
@@ -131,7 +134,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
             double ratio = nsp3 / (double) (nsp2 + nsp3);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(ratio), getDescriptorNames());
-        } catch (CloneNotSupportedException | CDKException e) {
+        } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
     }

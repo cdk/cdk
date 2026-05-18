@@ -66,8 +66,8 @@ class CDKMCSTest extends CDKTestCase {
     void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         IAtomContainer frag1 = TestMoleculeFactory.makeCyclohexene(); //one double bond in ring
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        AtomContainerManipulator.configure(mol);
+        AtomContainerManipulator.configure(frag1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         adder = CDKHydrogenAdder.getInstance(frag1.getBuilder());
@@ -124,8 +124,8 @@ class CDKMCSTest extends CDKTestCase {
     void test2() throws java.lang.Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         IAtomContainer frag1 = TestMoleculeFactory.makeCyclohexane(); // no double bond in ring
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        AtomContainerManipulator.configure(mol);
+        AtomContainerManipulator.configure(frag1);
         Aromaticity.cdkLegacy().apply(mol);
         Aromaticity.cdkLegacy().apply(frag1);
 
@@ -140,8 +140,8 @@ class CDKMCSTest extends CDKTestCase {
     void test3() throws java.lang.Exception {
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        AtomContainerManipulator.configure(mol);
+        AtomContainerManipulator.configure(frag1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         adder = CDKHydrogenAdder.getInstance(frag1.getBuilder());
@@ -173,8 +173,8 @@ class CDKMCSTest extends CDKTestCase {
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        AtomContainerManipulator.configure(mol);
+        AtomContainerManipulator.configure(frag1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         adder = CDKHydrogenAdder.getInstance(frag1.getBuilder());
@@ -236,12 +236,12 @@ class CDKMCSTest extends CDKTestCase {
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.configure(mol1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
         adder.addImplicitHydrogens(mol1);
         Aromaticity.cdkLegacy().apply(mol1);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol2);
         adder = CDKHydrogenAdder.getInstance(mol2.getBuilder());
         adder.addImplicitHydrogens(mol2);
         Aromaticity.cdkLegacy().apply(mol2);
@@ -273,12 +273,12 @@ class CDKMCSTest extends CDKTestCase {
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
         mol2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, permutor.next());
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.configure(mol1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
         adder.addImplicitHydrogens(mol1);
         Aromaticity.cdkLegacy().apply(mol1);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol2);
         adder = CDKHydrogenAdder.getInstance(mol2.getBuilder());
         adder.addImplicitHydrogens(mol2);
         Aromaticity.cdkLegacy().apply(mol2);

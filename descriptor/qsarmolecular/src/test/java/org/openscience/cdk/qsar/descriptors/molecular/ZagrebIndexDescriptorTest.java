@@ -63,7 +63,7 @@ class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("O1C2C34C(C(C1O)CCCc1cc(cc(c1)C(F)(F)F)C(F)(F)F)CCC(C3CCC(O2)(OO4)C)C");
 
         addExplicitHydrogens(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         double value2D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
@@ -74,7 +74,7 @@ class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         mol = (IAtomContainer) cList.get(0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         double value3D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();

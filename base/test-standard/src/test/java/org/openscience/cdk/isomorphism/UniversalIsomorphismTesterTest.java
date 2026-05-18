@@ -77,8 +77,8 @@ class UniversalIsomorphismTesterTest extends CDKTestCase {
     void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         IAtomContainer frag1 = TestMoleculeFactory.makeCyclohexene(); //one double bond in ring
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        AtomContainerManipulator.configure(mol);
+        AtomContainerManipulator.configure(frag1);
         Aromaticity.cdkLegacy().apply(mol);
         Aromaticity.cdkLegacy().apply(frag1);
 
@@ -116,8 +116,8 @@ class UniversalIsomorphismTesterTest extends CDKTestCase {
     void test2() throws java.lang.Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         IAtomContainer frag1 = TestMoleculeFactory.makeCyclohexane(); // no double bond in ring
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        AtomContainerManipulator.configure(mol);
+        AtomContainerManipulator.configure(frag1);
         Aromaticity.cdkLegacy().apply(mol);
         Aromaticity.cdkLegacy().apply(frag1);
 
@@ -132,8 +132,8 @@ class UniversalIsomorphismTesterTest extends CDKTestCase {
     void test3() throws java.lang.Exception {
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        AtomContainerManipulator.configure(mol);
+        AtomContainerManipulator.configure(frag1);
         Aromaticity.cdkLegacy().apply(mol);
         Aromaticity.cdkLegacy().apply(frag1);
 
@@ -161,8 +161,8 @@ class UniversalIsomorphismTesterTest extends CDKTestCase {
 
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        AtomContainerManipulator.configure(mol);
+        AtomContainerManipulator.configure(frag1);
         Aromaticity.cdkLegacy().apply(mol);
         Aromaticity.cdkLegacy().apply(frag1);
 

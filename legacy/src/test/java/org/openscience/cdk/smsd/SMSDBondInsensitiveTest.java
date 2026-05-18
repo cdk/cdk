@@ -53,9 +53,9 @@ class SMSDBondInsensitiveTest {
         Napthalene = createNaphthalene();
         Cyclohexane = createCyclohexane();
         Benzene = createBenzene();
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(Napthalene);
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(Cyclohexane);
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(Benzene);
+        ExtAtomContainerManipulator.configure(Napthalene);
+        ExtAtomContainerManipulator.configure(Cyclohexane);
+        ExtAtomContainerManipulator.configure(Benzene);
 
         Aromaticity.cdkLegacy().apply(Napthalene);
         Aromaticity.cdkLegacy().apply(Cyclohexane);
@@ -141,8 +141,8 @@ class SMSDBondInsensitiveTest {
         IAtomContainer cycloPropane = createCyclopropane();
         IAtomContainer isobutane = createIsobutane();
 
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(cycloPropane);
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(isobutane);
+        ExtAtomContainerManipulator.configure(cycloPropane);
+        ExtAtomContainerManipulator.configure(isobutane);
 
         IAtomContainer source = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(cycloPropane);
         IAtomContainer target = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(isobutane);
@@ -174,7 +174,7 @@ class SMSDBondInsensitiveTest {
 
         IAtomContainer mol2 = create4Toluene();
 
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        ExtAtomContainerManipulator.configure(mol2);
         Aromaticity.cdkLegacy().apply(mol2);
 
         boolean bondSensitive = false;
@@ -206,8 +206,8 @@ class SMSDBondInsensitiveTest {
         IAtomContainer mol1 = sp.parseSmiles(file1);
         IAtomContainer mol2 = sp.parseSmiles(file2);
 
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        ExtAtomContainerManipulator.configure(mol1);
+        ExtAtomContainerManipulator.configure(mol2);
 
         IAtomContainer source = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol1);
         IAtomContainer target = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol2);
@@ -273,7 +273,7 @@ class SMSDBondInsensitiveTest {
         result.addBond(bond6);
         result.addBond(bond7);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
+        AtomContainerManipulator.configure(result);
 
         return result;
     }
@@ -340,7 +340,7 @@ class SMSDBondInsensitiveTest {
         result.addBond(bond4);
         result.addBond(bond5);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
+        AtomContainerManipulator.configure(result);
 
         return result;
     }
@@ -382,7 +382,7 @@ class SMSDBondInsensitiveTest {
         result.addBond(bond5);
         result.addBond(bond6);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
+        AtomContainerManipulator.configure(result);
         return result;
     }
 
@@ -507,7 +507,7 @@ class SMSDBondInsensitiveTest {
         result.addBond(bond10);
         result.addBond(bond11);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
+        AtomContainerManipulator.configure(result);
 
         return result;
     }
@@ -647,7 +647,7 @@ class SMSDBondInsensitiveTest {
         result.addBond(bond5);
         result.addBond(bond6);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
+        AtomContainerManipulator.configure(result);
 
         return result;
 

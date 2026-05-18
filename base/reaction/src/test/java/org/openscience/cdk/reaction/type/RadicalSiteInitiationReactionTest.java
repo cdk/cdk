@@ -217,7 +217,7 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
         molecule.addSingleElectron(new SingleElectron(atom));
         atom.setFormalCharge(0);
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (CDKException e) {
             LoggingToolFactory.createLoggingTool(getClass())

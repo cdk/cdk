@@ -153,7 +153,7 @@ public class PiContactDetectionDescriptor extends AbstractAtomPairDescriptor imp
         IAtomContainer mol = ac.getBuilder().newInstance(IAtomContainer.class, ac);
         if (checkAromaticity) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+                AtomContainerManipulator.configure(mol);
                 Aromaticity.cdkLegacy().apply(mol);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);

@@ -70,7 +70,7 @@ class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     void testIPDescriptor1() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("CCCCl");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -89,7 +89,7 @@ class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     void testIPDescriptor2() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("CC(CC)Cl"); // not in db
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -108,7 +108,7 @@ class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     void testNotDB() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C=CCCl"); // not in db
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -127,7 +127,7 @@ class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     void testIPDescriptor_1() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-Cl");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -145,7 +145,7 @@ class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     void testIPDescriptor_2() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-Br");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -163,7 +163,7 @@ class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     void testIPDescriptor_3() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-C-I");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 

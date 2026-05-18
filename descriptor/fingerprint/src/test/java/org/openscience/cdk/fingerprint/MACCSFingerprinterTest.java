@@ -65,9 +65,9 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
         IAtomContainer mol2 = parser.parseSmiles("c1ccccc1CC");
         IAtomContainer mol3 = parser.parseSmiles("CCC.CCC");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
+        AtomContainerManipulator.configure(mol3);
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
         Aromaticity.cdkLegacy().apply(mol3);
@@ -97,9 +97,9 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
         IAtomContainer mol2 = parser.parseSmiles("CC(N)CCC");
         IAtomContainer mol3 = parser.parseSmiles("CCCC");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
+        AtomContainerManipulator.configure(mol3);
 
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
@@ -129,8 +129,8 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
         IAtomContainer superStructure = bug706786_1();
         IAtomContainer subStructure = bug706786_2();
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
+        AtomContainerManipulator.configure(superStructure);
+        AtomContainerManipulator.configure(subStructure);
         addImplicitHydrogens(superStructure);
         addImplicitHydrogens(subStructure);
 

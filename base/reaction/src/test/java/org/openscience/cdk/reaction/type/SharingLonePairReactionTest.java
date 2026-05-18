@@ -255,7 +255,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 
         try {
             addExplicitHydrogens(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
 
             lpcheck.saturate(molecule);
         } catch (Exception e) {
@@ -282,7 +282,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 
         try {
             addExplicitHydrogens(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
 
             lpcheck.saturate(molecule);
         } catch (Exception e) {

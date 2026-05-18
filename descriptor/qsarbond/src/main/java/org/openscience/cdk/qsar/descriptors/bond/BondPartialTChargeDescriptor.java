@@ -159,11 +159,13 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
         Double originalCharge1 = bond.getBegin().getCharge();
         String originalAtomtypeName1 = bond.getBegin().getAtomTypeName();
         Integer originalNeighborCount1 = bond.getBegin().getFormalNeighbourCount();
+        Integer originalImplH1 = bond.getBegin().getImplicitHydrogenCount();
         IAtomType.Hybridization originalHybridization1 = bond.getBegin().getHybridization();
         Integer originalValency1 = bond.getBegin().getValency();
         Double originalCharge2 = bond.getEnd().getCharge();
         String originalAtomtypeName2 = bond.getEnd().getAtomTypeName();
         Integer originalNeighborCount2 = bond.getEnd().getFormalNeighbourCount();
+        Integer originalImplH2 = bond.getEnd().getImplicitHydrogenCount();
         IAtomType.Hybridization originalHybridization2 = bond.getEnd().getHybridization();
         Integer originalValency2 = bond.getEnd().getValency();
         Double originalBondOrderSum1 = bond.getBegin().getBondOrderSum();
@@ -172,7 +174,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
         Order originalMaxBondOrder2 = bond.getEnd().getMaxBondOrder();
         if (!isCachedAtomContainer(ac)) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+                AtomContainerManipulator.configure(ac);
                 if (lpeChecker) {
                     LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                     lpcheck.saturate(ac);
@@ -210,11 +212,13 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
         bond.getBegin().setHybridization(originalHybridization1);
         bond.getBegin().setValency(originalValency1);
         bond.getBegin().setFormalNeighbourCount(originalNeighborCount1);
+        bond.getBegin().setImplicitHydrogenCount(originalImplH1);
         bond.getEnd().setCharge(originalCharge2);
         bond.getEnd().setAtomTypeName(originalAtomtypeName2);
         bond.getEnd().setHybridization(originalHybridization2);
         bond.getEnd().setValency(originalValency2);
         bond.getEnd().setFormalNeighbourCount(originalNeighborCount2);
+        bond.getEnd().setImplicitHydrogenCount(originalImplH2);
         bond.getBegin().setMaxBondOrder(originalMaxBondOrder1);
         bond.getBegin().setBondOrderSum(originalBondOrderSum1);
         bond.getEnd().setMaxBondOrder(originalMaxBondOrder2);

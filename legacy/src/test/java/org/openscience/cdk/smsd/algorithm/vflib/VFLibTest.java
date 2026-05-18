@@ -64,13 +64,13 @@ class VFLibTest extends CDKTestCase {
     static void setUp() throws CDKException {
         hexane = createHexane();
         Assertions.assertEquals(6, hexane.getAtomCount());
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(hexane);
+        ExtAtomContainerManipulator.configure(hexane);
         hexane = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(hexane);
         Aromaticity.cdkLegacy().apply(hexane);
         hexaneQuery = new QueryCompiler(hexane, true).compile();
         Assertions.assertEquals(6, hexaneQuery.countNodes());
         benzene = createBenzene();
-        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
+        ExtAtomContainerManipulator.configure(benzene);
         hexane = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(benzene);
         Aromaticity.cdkLegacy().apply(benzene);
         benzeneQuery = new QueryCompiler(benzene, true).compile();
@@ -242,7 +242,7 @@ class VFLibTest extends CDKTestCase {
         result.addBond(bond4);
         result.addBond(bond5);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
+        AtomContainerManipulator.configure(result);
 
         return result;
     }
@@ -284,7 +284,7 @@ class VFLibTest extends CDKTestCase {
         result.addBond(bond5);
         result.addBond(bond6);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
+        AtomContainerManipulator.configure(result);
         return result;
     }
 }
