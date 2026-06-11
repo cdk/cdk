@@ -506,19 +506,25 @@ final class Hydrogens {
                 IAtom focus = atomStereo.getFocus();
                 List<IAtom> carriers = atomStereo.getCarriers();
                 int rbonds = 0;
+                int bcount = 0;
                 for (IAtom nbor : carriers) {
                     IBond bond = container.getBond(focus, nbor);
-                    if (bond != null && bond.isInRing())
-                        rbonds++;
+                    if (bond != null) {
+                        if (nbor.getAtomicNumber() != IElement.H)
+                            bcount++;
+                        if (bond.isInRing())
+                            rbonds++;
+                    }
                 }
                 int adjacentStereo = 0;
                 for (IStereoElement<?, ?> otherStereo : container.stereoElements()) {
-                    if (otherStereo instanceof ITetrahedralChirality) {
-                        if (carriers.contains((IAtom) otherStereo.getFocus()))
+                    if (otherStereo instanceof ITetrahedralChirality && otherStereo != se) {
+                        if (carriers.contains((IAtom)otherStereo.getFocus())) {
                             adjacentStereo++;
+                        }
                     }
                 }
-                return rbonds >= 3 || adjacentStereo >= 3;
+                return rbonds >= 3 || adjacentStereo == bcount;
             case IStereoElement.Allenal:
             case IStereoElement.CisTrans:
             case IStereoElement.SquarePlanar:
