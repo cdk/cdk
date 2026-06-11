@@ -2093,6 +2093,17 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
+    public void testAdjacentStereo() throws CDKException {
+        assertHydrogenConversion("O[C@@H]1[C@@H](N)C[C@@H](N)[C@@H]([C@H]1O)O[C@H]2OCCC[C@H]2O",
+                                 "O[C@@H]1[C@@H](N)C[C@@H](N)[C@@H]([C@H]1O)O[C@H]2OCCC[C@H]2O", HydrogenState.Minimal);
+        assertHydrogenConversion("O[C@@H]1[C@@H](N)C[C@@H](N)[C@@H]([C@H]1O)O[C@H]2OCCC[C@H]2O",
+                                 "O[C@@]1([C@@](N)(C[C@@](N)([C@@]([C@]1(O)[H])(O[C@]2(OCCC[C@]2(O)[H])[H])[H])[H])[H])[H]",
+                                 HydrogenState.Stereo);
+        assertHydrogenConversion("O[C@@H]1[C@@H](N)C[C@@H](N)[C@@H]([C@H]1O)O[C@H]2OCCC[C@H]2O",
+                                 "O[C@@H]1[C@@H](N)C[C@@H](N)[C@@H]([C@H]1O)O[C@H]2OCCC[C@H]2O", HydrogenState.Depiction);
+    }
+
+    @Test
     public void testExtendedCisTrans() throws CDKException {
         assertHydrogenConversion("C/C=C=C=C(\\[H])C",
                                  "C/C=C=C=C/C", HydrogenState.Minimal);
