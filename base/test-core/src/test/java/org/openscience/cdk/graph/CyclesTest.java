@@ -398,6 +398,36 @@ class CyclesTest {
     }
 
     @Test
+    void testSmallRing_atom_epoxy() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles("C1CC2OC2CC1");
+        Cycles.markRingAtomsAndBonds(mol); // required
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(0)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(1)));
+        Assertions.assertEquals(3, Cycles.smallRingSize(mol.getAtom(2)));
+        Assertions.assertEquals(3, Cycles.smallRingSize(mol.getAtom(3)));
+        Assertions.assertEquals(3, Cycles.smallRingSize(mol.getAtom(4)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(5)));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(6)));
+
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(0), 6));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(1), 6));
+        Assertions.assertEquals(3, Cycles.smallRingSize(mol.getAtom(2), 6));
+        Assertions.assertEquals(3, Cycles.smallRingSize(mol.getAtom(3), 6));
+        Assertions.assertEquals(3, Cycles.smallRingSize(mol.getAtom(4), 6));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(5), 6));
+        Assertions.assertEquals(6, Cycles.smallRingSize(mol.getAtom(6), 6));
+
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(0), 5));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(1), 5));
+        Assertions.assertEquals(3, Cycles.smallRingSize(mol.getAtom(2), 5));
+        Assertions.assertEquals(3, Cycles.smallRingSize(mol.getAtom(3), 5));
+        Assertions.assertEquals(3, Cycles.smallRingSize(mol.getAtom(4), 5));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(5), 5));
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(6), 5));
+
+    }
+
+    @Test
     void testSmallRing_bond_indole() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("[nH]1ccc2c1cccc2");
         Cycles.markRingAtomsAndBonds(mol); // required
