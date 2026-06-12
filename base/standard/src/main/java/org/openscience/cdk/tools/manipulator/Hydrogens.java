@@ -235,6 +235,12 @@ final class Hydrogens {
             yNew = findSingleBond(v, y);
         }
 
+        // corner case: the new atom which we will base stereo off is also
+        // going to be contracted! This happens if someone gives us something
+        // daft like C/C=C(/[H])[H]
+        if (contract.contains(xNew) || contract.contains(yNew))
+            return null;
+
         // no other atoms connected, invalid double-bond configuration
         // is removed. example [2H]/C=C/[H]
         if (x == null || y == null ||
