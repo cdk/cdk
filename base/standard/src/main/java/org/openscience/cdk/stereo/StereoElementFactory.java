@@ -121,49 +121,6 @@ public abstract class StereoElementFactory {
         this.bondMap = bondMap;
     }
 
-    private boolean visitSmallRing(int[] mark, int aidx, int prev, int depth,
-                                   int max) {
-        if (mark[aidx] == 2)
-            return true;
-        if (depth == max)
-            return false;
-        if (mark[aidx] == 1)
-            return false;
-        mark[aidx] = 1;
-        for (int nbr : graph[aidx]) {
-            if (nbr != prev && visitSmallRing(mark, nbr, aidx, depth + 1, max))
-                return true;
-        }
-        mark[aidx] = 0;
-        return false;
-    }
-
-    private boolean isInSmallRing(IBond bond, int max) {
-        if (!bond.isInRing())
-            return false;
-        IAtom beg  = bond.getBegin();
-        IAtom end  = bond.getEnd();
-        int[] mark = new int[container.getAtomCount()];
-        int   bidx = container.indexOf(beg);
-        int   eidx = container.indexOf(end);
-        mark[bidx] = 2;
-        return visitSmallRing(mark,
-                              eidx,
-                              bidx,
-                              1,
-                              max);
-    }
-
-    private boolean isInSmallRing(IAtom atom, int max) {
-        if (!atom.isInRing())
-            return false;
-        for (IBond bond : container.getConnectedBondsList(atom)) {
-            if (isInSmallRing(bond, max))
-                return true;
-        }
-        return false;
-    }
-
     private IBond getOtherDb(IAtom a, IBond other) {
         IBond result = null;
         for (IBond bond : container.getConnectedBondsList(a)) {
@@ -269,9 +226,9 @@ public abstract class StereoElementFactory {
                         if (w > v &&
                             centers.elementType(w) == Stereocenters.Type.Tricoordinate &&
                             bond.getOrder() == IBond.Order.SINGLE &&
-                            !isInSmallRing(bond, 6) &&
-                            isInSmallRing(bond.getBegin(), 6) &&
-                            isInSmallRing(bond.getEnd(), 6)) {
+                            Cycles.smallRingSize(bond, 6) == 0 &&
+                            Cycles.smallRingSize(bond.getBegin(), 6) != 0 &&
+                            Cycles.smallRingSize(bond.getEnd(), 6) != 0) {
                             element = createAtropisomer(v, w, centers);
                             if (element != null)
                                 elements.add(element);
@@ -294,7 +251,7 @@ public abstract class StereoElementFactory {
                         IBond bond = bondMap.get(v, w);
                         if (w > v && bond.getOrder() == IBond.Order.DOUBLE) {
                             if (centers.elementType(w) == Stereocenters.Type.Tricoordinate
-                                && centers.isStereocenter(w) && !isInSmallRing(bond, 7)) {
+                                && centers.isStereocenter(w) && Cycles.smallRingSize(bond, 7) == 0) {
                                 IStereoElement element = createGeometric(v, w, centers);
                                 if (element != null) elements.add(element);
                             }
