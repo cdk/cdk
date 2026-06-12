@@ -2133,4 +2133,10 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         assertHydrogenConversion("N[C@OH1H]([H])(Cl)(Cl)Cl",
                                  "N[C@OH3]([H])(Cl)(Cl)(Cl)[H]", HydrogenState.Stereo);
     }
+
+    @Test
+    public void testBadCisTrans() throws CDKException {
+        assertHydrogenConversion("C/C=C/([H])[H]",
+                                 "CC=C", HydrogenState.Minimal);
+    }
 }
