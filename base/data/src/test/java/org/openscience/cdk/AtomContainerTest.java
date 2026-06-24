@@ -21,11 +21,18 @@ package org.openscience.cdk;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.interfaces.AbstractAtomContainerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -95,5 +102,37 @@ class AtomContainerTest extends AbstractAtomContainerTest {
         IAtomContainer container = new AtomContainer(acetone);
         Assertions.assertEquals(4, container.getAtomCount());
         Assertions.assertEquals(3, container.getBondCount());
+    }
+
+    @Test
+    void testStereoUpdate () throws Exception {
+        SmilesParser smiPar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Stereo | SmiFlavor.AtomAtomMap);
+        IAtomContainer molecule = smiPar.parseSmiles("[CH2:1]1[CH2:1][CH2:1][CH2:1][CH:1](/C(=C(/C2CCCNCCC2)\\C3CCCCCCC3)/C4CCCCCNC4)[CH2:1][CH2:1][CH2:1]1");
+        List<IAtom> toRemove = new ArrayList<>(6);
+        for (IAtom atom : molecule.atoms()) {
+            if (atom.getMapIdx() == 1) {
+                toRemove.add(atom);
+            }
+        }
+        for (IStereoElement elem : molecule.stereoElements()) {
+            for (Object obj : elem.getCarriers()) {
+                for (IAtom atom : ((IBond) obj).atoms()) {
+                    atom.setMapIdx(2);
+                }
+            }
+        }
+        System.out.println(smiGen.create(molecule));
+        for (IAtom atom : toRemove) {
+            molecule.removeAtom(atom);
+        }
+        for (IStereoElement elem : molecule.stereoElements()) {
+            for (Object obj : elem.getCarriers()) {
+                for (IAtom atom : ((IBond) obj).atoms()) {
+                    atom.setMapIdx(3);
+                }
+            }
+        }
+        System.out.println(smiGen.create(molecule));
     }
 }

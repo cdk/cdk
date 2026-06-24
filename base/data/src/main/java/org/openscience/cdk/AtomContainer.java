@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * This class should not be used directly.
@@ -366,6 +368,84 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                 setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
             }
         }
+    }
+
+    private static IDoubleBondStereochemistry update(IDoubleBondStereochemistry db,
+                                                     IAtom contract) {
+        IDoubleBondStereochemistry.Conformation conformation = db.getStereo();
+
+        IBond orgStereo = db.getStereoBond();
+        IBond orgLeft = db.getBonds()[0];
+        IBond orgRight = db.getBonds()[1];
+
+        // we use the following variable names to refer to the
+        // double bond atoms and substituents
+        // x       y
+        //  \     /
+        //   u = v
+
+        IAtom u = orgStereo.getBegin();
+        IAtom v = orgStereo.getEnd();
+        IAtom x = orgLeft.getOther(u);
+        IAtom y = orgRight.getOther(v);
+
+        // if xNew == x and yNew == y we don't need to find the
+        // connecting bonds
+        IAtom xNew = x;
+        IAtom yNew = y;
+
+        if (contract.equals(x)) {
+            conformation = conformation.invert();
+            xNew = findSingleBond(u, x);
+        }
+
+        if (contract.equals(y)) {
+            conformation = conformation.invert();
+            yNew = findSingleBond(v, y);
+        }
+
+        // corner case: the new atom which we will base stereo off is also
+        // going to be contracted! This happens if someone gives us something
+        // daft like C/C=C(/[H])[H]
+        if (contract.equals(xNew) || contract.equals(yNew))
+            return null;
+
+        // no other atoms connected, invalid double-bond configuration
+        // is removed. example [2H]/C=C/[H]
+        if (x == null || y == null ||
+                xNew == null || yNew == null) return null;
+
+        // no changes
+        if (x.equals(xNew) && y.equals(yNew)) {
+            return db;
+        }
+
+        // XXX: may perform slow operations but works for now
+        IBond cpyLeft = !Objects.equals(xNew, x) ? u.getBond(xNew) : orgLeft;
+        IBond cpyRight = !Objects.equals(yNew, y) ? v.getBond(yNew) : orgRight;
+
+        return new DoubleBondStereochemistry(orgStereo,
+                new IBond[]{cpyLeft, cpyRight},
+                conformation);
+    }
+
+    /**
+     * Finds a neighbor connected to 'atom' which is connected by a
+     * single bond and is not 'exclude'.
+     *
+     * @param atom    atom to find a neighbor of
+     * @param exclude the neighbor should not be this atom
+     * @return a neighbor of 'atom', null if not found
+     */
+    private static IAtom findSingleBond(IAtom atom, IAtom exclude) {
+        for (IBond bond : atom.bonds()) {
+            if (bond.getOrder() != IBond.Order.SINGLE)
+                continue;
+            IAtom neighbor = bond.getOther(atom);
+            if (!neighbor.equals(exclude))
+                return neighbor;
+        }
+        return null;
     }
 
     /**
@@ -1140,7 +1220,6 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                 invalidated.add(se);
             } else if (se instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
-                List<IBond> carriers = db.getCarriers();
                 final IAtom common = db.getFocus().getConnectedAtom(removedBond);
                 if (common != null) {
                     IBond otherBond = null;
@@ -1308,6 +1387,12 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                         bonds[newNumBonds].setIndex(newNumBonds);
                         newNumBonds++;
                     } else {
+                        for (int j = 0; j < stereo.size(); j++) {
+                            IStereoElement<?, ?> se = stereo.get(j);
+                            if (se.contains(atom) && se instanceof IDoubleBondStereochemistry) {
+                                update((IDoubleBondStereochemistry) se, atom);
+                            }
+                        }
                         bonds[i].removeListener(this);
                         delFromEndpoints(bonds[i]);
                         updateStereochemistry(bonds[i]);
