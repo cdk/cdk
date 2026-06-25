@@ -21,18 +21,14 @@ package org.openscience.cdk;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.smiles.SmiFlavor;
-import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.test.interfaces.AbstractAtomContainerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -104,35 +100,54 @@ class AtomContainerTest extends AbstractAtomContainerTest {
         Assertions.assertEquals(3, container.getBondCount());
     }
 
+    /**
+     * Tests the double bond stereochemistry update (carriers and conformation) after an atom removal.
+     */
     @Test
-    void testStereoUpdate () throws Exception {
-        SmilesParser smiPar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        SmilesGenerator smiGen = new SmilesGenerator(SmiFlavor.Stereo | SmiFlavor.AtomAtomMap);
-        IAtomContainer molecule = smiPar.parseSmiles("[CH2:1]1[CH2:1][CH2:1][CH2:1][CH:1](/C(=C(/C2CCCNCCC2)\\C3CCCCCCC3)/C4CCCCCNC4)[CH2:1][CH2:1][CH2:1]1");
-        List<IAtom> toRemove = new ArrayList<>(6);
-        for (IAtom atom : molecule.atoms()) {
-            if (atom.getMapIdx() == 1) {
-                toRemove.add(atom);
-            }
+    void testStereoUpdate() {
+        // we use the following variable names to refer to the
+        // double bond atoms and substituents
+        // x       y
+        //  \     /
+        //   u = v
+        //  /     \
+        // w       z
+        IAtomContainer mol = newChemObject().getBuilder().newInstance(IAtomContainer.class);
+        IAtom u = mol.getBuilder().newInstance(IAtom.class, "C");
+        IAtom v = mol.getBuilder().newInstance(IAtom.class, "C");
+        IAtom w = mol.getBuilder().newInstance(IAtom.class, "C");
+        IAtom x = mol.getBuilder().newInstance(IAtom.class, "C");
+        IAtom y = mol.getBuilder().newInstance(IAtom.class, "C");
+        IAtom z = mol.getBuilder().newInstance(IAtom.class, "C");
+        mol.addAtom(u);
+        mol.addAtom(v);
+        mol.addAtom(w);
+        mol.addAtom(x);
+        mol.addAtom(y);
+        mol.addAtom(z);
+        IBond uv = mol.getBuilder().newInstance(IBond.class, u, v, IBond.Order.DOUBLE);
+        IBond uw = mol.getBuilder().newInstance(IBond.class, u, w, IBond.Order.SINGLE);
+        IBond ux = mol.getBuilder().newInstance(IBond.class, u, x, IBond.Order.SINGLE);
+        IBond vy = mol.getBuilder().newInstance(IBond.class, v, y, IBond.Order.SINGLE);
+        IBond vz = mol.getBuilder().newInstance(IBond.class, v, z, IBond.Order.SINGLE);
+        mol.addBond(uv);
+        mol.addBond(uw);
+        mol.addBond(ux);
+        mol.addBond(vy);
+        mol.addBond(vz);
+        mol.addStereoElement(new DoubleBondStereochemistry(uv, new IBond[]{ux, vz}, DoubleBondStereochemistry.Conformation.OPPOSITE));
+        for (IStereoElement<?, ?> elem : mol.stereoElements()) {
+            Assertions.assertTrue(elem.getCarriers().contains(ux));
+            Assertions.assertTrue(elem.getCarriers().contains(vz));
+            Assertions.assertEquals(IDoubleBondStereochemistry.Conformation.OPPOSITE, ((IDoubleBondStereochemistry) elem).getStereo());
         }
-        for (IStereoElement elem : molecule.stereoElements()) {
-            for (Object obj : elem.getCarriers()) {
-                for (IAtom atom : ((IBond) obj).atoms()) {
-                    atom.setMapIdx(2);
-                }
-            }
+        mol.removeAtom(z);
+        for (IStereoElement<?, ?> elem : mol.stereoElements()) {
+            Assertions.assertTrue(elem.getCarriers().contains(ux));
+            //the other carrier is updated to vy
+            Assertions.assertTrue(elem.getCarriers().contains(vy));
+            //the configuration therefore needs to be TOGETHER now
+            Assertions.assertEquals(IDoubleBondStereochemistry.Conformation.TOGETHER, ((IDoubleBondStereochemistry) elem).getStereo());
         }
-        System.out.println(smiGen.create(molecule));
-        for (IAtom atom : toRemove) {
-            molecule.removeAtom(atom);
-        }
-        for (IStereoElement elem : molecule.stereoElements()) {
-            for (Object obj : elem.getCarriers()) {
-                for (IAtom atom : ((IBond) obj).atoms()) {
-                    atom.setMapIdx(3);
-                }
-            }
-        }
-        System.out.println(smiGen.create(molecule));
     }
 }

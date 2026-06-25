@@ -54,7 +54,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * This class should not be used directly.
@@ -370,8 +369,17 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         }
     }
 
-    private static IDoubleBondStereochemistry update(IDoubleBondStereochemistry db,
-                                                     IAtom contract) {
+    /**
+     * Updates carriers and conformation of a double bond stereochemistry element after an etom removal.
+     *
+     * @param db the double bond stereochemistry element to update
+     * @param contract the atom that is removed
+     * @return new double bond stereochemistry element, or null if the stereochemistry is no longer valid
+     * @author John May (original implementation in Hydrogens class)
+     * @author Jonas Schaub (adaption to this use case)
+     */
+    private static IDoubleBondStereochemistry updateDoubleBondStereo(IDoubleBondStereochemistry db,
+                                                                     IAtom contract) {
         IDoubleBondStereochemistry.Conformation conformation = db.getStereo();
 
         IBond orgStereo = db.getStereoBond();
@@ -1387,14 +1395,16 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                         bonds[newNumBonds].setIndex(newNumBonds);
                         newNumBonds++;
                     } else {
+                        bonds[i].removeListener(this);
+                        delFromEndpoints(bonds[i]);
+                        //update double bond stereos that this atom is involved in here already,
+                        // before the general bond stereochem update below; using specific method taken from Hydrogens
                         for (int j = 0; j < stereo.size(); j++) {
                             IStereoElement<?, ?> se = stereo.get(j);
                             if (se.contains(atom) && se instanceof IDoubleBondStereochemistry) {
-                                update((IDoubleBondStereochemistry) se, atom);
+                                stereo.set(j, updateDoubleBondStereo((IDoubleBondStereochemistry) se, atom));
                             }
                         }
-                        bonds[i].removeListener(this);
-                        delFromEndpoints(bonds[i]);
                         updateStereochemistry(bonds[i]);
                     }
                 }
