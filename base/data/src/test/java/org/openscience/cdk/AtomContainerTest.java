@@ -139,6 +139,7 @@ class AtomContainerTest extends AbstractAtomContainerTest {
         for (IStereoElement<?, ?> elem : mol.stereoElements()) {
             Assertions.assertTrue(elem.getCarriers().contains(ux));
             Assertions.assertTrue(elem.getCarriers().contains(vz));
+            Assertions.assertEquals(uv, elem.getFocus());
             Assertions.assertEquals(IDoubleBondStereochemistry.Conformation.OPPOSITE, ((IDoubleBondStereochemistry) elem).getStereo());
         }
         mol.removeAtom(z);

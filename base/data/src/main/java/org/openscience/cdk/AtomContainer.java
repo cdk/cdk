@@ -370,13 +370,15 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
     }
 
     /**
-     * Updates carriers and conformation of a double bond stereochemistry element after an etom removal.
+     * Updates carriers and conformation of a double bond stereochemistry element after an atom removal.
+     * Note that the returned element must be added to the stereo elements manually.
      *
      * @param db the double bond stereochemistry element to update
-     * @param contract the atom that is removed
+     * @param contract the atom that is removed; must be part of a carrier bond of this stereo element,
+     *                 not part of the focus bond!
      * @return new double bond stereochemistry element, or null if the stereochemistry is no longer valid
      * @author John May (original implementation in Hydrogens class)
-     * @author Jonas Schaub (adaption to this use case)
+     * @author Jonas Schaub (adaption to this class)
      */
     private static IDoubleBondStereochemistry updateDoubleBondStereo(IDoubleBondStereochemistry db,
                                                                      IAtom contract) {
@@ -397,6 +399,11 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         IAtom x = orgLeft.getOther(u);
         IAtom y = orgRight.getOther(v);
 
+        if (contract.equals(u) || contract.equals(v)) {
+            // The contracted atom is part of the focus bond, so we cannot update the stereochemistry
+            return null;
+        }
+
         // if xNew == x and yNew == y we don't need to find the
         // connecting bonds
         IAtom xNew = x;
@@ -412,14 +419,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
             yNew = findSingleBond(v, y);
         }
 
-        // corner case: the new atom which we will base stereo off is also
-        // going to be contracted! This happens if someone gives us something
-        // daft like C/C=C(/[H])[H]
-        if (contract.equals(xNew) || contract.equals(yNew))
-            return null;
-
         // no other atoms connected, invalid double-bond configuration
-        // is removed. example [2H]/C=C/[H]
+        // is removed.
         if (x == null || y == null ||
                 xNew == null || yNew == null) return null;
 
@@ -1397,12 +1398,19 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                     } else {
                         bonds[i].removeListener(this);
                         delFromEndpoints(bonds[i]);
-                        //update double bond stereos that this atom is involved in here already,
+                        //update double bond stereo elements where this atom is involved in a carrier bond here already,
                         // before the general bond stereochem update below; using specific method taken from Hydrogens
                         for (int j = 0; j < stereo.size(); j++) {
                             IStereoElement<?, ?> se = stereo.get(j);
                             if (se.contains(atom) && se instanceof IDoubleBondStereochemistry) {
-                                stereo.set(j, updateDoubleBondStereo((IDoubleBondStereochemistry) se, atom));
+                                for (IChemObject carrier : se.getCarriers()) {
+                                    if (carrier instanceof IBond && ((IBond) carrier).contains(atom)) {
+                                        IDoubleBondStereochemistry updated = updateDoubleBondStereo((IDoubleBondStereochemistry) se, atom);
+                                        if (updated != null) {
+                                            stereo.set(j, updated);
+                                        } //else: it cannot be updated, so it is left alone here and collected for removal below
+                                    }
+                                }
                             }
                         }
                         updateStereochemistry(bonds[i]);
