@@ -67,4 +67,17 @@ class AtomCountDescriptorTest extends MolecularDescriptorTest {
         value = descriptor.calculate(mol);
         Assertions.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
     }
+
+    @Test
+    void testHeavyAtomCount() throws Exception {
+        Object[] params = {"#"};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol1 = sp.parseSmiles("CCO"); // ethanol
+        IAtomContainer mol2 = sp.parseSmiles("*CCO[H]"); // ethanol with pseudo-atom and explicit H
+        DescriptorValue value1 = descriptor.calculate(mol1);
+        DescriptorValue value2 = descriptor.calculate(mol2);
+        Assertions.assertEquals(3, ((IntegerResult) value1.getValue()).intValue());
+        Assertions.assertEquals(3, ((IntegerResult) value2.getValue()).intValue());
+    }
 }

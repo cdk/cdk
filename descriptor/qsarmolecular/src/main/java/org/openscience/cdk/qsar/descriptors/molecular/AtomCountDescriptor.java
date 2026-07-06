@@ -20,7 +20,10 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -28,12 +31,13 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
+import java.util.Objects;
+
 /**
  * IDescriptor based on the number of atoms of a certain element type.
  *
- * It is
- * possible to use the wild card symbol '*' as element type to get the count of
- * all atoms.
+ * It is possible to use the wild card symbol '*' as element type to get the count of
+ * all atoms, or the symbol '#' to get the count of all heavy atoms (non-hydrogen, non-pseudo atoms).
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
@@ -43,12 +47,12 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *   <tr>
  *     <td>elementName</td>
  *     <td>*</td>
- *     <td>Symbol of the element we want to count</td>
+ *     <td>Symbol of the element we want to count (or '*' for all atoms, '#' for heavy atoms)</td>
  *   </tr>
  * </table>
  *
  * Returns a single value with name <i>nX</i> where <i>X</i> is the atomic symbol.  If *
- * is specified then the name is <i>nAtom</i>
+ * is specified then the name is <i>nAtom</i>. If # is specified then the name is <i>nHeavyAtom</i>.
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
@@ -59,7 +63,7 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
     private String elementName;
 
     /**
-     *  Constructor for the AtomCountDescriptor object.
+     * Constructor for the AtomCountDescriptor object.
      */
     public AtomCountDescriptor() {
         elementName = "*";
@@ -88,12 +92,12 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
     }
 
     /**
-     *  Sets the parameters attribute of the AtomCountDescriptor object.
+     * Sets the parameters attribute of the AtomCountDescriptor object.
      *
-     *@param  params            The new parameters value
-     *@throws  CDKException  if the number of parameters is greater than 1
-     *or else the parameter is not of type String
-     *@see #getParameters
+     * @param  params            The new parameters value
+     * @throws  CDKException  if the number of parameters is greater than 1
+     * or else the parameter is not of type String
+     * @see #getParameters
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -107,10 +111,10 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
     }
 
     /**
-     *  Gets the parameters attribute of the AtomCountDescriptor object.
+     * Gets the parameters attribute of the AtomCountDescriptor object.
      *
-     *@return    The parameters value
-     *@see #setParameters
+     * @return    The parameters value
+     * @see #setParameters
      */
     @Override
     public Object[] getParameters() {
@@ -125,16 +129,18 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
         String name = "n";
         if (elementName.equals("*"))
             name = "nAtom";
+        else if (elementName.equals("#"))
+            name = "nHeavyAtom";
         else
             name += elementName;
         return new String[]{name};
     }
 
     /**
-     *  This method calculate the number of atoms of a given type in an {@link IAtomContainer}.
+     * This method calculate the number of atoms of a given type in an {@link IAtomContainer}.
      *
-     *@param  container  The atom container for which this descriptor is to be calculated
-     *@return            Number of atoms of a certain type is returned.
+     * @param  container  The atom container for which this descriptor is to be calculated
+     * @return            Number of atoms of a certain type is returned.
      */
 
     // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
@@ -161,6 +167,13 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
                 if (hcount != CDKConstants.UNSET) atomCount += hcount;
             }
             atomCount += container.getAtomCount();
+        } else if (elementName.equals("#")) {
+            for (int i = 0; i < container.getAtomCount(); i++) {
+                IAtom atom = container.getAtom(i);
+                if (!isPseudoAtom(atom) && atom.getAtomicNumber() != IElement.H) {
+                    atomCount += 1;
+                }
+            }
         } else if (elementName.equals("H")) {
             for (int i = 0; i < container.getAtomCount(); i++) {
                 if (container.getAtom(i).getSymbol().equals(elementName)) {
@@ -184,6 +197,27 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
     }
 
     /**
+     * Checks whether the given atom is a pseudo atom. Very strict, any atom
+     * whose atomic number is null or 0, whose symbol equals "R" or "*", or that
+     * is an instance of an {@link IPseudoAtom} implementing class will be classified as
+     * a pseudo atom.
+     *
+     * @param atom the atom to test
+     * @return true if the given atom is identified as a pseudo (R) atom
+     */
+    protected boolean isPseudoAtom(IAtom atom) {
+        Integer tmpAtomicNr = atom.getAtomicNumber();
+        if (Objects.isNull(tmpAtomicNr)) {
+            return true;
+        }
+        String tmpSymbol = atom.getSymbol();
+        return tmpAtomicNr == IElement.Wildcard ||
+                tmpSymbol.equals("R") ||
+                tmpSymbol.equals("*") ||
+                atom instanceof IPseudoAtom;
+    }
+
+    /**
      * Returns the specific type of the DescriptorResult object.
      * 
      * The return value from this method really indicates what type of result will
@@ -200,9 +234,9 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
     }
 
     /**
-     *  Gets the parameterNames attribute of the AtomCountDescriptor object.
+     * Gets the parameterNames attribute of the AtomCountDescriptor object.
      *
-     *@return    The parameterNames value
+     * @return    The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -212,10 +246,10 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
     }
 
     /**
-     *  Gets the parameterType attribute of the AtomCountDescriptor object.
+     * Gets the parameterType attribute of the AtomCountDescriptor object.
      *
-     *@param  name  Description of the Parameter
-     *@return       An Object whose class is that of the parameter requested
+     * @param  name  Description of the Parameter
+     * @return       An Object whose class is that of the parameter requested
      */
     @Override
     public Object getParameterType(String name) {
