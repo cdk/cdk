@@ -474,31 +474,18 @@ public final class Cycles {
     public static int smallRingSize(IAtom atom, int max) {
         if (!atom.isInRing())
             return 0;
-        IAtomContainer mol    = atom.getContainer();
-        int[]          distTo = new int[mol.getAtomCount()];
-        Arrays.fill(distTo, 1 + distTo.length);
-        distTo[atom.getIndex()] = 0;
-        Deque<IAtom> queue = new ArrayDeque<>();
-        queue.add(atom);
-        int smallest = 1 + distTo.length;
-        while (!queue.isEmpty()) {
-            IAtom a    = queue.poll();
-            int   dist = 1 + distTo[a.getIndex()];
-            for (IBond b : a.bonds()) {
-                if (!b.isInRing())
-                    continue;
-                IAtom nbr = b.getOther(a);
-                if (dist < distTo[nbr.getIndex()]) {
-                    distTo[nbr.getIndex()] = dist;
-                    queue.add(nbr);
-                } else if (dist != 2 + distTo[nbr.getIndex()]) {
-                    int tmp = dist + distTo[nbr.getIndex()];
-                    if (tmp < smallest)
-                        smallest = tmp;
-                }
-            }
-            if (2 * dist > 1 + max)
-                break;
+        int[] visit = new int[atom.getContainer().getAtomCount()];
+        int smallest = max+1;
+        // We only need to test n-1 ring bonds hence the use of
+        // prev here (all but the last ring bond is visited)
+        IBond prev = null;
+        for (IBond bond : atom.bonds()) {
+            if (!bond.isInRing())
+                continue;
+            if (prev != null)
+                smallest = Math.min(smallest,
+                                    smallRingSize(prev, visit, smallest));
+            prev = bond;
         }
         return smallest <= max ? smallest : 0;
     }
@@ -518,6 +505,43 @@ public final class Cycles {
         return smallRingSize(atom, atom.getContainer().getAtomCount());
     }
 
+    private static int smallRingSize(IBond bond, int[] visit, int max) {
+        if (!bond.isInRing())
+            return 0;
+        Arrays.fill(visit, 2+max);
+        // bidirectional BFS we use the sign -/+ to determine which set
+        // we are in
+        visit[bond.getBegin().getIndex()] = -1;
+        visit[bond.getEnd().getIndex()] = +1;
+        Deque<IAtom> queue = new ArrayDeque<>();
+        queue.add(bond.getBegin());
+        queue.add(bond.getEnd());
+        int smallest = 2+max;
+        while (!queue.isEmpty()) {
+            IAtom a = queue.poll();
+            int dist = visit[a.getIndex()];
+            if (dist < 0) dist--;
+            else if (dist > 0) dist++;
+            for (IBond b : a.bonds()) {
+                if (b == bond || !b.isInRing())
+                    continue;
+                IAtom nbr = b.getOther(a);
+                if (visit[nbr.getIndex()] != 0 &&
+                    Math.abs(dist) < Math.abs(visit[nbr.getIndex()])) {
+                    visit[nbr.getIndex()] = dist;
+                    queue.add(nbr);
+                } else if (Math.signum(visit[nbr.getIndex()]) != Math.signum(dist)) {
+                    int tmp = Math.abs(dist) + Math.abs(visit[nbr.getIndex()]) - 1;
+                    if (tmp < smallest)
+                        smallest = tmp;
+                }
+            }
+            if ((2 * Math.abs(dist)) - 1 > max)
+                break;
+        }
+        return smallest <= max ? smallest : 0;
+    }
+
     /**
      * Determine the smallest ring size an bond belongs to. This method requires
      * that {@link #markRingAtomsAndBonds(IAtomContainer)} has been called
@@ -529,37 +553,8 @@ public final class Cycles {
      *         larger than 'max'
      */
     public static int smallRingSize(IBond bond, int max) {
-        if (!bond.isInRing())
-            return 0;
-        IAtomContainer mol    = bond.getContainer();
-        int[]          distTo = new int[mol.getAtomCount()];
-        Arrays.fill(distTo, 1 + distTo.length);
-        distTo[bond.getBegin().getIndex()] = 0;
-        distTo[bond.getEnd().getIndex()] = 0;
-        Deque<IAtom> queue = new ArrayDeque<>();
-        queue.add(bond.getBegin());
-        queue.add(bond.getEnd());
-        int smallest = 1 + distTo.length;
-        while (!queue.isEmpty()) {
-            IAtom a = queue.poll();
-            int dist = 1 + distTo[a.getIndex()];
-            for (IBond b : a.bonds()) {
-                if (b == bond || !b.isInRing())
-                    continue;
-                IAtom nbr = b.getOther(a);
-                if (dist < distTo[nbr.getIndex()]) {
-                    distTo[nbr.getIndex()] = dist;
-                    queue.add(nbr);
-                } else if (dist != 2 + distTo[nbr.getIndex()]) {
-                    int tmp = 1 + dist + distTo[nbr.getIndex()];
-                    if (tmp < smallest)
-                        smallest = tmp;
-                }
-            }
-            if (2 * dist > 1 + max)
-                break;
-        }
-        return smallest <= max ? smallest : 0;
+        int[] visit = new int[bond.getContainer().getAtomCount()];
+        return smallRingSize(bond, visit, max);
     }
 
     /**

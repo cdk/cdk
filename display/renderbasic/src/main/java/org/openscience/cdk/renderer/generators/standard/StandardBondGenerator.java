@@ -946,6 +946,8 @@ final class StandardBondGenerator {
         } else {
             Point2d beg = new Point2d(sum(atom1BackOffPoint, scale(perpendicular, separation)));
             Point2d end = new Point2d(sum(atom2BackOffPoint, scale(perpendicular, separation)));
+            if (Double.isNaN(atom1Offset)) atom1Offset = 1;
+            if (Double.isNaN(atom2Offset)) atom2Offset = 1;
             group.add(newLineElement(sum(beg, scale(unit, atom1Offset)),
                                      sum(end, scale(unit, -atom2Offset))));
         }
