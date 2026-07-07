@@ -50,7 +50,7 @@ import static org.hamcrest.CoreMatchers.not;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-class GasteigerMarsiliPartialChargesTestå {
+class GasteigerMarsiliPartialChargesTest {
 
     private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
