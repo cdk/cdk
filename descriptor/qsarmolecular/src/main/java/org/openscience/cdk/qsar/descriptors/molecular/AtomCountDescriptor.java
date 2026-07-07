@@ -207,7 +207,7 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
      */
     protected boolean isPseudoAtom(IAtom atom) {
         Integer tmpAtomicNr = atom.getAtomicNumber();
-        if (Objects.isNull(tmpAtomicNr)) {
+        if (tmpAtomicNr == null) {
             return true;
         }
         String tmpSymbol = atom.getSymbol();

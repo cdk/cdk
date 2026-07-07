@@ -21,10 +21,10 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -45,7 +45,7 @@ class AtomCountDescriptorTest extends MolecularDescriptorTest {
     void testCarbonCount() throws java.lang.Exception {
         Object[] params = {"C"};
         descriptor.setParameters(params);
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
         Assertions.assertEquals(2, ((IntegerResult) value.getValue()).intValue());
@@ -58,12 +58,12 @@ class AtomCountDescriptorTest extends MolecularDescriptorTest {
     void testImplicitExplicitH() throws Exception {
         Object[] params = {"*"};
         descriptor.setParameters(params);
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("C"); // ethanol
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C"); // methane
         DescriptorValue value = descriptor.calculate(mol);
         Assertions.assertEquals(5, ((IntegerResult) value.getValue()).intValue());
 
-        mol = sp.parseSmiles("[C]"); // ethanol
+        mol = sp.parseSmiles("[C]"); // carbon
         value = descriptor.calculate(mol);
         Assertions.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
     }
@@ -72,7 +72,7 @@ class AtomCountDescriptorTest extends MolecularDescriptorTest {
     void testHeavyAtomCount() throws Exception {
         Object[] params = {"#"};
         descriptor.setParameters(params);
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("CCO"); // ethanol
         IAtomContainer mol2 = sp.parseSmiles("*CCO[H]"); // ethanol with pseudo-atom and explicit H
         DescriptorValue value1 = descriptor.calculate(mol1);
