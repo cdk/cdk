@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
 import java.util.ArrayList;
@@ -366,6 +367,94 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                 setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
             }
         }
+    }
+
+    /**
+     * Updates carriers and conformation of a double bond stereochemistry element after an atom removal.
+     * Note that the returned element must be added to the stereo elements manually.
+     *
+     * @param db the double bond stereochemistry element to update
+     * @param contract the atom that is removed; must be part of a carrier bond of this stereo element,
+     *                 not part of the focus bond!
+     * @return new double bond stereochemistry element, or null if the stereochemistry is no longer valid
+     * @author John May (original implementation in Hydrogens class)
+     * @author Jonas Schaub (adaption to this class)
+     */
+    private static IDoubleBondStereochemistry updateDoubleBondStereo(IDoubleBondStereochemistry db,
+                                                                     IAtom contract) {
+        IDoubleBondStereochemistry.Conformation conformation = db.getStereo();
+
+        IBond orgStereo = db.getStereoBond();
+        IBond orgLeft = db.getBonds()[0];
+        IBond orgRight = db.getBonds()[1];
+
+        // we use the following variable names to refer to the
+        // double bond atoms and substituents
+        // x       y
+        //  \     /
+        //   u = v
+
+        IAtom u = orgStereo.getBegin();
+        IAtom v = orgStereo.getEnd();
+        IAtom x = orgLeft.getOther(u);
+        IAtom y = orgRight.getOther(v);
+
+        if (contract.equals(u) || contract.equals(v)) {
+            // The contracted atom is part of the focus bond, so we cannot update the stereochemistry
+            return null;
+        }
+
+        // if xNew == x and yNew == y we don't need to find the
+        // connecting bonds
+        IAtom xNew = x;
+        IAtom yNew = y;
+
+        if (contract.equals(x)) {
+            conformation = conformation.invert();
+            xNew = findSingleBond(u, x);
+        }
+
+        if (contract.equals(y)) {
+            conformation = conformation.invert();
+            yNew = findSingleBond(v, y);
+        }
+
+        // no other atoms connected, invalid double-bond configuration
+        // is removed.
+        if (x == null || y == null ||
+                xNew == null || yNew == null) return null;
+
+        // no changes
+        if (x.equals(xNew) && y.equals(yNew)) {
+            return db;
+        }
+
+        // XXX: may perform slow operations but works for now
+        IBond cpyLeft = !Objects.equals(xNew, x) ? u.getBond(xNew) : orgLeft;
+        IBond cpyRight = !Objects.equals(yNew, y) ? v.getBond(yNew) : orgRight;
+
+        return new DoubleBondStereochemistry(orgStereo,
+                new IBond[]{cpyLeft, cpyRight},
+                conformation);
+    }
+
+    /**
+     * Finds a neighbor connected to 'atom' which is connected by a
+     * single bond and is not 'exclude'.
+     *
+     * @param atom    atom to find a neighbor of
+     * @param exclude the neighbor should not be this atom
+     * @return a neighbor of 'atom', null if not found
+     */
+    private static IAtom findSingleBond(IAtom atom, IAtom exclude) {
+        for (IBond bond : atom.bonds()) {
+            if (bond.getOrder() != IBond.Order.SINGLE)
+                continue;
+            IAtom neighbor = bond.getOther(atom);
+            if (!neighbor.equals(exclude))
+                return neighbor;
+        }
+        return null;
     }
 
     /**
@@ -1140,7 +1229,6 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                 invalidated.add(se);
             } else if (se instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
-                List<IBond> carriers = db.getCarriers();
                 final IAtom common = db.getFocus().getConnectedAtom(removedBond);
                 if (common != null) {
                     IBond otherBond = null;
@@ -1310,6 +1398,21 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                     } else {
                         bonds[i].removeListener(this);
                         delFromEndpoints(bonds[i]);
+                        //update double bond stereo elements where this atom is involved in a carrier bond here already,
+                        // before the general bond stereochem update below; using specific method taken from Hydrogens
+                        for (int j = 0; j < stereo.size(); j++) {
+                            IStereoElement<?, ?> se = stereo.get(j);
+                            if (se.contains(atom) && se instanceof IDoubleBondStereochemistry) {
+                                for (IChemObject carrier : se.getCarriers()) {
+                                    if (carrier instanceof IBond && ((IBond) carrier).contains(atom)) {
+                                        IDoubleBondStereochemistry updated = updateDoubleBondStereo((IDoubleBondStereochemistry) se, atom);
+                                        if (updated != null) {
+                                            stereo.set(j, updated);
+                                        } //else: it cannot be updated, so it is left alone here and collected for removal below
+                                    }
+                                }
+                            }
+                        }
                         updateStereochemistry(bonds[i]);
                     }
                 }
