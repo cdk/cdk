@@ -31,8 +31,6 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
-import java.util.Objects;
-
 /**
  * IDescriptor based on the number of atoms of a certain element type.
  *
