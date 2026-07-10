@@ -86,7 +86,7 @@ class IPMolecularLearningDescriptorTest extends CDKTestCase {
         mol.addBond(3, 5, Order.SINGLE);
 
         addExplicitHydrogens(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         lpcheck.saturate(mol);
 
         IPMolecularLearningDescriptor descriptor = new IPMolecularLearningDescriptor();
@@ -107,7 +107,7 @@ class IPMolecularLearningDescriptorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("C-Cl");
 
         addExplicitHydrogens(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         lpcheck.saturate(mol);
 
         IPMolecularLearningDescriptor descriptor = new IPMolecularLearningDescriptor();
@@ -127,7 +127,7 @@ class IPMolecularLearningDescriptorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("COCCCC=O");
 
         addExplicitHydrogens(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         lpcheck.saturate(mol);
 
         IPMolecularLearningDescriptor descriptor = new IPMolecularLearningDescriptor();
@@ -149,7 +149,7 @@ class IPMolecularLearningDescriptorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("C=CCCC(=O)C");
 
         addExplicitHydrogens(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         lpcheck.saturate(mol);
 
         IPMolecularLearningDescriptor descriptor = new IPMolecularLearningDescriptor();
@@ -173,7 +173,7 @@ class IPMolecularLearningDescriptorTest extends CDKTestCase {
     //    	IAtomContainer mol = sp.parseSmiles("C-Cl");
     //
     //		addExplicitHydrogens(mol);
-    //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+    //		AtomContainerManipulator.configure(mol);
     //		lpcheck.saturate(mol);
     //
     //		descriptor.calculate(mol);
@@ -196,7 +196,7 @@ class IPMolecularLearningDescriptorTest extends CDKTestCase {
     //    	IAtomContainer mol = sp.parseSmiles("CCCC");
     //
     //		addExplicitHydrogens(mol);
-    //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+    //		AtomContainerManipulator.configure(mol);
     //		lpcheck.saturate(mol);
     //
     //		descriptor.calculate(mol);
@@ -216,7 +216,7 @@ class IPMolecularLearningDescriptorTest extends CDKTestCase {
     //    	IAtomContainer mol = sp.parseSmiles("CCC#CCCO");
     //
     //		addExplicitHydrogens(mol);
-    //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+    //		AtomContainerManipulator.configure(mol);
     //		lpcheck.saturate(mol);
     //
     //		descriptor.calculate(mol);
@@ -236,7 +236,7 @@ class IPMolecularLearningDescriptorTest extends CDKTestCase {
     //    	IAtomContainer mol = sp.parseSmiles("CCCCC=CO");
     //
     //		addExplicitHydrogens(mol);
-    //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+    //		AtomContainerManipulator.configure(mol);
     //		lpcheck.saturate(mol);
     //
     //		descriptor.calculate(mol);
@@ -295,7 +295,7 @@ class IPMolecularLearningDescriptorTest extends CDKTestCase {
         mol.addBond(10, 16, Order.SINGLE);
         mol.addBond(12, 15, Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);

@@ -614,7 +614,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      * @param sourceMolFileName source mol file name
      * @param targetMolFileName target mol file name
      * @param removeHydrogen    set true to make hydrogens implicit before search
-     * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc
+     * @param cleanAndConfigureMolecule eg: configure, detect aromaticity etc
      * @throws CDKException
      */
     public void init(String sourceMolFileName, String targetMolFileName, boolean removeHydrogen,

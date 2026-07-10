@@ -129,8 +129,10 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
             return null;
 
         atom1C.setHybridization(null);
+        atom1C.setImplicitHydrogenCount(null);
         atom3C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom3C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
 
         IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;

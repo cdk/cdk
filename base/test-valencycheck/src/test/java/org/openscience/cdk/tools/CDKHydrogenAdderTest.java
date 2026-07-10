@@ -478,7 +478,7 @@ class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addBond(b);
         carbon1.setImplicitHydrogenCount(3);
         carbon2.setImplicitHydrogenCount(3);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
 
         adder.addImplicitHydrogens(mol);
 

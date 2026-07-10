@@ -73,7 +73,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         String filename = "butadiene.cml";
         mol = readCMLMolecule(filename);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -104,7 +104,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         String filename = "naphtalene.cml";
         mol = readCMLMolecule(filename);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -135,7 +135,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         String filename = "toluene.cml";
         mol = readCMLMolecule(filename);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -168,7 +168,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         MDLReader reader = new MDLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read((ChemObject) new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -214,7 +214,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         IChemFile chemFile = (IChemFile) reader.read((ChemObject) new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -257,7 +257,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         IChemFile chemFile = (IChemFile) reader.read((ChemObject) new ChemFile());
 
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -300,7 +300,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
     void testAceticAcid() throws Exception {
         IAtomContainer mol;
         mol = (new SmilesParser(builder)).parseSmiles("CC(=O)O");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         lpcheck.saturate(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -336,7 +336,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         IChemFile chemFile = (IChemFile) reader.read((ChemObject) new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         lpcheck.saturate(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -358,7 +358,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
     @Test
     void test1_fluorobutadienene() throws Exception {
         IAtomContainer mol = (new SmilesParser(builder)).parseSmiles("FC=CC=C");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         lpcheck.saturate(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -383,7 +383,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
     void testEthyne_difluoro() throws Exception {
         IAtomContainer mol;
         mol = (new SmilesParser(builder)).parseSmiles("FC#CF");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         lpcheck.saturate(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -428,7 +428,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addBond(7, 8, Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         lpcheck.saturate(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -484,7 +484,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
     void testCyanoallene() throws Exception {
         IAtomContainer mol;
         mol = (new SmilesParser(builder)).parseSmiles("C=C=CC#N");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         lpcheck.saturate(mol);
         Aromaticity.cdkLegacy().apply(mol);
@@ -513,7 +513,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
     void testChargeWithProtonExplicit() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         lpcheck.saturate(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
@@ -540,7 +540,7 @@ class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
     void testChargeWithProtonImplicit() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer mol = sp.parseSmiles("C=C[C+]");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         lpcheck.saturate(mol);
         Aromaticity.cdkLegacy().apply(mol);
 

@@ -262,9 +262,20 @@ public class AtomTypeFactory {
      * @exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
      */
     public IAtomType getAtomType(String identifier) throws NoSuchAtomTypeException {
-    	IAtomType type = atomTypes.get(identifier);
+    	IAtomType type = getAtomTypeUnsafe(identifier);
     	if (type != null) return type;
         throw new NoSuchAtomTypeException("The AtomType " + identifier + " could not be found");
+    }
+
+    /**
+     * Get an AtomType with the given ID, if not found this method returns null
+     * rather than throw an exception.
+     *
+     * @param  identifier                   an ID for a particular atom type (like C$)
+     * @return                              The AtomType for this id or null
+     */
+    public IAtomType getAtomTypeUnsafe(String identifier) {
+        return identifier != null ? atomTypes.get(identifier) : null;
     }
 
     /**

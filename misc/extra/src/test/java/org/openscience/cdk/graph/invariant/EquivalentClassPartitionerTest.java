@@ -277,7 +277,7 @@ class EquivalentClassPartitionerTest {
         IAtomContainer mol = TestMoleculeFactory.makeAzulene();
         Assertions.assertNotNull(mol, "Created molecule was null");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int[] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
@@ -300,7 +300,7 @@ class EquivalentClassPartitionerTest {
     @Test
     void testAlphaPinene() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assertions.assertNotNull(mol, "Created molecule was null");
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
@@ -324,7 +324,7 @@ class EquivalentClassPartitionerTest {
     @Test
     void testPyrimidine() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrimidine();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assertions.assertNotNull(mol, "Created molecule was null");
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
@@ -347,7 +347,7 @@ class EquivalentClassPartitionerTest {
     @Test
     void testBiphenyl() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assertions.assertNotNull(mol, "Created molecule was null");
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
@@ -372,7 +372,7 @@ class EquivalentClassPartitionerTest {
     @Test
     void testImidazole() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeImidazole();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assertions.assertNotNull(mol, "Created molecule was null");
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);

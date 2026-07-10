@@ -60,7 +60,7 @@ import java.util.Map;
  *   IAtomContainer molecule = ...; // e.g. from SMILES
  *
  *   // note likely now optional:
- *   // AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+ *   // AtomContainerManipulator.configure(mol);
  *   // Aromaticity.cdkLegacy().apply(mol);
  *   // AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
  *

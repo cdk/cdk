@@ -244,7 +244,7 @@ public class MoleculeBuilder {
             IAtomContainer benzene = makeBenzene();
             //Detect Aromacity in the benzene ring.
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
+                AtomContainerManipulator.configure(benzene);
                 Aromaticity.cdkLegacy().apply(benzene);
             } catch (CDKException exc) {
                 //                logger.debug("No atom detected");

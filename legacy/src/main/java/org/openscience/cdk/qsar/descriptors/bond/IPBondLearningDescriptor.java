@@ -128,7 +128,7 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
 
         if (!isCachedAtomContainer(atomContainer)) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+                AtomContainerManipulator.configure(atomContainer);
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(atomContainer);
             } catch (CDKException e) {

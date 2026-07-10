@@ -245,7 +245,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
         molecule.addBond(1, 4, IBond.Order.SINGLE);
         molecule.addBond(1, 5, IBond.Order.SINGLE);
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
 
             lpcheck.saturate(molecule);
         } catch (CDKException e) {
@@ -279,7 +279,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
         molecule.addBond(1, 5, IBond.Order.SINGLE);
         molecule.addBond(1, 6, IBond.Order.SINGLE);
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
 
             lpcheck.saturate(molecule);
         } catch (CDKException e) {
