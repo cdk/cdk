@@ -25,6 +25,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-interfaces</artifactId>
             <version>${project.parent.version}</version>
@@ -33,10 +38,18 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-core</artifactId>
             <version>${project.parent.version}</version>
+        </dependency><dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-formula</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-standard</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>   <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-smarts</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
