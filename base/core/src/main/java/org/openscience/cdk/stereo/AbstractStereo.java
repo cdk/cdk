@@ -278,10 +278,17 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
     }
 
     // labels for describing permutation
-    protected static final int A = 0, B = 1, C = 2, D = 3, E = 4, F = 5;
+    protected static final byte A = 0, B = 1, C = 2, D = 3, E = 4, F = 5;
 
     // apply the inverse of a permutation
     protected static <T> T[] invapply(T[] src, int[] perm) {
+        T[] res = src.clone();
+        for (int i = 0; i < src.length; i++)
+            res[i] = src[perm[i]];
+        return res;
+    }
+
+    protected static <T> T[] invapply(T[] src, byte[] perm) {
         T[] res = src.clone();
         for (int i = 0; i < src.length; i++)
             res[i] = src[perm[i]];

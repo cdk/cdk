@@ -599,7 +599,7 @@ final class NonplanarBonds {
             // rotate such that there is a spiro (or no rings) in position 2/3 in the plane, these are laid out
             // adjacent so is the only place we can nicely place the spiro
             if (rcount == 1 && rnums.get(0) != 0) {
-                int[] perms = Octahedral.PERMUTATIONS[0];
+                byte[] perms = Octahedral.PERMUTATIONS[0];
                 int best = 0;
                 for (int j = 24; j < perms.length; j += 24) {
                     if (rnums.get(perms[j]) == 0 && rnums.get(perms[j + 6]) == 0) {
@@ -645,6 +645,12 @@ final class NonplanarBonds {
     }
 
     private <T> void permute(List<T> bonds, int[] perm, int offset, int n) {
+        List<T> backup = new ArrayList<>(bonds);
+        for (int i = 0; i < n; i++)
+            bonds.set(i, backup.get(perm[offset + i]));
+    }
+
+    private <T> void permute(List<T> bonds, byte[] perm, int offset, int n) {
         List<T> backup = new ArrayList<>(bonds);
         for (int i = 0; i < n; i++)
             bonds.set(i, backup.get(perm[offset + i]));

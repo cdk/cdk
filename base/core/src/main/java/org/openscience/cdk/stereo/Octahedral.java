@@ -60,7 +60,53 @@ import java.util.List;
  */
 public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
 
-    public static final int[][] PERMUTATIONS = new int[][]{
+    /* swap table */
+    public static byte[][] swaps = new byte[][] {
+            {17,16,30,21, 2},  // @OH1
+            { 7, 3,25,22, 1},  // @OH2
+            {18, 2,29,16,22},  // @OH3
+            {15,18,19,28,14},  // @OH4
+            {14,17,20,15,27},  // @OH5
+            {16,14,18,26,24},  // @OH6
+            { 2,15,17,23,25},  // @OH7
+            {23,26,11,12,10},  // @OH8
+            {24,25,10,11,13},  // @OH9
+            {20,29, 9,13, 8},  // @OH10
+            {19,30, 8, 9,12},  // @OH11
+            {22,27,13, 8,11},  // @OH12
+            {21,28,12,10, 9},  // @OH13
+            { 5, 6,24,27, 4},  // @OH14
+            { 4, 7,23, 5,28},  // @OH15
+            { 6, 1,26, 3,21},  // @OH16
+            { 1, 5, 7,20,30},  // @OH17
+            { 3, 4, 6,29,19},  // @OH18
+            {11,24, 4,30,18},  // @OH19
+            {10,23, 5,17,29},  // @OH20
+            {13,22,28, 1,16},  // @OH21
+            {12,21,27, 2, 3},  // @OH22
+            { 8,20,15, 7,26},  // @OH23
+            { 9,19,14,25, 6},  // @OH24
+            {30, 9, 2,24, 7},  // @OH25
+            {29, 8,16, 6,23},  // @OH26
+            {28,12,22,14, 5},  // @OH27
+            {27,13,21, 4,15},  // @OH28
+            {26,10, 3,18,20},  // @OH29
+            {25,11, 1,19,17},  // @OH30
+    };
+
+    private static int swap(int cfg, int i, int j) {
+        if (cfg > 30) throw new IllegalArgumentException();
+        if (i == 0)
+            return swaps[cfg - 1][j - 1];
+        else if (j == 0)
+            return swaps[cfg - 1][i - 1];
+        else if (i != j) // 0 <=> i, 0 <=> j, 0 <=> i
+            return swaps[swaps[swaps[cfg-1][i - 1]-1][j - 1]-1][i - 1];
+        else
+            return cfg;
+    }
+
+    public static final byte[][] PERMUTATIONS = new byte[][]{
 // @OH1
 {A, B, C, D, E, F,  A, C, D, E, B, F,  A, D, E, B, C, F,  A, E, B, C, D, F,
  B, A, E, F, C, D,  B, C, A, E, F, D,  B, E, F, C, A, D,  B, F, C, A, E, D,
@@ -357,7 +403,7 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
                               cfg);
     }
 
-    private static boolean same(List<IAtom> a, List<IAtom> b, int[] perm, int i) {
+    private static boolean same(List<IAtom> a, List<IAtom> b, byte[] perm, int i) {
         for(int j = i; j < i + 6; ++j) {
             if (!((IAtom)b.get(j - i)).equals(a.get(perm[j]))) {
                 return false;
@@ -369,7 +415,7 @@ public final class Octahedral extends AbstractStereo<IAtom,IAtom> {
 
     public static int reorder(List<IAtom> current, List<IAtom> required) {
         for(int order = 0; order < PERMUTATIONS.length; ++order) {
-            int[] local = PERMUTATIONS[order];
+            byte[] local = PERMUTATIONS[order];
 
             for(int k = 0; k < local.length; k += 6) {
                 if (same(current, required, local, k)) {
