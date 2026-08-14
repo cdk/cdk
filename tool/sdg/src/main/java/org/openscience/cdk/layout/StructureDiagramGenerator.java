@@ -2298,6 +2298,17 @@ public class StructureDiagramGenerator {
     private boolean isMacroCycle(IRing ring, IRingSet rs) {
         if (ring.getAtomCount() < 8)
             return false;
+
+        if (ring.getAtomCount() < 10) {
+            boolean hasBondStereo = false;
+            for (IStereoElement<?,?> se : ring.stereoElements()) {
+                if (se.getConfigClass() == IStereoElement.CisTrans)
+                    hasBondStereo = true;
+            }
+            if (!hasBondStereo)
+                return false;
+        }
+
         for (IBond bond : ring.bonds()) {
             boolean found = false;
             for (IAtomContainer other : rs.atomContainers()) {
