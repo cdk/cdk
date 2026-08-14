@@ -53,6 +53,7 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -1537,7 +1538,7 @@ public class StructureDiagramGenerator {
                             List<IAtomContainer> frags,
                             boolean finalize) throws CDKException {
         // FIXME: This may not be correct any more
-        final List<IBond> ionicBonds = makeIonicBonds(frags);
+        final List<IBond> ionicBonds = makeIonicBonds(mol, frags);
 
         // add tmp bonds and re-fragment
         int rollback = mol.getBondCount();
@@ -1776,7 +1777,7 @@ public class StructureDiagramGenerator {
      * @param frags input fragments (all connected)
      * @return the merge ions
      */
-    private List<IAtomContainer> mergeAtomicIons(final List<IAtomContainer> frags) {
+    private static List<IAtomContainer> mergeAtomicIons(final List<IAtomContainer> frags) {
         final List<IAtomContainer> res = new ArrayList<>(frags.size());
         for (IAtomContainer frag : frags) {
 
@@ -1820,24 +1821,15 @@ public class StructureDiagramGenerator {
      * @param sign the charge sign to select (+1 : cation, -1: anion)
      * @return the select atoms (includes duplicates)
      */
-    private List<IAtom> selectIons(IAtomContainer frag, int sign) {
+    private static List<IAtom> selectIons(IAtomContainer frag, Map<IAtom,Integer> charges, int sign) {
         int fragChg = frag.getProperty(FRAGMENT_CHARGE);
         assert Integer.signum(fragChg) == sign;
         final List<IAtom> atoms = new ArrayList<>();
-
-        FIRST_PASS:
         for (IAtom atom : frag.atoms()) {
             if (fragChg == 0)
                 break;
-            int atmChg = nullAsZero(atom.getFormalCharge());
+            int atmChg = charges.getOrDefault(atom, 0);
             if (Integer.signum(atmChg) == sign) {
-
-                // skip in first pass if charge separated
-                for (IBond bond : frag.getConnectedBondsList(atom)) {
-                    if (Integer.signum(nullAsZero(bond.getOther(atom).getFormalCharge())) + sign == 0)
-                        continue FIRST_PASS;
-                }
-
                 while (fragChg != 0 && atmChg != 0) {
                     atoms.add(atom);
                     atmChg -= sign;
@@ -1845,23 +1837,6 @@ public class StructureDiagramGenerator {
                 }
             }
         }
-
-        if (fragChg == 0)
-            return atoms;
-
-        for (IAtom atom : frag.atoms()) {
-            if (fragChg == 0)
-                break;
-            int atmChg = nullAsZero(atom.getFormalCharge());
-            if (Math.signum(atmChg) == sign) {
-                while (fragChg != 0 && atmChg != 0) {
-                    atoms.add(atom);
-                    atmChg -= sign;
-                    fragChg -= sign;
-                }
-            }
-        }
-
         return atoms;
     }
 
@@ -1878,8 +1853,14 @@ public class StructureDiagramGenerator {
      * @param frags connected fragments
      * @return ionic bonds to make
      */
-    private List<IBond> makeIonicBonds(final List<IAtomContainer> frags) {
+    static List<IBond> makeIonicBonds(IAtomContainer molecule,
+                                      final List<IAtomContainer> frags) {
         assert frags.size() > 1;
+
+        // compute effective atom charges on the whole molecule
+        Map<IAtom, Integer> effectiveCharge = calculateEffectiveCharges(molecule);
+        if (effectiveCharge.isEmpty())
+            return Collections.emptyList();
 
         // merge duplicates together, e.g. [H-].[H-].[H-].[Na+].[Na+].[Na+]
         // would be two needsMerge fragments. We currently only do single
@@ -1891,8 +1872,9 @@ public class StructureDiagramGenerator {
         int chgSum = 0;
         for (IAtomContainer frag : mergedFrags) {
             int chg = 0;
-            for (final IAtom atom : frag.atoms())
-                chg += nullAsZero(atom.getFormalCharge());
+            for (final IAtom atom : frag.atoms()) {
+                chg += nullAsZero(effectiveCharge.get(atom));
+            }
             chgSum += chg;
             frag.setProperty(FRAGMENT_CHARGE, chg);
             if (chg < 0)
@@ -1910,8 +1892,8 @@ public class StructureDiagramGenerator {
 
         // trivial case
         if (posFrags.size() == 1 && negFrags.size() == 1) {
-            cations.addAll(selectIons(posFrags.get(0), +1));
-            anions.addAll(selectIons(negFrags.get(0), -1));
+            cations.addAll(selectIons(posFrags.get(0), effectiveCharge, +1));
+            anions.addAll(selectIons(negFrags.get(0), effectiveCharge, -1));
         } else {
 
             // sort hi->lo fragment charge, if same charge then we put smaller
@@ -1933,9 +1915,9 @@ public class StructureDiagramGenerator {
             negFrags.sort(comparator);
 
             for (IAtomContainer posFrag : posFrags)
-                cations.addAll(selectIons(posFrag, +1));
+                cations.addAll(selectIons(posFrag, effectiveCharge, +1));
             for (IAtomContainer negFrag : negFrags)
-                anions.addAll(selectIons(negFrag, -1));
+                anions.addAll(selectIons(negFrag, effectiveCharge, -1));
         }
 
         if (cations.size() != anions.size() && cations.isEmpty())
@@ -1969,6 +1951,75 @@ public class StructureDiagramGenerator {
         // the new bonds and re-fragment the molecule with these bonds added.
 
         return ionicBonds;
+    }
+
+    /**
+     * The effecitve charges
+     * @return
+     */
+    static Map<IAtom, Integer> calculateEffectiveCharges(IAtomContainer molecule) {
+        Map<IAtom,Integer> effectiveCharge = new HashMap<>();
+
+        for (final IAtom atom : molecule.atoms()) {
+            if (atom.getFormalCharge() != null &&
+                atom.getFormalCharge() != 0) {
+                effectiveCharge.put(atom, atom.getFormalCharge());
+            }
+        }
+
+        // ignore N+O- / S+O-
+        for (IBond bond : molecule.bonds()) {
+            int begChg = effectiveCharge.getOrDefault(bond.getBegin(), 0);
+            int endChg = effectiveCharge.getOrDefault(bond.getEnd(), 0);
+            if (begChg == +1 && endChg == -1 ||
+                endChg == +1 && begChg == -1) {
+                effectiveCharge.put(bond.getBegin(), 0);
+                effectiveCharge.put(bond.getEnd(), 0);
+            }
+        }
+
+        // multi-attach metal pi bonds charges should not be considered
+        List<Sgroup> sgroups = molecule.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getType() == SgroupType.ExtMulticenter) {
+                    Set<IBond> bonds = sgroup.getBonds();
+                    Set<IAtom> atoms = sgroup.getAtoms();
+                    if (bonds.size() != 1)
+                        continue;
+                    IBond bond = bonds.iterator().next();
+                    final IAtom atom;
+                    if (atoms.contains(bond.getBegin()))
+                        atom = bond.getEnd();
+                    else if (atoms.contains(bond.getEnd()))
+                        atom = bond.getBegin();
+                    else
+                        continue;
+                    if (isMetalCation(atom, effectiveCharge)) {
+                        int ringCharge = 0;
+                        for (IAtom a : atoms) {
+                            ringCharge += effectiveCharge.getOrDefault(a, 0);
+                        }
+                        int metalCharge = effectiveCharge.get(atom);
+                        if (-ringCharge <= metalCharge) {
+                            effectiveCharge.put(atom, metalCharge + ringCharge);
+                            for (IAtom a : atoms)
+                                effectiveCharge.put(a, 0);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        effectiveCharge.entrySet()
+                       .removeIf(e ->  e.getValue() == 0);
+
+        return effectiveCharge;
+    }
+
+    private static boolean isMetalCation(IAtom atom, Map<IAtom, Integer> effectiveCharge) {
+        return Elements.isMetal(atom) && effectiveCharge.getOrDefault(atom, 0) > 0;
     }
 
     /**

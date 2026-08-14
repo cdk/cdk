@@ -70,6 +70,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -1424,5 +1425,27 @@ class StructureDiagramGeneratorTest {
             }
         }
         Assertions.assertEquals(expected, wedgeCount);
+    }
+
+    @Test
+    void testEffectiveChargePolarBond() throws CDKException {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(builder);
+        IAtomContainer mol = smipar.parseSmiles("[O-][S+]1CCC([S-])C1.[Na+]");
+        Map<IAtom,Integer> charges = StructureDiagramGenerator.calculateEffectiveCharges(mol);
+        Assertions.assertEquals(2, charges.size());
+        Assertions.assertEquals(-1, charges.getOrDefault(mol.getAtom(5),0)); // S-
+        Assertions.assertEquals(+1, charges.getOrDefault(mol.getAtom(7),0)); // Na+
+    }
+
+    @Test
+    void testEffectiveChargeMulticenter() throws CDKException {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(builder);
+        IAtomContainer mol = smipar.parseSmiles("*[Fe++]*.[cH-]1cccc1.[cH-]1cccc1[O-].[Na+] |m:0:3.4.5.6.7,2:8.9.10.11.12|");
+        Map<IAtom,Integer> charges = StructureDiagramGenerator.calculateEffectiveCharges(mol);
+        Assertions.assertEquals(2, charges.size());
+        Assertions.assertEquals(-1, charges.getOrDefault(mol.getAtom(mol.getAtomCount()-2),0)); // O-
+        Assertions.assertEquals(+1, charges.getOrDefault(mol.getAtom(mol.getAtomCount()-1),0)); // Na+
     }
 }
