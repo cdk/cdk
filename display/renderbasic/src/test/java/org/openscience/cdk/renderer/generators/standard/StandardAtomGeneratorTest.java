@@ -295,7 +295,7 @@ class StandardAtomGeneratorTest {
 
     @Test
     void anion() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(-1, 0), is("−"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(-1, 0), is("-"));
     }
 
     @Test
@@ -305,7 +305,7 @@ class StandardAtomGeneratorTest {
 
     @Test
     void dianion() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(-2, 0), is("2−"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(-2, 0), is("2-"));
     }
 
     @Test
@@ -330,7 +330,7 @@ class StandardAtomGeneratorTest {
 
     @Test
     void radicalAndAnion() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(-1, 1), is("(•)−"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(-1, 1), is("(•)-"));
     }
 
     @Test

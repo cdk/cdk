@@ -600,7 +600,7 @@ final class StandardAtomGenerator {
      * Characters used in the charge label.
      */
     private static final char BULLET = '•', // '\u2022'
-            PLUS                     = '+', MINUS = '−'; // '\u2212' and not a hyphen
+            PLUS                     = '+', MINUS = '-';
 
     /**
      * Create the charge adjunct text for the specified charge and number of unpaired electrons.
