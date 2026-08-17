@@ -41,8 +41,6 @@ import java.util.logging.LogManager;
 final class AwtArea {
 
     public static Area toArea(IRenderingElement e) {
-        if (e == null)
-            return null;
         if (e instanceof LineElement)
             return ((LineElement)e).toArea();
         else if (e instanceof GeneralPath)

@@ -3377,11 +3377,9 @@ public class StructureDiagramGenerator {
                     }
                 } else {
                     for (Map.Entry<IBond,Set<IAtom>> e2 : e.getValue()) {
-                        if (e2.getValue().contains(atom)) {
-                            if (visited.add(e.getKey())) {
+                        if (e2.getValue().contains(atom) && visited.add(e.getKey())) {
                                 complex = true;
-                                queue.add(e.getKey());
-                            }
+                            queue.add(e.getKey());
                         }
                     }
                 }
@@ -3396,15 +3394,6 @@ public class StructureDiagramGenerator {
                             other.getPoint2d().y - beg.getPoint2d().y);
     }
 
-    private static void rotate(Point2d point, Point2d center, double theta) {
-        double relativex = point.x - center.x;
-        double relativey = point.y - center.y;
-        double costheta = Math.cos(theta);
-        double sintheta = Math.sin(theta);
-        point.x = relativex * costheta - relativey * sintheta + center.x;
-        point.y = relativex * sintheta + relativey * costheta + center.y;
-    }
-
     private static void visit(Set<Integer> visited, int[][] g, int v) {
         visited.add(v);
         for (int w : g[v]) {
@@ -3416,15 +3405,13 @@ public class StructureDiagramGenerator {
     private static Map<Set<IAtom>, List<IAtom>> aggregateMulticenterSgroups(List<Sgroup> sgroups) {
         Map<Set<IAtom>,List<IAtom>> mapping = new LinkedHashMap<>();
         for (Sgroup sgroup : sgroups) {
-            if (sgroup.getType() != SgroupType.ExtMulticenter)
+            if (sgroup.getType() != SgroupType.ExtMulticenter ||
+                sgroup.getBonds().size() != 1)
                 continue;
 
             IAtom      beg  = null;
             Set<IAtom> ends = new HashSet<>();
-
             Set<IBond> bonds = sgroup.getBonds();
-            if (bonds.size() != 1)
-                continue;
             IBond bond = bonds.iterator().next();
 
             for (IAtom atom : sgroup.getAtoms()) {

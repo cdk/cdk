@@ -31,9 +31,7 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 
 import javax.vecmath.Point2d;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -79,13 +77,11 @@ final class ZOrdering {
         if (sgroups == null)
             return;
         for (Sgroup sgroup : sgroups) {
-            if (sgroup.getType() != SgroupType.ExtMulticenter)
+            if (sgroup.getType() != SgroupType.ExtMulticenter ||
+                sgroup.getBonds().size() != 1)
                 continue;
             Set<IAtom> atoms = sgroup.getAtoms();
             Set<IBond> bonds = sgroup.getBonds();
-            if (bonds.size() != 1)
-                continue;
-
             IBond bond = bonds.iterator().next();
             IAtom atom;
             if (atoms.contains(bond.getBegin()))

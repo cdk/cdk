@@ -178,9 +178,9 @@ final class StandardDonutGenerator {
             double  s  = GeometryUtil.getBondLengthMedian(ring);
             double  n  = ring.getBondCount();
             double  r  = s / (2 * Math.tan(Math.PI / n));
-            OvalElement element = new OvalElement(p2.x, p2.y, r - 1.5 * dbSpacing,
-                                                  stroke, false, fgColor);
-            ovals.add(element);
+            OvalElement oval = new OvalElement(p2.x, p2.y, r - 1.5 * dbSpacing,
+                                               stroke, false, fgColor);
+            ovals.add(oval);
         }
     }
 
