@@ -100,7 +100,7 @@ public class LineElement implements IRenderingElement {
         path.moveTo(b.x+o.x, b.y+o.y);
         path.lineTo(e.x+o.x, e.y+o.y);
         if (endCaps) {
-            path.curveTo(e.x + o.x + v.x / 2, e.y + o.y + o.y / 2,
+            path.curveTo(e.x + o.x + v.x / 2, e.y + o.y + v.y / 2,
                          e.x + v.x + o.x / 2, e.y + v.y + o.y / 2,
                          e.x + v.x, e.y + v.y);
             path.curveTo(e.x + v.x - o.x / 2, e.y + v.y - o.y / 2,
