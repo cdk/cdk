@@ -20,6 +20,7 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.invariant.Canon;
@@ -30,7 +31,10 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 
 import javax.vecmath.Point2d;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Algorithmic Z-Ordering assignment.
@@ -50,10 +54,7 @@ final class ZOrdering {
      */
     static void assign(final IAtomContainer mol) {
 
-        // ensure positional variation/multi attach are always "in front", this
-        // a bit of a fudge, really we should treat them as bonded and consider
-        // cues from wedges etc
-        raiseMultiattach(mol);
+        orderMultiAndVarAttach(mol);
 
         for (IAtomContainer part : ConnectivityChecker.partitionIntoMolecules(mol)) {
             long[] z = init(part);
@@ -70,19 +71,43 @@ final class ZOrdering {
     }
 
     /**
-     * Artificially raise all bonds that are multiattach
+     * Artificially raise/lower bonds that are multiple attachment
      * @param mol the molecule
      */
-    private static void raiseMultiattach(IAtomContainer mol) {
+    private static void orderMultiAndVarAttach(IAtomContainer mol) {
         List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null)
             return;
         for (Sgroup sgroup : sgroups) {
             if (sgroup.getType() != SgroupType.ExtMulticenter)
                 continue;
-            for (IBond bond : sgroup.getBonds()) {
+            Set<IAtom> atoms = sgroup.getAtoms();
+            Set<IBond> bonds = sgroup.getBonds();
+            if (bonds.size() != 1)
+                continue;
+
+            IBond bond = bonds.iterator().next();
+            IAtom atom;
+            if (atoms.contains(bond.getBegin()))
+                atom = bond.getEnd();
+            else
+                atom = bond.getBegin();
+
+            if (Elements.isMetal(atom)) {
+                // probably multi attachment / sandwich compound
+                if (atom.getPoint2d().y < bond.getOther(atom).getPoint2d().y) {
+                    // ring above should be in front - so bond goes behind (-20)
+                    if (bond.getProperty(CDKConstants.Z_ORDER) == null)
+                        bond.setProperty(CDKConstants.Z_ORDER, -20);
+                } else {
+                    // ring below should behind - so bond goes in front (+20)
+                    if (bond.getProperty(CDKConstants.Z_ORDER) == null)
+                        bond.setProperty(CDKConstants.Z_ORDER, +20);
+                }
+            } else {
+                // probably variable attachment / positional variation
                 if (bond.getProperty(CDKConstants.Z_ORDER) == null)
-                    bond.setProperty(CDKConstants.Z_ORDER, 999999);
+                    bond.setProperty(CDKConstants.Z_ORDER, +20);
             }
         }
     }

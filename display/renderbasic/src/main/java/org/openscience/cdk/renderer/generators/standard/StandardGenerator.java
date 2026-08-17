@@ -25,6 +25,8 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -72,6 +74,8 @@ import java.util.TreeMap;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Right;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.average;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVectors;
 
 /**
  * The standard generator creates {@link IRenderingElement}s for the atoms and bonds of a structure
@@ -716,11 +720,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 } else
                     symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition, parameters);
 
-                if (symbols[i] != null) {
+                if (symbols[i] != null ) {
 
                     // defines how the element is aligned on the atom point, when
                     // aligned to the left, the first character 'e.g. Cl' is used.
-                    if (visNeighbors.size() < 4) {
+                    if (visNeighbors.size() < 4 &&
+                        (!Elements.isMetal(atom) || !GeometryUtil.isColinear(atom, neighbors)) &&
+                        average(newUnitVectors(atom, neighbors)).lengthSquared() > 0.1) {
                         if (hPosition == Left) {
                             symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
                         } else {

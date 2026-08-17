@@ -25,6 +25,7 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 
 import javax.vecmath.Vector2d;
@@ -113,6 +114,8 @@ enum HydrogenPosition {
         if (neighbors.size() > 2) {
             return usingAngularExtent(vectors);
         } else if (neighbors.size() > 1) {
+            if (GeometryUtil.isColinear(atom, neighbors))
+                return Right;
             return usingCardinalDirection(average(vectors));
         } else if (neighbors.size() == 1) {
             return vectors.get(0).x > VERTICAL_THRESHOLD ? Left : Right;

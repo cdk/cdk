@@ -47,7 +47,7 @@ import java.util.Set;
 import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
 
 /**
- * Generates aromatic donuts (or life buoys) as ovals in small (<8) aromatic
+ * Generates aromatic donuts (or life buoys) as ovals in small (&le;8) aromatic
  * rings. If the ring is charged (and the charged is not shared with another
  * ring, e.g. rbonds > 2) it will be depicted in the middle of the ring.
  *
@@ -92,7 +92,7 @@ final class StandardDonutGenerator {
     }
 
     private boolean canDelocalise(final IAtomContainer ring) {
-        boolean okay = ring.getBondCount() < 8;
+        boolean okay = ring.getBondCount() <= 8;
         if (!okay)
             return false;
         for (IBond bond : ring.bonds()) {
@@ -103,6 +103,27 @@ final class StandardDonutGenerator {
                 !forceDelocalised)
                 okay = false;
         }
+
+        // ring size 8 "might" not be circle
+        if (ring.getBondCount() == 8) {
+            int rsize = ring.getAtomCount();
+            int concensus = 0;
+            for (int i = 0; i < rsize; i++) {
+                IAtom a = ring.getAtom(i);
+                IAtom b = ring.getAtom((i + 1)%rsize);
+                IAtom c = ring.getAtom((i + 2)%rsize);
+                int sign = (int) Math.signum(GeometryUtil.det(a.getPoint2d(),
+                                                              b.getPoint2d(),
+                                                              c.getPoint2d()));
+                if (concensus != 0 && concensus != sign) {
+                    okay = false;
+                    break;
+                }
+
+                concensus = sign;
+            }
+        }
+
         return okay;
     }
 
