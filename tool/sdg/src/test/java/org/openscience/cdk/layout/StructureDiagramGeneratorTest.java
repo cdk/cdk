@@ -1448,4 +1448,13 @@ class StructureDiagramGeneratorTest {
         Assertions.assertEquals(-1, charges.getOrDefault(mol.getAtom(mol.getAtomCount()-2),0)); // O-
         Assertions.assertEquals(+1, charges.getOrDefault(mol.getAtom(mol.getAtomCount()-1),0)); // Na+
     }
+
+    @Test
+    void testEffectiveChargeMulticenter2() throws CDKException {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(builder);
+        IAtomContainer mol = smipar.parseSmiles("*[Mn+]([C-]#[O+])([C-]#[O+])[C-]#[O+].C[c-]1cccc1 |m:0:9.10.11.12.13|");
+        Map<IAtom,Integer> charges = StructureDiagramGenerator.calculateEffectiveCharges(mol);
+        Assertions.assertEquals(0, charges.size());
+    }
 }

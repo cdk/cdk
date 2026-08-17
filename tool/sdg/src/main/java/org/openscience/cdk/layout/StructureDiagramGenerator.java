@@ -1970,17 +1970,6 @@ public class StructureDiagramGenerator {
             }
         }
 
-        // ignore N+O- / S+O-
-        for (IBond bond : molecule.bonds()) {
-            int begChg = effectiveCharge.getOrDefault(bond.getBegin(), 0);
-            int endChg = effectiveCharge.getOrDefault(bond.getEnd(), 0);
-            if (begChg == +1 && endChg == -1 ||
-                endChg == +1 && begChg == -1) {
-                effectiveCharge.put(bond.getBegin(), 0);
-                effectiveCharge.put(bond.getEnd(), 0);
-            }
-        }
-
         // multi-attach metal pi bonds charges should not be considered
         List<Sgroup> sgroups = molecule.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups != null) {
@@ -2014,6 +2003,16 @@ public class StructureDiagramGenerator {
             }
         }
 
+        // ignore N+O- / S+O-
+        for (IBond bond : molecule.bonds()) {
+            int begChg = effectiveCharge.getOrDefault(bond.getBegin(), 0);
+            int endChg = effectiveCharge.getOrDefault(bond.getEnd(), 0);
+            if (begChg == +1 && endChg == -1 ||
+                endChg == +1 && begChg == -1) {
+                effectiveCharge.put(bond.getBegin(), 0);
+                effectiveCharge.put(bond.getEnd(), 0);
+            }
+        }
 
         effectiveCharge.entrySet()
                        .removeIf(e ->  e.getValue() == 0);
