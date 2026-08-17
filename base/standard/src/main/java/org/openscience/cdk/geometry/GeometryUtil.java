@@ -246,13 +246,14 @@ public final class GeometryUtil {
      * @param angle   The angle by which to rotate the molecule, in radians
      */
     public static void rotate(IAtomContainer atomCon, Point2d center, double angle) {
-        Point2d point;
+       rotate(atomCon.atoms(), center, angle);
+    }
+
+    public static void rotate(Iterable<IAtom> atoms, Point2d center, double angle) {
         double costheta = Math.cos(angle);
         double sintheta = Math.sin(angle);
-        IAtom atom;
-        for (int i = 0; i < atomCon.getAtomCount(); i++) {
-            atom = atomCon.getAtom(i);
-            point = atom.getPoint2d();
+        for (IAtom atom : atoms) {
+            Point2d point = atom.getPoint2d();
             double relativex = point.x - center.x;
             double relativey = point.y - center.y;
             point.x = relativex * costheta - relativey * sintheta + center.x;

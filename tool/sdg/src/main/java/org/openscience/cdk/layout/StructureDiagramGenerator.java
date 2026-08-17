@@ -53,7 +53,6 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -74,6 +73,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -1161,13 +1161,15 @@ public class StructureDiagramGenerator {
     }
 
     private void refinePlacement(IAtomContainer molecule) {
+
         AtomPlacer.prioritise(molecule);
 
         // refine the layout by rotating, bending, and stretching bonds
         LayoutRefiner refiner = new LayoutRefiner(molecule, afix, bfix);
         refiner.refine();
 
-        // check for attachment points, these override the direction which we rorate structures
+        // check for attachment points, these override the direction which we
+        // rotate structures
         IAtom begAttach = null;
         for (IAtom atom : molecule.atoms()) {
             if (atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() == 1) {
@@ -1179,6 +1181,7 @@ public class StructureDiagramGenerator {
 
         // choose the orientation in which to display the structure
         if (selectOrientation) {
+
             // no attachment point, rotate to maximise horizontal spread etc.
             if (begAttach == null) {
                 selectOrientation(molecule, DEFAULT_BOND_LENGTH, 1);
@@ -2943,12 +2946,32 @@ public class StructureDiagramGenerator {
         return 2;
     }
 
+    /**
+     * Calculate the total size of the component (in bonds).
+     * @param atoms the initial atoms to start from
+     * @return the size of the component
+     */
+    private int connectedComponentSize(Set<IAtom> atoms) {
+        Set<IBond> visit = new HashSet<>();
+        Deque<IAtom> queue = new ArrayDeque<>(atoms);
+        while (!queue.isEmpty()) {
+            IAtom atom = queue.poll();
+            for (IBond bond : atom.bonds()) {
+                if (visit.add(bond)) {
+                    queue.add(bond.getOther(atom));
+                }
+            }
+        }
+        return visit.size();
+    }
+
     private void placePositionalVariation(final IAtomContainer mol) {
 
         final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null)
             return;
 
+        boolean hasMultiAttach = false;
         Map<Set<IAtom>, List<IAtom>> mapping = aggregateMulticenterSgroups(sgroups);
 
         if (mapping.isEmpty())
@@ -2961,7 +2984,17 @@ public class StructureDiagramGenerator {
         for (IAtom atom : mol.atoms())
             idxs.put(atom, idxs.size());
 
-        for (Map.Entry<Set<IAtom>,List<IAtom>> e : mapping.entrySet()) {
+        Set<IAtom> placed = new HashSet<>();
+
+        // we sort the entries by either size placing smallest to largest,
+        // the philsophy is the large one will not be "picked" up and moved
+        List<Map.Entry<Set<IAtom>, List<IAtom>>> entries = new ArrayList<>(mapping.entrySet());
+        entries.sort((a, b) -> {
+            return Integer.compare(connectedComponentSize(a.getKey()),
+                                   connectedComponentSize(b.getKey()));
+        });
+
+        for (Map.Entry<Set<IAtom>,List<IAtom>> e : entries) {
             List<IBond> bonds = new ArrayList<>();
 
             IAtomContainer shared = mol.getBuilder().newInstance(IAtomContainer.class);
@@ -2992,6 +3025,7 @@ public class StructureDiagramGenerator {
                 }
             });
 
+
             if (bonds.size() >= e.getValue().size()) {
 
                 Iterator<IAtom> begIter = e.getValue().iterator();
@@ -3002,10 +3036,17 @@ public class StructureDiagramGenerator {
                     final IBond bond = bndIter.next();
                     final IAtom atom = begIter.next();
 
+                    // multi-attach (stacked pi-system) opposed to query positional variation
+                    boolean isMultiAttach = atom.getBondCount() == 1 &&
+                                            Elements.isMetal(atom.bonds().iterator().next().getOther(atom));
+                    if (isMultiAttach)
+                        hasMultiAttach = true;
+
                     final Point2d newBegP = new Point2d(bond.getBegin().getPoint2d());
                     final Point2d newEndP = new Point2d(bond.getEnd().getPoint2d());
 
                     final Vector2d bndVec  = new Vector2d(newEndP.x-newBegP.x, newEndP.y-newBegP.y);
+                    // bond cross (x) vector
                     final Vector2d bndXVec = new Vector2d(-bndVec.y, bndVec.x);
 
                     // ensure vector is pointing out of rings
@@ -3054,7 +3095,9 @@ public class StructureDiagramGenerator {
                     Set<Integer> visited = new HashSet<>();
                     visit(visited, adjlist, atomIdx);
 
-                    // gather up other position group
+                    // gather-up other position group that have already been
+                    // moved (placed) by this function. If we are connected
+                    // to something which has not be placed we don't move it
                     Set<Integer> newvisit = new HashSet<>();
                     do {
                         newvisit.clear();
@@ -3062,16 +3105,20 @@ public class StructureDiagramGenerator {
                             IAtom visitedAtom = mol.getAtom(idx);
                             if (e.getKey().contains(visitedAtom) || e.getValue().contains(visitedAtom))
                                 continue;
-                            for (Map.Entry<Set<IAtom>, List<IAtom>> e2 : mapping.entrySet()) {
+                            for (Map.Entry<Set<IAtom>, List<IAtom>> e2 : entries) {
                                 for (IAtom val : e2.getValue()) {
                                     if (e2.getKey().contains(visitedAtom)) {
                                         int other = idxs.get(val);
-                                        if (!visited.contains(other) && newvisit.add(other)) {
+                                        if (!visited.contains(other) &&
+                                            newvisit.add(other)) {
                                             visit(newvisit, adjlist, other);
                                         }
                                     } else if (val.equals(visitedAtom)) {
-                                        int other = idxs.get(e2.getKey().iterator().next());
-                                        if (!visited.contains(other) && newvisit.add(other)) {
+                                        IAtom nbor = e2.getKey().iterator().next();
+                                        int other = idxs.get(nbor);
+                                        if (!visited.contains(other) &&
+                                            placed.contains(nbor) &&
+                                            newvisit.add(other)) {
                                             visit(newvisit, adjlist, other);
                                         }
                                     }
@@ -3082,8 +3129,10 @@ public class StructureDiagramGenerator {
                     } while (!newvisit.isEmpty());
 
                     IAtomContainer frag = mol.getBuilder().newInstance(IAtomContainer.class);
-                    for (Integer visit : visited)
+                    for (Integer visit : visited) {
                         frag.addAtom(mol.getAtom(visit));
+                    }
+                    placed.addAll(e.getKey());
 
                     final IBond attachBond = bondMap.get(atomIdx, adjlist[atomIdx][0]);
                     final Point2d begP = atom.getPoint2d();
@@ -3100,14 +3149,244 @@ public class StructureDiagramGenerator {
                     GeometryUtil.translate2D(frag, newBegP.x - begP.x, newBegP.y - begP.y);
                     GeometryUtil.rotate(frag, new Point2d(atom.getPoint2d()), theta);
 
-                    // stretch bond
-                    frag.removeAtomOnly(atom);
-                    GeometryUtil.translate2D(frag, newEndP.x - endP.x, newEndP.y - endP.y);
+                    // if we are a multi attach (i.e. metal-sandwich) we point
+                    // to near the centre (with some backoff) rather than just
+                    // over lapping the bond
+                    if (isMultiAttach) {
+                        Point2d newRingCenter = GeometryUtil.get2DCenter(shared);
+                        bndXVec.normalize();
+                        bndXVec.scale(bondLength / 6);
+                        newRingCenter.add(bndXVec);
+                        atom.setPoint2d(newRingCenter);
+                    }
                 }
             } else {
                 System.err.println("Positional variation not yet handled");
             }
         }
+
+        // if we have multiattach orientated top to bottom like a sandwich
+        if (hasMultiAttach) {
+            refineMulticenterLayout(sgroups);
+        }
+    }
+
+    /**
+     * This function is called after we have done our initial placement
+     * of positional variation bonds. It attempts to stack sandwich rings
+     * vertically.
+     *
+     * @param sgroups the sgroups
+     */
+    private void refineMulticenterLayout(List<Sgroup> sgroups) {
+
+        // reindex our multiattach/center bond but this time from the
+        // attached atom (metal) to the anchor bond and the atoms it connects
+        Map<IAtom, List<Map.Entry<IBond,Set<IAtom>>>> multiattach = new HashMap<>();
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getType() == SgroupType.ExtMulticenter) {
+                Set<IBond> bonds = sgroup.getBonds();
+                Set<IAtom> atoms = sgroup.getAtoms();
+                if (bonds.size() != 1)
+                    continue;
+                IBond bond = bonds.iterator().next();
+                final IAtom atom;
+                if (atoms.contains(bond.getBegin()))
+                    atom = bond.getEnd();
+                else if (atoms.contains(bond.getEnd()))
+                    atom = bond.getBegin();
+                else
+                    continue;
+
+                if (Elements.isMetal(atom) && isRing(bond, atoms)) {
+                    multiattach.computeIfAbsent(atom, k -> new ArrayList<>())
+                               .add(new SimpleImmutableEntry<>(bond, atoms));
+                }
+            }
+        }
+
+        for (Map.Entry<IAtom,List<Map.Entry<IBond,Set<IAtom>>>> e : multiattach.entrySet()) {
+            IAtom metalAtom = e.getKey();
+            List<Map.Entry<IBond,Set<IAtom>>> rings = e.getValue();
+            if (rings.size() == 1) {
+                // half sandwich compounds / piano stools
+
+                // we collect all the connected atoms and rotate such that
+                // the ring is on top
+                Set<IAtom> atoms = new HashSet<>();
+                traverse(atoms, Collections.singleton(metalAtom), multiattach);
+
+                Vector2d v = getVector(metalAtom, rings.get(0).getKey());
+                double theta = Math.atan2(v.y, v.x);
+                GeometryUtil.rotate(atoms, metalAtom.getPoint2d(), -theta + Math.PI/2);
+
+                // now we need to sweep the bonds like a piano stool
+                List<IBond> otherBonds = new ArrayList<>();
+                for (IBond bond : metalAtom.bonds()) {
+                    boolean okay = true;
+                    for (Map.Entry<IBond, Set<IAtom>> e2 : multiattach.get(metalAtom)) {
+                        if (e2.getKey().equals(bond)) {
+                            okay = false;
+                            break;
+                        }
+                    }
+                    if (okay)
+                        otherBonds.add(bond);
+                }
+
+                if (otherBonds.size() <= 3) {
+                    List<Set<IAtom>> atomSets = new ArrayList<>();
+                    for (IBond bond : otherBonds) {
+                        if (bond.isInRing()) continue;
+                        IAtom root = bond.getOther(metalAtom);
+                        Set<IAtom> atomSet = new HashSet<>();
+                        atomSet.add(metalAtom);
+                        traverse(atomSet, Collections.singleton(root), multiattach);
+                        atomSets.add(atomSet);
+                    }
+
+                    if (atomSets.size() == otherBonds.size()) {
+                        double angle = Math.PI / 6; // 30 deg
+                        double angleStep = (4 * angle) / (atomSets.size()-1); // 120 deg / number of steps
+                        for (int i=0; i<otherBonds.size(); i++) {
+                            Vector2d v2 = getVector(metalAtom, otherBonds.get(i));
+                            double theta2 = Math.atan2(v2.y, v2.x);
+                            GeometryUtil.rotate(atomSets.get(i), metalAtom.getPoint2d(), -theta2 -angle);
+                            angle += angleStep;
+                        }
+                    }
+                }
+            } else if (rings.size() == 2 && metalAtom.getBondCount() == 2) {
+                // sandwich compounds / stacked pi rings
+                Map.Entry<IBond,Set<IAtom>> ringAbove = rings.get(0);
+                Map.Entry<IBond,Set<IAtom>> ringBelow = rings.get(1);
+
+                Set<IAtom> atomsAbove = new HashSet<>();
+                Set<IAtom> atomsBelow = new HashSet<>();
+                atomsAbove.add(metalAtom);
+                atomsBelow.add(metalAtom);
+                boolean complexAbove = traverse(atomsAbove, ringAbove.getValue(), multiattach);
+                boolean complexBelow = traverse(atomsBelow, ringBelow.getValue(), multiattach);
+                atomsAbove.remove(metalAtom);
+                atomsBelow.remove(metalAtom);
+
+                if (atomsAbove.equals(atomsBelow)) {
+                    // abort both above/below are connected and beyond
+                    // what we can do here
+                    continue;
+                }
+
+                if (!complexAbove && !complexBelow) {
+                    // common case: a simple sandwich we just move everything
+                    //              above/below as needed
+                    Vector2d vectorAbove = getVector(metalAtom, ringAbove.getKey());
+                    Vector2d vectorBelow = getVector(metalAtom, ringBelow.getKey());
+                    double thetaAbove = Math.atan2(vectorAbove.y, vectorAbove.x);
+                    double thetaBelow = Math.atan2(vectorBelow.y, vectorBelow.x);
+                    GeometryUtil.rotate(atomsAbove, metalAtom.getPoint2d(), -thetaAbove + Math.PI/2);
+                    GeometryUtil.rotate(atomsBelow, metalAtom.getPoint2d(), -thetaBelow + Math.PI + Math.PI/2);
+                } else if (complexAbove && !complexBelow) {
+                    // the 'above' ring is complex (fused/double stacked) so
+                    // move the non-complex ring above/below it as needed
+                    Vector2d v = getVector(metalAtom, ringBelow.getKey());
+                    double theta = Math.atan2(v.y, v.x);
+                    IAtom attachAtom = ringAbove.getKey().getOther(metalAtom);
+                    Iterator<IAtom> iterator = ringAbove.getValue().stream().filter(IAtom::isInRing).iterator();
+                    Point2d center = GeometryUtil.get2DCenter(iterator);
+                    atomsBelow.add(metalAtom);
+                    atomsBelow.add(attachAtom);
+                    if (attachAtom.getPoint2d().y < metalAtom.getPoint2d().y)
+                        GeometryUtil.rotate(atomsBelow, center, -theta + Math.PI + Math.PI/2);
+                    else
+                        GeometryUtil.rotate(atomsBelow, center, -theta + Math.PI/2);
+                } else if (!complexAbove) { // complex1 = true
+
+                    // the 'below' ring is complex (fused/double stacked) so
+                    // move the non-complex ring above/below it as needed
+
+                    Vector2d v = getVector(metalAtom, ringAbove.getKey());
+                    double theta = Math.atan2(v.y, v.x);
+                    IAtom attachAtom = ringBelow.getKey().getOther(metalAtom);
+                    atomsAbove.add(metalAtom);
+                    atomsAbove.add(attachAtom);
+                    Point2d center = GeometryUtil.get2DCenter(ringBelow.getValue().stream().filter(IAtom::isInRing).iterator());
+                    if (attachAtom.getPoint2d().y < metalAtom.getPoint2d().y)
+                        GeometryUtil.rotate(atomsAbove, center, -theta + Math.PI + Math.PI/2);
+                    else
+                        GeometryUtil.rotate(atomsAbove, center, -theta + Math.PI/2);
+                }
+
+                // else => both rings are complex so we leave them positioned
+                //         how they were
+            }
+        }
+    }
+
+    // check all atoms which don't belong to the anchor bond of a multicenter
+    // Sgroup are in a ring, we could be stricter and check they
+    // actually form a ring
+    private boolean isRing(IBond bond, Set<IAtom> atoms) {
+        for (IAtom atom : atoms) {
+           if (!atom.isInRing() && !bond.contains(atom))
+               return false;
+        }
+        return true;
+    }
+
+    boolean traverse(Set<IAtom> visited,
+                     Set<IAtom> seeds,
+                     Map<IAtom, List<Map.Entry<IBond,Set<IAtom>>>> multiattach) {
+        visited.addAll(seeds);
+        Deque<IAtom> queue = new ArrayDeque<>(seeds);
+        boolean complex = false;
+        while (!queue.isEmpty()) {
+            IAtom atom = queue.poll();
+            for (IBond bond : atom.bonds()) {
+                IAtom nbor = bond.getOther(atom);
+                if (visited.add(nbor)) {
+                    complex |= nbor.isInRing();
+                    queue.add(nbor);
+                }
+            }
+
+            for (Map.Entry<IAtom, List<Map.Entry<IBond,Set<IAtom>>>> e : multiattach.entrySet()) {
+                if (e.getKey().equals(atom)) {
+                    for (Map.Entry<IBond,Set<IAtom>> e2 : e.getValue()) {
+                        for (IAtom nbor : e2.getValue()) {
+                            if (visited.add(nbor)) {
+                                complex = true;
+                                queue.add(nbor);
+                            }
+                        }
+                    }
+                } else {
+                    for (Map.Entry<IBond,Set<IAtom>> e2 : e.getValue()) {
+                        if (e2.getValue().contains(atom)) {
+                            if (visited.add(e.getKey())) {
+                                complex = true;
+                                queue.add(e.getKey());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return complex;
+    }
+
+    private static Vector2d getVector(IAtom beg, IBond bond) {
+        IAtom other = bond.getOther(beg);
+        return new Vector2d(other.getPoint2d().x - beg.getPoint2d().x,
+                            other.getPoint2d().y - beg.getPoint2d().y);
+    }
+
+    private static void rotate(Point2d point, Point2d center, double theta) {
+        double relativex = point.x - center.x;
+        double relativey = point.y - center.y;
+        double costheta = Math.cos(theta);
+        double sintheta = Math.sin(theta);
+        point.x = relativex * costheta - relativey * sintheta + center.x;
+        point.y = relativex * sintheta + relativey * costheta + center.y;
     }
 
     private static void visit(Set<Integer> visited, int[][] g, int v) {
@@ -3119,7 +3398,7 @@ public class StructureDiagramGenerator {
     }
 
     private static Map<Set<IAtom>, List<IAtom>> aggregateMulticenterSgroups(List<Sgroup> sgroups) {
-        Map<Set<IAtom>,List<IAtom>> mapping = new HashMap<>();
+        Map<Set<IAtom>,List<IAtom>> mapping = new LinkedHashMap<>();
         for (Sgroup sgroup : sgroups) {
             if (sgroup.getType() != SgroupType.ExtMulticenter)
                 continue;
