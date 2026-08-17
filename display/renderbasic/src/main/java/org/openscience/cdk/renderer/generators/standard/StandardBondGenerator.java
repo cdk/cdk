@@ -64,6 +64,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
@@ -187,7 +188,6 @@ final class StandardBondGenerator {
                                              Font font,
                                              ElementGroup annotations,
                                              StandardDonutGenerator donutGen) {
-
         StandardBondGenerator bondGenerator;
         bondGenerator = new StandardBondGenerator(container, symbols,
                                                   parameters, annotations,
@@ -199,6 +199,15 @@ final class StandardBondGenerator {
                 elements[i] = bondGenerator.generate(bond);
             }
         }
+
+        // this could be a paremeter!
+        double cutout = 1.25 * stroke;
+
+        List<OvalElement> ovals = donutGen.getOvals();
+        Area donutArea = AwtArea.toArea(new ElementGroup(ovals));
+        Area donutMask = AwtArea.toArea(new ElementGroup(ovals.stream()
+                                                              .map(o -> o.withStroke(stroke+2*cutout))
+                                                              .collect(Collectors.toList())));
 
         // Handle intersecting bonds and Z-ordering
         List<Map.Entry<IBond,IBond>> crossing = GeometryUtil.intersectingBonds(container);
@@ -215,16 +224,47 @@ final class StandardBondGenerator {
                 Integer z2 = b2.getProperty(CDKConstants.Z_ORDER);
                 assert z1 != null;
                 assert z2 != null;
+                // bond 1 is behind bond 2
                 if (z1 <= z2) {
-                    area1.subtract(AwtArea.expand(area2, stroke));
+                    Area expand = AwtArea.expand(area2, cutout);
+                    area1.subtract(expand);
+
+                    if (donutArea != null) {
+                        if (donutGen.isDelocalised(b1)) {
+                            donutArea.subtract(expand);
+                        } else if (donutGen.isDelocalised(b2)) {
+                            area1.subtract(donutMask);
+                        }
+                    }
+
                     elements[b1.getIndex()] = GeneralPath.shapeOf(area1,
                                                                   bondGenerator.foreground);
                 } else {
-                    area2.subtract(AwtArea.expand(area1, stroke));
+                    Area expand = AwtArea.expand(area1, cutout);
+                    area2.subtract(expand);
+
+                    if (donutArea != null) {
+                        if (donutGen.isDelocalised(b2)) {
+                            donutArea.subtract(expand);
+                        } else if (donutGen.isDelocalised(b1)) {
+                            area2.subtract(donutMask);
+                        }
+                    }
+
                     elements[b2.getIndex()] = GeneralPath.shapeOf(area2,
                                                                   bondGenerator.foreground);
                 }
+
             }
+        }
+
+        // attach the donuts to the first bond
+        if (donutArea != null && !crossing.isEmpty()) {
+            ElementGroup group = new ElementGroup();
+            group.add(GeneralPath.shapeOf(donutArea,
+                                          bondGenerator.foreground));
+            group.add(new ElementGroup(donutGen.getChargeLabels()));
+            donutGen.setElement(group);
         }
 
         return elements;

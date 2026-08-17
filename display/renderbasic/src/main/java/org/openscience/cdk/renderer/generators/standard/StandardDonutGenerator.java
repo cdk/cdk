@@ -41,7 +41,9 @@ import org.openscience.cdk.renderer.generators.standard.StandardGenerator.ForceD
 import javax.vecmath.Point2d;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
@@ -71,6 +73,10 @@ final class StandardDonutGenerator {
     private final Color      fgColor;
     private final Font       font;
     private final IAtomContainer mol;
+
+    private List<OvalElement> ovals = new ArrayList<>();
+    private List<IRenderingElement> text = new ArrayList<>();
+    private IRenderingElement element = null;
 
     /**
      * Create a new generator for a molecule.
@@ -127,10 +133,9 @@ final class StandardDonutGenerator {
         return okay;
     }
 
-    IRenderingElement generate() {
+    void generate() {
         if (!delocalisedDonuts)
-            return null;
-        ElementGroup group = new ElementGroup();
+            return;
         smallest = Cycles.edgeShort(mol).toRingSet();
         for (IAtomContainer ring : smallest.atomContainers()) {
             if (!canDelocalise(ring))
@@ -167,15 +172,38 @@ final class StandardDonutGenerator {
                 qSym = qSym.resize(1 / scale, -1 / scale);
                 qSym = qSym.translate(p2.x - qSym.getCenter().getX(),
                                       p2.y - qSym.getCenter().getY());
-                group.add(GeneralPath.shapeOf(qSym.getOutline(), fgColor));
+                text.add(GeneralPath.shapeOf(qSym.getOutline(), fgColor));
             }
 
             double  s  = GeometryUtil.getBondLengthMedian(ring);
             double  n  = ring.getBondCount();
             double  r  = s / (2 * Math.tan(Math.PI / n));
-            group.add(new OvalElement(p2.x, p2.y, r - 1.5*dbSpacing,
-                                      stroke, false, fgColor));
+            OvalElement element = new OvalElement(p2.x, p2.y, r - 1.5 * dbSpacing,
+                                                  stroke, false, fgColor);
+            ovals.add(element);
         }
+    }
+
+    List<OvalElement> getOvals() {
+        return ovals;
+    }
+
+    List<IRenderingElement> getChargeLabels() {
+        return text;
+    }
+
+    void setElement(IRenderingElement element) {
+        this.element = element;
+    }
+
+    IRenderingElement getElement() {
+        if (element != null)
+            return element;
+        ElementGroup group = new ElementGroup();
+        for (OvalElement oval : ovals)
+            group.add(oval);
+        for (IRenderingElement t : text)
+            group.add(t);
         return group;
     }
 

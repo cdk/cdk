@@ -19,6 +19,10 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
 
 
 /**
@@ -97,9 +101,30 @@ public class OvalElement implements IRenderingElement {
         this.color = color;
     }
 
+    public OvalElement withStroke(double stroke) {
+        return new OvalElement(xCoord, yCoord, radius, stroke, fill, color);
+    }
+
     /** {@inheritDoc} **/
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public Area toArea() {
+        if (!fill) {
+            double halfStroke = stroke / 2;
+            Ellipse2D outer = new Ellipse2D.Double(xCoord - (radius + halfStroke),
+                                                   yCoord - (radius + halfStroke),
+                                                   2*radius+stroke, 2*radius+stroke);
+            Ellipse2D inner = new Ellipse2D.Double(xCoord - (radius - halfStroke),
+                                                   yCoord - (radius - halfStroke),
+                                                   2*radius-stroke, 2*radius-stroke);
+            Area area = new Area(outer);
+            area.subtract(new Area(inner));
+            return area;
+        }
+        return new Area(new Ellipse2D.Double(xCoord - radius, yCoord - radius,
+                                             2*radius, 2*radius));
     }
 }

@@ -258,7 +258,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         StandardDonutGenerator donutGenerator;
         donutGenerator = new StandardDonutGenerator(container, font, parameters,
                                                     stroke);
-        IRenderingElement donuts = donutGenerator.generate();
+        donutGenerator.generate();
 
         String enantiomerText = determineEnantiomerText(container);
         if (enantiomerText == null) {
@@ -341,8 +341,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
-        // bonds for delocalised aromatic
-        frontLayer.add(donuts);
+        // bonds for delocalised aromatic, note this element may have
+        // been sliced and diced when we had crossing bonds
+        frontLayer.add(donutGenerator.getElement());
 
         // convert the atom symbols to IRenderingElements
         for (int i = 0; i < container.getAtomCount(); i++) {

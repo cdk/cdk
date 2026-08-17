@@ -38,7 +38,11 @@ public class ElementGroup implements IRenderingElement, Iterable<IRenderingEleme
      * Create an empty element group.
      */
     public ElementGroup() {
-        elements = new ArrayList<>();
+        this(new ArrayList<>());
+    }
+
+    public ElementGroup(List<? extends IRenderingElement> elements) {
+        this.elements = new ArrayList<>(elements);
     }
 
     /** {@inheritDoc} */
