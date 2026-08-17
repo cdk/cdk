@@ -3153,9 +3153,17 @@ public class StructureDiagramGenerator {
                     // over lapping the bond
                     if (isMultiAttach) {
                         Point2d newRingCenter = GeometryUtil.get2DCenter(shared);
-                        bndXVec.normalize();
-                        bndXVec.scale(bondLength / 6);
-                        newRingCenter.add(bndXVec);
+                        // back off a little if a charge "might" be displayed
+                        // there in the center of the ring
+                        if (isCharged(shared)) {
+                            bndXVec.normalize();
+                            bndXVec.scale(bondLength / 6);
+                            newRingCenter.add(bndXVec);
+                        } else {
+                            bndXVec.normalize();
+                            bndXVec.scale(bondLength / 24);
+                            newRingCenter.add(bndXVec);
+                        }
                         atom.setPoint2d(newRingCenter);
                     }
                 }
@@ -3168,6 +3176,15 @@ public class StructureDiagramGenerator {
         if (hasMultiAttach) {
             refineMulticenterLayout(sgroups);
         }
+    }
+
+    private boolean isCharged(IAtomContainer shared) {
+        for (IAtom atom : shared.atoms()) {
+            if (atom.getFormalCharge() != null &&
+                atom.getFormalCharge() != 0)
+                return true;
+        }
+        return false;
     }
 
     /**
