@@ -726,8 +726,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     // defines how the element is aligned on the atom point, when
                     // aligned to the left, the first character 'e.g. Cl' is used.
                     if (visNeighbors.size() < 4 &&
-                        (!Elements.isMetal(atom) || !GeometryUtil.isColinear(atom, neighbors)) &&
-                        average(newUnitVectors(atom, neighbors)).lengthSquared() > 0.1) {
+                        (!Elements.isMetal(atom) || !GeometryUtil.isColinear(atom, visNeighbors)) &&
+                        average(newUnitVectors(atom, visNeighbors)).lengthSquared() > 0.1) {
                         if (hPosition == Left) {
                             symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
                         } else {
