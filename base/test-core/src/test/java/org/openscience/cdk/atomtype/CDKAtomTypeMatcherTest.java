@@ -6558,7 +6558,7 @@ class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         pyrrole.addBond(b4);
         pyrrole.addBond(b5);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pyrrole);
+        AtomContainerManipulator.configure(pyrrole);
 
         Assertions.assertEquals(pyrrole.getAtom(0).getHybridization().name(), "PLANAR3");
     }
@@ -6620,7 +6620,7 @@ class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         pyrrole.addBond(builder.newInstance(IBond.class, c4, h4));
         pyrrole.addBond(builder.newInstance(IBond.class, c5, h5));
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pyrrole);
+        AtomContainerManipulator.configure(pyrrole);
 
         Assertions.assertEquals(pyrrole.getAtom(0).getHybridization().name(), "PLANAR3");
     }

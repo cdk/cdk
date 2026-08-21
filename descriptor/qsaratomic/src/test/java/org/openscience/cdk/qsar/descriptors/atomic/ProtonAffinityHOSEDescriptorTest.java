@@ -88,7 +88,7 @@ class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
         mol.addAtom(builder.newInstance(IAtom.class, "Cl"));
         mol.addBond(0, 6, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
@@ -115,7 +115,7 @@ class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
         mol.addBond(1, 2, IBond.Order.SINGLE);
 
         addExplicitHydrogens(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         lpcheck.saturate(mol);
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();

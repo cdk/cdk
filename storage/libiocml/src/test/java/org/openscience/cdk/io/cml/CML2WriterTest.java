@@ -75,7 +75,7 @@ class CML2WriterTest extends CDKTestCase {
     void testCMLWriterBenzene() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         CMLWriter cmlWriter = new CMLWriter(writer);
 

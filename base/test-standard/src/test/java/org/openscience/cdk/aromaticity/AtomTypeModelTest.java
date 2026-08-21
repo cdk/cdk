@@ -180,7 +180,7 @@ class AtomTypeModelTest {
 
     /** Check the electron contribution is the same as expected. */
     static void test(IAtomContainer m, int... expected) throws CDKException {
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
+        AtomContainerManipulator.configure(m);
         Cycles.markRingAtomsAndBonds(m);
         assertThat(model.contribution(m), is(expected));
     }

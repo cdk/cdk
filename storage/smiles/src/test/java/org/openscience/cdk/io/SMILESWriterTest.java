@@ -80,7 +80,7 @@ class SMILESWriterTest extends ChemObjectIOTest {
         StringWriter stringWriter = new StringWriter();
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
+        AtomContainerManipulator.configure(benzene);
         Aromaticity.cdkLegacy().apply(benzene);
         SMILESWriter smilesWriter = new SMILESWriter(stringWriter);
         Properties prop = new Properties();

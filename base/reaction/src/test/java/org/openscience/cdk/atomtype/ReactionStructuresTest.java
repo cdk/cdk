@@ -706,7 +706,7 @@ class ReactionStructuresTest extends CDKTestCase  {
         expected1.addBond(0, 2, IBond.Order.SINGLE);
         expected1.addBond(0, 3, IBond.Order.SINGLE);
         expected1.addBond(0, 4, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.configure(expected1);
 
         String[] expectedTypes = {"C.sp3", "O.sp3.radical", "H", "H", "H"};
         Assertions.assertEquals(expectedTypes.length, expected1.getAtomCount());
@@ -744,7 +744,7 @@ class ReactionStructuresTest extends CDKTestCase  {
         expected1.addBond(5, 6, IBond.Order.DOUBLE);
         expected1.addBond(6, 1, IBond.Order.SINGLE);
         addExplicitHydrogens(expected1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.configure(expected1);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.saturate(expected1);
 
@@ -761,7 +761,7 @@ class ReactionStructuresTest extends CDKTestCase  {
 
             Assertions.assertEquals(expectedTypes[i], perceivedType.getAtomTypeName(), "Incorrect atom type perceived for: " + nextAtom);
             nextAtom.setHybridization(null);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+            AtomContainerManipulator.configure(expected1);
             IAtomType type = matcher.findMatchingAtomType(expected1, nextAtom);
             Assertions.assertNotNull(type);
         }

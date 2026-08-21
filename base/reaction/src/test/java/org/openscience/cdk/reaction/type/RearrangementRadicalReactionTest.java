@@ -246,9 +246,9 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants = builder.newInstance(IAtomContainerSet.class);
 
-        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
+        IAtomContainer molecule = builder.newAtomContainer();
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.getAtom(0).setFormalCharge(1);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -266,12 +266,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 
         molecule.getAtom(0).setFormalCharge(0);
         molecule.addSingleElectron(new SingleElectron(molecule.getAtom(0)));
-        try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        } catch (CDKException e) {
-            LoggingToolFactory.createLoggingTool(getClass())
-                              .error("Unexpected Error:", e);
-        }
+        AtomContainerManipulator.reconfigure(molecule);
         setOfReactants.addAtomContainer(molecule);
         return setOfReactants;
     }
@@ -301,11 +296,8 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 
         molecule.getAtom(2).setFormalCharge(0);
         molecule.addSingleElectron(new SingleElectron(molecule.getAtom(2)));
-        try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        } catch (CDKException e) {
-            e.printStackTrace();
-        }
+        AtomContainerManipulator.reconfigure(molecule);
+
         setOfProducts.addAtomContainer(molecule);
         return setOfProducts;
     }

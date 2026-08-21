@@ -82,7 +82,7 @@ class StabilizationChargesTest {
         molecule.addBond(2, 3, IBond.Order.DOUBLE);
 
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {

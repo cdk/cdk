@@ -149,9 +149,7 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
 
         int aromaticAtomsCount = 0;
         if (checkAromaticity) {
-            try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-            } catch (CDKException e) {
+            if (!AtomContainerManipulator.configure(ac)) {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
                         (int) Double.NaN), getDescriptorNames(), new CDKException("Error during atom type perception"));
             }

@@ -116,7 +116,7 @@ class JPlogPDescriptorTest {
 	private static IAtomContainer parseSmiles(String smiles) throws CDKException {
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer molecule = parser.parseSmiles(smiles);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(molecule);
+		AtomContainerManipulator.configure(molecule);
 		AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
 		Aromaticity.cdkLegacy().apply(molecule);
 		return molecule;

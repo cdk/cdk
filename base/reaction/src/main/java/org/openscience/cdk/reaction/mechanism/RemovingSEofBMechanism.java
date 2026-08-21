@@ -98,11 +98,13 @@ public class RemovingSEofBMechanism implements IReactionMechanism {
 
         // check if resulting atom type is reasonable
         atom1C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom1C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
         atom2C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom2C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 

@@ -31,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -2542,8 +2543,18 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType getAtomType(String identifier) throws CDKException {
-        IAtomType type = factory.getAtomType(identifier);
-        return type;
+        return factory.getAtomType(identifier);
+    }
+
+    /**
+     * In the context of this matcher, access the atom type for the given
+     * atom type name, if no such atom type exists null is returned.
+     *
+     * @param typename the atom type name
+     * @return the atom type or null
+     */
+    public IAtomType getAtomTypeUnsafe(String typename) {
+        return factory.getAtomTypeUnsafe(typename);
     }
 
     private boolean isAcceptable(IAtom atom, IAtomContainer container, IAtomType type) {

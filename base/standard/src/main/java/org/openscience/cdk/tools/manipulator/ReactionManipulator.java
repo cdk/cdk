@@ -582,6 +582,48 @@ public class ReactionManipulator {
     }
 
     /**
+     * Configure the atom types of a reaction and set the implicit hydrogen
+     * count of the atoms, this function does not overwrite properties the
+     * original atoms - use {@link #reconfigure} to do that<br>
+     *
+     * @param reaction the reaction
+     * @return the molecule was fully configured, if false one or more atoms
+     *         could not be configured
+     * @see #reconfigure(IReaction)
+     */
+    public static boolean configure(IReaction reaction) {
+        boolean ok = true;
+        if (reaction != null) {
+            for (IAtomContainer atomContainer : reaction) {
+                if (!AtomContainerManipulator.configure(atomContainer))
+                    ok = false;
+            }
+        }
+        return ok;
+    }
+
+    /**
+     * Reconfigure the atom types of a reaction and set the implicit hydrogen
+     * count of the atoms, this function overwrites properties the
+     * original atoms - use {@link #configure} to <b>not</b> do that<br>
+     *
+     * @param reaction the reaction
+     * @return the molecule was fully configured, if false one or more atoms
+     *         could not be configured
+     * @see #configure(IReaction)
+     */
+    public static boolean reconfigure(IReaction reaction) {
+        boolean ok = true;
+        if (reaction != null) {
+            for (IAtomContainer atomContainer : reaction) {
+                if (!AtomContainerManipulator.reconfigure(atomContainer))
+                    ok = false;
+            }
+        }
+        return ok;
+    }
+
+    /**
      * This method will reset all atom properties related to atom configuration to the value {@link CDKConstants#UNSET}.
      * <br>
      * This method reverses most of the effects of

@@ -99,7 +99,7 @@ class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
         IBond b7 = builder.newInstance(IBond.class, a4, a7, IBond.Order.SINGLE);
         mol.addBond(b7);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
 
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();

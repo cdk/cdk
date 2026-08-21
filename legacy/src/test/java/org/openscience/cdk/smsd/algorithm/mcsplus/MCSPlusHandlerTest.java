@@ -151,8 +151,8 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         sp.kekulise(false);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
+        AtomContainerManipulator.configure(target);
+        AtomContainerManipulator.configure(queryac);
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
         MolHandler mol1 = new MolHandler(queryac, true, true);
@@ -175,8 +175,8 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         sp.kekulise(false);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
+        AtomContainerManipulator.configure(target);
+        AtomContainerManipulator.configure(queryac);
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
         MolHandler mol1 = new MolHandler(queryac, true, true);
