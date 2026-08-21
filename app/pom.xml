@@ -15,5 +15,6 @@
 
     <modules>
         <module>depict</module>
+        <module>cli</module>
     </modules>
 </project>

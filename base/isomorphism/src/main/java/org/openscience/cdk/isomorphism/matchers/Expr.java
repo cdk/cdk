@@ -157,7 +157,12 @@ public final class Expr {
      * @param expr the expre
      */
     public Expr(final Expr expr) {
-        set(expr);
+        this.type = expr.type;
+        this.left = expr.left != null ? new Expr(expr.left) : null;
+        this.right = expr.right != null ? new Expr(expr.right) : null;
+        this.value = expr.value;
+        this.query = expr.query;
+        this.ptrn = expr.ptrn;
     }
 
     private static boolean eq(Integer a, int b) {
