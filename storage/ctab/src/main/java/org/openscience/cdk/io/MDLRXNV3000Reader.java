@@ -60,7 +60,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
 
     public MDLRXNV3000Reader(Reader in) {
-        this(in, Mode.RELAXED);
+        this(in, Mode.DEFAULT);
     }
 
     public MDLRXNV3000Reader(Reader in, Mode mode) {
@@ -74,7 +74,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
 
     public MDLRXNV3000Reader(InputStream input) {
-        this(input, Mode.RELAXED);
+        this(input, Mode.DEFAULT);
     }
 
     public MDLRXNV3000Reader(InputStream input, Mode mode) {

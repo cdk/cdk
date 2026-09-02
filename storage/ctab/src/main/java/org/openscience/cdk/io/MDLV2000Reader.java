@@ -164,7 +164,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @param in The Reader to read from
      */
     public MDLV2000Reader(Reader in) {
-        this(in, Mode.RELAXED);
+        this(in, Mode.DEFAULT);
     }
 
     public MDLV2000Reader(Reader in, Mode mode) {

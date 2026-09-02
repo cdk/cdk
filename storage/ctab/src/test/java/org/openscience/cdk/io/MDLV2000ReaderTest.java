@@ -613,7 +613,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         String filename = "hisotopes.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
-        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.RELAXED);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.DEFAULT);
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         Assertions.assertNotNull(chemFile);
@@ -839,7 +839,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void testShortLines() throws Exception {
         logger.info("Testing short lines Mode.RELAXED");
-        testShortLinesForMode(Mode.RELAXED);
+        testShortLinesForMode(Mode.DEFAULT);
         logger.info("Testing short lines Mode.STRICT");
         testShortLinesForMode(Mode.STRICT);
     }
@@ -901,7 +901,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testDeuterium() throws Exception {
         String filename = "chemblMolregno5369.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
-        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.RELAXED);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.DEFAULT);
 
         Properties prop = new Properties();
         prop.setProperty("InterpretHydrogenIsotopes", "true");
@@ -923,7 +923,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testDeuteriumProperties() throws Exception {
         String filename = "chemblMolregno5369.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
-        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.RELAXED);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.DEFAULT);
         IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
         molecule = reader.read(molecule);
         reader.close();
@@ -1814,7 +1814,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 "M  END\n" +
                 "\n";
         final MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new ByteArrayInputStream(mol.getBytes(StandardCharsets.UTF_8)));
-        mdlv2000Reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        mdlv2000Reader.setReaderMode(IChemObjectReader.Mode.DEFAULT);
         final IAtomContainer atomContainer = mdlv2000Reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         Assertions.assertEquals(17, atomContainer.getAtomCount());
     }

@@ -54,11 +54,11 @@ import java.util.StringTokenizer;
  * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
  * This MDL RXN reader uses the {@link MDLV2000Reader} to read each mol file.
  * <p>
- * This reader has two modes: {@link Mode#STRICT} and {@link Mode#RELAXED}. It
- * defaults to mode {@code RELAXED}.
+ * This reader has two modes: {@link Mode#STRICT},
+ * {@link Mode#DEFAULT} (default), {@link Mode#RELAXED}.
  * </p>
  * <p>
- * In mode {@code RELAXED} it supports an entry for agents on the count line. It
+ * In mode {@link Mode#RELAXED} it supports an entry for agents on the count line. It
  * also silently accepts any molecular entities that are not declared on the counts
  * line as agents.
  * </p>
@@ -94,7 +94,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
      * @param in Reader to read from
      */
     public MDLRXNV2000Reader(Reader in) {
-        this(in, Mode.RELAXED);
+        this(in, Mode.DEFAULT);
     }
 
     public MDLRXNV2000Reader(Reader in, Mode mode) {
@@ -107,7 +107,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
     }
 
     public MDLRXNV2000Reader(InputStream input) {
-        this(input, Mode.RELAXED);
+        this(input, Mode.DEFAULT);
     }
 
     public MDLRXNV2000Reader(InputStream input, Mode mode) {

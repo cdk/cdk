@@ -73,7 +73,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      * @param  in  The Reader to read from
      */
     public MDLRXNReader(Reader in) {
-        this(in, Mode.RELAXED);
+        this(in, Mode.DEFAULT);
     }
 
     public MDLRXNReader(Reader in, Mode mode) {
@@ -86,7 +86,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
     }
 
     public MDLRXNReader(InputStream input) {
-        this(input, Mode.RELAXED);
+        this(input, Mode.DEFAULT);
     }
 
     public MDLRXNReader(InputStream input, Mode mode) {

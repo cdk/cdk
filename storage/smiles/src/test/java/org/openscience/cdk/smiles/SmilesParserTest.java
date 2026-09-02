@@ -33,6 +33,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -2850,5 +2851,39 @@ class SmilesParserTest extends CDKTestCase {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IReactionSet rs = parser.parseReactionSetSmiles("CCC>>CCO <a reaction>");
         Assertions.assertEquals("<a reaction>", rs.getProperty(CDKConstants.TITLE));
+    }
+
+    @Test
+    void testLooseParsing_unclosedRings() throws CDKException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        parser.setMode(IChemObjectReader.Mode.RELAXED);
+        Assertions.assertEquals("CCCC", smigen.create(parser.parseSmiles("C1CCC")));
+        Assertions.assertEquals("CCCC", smigen.create(parser.parseSmiles("C%CCC")));
+        Assertions.assertEquals("CCCC", smigen.create(parser.parseSmiles("C%1CCC")));
+        Assertions.assertEquals("CC1CCCC1", smigen.create(parser.parseSmiles("CC1CCCC12")));
+        Assertions.assertEquals("CC1CCCC1", smigen.create(parser.parseSmiles("CC12CCCC1")));
+    }
+
+    @Test
+    void testLooseParsing_unclosedBranches() throws CDKException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        parser.setMode(IChemObjectReader.Mode.RELAXED);
+        Assertions.assertEquals("CCCC", smigen.create(parser.parseSmiles("C(CCC")));
+        Assertions.assertEquals("CCCC", smigen.create(parser.parseSmiles("C((CCC")));
+        Assertions.assertEquals("CCCC", smigen.create(parser.parseSmiles("C)CCC")));
+        Assertions.assertEquals("CCCC", smigen.create(parser.parseSmiles("C))CCC")));
+        Assertions.assertEquals("CCC(CO)O", smigen.create(parser.parseSmiles("CCC(CO)O(")));
+    }
+
+    @Test
+    void testLooseParsing_multipleRings() throws CDKException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+        parser.setMode(IChemObjectReader.Mode.RELAXED);
+        Assertions.assertEquals("CC#CC", smigen.create(parser.parseSmiles("CC-=#CC")));
+        Assertions.assertEquals("CC=CC", smigen.create(parser.parseSmiles("CC-==CC")));
+        Assertions.assertEquals("CC=CC", smigen.create(parser.parseSmiles("CC#=CC")));
     }
 }

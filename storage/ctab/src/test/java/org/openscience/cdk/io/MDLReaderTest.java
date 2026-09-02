@@ -206,7 +206,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         String filename = "ChEBI_26120.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins, Mode.RELAXED);
+        MDLReader reader = new MDLReader(ins, Mode.DEFAULT);
         IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         Assertions.assertEquals(IBond.Display.Crossed, mol.getBond(1).getDisplay());
@@ -235,7 +235,7 @@ class MDLReaderTest extends SimpleChemObjectReaderTest {
         String filenameMol = "with000coordinate.mol";
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
         IAtomContainer molOne;
-        MDLReader reader = new MDLReader(ins, Mode.RELAXED);
+        MDLReader reader = new MDLReader(ins, Mode.DEFAULT);
         molOne = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         reader.close();
         // 0,0 or null no Coords, MDLV2000 will get this OK if there is 2D/3D
