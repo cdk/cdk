@@ -356,9 +356,10 @@ public final class SmilesParser {
     private static Mode convert(IChemObjectReader.Mode m) {
         switch (m) {
             case STRICT:  return Mode.Strict;
+            case DEFAULT: return Mode.Default;
             case RELAXED: return Mode.Relaxed;
-            default:      return Mode.Standard;
         }
+        throw new IllegalStateException("Unexpected parsing mode!");
     }
 
     private IAtomContainer parseSmiles(String smiles, boolean isRxnPart) throws InvalidSmilesException {
