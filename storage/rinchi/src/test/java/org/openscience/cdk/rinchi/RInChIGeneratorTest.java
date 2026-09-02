@@ -858,7 +858,7 @@ class RInChIGeneratorTest {
 
     private IReaction readReactionFromRxnFile(String filename) throws Exception {
         try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filename)) {
-            final MDLRXNV2000Reader reader = new MDLRXNV2000Reader(inputStream, Mode.RELAXED);
+            final MDLRXNV2000Reader reader = new MDLRXNV2000Reader(inputStream, Mode.DEFAULT);
             return reader.read(SilentChemObjectBuilder.getInstance().newReaction());
         }
     }

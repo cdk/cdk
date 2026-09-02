@@ -133,6 +133,7 @@ public class SMILESReader extends DefaultChemObjectReader {
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         sp = new SmilesParser(object.getBuilder());
+        sp.setMode(mode);
 
         if (object instanceof IAtomContainerSet) {
             return (T) readAtomContainerSet((IAtomContainerSet) object);

@@ -33,7 +33,7 @@ import org.openscience.cdk.io.IChemObjectReaderErrorHandler;
 public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> extends ChemObjectIO implements
         IIteratingChemObjectReader<T> {
 
-    protected Mode        mode         = Mode.RELAXED;
+    protected Mode        mode         = Mode.DEFAULT;
     protected IChemObjectReaderErrorHandler errorHandler = new DefaultChemObjectReaderErrorHandler(getClass());
 
     @Override

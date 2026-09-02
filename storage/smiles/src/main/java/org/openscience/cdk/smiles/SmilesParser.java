@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.renderer.selection.AtomBondSelection;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -51,6 +52,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 import uk.ac.ebi.beam.Graph;
+import uk.ac.ebi.beam.Mode;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -158,7 +160,7 @@ public final class SmilesParser {
     /**
      * Whether the parser is in strict mode or not.
      */
-    private boolean strict = false;
+    private IChemObjectReader.Mode mode = IChemObjectReader.Mode.DEFAULT;
 
     /**
      * Create a new SMILES parser which will create {@link IAtomContainer}s with
@@ -178,7 +180,16 @@ public final class SmilesParser {
      * @param strict strict mode true/false.
      */
     public void setStrict(boolean strict) {
-        this.strict = strict;
+        this.mode = strict ? IChemObjectReader.Mode.STRICT
+                           : IChemObjectReader.Mode.DEFAULT;
+    }
+
+    /**
+     * Set the parsing mode.
+     * @param mode the mode
+     */
+    public void setMode(IChemObjectReader.Mode mode) {
+        this.mode = mode;
     }
 
     /**
@@ -337,11 +348,24 @@ public final class SmilesParser {
         return parseSmiles(smiles, false);
     }
 
+    /**
+     * Convert CDK's 'Mode' to Beam's 'Mode' enum.
+     * @param m the mode
+     * @return the mode
+     */
+    private static Mode convert(IChemObjectReader.Mode m) {
+        switch (m) {
+            case STRICT:  return Mode.Strict;
+            case RELAXED: return Mode.Relaxed;
+            default:      return Mode.Standard;
+        }
+    }
+
     private IAtomContainer parseSmiles(String smiles, boolean isRxnPart) throws InvalidSmilesException {
         try {
             // create the Beam object from parsing the SMILES
             Set<String> warnings = new HashSet<>();
-            Graph g = Graph.parse(smiles, strict, warnings);
+            Graph g = Graph.parse(smiles, convert(mode), warnings);
             for (String warning : warnings)
                 logger.warn(warning);
 

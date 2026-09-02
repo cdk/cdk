@@ -282,7 +282,7 @@ class MDLV2000AtomBlockTest {
     @Test
     void readOldJmolCoords() throws Exception {
         MDLV2000Reader reader = new MDLV2000Reader();
-        reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        reader.setReaderMode(IChemObjectReader.Mode.DEFAULT);
         assertThat(reader.readMDLCoordinate("  -2.00120    7.8089", 0), is(closeTo(-2.00120, 0.1)));
     }
 
@@ -310,7 +310,7 @@ class MDLV2000AtomBlockTest {
     void readMDLCoordinates_wrong_decimal_position_relaxed() throws Exception {
 
         MDLV2000Reader reader = new MDLV2000Reader();
-        reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        reader.setReaderMode(IChemObjectReader.Mode.DEFAULT);
         assertThat(reader.readMDLCoordinate("   -2.0012   7.8089 ", 10), is(closeTo(7.8089, 0.1)));
     }
 
@@ -318,7 +318,7 @@ class MDLV2000AtomBlockTest {
     void readMDLCoordinates_no_value_relaxed() throws Exception {
 
         MDLV2000Reader reader = new MDLV2000Reader();
-        reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        reader.setReaderMode(IChemObjectReader.Mode.DEFAULT);
         assertThat(reader.readMDLCoordinate("   -2.0012          ", 10), is(closeTo(0.0, 0.1)));
     }
 
@@ -326,7 +326,7 @@ class MDLV2000AtomBlockTest {
     void readMDLCoordinates_no_decimal_relaxed() throws Exception {
 
         MDLV2000Reader reader = new MDLV2000Reader();
-        reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        reader.setReaderMode(IChemObjectReader.Mode.DEFAULT);
         assertThat(reader.readMDLCoordinate("   -2.0012   708089 ", 10), is(closeTo(708089, 0.1)));
     }
 }

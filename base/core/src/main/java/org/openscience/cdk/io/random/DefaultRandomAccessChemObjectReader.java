@@ -35,7 +35,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  */
 public abstract class DefaultRandomAccessChemObjectReader implements IRandomAccessChemObjectReader<IChemObject> {
 
-    protected IChemObjectReader.Mode    mode         = IChemObjectReader.Mode.RELAXED;
+    protected IChemObjectReader.Mode    mode         = IChemObjectReader.Mode.DEFAULT;
 
     /**
      * Holder of reader event listeners.

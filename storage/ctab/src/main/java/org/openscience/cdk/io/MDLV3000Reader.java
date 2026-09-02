@@ -100,7 +100,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private int lineNumber;
 
     public MDLV3000Reader(Reader in) {
-        this(in, Mode.RELAXED);
+        this(in, Mode.DEFAULT);
     }
 
     public MDLV3000Reader(Reader in, Mode mode) {
@@ -111,7 +111,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     public MDLV3000Reader(InputStream input) {
-        this(input, Mode.RELAXED);
+        this(input, Mode.DEFAULT);
     }
 
     public MDLV3000Reader(InputStream input, Mode mode) {

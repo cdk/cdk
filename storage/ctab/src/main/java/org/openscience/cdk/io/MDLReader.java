@@ -102,7 +102,7 @@ public class MDLReader extends DefaultChemObjectReader {
      *@param  in  The InputStream to read from
      */
     public MDLReader(InputStream in) {
-        this(in, Mode.RELAXED);
+        this(in, Mode.DEFAULT);
     }
 
     public MDLReader(InputStream in, Mode mode) {
@@ -116,7 +116,7 @@ public class MDLReader extends DefaultChemObjectReader {
      * @param  in  The Reader to read from
      */
     public MDLReader(Reader in) {
-        this(in, Mode.RELAXED);
+        this(in, Mode.DEFAULT);
     }
 
     public MDLReader(Reader in, Mode mode) {

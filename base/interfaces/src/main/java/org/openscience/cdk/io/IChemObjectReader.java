@@ -45,9 +45,11 @@ import org.openscience.cdk.io.iterator.IIteratingChemObjectReader;
 public interface IChemObjectReader extends IChemObjectIO {
 
     enum Mode {
-        /** Only fail on serious format problems */
+        /** Attempt to continue ignoring any errors. */
         RELAXED,
-        /** Fail on any format problem */
+        /** Only fail on serious format problems and errors.  */
+        DEFAULT,
+        /** Fail on any format problem even if they are pedantic. */
         STRICT
     }
 
