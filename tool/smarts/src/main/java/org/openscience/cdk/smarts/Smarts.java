@@ -2995,6 +2995,12 @@ public final class Smarts {
                     else
                         sb.append('+').append(expr.value());
                     break;
+                case UNSATURATED:
+                    sb.append("i");
+                    break;
+                case INSATURATION:
+                    sb.append("i").append(expr.value());
+                    break;
                 case RING_BOND_COUNT:
                     sb.append('x').append(expr.value());
                     break;
