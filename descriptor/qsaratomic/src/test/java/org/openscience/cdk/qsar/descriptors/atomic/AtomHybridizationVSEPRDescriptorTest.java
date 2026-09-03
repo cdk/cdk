@@ -250,7 +250,7 @@ class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("F-C=C");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
 
@@ -277,7 +277,7 @@ class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[F+]=C-[C-]");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         assertAtomTypesPerceived(mol);
         addImplicitHydrogens(mol);
 

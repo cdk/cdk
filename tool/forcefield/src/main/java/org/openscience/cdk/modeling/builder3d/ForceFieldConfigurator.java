@@ -249,7 +249,7 @@ public class ForceFieldConfigurator {
         IRingSet ringSetMolecule = Cycles.sssr(molecule).toRingSet();
         boolean isInHeteroRing;
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.configure(molecule);
             Aromaticity.cdkLegacy().apply(molecule);
         } catch (Exception cdk1) {
             throw new CDKException("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.getMessage(), cdk1);

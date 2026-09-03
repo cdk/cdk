@@ -76,7 +76,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
             smilesParser.kekulise(false);
             IAtomContainer molecule = smilesParser.parseSmiles(smiles);
             AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.configure(molecule);
 
             molecule = fbot.kekuliseAromaticRings(molecule);
             Assertions.assertNotNull(molecule);
@@ -100,7 +100,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
             smilesParser.kekulise(false);
             IAtomContainer molecule = smilesParser.parseSmiles(smiles);
             AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.configure(molecule);
 
             molecule = fbot.kekuliseAromaticRings(molecule);
             Assertions.assertNotNull(molecule);
@@ -199,7 +199,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
         enol.addBond(bond5);
 
         // perceive atom types
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+        AtomContainerManipulator.configure(enol);
 
         // now have the algorithm have a go at it
         enol = fbot.kekuliseAromaticRings(enol);
@@ -254,7 +254,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
         enol.addBond(bond6);
 
         // perceive atom types
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+        AtomContainerManipulator.configure(enol);
 
         // now have the algorithm have a go at it
         enol = fbot.kekuliseAromaticRings(enol);
@@ -326,7 +326,7 @@ class FixBondOrdersToolTest extends CDKTestCase {
         enol.addBond(bond6);
 
         // perceive atom types
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+        AtomContainerManipulator.configure(enol);
 
         // now have the algorithm have a go at it
         enol = fbot.kekuliseAromaticRings(enol);

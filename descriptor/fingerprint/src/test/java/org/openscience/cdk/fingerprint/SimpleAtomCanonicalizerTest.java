@@ -22,7 +22,7 @@ class SimpleAtomCanonicalizerTest {
     void testCanonicalizeAtoms() throws CDKException {
 
         IAtomContainer container = TestMoleculeFactory.makeAdenine();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
 
         Collection<IAtom> atoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(container);
 

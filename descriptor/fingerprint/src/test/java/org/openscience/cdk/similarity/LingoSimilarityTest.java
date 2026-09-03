@@ -45,8 +45,8 @@ class LingoSimilarityTest extends CDKTestCase {
         IAtomContainer mol2 = TestMoleculeFactory.makeIndole();
         addImplicitHydrogens(mol1);
         addImplicitHydrogens(mol2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
         LingoFingerprinter fingerprinter = new LingoFingerprinter();
         Map<String, Integer> bs1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> bs2 = fingerprinter.getRawFingerprint(mol2);

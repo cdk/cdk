@@ -63,7 +63,7 @@ class InChITautomerGeneratorTest {
     private List<IAtomContainer> unitTestWithInchiProvided(String smiles, String inchi, int tautCountExpected)
             throws Exception {
         IAtomContainer container = smilesParser.parseSmiles(smiles);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(container, inchi);
         Assertions.assertEquals(tautCountExpected, tautomers.size());
         return tautomers;
@@ -72,7 +72,7 @@ class InChITautomerGeneratorTest {
     private List<IAtomContainer> unitTestWithoutInchiProvided(String smiles, int flags, int tautCountExpected)
             throws Exception {
         IAtomContainer container = smilesParser.parseSmiles(smiles);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         InChITautomerGenerator tautegen = new InChITautomerGenerator(flags);
         List<IAtomContainer> tautomers = tautegen.getTautomers(container);
         Assertions.assertEquals(tautCountExpected, tautomers.size());
@@ -186,7 +186,7 @@ class InChITautomerGeneratorTest {
 
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdlInput));
         IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
         hAdder.addImplicitHydrogens(molecule);
 
@@ -260,7 +260,7 @@ class InChITautomerGeneratorTest {
         mol.addBond(b15);
         IBond b16 = builder.newInstance(IBond.class, a10, a13, IBond.Order.SINGLE);
         mol.addBond(b16);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
 
         List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(mol);
         Assertions.assertEquals(8, tautomers.size());
@@ -278,7 +278,7 @@ class InChITautomerGeneratorTest {
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer molecule = smipar.parseSmiles("CCCCCN1C2=CC=CC=C2C(C(N[C@](C(C)C)([H])C(=N)O)=O)=N1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
 
         InChITautomerGenerator tautoGen = new InChITautomerGenerator();
         List<IAtomContainer> tautomers = tautoGen.getTautomers(molecule);

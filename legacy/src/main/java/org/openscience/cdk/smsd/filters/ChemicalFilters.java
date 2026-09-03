@@ -762,8 +762,8 @@ public class ChemicalFilters {
         boolean stereoMatchFlag = false;
         IAtomContainer reactant = rMol;
         IAtomContainer product = pMol;
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(product);
+        AtomContainerManipulator.configure(reactant);
+        AtomContainerManipulator.configure(product);
         Aromaticity.cdkLegacy().apply(reactant);
         Aromaticity.cdkLegacy().apply(product);
 

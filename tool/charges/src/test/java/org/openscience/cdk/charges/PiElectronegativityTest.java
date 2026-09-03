@@ -86,7 +86,7 @@ class PiElectronegativityTest {
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -117,7 +117,7 @@ class PiElectronegativityTest {
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {

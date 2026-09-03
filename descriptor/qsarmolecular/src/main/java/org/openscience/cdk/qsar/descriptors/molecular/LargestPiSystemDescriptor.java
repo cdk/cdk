@@ -157,7 +157,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
         boolean[] visited = new boolean[container.getAtomCount()];
         if (checkAromaticity) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+                AtomContainerManipulator.configure(container);
                 Aromaticity.cdkLegacy().apply(container);
             } catch (CDKException e) {
                 logger.warn("Could not perceive atom types or configure atoms or set aromaticity: " + e.getMessage(), e);

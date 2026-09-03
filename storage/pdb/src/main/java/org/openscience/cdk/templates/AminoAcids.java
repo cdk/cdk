@@ -173,7 +173,7 @@ public class AminoAcids {
                 aminoAcid.setProperty(NO_ATOMS, "" + aminoAcid.getAtomCount());
                 aminoAcid.setProperty(NO_BONDS, "" + aminoAcid.getBondCount());
 
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(aminoAcid);
+                AtomContainerManipulator.configure(aminoAcid);
                 arom.apply(aminoAcid);
 
                 if (counter < aminoAcids.length) {

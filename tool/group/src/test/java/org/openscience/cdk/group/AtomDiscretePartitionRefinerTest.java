@@ -192,7 +192,7 @@ class AtomDiscretePartitionRefinerTest {
         IAtomContainer mol = TestMoleculeFactory.makeAzulene();
         Assertions.assertNotNull(mol, "Created molecule was null");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
@@ -214,7 +214,7 @@ class AtomDiscretePartitionRefinerTest {
     @Test
     void testPyrimidine() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrimidine();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assertions.assertNotNull(mol, "Created molecule was null");
 
@@ -236,7 +236,7 @@ class AtomDiscretePartitionRefinerTest {
     @Test
     void testBiphenyl() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assertions.assertNotNull(mol, "Created molecule was null");
 
