@@ -51,14 +51,14 @@ class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
         IFingerprinter       printer = new AtomPairs2DFingerprinter();
         IAtomContainer       mol1    = parser.parseSmiles("Clc1ccccc1");
         Map<String, Integer> map     = printer.getRawFingerprint(mol1);
-        Assertions.assertTrue(map.containsKey("1_X_C"));
-        Assertions.assertTrue(map.containsKey("1_Cl_C"));
-        Assertions.assertTrue(map.containsKey("2_X_C"));
-        Assertions.assertTrue(map.containsKey("2_Cl_C"));
-        Assertions.assertTrue(map.containsKey("3_X_C"));
-        Assertions.assertTrue(map.containsKey("3_Cl_C"));
-        Assertions.assertTrue(map.containsKey("4_X_C"));
-        Assertions.assertTrue(map.containsKey("4_Cl_C"));
+        Assertions.assertTrue(map.containsKey("1_C_X"));
+        Assertions.assertTrue(map.containsKey("1_C_Cl"));
+        Assertions.assertTrue(map.containsKey("2_C_X"));
+        Assertions.assertTrue(map.containsKey("2_C_Cl"));
+        Assertions.assertTrue(map.containsKey("3_C_X"));
+        Assertions.assertTrue(map.containsKey("3_C_Cl"));
+        Assertions.assertTrue(map.containsKey("4_C_X"));
+        Assertions.assertTrue(map.containsKey("4_C_Cl"));
     }
 
     @Test

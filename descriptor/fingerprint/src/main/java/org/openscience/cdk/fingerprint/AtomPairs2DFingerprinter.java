@@ -15,6 +15,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -22,8 +23,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-//import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 
 /**
  * Generates an atom pair 2D fingerprint as implemented in PaDEL given an  {@link IAtomContainer}, that
@@ -38,6 +37,7 @@ import java.util.Map;
 public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     private static final int      MAX_DISTANCE = 10;
+    // important keep sync'd with include() below
     private static final String[] atypes       = {"C", "N", "O", "S", "P", "F", "Cl", "Br", "I", "B", "Si", "X"};
 
     private final Map<String, Integer> pathToBit = new HashMap<>();
@@ -67,10 +67,10 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
      */
     private static boolean isHalogen(final IAtom atom) {
         switch (atom.getAtomicNumber()) {
-            case 9:  // F
-            case 17: // Cl
-            case 35: // Br
-            case 53: // I
+            case IElement.F:
+            case IElement.Cl:
+            case IElement.Br:
+            case IElement.I:
                 return true;
             default:
                 return false;
@@ -84,17 +84,17 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
      */
     private static boolean include(final IAtom atom) {
         switch (atom.getAtomicNumber()) {
-            case 5:  // B
-            case 6:  // C
-            case 7:  // N
-            case 8:  // O
-            case 14: // Si
-            case 15: // P
-            case 16: // S
-            case 9:  // F
-            case 17: // Cl
-            case 35: // Br
-            case 53: // I
+            case IElement.B:
+            case IElement.C:
+            case IElement.N:
+            case IElement.O:
+            case IElement.Si:
+            case IElement.P:
+            case IElement.S:
+            case IElement.F:
+            case IElement.Cl:
+            case IElement.Br:
+            case IElement.I:
                 return true;
             default:
                 return false;
@@ -178,7 +178,7 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         for (String path : paths) {
             if (!pathToBit.containsKey(path))
                 continue;
-            if (prev == null || !path.equals(prev)) {
+            if (!path.equals(prev)) {
                 if (count > 0)
                     raw.put(prev, count);
                 count = 1;
@@ -220,13 +220,13 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
 
             @Override
             public void merge(ICountFingerprint fp) {
-
+                throw new UnsupportedOperationException();
             }
 
             @Override
             public void setBehaveAsBitFingerprint(
                 boolean behaveAsBitFingerprint) {
-
+                throw new UnsupportedOperationException();
             }
 
             @Override
