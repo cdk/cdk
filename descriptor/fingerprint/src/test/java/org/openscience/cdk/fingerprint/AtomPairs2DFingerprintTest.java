@@ -93,4 +93,27 @@ class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
         chlorobenzene = parser.parseSmiles("c1ccccc1Cl");
         BitSetFingerprint bsfp2 = (BitSetFingerprint) printer.getBitFingerprint(chlorobenzene);
     }
+
+    /* See: https://sourceforge.net/p/cdk/mailman/message/59396625/ */
+    @Test
+    public void testOnlyRetainPathsOfInterestInCountFp() throws Exception {
+        IFingerprinter fingerprinter = new AtomPairs2DFingerprinter();
+        IAtomContainer mol = parser.parseSmiles("c1ccccc1O");
+        ICountFingerprint fp = fingerprinter.getCountFingerprint(mol);
+        Assertions.assertEquals(7, fp.numOfPopulatedbins());
+        Assertions.assertEquals(236, fp.getHash(0));
+        Assertions.assertEquals(1, fp.getCount(0));
+        Assertions.assertEquals(156, fp.getHash(1));
+        Assertions.assertEquals(6, fp.getCount(1));
+        Assertions.assertEquals(78, fp.getHash(2));
+        Assertions.assertEquals(12, fp.getCount(2));
+        Assertions.assertEquals(0, fp.getHash(3));
+        Assertions.assertEquals(12, fp.getCount(3));
+        Assertions.assertEquals(80, fp.getHash(4));
+        Assertions.assertEquals(2, fp.getCount(4));
+        Assertions.assertEquals(2, fp.getHash(5));
+        Assertions.assertEquals(1, fp.getCount(5));
+        Assertions.assertEquals(158, fp.getHash(6));
+        Assertions.assertEquals(2, fp.getCount(6));
+    }
 }

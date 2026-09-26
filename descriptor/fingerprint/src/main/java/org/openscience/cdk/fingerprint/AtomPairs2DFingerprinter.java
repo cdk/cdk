@@ -176,6 +176,8 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         int count = 0;
         String prev = null;
         for (String path : paths) {
+            if (!pathToBit.containsKey(path))
+                continue;
             if (prev == null || !path.equals(prev)) {
                 if (count > 0)
                     raw.put(prev, count);
