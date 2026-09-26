@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Generates an atom pair 2D fingerprint as implemented in PaDEL given an  {@link IAtomContainer}, that
@@ -124,6 +125,13 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
                (isHalogen(b) ? "X" : b.getSymbol());
     }
 
+    private boolean add(List<String> paths, String path) {
+        if (!pathToBit.containsKey(path))
+            return false;
+        paths.add(path);
+        return true;
+    }
+
     /**
      * This performs the calculations used to generate the fingerprint
      * @param paths
@@ -142,11 +150,14 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
                     continue;
                 final IAtom beg = mol.getAtom(i);
                 final IAtom end = mol.getAtom(j);
-                paths.add(encodePath(dist, beg, end));
-                paths.add(encodePath(dist, end, beg));
+
+                // if one path gets added we know the other one won't
+                // be, we also avoid double counting symmetric paths 4_C_C
+                if (!add(paths, encodePath(dist, beg, end)))
+                    add(paths, encodePath(dist, end, beg));
                 if (isHalogen(mol.getAtom(i)) || isHalogen(mol.getAtom(j))) {
-                    paths.add(encodeHalPath(dist, beg, end));
-                    paths.add(encodeHalPath(dist, end, beg));
+                    if (!add(paths, encodeHalPath(dist, beg, end)))
+                        add(paths, encodeHalPath(dist, end, beg));
                 }
             }
         }
@@ -158,9 +169,7 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         List<String> paths = new ArrayList<>();
         calculate(paths, container);
         for (String path : paths) {
-        	if (!pathToBit.containsKey(path))
-        		continue;
-            fp.set(pathToBit.get(path));
+        	fp.set(pathToBit.get(path));
         }
         return new BitSetFingerprint(fp);
     }
@@ -176,8 +185,6 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         int count = 0;
         String prev = null;
         for (String path : paths) {
-            if (!pathToBit.containsKey(path))
-                continue;
             if (!path.equals(prev)) {
                 if (count > 0)
                     raw.put(prev, count);

@@ -104,11 +104,11 @@ class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
         Assertions.assertEquals(236, fp.getHash(0));
         Assertions.assertEquals(1, fp.getCount(0));
         Assertions.assertEquals(156, fp.getHash(1));
-        Assertions.assertEquals(6, fp.getCount(1));
+        Assertions.assertEquals(3, fp.getCount(1));
         Assertions.assertEquals(78, fp.getHash(2));
-        Assertions.assertEquals(12, fp.getCount(2));
+        Assertions.assertEquals(6, fp.getCount(2));
         Assertions.assertEquals(0, fp.getHash(3));
-        Assertions.assertEquals(12, fp.getCount(3));
+        Assertions.assertEquals(6, fp.getCount(3));
         Assertions.assertEquals(80, fp.getHash(4));
         Assertions.assertEquals(2, fp.getCount(4));
         Assertions.assertEquals(2, fp.getHash(5));
