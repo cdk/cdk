@@ -280,7 +280,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         molecule.addBond(2, 8, IBond.Order.SINGLE);
         molecule.addBond(2, 9, IBond.Order.SINGLE);
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             lpcheck.saturate(molecule);
         } catch (CDKException e) {
             LoggingToolFactory.createLoggingTool(getClass())
@@ -312,7 +312,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 4, IBond.Order.SINGLE);
         expected1.addBond(1, 5, IBond.Order.SINGLE);
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+            AtomContainerManipulator.reconfigure(expected1);
             lpcheck.saturate(expected1);
         } catch (CDKException e) {
             LoggingToolFactory.createLoggingTool(getClass())
@@ -328,12 +328,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         expected2.addBond(0, 1, IBond.Order.SINGLE);
         expected2.addBond(0, 2, IBond.Order.SINGLE);
         expected2.addBond(0, 3, IBond.Order.SINGLE);
-        try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
-        } catch (CDKException e) {
-            LoggingToolFactory.createLoggingTool(getClass())
-                              .error("Unexpected Error:", e);
-        }
+        AtomContainerManipulator.reconfigure(expected2);
+
 
         setOfProducts.addAtomContainer(expected1);
         setOfProducts.addAtomContainer(expected2);
@@ -388,7 +384,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         molecule.addBond(2, 8, IBond.Order.SINGLE);
         molecule.addBond(2, 9, IBond.Order.SINGLE);
         molecule.addBond(2, 10, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -427,7 +423,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 4, IBond.Order.SINGLE);
         expected1.addBond(1, 5, IBond.Order.SINGLE);
         expected1.addBond(1, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -443,7 +439,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         expected2.addBond(0, 1, IBond.Order.SINGLE);
         expected2.addBond(0, 2, IBond.Order.SINGLE);
         expected2.addBond(0, 3, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
+        AtomContainerManipulator.reconfigure(expected2);
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
         Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, queryAtom));
@@ -479,7 +475,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         molecule.addBond(2, 6, IBond.Order.SINGLE);
         molecule.addBond(2, 7, IBond.Order.SINGLE);
         molecule.addBond(2, 8, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         molecule.getAtom(1).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -514,7 +510,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 2, IBond.Order.SINGLE);
         expected1.addBond(0, 3, IBond.Order.SINGLE);
         expected1.addBond(1, 4, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -530,7 +526,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         expected2.addBond(0, 1, IBond.Order.SINGLE);
         expected2.addBond(0, 2, IBond.Order.SINGLE);
         expected2.addBond(0, 3, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
+        AtomContainerManipulator.reconfigure(expected2);
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
         Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, queryAtom));
@@ -559,7 +555,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         molecule.addBond(1, 3, IBond.Order.SINGLE);
         molecule.addBond(1, 4, IBond.Order.SINGLE);
         molecule.addBond(1, 5, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
         lpcheck.saturate(molecule);
 
         molecule.getAtom(0).setFlag(IChemObject.REACTIVE_CENTER, true);
@@ -586,7 +582,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         expected1.addAtom(builder.newInstance(IAtom.class, "F"));
         expected1.addAtom(builder.newInstance(IAtom.class, "H"));
         expected1.addBond(0, 1, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+        AtomContainerManipulator.reconfigure(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -602,7 +598,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         expected2.addBond(0, 1, IBond.Order.SINGLE);
         expected2.addBond(0, 2, IBond.Order.SINGLE);
         expected2.addBond(0, 3, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
+        AtomContainerManipulator.reconfigure(expected2);
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
         Assertions.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, queryAtom));

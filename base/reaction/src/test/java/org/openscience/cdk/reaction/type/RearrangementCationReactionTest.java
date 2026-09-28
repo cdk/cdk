@@ -228,7 +228,7 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
     @Test
     void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
+        AtomContainerManipulator.reconfigure(moleculeTest);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
     }
@@ -239,7 +239,7 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
     @Test
     void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
+        AtomContainerManipulator.reconfigure(moleculeTest);
         makeSureAtomTypesAreRecognized(moleculeTest);
 
     }

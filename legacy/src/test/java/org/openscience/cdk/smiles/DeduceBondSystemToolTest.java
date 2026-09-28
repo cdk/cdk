@@ -77,7 +77,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
             smilesParser.kekulise(false);
             IAtomContainer molecule = smilesParser.parseSmiles(smiles);
             AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.configure(molecule);
             molecule = dbst.fixAromaticBondOrders(molecule);
             Assertions.assertNotNull(molecule);
 
@@ -100,7 +100,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
             smilesParser.kekulise(false);
             IAtomContainer molecule = smilesParser.parseSmiles(smiles);
             AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.configure(molecule);
             molecule = dbst.fixAromaticBondOrders(molecule);
             Assertions.assertNotNull(molecule);
 
@@ -173,7 +173,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
             smilesParser.kekulise(false);
             IAtomContainer molecule = smilesParser.parseSmiles(smiles);
             AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.configure(molecule);
 
             DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
             molecule = dbst.fixAromaticBondOrders(molecule);
@@ -243,7 +243,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
         enol.addBond(bond8);
 
         // perceive atom types
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+        AtomContainerManipulator.configure(enol);
 
         // now have the algorithm have a go at it
         enol = dbst.fixAromaticBondOrders(enol);
@@ -300,7 +300,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
         enol.addBond(bond5);
 
         // perceive atom types
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+        AtomContainerManipulator.configure(enol);
 
         // now have the algorithm have a go at it
         enol = dbst.fixAromaticBondOrders(enol);
@@ -355,7 +355,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
         enol.addBond(bond6);
 
         // perceive atom types
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+        AtomContainerManipulator.configure(enol);
 
         // now have the algorithm have a go at it
         enol = dbst.fixAromaticBondOrders(enol);
@@ -427,7 +427,7 @@ class DeduceBondSystemToolTest extends CDKTestCase {
         enol.addBond(bond6);
 
         // perceive atom types
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+        AtomContainerManipulator.configure(enol);
 
         // now have the algorithm have a go at it
         enol = dbst.fixAromaticBondOrders(enol);

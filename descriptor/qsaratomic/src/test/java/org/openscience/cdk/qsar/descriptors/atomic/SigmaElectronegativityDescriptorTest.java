@@ -274,7 +274,7 @@ class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
         molA.addBond(2, 3, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molA);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molA);
+        AtomContainerManipulator.configure(molA);
         lpcheck.saturate(molA);
 
         double resultA = ((DoubleResult) descriptor.calculate(molA.getAtom(3), molA).getValue()).doubleValue();
@@ -293,7 +293,7 @@ class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
         molB.addBond(2, 3, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molB);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molB);
+        AtomContainerManipulator.configure(molB);
         lpcheck.saturate(molB);
 
         Assertions.assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);

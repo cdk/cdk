@@ -197,7 +197,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
     //	@Test public void testGetAllStructures_IAtomContainer() throws Exception {
     //		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
     //        addExplicitHydrogens(molecule);
-    //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+    //		AtomContainerManipulator.configure(molecule);
     //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //        lpcheck.saturate(molecule);
     //
@@ -277,7 +277,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
     //	@Test public void testGetStructures_IAtomContainer() throws Exception {
     //		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
     //        addExplicitHydrogens(molecule);
-    //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+    //		AtomContainerManipulator.configure(molecule);
     //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //        lpcheck.saturate(molecule);
     //
@@ -315,7 +315,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
     //	@Test public void testGetStructures2() throws Exception {
     //		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
     //        addExplicitHydrogens(molecule);
-    //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+    //		AtomContainerManipulator.configure(molecule);
     //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //        lpcheck.saturate(molecule);
     //
@@ -508,7 +508,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
         molecule.addBond(0, 2, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gR = new StructureResonanceGenerator();
@@ -528,7 +528,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule2.getAtom(2).setFormalCharge(1);
         molecule2.addBond(0, 2, IBond.Order.DOUBLE);
         addExplicitHydrogens(molecule2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        AtomContainerManipulator.configure(molecule2);
         lpcheck.saturate(molecule2);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
@@ -552,7 +552,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addBond(1, 2, IBond.Order.DOUBLE);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gR = new StructureResonanceGenerator();
@@ -569,7 +569,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule1.getAtom(0).setFormalCharge(+1); // workaround for bug #1875949
         molecule1.getAtom(2).setFormalCharge(-1);
         addExplicitHydrogens(molecule1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule1);
+        AtomContainerManipulator.configure(molecule1);
         lpcheck.saturate(molecule1);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
@@ -604,7 +604,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(6, 1, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -630,7 +630,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule1.addBond(5, 6, IBond.Order.DOUBLE);
         molecule1.addBond(6, 1, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule1);
+        AtomContainerManipulator.configure(molecule1);
         lpcheck.saturate(molecule1);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
@@ -654,7 +654,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule2.addBond(5, 6, IBond.Order.DOUBLE);
         molecule2.addBond(6, 1, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        AtomContainerManipulator.configure(molecule2);
         lpcheck.saturate(molecule2);
 
         IAtomContainer product2 = setOfMolecules.getAtomContainer(4);
@@ -691,7 +691,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(6, 1, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -729,7 +729,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(6, 1, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
@@ -755,7 +755,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule1.addBond(5, 6, IBond.Order.DOUBLE);
         molecule1.addBond(6, 1, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule1);
+        AtomContainerManipulator.configure(molecule1);
         lpcheck.saturate(molecule1);
 
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
@@ -779,7 +779,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule2.addBond(5, 6, IBond.Order.DOUBLE);
         molecule2.addBond(6, 1, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        AtomContainerManipulator.configure(molecule2);
         lpcheck.saturate(molecule2);
 
         IAtomContainer product2 = setOfMolecules.getAtomContainer(2);
@@ -814,7 +814,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(5, 6, IBond.Order.DOUBLE);
         molecule.addBond(6, 1, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -848,7 +848,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(5, 6, IBond.Order.DOUBLE);
         molecule.addBond(6, 1, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
@@ -878,7 +878,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.getAtom(0).setFormalCharge(+1);
         addExplicitHydrogens(molecule);
         Assertions.assertEquals(8, molecule.getAtomCount());
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -909,7 +909,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addSingleElectron(new SingleElectron(molecule.getAtom(0)));
         Assertions.assertEquals(11, molecule.getAtomCount());
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         IAtomContainerSet resonanceStructures = gRI.getStructures(molecule);
@@ -934,7 +934,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(1, 2, IBond.Order.DOUBLE);
         molecule.getAtom(0).setFormalCharge(-1);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
         Assertions.assertEquals(6, molecule.getAtomCount());
 
@@ -975,7 +975,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(0, 6, IBond.Order.SINGLE);
         molecule.addBond(1, 7, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         Assertions.assertEquals(17, molecule.getAtomCount());
@@ -1017,7 +1017,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(1, 7, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         LonePairElectronChecker lpChecker = new LonePairElectronChecker();
         lpChecker.saturate(molecule);
 
@@ -1063,7 +1063,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(6, 1, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         boolean isAromatic = Aromaticity.cdkLegacy().apply(molecule);
@@ -1110,7 +1110,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         // anti-aromatic
         IAtomContainer molecule = TestMoleculeFactory.makeCyclobutadiene();
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -1130,7 +1130,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
     void testBenzene() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -1158,7 +1158,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(1, 2, IBond.Order.DOUBLE);
         molecule.getAtom(0).setFormalCharge(-1);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
         Assertions.assertEquals(6, molecule.getAtomCount());
 
@@ -1203,7 +1203,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.getBond(6).setID("bond_6");
         molecule.getAtom(7).setFormalCharge(+1);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
@@ -1253,7 +1253,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(6, 7, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
@@ -1301,7 +1301,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(6, 7, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
@@ -1356,7 +1356,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         atom8.setFormalCharge(+1);
         molecule.addBond(6, 7, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
@@ -1401,7 +1401,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(6, 7, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -1447,7 +1447,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(6, 1, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -1485,7 +1485,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addBond(1, 3, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -1524,7 +1524,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(6, 7, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -1564,7 +1564,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(7, 8, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -1628,7 +1628,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(0, 7, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -1668,7 +1668,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(0, 7, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         Assertions.assertTrue(Aromaticity.cdkLegacy().apply(molecule));
@@ -1710,7 +1710,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase  {
         molecule.addBond(0, 7, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         lpcheck.saturate(molecule);
 
         Assertions.assertTrue(Aromaticity.cdkLegacy().apply(molecule));

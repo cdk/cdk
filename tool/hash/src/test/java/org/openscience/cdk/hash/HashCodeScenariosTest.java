@@ -1131,12 +1131,8 @@ class HashCodeScenariosTest {
         List<IAtomContainer> structures = new ArrayList<>(exp);
         while (sdf.hasNext()) {
             IAtomContainer mol = sdf.next();
-            try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+            if (AtomContainerManipulator.configure(mol))
                 structures.add(mol);
-            } catch (CDKException e) {
-                System.err.println(e.getMessage());
-            }
         }
         try {
             sdf.close();

@@ -96,19 +96,21 @@ public class AdductionPBMechanism implements IReactionMechanism {
         int charge = atom1C.getFormalCharge();
         atom1C.setFormalCharge(charge + 1);
         atom1C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 
         atom2C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom2C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 
         charge = atom3C.getFormalCharge();
         atom3C.setFormalCharge(charge - 1);
         atom3C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom3C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.configure(reactantCloned);
         type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 

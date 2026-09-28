@@ -196,7 +196,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         }
         if (checkAromaticity) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
+                AtomContainerManipulator.configure(varAtomContainer);
                 Aromaticity.cdkLegacy().apply(varAtomContainer);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);

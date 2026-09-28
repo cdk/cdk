@@ -108,7 +108,7 @@ public class MoleculeSanityCheck {
         try {
             // figure out which atoms are in aromatic rings:
             CDKHydrogenAdder cdk = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
-            ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+            ExtAtomContainerManipulator.configure(mol);
             cdk.addImplicitHydrogens(mol);
 
             Aromaticity.cdkLegacy().apply(mol);

@@ -90,7 +90,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addBond(3, 5, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -118,7 +118,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
         mol.addAtom(builder.newInstance(IAtom.class, "Cl"));
         mol.addBond(2, 3, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -137,7 +137,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor2() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("CC(CC)Cl"); // not in db
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -156,7 +156,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testNotDB() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C=CCCl"); // not in db
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -176,7 +176,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_1() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-Cl");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -195,7 +195,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_2() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-Br");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -213,7 +213,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_3() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-C-I");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -233,7 +233,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_4() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-O");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -252,7 +252,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_5() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("N1(C)CCC(C)(C)CC1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
 
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -274,7 +274,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_6() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-N-C");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
 
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -296,7 +296,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_7() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-N");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
 
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -318,7 +318,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_8() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-P-C-C");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
 
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -340,7 +340,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_9() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("O=C(C)CC(C)C");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -360,7 +360,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_10() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("O=C1C2CCC1CC2");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -380,7 +380,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
     void testIPDescriptor_14() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("CCOCCCO");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -460,7 +460,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(C=CC=C)C");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -485,7 +485,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("OC=CC");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -510,7 +510,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C1=C(C)CCS1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -577,7 +577,7 @@ class IPAtomicLearningDescriptorTest extends CDKTestCase {
         molecule.addBond(5, 6, IBond.Order.DOUBLE);
         molecule.addBond(6, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 

@@ -126,7 +126,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
             container = container.clone();
             atom = container.getAtom(i);
 
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+            AtomContainerManipulator.configure(container);
             LonePairElectronChecker lpcheck = new LonePairElectronChecker();
             lpcheck.saturate(container);
         } catch (CDKException | CloneNotSupportedException e) {

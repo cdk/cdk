@@ -63,7 +63,7 @@ class IonizationPotentialToolTest extends CDKTestCase {
         String smiles = "c1ccccc1";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles(smiles);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         lpcheck.saturate(molecule);

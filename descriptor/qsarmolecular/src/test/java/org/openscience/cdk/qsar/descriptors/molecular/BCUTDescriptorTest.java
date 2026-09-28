@@ -145,8 +145,8 @@ class BCUTDescriptorTest extends MolecularDescriptorTest {
         addExplicitHydrogens(mol1);
         addExplicitHydrogens(mol2);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
 
@@ -181,7 +181,7 @@ class BCUTDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 
         Assertions.assertNotNull(ac);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        AtomContainerManipulator.configure(ac);
         addExplicitHydrogens(ac);
         Aromaticity.cdkLegacy().apply(ac);
 

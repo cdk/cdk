@@ -86,7 +86,7 @@ public class MolHandler {
                     atomContainer = canonLabeler.getCanonicalMolecule(atomContainer);
                 }
                 // percieve atoms, set valency etc
-                ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+                ExtAtomContainerManipulator.configure(atomContainer);
                 //Add implicit Hydrogens
                 CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(atomContainer.getBuilder());
                 adder.addImplicitHydrogens(atomContainer);
@@ -137,7 +137,7 @@ public class MolHandler {
                     atomContainer = canonLabeler.getCanonicalMolecule(atomContainer);
                 }
                 // percieve atoms, set valency etc
-                ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+                ExtAtomContainerManipulator.configure(atomContainer);
                 //Add implicit Hydrogens
                 CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(atomContainer.getBuilder());
                 adder.addImplicitHydrogens(atomContainer);

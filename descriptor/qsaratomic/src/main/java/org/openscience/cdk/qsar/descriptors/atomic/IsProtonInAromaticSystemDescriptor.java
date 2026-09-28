@@ -140,7 +140,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
         IAtomContainer mol = atom.getBuilder().newInstance(IAtomContainer.class, clonedAtomContainer);
         if (checkAromaticity) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+                AtomContainerManipulator.configure(mol);
                 Aromaticity.cdkLegacy().apply(mol);
             } catch (CDKException e) {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(

@@ -117,7 +117,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		IAtomContainer struct;
 		try {
 			struct = container.clone();
-			AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(struct);
+			AtomContainerManipulator.configure(struct);
 			CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(struct.getBuilder());
 			hAdder.addImplicitHydrogens(struct);
 			AtomContainerManipulator.convertImplicitToExplicitHydrogens(struct);

@@ -303,12 +303,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         molecule.addBond(2, 4, IBond.Order.SINGLE);
         molecule.addBond(2, 5, IBond.Order.SINGLE);
         molecule.addBond(2, 6, IBond.Order.SINGLE);
-        try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        } catch (CDKException e) {
-            LoggingToolFactory.createLoggingTool(getClass())
-                              .error("Unexpected Error:", e);
-        }
+        AtomContainerManipulator.reconfigure(molecule);
 
         setOfReactants.addAtomContainer(molecule);
         return setOfReactants;
@@ -337,12 +332,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         molecule.addBond(2, 4, IBond.Order.SINGLE);
         molecule.addBond(2, 5, IBond.Order.SINGLE);
         molecule.addBond(0, 6, IBond.Order.SINGLE);
-        try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        } catch (CDKException e) {
-            LoggingToolFactory.createLoggingTool(getClass())
-                              .error("Unexpected Error:", e);
-        }
+        AtomContainerManipulator.reconfigure(molecule);
 
         setOfProducts.addAtomContainer(molecule);
         return setOfProducts;

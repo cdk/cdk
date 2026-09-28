@@ -118,7 +118,7 @@ class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     void testEthaneIncludeTerminalsExplicitH() throws Exception {
         IAtomContainer container = makeEthane();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(container.getBuilder());
         adder.addImplicitHydrogens(container);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
@@ -134,7 +134,7 @@ class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     void testEthaneExplicitH() throws Exception {
         IAtomContainer container = makeEthane();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(container.getBuilder());
         adder.addImplicitHydrogens(container);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
@@ -150,7 +150,7 @@ class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     void testButaneIncludeTerminalsExplicitH() throws Exception {
         IAtomContainer container = makeButane();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(container.getBuilder());
         adder.addImplicitHydrogens(container);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
@@ -166,7 +166,7 @@ class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     void testButaneExplicitH() throws Exception {
         IAtomContainer container = makeButane();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(container.getBuilder());
         adder.addImplicitHydrogens(container);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
@@ -181,7 +181,7 @@ class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         String amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(amide);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{false, false});
@@ -194,7 +194,7 @@ class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         String amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(amide);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{false, true});

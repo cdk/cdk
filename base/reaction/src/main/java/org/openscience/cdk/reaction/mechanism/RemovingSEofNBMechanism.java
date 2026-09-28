@@ -89,7 +89,8 @@ public class RemovingSEofNBMechanism implements IReactionMechanism {
 
         // check if resulting atom type is reasonable
         reactantCloned.getAtom(posAtom).setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        reactantCloned.getAtom(posAtom).setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, reactantCloned.getAtom(posAtom));
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 

@@ -54,7 +54,7 @@ class VicinitySamplerTest {
         IAtomContainer mol = TestMoleculeFactory.makeEthylPropylPhenantren();
 
         Isotopes.getInstance().configureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
 
         IAtomContainer temp;
@@ -76,7 +76,7 @@ class VicinitySamplerTest {
         IAtomContainer mol = parser.parseSmiles("C=CC=C");
 
         Isotopes.getInstance().configureAtoms(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
 
         IAtomContainer temp;

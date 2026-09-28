@@ -303,7 +303,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 
         try {
             addExplicitHydrogens(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
 
             lpcheck.saturate(molecule);
         } catch (Exception e) {
@@ -338,7 +338,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 
         try {
             addExplicitHydrogens(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
 
             lpcheck.saturate(molecule);
 
@@ -393,7 +393,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         molecule.addBond(6, 1, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
 
         lpcheck.saturate(molecule);
 
@@ -432,7 +432,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         molecule1.addBond(5, 6, IBond.Order.DOUBLE);
         molecule1.addBond(6, 1, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule1);
+        AtomContainerManipulator.reconfigure(molecule1);
         lpcheck.saturate(molecule1);
 
         assertEquals(molecule1, product1);

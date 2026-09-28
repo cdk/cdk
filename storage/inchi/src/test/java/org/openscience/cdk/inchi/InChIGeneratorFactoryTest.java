@@ -239,9 +239,9 @@ class InChIGeneratorFactoryTest {
         try {
             // create a fairly complex aromatic molecule
             IAtomContainer tetrazole = TestMoleculeFactory.makeTetrazole();
+            AtomContainerManipulator.configure(tetrazole);
             for (IAtom atom : tetrazole.atoms())
                 atom.setImplicitHydrogenCount(null);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(tetrazole);
             Aromaticity.cdkLegacy().apply(tetrazole);
 
             InChIGeneratorFactory inchiFactory = InChIGeneratorFactory.getInstance();

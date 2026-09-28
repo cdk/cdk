@@ -139,7 +139,7 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
         IAtomContainer mol = clonedAtom.getBuilder().newInstance(IAtomContainer.class, clonedAtomContainer);
         if (checkAromaticity) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+                AtomContainerManipulator.configure(mol);
                 Aromaticity.cdkLegacy().apply(mol);
             } catch (CDKException e) {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(

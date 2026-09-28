@@ -404,7 +404,7 @@ class ModelBuilder3DTest {
     void hydrogenAsFirstAtomInMethane() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer methane = smipar.parseSmiles("[H]C([H])([H])[H]");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
+        AtomContainerManipulator.configure(methane);
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(SilentChemObjectBuilder.getInstance());
         mb3d.generate3DCoordinates(methane, false);
         for (IAtom atom : methane.atoms())
@@ -415,7 +415,7 @@ class ModelBuilder3DTest {
     void hydrogenAsFirstAtomInEthane() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ethane = smipar.parseSmiles("[H]C([H])([H])C([H])([H])[H]");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ethane);
+        AtomContainerManipulator.configure(ethane);
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(SilentChemObjectBuilder.getInstance());
         mb3d.generate3DCoordinates(ethane, false);
         for (IAtom atom : ethane.atoms())

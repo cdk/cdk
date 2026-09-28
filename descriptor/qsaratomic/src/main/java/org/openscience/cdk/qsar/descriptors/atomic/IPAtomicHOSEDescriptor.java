@@ -134,7 +134,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 
         if (!isCachedAtomContainer(container)) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+                AtomContainerManipulator.configure(container);
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(container);
             } catch (CDKException e) {

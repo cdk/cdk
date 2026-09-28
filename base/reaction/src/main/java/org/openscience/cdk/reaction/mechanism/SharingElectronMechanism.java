@@ -95,13 +95,15 @@ public class SharingElectronMechanism implements IReactionMechanism {
         atom2C.setFormalCharge(charge - 1);
 
         atom1C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom1C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
 
         IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 
         atom2C.setHybridization(null);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        atom2C.setImplicitHydrogenCount(null);
+        AtomContainerManipulator.reconfigure(reactantCloned);
         type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
         if (type == null || type.getAtomTypeName().equals("X")) return null;
 

@@ -73,7 +73,7 @@ class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
     void testPhosphorusAcidGroup() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=P(=O)O");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
         Assertions.assertEquals(1, result.intValue());
     }
@@ -82,7 +82,7 @@ class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
     void testFancyGroup() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[NH](S(=O)=O)C(F)(F)F");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
         Assertions.assertEquals(1, result.intValue());
     }
@@ -162,7 +162,7 @@ class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         IBond b10 = mol.getBuilder().newInstance(IBond.class, a7, a8, IBond.Order.SINGLE);
         mol.addBond(b10);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
 
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
@@ -347,7 +347,7 @@ class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(b27);
         IBond b28 = mol.getBuilder().newInstance(IBond.class, a16, a23, IBond.Order.SINGLE);
         mol.addBond(b28);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
         Assertions.assertEquals(2, result.intValue());

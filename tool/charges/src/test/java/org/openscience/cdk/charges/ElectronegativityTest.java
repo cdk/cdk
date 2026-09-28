@@ -86,7 +86,7 @@ class ElectronegativityTest {
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         CDKHydrogenAdder.getInstance(molecule.getBuilder()).addImplicitHydrogens(molecule);
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
 
@@ -115,7 +115,7 @@ class ElectronegativityTest {
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         CDKHydrogenAdder.getInstance(molecule.getBuilder()).addImplicitHydrogens(molecule);
         AtomContainerManipulator.normalizeHydrogens(molecule, HydrogenState.Explicit);
         lpcheck.saturate(molecule);

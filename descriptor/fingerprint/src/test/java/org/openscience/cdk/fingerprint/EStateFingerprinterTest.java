@@ -80,8 +80,8 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
         IAtomContainer superStructure = bug706786_1();
         IAtomContainer subStructure = bug706786_2();
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
+        AtomContainerManipulator.configure(superStructure);
+        AtomContainerManipulator.configure(subStructure);
         addImplicitHydrogens(superStructure);
         addImplicitHydrogens(subStructure);
 

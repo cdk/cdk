@@ -77,8 +77,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         IAtomContainer mol1 = parser.parseSmiles("c1ccccc1CCc1ccccc1");
         IAtomContainer mol2 = parser.parseSmiles("c1ccccc1CC");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
 
         adder.addImplicitHydrogens(mol1);
         adder.addImplicitHydrogens(mol2);
@@ -105,9 +105,9 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         IAtomContainer mol2 = parser.parseSmiles("CC(N)CCC");
         IAtomContainer mol3 = parser.parseSmiles("CCCC");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
+        AtomContainerManipulator.configure(mol3);
 
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
@@ -130,7 +130,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     @Test
     void testCID2518130() throws CDKException {
         IAtomContainer mol = parser.parseSmiles("COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)S)O)O)O)O");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
@@ -153,7 +153,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     @Test
     void testCID5934166() throws CDKException {
         IAtomContainer mol = parser.parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
@@ -176,7 +176,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     @Test
     void testCID25181289() throws CDKException {
         IAtomContainer mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
@@ -195,7 +195,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         IAtomContainer mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
@@ -245,7 +245,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     @Test
     void testBenzene() throws CDKException {
         IAtomContainer mol = parser.parseSmiles("c1ccccc1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
@@ -270,8 +270,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         IAtomContainer mol2 = parser
                 .parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
 
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
         adder.addImplicitHydrogens(mol1);

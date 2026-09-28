@@ -1101,11 +1101,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         container.addAtom(new Atom("R"));
 
         // the next should not throw an exception
-        try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-        } catch (CDKException e) {
-            Assertions.fail("The percieveAtomTypesAndConfigureAtoms must not throw exceptions when no atom type is perceived.");
-        }
+        AtomContainerManipulator.configure(container);
     }
 
     @Test
@@ -1118,7 +1114,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         type.setAtomTypeName("C.sp3");
         type.setExactMass(12.0);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(container);
+        AtomContainerManipulator.configure(container);
         Assertions.assertNotNull(atom.getExactMass());
         Assertions.assertEquals(13.0, atom.getExactMass(), 0.1);
         Assertions.assertNotNull(atom.getAtomTypeName());
@@ -1137,7 +1133,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         container.addBond(new Bond(atom1, atom2, IBond.Order.SINGLE));
         container.addBond(new Bond(atom2, atom3, IBond.Order.SINGLE));
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         for (IAtom atom : container.atoms()) {
             Assertions.assertTrue(atom.getAtomTypeName() != CDKConstants.UNSET);
             Assertions.assertTrue(atom.getHybridization() != CDKConstants.UNSET);
@@ -1254,7 +1250,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         Assertions.assertEquals(0, countHydrogens(container, atom1));
         Assertions.assertEquals(0, countHydrogens(container, atom2));
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         CDKHydrogenAdder ha = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
         ha.addImplicitHydrogens(container);
 
@@ -1295,7 +1291,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     void testGetImplicitHydrogenCount_adenine() throws Exception {
         IAtomContainer container = TestMoleculeFactory.makeAdenine();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance()).addImplicitHydrogens(container);
         Assertions.assertEquals(5, getImplicitHydrogenCount(container), "Adenine should have 5 implicit hydrogens");
 
@@ -1503,7 +1499,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
             exactMass.put(atom, atom.getExactMass());
         }
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        AtomContainerManipulator.configure(ac);
 
         for (IAtom atom : ac.atoms()) {
             Double expected = exactMass.get(atom);

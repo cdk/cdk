@@ -214,7 +214,7 @@ class RingSetManipulatorTest extends CDKTestCase {
     @Test
     void markAromatic() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         AllRingsFinder arf = new AllRingsFinder();
