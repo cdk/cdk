@@ -319,8 +319,7 @@ public abstract class IsotopeFactory {
      * @return               The symbol of the Element
      */
     public String getElementSymbol(int atomicNumber) {
-        IIsotope isotope = getMajorIsotope(atomicNumber);
-        return isotope.getSymbol();
+        return Elements.ofNumber(atomicNumber).toIElement().getSymbol();
     }
 
     /**
