@@ -80,9 +80,10 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                 }
             }
         }
-        if (ins == null) throw new IOException("There was a problem getting an input stream");
+        if (ins == null) throw new IOException("There was a problem getting an input stream for " + configFile);
         AtomTypeReader reader = new AtomTypeReader(new InputStreamReader(ins));
         atomTypes = reader.readAtomTypes(builder);
+        if (atomTypes == null) throw new IOException("There was a problem reading the atom types for " + configFile);
         for (IAtomType atomType : atomTypes) {
             if (atomType == null) {
                 logger.debug("Expecting an object but found null!");
