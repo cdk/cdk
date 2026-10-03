@@ -65,9 +65,9 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @author John Mayfield
  * @cdk.created 2004-09-21
  */
-public class TemplateHandler3D {
+public enum TemplateHandler3D {
+    INSTANCE;
 
-    private static final IChemObjectBuilder builder       = SilentChemObjectBuilder.getInstance();
     public static final  String             TEMPLATE_PATH = "data/ringTemplateStructures.sdf.gz";
 
     private final List<IAtomContainer>      templates = new ArrayList<>();
@@ -78,16 +78,9 @@ public class TemplateHandler3D {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
 
-    private final UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
 
-    private TemplateHandler3D() {
-    }
-
-    public static TemplateHandler3D getInstance() throws CDKException {
-        if (self == null) {
-            self = new TemplateHandler3D();
-        }
-        return self;
+    public static TemplateHandler3D getInstance() {
+        return INSTANCE;
     }
 
     private void addTemplateMol(IAtomContainer mol) {
@@ -105,7 +98,8 @@ public class TemplateHandler3D {
      *
      * @throws CDKException The template file cannot be loaded
      */
-    private void loadTemplates() throws CDKException {
+    TemplateHandler3D() {
+        final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (InputStream gin = getClass().getResourceAsStream(TEMPLATE_PATH);
              InputStream in = new GZIPInputStream(gin);
              IteratingSDFReader sdfr = new IteratingSDFReader(in, builder)) {
@@ -114,7 +108,7 @@ public class TemplateHandler3D {
                 addTemplateMol(mol);
             }
         } catch (IOException e) {
-            throw new CDKException("Could not load ring templates", e);
+            throw new InstantiationError("Could not load 3D ring templates: " + e);
         }
     }
 
@@ -192,8 +186,6 @@ public class TemplateHandler3D {
      */
     public void mapTemplates(IAtomContainer mol, int numberOfRingAtoms)
         throws CDKException, CloneNotSupportedException {
-        if (templates.isEmpty())
-            loadTemplates();
 
         IAtomContainer                best          = null;
         Map<IChemObject, IChemObject> bestMap       = null;
