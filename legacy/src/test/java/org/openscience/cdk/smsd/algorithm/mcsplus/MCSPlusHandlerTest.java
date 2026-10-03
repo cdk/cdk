@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -145,7 +144,6 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws InvalidSmilesException
      */
     @Test
-    @Disabled("Failing but not going to be fixed")
     void testGetAllAtomMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
@@ -169,7 +167,6 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws InvalidSmilesException
      */
     @Test
-    @Disabled("Failing but not going to be fixed")
     void testGetAllMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
@@ -227,4 +224,40 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
         Assertions.assertEquals(7, smsd1.getFirstMapping().size());
     }
+    @Test
+    void creatingAnotherHandlerPreservesResults() throws Exception {
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        MCSPlusHandler first = new MCSPlusHandler();
+        first.set(new MolHandler(parser.parseSmiles("CC"), true, true),
+                  new MolHandler(parser.parseSmiles("CCC"), true, true));
+        first.searchMCS(true);
+        Assertions.assertEquals(2, first.getFirstMapping().size());
+        java.util.Map<Integer, Integer> expected = new java.util.TreeMap<>(first.getFirstMapping());
+        int count = first.getAllMapping().size();
+        MCSPlusHandler second = new MCSPlusHandler();
+        Assertions.assertTrue(second.getFirstMapping().isEmpty());
+        Assertions.assertEquals(expected, first.getFirstMapping());
+        Assertions.assertEquals(2, first.getFirstAtomMapping().size());
+        Assertions.assertEquals(count, first.getAllMapping().size());
+        Assertions.assertEquals(count, first.getAllAtomMapping().size());
+        second.set(new MolHandler(parser.parseSmiles("NN"), true, true),
+                   new MolHandler(parser.parseSmiles("NNN"), true, true));
+        second.searchMCS(true);
+        Assertions.assertEquals(2, second.getFirstMapping().size());
+        Assertions.assertEquals(expected, first.getFirstMapping());
+        Assertions.assertTrue(first.getFirstAtomMapping().keySet().stream()
+                .allMatch(atom -> "C".equals(atom.getSymbol())));
+    }
+
+    @Test
+    void mapsTheCompleteBranchedQuery() throws Exception {
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        MCSPlusHandler handler = new MCSPlusHandler();
+        handler.set(new MolHandler(parser.parseSmiles("CC(C)C"), false, false),
+                    new MolHandler(parser.parseSmiles("CC(C)(C)O"), false, false));
+        handler.searchMCS(true);
+        Assertions.assertEquals(4, handler.getFirstMapping().size());
+        Assertions.assertTrue(handler.getAllMapping().stream().allMatch(map -> map.size() == 4));
+    }
+
 }

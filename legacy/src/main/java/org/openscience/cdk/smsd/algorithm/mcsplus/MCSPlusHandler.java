@@ -23,25 +23,52 @@
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.smsd.filters.PostFilter;
-import org.openscience.cdk.smsd.helper.FinalMappings;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
 import org.openscience.cdk.smsd.tools.MolHandler;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * This class acts as a handler class for MCSPlus algorithm.
- * {@link org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlus}
+ * Finds connected maximum common substructures through {@link MCSPlus}.
+ * Results maximize the number of mapped atoms, then compatible common bonds;
+ * bonds may be deleted from either input. All tied maximum mappings are retained.
+ *
+ * <p>Inputs are borrowed simple two-centre graphs. Atom and bond properties must
+ * remain stable during a search. Ordinary atoms match by element; ordinary bonds
+ * match by strict order/aromaticity when requested. Explicit query predicates
+ * remain directional. Mapping-level stereochemistry and conformer geometry are
+ * not checked by this handler.</p>
+ *
+ * <p>Result collections are read-only snapshots with source-to-target keys and
+ * values. A timeout yields the best mappings found so far; consult
+ * {@link org.openscience.cdk.smsd.global.TimeOut} on the searching thread before
+ * treating a result as a certified maximum. An instance must not be used for
+ * concurrent or nested searches.</p>
+ *
+ * <p>For containers already prepared by the caller:</p>
+ * <pre>{@code
+ * MCSPlusHandler handler = new MCSPlusHandler();
+ * handler.set(new MolHandler(source, false, false),
+ *             new MolHandler(target, false, false));
+ * handler.searchMCS(true);
+ * List<Map<Integer, Integer>> mappings = handler.getAllMapping();
+ * boolean incomplete = org.openscience.cdk.smsd.global.TimeOut
+ *         .getInstance().isTimeOutFlag();
+ * }</pre>
+ *
+ * @see org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandler
+ * @cdk.threadnonsafe
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -49,161 +76,130 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @Deprecated
 public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
-    private static List<Map<IAtom, IAtom>>     allAtomMCS   = null;
-    private static Map<IAtom, IAtom>           atomsMCS     = null;
-    private static Map<Integer, Integer>       firstMCS     = null;
-    private static List<Map<Integer, Integer>> allMCS       = null;
+    private final List<Map<IAtom, IAtom>> allAtomMCS = new ArrayList<>();
+    private final List<Map<Integer, Integer>> allMCS = new ArrayList<>();
     private IAtomContainer                     source       = null;
     private IAtomContainer                     target       = null;
-    private boolean                            flagExchange = false;
 
     /**
-     * Constructor for the MCS Plus algorithm class
+     * Creates a handler with no inputs or results.
      */
     public MCSPlusHandler() {
-        allAtomMCS = new ArrayList<>();
-        atomsMCS = new HashMap<>();
-        firstMCS = new TreeMap<>();
-        allMCS = new ArrayList<>();
     }
 
-    /** {@inheritDoc}
+    /**
+     * Borrows the molecules prepared by the supplied handlers.
+     * Results from the preceding search remain available until the next search.
      *
-     * @param source
-     * @param target
+     * @param source handler containing the source molecule
+     * @param target handler containing the target molecule
+     * @throws NullPointerException if a handler or its molecule is null;
+     *         neither input is replaced in this case
      */
     @Override
     public synchronized void set(MolHandler source, MolHandler target) {
-        this.source = source.getMolecule();
-        this.target = target.getMolecule();
+        IAtomContainer sourceMolecule = Objects.requireNonNull(
+                Objects.requireNonNull(source, "source handler").getMolecule(), "source molecule");
+        IAtomContainer targetMolecule = Objects.requireNonNull(
+                Objects.requireNonNull(target, "target handler").getMolecule(), "target molecule");
+        this.source = sourceMolecule;
+        this.target = targetMolecule;
     }
 
-    /** {@inheritDoc}
+    /**
+     * Borrows a directional query and target without additional preparation.
      *
-     * @param source
-     * @param target
+     * @param source query container whose predicates are applied to the target
+     * @param target target container
+     * @throws NullPointerException if either input is null;
+     *         neither input is replaced in this case
      */
     @Override
     public void set(IQueryAtomContainer source, IAtomContainer target) {
+        Objects.requireNonNull(source, "source query");
+        Objects.requireNonNull(target, "target container");
         this.source = source;
         this.target = target;
     }
 
-    /** {@inheritDoc}
-     * Function is called by the main program and serves as a starting point for the comparison procedure.
+    /**
+     * Replaces the stored results with the connected maximum common mappings.
+     * The searching thread's timeout is cooperative; incomplete results are
+     * accompanied by its timeout flag. A declared legacy {@code CDKException}
+     * from the overlap operation is logged. Runtime validation and predicate
+     * failures propagate to the caller.
      *
-     * @param shouldMatchBonds
+     * @param shouldMatchBonds whether ordinary bond order/aromaticity must match;
+     *        explicit query bond predicates are always applied
+     * @throws IllegalStateException if inputs have not been set
+     * @throws IllegalArgumentException if an input is not a supported simple graph
+     * @throws NullPointerException if required query objects or ordinary
+     *         element-matching metadata are missing
      */
     @Override
     public synchronized void searchMCS(boolean shouldMatchBonds) {
-        List<List<Integer>> mappings;
+        if (source == null || target == null) {
+            throw new IllegalStateException("Set source and target before searching");
+        }
+        allAtomMCS.clear();
+        allMCS.clear();
         try {
-            if (source.getAtomCount() >= target.getAtomCount()) {
-                mappings = new MCSPlus().getOverlaps(source, target, shouldMatchBonds);
-            } else {
-                flagExchange = true;
-                mappings = new MCSPlus().getOverlaps(target, source, shouldMatchBonds);
+            for (List<Integer> pairs : new MCSPlus().getOverlaps(source, target, shouldMatchBonds)) {
+                Map<Integer, Integer> indices = new TreeMap<>();
+                Map<IAtom, IAtom> atoms = new HashMap<>();
+                for (int i = 0; i < pairs.size(); i += 2) {
+                    int sourceIndex = pairs.get(i);
+                    int targetIndex = pairs.get(i + 1);
+                    indices.put(sourceIndex, targetIndex);
+                    atoms.put(source.getAtom(sourceIndex), target.getAtom(targetIndex));
+                }
+                allMCS.add(Collections.unmodifiableMap(indices));
+                allAtomMCS.add(Collections.unmodifiableMap(atoms));
             }
-            PostFilter.filter(mappings);
-            setAllMapping();
-            setAllAtomMapping();
-            setFirstMapping();
-            setFirstAtomMapping();
         } catch (CDKException e) {
-            mappings = null;
+            LoggingToolFactory.createLoggingTool(MCSPlusHandler.class).warn("MCS search failed:", e);
         }
     }
 
-    private synchronized void setAllMapping() {
-        try {
-
-            List<Map<Integer, Integer>> finalSolution = FinalMappings.getInstance().getFinalMapping();
-            int counter = 0;
-            for (Map<Integer, Integer> solution : finalSolution) {
-                //                System.out.println("Number of MCS solution: " + solution);
-                Map<Integer, Integer> validSolution = new TreeMap<>();
-                if (!flagExchange) {
-                    for (Map.Entry<Integer, Integer> map : solution.entrySet()) {
-                        validSolution.put(map.getKey(), map.getValue());
-                    }
-                } else {
-                    for (Map.Entry<Integer, Integer> map : solution.entrySet()) {
-                        validSolution.put(map.getValue(), map.getKey());
-                    }
-                }
-                allMCS.add(counter++, validSolution);
-            }
-
-        } catch (Exception ex) {
-            LoggingToolFactory.createLoggingTool(MCSPlusHandler.class)
-                              .warn("Unexpected Error:", ex);
-        }
-
-    }
-
-    private synchronized void setAllAtomMapping() {
-        try {
-
-            int counter = 0;
-            for (Map<Integer, Integer> solution : allMCS) {
-                Map<IAtom, IAtom> atomMappings = new HashMap<>();
-                for (Map.Entry<Integer, Integer> map : solution.entrySet()) {
-
-                    int iIndex = map.getKey();
-                    int jIndex = map.getValue();
-
-                    IAtom sourceAtom;
-                    IAtom targetAtom;
-
-                    sourceAtom = source.getAtom(iIndex);
-                    targetAtom = target.getAtom(jIndex);
-                    atomMappings.put(sourceAtom, targetAtom);
-                }
-                allAtomMCS.add(counter++, atomMappings);
-            }
-        } catch (Exception I) {
-            I.getCause();
-        }
-
-    }
-
-    private synchronized void setFirstMapping() {
-        if (!allMCS.isEmpty()) {
-            firstMCS = new TreeMap<>(allMCS.iterator().next());
-        }
-    }
-
-    private synchronized void setFirstAtomMapping() {
-        if (!allAtomMCS.isEmpty()) {
-            atomsMCS = new HashMap<>(allAtomMCS.iterator().next());
-        }
-    }
-
-    /** {@inheritDoc}
+    /**
+     * Returns the index mappings from the most recent search.
+     *
+     * @return a read-only snapshot of read-only, zero-based source-to-target maps;
+     *         empty before a search or when no nonempty overlap is found
      */
     @Override
     public synchronized List<Map<Integer, Integer>> getAllMapping() {
-        return allMCS;
+        return Collections.unmodifiableList(new ArrayList<>(allMCS));
     }
 
-    /** {@inheritDoc}
+    /**
+     * Returns the first stored index mapping, without ranking tied mappings.
+     *
+     * @return a read-only source-to-target map, or an empty map if no result exists
      */
     @Override
     public synchronized Map<Integer, Integer> getFirstMapping() {
-        return firstMCS;
+        return allMCS.isEmpty() ? Collections.emptyMap() : allMCS.get(0);
     }
 
-    /** {@inheritDoc}
+    /**
+     * Returns the atom mappings from the most recent search.
+     *
+     * @return a read-only snapshot of read-only source-to-target maps;
+     *         atom objects are borrowed from the inputs
      */
     @Override
     public synchronized List<Map<IAtom, IAtom>> getAllAtomMapping() {
-        return allAtomMCS;
+        return Collections.unmodifiableList(new ArrayList<>(allAtomMCS));
     }
 
-    /** {@inheritDoc}
+    /**
+     * Returns the first stored atom mapping, without ranking tied mappings.
+     *
+     * @return a read-only source-to-target map, or an empty map if no result exists
      */
     @Override
     public synchronized Map<IAtom, IAtom> getFirstAtomMapping() {
-        return atomsMCS;
+        return allAtomMCS.isEmpty() ? Collections.emptyMap() : allAtomMCS.get(0);
     }
 }
