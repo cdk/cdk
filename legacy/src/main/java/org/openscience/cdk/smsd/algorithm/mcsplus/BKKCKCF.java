@@ -25,425 +25,244 @@
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
 import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.Stack;
+import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
- * This class implements Bron-Kerbosch clique detection algorithm as it is
- * described in [F. Cazals, vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
- * processedVertex.Comp. Sc. (2005); vol 349; pp.
- * 484-490]
- *
- *
- * BronKerboschCazalsKarandeKochCliqueFinder.java
+ * Finds maximum cliques connected by C-edges in a compatibility graph.
+ * <p>Every pair in a clique must have a C-edge or D-edge, and C-edges must connect
+ *  its vertices. Bron-Kerbosch enumerates maximal cliques in the combined graph;
+ *  their C-edge components contain every maximum connected clique. Distinct
+ *  vertex-ID sets remain separate results. This helper does not evaluate chemical
+ *  predicates or mapping-level stereochemistry.
+ * <p>Construction validates and copies graph indices, then performs the search.
+ *  It resets the calling thread's {@link TimeOut} flag and captures its cutoff.
+ *  On cooperative cancellation, stored cliques may be suboptimal or incomplete.
+ *  The search is recursive and is not guaranteed to handle arbitrarily deep
+ *  compatibility graphs. It is separate from the iterative VF-backed MCS engine.
+ * <p>Result access returns mutable snapshots, including independent clique lists.
+ *  Do not use this instance concurrently or recursively during construction.
  *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD is deprecated in CDK. See the separate
+ *             <a href="https://github.com/asad/smsd">SMSD implementation</a>.
  */
 @Deprecated
 public class BKKCKCF {
 
-    private List<List<Integer>> maxCliquesSet;
-    /***********************************************************************/
-    private List<Integer>       cEdges;
-    private List<Integer>       dEdges;
-    private int                 bestCliqueSize;
-    private List<Integer>       compGraphNodes;
-    private double              dEdgeIterationSize;
-    private double              cEdgeIterationSize;
+    private final int[] nodeIds;
+    private final int[][] neighbors;
+    private final int[][] cNeighbors;
+    private final List<List<Integer>> maxCliquesSet = new ArrayList<>();
+    private final Set<List<Integer>> uniqueCliques = new HashSet<>();
+    private int bestCliqueSize;
+    private final TimeManager searchClock = new TimeManager();
+    private final double searchTimeout;
 
     /**
-     * Creates index new instance of Bron Kerbosch Cazals Karande Koch Clique Finder
-     * This class implements Bron-Kerbosch clique detection algorithm as it is
-     * described in [F. Cazals, vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
-     * processedVertex.Comp. Sc. (2005); vol 349; pp.
-     * 484-490]
-     * @param compGraphNodesOrg
-     * @param cEdgesOrg C-Edges set of allowed edges
-     * @param dEdgesOrg D-Edges set of prohibited edges
+     * Validate a compatibility graph and enumerate its largest C-connected cliques.
+     * <p>Vertex IDs are arbitrary distinct integers. C-edges and D-edges are undirected
+     *  endpoint pairs; a pair present in both is treated as a C-edge for connectivity.
+     *  Source/target values in each node triple are integer payloads and are not used
+     *  to enforce molecular index bounds or injectivity in this graph helper.
+     *
+     * @param compGraphNodes source/target/vertex-ID triples
+     * @param cEdges vertex-ID pairs representing common compatible bonds
+     * @param dEdges vertex-ID pairs allowing clique compatibility without a common bond
+     * @throws NullPointerException if any input list is null
+     * @throws IllegalArgumentException if triples/pairs are incomplete, entries are not
+     *                                  integers, IDs repeat, or an edge has equal or unknown endpoints
      */
-    protected BKKCKCF(List<Integer> compGraphNodesOrg, List<Integer> cEdgesOrg, List<Integer> dEdgesOrg) {
-        MCSPlus.setTimeManager(new TimeManager());
-        this.compGraphNodes = compGraphNodesOrg;
-        this.cEdges = cEdgesOrg;
-        this.dEdges = dEdgesOrg;
-        bestCliqueSize = 0;
-        //Orignal assignment as per paper
-        dEdgeIterationSize = dEdges.size() / 2.0;
-
-        //Orignal assignment as per paper
-        cEdgeIterationSize = cEdges.size() / 2.0;
-
-        //reset Degdes and Cedges if required
-        //        setEdges();
-
-        //Initialization maxCliquesSet
-
-        maxCliquesSet = new ArrayList<>();
-
-        init();
-
+    protected BKKCKCF(List<Integer> compGraphNodes, List<Integer> cEdges, List<Integer> dEdges) {
+        Objects.requireNonNull(compGraphNodes, "compatibility nodes");
+        Objects.requireNonNull(cEdges, "C edges");
+        Objects.requireNonNull(dEdges, "D edges");
+        if (compGraphNodes.size() % 3 != 0) {
+            throw new IllegalArgumentException("Compatibility nodes must contain triples");
+        }
+        searchTimeout = TimeOut.getInstance().getTimeOut();
+        int size = compGraphNodes.size() / 3;
+        nodeIds = new int[size];
+        Map<Integer, Integer> indices = new HashMap<>();
+        for (int i = 0; i < size; i++) {
+            integerValue(compGraphNodes.get(i * 3));
+            integerValue(compGraphNodes.get(i * 3 + 1));
+            nodeIds[i] = integerValue(compGraphNodes.get(i * 3 + 2));
+            if (indices.put(nodeIds[i], i) != null) {
+                throw new IllegalArgumentException("Duplicate compatibility vertex: " + nodeIds[i]);
+            }
+        }
+        cNeighbors = indexNeighbors(size, indices, cEdges, new ArrayList<>());
+        neighbors = indexNeighbors(size, indices, cEdges, dEdges);
+        BitSet candidates = new BitSet();
+        candidates.set(0, size);
+        // This is a new search; an earlier MCSPlus clock/flag must not cancel it.
+        TimeOut.getInstance().setTimeOutFlag(false);
+        enumerateCliques(new BitSet(), candidates, new BitSet());
     }
 
-    /*
-     * Call the wrapper for ENUMERATE_CLIQUES
+    private boolean hasTimedOut() {
+        TimeOut timeout = TimeOut.getInstance();
+        if (timeout.isTimeOutFlag()) return true;
+        if (searchTimeout >= 0 && searchClock.getElapsedTimeInMinutes() > searchTimeout) {
+            timeout.setTimeOutFlag(true);
+            return true;
+        }
+        return false;
+    }
+
+    private static int integerValue(Object value) {
+        if (!(value instanceof Integer)) throw new IllegalArgumentException("Graph indices must be integers");
+        return (Integer) value;
+    }
+
+    // Store adjacency in O(V + E) space; bit sets are confined to search states.
+    private int[][] indexNeighbors(int size, Map<Integer, Integer> indices,
+                                   List<Integer> firstEdges, List<Integer> secondEdges) {
+        int[] degrees = new int[size];
+        countEdges(indices, firstEdges, degrees);
+        countEdges(indices, secondEdges, degrees);
+        int[][] adjacency = new int[size][];
+        for (int i = 0; i < size; i++) adjacency[i] = new int[degrees[i]];
+        int[] offsets = new int[size];
+        addEdges(indices, firstEdges, adjacency, offsets);
+        addEdges(indices, secondEdges, adjacency, offsets);
+        return adjacency;
+    }
+
+    private void countEdges(Map<Integer, Integer> indices, List<Integer> edges, int[] degrees) {
+        if (edges.size() % 2 != 0) throw new IllegalArgumentException("Edges must contain endpoint pairs");
+        for (int i = 0; i < edges.size(); i += 2) {
+            Integer first = indices.get(integerValue(edges.get(i)));
+            Integer second = indices.get(integerValue(edges.get(i + 1)));
+            if (first == null || second == null || first.equals(second)) {
+                throw new IllegalArgumentException("Edge endpoints must be distinct known vertices");
+            }
+            degrees[first]++;
+            degrees[second]++;
+        }
+    }
+
+    private void addEdges(Map<Integer, Integer> indices, List<Integer> edges,
+                          int[][] adjacency, int[] offsets) {
+        for (int i = 0; i < edges.size(); i += 2) {
+            int first = indices.get(edges.get(i));
+            int second = indices.get(edges.get(i + 1));
+            adjacency[first][offsets[first]++] = second;
+            adjacency[second][offsets[second]++] = first;
+        }
+    }
+
+    private BitSet intersect(BitSet vertices, int[] adjacent) {
+        BitSet intersection = new BitSet();
+        for (int vertex : adjacent) {
+            if (vertices.get(vertex)) intersection.set(vertex);
+        }
+        return intersection;
+    }
+
+    private int pivot(BitSet candidates, BitSet excluded) {
+        BitSet choices = (BitSet) candidates.clone();
+        choices.or(excluded);
+        int pivot = -1;
+        int mostNeighbors = -1;
+        for (int vertex = choices.nextSetBit(0); vertex >= 0; vertex = choices.nextSetBit(vertex + 1)) {
+            int count = 0;
+            for (int neighbor : neighbors[vertex]) {
+                if (candidates.get(neighbor)) count++;
+            }
+            if (count > mostNeighbors) {
+                mostNeighbors = count;
+                pivot = vertex;
+            }
+        }
+        return pivot;
+    }
+
+    private void enumerateCliques(BitSet clique, BitSet candidates, BitSet excluded) {
+        if (hasTimedOut() || clique.cardinality() + candidates.cardinality() < bestCliqueSize) return;
+        if (candidates.isEmpty()) {
+            if (excluded.isEmpty()) saveConnectedComponents(clique);
+            return;
+        }
+        BitSet branches = (BitSet) candidates.clone();
+        int pivot = pivot(candidates, excluded);
+        if (pivot >= 0) {
+            for (int neighbor : neighbors[pivot]) branches.clear(neighbor);
+        }
+        for (int vertex = branches.nextSetBit(0); vertex >= 0; vertex = branches.nextSetBit(vertex + 1)) {
+            if (hasTimedOut()) return;
+            clique.set(vertex);
+            enumerateCliques(clique, intersect(candidates, neighbors[vertex]),
+                    intersect(excluded, neighbors[vertex]));
+            clique.clear(vertex);
+            candidates.clear(vertex);
+            excluded.set(vertex);
+        }
+    }
+
+    private void saveConnectedComponents(BitSet clique) {
+        BitSet remaining = (BitSet) clique.clone();
+        int[] pending = new int[clique.cardinality()];
+        while (!remaining.isEmpty()) {
+            BitSet component = new BitSet();
+            int first = remaining.nextSetBit(0);
+            remaining.clear(first);
+            int count = 1;
+            pending[0] = first;
+            while (count > 0) {
+                int vertex = pending[--count];
+                component.set(vertex);
+                for (int neighbor : cNeighbors[vertex]) {
+                    if (remaining.get(neighbor)) {
+                        remaining.clear(neighbor);
+                        pending[count++] = neighbor;
+                    }
+                }
+            }
+            int size = component.cardinality();
+            if (size < bestCliqueSize) continue;
+            if (size > bestCliqueSize) {
+                bestCliqueSize = size;
+                maxCliquesSet.clear();
+                uniqueCliques.clear();
+            }
+            List<Integer> mapping = new ArrayList<>(size);
+            for (int vertex = component.nextSetBit(0); vertex >= 0; vertex = component.nextSetBit(vertex + 1)) {
+                mapping.add(nodeIds[vertex]);
+            }
+            if (uniqueCliques.add(mapping)) maxCliquesSet.add(mapping);
+        }
+    }
+
+    /**
+     * Return the largest C-connected clique size found before cancellation.
+     *
+     * @return largest retained clique cardinality, or zero if none was found
      */
-    private void init() {
-
-        /********************************************************************/
-        /*
-         * vertex: stored all the vertices for the Graph G vertex[G] nodes of
-         * vector compGraphNodes are stored in vertex
-         */
-        List<Integer> vertex = new ArrayList<>(); //Initialization of ArrayList vertex
-
-        int vertexCount = compGraphNodes.size() / 3;
-
-        //System.out.println("ArrayList vertex is initialized");
-        for (int a = 0; a < vertexCount; a++) {
-            vertex.add(compGraphNodes.get(a * 3 + 2));
-            //System.out.print("vertex[" + index + "]: " + compGraphNodes.get(index * 3 + 2) + " ");
-        }
-        //System.out.println();
-
-        vertex.add(0);
-        // System.out.println("ArrayList vertex :" + vertex);
-
-        /*
-         * processedVertex: is index set of vertices which have already been
-         * used
-         */
-        List<Integer> processedVertex = new ArrayList<>();
-        /*
-         * Let processedVertex be the set of Nodes already been used in the
-         * initialization
-         */
-        initIterator(vertex, processedVertex);
-        processedVertex.clear();
-        //System.out.println("maxCliquesSet: " + maxCliquesSet);
-
-    }
-
-    private int enumerateCliques(List<Integer> vertexOfCurrentClique, Stack<Integer> potentialCVertex,
-            List<Integer> potentialDVertex, List<Integer> excludedVertex, List<Integer> excludedCVertex) {
-        List<Integer> potentialVertex = new ArrayList<>();//Defined as potentialCVertex' in the paper
-        for (Integer i : potentialCVertex) {
-            potentialVertex.add(i);
-        }
-
-        if ((potentialCVertex.size() == 1) && (excludedVertex.isEmpty())) {
-
-            //store best solutions in stack maxCliquesSet
-            int cliqueSize = vertexOfCurrentClique.size();
-
-            if (cliqueSize >= bestCliqueSize) {
-                if (cliqueSize > bestCliqueSize) {
-
-                    maxCliquesSet.clear();
-                    bestCliqueSize = cliqueSize;
-
-                }
-                if (cliqueSize == bestCliqueSize) {
-                    //System.out.println("vertexOfCurrentClique-Clique " + vertexOfCurrentClique);
-                    maxCliquesSet.add(vertexOfCurrentClique);
-                }
-            }
-            return 0;
-        }
-        findCliques(potentialVertex, vertexOfCurrentClique, potentialCVertex, potentialDVertex, excludedVertex,
-                excludedCVertex);
-        return 0;
-    }
-
-    private List<Integer> findNeighbors(int centralNode) {
-
-        List<Integer> neighborVertex = new ArrayList<>();
-
-        for (int a = 0; a < cEdgeIterationSize; a++) {
-            if (cEdges.get(a * 2 + 0) == centralNode) {
-                //          System.out.println( cEdges.get(index*2+0) + " " + cEdges.get(index*2+1));
-                neighborVertex.add(cEdges.get(a * 2 + 1));
-                neighborVertex.add(1); // 1 means: is connected via C-edge
-            } else if (cEdges.get(a * 2 + 1) == centralNode) {
-                //           System.out.println(cEdges.get(index*2+0) + " " + cEdges.get(index*2+1));
-                neighborVertex.add(cEdges.get(a * 2 + 0));
-                neighborVertex.add(1); // 1 means: is connected via C-edge
-            }
-
-        }
-        for (int a = 0; a < dEdgeIterationSize; a++) {
-            if (dEdges.get(a * 2 + 0) == centralNode) {
-                //       System.out.println( dEdges.get(index*2+0) + " " + dEdges.get(index*2+1));
-                neighborVertex.add(dEdges.get(a * 2 + 1));
-                neighborVertex.add(2); // 2 means: is connected via D-edge
-            } else if (dEdges.get(a * 2 + 1) == centralNode) {
-                //        System.out.println(dEdges.get(index*2+0) + " " + dEdges.get(index*2+1));
-                neighborVertex.add(dEdges.get(a * 2 + 0));
-                neighborVertex.add(2); // 2 means: is connected via D-edge
-            }
-        }
-        return neighborVertex;
-    }
-
     protected int getBestCliqueSize() {
         return bestCliqueSize;
     }
 
+    /**
+     * Copy the retained largest C-connected clique vertex-ID sets.
+     * <p>The returned stack and every inner list are independent mutable snapshots.
+     *  Results may be suboptimal or incomplete on timeout, and iteration order is
+     *  unspecified. An empty compatibility graph produces an empty stack.
+     *
+     * @return mutable stack of mutable vertex-ID list snapshots
+     */
     protected Stack<List<Integer>> getMaxCliqueSet() {
         Stack<List<Integer>> solution = new Stack<>();
-        solution.addAll(maxCliquesSet);
+        for (List<Integer> clique : maxCliquesSet) solution.add(new ArrayList<>(clique));
         return solution;
-    }
-
-    private void findCliques(List<Integer> potentialVertex, List<Integer> vertexOfCurrentClique,
-            Stack<Integer> potentialCVertex, List<Integer> potentialDVertex, List<Integer> excludedVertex,
-            List<Integer> excludedCVertex) {
-        int index = 0;
-        List<Integer> neighbourVertex = new ArrayList<>(); ////Initialization ArrayList neighbourVertex
-
-        while (potentialVertex.get(index) != 0) {
-            int potentialVertexIndex = potentialVertex.get(index);
-
-            potentialCVertex.removeElement(potentialVertexIndex);
-
-            List<Integer> rCopy = new ArrayList<>(vertexOfCurrentClique);
-            Stack<Integer> pCopy = new Stack<>();
-            List<Integer> qCopy = new ArrayList<>(potentialDVertex);
-            List<Integer> xCopy = new ArrayList<>(excludedVertex);
-            List<Integer> yCopy = new ArrayList<>(excludedCVertex);
-
-            neighbourVertex.clear();
-
-            for (Integer obj : potentialCVertex) {
-                pCopy.add(obj);
-            }
-
-            pCopy.pop();
-            //find the neighbors of the central node from potentialCVertex
-            //System.out.println("potentialVertex.elementAt(index): " + potentialVertex.elementAt(index));
-
-            neighbourVertex = findNeighbors(potentialVertexIndex);
-            groupNeighbors(index, pCopy, qCopy, xCopy, yCopy, neighbourVertex, potentialDVertex, potentialVertex,
-                    excludedVertex, excludedCVertex);
-            Stack<Integer> pCopyNIntersec = new Stack<>();
-            List<Integer> qCopyNIntersec = new ArrayList<>();
-            List<Integer> xCopyNIntersec = new ArrayList<>();
-            List<Integer> yCopyNIntersec = new ArrayList<>();
-
-            copyVertex(neighbourVertex, pCopyNIntersec, pCopy, qCopyNIntersec, qCopy, xCopyNIntersec,
-                    xCopy, yCopyNIntersec, yCopy);
-
-            pCopyNIntersec.push(0);
-            rCopy.add(potentialVertexIndex);
-            enumerateCliques(rCopy, pCopyNIntersec, qCopyNIntersec, xCopyNIntersec, yCopyNIntersec);
-            excludedVertex.add(potentialVertexIndex);
-            index++;
-        }
-    }
-
-    private void copyVertex(List<Integer> neighbourVertex, Stack<Integer> pCopyNIntersec, Stack<Integer> pCopy,
-            List<Integer> qCopyNIntersec, List<Integer> qCopy, List<Integer> xCopyNIntersec,
-            List<Integer> xCopy, List<Integer> yCopyNIntersec, List<Integer> yCopy) {
-        int nElement;
-        int nSize = neighbourVertex.size();
-
-        for (int sec = 0; sec < nSize; sec += 2) {
-
-            nElement = neighbourVertex.get(sec);
-
-            if (pCopy.contains(nElement)) {
-                pCopyNIntersec.push(nElement);
-            }
-            if (qCopy.contains(nElement)) {
-                qCopyNIntersec.add(nElement);
-            }
-            if (xCopy.contains(nElement)) {
-                xCopyNIntersec.add(nElement);
-            }
-            if (yCopy.contains(nElement)) {
-                yCopyNIntersec.add(nElement);
-            }
-        }
-    }
-
-    private void groupNeighbors(int index, Stack<Integer> pCopy, List<Integer> qCopy, List<Integer> xCopy,
-            List<Integer> yCopy, List<Integer> neighbourVertex, List<Integer> potentialDVertex,
-            List<Integer> potentialVertex, List<Integer> excludedVertex, List<Integer> excludedCVertex) {
-
-        int nSize = neighbourVertex.size();
-
-        //System.out.println("Neighbors: ");
-
-        for (int b = 0; b < nSize; b += 2) {
-            // neighbourVertex[index] is node v
-            //Grouping of the neighbors:
-
-            Integer nElementAtB = neighbourVertex.get(b);
-
-            if (neighbourVertex.get(b + 1) == 1) {
-                //u and v are adjacent via index C-edge
-
-                if (potentialDVertex.contains(nElementAtB)) {
-
-                    pCopy.push(nElementAtB);
-                    //delete neighbourVertex[index] bzw. potentialDVertex[c] from set qCopy, remove C-edges
-                    qCopy.remove(nElementAtB);
-
-                }
-                if (excludedCVertex.contains(nElementAtB)) {
-                    if (excludedVertex.contains(nElementAtB)) {
-                        xCopy.add(nElementAtB);
-                    }
-                    yCopy.remove(nElementAtB);
-                }
-            }
-
-            //find respective neighbor position in potentialVertex, which is needed for the deletion from potentialVertex
-
-            if (potentialVertex.indexOf(nElementAtB) <= index && potentialVertex.contains(nElementAtB)) {
-                --index;
-            }
-            potentialVertex.remove(nElementAtB);
-        }
-    }
-
-    private void setEdges() {
-        boolean dEdgeFlag = false;
-
-        if (dEdges.size() > cEdges.size()) {
-            if (dEdges.size() > 10000000 && cEdges.size() > 100000) {
-                dEdgeIterationSize = (float) dEdges.size() * 0.000001;
-                dEdgeFlag = true;
-            } else if (dEdges.size() > 10000000 && cEdges.size() > 5000) {
-                dEdgeIterationSize = (float) dEdges.size() * 0.001;
-                dEdgeFlag = true;
-            }
-
-            //        else if (dEdges.size() > 5000000 && dEdges.size() > cEdges.size()) {
-            //            dEdgeIterationSize = (float) dEdges.size() * 0.0001;
-            //            dEdgeFlag = true;
-            //
-            //        } else if (dEdges.size() > 100000 && dEdges.size() > cEdges.size()) {
-            //            dEdgeIterationSize = (float) dEdges.size() * 0.1;
-            //            dEdgeFlag = true;
-            //        }
-
-            //        }
-
-            //        else if (dEdges.size() >= 10000 && 500 >= cEdges.size()) {
-            //            dEdgeIterationSize = (float) dEdges.size() * 0.1;
-            //            dEdgeFlag = true;
-            //        }
-            //
-            //
-            //
-
-        }
-
-        if (dEdgeFlag) {
-            checkLowestEdgeCount();
-        }
-    }
-
-    private void initIterator(List<Integer> vertex, List<Integer> processedVertex) {
-        /*
-         * vertexOfCurrentClique: set of vertices belonging to the current
-         * clique
-         */
-        List<Integer> vertexOfCurrentClique = new ArrayList<>();
-        /*
-         * potentialCVertex: is index set of vertices which <index>can</index>
-         * be addedto vertexOfCurrentClique, because they are neighbours of
-         * vertex u via <i>c-edges</i>
-         */
-        Stack<Integer> potentialCVertex = new Stack<>();
-        /*
-         * potentialDVertex: is index set of vertices which
-         * <index>cannot</index> be added tovertexOfCurrentClique, because they
-         * are neighbours of vertex u via <i>d-edges</i>
-         */
-
-        List<Integer> potentialDVertex = new ArrayList<>();
-        /*
-         * excludedVertex: set of vertices which are not allowed to be added to
-         * vertexOfCurrentClique
-         */
-        List<Integer> excludedVertex = new ArrayList<>();
-
-        /*
-         * excludedCVertex: set of vertices which are not allowed to be added to
-         * C
-         */
-
-        List<Integer> excludedCVertex = new ArrayList<>();
-
-        /*
-         * neighbourVertex[u]: set of neighbours of vertex u in Graph G
-         */
-
-        List<Integer> neighbourVertex;
-
-        int index = 0;
-        while (vertex.get(index) != 0) {
-            int centralNode = vertex.get(index);
-            potentialCVertex.clear();
-            potentialDVertex.clear();
-            excludedVertex.clear();
-            vertexOfCurrentClique.clear();
-
-            //find the neighbors of the central node from vertex
-            neighbourVertex = findNeighbors(centralNode);
-
-            for (int c = 0; c < neighbourVertex.size(); c = c + 2) {
-                /*
-                 * u and v are adjacent via index vertexOfCurrentClique-edge
-                 */
-                Integer neighbourVertexOfC = neighbourVertex.get(c);
-
-                //find respective neighbor position in potentialCVertex, which is needed for the deletion from vertex
-                //delete neighbor from set vertex
-
-                if (neighbourVertex.get(c + 1) == 1) {
-                    if (processedVertex.contains(neighbourVertexOfC)) {
-                        excludedVertex.add(neighbourVertexOfC);
-                    } else {
-                        potentialCVertex.push(neighbourVertexOfC);
-                    }
-                } else if (neighbourVertex.get(c + 1) == 2) {
-                    // u and v are adjacent via index potentialDVertex-edge
-                    //System.out.println("u and v are adjacent via index potentialDVertex-edge: " + neighbourVertex.elementAt(c));
-
-                    if (processedVertex.contains(neighbourVertexOfC)) {
-                        excludedCVertex.add(neighbourVertexOfC);
-                    } else {
-                        potentialDVertex.add(neighbourVertexOfC);
-                    }
-                }
-
-                if (vertex.indexOf(neighbourVertexOfC) <= index && vertex.contains(neighbourVertexOfC)) {
-                    --index;
-                }
-                vertex.remove(neighbourVertexOfC);
-                //System.out.println("Elements Removed from vertex:" + neighbourVertexOfC);
-            }
-
-            potentialCVertex.add(0);
-            vertexOfCurrentClique.add(centralNode);
-
-            enumerateCliques(vertexOfCurrentClique, potentialCVertex, potentialDVertex, excludedVertex, excludedCVertex);
-            //enumerateCliques(vertexOfCurrentClique, potentialCVertex, potentialDVertex, excludedVertex);
-            processedVertex.add(centralNode);
-            index++;
-        }
-    }
-
-    private void checkLowestEdgeCount() {
-        if (dEdgeIterationSize < 1 && cEdges.size() <= 5000) {
-            dEdgeIterationSize = 2;
-        } else if (dEdgeIterationSize < 1) {
-            dEdgeIterationSize = 1;
-        }
     }
 }

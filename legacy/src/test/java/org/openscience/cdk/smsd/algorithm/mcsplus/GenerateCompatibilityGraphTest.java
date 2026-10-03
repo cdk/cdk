@@ -57,4 +57,64 @@ class GenerateCompatibilityGraphTest {
         // TODO review the generated test code and remove the default call to fail.
         Assertions.assertNotNull(new GenerateCompatibilityGraph(DefaultChemObjectBuilder.getInstance().newAtomContainer(), DefaultChemObjectBuilder.getInstance().newAtomContainer(), true));
     }
+    @Test
+    void handlesAtomsWithMoreThanSixNeighbours() throws IOException {
+        org.openscience.cdk.interfaces.IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        molecule.addAtom(new org.openscience.cdk.Atom("Fe"));
+        for (int i = 1; i <= 7; i++) {
+            molecule.addAtom(new org.openscience.cdk.Atom("N"));
+            molecule.addBond(0, i, org.openscience.cdk.interfaces.IBond.Order.SINGLE);
+        }
+        GenerateCompatibilityGraph graph = new GenerateCompatibilityGraph(molecule, molecule, true);
+        Assertions.assertFalse(graph.getCompGraphNodes().isEmpty());
+        Assertions.assertFalse(graph.getCEgdes().isEmpty());
+    }
+
+    @Test
+    void keepsTheCentralElementSeparateFromNeighbourLabels() throws Exception {
+        org.openscience.cdk.interfaces.IAtomContainer molecule =
+                new org.openscience.cdk.smiles.SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles("CN");
+        GenerateCompatibilityGraph graph = new GenerateCompatibilityGraph(molecule, molecule, true);
+        java.util.List<Integer> nodes = graph.getCompGraphNodes();
+        Assertions.assertEquals(6, nodes.size());
+        for (int i = 0; i < nodes.size(); i += 3) {
+            Assertions.assertEquals(molecule.getAtom(nodes.get(i)).getSymbol(),
+                    molecule.getAtom(nodes.get(i + 1)).getSymbol());
+        }
+    }
+
+    @Test
+    void preservesCompatibleNonBondedPairsInPathCliques() throws Exception {
+        org.openscience.cdk.interfaces.IAtomContainer molecule =
+                new org.openscience.cdk.smiles.SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles("CCC");
+        GenerateCompatibilityGraph graph = new GenerateCompatibilityGraph(molecule, molecule, true);
+        Assertions.assertFalse(graph.getDEgdes().isEmpty());
+        BKKCKCF cliques = new BKKCKCF(graph.getCompGraphNodes(), graph.getCEgdes(), graph.getDEgdes());
+        Assertions.assertEquals(3, cliques.getBestCliqueSize());
+        Assertions.assertEquals(2, cliques.getMaxCliqueSet().size());
+    }
+
+    @Test
+    void allowsAtomPairsWithDifferentOriginalNeighbourhoods() throws Exception {
+        org.openscience.cdk.smiles.SmilesParser parser =
+                new org.openscience.cdk.smiles.SmilesParser(DefaultChemObjectBuilder.getInstance());
+        GenerateCompatibilityGraph graph = new GenerateCompatibilityGraph(
+                parser.parseSmiles("CCC(C)C"), parser.parseSmiles("CCCCC"), true);
+        Assertions.assertEquals(25 * 3, graph.getCompGraphNodes().size());
+    }
+
+    @Test
+    void preservesPredicatesInOrdinaryContainers() throws Exception {
+        org.openscience.cdk.interfaces.IAtomContainer query =
+                DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        query.addAtom(new org.openscience.cdk.isomorphism.matchers.QueryAtom(
+                new org.openscience.cdk.isomorphism.matchers.Expr(
+                        org.openscience.cdk.isomorphism.matchers.Expr.Type.ELEMENT, 6)));
+        org.openscience.cdk.interfaces.IAtomContainer target =
+                new org.openscience.cdk.smiles.SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles("CO");
+        GenerateCompatibilityGraph graph = new GenerateCompatibilityGraph(query, target, false);
+        Assertions.assertEquals(java.util.Arrays.asList(0, 0, 1), graph.getCompGraphNodes());
+    }
+
 }

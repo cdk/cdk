@@ -56,4 +56,18 @@ class ExactMappingTest {
         Assertions.assertNotNull(ExactMapping.extractMapping(new ArrayList<>(), new ArrayList<>(),
                                                              new ArrayList<>()));
     }
+    @Test
+    void rejectsUnknownCliqueNodesWithoutTerminatingTheJvm() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> ExactMapping.extractMapping(
+                new ArrayList<>(), java.util.Arrays.asList(0, 1, 257), java.util.Arrays.asList(258)));
+    }
+
+    @Test
+    void extractsLargeCliqueIdentifiersByValue() {
+        java.util.List<java.util.List<Integer>> mappings = ExactMapping.extractMapping(
+                new ArrayList<>(), java.util.Arrays.asList(0, 1, 257, 2, 3, 258),
+                java.util.Arrays.asList(258, 257));
+        Assertions.assertEquals(java.util.Arrays.asList(2, 3, 0, 1), mappings.get(0));
+    }
+
 }

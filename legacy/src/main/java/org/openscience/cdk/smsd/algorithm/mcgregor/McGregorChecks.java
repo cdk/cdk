@@ -29,19 +29,26 @@ import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.BondMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultMCSPlusAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultMatcher;
 import org.openscience.cdk.smsd.helper.BinaryTree;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Class to perform check/methods for McGregor class.
+ * Provides legacy bond-table and arc-matrix helpers for McGregor extension.
+ * Index tables use endpoint/order triples, label tables use four entries per
+ * bond, and atom mappings use flattened source/target pairs. Callers supply
+ * aligned, non-null tables with valid sizes and indices; these low-level
+ * helpers do not perform the public search entry-point validation.
+ *
+ * <p>Mapped identity labels constrain boundary correspondence before actual
+ * atom/bond predicates are evaluated. String-label comparison alone is not a
+ * chemical or stereochemical compatibility test. Methods that update tables
+ * mutate the supplied lists and must not share those lists across searches.
+ * Chemistry evaluation failures propagate to the caller; they are not treated
+ * as incompatible atom or bond pairs.</p>
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -50,17 +57,24 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class McGregorChecks {
 
     /**
-     *
-     * @param source
-     * @param target
-     * @param neighborBondNumA
-     * @param neighborBondNumB
-     * @param iBondNeighborAtomsA
-     * @param iBondNeighborAtomsB
-     * @param cBondNeighborsA
-     * @param cBondNeighborsB
-     * @param shouldMatchBonds
-     * @return
+     * Constructs the legacy McGregor helper facade.
+     */
+    public McGregorChecks() {
+    }
+
+    /**
+     * Checks whether any boundary-bond pair has compatible labels and chemistry.
+     * @param source source graph containing any directional predicates
+     * @param target target graph
+     * @param neighborBondNumA number of source boundary-bond records
+     * @param neighborBondNumB number of target boundary-bond records
+     * @param iBondNeighborAtomsA source endpoint/order triples
+     * @param iBondNeighborAtomsB target endpoint/order triples
+     * @param cBondNeighborsA source four-entry endpoint-label/backup records
+     * @param cBondNeighborsB target four-entry endpoint-label/backup records
+     * @param shouldMatchBonds whether strict ordinary bond chemistry is checked; query predicates always apply
+     * @return whether a feasible boundary-bond pair exists
+     * @throws RuntimeException if atom or bond predicate evaluation fails
      */
     protected static boolean isFurtherMappingPossible(IAtomContainer source, IAtomContainer target,
             int neighborBondNumA, int neighborBondNumB, List<Integer> iBondNeighborAtomsA,
@@ -77,29 +91,24 @@ public class McGregorChecks {
                 String g1B = cBondNeighborsB.get(column * 4 + 0);
                 String g2B = cBondNeighborsB.get(column * 4 + 1);
 
-                if (isAtomMatch(g1A, g2a, g1B, g2B)) {
-                    try {
+                if (isLabelMatch(g1A, g2a, g1B, g2B)) {
 
-                        int indexI = iBondNeighborAtomsA.get(row * 3 + 0);
-                        int indexIPlus1 = iBondNeighborAtomsA.get(row * 3 + 1);
+                    int indexI = iBondNeighborAtomsA.get(row * 3 + 0);
+                    int indexIPlus1 = iBondNeighborAtomsA.get(row * 3 + 1);
 
-                        int indexJ = iBondNeighborAtomsB.get(column * 3 + 0);
-                        int indexJPlus1 = iBondNeighborAtomsB.get(column * 3 + 1);
+                    int indexJ = iBondNeighborAtomsB.get(column * 3 + 0);
+                    int indexJPlus1 = iBondNeighborAtomsB.get(column * 3 + 1);
 
-                        IAtom r1A = source.getAtom(indexI);
-                        IAtom r2A = source.getAtom(indexIPlus1);
-                        IBond reactantBond = source.getBond(r1A, r2A);
+                    IAtom r1A = source.getAtom(indexI);
+                    IAtom r2A = source.getAtom(indexIPlus1);
+                    IBond reactantBond = source.getBond(r1A, r2A);
 
-                        IAtom p1B = target.getAtom(indexJ);
-                        IAtom p2B = target.getAtom(indexJPlus1);
-                        IBond productBond = target.getBond(p1B, p2B);
+                    IAtom p1B = target.getAtom(indexJ);
+                    IAtom p2B = target.getAtom(indexJPlus1);
+                    IBond productBond = target.getBond(p1B, p2B);
 
-                        if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
-                            return true;
-                        }
-                    } catch (Exception e) {
-                        LoggingToolFactory.createLoggingTool(McGregorChecks.class)
-                                          .warn("Unexpected Error:", e);
+                    if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
+                        return true;
                     }
                 }
             }
@@ -108,51 +117,54 @@ public class McGregorChecks {
         return false;
     }
 
+    /**
+     * Checks source/target bond compatibility and either endpoint orientation.
+     *
+     * A seeded extension must also verify the selected endpoint orientation against its existing atom pairs.
+     * @param ac1 source graph
+     * @param bondA1 source bond or query predicate
+     * @param ac2 target graph
+     * @param bondA2 target bond
+     * @param shouldMatchBonds whether strict ordinary bond chemistry is checked; query predicates always apply
+     * @return whether the bond and endpoint matchers accept either orientation; false for null bonds
+     * @throws RuntimeException if atom or bond predicate evaluation fails
+     */
     protected static boolean isMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2,
             boolean shouldMatchBonds) {
 
-        if (ac1 instanceof IQueryAtomContainer) {
-            if (((IQueryBond) bondA1).matches(bondA2)) {
-                IQueryAtom atom1 = (IQueryAtom) (bondA1.getBegin());
-                IQueryAtom atom2 = (IQueryAtom) (bondA1.getEnd());
-                // ok, bonds match
-                if (atom1.matches(bondA2.getBegin()) && atom2.matches(bondA2.getEnd())
-                        || atom1.matches(bondA2.getEnd()) && atom2.matches(bondA2.getBegin())) {
-                    // ok, atoms match in either order
-                    return true;
-                }
-                return false;
-            }
-            return false;
-        } else {
+        if (bondA1 == null || bondA2 == null) return false;
+        BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
+        AtomMatcher first = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getBegin(), shouldMatchBonds);
+        AtomMatcher second = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getEnd(), shouldMatchBonds);
+        return DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
+                && DefaultMatcher.isAtomMatch(first, second, ac2, bondA2, shouldMatchBonds);
+    }
 
-            //Bond Matcher
-            BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
-            //Atom Matcher
-            AtomMatcher atomMatcher1 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getBegin(), shouldMatchBonds);
-            //Atom Matcher
-            AtomMatcher atomMatcher2 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getEnd(), shouldMatchBonds);
+    // Labels preserve mapped endpoint identity. Unmapped chemistry must be
+    // checked by the actual atom predicates, not their optional display symbols.
+    static boolean isLabelMatch(String a, String b, String c, String d) {
+        return sameEndpoint(a, c) && sameEndpoint(b, d)
+                || sameEndpoint(a, d) && sameEndpoint(b, c);
+    }
 
-            if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
-                    && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {
-                return true;
-            }
-            return false;
-        }
+    private static boolean sameEndpoint(String query, String target) {
+        boolean queryMapped = query != null && query.startsWith("$");
+        boolean targetMapped = target != null && target.startsWith("$");
+        return queryMapped || targetMapped ? queryMapped && query.equals(target) : true;
     }
 
     /**
-     *
-     * @param mappedAtomsSize
-     * @param atomFromOtherMolecule
-     * @param molecule
-     * @param mappedAtomsOrg
-     * @return
+     * Finds the mapped counterpart of an atom index.
+     * @param mappedAtomsSize number of source/target atom pairs
+     * @param atomFromOtherMolecule index whose counterpart is requested
+     * @param molecule 1 to search source indices, or 2 to search target indices
+     * @param mappedAtomsOrg flattened source/target index pairs
+     * @return the last matching counterpart, or legacy value zero when no pair matches
      */
     protected static int searchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule,
             List<Integer> mappedAtomsOrg) {
 
-        List<Integer> mappedAtoms = new ArrayList<>(mappedAtomsOrg);
+        List<Integer> mappedAtoms = mappedAtomsOrg;
 
         int correspondingAtom = 0;
         for (int a = 0; a < mappedAtomsSize; a++) {
@@ -167,12 +179,14 @@ public class McGregorChecks {
     }
 
     /**
+     * Compares two endpoint-label pairs case-insensitively in either orientation.
      *
-     * @param g1A
-     * @param g2A
-     * @param g1B
-     * @param g2B
-     * @return
+     * This legacy string comparison does not replace atom query predicates or element matching.
+     * @param g1A first source endpoint label
+     * @param g2A second source endpoint label
+     * @param g1B first target endpoint label
+     * @param g2B second target endpoint label
+     * @return whether the supplied string pairs agree in either orientation
      */
     protected static boolean isAtomMatch(String g1A, String g2A, String g1B, String g2B) {
         if ((g1A.compareToIgnoreCase(g1B) == 0 && g2A.compareToIgnoreCase(g2B) == 0)
@@ -184,6 +198,13 @@ public class McGregorChecks {
 
     /*
      * Modified function call by ASAD in Java have to check
+     */
+    /**
+     * Recursively visits both branches of an acyclic legacy search tree.
+     *
+     * This method does not detach caller-owned tree links; recursion requires an acyclic tree and can exhaust the stack on deep inputs.
+     * @param curStruc root of the acyclic branch tree to visit
+     * @return legacy status value zero
      */
     protected static int removeTreeStructure(BinaryTree curStruc) {
 
@@ -206,9 +227,9 @@ public class McGregorChecks {
     //The function eliminates these recurring mappings. Function is called in function best_solution.
     //The function is called by itself as long as the last list element is processed.
     /**
-     *
-     * @param atomMapping
-     * @return
+     * Copies atom pairs while retaining only the last pair for each source index.
+     * @param atomMapping flattened source/target atom pairs
+     * @return a new flattened list with repeated source indices removed
      */
     protected static List<Integer> removeRecurringMappings(List<Integer> atomMapping) {
 
@@ -236,15 +257,11 @@ public class McGregorChecks {
     }
 
     /**
-     * The function is called in function partsearch. The function is given a temporary matrix and a position (row/column)
-     * within this matrix. First the function sets all entries to zero, which can be exlcuded in respect to the current
-     * atom by atom matching. After this the function replaces all entries in the same row and column of the current
-     * position by zeros. Only the entry of the current position is set to one.
-     * Return value "count_arcsleft" counts the number of arcs, which are still in the matrix.
-     * @param row
-     * @param column
-     * @param marcs
-     * @param mcGregorHelper
+     * Zeros conflicting matrix entries and retains the selected arc.
+     * @param row selected source boundary-bond row
+     * @param column selected target boundary-bond column
+     * @param marcs mutable row-major arc matrix
+     * @param mcGregorHelper aligned source/target boundary tables and dimensions
      */
     protected static void removeRedundantArcs(int row, int column, List<Integer> marcs, McgregorHelper mcGregorHelper) {
         int neighborBondNumA = mcGregorHelper.getNeighborBondNumA();
@@ -284,10 +301,10 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param bondNumber
-     * @param cSet
-     * @return
+     * Copies endpoint labels and resets both backup labels to X.
+     * @param bondNumber number of bond records to copy
+     * @param cSet four-entry endpoint-label/backup records
+     * @return a new four-entry label record for each requested bond
      */
     protected static List<String> generateCSetCopy(int bondNumber, List<String> cSet) {
         List<String> cTabCopy = new ArrayList<>();
@@ -301,10 +318,10 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param atomContainer
-     * @return
-     * @throws IOException
+     * Creates bond label records from the graph endpoint symbols.
+     * @param atomContainer simple molecular graph whose endpoints supply labels
+     * @return four-entry endpoint-label/backup records, with backups initially X
+     * @throws IOException retained for compatibility with legacy bond-table preparation
      */
     protected static List<String> generateCTabCopy(IAtomContainer atomContainer) throws IOException {
         List<String> cTabCopy = new ArrayList<>();
@@ -320,15 +337,15 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param g1Atom
-     * @param g3Atom
-     * @param g4Atom
-     * @param rowAtom1
-     * @param rowAtom2
-     * @param columnAtom3
-     * @param columnAtom4
-     * @return
+     * Checks whether a shared first source endpoint lacks a shared target endpoint.
+     * @param g1Atom first selected source endpoint
+     * @param g3Atom first selected target endpoint
+     * @param g4Atom second selected target endpoint
+     * @param rowAtom1 first candidate source endpoint
+     * @param rowAtom2 second candidate source endpoint
+     * @param columnAtom3 first candidate target endpoint
+     * @param columnAtom4 second candidate target endpoint
+     * @return whether the candidate arc conflicts with the selected first source endpoint
      */
     protected static boolean case1(int g1Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2,
             int columnAtom3, int columnAtom4) {
@@ -340,15 +357,15 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param g2Atom
-     * @param g3Atom
-     * @param g4Atom
-     * @param rowAtom1
-     * @param rowAtom2
-     * @param columnAtom3
-     * @param columnAtom4
-     * @return
+     * Checks whether a shared second source endpoint lacks a shared target endpoint.
+     * @param g2Atom second selected source endpoint
+     * @param g3Atom first selected target endpoint
+     * @param g4Atom second selected target endpoint
+     * @param rowAtom1 first candidate source endpoint
+     * @param rowAtom2 second candidate source endpoint
+     * @param columnAtom3 first candidate target endpoint
+     * @param columnAtom4 second candidate target endpoint
+     * @return whether the candidate arc conflicts with the selected second source endpoint
      */
     protected static boolean case2(int g2Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2,
             int columnAtom3, int columnAtom4) {
@@ -360,15 +377,15 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param g1Atom
-     * @param g3Atom
-     * @param g2Atom
-     * @param rowAtom1
-     * @param rowAtom2
-     * @param columnAtom3
-     * @param columnAtom4
-     * @return
+     * Checks whether a shared first target endpoint lacks a shared source endpoint.
+     * @param g1Atom first selected source endpoint
+     * @param g3Atom first selected target endpoint
+     * @param g2Atom second selected source endpoint
+     * @param rowAtom1 first candidate source endpoint
+     * @param rowAtom2 second candidate source endpoint
+     * @param columnAtom3 first candidate target endpoint
+     * @param columnAtom4 second candidate target endpoint
+     * @return whether the candidate arc conflicts with the selected first target endpoint
      */
     protected static boolean case3(int g1Atom, int g3Atom, int g2Atom, int rowAtom1, int rowAtom2,
             int columnAtom3, int columnAtom4) {
@@ -380,15 +397,15 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param g1Atom
-     * @param g2Atom
-     * @param g4Atom
-     * @param rowAtom1
-     * @param rowAtom2
-     * @param columnAtom3
-     * @param columnAtom4
-     * @return
+     * Checks whether a shared second target endpoint lacks a shared source endpoint.
+     * @param g1Atom first selected source endpoint
+     * @param g2Atom second selected source endpoint
+     * @param g4Atom second selected target endpoint
+     * @param rowAtom1 first candidate source endpoint
+     * @param rowAtom2 second candidate source endpoint
+     * @param columnAtom3 first candidate target endpoint
+     * @param columnAtom4 second candidate target endpoint
+     * @return whether the candidate arc conflicts with the selected second target endpoint
      */
     protected static boolean case4(int g1Atom, int g2Atom, int g4Atom, int rowAtom1, int rowAtom2,
             int columnAtom3, int columnAtom4) {
@@ -400,16 +417,16 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param g1Atom
-     * @param g2Atom
-     * @param g3Atom
-     * @param g4Atom
-     * @param rowAtom1
-     * @param rowAtom2
-     * @param columnAtom3
-     * @param columnAtom4
-     * @return
+     * Checks all four endpoint-consistency conflicts for two candidate arcs.
+     * @param g1Atom first selected source endpoint
+     * @param g2Atom second selected source endpoint
+     * @param g3Atom first selected target endpoint
+     * @param g4Atom second selected target endpoint
+     * @param rowAtom1 first candidate source endpoint
+     * @param rowAtom2 second candidate source endpoint
+     * @param columnAtom3 first candidate target endpoint
+     * @param columnAtom4 second candidate target endpoint
+     * @return whether either source or target endpoint correspondence conflicts
      */
     protected static boolean cases(int g1Atom, int g2Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2,
             int columnAtom3, int columnAtom4) {
@@ -423,18 +440,18 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param source
-     * @param target
-     * @param neighborBondNumA
-     * @param neighborBondNumB
-     * @param iBondNeighborAtomsA
-     * @param iBondNeighborAtomsB
-     * @param cBondNeighborsA
-     * @param cBondNeighborsB
-     * @param modifiedARCS
-     * @param shouldMatchBonds
-     * @return
+     * Marks compatible boundary-bond pairs in the supplied arc matrix.
+     * @param source source graph containing any directional predicates
+     * @param target target graph
+     * @param neighborBondNumA number of source boundary-bond records
+     * @param neighborBondNumB number of target boundary-bond records
+     * @param iBondNeighborAtomsA source endpoint/order triples
+     * @param iBondNeighborAtomsB target endpoint/order triples
+     * @param cBondNeighborsA source four-entry endpoint-label/backup records
+     * @param cBondNeighborsB target four-entry endpoint-label/backup records
+     * @param modifiedARCS mutable row-major arc matrix updated in place
+     * @param shouldMatchBonds whether strict ordinary bond chemistry is checked; query predicates always apply
+     * @return the supplied matrix after feasible entries have been set to one
      */
     protected static List<Integer> setArcs(IAtomContainer source, IAtomContainer target, int neighborBondNumA,
             int neighborBondNumB, List<Integer> iBondNeighborAtomsA, List<Integer> iBondNeighborAtomsB,
@@ -449,7 +466,7 @@ public class McGregorChecks {
                 String g1B = cBondNeighborsB.get(column * 4 + 0);
                 String g2B = cBondNeighborsB.get(column * 4 + 1);
 
-                if (McGregorChecks.isAtomMatch(g1A, g2A, g1B, g2B)) {
+                if (isLabelMatch(g1A, g2A, g1B, g2B)) {
 
                     int indexI = iBondNeighborAtomsA.get(row * 3 + 0);
                     int indexIPlus1 = iBondNeighborAtomsA.get(row * 3 + 1);
@@ -474,11 +491,11 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param tempmarcs
-     * @param neighborBondNumA
-     * @param neighborBondNumB
-     * @return
+     * Counts entries equal to one in the requested matrix dimensions.
+     * @param tempmarcs row-major arc matrix
+     * @param neighborBondNumA number of source boundary-bond records
+     * @param neighborBondNumB number of target boundary-bond records
+     * @return number of remaining feasible arcs
      */
     protected static int countArcsLeft(List<Integer> tempmarcs, int neighborBondNumA, int neighborBondNumB) {
         int arcsleft = 0;
@@ -495,13 +512,13 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param correspondingAtom
-     * @param newSymbol
-     * @param neighborBondNum
-     * @param atomContainer
-     * @param cBondNeighbors
-     * @return
+     * Relabels an atom in bond records and preserves its original endpoint labels.
+     * @param correspondingAtom atom index to relabel
+     * @param newSymbol unique mapped-atom identity label, normally beginning with $
+     * @param neighborBondNum number of bond records to inspect
+     * @param atomContainer simple molecular graph whose endpoints supply labels
+     * @param cBondNeighbors mutable four-entry endpoint-label/backup records
+     * @return legacy status value zero
      */
     protected static int changeCharBonds(int correspondingAtom, String newSymbol, int neighborBondNum,
             IAtomContainer atomContainer, List<String> cBondNeighbors) {
@@ -525,13 +542,13 @@ public class McGregorChecks {
     }
 
     /**
-     *
-     * @param correspondingAtom
-     * @param newSymbol
-     * @param neighborBondNum
-     * @param iBondNeighbors
-     * @param cBondNeighbors
-     * @return
+     * Relabels an atom in bond records and preserves its original endpoint labels.
+     * @param correspondingAtom atom index to relabel
+     * @param newSymbol unique mapped-atom identity label, normally beginning with $
+     * @param neighborBondNum number of bond records to inspect
+     * @param iBondNeighbors endpoint/order triples aligned with the label records
+     * @param cBondNeighbors mutable four-entry endpoint-label/backup records
+     * @return legacy status value zero
      */
     protected static int changeCharBonds(int correspondingAtom, String newSymbol, int neighborBondNum,
             List<Integer> iBondNeighbors, List<String> cBondNeighbors) {
@@ -574,29 +591,24 @@ public class McGregorChecks {
                 String g1B = cBondNeighborsB.get(column * 4 + 0);
                 String g2B = cBondNeighborsB.get(column * 4 + 1);
 
-                if (isAtomMatch(g1A, g2A, g1B, g2B)) {
-                    try {
+                if (isLabelMatch(g1A, g2A, g1B, g2B)) {
 
-                        int indexI = iBondNeighborAtomsA.get(row * 3 + 0);
-                        int indexIPlus1 = iBondNeighborAtomsA.get(row * 3 + 1);
+                    int indexI = iBondNeighborAtomsA.get(row * 3 + 0);
+                    int indexIPlus1 = iBondNeighborAtomsA.get(row * 3 + 1);
 
-                        int indexJ = iBondNeighborAtomsB.get(column * 3 + 0);
-                        int indexJPlus1 = iBondNeighborAtomsB.get(column * 3 + 1);
+                    int indexJ = iBondNeighborAtomsB.get(column * 3 + 0);
+                    int indexJPlus1 = iBondNeighborAtomsB.get(column * 3 + 1);
 
-                        IAtom r1A = source.getAtom(indexI);
-                        IAtom r2A = source.getAtom(indexIPlus1);
-                        IBond reactantBond = source.getBond(r1A, r2A);
+                    IAtom r1A = source.getAtom(indexI);
+                    IAtom r2A = source.getAtom(indexIPlus1);
+                    IBond reactantBond = source.getBond(r1A, r2A);
 
-                        IAtom p1B = target.getAtom(indexJ);
-                        IAtom p2B = target.getAtom(indexJPlus1);
-                        IBond productBond = target.getBond(p1B, p2B);
+                    IAtom p1B = target.getAtom(indexJ);
+                    IAtom p2B = target.getAtom(indexJPlus1);
+                    IBond productBond = target.getBond(p1B, p2B);
 
-                        if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
-                            return true;
-                        }
-                    } catch (Exception e) {
-                        LoggingToolFactory.createLoggingTool(McGregorChecks.class)
-                                          .warn("Unexpected Error:", e);
+                    if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
+                        return true;
                     }
                 }
             }
@@ -606,45 +618,29 @@ public class McGregorChecks {
     }
 
     static List<Integer> markUnMappedAtoms(boolean flag, IAtomContainer container, Map<Integer, Integer> presentMapping) {
-        List<Integer> unmappedMolAtoms = new ArrayList<>();
-
-        int unmappedNum = 0;
-        boolean atomIsUnmapped = true;
-
-        for (int a = 0; a < container.getAtomCount(); a++) {
-            //Atomic list are only numbers from 1 to atom_number1
-            if (flag && presentMapping.containsKey(a)) {
-                atomIsUnmapped = false;
-            } else if (!flag && presentMapping.containsValue(a)) {
-                atomIsUnmapped = false;
-            }
-            if (atomIsUnmapped) {
-                unmappedMolAtoms.add(unmappedNum++, a);
-            }
-            atomIsUnmapped = true;
+        boolean[] mapped = new boolean[container.getAtomCount()];
+        for (Integer atom : flag ? presentMapping.keySet() : presentMapping.values()) {
+            if (atom >= 0 && atom < mapped.length) mapped[atom] = true;
         }
-        return unmappedMolAtoms;
+        return unmappedAtoms(mapped);
     }
 
     static List<Integer> markUnMappedAtoms(boolean flag, IAtomContainer container, List<Integer> mappedAtoms,
             int cliqueSize) {
-        List<Integer> unmappedMolAtoms = new ArrayList<>();
-        int unmappedNum = 0;
-        boolean atomIsUnmapped = true;
-        for (int a = 0; a < container.getAtomCount(); a++) {
-            //Atomic list are only numbers from 1 to atom_number1
-            for (int b = 0; b < cliqueSize; b += 2) {
-                if (flag && mappedAtoms.get(b) == a) {
-                    atomIsUnmapped = false;
-                } else if (!flag && mappedAtoms.get(b + 1) == a) {
-                    atomIsUnmapped = false;
-                }
-            }
-            if (atomIsUnmapped) {
-                unmappedMolAtoms.add(unmappedNum++, a);
-            }
-            atomIsUnmapped = true;
+        boolean[] mapped = new boolean[container.getAtomCount()];
+        int offset = flag ? 0 : 1;
+        for (int i = 0; i < cliqueSize; i++) {
+            int atom = mappedAtoms.get(i * 2 + offset);
+            if (atom >= 0 && atom < mapped.length) mapped[atom] = true;
         }
-        return unmappedMolAtoms;
+        return unmappedAtoms(mapped);
+    }
+
+    private static List<Integer> unmappedAtoms(boolean[] mapped) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < mapped.length; i++) {
+            if (!mapped[i]) result.add(i);
+        }
+        return result;
     }
 }
