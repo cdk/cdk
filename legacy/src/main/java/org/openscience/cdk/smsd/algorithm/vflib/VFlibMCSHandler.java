@@ -22,21 +22,22 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
-import java.util.logging.Level;
 
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.smsd.algorithm.mcgregor.McGregor;
-import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 import org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper;
@@ -44,20 +45,25 @@ import org.openscience.cdk.smsd.algorithm.vflib.query.QueryCompiler;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
 import org.openscience.cdk.smsd.tools.MolHandler;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * This class should be used to find MCS between query
- * graph and target graph.
+ * Finds a connected maximum common substructure, maximizing the number of atoms
+ * and then the number of compatible common bonds.
+ * Bonds may be deleted from either graph; all tied optimum mappings are stored.
  *
- * First the algorithm runs VF lib {@link org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper}
- * and reports MCS between
- * run query and target graphs. Then these solutions are extended
- * using McGregor {@link org.openscience.cdk.smsd.algorithm.mcgregor.McGregor}
- * algorithm where ever required.
+ * <p>Inputs are borrowed simple two-centre graphs and must remain stable while
+ * searching. Ordinary atoms match by element and ordinary bonds match by strict
+ * order/aromaticity when enabled. Explicit query predicates remain directional.
+ * This handler does not apply mapping-level stereochemical filters or compare
+ * conformer geometry.</p>
  *
+ * <p>Results are read-only snapshots from source to target. A cooperative timeout
+ * returns the best mappings found so far and sets the searching thread's
+ * {@link org.openscience.cdk.smsd.global.TimeOut} flag. Instances are mutable and
+ * must not be shared by concurrent or nested searches.</p>
+ *
+ * @see org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandler
+ * @cdk.threadnonsafe
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -65,339 +71,165 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @Deprecated
 public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
-    private static       List<Map<IAtom, IAtom>>     allAtomMCS     = null;
-    private static       Map<IAtom, IAtom>           atomsMCS       = null;
-    private static       List<Map<IAtom, IAtom>>     allAtomMCSCopy = null;
-    private static       Map<Integer, Integer>       firstMCS       = null;
-    private static       List<Map<Integer, Integer>> allMCS         = null;
-    private static       List<Map<Integer, Integer>> allMCSCopy     = null;
-    private              List<Map<INode, IAtom>>     vfLibSolutions = null;
-    private              IQueryAtomContainer         queryMol       = null;
-    private              IAtomContainer              mol1           = null;
-    private              IAtomContainer              mol2           = null;
-    private              int                         vfMCSSize      = -1;
-    private              boolean                     bondMatchFlag  = false;
-    private              int                         countR         = 0;
-    private              int                         countP         = 0;
-    private final static ILoggingTool                LOGGER         = LoggingToolFactory
-            .createLoggingTool(VFlibMCSHandler.class);
+    private final List<Map<IAtom, IAtom>> allAtomMCS = new ArrayList<>();
+    private final List<Map<Integer, Integer>> allMCS = new ArrayList<>();
+    private IAtomContainer source;
+    private IAtomContainer target;
+    private boolean bondMatchFlag;
 
-    /**
-     * Constructor for an extended VF Algorithm for the MCS search
-     */
+    /** Creates a handler with no inputs or results. */
     public VFlibMCSHandler() {
-        allAtomMCS = new ArrayList<>();
-        allAtomMCSCopy = new ArrayList<>();
-        atomsMCS = new HashMap<>();
-        firstMCS = new TreeMap<>();
-        allMCS = new ArrayList<>();
-        allMCSCopy = new ArrayList<>();
     }
 
     /**
-     *{@inheritDoc}
+     * Replaces the stored results with connected maximum common mappings.
+     * Query/target preparation precedes the captured search budget. Predicate
+     * failures propagate to the caller; deadline checks resume when callbacks
+     * return. A timed-out result is not a certified optimum.
      *
-     * @param bondTypeMatch
+     * @param bondTypeMatch whether ordinary bond order/aromaticity must match;
+     *        explicit query bond predicates are always applied
+     * @throws IllegalStateException if inputs have not been set
+     * @throws IllegalArgumentException if an input is not a supported simple graph
+     * @throws NullPointerException if required query objects or ordinary
+     *         element-matching metadata are missing
      */
     @Override
     public void searchMCS(boolean bondTypeMatch) {
+        if (source == null || target == null) {
+            throw new IllegalStateException("Set source and target before searching");
+        }
+        allAtomMCS.clear();
+        allMCS.clear();
         setBondMatchFlag(bondTypeMatch);
-        searchVFMCSMappings();
-        boolean flag = mcgregorFlag();
-        if (flag && !vfLibSolutions.isEmpty()) {
-            try {
-                searchMcGregorMapping();
-            } catch (CDKException | IOException ex) {
-                LOGGER.error(Level.SEVERE, null, ex);
+
+        // Query predicates belong on the query side even when it is larger.
+        boolean reverse = source.getAtomCount() > target.getAtomCount()
+                && !hasPredicates(source) && !hasPredicates(target);
+        IAtomContainer queryMolecule = reverse ? target : source;
+        IAtomContainer targetMolecule = reverse ? source : target;
+        IQuery query = new QueryCompiler(queryMolecule, bondTypeMatch).compile();
+        for (Map<INode, IAtom> solution : new VFMCSMapper(query).getMaps(targetMolecule)) {
+            if (solution.isEmpty()) continue;
+            Map<IAtom, IAtom> atomMapping = new HashMap<>();
+            Map<Integer, Integer> indexMapping = new TreeMap<>();
+            for (Map.Entry<INode, IAtom> entry : solution.entrySet()) {
+                IAtom queryAtom = query.getAtom(entry.getKey());
+                IAtom targetAtom = entry.getValue();
+                IAtom sourceAtom = reverse ? targetAtom : queryAtom;
+                IAtom productAtom = reverse ? queryAtom : targetAtom;
+                atomMapping.put(sourceAtom, productAtom);
+                indexMapping.put(source.indexOf(sourceAtom), target.indexOf(productAtom));
             }
-        }
-        else if (!allAtomMCSCopy.isEmpty()) {
-            allAtomMCS.addAll(allAtomMCSCopy);
-            allMCS.addAll(allMCSCopy);
-        }
-        setFirstMappings();
-    }
-
-    private void setFirstMappings() {
-        if (!allAtomMCS.isEmpty()) {
-            atomsMCS.putAll(allAtomMCS.get(0));
-            firstMCS.putAll(allMCS.get(0));
+            allAtomMCS.add(Collections.unmodifiableMap(atomMapping));
+            allMCS.add(Collections.unmodifiableMap(indexMapping));
         }
     }
 
-    private boolean mcgregorFlag() {
-        int commonAtomCount = checkCommonAtomCount(getReactantMol(), getProductMol());
-        return commonAtomCount > vfMCSSize;
-    }
-
-    /** {@inheritDoc}
-     *
-     * Set the VFLib MCS software
-     *
-     * @param reactant
-     * @param product
-     */
-    @Override
-    public void set(MolHandler reactant, MolHandler product) {
-        mol1 = reactant.getMolecule();
-        mol2 = product.getMolecule();
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param source
-     * @param target
-     */
-    @Override
-    public void set(IQueryAtomContainer source, IAtomContainer target) {
-        queryMol = source;
-        mol2 = target;
-    }
-
-    private boolean hasMap(Map<Integer, Integer> maps, List<Map<Integer, Integer>> mapGlobal) {
-        for (Map<Integer, Integer> test : mapGlobal) {
-            if (test.equals(maps)) {
-                return true;
-            }
+    private boolean hasPredicates(IAtomContainer molecule) {
+        if (molecule instanceof IQueryAtomContainer) return true;
+        for (IAtom atom : molecule.atoms()) {
+            if (AtomRef.deref(atom) instanceof IQueryAtom) return true;
+        }
+        for (IBond bond : molecule.bonds()) {
+            if (BondRef.deref(bond) instanceof IQueryBond) return true;
         }
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Borrows the molecules prepared by the supplied handlers.
+     * Results from the preceding search remain available until the next search.
+     *
+     * @param reactant handler containing the source molecule
+     * @param product handler containing the target molecule
+     * @throws NullPointerException if a handler or its molecule is null;
+     *         neither input is replaced in this case
+     */
     @Override
-    public List<Map<IAtom, IAtom>> getAllAtomMapping() {
-        return Collections.unmodifiableList(allAtomMCS);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public List<Map<Integer, Integer>> getAllMapping() {
-        return Collections.unmodifiableList(allMCS);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Map<IAtom, IAtom> getFirstAtomMapping() {
-        return Collections.unmodifiableMap(atomsMCS);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Map<Integer, Integer> getFirstMapping() {
-        return Collections.unmodifiableMap(firstMCS);
-    }
-
-    private int checkCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule) {
-        ArrayList<String> atoms = new ArrayList<>();
-        for (int i = 0; i < reactantMolecule.getAtomCount(); i++) {
-            atoms.add(reactantMolecule.getAtom(i).getSymbol());
-
-        }
-        int common = 0;
-        for (int i = 0; i < productMolecule.getAtomCount(); i++) {
-            String symbol = productMolecule.getAtom(i).getSymbol();
-            if (atoms.contains(symbol)) {
-                atoms.remove(symbol);
-                common++;
-            }
-        }
-        return common;
-    }
-
-    private void searchVFMCSMappings() {
-        //        System.out.println("searchVFMCSMappings ");
-        IQuery query;
-        IMapper mapper;
-
-        if (queryMol == null) {
-            countR = getReactantMol().getAtomCount()
-                    + AtomContainerManipulator.getSingleBondEquivalentSum(getReactantMol());
-            countP = getProductMol().getAtomCount()
-                    + AtomContainerManipulator.getSingleBondEquivalentSum(getProductMol());
-        }
-        vfLibSolutions = new ArrayList<>();
-        if (queryMol != null) {
-            query = new QueryCompiler(queryMol).compile();
-            mapper = new VFMCSMapper(query);
-            List<Map<INode, IAtom>> maps = mapper.getMaps(getProductMol());
-            if (maps != null) {
-                vfLibSolutions.addAll(maps);
-            }
-            setVFMappings(true, query);
-        } else if (countR <= countP) {
-            query = new QueryCompiler(mol1, isBondMatchFlag()).compile();
-            mapper = new VFMCSMapper(query);
-            List<Map<INode, IAtom>> maps = mapper.getMaps(getProductMol());
-            if (maps != null) {
-                vfLibSolutions.addAll(maps);
-            }
-            setVFMappings(true, query);
-        } else {
-            query = new QueryCompiler(getProductMol(), isBondMatchFlag()).compile();
-            mapper = new VFMCSMapper(query);
-            List<Map<INode, IAtom>> maps = mapper.getMaps(getReactantMol());
-            if (maps != null) {
-                vfLibSolutions.addAll(maps);
-            }
-            setVFMappings(false, query);
-        }
-        setVFMappings(false, query);
-        //        System.out.println("Sol count " + vfLibSolutions.size());
-        //        System.out.println("Sol size " + vfLibSolutions.iterator().next().size());
-        //        System.out.println("MCSSize " + vfMCSSize);
-        //        System.out.println("After Sol count " + allMCSCopy.size());
-
-    }
-
-    private void searchMcGregorMapping() throws CDKException, IOException {
-        List<List<Integer>> mappings = new ArrayList<>();
-        boolean ropFlag = true;
-        for (Map<Integer, Integer> firstPassMappings : allMCSCopy) {
-            Map<Integer, Integer> tMapping = new TreeMap<>(firstPassMappings);
-            McGregor mgit;
-            if (queryMol != null) {
-                mgit = new McGregor(queryMol, mol2, mappings, isBondMatchFlag());
-            } else {
-                if (countR > countP) {
-                    mgit = new McGregor(mol1, mol2, mappings, isBondMatchFlag());
-                } else {
-                    tMapping.clear();
-                    mgit = new McGregor(mol2, mol1, mappings, isBondMatchFlag());
-                    ropFlag = false;
-                    for (Map.Entry<Integer, Integer> map : firstPassMappings.entrySet()) {
-                        tMapping.put(map.getValue(), map.getKey());
-                    }
-                }
-            }
-            mgit.startMcGregorIteration(mgit.getMCSSize(), tMapping); //Start McGregor search
-            mappings = mgit.getMappings();
-            mgit = null;
-        }
-        //        System.out.println("\nSol count after MG" + mappings.size());
-        setMcGregorMappings(ropFlag, mappings);
-        vfMCSSize = vfMCSSize / 2;
-        //        System.out.println("After set Sol count MG" + allMCS.size());
-        //        System.out.println("MCSSize " + vfMCSSize + "\n");
-    }
-
-    private void setVFMappings(boolean rONP, IQuery query) {
-        int counter = 0;
-        for (Map<INode, IAtom> solution : vfLibSolutions) {
-            Map<IAtom, IAtom> atomatomMapping = new HashMap<>();
-            Map<Integer, Integer> indexindexMapping = new TreeMap<>();
-            if (solution.size() > vfMCSSize) {
-                this.vfMCSSize = solution.size();
-                allAtomMCSCopy.clear();
-                allMCSCopy.clear();
-                counter = 0;
-            }
-            for (Map.Entry<INode, IAtom> mapping : solution.entrySet()) {
-                IAtom qAtom;
-                IAtom tAtom;
-                Integer qIndex;
-                Integer tIndex;
-
-                if (rONP) {
-                    qAtom = query.getAtom(mapping.getKey());
-                    tAtom = mapping.getValue();
-                    qIndex = getReactantMol().indexOf(qAtom);
-                    tIndex = getProductMol().indexOf(tAtom);
-                } else {
-                    tAtom = query.getAtom(mapping.getKey());
-                    qAtom = mapping.getValue();
-                    tIndex = getProductMol().indexOf(qAtom);
-                    qIndex = getReactantMol().indexOf(tAtom);
-                }
-
-                if (qIndex != -1 && tIndex != -1) {
-                    atomatomMapping.put(qAtom, tAtom);
-                    indexindexMapping.put(qIndex, tIndex);
-                } else {
-                    try {
-                        throw new CDKException("Atom index pointing to -1");
-                    } catch (CDKException ex) {
-                        LOGGER.error(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-            if (!atomatomMapping.isEmpty() && !hasMap(indexindexMapping, allMCSCopy)
-                    && indexindexMapping.size() == vfMCSSize) {
-                allAtomMCSCopy.add(counter, atomatomMapping);
-                allMCSCopy.add(counter, indexindexMapping);
-                counter++;
-            }
-        }
-    }
-
-    private void setMcGregorMappings(boolean ronp, List<List<Integer>> mappings) throws CDKException {
-        int counter = 0;
-        for (List<Integer> mapping : mappings) {
-            if (mapping.size() > vfMCSSize) {
-                vfMCSSize = mapping.size();
-                allAtomMCS.clear();
-                allMCS.clear();
-                counter = 0;
-            }
-            Map<IAtom, IAtom> atomatomMapping = new HashMap<>();
-            Map<Integer, Integer> indexindexMapping = new TreeMap<>();
-            for (int index = 0; index < mapping.size(); index += 2) {
-                IAtom qAtom;
-                IAtom tAtom;
-                Integer qIndex;
-                Integer tIndex;
-
-                if (ronp) {
-                    qAtom = getReactantMol().getAtom(mapping.get(index));
-                    tAtom = getProductMol().getAtom(mapping.get(index + 1));
-
-                    qIndex = mapping.get(index);
-                    tIndex = mapping.get(index + 1);
-                } else {
-                    qAtom = getReactantMol().getAtom(mapping.get(index + 1));
-                    tAtom = getProductMol().getAtom(mapping.get(index));
-                    qIndex = mapping.get(index + 1);
-                    tIndex = mapping.get(index);
-                }
-
-                if (qIndex != null && tIndex != null) {
-                    atomatomMapping.put(qAtom, tAtom);
-                    indexindexMapping.put(qIndex, tIndex);
-                } else {
-                    throw new CDKException("Atom index pointing to NULL");
-                }
-            }
-            if (!atomatomMapping.isEmpty() && !hasMap(indexindexMapping, allMCS)
-                    && (2 * indexindexMapping.size()) == vfMCSSize) {
-                allAtomMCS.add(counter, atomatomMapping);
-                allMCS.add(counter, indexindexMapping);
-                counter++;
-            }
-        }
+    public void set(MolHandler reactant, MolHandler product) {
+        IAtomContainer sourceMolecule = Objects.requireNonNull(
+                Objects.requireNonNull(reactant, "source handler").getMolecule(), "source molecule");
+        IAtomContainer targetMolecule = Objects.requireNonNull(
+                Objects.requireNonNull(product, "target handler").getMolecule(), "target molecule");
+        source = sourceMolecule;
+        target = targetMolecule;
     }
 
     /**
-     * @return the shouldMatchBonds
+     * Borrows a directional query and target without additional preparation.
+     *
+     * @param source query container whose predicates are applied to the target
+     * @param target target container
+     * @throws NullPointerException if either input is null;
+     *         neither input is replaced in this case
+     */
+    @Override
+    public void set(IQueryAtomContainer source, IAtomContainer target) {
+        Objects.requireNonNull(source, "source query");
+        Objects.requireNonNull(target, "target container");
+        this.source = source;
+        this.target = target;
+    }
+
+    /**
+     * Returns the atom mappings from the most recent search.
+     *
+     * @return a read-only snapshot of read-only source-to-target maps;
+     *         atom objects are borrowed from the inputs
+     */
+    @Override
+    public List<Map<IAtom, IAtom>> getAllAtomMapping() {
+        return Collections.unmodifiableList(new ArrayList<>(allAtomMCS));
+    }
+
+    /**
+     * Returns the index mappings from the most recent search.
+     *
+     * @return a read-only snapshot of read-only, zero-based source-to-target maps;
+     *         empty before a search or when no nonempty overlap is found
+     */
+    @Override
+    public List<Map<Integer, Integer>> getAllMapping() {
+        return Collections.unmodifiableList(new ArrayList<>(allMCS));
+    }
+
+    /**
+     * Returns the first stored atom mapping, without ranking tied mappings.
+     *
+     * @return a read-only source-to-target map, or an empty map if no result exists
+     */
+    @Override
+    public Map<IAtom, IAtom> getFirstAtomMapping() {
+        return allAtomMCS.isEmpty() ? Collections.emptyMap() : allAtomMCS.get(0);
+    }
+
+    /**
+     * Returns the first stored index mapping, without ranking tied mappings.
+     *
+     * @return a read-only source-to-target map, or an empty map if no result exists
+     */
+    @Override
+    public Map<Integer, Integer> getFirstMapping() {
+        return allMCS.isEmpty() ? Collections.emptyMap() : allMCS.get(0);
+    }
+
+    /**
+     * Returns the last requested ordinary bond-matching setting.
+     *
+     * @return whether ordinary bond order/aromaticity is matched
      */
     public boolean isBondMatchFlag() {
         return bondMatchFlag;
     }
 
     /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
+     * Sets the reported ordinary bond-matching setting.
+     * The argument to the next {@link #searchMCS(boolean)} replaces this value.
+     *
+     * @param shouldMatchBonds whether ordinary bond order/aromaticity should match
      */
     public void setBondMatchFlag(boolean shouldMatchBonds) {
         this.bondMatchFlag = shouldMatchBonds;
-    }
-
-    private IAtomContainer getReactantMol() {
-        if (queryMol == null) {
-            return mol1;
-        } else {
-            return queryMol;
-        }
-    }
-
-    private IAtomContainer getProductMol() {
-        return mol2;
     }
 }

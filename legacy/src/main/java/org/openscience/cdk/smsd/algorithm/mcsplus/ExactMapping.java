@@ -26,17 +26,22 @@ package org.openscience.cdk.smsd.algorithm.mcsplus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * This class handles MCS between two identical molecules.
- * Hence they generate am MCS where all atoms are mapped.
+ * Converts compatibility-graph clique node IDs to source/target index pairs.
+ * This helper does not search for a clique or establish chemical compatibility.
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class ExactMapping {
+
+    /** Creates the legacy clique-mapping helper. */
+    public ExactMapping() {
+    }
 
     /**
      *
@@ -46,40 +51,41 @@ public class ExactMapping {
      */
     private static List<Integer> extractCliqueMapping(List<Integer> compGraphNodes, List<Integer> cliqueListOrg) {
 
-        List<Integer> cliqueMapping = new ArrayList<>();
-        List<Integer> cliqueList = new ArrayList<>(cliqueListOrg);
-        int cliqueSize = cliqueList.size();
-        int vecSize = compGraphNodes.size();
-        //        System.out.println("VEC  SIZE " + vec_size);
-        for (Integer integer : cliqueList) {
-            for (int b = 0; b < vecSize; b += 3) {
-                if (Objects.equals(integer, compGraphNodes.get(b + 2))) {
-                    cliqueMapping.add(compGraphNodes.get(b));
-                    cliqueMapping.add(compGraphNodes.get(b + 1));
-                }
+        Map<Integer, Integer> nodeOffsets = new HashMap<>();
+        for (int i = 0; i < compGraphNodes.size(); i += 3) {
+            nodeOffsets.put(compGraphNodes.get(i + 2), i);
+        }
+        List<Integer> cliqueMapping = new ArrayList<>(cliqueListOrg.size() * 2);
+        for (Integer node : cliqueListOrg) {
+            Integer offset = nodeOffsets.get(node);
+            if (offset == null) {
+                throw new IllegalArgumentException("Clique node is absent from the compatibility graph: " + node);
             }
+            cliqueMapping.add(compGraphNodes.get(offset));
+            cliqueMapping.add(compGraphNodes.get(offset + 1));
         }
 
         return cliqueMapping;
     }
 
-    //extract atom mapping from the clique List and print it on the screen
     /**
+     * Appends the clique's mapping to the supplied output list.
+     * Compatibility nodes are flat source-index/target-index/node-ID triples.
+     * The resulting mapping is a new flat source-index/target-index pair list
+     * in clique order. Input collections and index compatibility are trusted;
+     * no equality of the original molecules is required or checked.
      *
-     * @param mappings
-     * @param compGraphNodes
-     * @param cliqueListOrg
-     * @return mappings
+     * @param mappings mutable output list receiving the new mapping
+     * @param compGraphNodes compatibility-node triples with unique node IDs
+     * @param cliqueListOrg clique node IDs to extract
+     * @return the same output list after appending one mapping
+     * @throws IllegalArgumentException if a clique ID is absent from the graph
+     * @throws NullPointerException if an input list is null
+     * @throws IndexOutOfBoundsException if graph triples are incomplete
      */
     public static List<List<Integer>> extractMapping(List<List<Integer>> mappings, List<Integer> compGraphNodes,
             List<Integer> cliqueListOrg) {
-        try {
-            List<Integer> cliqueList = extractCliqueMapping(compGraphNodes, cliqueListOrg);
-            mappings.add(cliqueList);
-        } catch (Exception e) {
-            System.err.println("Error in FinalMapping List: " + e.getCause());
-            System.exit(1);
-        }
+        mappings.add(extractCliqueMapping(compGraphNodes, cliqueListOrg));
         return mappings;
     }
 }

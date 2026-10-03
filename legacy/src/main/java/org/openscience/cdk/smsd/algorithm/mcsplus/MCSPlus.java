@@ -22,21 +22,43 @@
  */
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
+import java.util.Objects;
+
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.smsd.algorithm.mcgregor.McGregor;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
+import org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper;
+import org.openscience.cdk.smsd.algorithm.vflib.query.QueryCompiler;
 import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
- * This class handles MCS plus algorithm which is a combination of
- * c-clique algorithm and McGregor algorithm.
+ * MCSPlus entry point for connected common substructures. Results maximize
+ * atoms, then compatible common bonds. The shared search also considers bond
+ * deletion, which cannot be covered by extending only maximum induced cliques.
+ * Ordinary atoms match by element and bonds by strict order/aromaticity when
+ * requested; explicit query predicates are always applied directionally.
+ *
+ * <p>The inputs are borrowed simple two-centre graphs and must remain stable
+ * during a search. Mapping-level stereochemistry and conformer geometry are not
+ * checked. A captured cooperative budget returns the best mappings found so far
+ * when interrupted; an incomplete result is not a certified optimum. Query
+ * compilation and result conversion also contribute to this entry point's
+ * legacy elapsed-clock check.</p>
+ *
+ * @see MCSPlusHandler
+ *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -44,93 +66,130 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 @Deprecated
 public class MCSPlus {
 
-    /**
-    * Default constructor added
-    */
-    public MCSPlus() {
+    private static final ThreadLocal<TimeManager> timeManager = new ThreadLocal<>();
+    private static final ThreadLocal<double[]> timeout = ThreadLocal.withInitial(() -> new double[]{-1});
 
+    /** Creates the legacy connected-overlap entry point. */
+    public MCSPlus() {
     }
 
-    private static TimeManager timeManager = null;
-
     /**
-     * @return the timeout
+     * Returns the calling thread's configuration for a subsequent search.
+     *
+     * @return timeout in minutes; a finite negative value disables checking
      */
-    protected synchronized static double getTimeout() {
+    protected static double getTimeout() {
         return TimeOut.getInstance().getTimeOut();
     }
 
     /**
-     * @return the timeManager
-     */
-    protected synchronized static TimeManager getTimeManager() {
-        return timeManager;
-    }
-
-    /**
-     * @param aTimeManager the timeManager to set
-     */
-    protected synchronized static void setTimeManager(TimeManager aTimeManager) {
-        TimeOut.getInstance().setTimeOutFlag(false);
-        timeManager = aTimeManager;
-    }
-
-    /**
+     * Returns the calling thread's compatibility clock.
      *
-     * @param ac1
-     * @param ac2
-     * @param shouldMatchBonds
-     * @return
-     * @throws CDKException
+     * @return the clock, or null if none has been assigned
      */
-    protected List<List<Integer>> getOverlaps(IAtomContainer ac1, IAtomContainer ac2, boolean shouldMatchBonds)
-            throws CDKException {
-        Stack<List<Integer>> maxCliqueSet;
-        List<List<Integer>> mappings = new ArrayList<>();
-        try {
-            GenerateCompatibilityGraph gcg = new GenerateCompatibilityGraph(ac1, ac2, shouldMatchBonds);
-            List<Integer> compGraphNodes = gcg.getCompGraphNodes();
-
-            List<Integer> cEdges = gcg.getCEgdes();
-            List<Integer> dEdges = gcg.getDEgdes();
-
-            //            System.err.println("**************************************************");
-            //            System.err.println("CEdges: " + CEdges.size());
-            //            System.out.println("DEdges: " + DEdges.size());
-
-            BKKCKCF init = new BKKCKCF(compGraphNodes, cEdges, dEdges);
-            maxCliqueSet = init.getMaxCliqueSet();
-
-            //            System.err.println("**************************************************");
-            //            System.err.println("Max_Cliques_Set: " + maxCliqueSet.size());
-            //            System.out.println("Best Clique Size: " + init.getBestCliqueSize());
-
-            //clear all the compatibility graph content
-            gcg.clear();
-            while (!maxCliqueSet.empty()) {
-                List<Integer> cliqueList = maxCliqueSet.peek();
-                int cliqueSize = cliqueList.size();
-                if (cliqueSize < ac1.getAtomCount() && cliqueSize < ac2.getAtomCount()) {
-                    McGregor mgit = new McGregor(ac1, ac2, mappings, shouldMatchBonds);
-                    mgit.startMcGregorIteration(mgit.getMCSSize(), cliqueList, compGraphNodes);
-                    mappings = mgit.getMappings();
-                    mgit = null;
-                } else {
-                    mappings = ExactMapping.extractMapping(mappings, compGraphNodes, cliqueList);
-                }
-                maxCliqueSet.pop();
-                if (isTimeOut()) {
-                    break;
-                }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(MCSPlus.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return mappings;
+    protected static TimeManager getTimeManager() {
+        return timeManager.get();
     }
 
-    public synchronized static boolean isTimeOut() {
-        if (getTimeout() > -1 && getTimeManager().getElapsedTimeInMinutes() > getTimeout()) {
+    /**
+     * Assigns a compatibility clock and captures the configured cutoff.
+     * This also clears the calling thread's recorded timeout flag.
+     *
+     * @param aTimeManager clock to inspect, or null to remove the clock
+     */
+    protected static void setTimeManager(TimeManager aTimeManager) {
+        TimeOut.getInstance().setTimeOutFlag(false);
+        timeManager.set(aTimeManager);
+        timeout.get()[0] = getTimeout();
+    }
+
+    /**
+     * Return source/target index pairs for the maximum connected overlap.
+     * On timeout the flag is set and the best mappings found so far are returned.
+     * Every output row is a mutable flat source-index/target-index pair list;
+     * indices are zero-based in the supplied containers, including reversed
+     * ordinary-graph searches. An empty overlap is represented by an empty list.
+     *
+     * @param source source container; explicit predicates stay on this side
+     * @param target target container
+     * @param shouldMatchBonds whether ordinary order/aromaticity must match
+     * @return all tied maximum mappings, or best-so-far mappings on timeout
+     * @throws NullPointerException if either container is null
+     * @throws IllegalArgumentException if an input is not a supported simple graph
+     * @throws CDKException retained for legacy subclass/source compatibility
+     */
+    protected List<List<Integer>> getOverlaps(IAtomContainer source, IAtomContainer target,
+                                             boolean shouldMatchBonds) throws CDKException {
+        Objects.requireNonNull(source, "source container");
+        Objects.requireNonNull(target, "target container");
+        TimeManager searchClock = new TimeManager();
+        double searchTimeout = getTimeout();
+        setTimeManager(searchClock);
+        boolean solverEntered = false;
+        boolean solverCompleted = false;
+        boolean solverTimedOut = false;
+        try {
+            // An ordinary graph may be reversed to reduce the search. Predicates
+            // belong to the query and must never move to the target side.
+            boolean reverse = source.getAtomCount() > target.getAtomCount()
+                    && !hasPredicates(source) && !hasPredicates(target);
+            IAtomContainer queryMolecule = reverse ? target : source;
+            IAtomContainer targetMolecule = reverse ? source : target;
+            IQuery query = new QueryCompiler(queryMolecule, shouldMatchBonds).compile();
+            TargetProperties preparedTarget = new TargetProperties(targetMolecule);
+            solverEntered = true;
+            List<Map<INode, IAtom>> embeddings = new VFMCSMapper(query).getMaps(preparedTarget);
+            solverTimedOut = TimeOut.getInstance().isTimeOutFlag();
+            solverCompleted = true;
+            List<List<Integer>> result = new ArrayList<>();
+            for (Map<INode, IAtom> embedding : embeddings) {
+                if (embedding.isEmpty()) continue;
+                List<Integer> mapping = new ArrayList<>(embedding.size() * 2);
+                for (Map.Entry<INode, IAtom> entry : embedding.entrySet()) {
+                    int queryIndex = queryMolecule.indexOf(query.getAtom(entry.getKey()));
+                    int targetIndex = targetMolecule.indexOf(entry.getValue());
+                    mapping.add(reverse ? targetIndex : queryIndex);
+                    mapping.add(reverse ? queryIndex : targetIndex);
+                }
+                result.add(mapping);
+            }
+            return result;
+        } finally {
+            // A predicate may have run another entry point or changed configuration.
+            // Restore this operation's compatibility clock and captured cutoff.
+            timeManager.set(searchClock);
+            timeout.get()[0] = searchTimeout;
+            // Preparation/conversion callbacks must not replace the solver status.
+            TimeOut.getInstance().setTimeOutFlag(solverCompleted ? solverTimedOut
+                    : solverEntered && TimeOut.getInstance().isTimeOutFlag());
+            isTimeOut();
+        }
+    }
+
+    private static boolean hasPredicates(IAtomContainer molecule) {
+        for (IAtom atom : molecule.atoms()) {
+            if (AtomRef.deref(atom) instanceof IQueryAtom) return true;
+        }
+        for (IBond bond : molecule.bonds()) {
+            if (BondRef.deref(bond) instanceof IQueryBond) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks the calling thread's flag and captured compatibility clock budget.
+     * Configuration changes do not change the cutoff paired with that clock.
+     * Elapsed time is measured until this method is invoked, including idle time
+     * after a result; use {@link TimeOut#isTimeOutFlag()} immediately after a
+     * search for its recorded completion status.
+     *
+     * @return whether a timeout was recorded or the captured clock has expired
+     */
+    public static boolean isTimeOut() {
+        if (TimeOut.getInstance().isTimeOutFlag()) return true;
+        double captured = timeout.get()[0];
+        if (captured >= 0 && getTimeManager() != null
+                && getTimeManager().getElapsedTimeInMinutes() > captured) {
             TimeOut.getInstance().setTimeOutFlag(true);
             return true;
         }

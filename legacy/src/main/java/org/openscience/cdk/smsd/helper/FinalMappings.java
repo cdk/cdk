@@ -25,13 +25,24 @@
 package org.openscience.cdk.smsd.helper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.openscience.cdk.smsd.interfaces.IFinalMapping;
 
 /**
- * Class that stores raw mapping(s) after each algorithm is executed.
+ * Stores legacy raw index mappings for algorithms on the calling thread.
+ *
+ * <p>Every input mapping is copied. Getters return independent, mutable copies;
+ * editing a returned map, list or iterator cannot alter the stored results.
+ * This differs from the read-only snapshots returned by the MCS handlers.
+ * The store does not validate chemical compatibility, index bounds or
+ * injectivity; algorithm entry points are responsible for those checks.</p>
+ *
+ * <p>The thread-local instance isolates independent worker threads, but nested
+ * algorithms on the same thread share this legacy store.</p>
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -39,74 +50,91 @@ import org.openscience.cdk.smsd.interfaces.IFinalMapping;
 @Deprecated
 public class FinalMappings implements IFinalMapping {
 
-    private static List<Map<Integer, Integer>> mappings = null;
-    private static FinalMappings               instance = null;
+    private final List<Map<Integer, Integer>> mappings = new ArrayList<>();
+    private static final ThreadLocal<FinalMappings> INSTANCE = ThreadLocal.withInitial(FinalMappings::new);
 
+    /** Creates an empty mapping store. */
     protected FinalMappings() {
-        mappings = new ArrayList<>();
+
     }
 
     /**
-     * Stores mapping solutions
-     * @return instance of this object
-     */
-    synchronized public static FinalMappings getInstance() {
-        if (instance == null) {
-            instance = new FinalMappings();
-        }
-        return instance;
-    }
-
-    /**
-     *  {@inheritDoc}
+     * Returns the mapping store belonging to the calling thread.
      *
+     * @return the calling thread's store
+     */
+    public static FinalMappings getInstance() {
+        return INSTANCE.get();
+    }
+
+    /**
+     * Adds an independent copy of one index mapping.
+     *
+     * @param mapping source-to-target index mapping
+     * @throws NullPointerException if the mapping is null
      */
     @Override
     synchronized public void add(Map<Integer, Integer> mapping) {
-        mappings.add(mapping);
+        mappings.add(new HashMap<>(Objects.requireNonNull(mapping, "mapping")));
     }
 
     /**
-     * {@inheritDoc}
-     * @param list list of mappings
+     * Replaces the stored mappings with independent copies.
+     * All entries are copied before any stored result is cleared.
+     *
+     * @param list mappings to store, in the supplied order
+     * @throws NullPointerException if the list or any mapping is null;
+     *         existing results remain unchanged
      */
     @Override
     synchronized public final void set(List<Map<Integer, Integer>> list) {
+        // Copy before clearing: callers may pass this store's own list or a view of it.
+        List<Map<Integer, Integer>> copy = copyMappings(Objects.requireNonNull(list, "mappings"));
         this.clear();
-        mappings.addAll(list);
+        mappings.addAll(copy);
     }
 
     /**
-     *  {@inheritDoc}
+     * Returns an iterator over independent copies of the stored mappings.
      *
+     * @return a snapshot iterator; removal affects only that snapshot
      */
     @Override
     synchronized public Iterator<Map<Integer, Integer>> getIterator() {
-        Iterator<Map<Integer, Integer>> iterator = mappings.iterator();
-        return iterator;
+        return copyMappings(mappings).iterator();
     }
 
     /**
-     *  {@inheritDoc}
+     * Removes all stored mappings from this instance.
      *
      */
     @Override
     synchronized public void clear() {
-        FinalMappings.mappings.clear();
+        mappings.clear();
     }
 
     /**
-     *  {@inheritDoc}
+     * Returns independent copies of the stored mappings.
      *
+     * @return a mutable snapshot in insertion order
      */
     @Override
     synchronized public List<Map<Integer, Integer>> getFinalMapping() {
-        return mappings;
+        return copyMappings(mappings);
+    }
+
+    private static List<Map<Integer, Integer>> copyMappings(List<Map<Integer, Integer>> source) {
+        List<Map<Integer, Integer>> copy = new ArrayList<>(source.size());
+        for (Map<Integer, Integer> mapping : source) {
+            copy.add(new HashMap<>(Objects.requireNonNull(mapping, "mapping")));
+        }
+        return copy;
     }
 
     /**
-     *  {@inheritDoc}
+     * Returns the number of stored mappings.
      *
+     * @return mapping count
      */
     @Override
     synchronized public int getSize() {

@@ -26,7 +26,18 @@ package org.openscience.cdk.smsd.global;
 
 
 /**
- * Class that manages MCS timeout.
+ * Stores the legacy MCS timeout configuration and status for one thread.
+ *
+ * <p>Configure the cutoff on the thread performing the search. Search engines
+ * capture a finite cutoff at search entry; subsequent configuration changes do
+ * not extend that active budget. Checks are cooperative and cannot interrupt
+ * user predicates. The flag records incomplete work, so a timed-out result
+ * must not be treated as a certified maximum.</p>
+ *
+ * <p>Each thread obtains its own instance. Passing an instance to another thread
+ * does not make its mutable fields safe for concurrent use.</p>
+ *
+ * @cdk.threadnonsafe
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -34,52 +45,61 @@ package org.openscience.cdk.smsd.global;
 @Deprecated
 public class TimeOut {
 
-    private static TimeOut instance    = null;
+    private static final ThreadLocal<TimeOut> INSTANCE = ThreadLocal.withInitial(TimeOut::new);
     private double         time        = -1;
     private boolean        timeOutFlag = false;
 
     /**
-     * Get Instance of the timeout. This starts the timeout counter.
-     * @return Instance
+     * Get timeout state for the calling thread. Configure the cutoff on the
+     * thread that performs the search.
+     *
+     * @return the calling thread's timeout configuration and flag
      */
-    public static synchronized TimeOut getInstance() {
-        if (instance == null) {
-            // it's ok, we can call this constructor
-            instance = new TimeOut();
-        }
-        return instance;
+    public static TimeOut getInstance() {
+        return INSTANCE.get();
     }
 
+    /** Creates disabled timeout configuration with an unset timeout flag. */
     protected TimeOut() {}
 
     /**
-     * set cutoff value for time out eg. -1 for infinite and 0.23 for
-     * 23 seconds.
-     * @param timeout
+     * Sets the cutoff in minutes for subsequent searches.
+     * Any finite negative value disables timeout checking; zero is an immediate
+     * cooperative cutoff. Changing the cutoff does not clear the timeout flag.
+     *
+     * @param timeout finite cutoff in minutes
+     * @throws IllegalArgumentException if the cutoff is not finite
      */
     public void setTimeOut(double timeout) {
+        if (!Double.isFinite(timeout)) throw new IllegalArgumentException("Timeout must be finite");
         this.time = timeout;
     }
 
     /**
-     * Return cutoff value for time out.
-     * @return time out cutoff value
+     * Returns the configured cutoff for subsequent searches.
+     *
+     * @return cutoff in minutes, or a finite negative value when disabled
      */
     public double getTimeOut() {
         return time;
     }
 
     /**
-     * Return true if its a timeout else return false.
-     * @return the timeout flag
+     * Returns the recorded status without consulting an elapsed clock.
+     *
+     * @return whether a search recorded a timeout on this thread
      */
     public boolean isTimeOutFlag() {
         return timeOutFlag;
     }
 
     /**
-     * Set true if timeout occures else false
-     * @param timeOut the timeout flag to set
+     * Sets the recorded timeout status.
+     * Engines clear the flag when beginning a validated search.
+     * This compatibility status does not replace an active engine's captured
+     * budget or request cancellation of that engine.
+     *
+     * @param timeOut whether the search exceeded its captured budget
      */
     public void setTimeOutFlag(boolean timeOut) {
         this.timeOutFlag = timeOut;

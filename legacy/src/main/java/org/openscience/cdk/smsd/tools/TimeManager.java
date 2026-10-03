@@ -22,12 +22,12 @@
  */
 package org.openscience.cdk.smsd.tools;
 
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 
 /**
- * Class that handles execution time of the MCS search.
+ * Measures elapsed duration from construction using a monotonic clock.
+ * Wall-clock adjustments do not change the reported duration. This object
+ * has no mutable state after construction and may be shared between readers.
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -35,64 +35,48 @@ import java.util.TimeZone;
 @Deprecated
 public class TimeManager {
 
-    private final double           startTime;
-    private final SimpleDateFormat dateFormat;
+    private final long startTime;
 
     /**
-     * Constructor for storing execution time
+     * Starts a new elapsed-time measurement.
      */
     public TimeManager() {
-
-        dateFormat = new SimpleDateFormat("HH:mm:ss");
-
-        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        startTime = System.currentTimeMillis();
+        startTime = System.nanoTime();
     }
 
     /**
-     * Returns Elapsed Time In Hours
-     * @return Elapsed Time In Hours
+     * Returns the elapsed duration in hours.
+     *
+     * @return elapsed hours since construction
      */
     public double getElapsedTimeInHours() {
-        double currentTime = System.currentTimeMillis();
-
-        return (currentTime - startTime) / (60 * 60 * 1000);
-
+        return getElapsedTimeInMilliSeconds() / 3600000.0;
     }
 
     /**
-     * Returns Elapsed Time In Minutes
-     * @return Elapsed Time In Minutes
+     * Returns the elapsed duration in minutes.
+     *
+     * @return elapsed minutes since construction
      */
     public double getElapsedTimeInMinutes() {
-
-        //long diffSeconds = diff / 1000;
-        //long diffMinutes = diff / (60 * 1000);
-        //long diffHours = diff / (60 * 60 * 1000);
-        //long diffDays = diff / (24 * 60 * 60 * 1000);
-
-        double currentTime = System.currentTimeMillis();
-        return (currentTime - startTime) / (60 * 1000);
-
+        return getElapsedTimeInMilliSeconds() / 60000.0;
     }
 
     /**
-     * Return Elapsed Time In Seconds
-     * @return Elapsed Time In Seconds
+     * Returns the elapsed duration in seconds.
+     *
+     * @return elapsed seconds since construction
      */
     public double getElapsedTimeInSeconds() {
-        double currentTime = System.currentTimeMillis();
-        return ((currentTime - startTime) / 1000);
-
+        return getElapsedTimeInMilliSeconds() / 1000.0;
     }
 
     /**
-     * Returns Elapsed Time In Mill Seconds
-     * @return Elapsed Time In Mill Seconds
+     * Returns the elapsed duration in milliseconds.
+     *
+     * @return elapsed milliseconds since construction
      */
     public double getElapsedTimeInMilliSeconds() {
-        double currentTime = System.currentTimeMillis();
-        return (currentTime - startTime);
-
+        return (System.nanoTime() - startTime) / 1000000.0;
     }
 }

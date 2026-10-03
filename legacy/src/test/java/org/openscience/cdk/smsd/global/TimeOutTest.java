@@ -35,6 +35,18 @@ import org.junit.jupiter.api.Test;
 class TimeOutTest {
 
     @Test
+    void rejectsNonFiniteCutoffsWithoutChangingPreviousState() {
+        TimeOut timeout = new TimeOut();
+        timeout.setTimeOut(1);
+        for (double invalid : new double[]{Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY}) {
+            Assertions.assertThrows(IllegalArgumentException.class, () -> timeout.setTimeOut(invalid));
+            Assertions.assertEquals(1, timeout.getTimeOut());
+        }
+        timeout.setTimeOut(-1);
+        Assertions.assertEquals(-1, timeout.getTimeOut());
+    }
+
+    @Test
     void testGetInstance() {
         Assertions.assertNotNull(TimeOut.getInstance());
     }

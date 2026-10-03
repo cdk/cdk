@@ -29,7 +29,17 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
- * Class to handle mappings of query molecule.
+ * Partitions source bonds for one McGregor extension step and propagates
+ * mapped-atom identity labels to the corresponding graph. Input/output lists
+ * are borrowed and mutated in place: integer bond records contain endpoint
+ * indices and order, label records contain two endpoint labels and two backups,
+ * and atom mappings contain source/target pairs in stable order.
+ *
+ * <p>Each mapped pair uses its own unique $-prefixed label. Extended mappings
+ * must retain the seed prefix, sign arrays must cover all mapped pairs, and
+ * graph/table sizes and indices must already be valid. These internal helpers
+ * do not prepare chemistry, apply stereo filters or check deadlines. Their
+ * mutable instances and tables are not safe for concurrent or reentrant use.</p>
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -39,6 +49,7 @@ public class QueryProcessor {
 
     private final List<String>  cTab1Copy;
     private final List<String>  cTab2Copy;
+    // Mapping pairs retain their positions when extension appends new pairs.
     private final String[]      signs;
     private int           neighborBondNumA; //number of remaining molecule A bonds after the clique search, which are neighbors of the MCS_1
     private int           setBondNumA; //number of remaining molecule A bonds after the clique search, which aren't neighbors
@@ -49,17 +60,17 @@ public class QueryProcessor {
     private final List<String>  newCNeighborsA;
 
     /**
-     * Query molecule
-     * @param cTab1Copy
-     * @param cTab2Copy
-     * @param signArray
-     * @param neighborBondnumA
-     * @param setBondnumA
-     * @param iBondNeighborsA
-     * @param cBondNeighborsA
-     * @param mappingSize
-     * @param iBondSetA
-     * @param cBondSetA
+     * Constructs a source bond processor over aligned borrowed tables.
+     * @param cTab1Copy borrowed mutable source four-entry endpoint-label/backup records
+     * @param cTab2Copy borrowed mutable target four-entry endpoint-label/backup records
+     * @param signArray unique $-prefixed mapped identity labels indexed by stable atom-pair position
+     * @param neighborBondnumA initial source boundary-bond count
+     * @param setBondnumA initial source remaining-bond count
+     * @param iBondNeighborsA mutable output source endpoint/order triples
+     * @param cBondNeighborsA mutable output source endpoint-label/backup records
+     * @param mappingSize number of mapped source/target atom pairs
+     * @param iBondSetA mutable source remaining-bond endpoint/order triples
+     * @param cBondSetA mutable source remaining-bond endpoint-label/backup records
      */
     protected QueryProcessor(List<String> cTab1Copy, List<String> cTab2Copy, String[] signArray,
             int neighborBondnumA, int setBondnumA, List<Integer> iBondNeighborsA, List<String> cBondNeighborsA,
@@ -78,17 +89,16 @@ public class QueryProcessor {
     }
 
     /**
-     *
-     * @param query
-     * @param target
-     * @param unmappedAtomsMolA
-     * @param mappedAtoms
-     * @param counter
+     * Partitions source bonds and propagates stable mapped-atom labels.
+     * @param query simple source graph, including per-atom/per-bond query predicates
+     * @param target simple target graph
+     * @param unmappedAtomsMolA unmapped source atom indices
+     * @param mappedAtoms flattened source/target atom pairs in stable order
+     * @param counter legacy compatibility value; labels use stable atom-pair positions
      */
     protected void process(IAtomContainer query, IAtomContainer target, List<Integer> unmappedAtomsMolA,
             List<Integer> mappedAtoms, int counter) {
 
-        int unmappedNumA = unmappedAtomsMolA.size();
         boolean bondConsidered = false;
         boolean normalBond = true;
 
@@ -98,7 +108,8 @@ public class QueryProcessor {
 
             Integer indexI = query.indexOf(query.getBond(atomIndex).getBegin());
             Integer indexJ = query.indexOf(query.getBond(atomIndex).getEnd());
-            Integer order = query.getBond(atomIndex).getOrder().numeric();
+            Integer order = query.getBond(atomIndex).getOrder() == null
+                    ? 0 : query.getBond(atomIndex).getOrder().numeric();
 
             //            System.out.println(AtomI + "= , =" + AtomJ );
             for (Integer integer : unmappedAtomsMolA) {
@@ -124,62 +135,28 @@ public class QueryProcessor {
     }
 
     /**
-     *
-     * @param query
-     * @param target
-     * @param unmappedAtomsMolA
-     * @param mappedAtoms
-     * @param counter
+     * Partitions source bonds and propagates stable mapped-atom labels.
+     * @param query simple source graph, including per-atom/per-bond query predicates
+     * @param target simple target graph
+     * @param unmappedAtomsMolA unmapped source atom indices
+     * @param mappedAtoms flattened source/target atom pairs in stable order
+     * @param counter legacy compatibility value; labels use stable atom-pair positions
      */
     protected void process(IQueryAtomContainer query, IAtomContainer target, List<Integer> unmappedAtomsMolA,
             List<Integer> mappedAtoms, int counter) {
 
-        int unmappedNumA = unmappedAtomsMolA.size();
-        boolean bondConsidered = false;
-        boolean normalBond = true;
-
-        //        System.out.println("\n" + cTab1Copy + "\n");
-
-        for (int atomIndex = 0; atomIndex < query.getBondCount(); atomIndex++) {
-            Integer indexI = query.indexOf(query.getBond(atomIndex).getBegin());
-            Integer indexJ = query.indexOf(query.getBond(atomIndex).getEnd());
-            Integer order = 0;
-            if (query.getBond(atomIndex).getOrder() != null) {
-                order = query.getBond(atomIndex).getOrder().numeric();
-            }
-
-            //            System.out.println(AtomI + "= , =" + AtomJ );
-            for (Integer integer : unmappedAtomsMolA) {
-
-                if (integer.equals(indexI)) {
-                    normalBond = unMappedAtomsEqualsIndexJ(query, target, atomIndex, counter, mappedAtoms, indexI,
-                            indexJ, order);
-                    bondConsidered = true;
-                } else //Does a ungemaptes atom at second position in the connection occur?
-                    if (integer.equals(indexJ)) {
-                        normalBond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mappedAtoms, indexI,
-                                indexJ, order);
-                        bondConsidered = true;
-                    }
-                if (normalBond && bondConsidered) {
-                    markNormalBonds(atomIndex, indexI, indexJ, order);
-                    normalBond = true;
-                    break;
-                }
-            }
-            bondConsidered = false;
-        }
+        process((IAtomContainer) query, target, unmappedAtomsMolA, mappedAtoms, counter);
     }
 
     /**
-     *
-     * @param setNumA
-     * @param setNumB
-     * @param iBondSetA
-     * @param iBondSetB
-     * @param unmappedAtomsMolA
-     * @param newMapping
-     * @param counter
+     * Partitions source bonds and propagates stable mapped-atom labels.
+     * @param setNumA number of source remaining-bond records
+     * @param setNumB number of target remaining-bond records
+     * @param iBondSetA mutable source remaining-bond endpoint/order triples
+     * @param iBondSetB target remaining-bond endpoint/order triples
+     * @param unmappedAtomsMolA unmapped source atom indices
+     * @param newMapping flattened extended source/target atom pairs preserving the seed prefix
+     * @param counter legacy compatibility value; labels use stable atom-pair positions
      */
     protected void process(int setNumA, int setNumB, List<Integer> iBondSetA, List<Integer> iBondSetB,
             List<Integer> unmappedAtomsMolA, List<Integer> newMapping, int counter) {
@@ -215,23 +192,6 @@ public class QueryProcessor {
             }
             bondConsidered = false;
         }
-    }
-
-    private int searchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule,
-            List<Integer> mappedAtomsOrg) {
-
-        List<Integer> mappedAtoms = new ArrayList<>(mappedAtomsOrg);
-
-        int correspondingAtom = 0;
-        for (int a = 0; a < mappedAtomsSize; a++) {
-            if ((molecule == 1) && (mappedAtoms.get(a * 2 + 0) == atomFromOtherMolecule)) {
-                correspondingAtom = mappedAtoms.get(a * 2 + 1);
-            }
-            if ((molecule == 2) && (mappedAtoms.get(a * 2 + 1) == atomFromOtherMolecule)) {
-                correspondingAtom = mappedAtoms.get(a * 2 + 0);
-            }
-        }
-        return correspondingAtom;
     }
 
     private void markNormalBonds(int atomIndex, Integer indexI, Integer indexJ, Integer order) {
@@ -282,12 +242,11 @@ public class QueryProcessor {
                 setBondNeighbors(indexI, indexJ, order);
                 if (cTab1Copy.get(atomIndex * 4 + 3).compareToIgnoreCase("X") == 0) {
 
-                    step1(atomIndex, counter);
-                    McGregorChecks.changeCharBonds(indexI, signs[counter], query.getBondCount(), query, cTab1Copy);
+                    step1(atomIndex, c);
+                    McGregorChecks.changeCharBonds(indexJ, signs[c], query.getBondCount(), query, cTab1Copy);
 
-                    int corAtom = searchCorrespondingAtom(newNeighborNumA, indexI, 1, mappedAtoms);
-                    McGregorChecks.changeCharBonds(corAtom, signs[counter], target.getBondCount(), target, cTab2Copy);
-                    counter++;
+                    int corAtom = McGregorChecks.searchCorrespondingAtom(newNeighborNumA, indexJ, 1, mappedAtoms);
+                    McGregorChecks.changeCharBonds(corAtom, signs[c], target.getBondCount(), target, cTab2Copy);
                 } else {
                     step2(atomIndex);
                 }
@@ -307,12 +266,11 @@ public class QueryProcessor {
             if (mappedAtoms.get(c * 2 + 0).equals(indexI)) {
                 setBondNeighbors(indexI, indexJ, order);
                 if (cTab1Copy.get(atomIndex * 4 + 2).compareToIgnoreCase("X") == 0) {
-                    step3(atomIndex, counter);
-                    McGregorChecks.changeCharBonds(indexJ, signs[counter], query.getBondCount(), query, cTab1Copy);
+                    step3(atomIndex, c);
+                    McGregorChecks.changeCharBonds(indexI, signs[c], query.getBondCount(), query, cTab1Copy);
 
-                    int corAtom = searchCorrespondingAtom(newNeighborNumA, indexJ, 1, mappedAtoms);
-                    McGregorChecks.changeCharBonds(corAtom, signs[counter], target.getBondCount(), target, cTab2Copy);
-                    counter++;
+                    int corAtom = McGregorChecks.searchCorrespondingAtom(newNeighborNumA, indexI, 1, mappedAtoms);
+                    McGregorChecks.changeCharBonds(corAtom, signs[c], target.getBondCount(), target, cTab2Copy);
                 } else {
                     step4(atomIndex);
                 }
@@ -335,11 +293,10 @@ public class QueryProcessor {
 
                 setBondNeighbors(indexI, indexJ, order);
                 if (cTab1Copy.get(atomIndex * 4 + 3).compareToIgnoreCase("X") == 0) {
-                    step1(atomIndex, counter);
-                    McGregorChecks.changeCharBonds(indexI, signs[counter], setNumA, iBondSetA, cTab1Copy);
-                    int corAtom = McGregorChecks.searchCorrespondingAtom(newNeighborNumA, indexI, 1, newMapping);
-                    McGregorChecks.changeCharBonds(corAtom, signs[counter], setNumB, iBondSetB, cTab2Copy);
-                    counter++;
+                    step1(atomIndex, c);
+                    McGregorChecks.changeCharBonds(indexJ, signs[c], setNumA, iBondSetA, cTab1Copy);
+                    int corAtom = McGregorChecks.searchCorrespondingAtom(newNeighborNumA, indexJ, 1, newMapping);
+                    McGregorChecks.changeCharBonds(corAtom, signs[c], setNumB, iBondSetB, cTab2Copy);
 
                 } else {
                     step2(atomIndex);
@@ -361,11 +318,10 @@ public class QueryProcessor {
 
                 setBondNeighbors(indexI, indexJ, order);
                 if (cTab1Copy.get(atomIndex * 4 + 2).compareToIgnoreCase("X") == 0) {
-                    step3(atomIndex, counter);
-                    McGregorChecks.changeCharBonds(indexJ, signs[counter], setNumA, iBondSetA, cTab1Copy);
-                    int corAtom = McGregorChecks.searchCorrespondingAtom(newNeighborNumA, indexJ, 1, newMapping);
-                    McGregorChecks.changeCharBonds(corAtom, signs[counter], setNumB, iBondSetB, cTab2Copy);
-                    counter++;
+                    step3(atomIndex, c);
+                    McGregorChecks.changeCharBonds(indexI, signs[c], setNumA, iBondSetA, cTab1Copy);
+                    int corAtom = McGregorChecks.searchCorrespondingAtom(newNeighborNumA, indexI, 1, newMapping);
+                    McGregorChecks.changeCharBonds(corAtom, signs[c], setNumB, iBondSetB, cTab2Copy);
                 } else {
                     step4(atomIndex);
                 }
@@ -385,35 +341,32 @@ public class QueryProcessor {
     }
 
     /**
-     *
-     * @return cTabQuery copy
+     * Returns the mutable source bond-label table.
+     * @return the borrowed source endpoint-label/backup records
      */
     protected List<String> getCTab1() {
         return this.cTab1Copy;
     }
 
     /**
-     *
-     * @return cTabTarget Copy
+     * Returns the mutable target bond-label table.
+     * @return the borrowed target endpoint-label/backup records
      */
     protected List<String> getCTab2() {
         return this.cTab2Copy;
     }
 
     /**
-     *
-     * @return number of remaining molecule A bonds after the clique search,
-     * which are neighbors of the MCS
-     *
+     * Returns the number of source bonds bordering the current mapping.
+     * @return source boundary-bond count
      */
     protected int getNeighborBondNumA() {
         return this.neighborBondNumA;
     }
 
     /**
-     *
-     * @return number of remaining molecule A bonds after the clique search,
-     * which aren't neighbors
+     * Returns the number of source bonds remaining outside the boundary.
+     * @return source remaining-bond count
      */
     protected int getBondNumA() {
         return this.setBondNumA;

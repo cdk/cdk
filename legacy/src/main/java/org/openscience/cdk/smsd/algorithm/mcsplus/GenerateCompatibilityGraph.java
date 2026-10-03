@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.IdentityHashMap;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -35,12 +37,23 @@ import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.BondMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultMCSPlusAtomMatcher;
-import org.openscience.cdk.smsd.algorithm.matchers.DefaultMatcher;
 import org.openscience.cdk.smsd.helper.LabelContainer;
 
 /**
- * This class generates compatibility graph between query and target molecule.
- * It also markes edges in the compatibility graph as c-edges or d-edges.
+ * Generates the legacy compatibility graph of directional source/target atom
+ * pairs. A c-edge joins pairs with compatible bonds on both molecules; a d-edge
+ * joins pairs with no bond on either molecule. This helper alone does not
+ * enumerate connected common subgraphs that permit bond deletion.
+ *
+ * <p>The helper is mutable and not thread safe. Containers and chemical
+ * payloads remain borrowed and must not change during graph generation. Inputs
+ * are expected to be simple graphs: loops, parallel/multicentre bonds and
+ * foreign endpoints are unsupported. This legacy helper does not perform the
+ * complete topology validation of the VF graph compiler and snapshots.</p>
+ *
+ * <p>Read-only list getters expose live views, while the protected labeled-node
+ * getter retains its legacy mutable view. Callers should copy lists needed
+ * beyond a rebuild or release of this helper.</p>
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -59,18 +72,20 @@ public final class GenerateCompatibilityGraph {
     private boolean        shouldMatchBonds    = false;
 
     /**
-    * Default constructor added
+    * Create an uninitialized legacy helper. Graph-building and getter methods
+    * require an instance created with the molecular constructor; bond-policy
+    * accessors remain usable on this uninitialized instance.
     */
     public GenerateCompatibilityGraph() {
 
     }
 
     /**
-     * Generates a compatibility graph between two molecules
-     * @param source
-     * @param target
-     * @param shouldMatchBonds
-     * @throws java.io.IOException
+     * Generate atom-pair nodes and compatibility edges for two molecules.
+     * @param source borrowed source molecule containing directional predicates
+     * @param target borrowed target molecule
+     * @param shouldMatchBonds whether ordinary bond chemistry must match
+     * @throws IOException retained by the legacy graph-generation contract
      */
     public GenerateCompatibilityGraph(IAtomContainer source, IAtomContainer target, boolean shouldMatchBonds)
             throws IOException {
@@ -84,330 +99,193 @@ public final class GenerateCompatibilityGraph {
         compatibilityGraphNodes();
         compatibilityGraph();
 
-        if (getCEdgesSize() == 0) {
-            clearCompGraphNodes();
-
-            clearCEgdes();
-            clearDEgdes();
-
-            resetCEdgesSize();
-            resetDEdgesSize();
-
-            compatibilityGraphNodesIfCEdgeIsZero();
-            compatibilityGraphCEdgeZero();
-            clearCompGraphNodesCZero();
-        }
-    }
-
-    private List<List<Integer>> labelAtoms(IAtomContainer atomCont) {
-        List<List<Integer>> labelList = new ArrayList<>();
-
-        for (int i = 0; i < atomCont.getAtomCount(); i++) {
-            LabelContainer labelContainer = LabelContainer.getInstance();
-            ArrayList<Integer> label = new ArrayList<>(7);
-            //            label.setSize(7);
-
-            for (int a = 0; a < 7; a++) {
-                label.add(a, 0);
-            }
-
-            IAtom refAtom = atomCont.getAtom(i);
-            String atom1Type = refAtom.getSymbol();
-
-            label.set(0, labelContainer.getLabelID(atom1Type));
-
-            int countNeighbors = 1;
-            List<IAtom> connAtoms = atomCont.getConnectedAtomsList(refAtom);
-
-            for (IAtom negAtom : connAtoms) {
-                String atom2Type = negAtom.getSymbol();
-                label.set(countNeighbors++, labelContainer.getLabelID(atom2Type));
-            }
-
-            bubbleSort(label);
-            labelList.add(label);
-
-        }
-        return labelList;
-    }
-
-    private void bubbleSort(List<Integer> label) {
-
-        boolean flag = true; // set flag to 1 to begin initial pass
-
-        int temp; // holding variable
-
-        for (int i = 0; i < 7 && flag; i++) {
-            flag = false;
-            for (int j = 0; j < 6; j++) {
-                if (label.get(i) > label.get(j + 1)) {
-                    // descending order simply changes to >
-                    temp = label.get(i); // swap elements
-
-                    label.set(i, label.get(j + 1));
-                    label.set(j + 1, temp);
-                    flag = true; // indicates that iIndex swap occurred.
-                }
-            }
-        }
-    }
-
-    private List<IAtom> reduceAtomSet(IAtomContainer atomCont) {
-
-        List<IAtom> basicAtoms = new ArrayList<>();
-        for (IAtom atom : atomCont.atoms()) {
-            basicAtoms.add(atom);
-        }
-        return basicAtoms;
     }
 
     /**
-     * Generate Compatibility Graph Nodes
-     *
-     * @return
-     * @throws IOException
+     * Rebuild compatible atom pairs as source-index/target-index/vertex triples.
+     * @return legacy success status, always zero
+     * @throws IOException retained by the legacy graph-generation contract
      */
     protected int compatibilityGraphNodes() throws IOException {
 
-        compGraphNodes.clear();
-        List<IAtom> basicAtomVecA;
-        List<IAtom> basicAtomVecB;
-        IAtomContainer reactant = source;
-        IAtomContainer product = target;
-
-        basicAtomVecA = reduceAtomSet(reactant);
-        basicAtomVecB = reduceAtomSet(product);
-
-        List<List<Integer>> labelListMolA = labelAtoms(reactant);
-        List<List<Integer>> labelListMolB = labelAtoms(product);
-
-        int molANodes = 0;
-        int countNodes = 1;
-
-        for (List<Integer> labelA : labelListMolA) {
-            int molBNodes = 0;
-            for (List<Integer> labelB : labelListMolB) {
-                if (labelA.equals(labelB)) {
-                    compGraphNodes.add(reactant.indexOf(basicAtomVecA.get(molANodes)));
-                    compGraphNodes.add(product.indexOf(basicAtomVecB.get(molBNodes)));
-                    compGraphNodes.add(countNodes++);
-                }
-                molBNodes++;
-            }
-            molANodes++;
-        }
+        buildNodes(false);
         return 0;
     }
 
-    /**
-     * Generate Compatibility Graph Nodes Bond Insensitive
-     *
-     * @return
-     * @throws IOException
-     */
-    protected int compatibilityGraph() throws IOException {
-        int compGraphNodesListSize = compGraphNodes.size();
-
-        cEdges = new ArrayList<>(); //Initialize the cEdges List
-        dEdges = new ArrayList<>(); //Initialize the dEdges List
-
-        for (int a = 0; a < compGraphNodesListSize; a += 3) {
-            int indexA = compGraphNodes.get(a);
-            int indexAPlus1 = compGraphNodes.get(a + 1);
-
-            for (int b = a + 3; b < compGraphNodesListSize; b += 3) {
-                int indexB = compGraphNodes.get(b);
-                int indexBPlus1 = compGraphNodes.get(b + 1);
-
-                // if element atomCont !=jIndex and atoms on the adjacent sides of the bonds are not equal
-                if (a != b && indexA != indexB && indexAPlus1 != indexBPlus1) {
-
-                    IBond reactantBond;
-                    IBond productBond;
-
-                    reactantBond = source.getBond(source.getAtom(indexA), source.getAtom(indexB));
-                    productBond = target.getBond(target.getAtom(indexAPlus1), target.getAtom(indexBPlus1));
-                    if (reactantBond != null && productBond != null) {
-                        addEdges(reactantBond, productBond, a, b);
-                    }
-                }
-            }
-        }
-        cEdgesSize = cEdges.size();
-        dEdgesSize = dEdges.size();
-        return 0;
-    }
-
-    private void addEdges(IBond reactantBond, IBond productBond, int iIndex, int jIndex) {
-        //if (isMatchBond() && bondMatch(ReactantBond, ProductBond)) {
-        if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
-            cEdges.add((iIndex / 3) + 1);
-            cEdges.add((jIndex / 3) + 1);
-        } else if (reactantBond == null && productBond == null) {
-            dEdges.add((iIndex / 3) + 1);
-            dEdges.add((jIndex / 3) + 1);
-        }
-    }
-
-    /**
-     * compGraphNodesCZero is used to build up of the edges of the compatibility graph
-     * @return
-     * @throws IOException
-     */
-    protected Integer compatibilityGraphNodesIfCEdgeIsZero() throws IOException {
-
-        int countNodes = 1;
-        List<String> map = new ArrayList<>();
-        compGraphNodesCZero = new ArrayList<>(); //Initialize the compGraphNodesCZero List
-        LabelContainer labelContainer = LabelContainer.getInstance();
+    private int buildNodes(boolean includeLabels) {
         compGraphNodes.clear();
-
+        compGraphNodesCZero.clear();
+        int countNodes = 1;
         for (int i = 0; i < source.getAtomCount(); i++) {
+            AtomMatcher matcher = new DefaultMCSPlusAtomMatcher(source, source.getAtom(i), shouldMatchBonds);
             for (int j = 0; j < target.getAtomCount(); j++) {
-                IAtom atom1 = source.getAtom(i);
-                IAtom atom2 = target.getAtom(j);
-
-                //You can also check object equal or charge, hydrogen count etc
-
-                if (atom1.getAtomicNumber().equals(atom2.getAtomicNumber()) && (!map.contains(i + "_" + j))) {
+                // Original neighborhoods are not a valid MCS pruning rule:
+                // atoms may lose neighbors in the common substructure.
+                if (!matcher.matches(target, target.getAtom(j))) continue;
+                compGraphNodes.add(i);
+                compGraphNodes.add(j);
+                compGraphNodes.add(countNodes);
+                if (includeLabels) {
                     compGraphNodesCZero.add(i);
                     compGraphNodesCZero.add(j);
-                    compGraphNodesCZero.add(labelContainer.getLabelID(atom1.getSymbol())); //i.e C is label 1
+                    String symbol = source.getAtom(i).getSymbol();
+                    compGraphNodesCZero.add(symbol == null ? 0 : LabelContainer.getInstance().getLabelID(symbol));
                     compGraphNodesCZero.add(countNodes);
-                    compGraphNodes.add(i);
-                    compGraphNodes.add(j);
-                    compGraphNodes.add(countNodes++);
-                    map.add(i + "_" + j);
                 }
+                countNodes++;
             }
         }
-        map.clear();
         return countNodes;
     }
 
     /**
-     * compatibilityGraphCEdgeZero is used to
-     * build up of the edges of the
-     * compatibility graph BIS
-     * @return
-     * @throws IOException
+     * Rebuild c-edges and d-edges from the ordinary atom-pair triples.
+     * @return legacy success status, always zero
+     * @throws IOException retained by the legacy graph-generation contract
      */
-    protected int compatibilityGraphCEdgeZero() throws IOException {
-
-        int compGraphNodesCZeroListSize = compGraphNodesCZero.size();
-        cEdges = new ArrayList<>(); //Initialize the cEdges List
-        dEdges = new ArrayList<>(); //Initialize the dEdges List
-
-        for (int a = 0; a < compGraphNodesCZeroListSize; a += 4) {
-            int indexA = compGraphNodesCZero.get(a);
-            int indexAPlus1 = compGraphNodesCZero.get(a + 1);
-            for (int b = a + 4; b < compGraphNodesCZeroListSize; b += 4) {
-                int indexB = compGraphNodesCZero.get(b);
-                int indexBPlus1 = compGraphNodesCZero.get(b + 1);
-
-                // if element atomCont !=jIndex and atoms on the adjacent sides of the bonds are not equal
-                if ((a != b) && (indexA != indexB) && (indexAPlus1 != indexBPlus1)) {
-
-                    IBond reactantBond;
-                    IBond productBond;
-
-                    reactantBond = source.getBond(source.getAtom(indexA), source.getAtom(indexB));
-                    productBond = target.getBond(target.getAtom(indexAPlus1), target.getAtom(indexBPlus1));
-
-                    if (reactantBond != null && productBond != null) {
-                        addCZeroEdges(reactantBond, productBond, a, b);
-                    }
-
-                }
-            }
-        }
-
-        //Size of C and D edges of the compatibility graph
-        cEdgesSize = cEdges.size();
-        dEdgesSize = dEdges.size();
+    protected int compatibilityGraph() throws IOException {
+        buildEdges(compGraphNodes, 3);
         return 0;
     }
 
-    private void addCZeroEdges(IBond reactantBond, IBond productBond, int indexI, int indexJ) {
-        if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
-            //bondMatch(reactantBond, productBond)
-            cEdges.add((indexI / 4) + 1);
-            cEdges.add((indexJ / 4) + 1);
-        }
-        if (reactantBond == null && productBond == null) {
-            dEdges.add((indexI / 4) + 1);
-            dEdges.add((indexJ / 4) + 1);
-        }
+    /**
+     * Rebuild compatible atom pairs and the legacy labeled quadruple view.
+     * @return next unused vertex identifier after the generated nodes
+     * @throws IOException retained by the legacy graph-generation contract
+     */
+    protected Integer compatibilityGraphNodesIfCEdgeIsZero() throws IOException {
+        return buildNodes(true);
     }
 
-    private static boolean isMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2,
-            boolean shouldMatchBonds) {
-
-        if (bondA1 == null)
-            return false;
-
-        //Bond Matcher
-        BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
-        //Atom Matcher
-        AtomMatcher atomMatcher1 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getBegin(), shouldMatchBonds);
-        //Atom Matcher
-        AtomMatcher atomMatcher2 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getEnd(), shouldMatchBonds);
-
-        if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
-                && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {
-            return true;
-        }
-        return false;
+    /**
+     * Rebuild compatibility edges from the labeled quadruple node view.
+     * @return legacy success status, always zero
+     * @throws IOException retained by the legacy graph-generation contract
+     */
+    protected int compatibilityGraphCEdgeZero() throws IOException {
+        buildEdges(compGraphNodesCZero, 4);
+        return 0;
     }
 
+    private void buildEdges(List<Integer> nodes, int stride) {
+        cEdges.clear();
+        dEdges.clear();
+        Map<IBond, BondMatcher> bondMatchers = new IdentityHashMap<>();
+        for (int a = 0; a < nodes.size(); a += stride) {
+            int sourceA = nodes.get(a);
+            int targetA = nodes.get(a + 1);
+            for (int b = a + stride; b < nodes.size(); b += stride) {
+                int sourceB = nodes.get(b);
+                int targetB = nodes.get(b + 1);
+                if (sourceA == sourceB || targetA == targetB) continue;
+                IBond sourceBond = source.getBond(source.getAtom(sourceA), source.getAtom(sourceB));
+                IBond targetBond = target.getBond(target.getAtom(targetA), target.getAtom(targetB));
+                List<Integer> edges;
+                if (sourceBond == null && targetBond == null) {
+                    edges = dEdges;
+                } else if (sourceBond != null && targetBond != null) {
+                    BondMatcher matcher = bondMatchers.get(sourceBond);
+                    if (matcher == null) {
+                        matcher = new DefaultBondMatcher(source, sourceBond, shouldMatchBonds);
+                        bondMatchers.put(sourceBond, matcher);
+                    }
+                    if (!matcher.matches(target, targetBond)) continue;
+                    edges = cEdges;
+                } else {
+                    continue;
+                }
+                edges.add(nodes.get(a + stride - 1));
+                edges.add(nodes.get(b + stride - 1));
+            }
+        }
+        cEdgesSize = cEdges.size();
+        dEdgesSize = dEdges.size();
+    }
+
+    /**
+     * Return the read-only live c-edge endpoint pairs.
+     * @return flattened vertex identifier pairs
+     */
     public List<Integer> getCEgdes() {
         return Collections.unmodifiableList(cEdges);
     }
 
+    /**
+     * Return the read-only live d-edge endpoint pairs.
+     * @return flattened vertex identifier pairs
+     */
     protected List<Integer> getDEgdes() {
         return Collections.unmodifiableList(dEdges);
     }
 
+    /**
+     * Return the read-only live atom-pair node triples.
+     * @return flattened source-index/target-index/vertex triples
+     */
     protected List<Integer> getCompGraphNodes() {
         return Collections.unmodifiableList(compGraphNodes);
     }
 
+    /**
+     * Return the cached size of the flattened c-edge list.
+     * @return endpoint integer count, twice the number of edges
+     */
     protected int getCEdgesSize() {
         return cEdgesSize;
     }
 
+    /**
+     * Return the cached size of the flattened d-edge list.
+     * @return endpoint integer count, twice the number of edges
+     */
     protected int getDEdgesSize() {
         return dEdgesSize;
     }
 
+    /**
+     * Return the legacy mutable live labeled atom-pair view.
+     * @return flattened source-index/target-index/label/vertex quadruples
+     */
     protected List<Integer> getCompGraphNodesCZero() {
         return compGraphNodesCZero;
     }
 
+    /** Empty c-edge endpoints without resetting their cached size. */
     protected void clearCEgdes() {
         cEdges.clear();
     }
 
+    /** Empty d-edge endpoints without resetting their cached size. */
     protected void clearDEgdes() {
         dEdges.clear();
     }
 
+    /** Empty the ordinary atom-pair triples. */
     protected void clearCompGraphNodes() {
         compGraphNodes.clear();
     }
 
+    /** Empty the legacy labeled atom-pair quadruples. */
     protected void clearCompGraphNodesCZero() {
         compGraphNodesCZero.clear();
     }
 
+    /** Reset the cached c-edge endpoint count without changing the list. */
     protected void resetCEdgesSize() {
         cEdgesSize = 0;
     }
 
+    /** Reset the cached d-edge endpoint count without changing the list. */
     protected void resetDEdgesSize() {
         dEdgesSize = 0;
     }
 
+    /**
+     * Release graph list references, leaving this legacy helper uninitialized.
+     * Previously returned views retain their backing lists; cached sizes and
+     * bond policy are unchanged. Graph access or rebuilding requires initialized
+     * lists and is unsupported after this release.
+     */
     public void clear() {
         cEdges = null;
         dEdges = null;
@@ -416,14 +294,17 @@ public final class GenerateCompatibilityGraph {
     }
 
     /**
-     * @return the shouldMatchBonds
+     * Return the ordinary bond matching policy for future graph generation.
+     * @return whether ordinary bond chemistry must match
      */
     public boolean isMatchBond() {
         return shouldMatchBonds;
     }
 
     /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
+     * Set the ordinary bond matching policy for subsequent graph rebuilding.
+     * Existing encoded edges are unchanged until rebuilt.
+     * @param shouldMatchBonds whether ordinary bond chemistry must match
      */
     public void setMatchBond(boolean shouldMatchBonds) {
         this.shouldMatchBonds = shouldMatchBonds;

@@ -238,4 +238,42 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
         Assertions.assertEquals(7, smsd1.getFirstMapping().size());
     }
+    @Test
+    void creatingAnotherHandlerPreservesResults() throws Exception {
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        VFlibMCSHandler first = new VFlibMCSHandler();
+        first.set(new MolHandler(parser.parseSmiles("CC"), true, true),
+                  new MolHandler(parser.parseSmiles("CCC"), true, true));
+        first.searchMCS(true);
+        Assertions.assertEquals(2, first.getFirstMapping().size());
+        java.util.Map<Integer, Integer> expected = new java.util.TreeMap<>(first.getFirstMapping());
+        int count = first.getAllMapping().size();
+        VFlibMCSHandler second = new VFlibMCSHandler();
+        Assertions.assertTrue(second.getFirstMapping().isEmpty());
+        Assertions.assertEquals(expected, first.getFirstMapping());
+        Assertions.assertEquals(2, first.getFirstAtomMapping().size());
+        Assertions.assertEquals(count, first.getAllMapping().size());
+        Assertions.assertEquals(count, first.getAllAtomMapping().size());
+        second.set(new MolHandler(parser.parseSmiles("NN"), true, true),
+                   new MolHandler(parser.parseSmiles("NNN"), true, true));
+        second.searchMCS(true);
+        Assertions.assertEquals(2, second.getFirstMapping().size());
+        Assertions.assertEquals(expected, first.getFirstMapping());
+        Assertions.assertTrue(first.getFirstAtomMapping().keySet().stream()
+                .allMatch(atom -> "C".equals(atom.getSymbol())));
+    }
+
+    @Test
+    void mapsLargerSourceBackToOriginalAtomIndices() throws Exception {
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        VFlibMCSHandler handler = new VFlibMCSHandler();
+        handler.set(new MolHandler(parser.parseSmiles("CCC"), true, true),
+                    new MolHandler(parser.parseSmiles("CC"), true, true));
+        handler.searchMCS(true);
+        Assertions.assertEquals(2, handler.getFirstMapping().size());
+        Assertions.assertTrue(handler.getAllMapping().stream()
+                .allMatch(mapping -> mapping.size() == 2));
+        Assertions.assertEquals(2, handler.getFirstAtomMapping().size());
+    }
+
 }
