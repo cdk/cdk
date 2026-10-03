@@ -74,10 +74,7 @@ public enum TemplateHandler3D {
     private final List<IQueryAtomContainer> queries   = new ArrayList<>();
     private final List<Pattern>             patterns  = new ArrayList<>();
 
-    private static TemplateHandler3D self = null;
-
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
-
 
     public static TemplateHandler3D getInstance() {
         return INSTANCE;
