@@ -766,11 +766,16 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         // if there was a mass difference, set the mass number
         if (massDiff != 0 && atom.getAtomicNumber() > 0) {
+            // TODO: Ctab doesn't actually use major isotopes but
+            //       rather a fixed table, we should put that in
             IIsotope majorIsotope = Isotopes.getInstance().getMajorIsotope(atom.getAtomicNumber());
-            if (majorIsotope == null)
-                atom.setMassNumber(-1); // checked after M ISO is processed
-            else
+            if (majorIsotope == null) {
+                handleError("Ignored relative mass number (no major isotope) " + atom.getSymbol() + line);
+            } else if (majorIsotope.getMassNumber() + massDiff < 0) {
+                handleError("Relative mass number is negative " + atom.getSymbol() + " " + massDiff + line);
+            } else {
                 atom.setMassNumber(majorIsotope.getMassNumber() + massDiff);
+            }
         }
 
         if (valence > 0 && valence < 16) atom.setValency(valence == 15 ? 0 : valence);
@@ -1090,9 +1095,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     count = readUInt(line, 6, 3);
                     for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
                         index = readMolfileInt(line, st) - 1;
+                        if (index >= nAtoms) {
+                            handleError("M ISO ignored invalid atom index" + line);
+                            continue;
+                        }
                         int mass = readMolfileInt(line, st + 4);
                         if (mass < 0)
-                            handleError("Absolute mass number should be >= 0, " + line);
+                            handleError("M ISO ignored negative absolute mass number, " + line);
                         else
                             container.getAtom(offset + index).setMassNumber(mass);
                       }
@@ -1443,14 +1452,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // version stamp in the counts line.
                 case M_END:
                     break LINES;
-            }
-        }
-
-        // check of ill specified atomic mass
-        for (IAtom atom : container.atoms()) {
-            if (atom.getMassNumber() != null && atom.getMassNumber() < 0) {
-              handleError("Unstable use of mass delta on " + atom.getSymbol() + " please use M  ISO");
-              atom.setMassNumber(null);
             }
         }
 
@@ -1928,8 +1929,16 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 try {
                     int massDiff = Integer.parseInt(massDiffString);
                     if (massDiff != 0) {
+                        // TODO: Ctab doesn't actually use major isotopes but
+                        //       rather a fixed table, we should put that in
                         IIsotope major = Isotopes.getInstance().getMajorIsotope(element);
-                        atom.setMassNumber(major.getMassNumber() + massDiff);
+                        if (major == null) {
+                            handleError("Ignored relative mass number (no major isotope) " + atom.getSymbol() + line);
+                        } else if (major.getMassNumber() + massDiff < 0) {
+                            handleError("Relative mass number is negative " + atom.getSymbol() + " " + massDiff + line);
+                        } else {
+                            atom.setMassNumber(major.getMassNumber() + massDiff);
+                        }
                     }
                 } catch (NumberFormatException | IOException exception) {
                     handleError("Could not parse mass difference field.", linecount, 35, 37, exception);
