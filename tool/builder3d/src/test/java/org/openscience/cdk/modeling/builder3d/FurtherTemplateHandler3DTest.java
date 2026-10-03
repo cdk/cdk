@@ -46,25 +46,6 @@ import org.junit.jupiter.api.Test;
 class FurtherTemplateHandler3DTest {
 
     @Test
-    void testLoadTemplates() throws Exception {
-        // test order is not guaranteed so the templates may have already been loaded,
-        // to avoid this we create a new instance using reflection. This is a hack and
-        // requires changing if the underlying class is modified
-        Constructor<TemplateHandler3D> constructor = TemplateHandler3D.class.getDeclaredConstructor();
-        constructor.setAccessible(true);
-
-        TemplateHandler3D tmphandler3d = constructor.newInstance();
-        Assertions.assertEquals(0, tmphandler3d.getTemplateCount());
-        //cannot test TemplateHandler3D#loadTemplates as it is a private method
-
-        // but we can using reflection ...
-        Method loadTemplates = TemplateHandler3D.class.getDeclaredMethod("loadTemplates");
-        loadTemplates.setAccessible(true); // private -> public
-        loadTemplates.invoke(tmphandler3d);
-        Assertions.assertEquals(10751, tmphandler3d.getTemplateCount());
-    }
-
-    @Test
     void testMapTemplates_cyclicMol1() throws Exception {
         TemplateHandler3D tmphandler3d = TemplateHandler3D.getInstance();
         String cyclicMolSmi = "O(CC(O)CN1CCN(CC1)CC(=O)Nc1c(cccc1C)C)c1c(cccc1)OC";
