@@ -28,17 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import org.openscience.cdk.smsd.helper.FinalMappings;
 
 /**
- * Class that cleans redundant mappings from the solution set.
- * <OL>
- *
- * <lI>1: Stereo match, bond type, ring etc,
- * <lI>2: Fragment size,
- * <lI>3: Bond breaking energy
- *
- * </OL>
+ * Removes duplicate index mappings, preserving their first-occurrence order.
+ * No stereochemical, ring, fragment-size or bond-energy scoring is performed.
+ * Results are also stored in the calling thread's {@link FinalMappings}.
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -46,13 +43,24 @@ import org.openscience.cdk.smsd.helper.FinalMappings;
 @Deprecated
 public class PostFilter {
 
+    /** Creates the legacy mapping-deduplication helper. */
+    public PostFilter() {
+    }
+
     /**
+     * Deduplicates flat source-index/target-index pair lists.
+     * The input's outer list is cleared after successful storage; a null or
+     * empty list clears the thread-local result store. Each pair list must have
+     * even length and nonnull integer keys. Repeated source keys in one list
+     * use their final value, as in {@link java.util.Map#put(Object, Object)}.
      *
-     * Creates a new instance of Post Filter and removes
-     * redundant mapping(s).
-     *
-     * @param mappings
-     * @return Filtered non-redundant mappings
+     * @param mappings mutable outer list of pair lists, or null for no mappings
+     * @return an independent, mutable snapshot of the unique index mappings
+     * @throws NullPointerException if a nonempty input contains a null mapping
+     *         or a null source index
+     * @throws IndexOutOfBoundsException if a pair list has odd length
+     * @throws UnsupportedOperationException if the nonempty outer list cannot
+     *         be cleared; the result store has already been updated in this case
      */
     public static List<Map<Integer, Integer>> filter(List<List<Integer>> mappings) {
         FinalMappings finalMappings = FinalMappings.getInstance();
@@ -65,29 +73,17 @@ public class PostFilter {
         return finalMappings.getFinalMapping();
     }
 
-    private static boolean hasMap(Map<Integer, Integer> newMap, List<Map<Integer, Integer>> nonRedundantMapping) {
-        for (Map<Integer, Integer> storedMap : nonRedundantMapping) {
-            if (storedMap.equals(newMap)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      *
      * @param mappingOrg
      * @return
      */
     private static List<Map<Integer, Integer>> removeRedundantMapping(List<List<Integer>> mappingOrg) {
-        List<Map<Integer, Integer>> nonRedundantMapping = new ArrayList<>();
+        Set<Map<Integer, Integer>> unique = new LinkedHashSet<>();
         for (List<Integer> mapping : mappingOrg) {
-            Map<Integer, Integer> newMap = getMappingMapFromList(mapping);
-            if (!hasMap(newMap, nonRedundantMapping)) {
-                nonRedundantMapping.add(newMap);
-            }
+            unique.add(getMappingMapFromList(mapping));
         }
-        return nonRedundantMapping;
+        return new ArrayList<>(unique);
     }
 
     private static Map<Integer, Integer> getMappingMapFromList(List<Integer> list) {

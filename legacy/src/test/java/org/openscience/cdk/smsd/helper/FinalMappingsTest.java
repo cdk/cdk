@@ -42,6 +42,36 @@ import org.junit.jupiter.api.Test;
  */
 class FinalMappingsTest {
 
+    @Test
+    void ownsInputsAndOutputsAndCanSetItsOwnSnapshot() {
+        FinalMappings instance = new FinalMappings();
+        Map<Integer, Integer> map = new TreeMap<>();
+        map.put(0, 1);
+        instance.add(map);
+        map.clear();
+        Assertions.assertEquals(Integer.valueOf(1), instance.getFinalMapping().get(0).get(0));
+        instance.set(instance.getFinalMapping());
+        Assertions.assertEquals(1, instance.getSize());
+        List<Map<Integer, Integer>> snapshot = instance.getFinalMapping();
+        snapshot.get(0).clear();
+        snapshot.clear();
+        Assertions.assertEquals(Integer.valueOf(1), instance.getFinalMapping().get(0).get(0));
+        Iterator<Map<Integer, Integer>> iterator = instance.getIterator();
+        instance.clear();
+        Assertions.assertEquals(Integer.valueOf(1), iterator.next().get(0));
+    }
+
+    @Test
+    void validatesReplacementBeforeChangingExistingMappings() {
+        FinalMappings instance = new FinalMappings();
+        instance.add(java.util.Collections.singletonMap(0, 1));
+        Assertions.assertThrows(NullPointerException.class, () -> instance.set(null));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> instance.set(java.util.Arrays.asList(java.util.Collections.singletonMap(1, 0), null)));
+        Assertions.assertEquals(1, instance.getSize());
+        Assertions.assertEquals(Integer.valueOf(1), instance.getFinalMapping().get(0).get(0));
+    }
+
     public FinalMappingsTest() {}
 
     @BeforeAll

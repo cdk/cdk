@@ -46,11 +46,22 @@
  */
 package org.openscience.cdk.smsd.algorithm.matchers;
 
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.BondRef;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
- * Checks if atom is matching between query and target molecules.
+ * Provides shared atom and bond compatibility helpers for SMSD matchers.
+ * Ordinary atoms use the CDK element matcher and ordinary bonds use strict
+ * order/aromaticity matching. Source query predicates are directional and
+ * remain authoritative through reference wrappers.
+ *
+ * <p>These helpers do not prepare molecules or apply mapping-wide
+ * stereochemistry, component-group or reaction-map filters.</p>
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
  *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
@@ -59,32 +70,63 @@ import org.openscience.cdk.interfaces.IBond;
 @Deprecated
 public class DefaultMatcher {
 
-    public static boolean isBondMatch(BondMatcher bondMatcher, IAtomContainer ac2, IBond bondA2,
-            boolean shouldMatchBonds) {
-
-        // ok, bonds match
-        if (bondMatcher.matches(ac2, bondA2)) {
-            //            System.out.println("Bond Matched");
-            return true;
-        }
-        return false;
-
+    /**
+     * Constructs the legacy matcher helper facade.
+     */
+    public DefaultMatcher() {
     }
 
+    private static final org.openscience.cdk.isomorphism.AtomMatcher ELEMENT_MATCHER =
+            org.openscience.cdk.isomorphism.AtomMatcher.forElement();
+    private static final org.openscience.cdk.isomorphism.BondMatcher ORDER_MATCHER =
+            org.openscience.cdk.isomorphism.BondMatcher.forStrictOrder();
+
+    /** Query predicates are directional; ordinary atoms match by element. */
+    static boolean matchesAtom(IAtom queryAtom, IAtom targetAtom) {
+        queryAtom = AtomRef.deref(queryAtom);
+        return queryAtom instanceof IQueryAtom
+                ? ((IQueryAtom) queryAtom).matches(targetAtom)
+                : ELEMENT_MATCHER.matches(queryAtom, targetAtom);
+    }
+
+    /** Explicit predicates also apply when ordinary bond orders are ignored. */
+    static boolean matchesBond(IBond queryBond, IBond targetBond, boolean matchBonds) {
+        queryBond = BondRef.deref(queryBond);
+        return queryBond instanceof IQueryBond
+                ? ((IQueryBond) queryBond).matches(targetBond)
+                : !matchBonds || ORDER_MATCHER.matches(queryBond, targetBond);
+    }
+
+    /**
+     * Delegates target-bond compatibility to the supplied matcher.
+     * @param bondMatcher configured source bond matcher
+     * @param ac2 target container passed to the matcher
+     * @param bondA2 target bond to check
+     * @param shouldMatchBonds legacy compatibility parameter; the matcher controls bond comparison
+     * @return whether the configured matcher accepts the target bond
+     * @throws NullPointerException if the matcher is null
+     */
+    public static boolean isBondMatch(BondMatcher bondMatcher, IAtomContainer ac2, IBond bondA2,
+            boolean shouldMatchBonds) {
+        return bondMatcher.matches(ac2, bondA2);
+    }
+
+    /**
+     * Checks whether source endpoint matchers accept either orientation of a target bond.
+     *
+     * Seeded extensions must additionally verify the actual mapped orientation to preserve query direction.
+     * @param atomMatcher1 directional matcher for the first source endpoint
+     * @param atomMatcher2 directional matcher for the second source endpoint
+     * @param ac2 target container passed to each matcher
+     * @param bondA2 target bond whose endpoints are checked
+     * @param shouldMatchBonds legacy compatibility parameter; each matcher controls its own checks
+     * @return whether either target endpoint orientation is accepted by both matchers
+     * @throws NullPointerException if a required matcher or target bond is null
+     */
     public static boolean isAtomMatch(AtomMatcher atomMatcher1, AtomMatcher atomMatcher2, IAtomContainer ac2,
             IBond bondA2, boolean shouldMatchBonds) {
-
-        // ok, atoms match
-        if (atomMatcher1.matches(ac2, bondA2.getBegin()) && atomMatcher2.matches(ac2, bondA2.getEnd())) {
-            //            System.out.println("Atom Matched");
-            return true;
-        }
-        // ok, atoms match
-        if (atomMatcher1.matches(ac2, bondA2.getEnd()) && atomMatcher2.matches(ac2, bondA2.getBegin())) {
-            //            System.out.println("Atom Matched");
-            return true;
-        }
-        return false;
+        return atomMatcher1.matches(ac2, bondA2.getBegin()) && atomMatcher2.matches(ac2, bondA2.getEnd())
+                || atomMatcher1.matches(ac2, bondA2.getEnd()) && atomMatcher2.matches(ac2, bondA2.getBegin());
     }
 
 }

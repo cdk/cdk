@@ -46,15 +46,22 @@
  */
 package org.openscience.cdk.smsd.algorithm.matchers;
 
-import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 
 /**
- * Checks if a bond is matching between query and target molecules.
+ * Matches ordinary bonds by strict order and aromaticity, or evaluates a
+ * directional source bond query predicate. Two aromatic bonds match regardless
+ * of assigned orders; aromatic and non-aromatic bonds remain distinct when
+ * ordinary bond matching is enabled. Reference-wrapped query bonds retain
+ * their predicates, including when ordinary bond matching is disabled.
+ *
+ * <p>Matching does not prepare aromaticity or apply mapping-wide stereo filters.
+ * Target bonds retain the references and chemical properties needed by query
+ * predicates. Mutable matcher instances are not thread-safe.</p>
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
  *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
@@ -63,124 +70,60 @@ import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 @Deprecated
 public class DefaultVFBondMatcher implements VFBondMatcher {
 
-    static final long  serialVersionUID = -7861469841127328812L;
-    private IBond      queryBond        = null;
-    private int        unsaturation     = 0;
-    private boolean    shouldMatchBonds;
-    private IQueryBond smartQueryBond   = null;
+    static final long serialVersionUID = -7861469841127328812L;
+    private IBond queryBond;
+    private boolean shouldMatchBonds;
 
     /**
-     * Bond type flag
-     */
-    /**
-     * Constructor
+     * Constructs a matcher with ordinary bond matching disabled.
      */
     public DefaultVFBondMatcher() {
-        this.queryBond = null;
-        this.unsaturation = -1;
-        shouldMatchBonds = false;
     }
 
     /**
-     * Constructor
-     * @param queryMol query Molecule
-     * @param queryBond query Molecule
-     * @param shouldMatchBonds bond match flag
+     * Constructs a matcher for an ordinary bond or an explicit query predicate.
+     * @param queryMol legacy query container parameter, unused by this constructor
+     * @param queryBond borrowed source bond or predicate, with reference wrappers resolved
+     * @param shouldMatchBonds whether ordinary bonds must have compatible order and aromaticity
      */
     public DefaultVFBondMatcher(IAtomContainer queryMol, IBond queryBond, boolean shouldMatchBonds) {
-        super();
-        this.queryBond = queryBond;
-        this.unsaturation = getUnsaturation(queryMol, this.queryBond);
+        this.queryBond = BondRef.deref(queryBond);
         setBondMatchFlag(shouldMatchBonds);
     }
 
     /**
-     * Constructor
-     * @param queryBond query Molecule
+     * Constructs a matcher that evaluates a directional bond query predicate.
+     * @param queryBond borrowed source bond predicate
      */
     public DefaultVFBondMatcher(IQueryBond queryBond) {
-        super();
-        this.smartQueryBond = queryBond;
+        this.queryBond = BondRef.deref(queryBond);
     }
 
-    /** {@inheritDoc}
-     *
-     * @param targetConatiner target container
-     * @param targetBond target bond
-     * @return true if bonds match
+    /**
+     * Checks one target bond against the stored source bond.
+     * @param targetContainer legacy target graph parameter, unused by this matcher
+     * @param targetBond target bond with properties required by the source predicate
+     * @return whether the predicate accepts the target, or the requested ordinary bond comparison succeeds
+     * @throws NullPointerException if strict ordinary bond comparison receives a null source or target bond
      */
     @Override
-    public boolean matches(TargetProperties targetConatiner, IBond targetBond) {
-        if (this.smartQueryBond != null) {
-            return smartQueryBond.matches(targetBond);
-        } else {
-            if (!isBondMatchFlag()) {
-                return true;
-            }
-            if (isBondMatchFlag() && isBondTypeMatch(targetBond)) {
-                return true;
-            }
-            if (isBondMatchFlag() && this.unsaturation == getUnsaturation(targetConatiner, targetBond)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean matches(TargetProperties targetContainer, IBond targetBond) {
+        return DefaultMatcher.matchesBond(queryBond, targetBond, shouldMatchBonds);
     }
 
     /**
-     * Return true if a bond is matched between query and target
-     * @param targetBond
-     * @return
-     */
-    private boolean isBondTypeMatch(IBond targetBond) {
-        int reactantBondType = queryBond.getOrder().numeric();
-        int productBondType = targetBond.getOrder().numeric();
-        if ((queryBond.getFlag(IChemObject.AROMATIC) == targetBond.getFlag(IChemObject.AROMATIC))
-                && (reactantBondType == productBondType)) {
-            return true;
-        } else if (queryBond.getFlag(IChemObject.AROMATIC) && targetBond.getFlag(IChemObject.AROMATIC)) {
-            return true;
-        }
-        return false;
-    }
-
-    private int getUnsaturation(TargetProperties container, IBond bond) {
-        return getUnsaturation(container, bond.getBegin()) + getUnsaturation(container, bond.getEnd());
-    }
-
-    private int getUnsaturation(TargetProperties container, IAtom atom) {
-        return getValency(atom) - container.countNeighbors(atom);
-    }
-
-    private int getValency(IAtom atom) {
-        return (atom.getValency() == null) ? 0 : atom.getValency();
-    }
-
-    private int getUnsaturation(IAtomContainer container, IBond bond) {
-        return getUnsaturation(container, bond.getBegin()) + getUnsaturation(container, bond.getEnd());
-    }
-
-    private int getUnsaturation(IAtomContainer container, IAtom atom) {
-        return getValency(atom) - (countNeighbors(container, atom) + countImplicitHydrogens(atom));
-    }
-
-    private int countNeighbors(IAtomContainer container, IAtom atom) {
-        return container.getConnectedBondsCount(atom);
-    }
-
-    private int countImplicitHydrogens(IAtom atom) {
-        return (atom.getImplicitHydrogenCount() == null) ? 0 : atom.getImplicitHydrogenCount();
-    }
-
-    /**
-     * @return the shouldMatchBonds
+     * Reports whether ordinary bond order and aromaticity are compared.
+     * @return whether strict ordinary bond comparison is enabled
      */
     public boolean isBondMatchFlag() {
         return shouldMatchBonds;
     }
 
     /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
+     * Enables or disables strict ordinary bond comparison.
+     *
+     * Explicit query bond predicates are evaluated regardless of this flag.
+     * @param shouldMatchBonds whether to compare ordinary bond order and aromaticity
      */
     public final void setBondMatchFlag(boolean shouldMatchBonds) {
         this.shouldMatchBonds = shouldMatchBonds;

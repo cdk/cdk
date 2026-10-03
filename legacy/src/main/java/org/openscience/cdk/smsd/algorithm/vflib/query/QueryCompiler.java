@@ -46,6 +46,10 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.query;
 
+import java.util.Objects;
+
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -57,11 +61,23 @@ import org.openscience.cdk.smsd.algorithm.matchers.DefaultVFBondMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.VFBondMatcher;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.VFQueryBuilder;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQueryCompiler;
 
 /**
- * This class creates an template for MCS/substructure query.
+ * Creates an MCS/substructure query from a simple undirected graph. Atoms must
+ * be unique, and each bond must connect two distinct atoms in the container.
+ * Self-loops, parallel bonds and bonds with any other number of endpoints are
+ * rejected. Query atom and bond predicates are preserved, including predicates
+ * in ordinary containers and reference wrappers.
+ *
+ * <p>The compiled graph borrows its atoms and bonds; callers must not mutate
+ * the container or its chemistry during compilation or matching. Callers must
+ * prepare chemical properties needed by their predicates, such as aromaticity,
+ * ring membership and hydrogen counts. Compilation does not supply missing
+ * chemistry or apply {@code Pattern} stereo/component/reaction-map filters.
+ * No synchronization is provided for mutable inputs or predicate state.</p>
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
  *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
@@ -69,120 +85,67 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQueryCompiler;
 @Deprecated
 public class QueryCompiler implements IQueryCompiler {
 
-    private IAtomContainer      molecule         = null;
-    private IQueryAtomContainer queryMolecule    = null;
-    private boolean             shouldMatchBonds = true;
+    private final IAtomContainer molecule;
+    private final boolean shouldMatchBonds;
 
     /**
-     * Construct query object from the molecule
-     * @param molecule
-     * @param shouldMatchBonds
+     * Construct a compiler for the supplied container.
+     * @param molecule container to compile
+     * @param shouldMatchBonds whether to compare ordinary bond chemistry;
+     *                         query bond predicates are always evaluated
+     * @throws NullPointerException if the container is null
      */
     public QueryCompiler(IAtomContainer molecule, boolean shouldMatchBonds) {
-        this.setMolecule(molecule);
-        this.setBondMatchFlag(shouldMatchBonds);
+        this.molecule = Objects.requireNonNull(molecule, "Query container must not be null");
+        this.shouldMatchBonds = shouldMatchBonds;
     }
 
     /**
-     * Construct query object from the molecule
-     * @param molecule
+     * Construct a compiler for the supplied query container.
+     * @param molecule query container to compile
+     * @throws NullPointerException if the container is null
      */
     public QueryCompiler(IQueryAtomContainer molecule) {
-        this.setQueryMolecule(molecule);
+        this(molecule, true);
     }
 
     /**
-     * Set Molecule
-     * @param molecule
+     * Compile a new graph, retaining the container's atom and bond payloads.
+     * @return newly compiled query with directional atom and bond predicates
+     * @throws NullPointerException if an atom, bond or bond endpoint is null
+     * @throws IllegalArgumentException if atoms repeat or the bonds do not
+     *                                  form a simple graph over the container
      */
-    private void setMolecule(IAtomContainer molecule) {
-        this.molecule = molecule;
-    }
-
-    /**
-     * Set Molecule
-     * @param molecule
-     */
-    private void setQueryMolecule(IQueryAtomContainer molecule) {
-        this.queryMolecule = molecule;
-    }
-
-    /**
-     * Return molecule
-     * @return Atom Container
-     */
-    private IAtomContainer getMolecule() {
-        return queryMolecule == null ? molecule : queryMolecule;
-    }
-
-    /** {@inheritDoc} */
     @Override
     public IQuery compile() {
-        return this.queryMolecule == null ? build(molecule) : build(queryMolecule);
-    }
-
-    private IQuery build(IAtomContainer queryMolecule) {
         VFQueryBuilder result = new VFQueryBuilder();
-        for (IAtom atom : queryMolecule.atoms()) {
-            VFAtomMatcher matcher = createAtomMatcher(queryMolecule, atom);
-            if (matcher != null) {
-                result.addNode(matcher, atom);
-            }
+        for (IAtom atom : molecule.atoms()) {
+            Objects.requireNonNull(atom, "Query atom must not be null");
+            IAtom queryAtom = AtomRef.deref(atom);
+            VFAtomMatcher matcher = queryAtom instanceof IQueryAtom
+                    ? new DefaultVFAtomMatcher((IQueryAtom) queryAtom,
+                            molecule instanceof IQueryAtomContainer ? (IQueryAtomContainer) molecule : null)
+                    : new DefaultVFAtomMatcher(molecule, atom, shouldMatchBonds);
+            result.addNode(matcher, atom);
         }
-        for (int i = 0; i < queryMolecule.getBondCount(); i++) {
-            IBond bond = queryMolecule.getBond(i);
-            IAtom atomI = bond.getBegin();
-            IAtom atomJ = bond.getEnd();
-            result.connect(result.getNode(atomI), result.getNode(atomJ), createBondMatcher(queryMolecule, bond));
+        for (IBond bond : molecule.bonds()) {
+            Objects.requireNonNull(bond, "Query bond must not be null");
+            if (bond.getAtomCount() != 2) {
+                throw new IllegalArgumentException("Query bonds must have exactly two endpoints");
+            }
+            INode begin = result.getNode(Objects.requireNonNull(bond.getBegin(),
+                    "Query bond endpoint must not be null"));
+            INode end = result.getNode(Objects.requireNonNull(bond.getEnd(),
+                    "Query bond endpoint must not be null"));
+            if (begin == null || end == null) {
+                throw new IllegalArgumentException("Query bond endpoints must belong to the query container");
+            }
+            IBond queryBond = BondRef.deref(bond);
+            VFBondMatcher matcher = queryBond instanceof IQueryBond
+                    ? new DefaultVFBondMatcher((IQueryBond) queryBond)
+                    : new DefaultVFBondMatcher(molecule, bond, shouldMatchBonds);
+            result.connect(begin, end, matcher);
         }
         return result;
-    }
-
-    private IQuery build(IQueryAtomContainer queryMolecule) {
-        VFQueryBuilder result = new VFQueryBuilder();
-        for (IAtom atoms : queryMolecule.atoms()) {
-            IQueryAtom atom = (IQueryAtom) atoms;
-            VFAtomMatcher matcher = createAtomMatcher(atom, queryMolecule);
-            if (matcher != null) {
-                result.addNode(matcher, atom);
-            }
-        }
-        for (int i = 0; i < queryMolecule.getBondCount(); i++) {
-            IBond bond = queryMolecule.getBond(i);
-            IQueryAtom atomI = (IQueryAtom) bond.getBegin();
-            IQueryAtom atomJ = (IQueryAtom) bond.getEnd();
-            result.connect(result.getNode(atomI), result.getNode(atomJ), createBondMatcher((IQueryBond) bond));
-        }
-        return result;
-    }
-
-    private VFAtomMatcher createAtomMatcher(IAtomContainer mol, IAtom atom) {
-        return new DefaultVFAtomMatcher(mol, atom, isBondMatchFlag());
-    }
-
-    private VFBondMatcher createBondMatcher(IAtomContainer mol, IBond bond) {
-        return new DefaultVFBondMatcher(mol, bond, isBondMatchFlag());
-    }
-
-    private VFAtomMatcher createAtomMatcher(IQueryAtom atom, IQueryAtomContainer container) {
-        return new DefaultVFAtomMatcher(atom, container);
-    }
-
-    private VFBondMatcher createBondMatcher(IQueryBond bond) {
-        return new DefaultVFBondMatcher(bond);
-    }
-
-    /**
-     * @return the shouldMatchBonds
-     */
-    private boolean isBondMatchFlag() {
-        return shouldMatchBonds;
-    }
-
-    /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
-     */
-    private void setBondMatchFlag(boolean shouldMatchBonds) {
-        this.shouldMatchBonds = shouldMatchBonds;
     }
 }

@@ -46,13 +46,22 @@
  */
 package org.openscience.cdk.smsd.algorithm.matchers;
 
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
- * Checks if atom is matching between query and target molecules.
+ * Matches ordinary atoms by element or evaluates the source atom query predicate.
+ * Reference-wrapped query atoms retain their predicates. Ordinary matching does
+ * not compare atom aromaticity, charge, isotope, radicals or stereochemistry.
+ *
+ * <p>Symbol overrides and the optional minimum target-degree bound apply only
+ * to ordinary atoms. Query predicates are directional and take precedence over
+ * those settings. Callers supply the chemical properties and target adjacency
+ * required by their predicates; no chemical preparation or mapping-wide stereo
+ * filtering is performed. Mutable matcher instances are not thread-safe.</p>
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
  *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
@@ -62,68 +71,65 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
 
     static final long  serialVersionUID = -7861469841127327812L;
-    private int        maximumNeighbors;
+    private int        maximumNeighbors = -1;
     private String     symbol;
-    private IAtom      qAtom;
-    private IQueryAtom smartQueryAtom   = null;
+    private IAtom      queryAtom;
+    private boolean    symbolOverride;
     private boolean    shouldMatchBonds = false;
 
     /**
-     * @return the shouldMatchBonds
+     * Reports whether a configured ordinary-atom degree bound should be applied.
+     * @return the bond-match flag controlling optional degree checks
      */
     public boolean isBondMatchFlag() {
         return shouldMatchBonds;
     }
 
     /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
+     * Enables or disables the optional ordinary-atom degree bound.
+     * @param shouldMatchBonds whether to apply a configured degree bound; query predicates are unaffected
      */
     public final void setBondMatchFlag(boolean shouldMatchBonds) {
         this.shouldMatchBonds = shouldMatchBonds;
     }
 
     /**
-     * Constructor
+     * Constructs an unconfigured matcher.
+     *
+     * Set a symbol before using this form; an unset symbol does not match ordinary atoms.
      */
     public DefaultMCSPlusAtomMatcher() {
-        this.qAtom = null;
-        symbol = null;
-        maximumNeighbors = -1;
     }
 
     /**
-     * Constructor
-     * @param queryContainer query atom container
-     * @param atom query atom
-     * @param shouldMatchBonds bond matching flag
+     * Constructs a directional matcher for the supplied query atom.
+     * @param queryContainer legacy query container parameter, unused by this constructor
+     * @param atom borrowed query atom or query predicate, with reference wrappers resolved
+     * @param shouldMatchBonds whether to apply an explicitly configured ordinary-atom degree bound
      */
     public DefaultMCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom atom, boolean shouldMatchBonds) {
-        this();
-        this.qAtom = atom;
-        this.symbol = atom.getSymbol();
+        this.queryAtom = AtomRef.deref(atom);
         setBondMatchFlag(shouldMatchBonds);
-
-        //        System.out.println("Atom " + atom.getSymbol());
-        //        System.out.println("MAX allowed " + maximumNeighbors);
     }
 
     /**
-     * Constructor
-     * @param smartQueryAtom query atom
-     * @param container
+     * Constructs a matcher that evaluates a query atom predicate.
+     * @param smartQueryAtom borrowed directional atom predicate
+     * @param container legacy query container parameter, unused by this constructor
      */
     public DefaultMCSPlusAtomMatcher(IQueryAtom smartQueryAtom, IQueryAtomContainer container) {
-        this();
-        this.smartQueryAtom = smartQueryAtom;
-        this.symbol = smartQueryAtom.getSymbol();
+        this(container, smartQueryAtom, false);
     }
 
     /**
-     * Constructor
-     * @param queryContainer query atom container
-     * @param template query atom
-     * @param blockedPositions
-     * @param shouldMatchBonds bond matching flag
+     * Constructs a matcher with a derived minimum target-degree bound.
+     *
+     * An unset implicit hydrogen count contributes zero. Explicit query predicates ignore the derived bound.
+     * @param queryContainer container used to count bonds connected to the template
+     * @param template borrowed query atom or query predicate
+     * @param blockedPositions positions subtracted from template implicit hydrogens plus connected bonds
+     * @param shouldMatchBonds whether to apply the derived bound to ordinary atoms
+     * @throws NullPointerException if the template or container required to compute the bound is null
      */
     public DefaultMCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions,
             boolean shouldMatchBonds) {
@@ -133,25 +139,31 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
     }
 
     /**
+     * Sets the optional minimum target-degree bound for ordinary atoms.
      *
-     * @param maximum numbers of connected atoms allowed
+     * Other values are used literally. The bound is applied only when the bond-match flag is enabled and the query atom is ordinary.
+     * @param maximum minimum number of target bonds; -1 disables the bound
      */
     public void setMaximumNeighbors(int maximum) {
         this.maximumNeighbors = maximum;
     }
 
     /**
-     * @param symbol
+     * Overrides the element comparison with an ordinary-atom symbol comparison.
+     *
+     * Query atom predicates remain authoritative and ignore this override.
+     * @param symbol case-sensitive target symbol to accept; null rejects ordinary atoms
      */
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+        this.symbolOverride = true;
     }
 
-    private boolean matchSymbol(IAtom atom) {
-        if (symbol == null) {
-            return false;
+    private boolean matchElement(IAtom atom) {
+        if (symbolOverride || queryAtom == null) {
+            return symbol != null && symbol.equals(atom.getSymbol());
         }
-        return symbol.equals(atom.getSymbol());
+        return DefaultMatcher.matchesAtom(queryAtom, atom);
     }
 
     private boolean matchMaximumNeighbors(IAtomContainer targetContainer, IAtom targetAtom) {
@@ -167,22 +179,18 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
         return (atom.getImplicitHydrogenCount() == null) ? 0 : atom.getImplicitHydrogenCount();
     }
 
-    /** {@inheritDoc}
+    /**
+     * Checks the query atom against one target atom.
+     * @param targetContainer target graph used by the optional ordinary-atom degree check
+     * @param targetAtom target atom retaining the adjacency and chemical properties needed by predicates
+     * @return whether the directional predicate or ordinary element/symbol and degree checks accept the atom
+     * @throws NullPointerException if ordinary element matching receives a null atom or an unset non-pseudo atomic number, or an enabled degree check receives a null target graph
      */
     @Override
     public boolean matches(IAtomContainer targetContainer, IAtom targetAtom) {
-        if (smartQueryAtom != null && qAtom == null) {
-            if (!smartQueryAtom.matches(targetAtom)) {
-                return false;
-            }
-        } else {
-            if (!matchSymbol(targetAtom)) {
-                return false;
-            }
-            if (!matchMaximumNeighbors(targetContainer, targetAtom)) {
-                return false;
-            }
+        if (queryAtom instanceof IQueryAtom) {
+            return DefaultMatcher.matchesAtom(queryAtom, targetAtom);
         }
-        return true;
+        return matchElement(targetAtom) && matchMaximumNeighbors(targetContainer, targetAtom);
     }
 }
