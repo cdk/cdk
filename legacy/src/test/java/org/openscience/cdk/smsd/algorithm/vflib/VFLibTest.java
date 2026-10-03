@@ -86,7 +86,8 @@ class VFLibTest extends CDKTestCase {
             state.nextCandidate();
             count++;
         }
-        Assertions.assertEquals(benzene.getAtomCount() * benzene.getAtomCount(), count);
+        // Each target atom is tried for one fixed query root; mappings remain exhaustive.
+        Assertions.assertEquals(benzene.getAtomCount(), count);
     }
 
     @Test
@@ -100,7 +101,8 @@ class VFLibTest extends CDKTestCase {
             candidates.add(newState.nextCandidate());
         }
 
-        Assertions.assertEquals(4, candidates.size());
+        // A fixed query frontier avoids exploring both orders of the same mapping.
+        Assertions.assertEquals(2, candidates.size());
     }
 
     @Test

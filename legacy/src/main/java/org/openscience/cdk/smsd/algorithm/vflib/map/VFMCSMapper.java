@@ -48,10 +48,14 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.map;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Deque;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -59,225 +63,390 @@ import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
-import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IState;
 import org.openscience.cdk.smsd.algorithm.vflib.query.QueryCompiler;
 import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
- * This class finds MCS between query and target molecules
- * using VF2 algorithm.
+ * Enumerates maximum connected common-edge mappings from query to target.
+ * <p>{@code getMaps} and {@code countMaps} maximize the number of mapped atoms,
+ *  then the number of compatible common bonds. Extra, missing or incompatible
+ *  bonds can be deleted on either side; this is not an induced-subgraph search.
+ *  Connectivity is measured using retained compatible bonds, and a single atom is
+ *  connected. Distinct injective atom assignments remain distinct results.
+ * <p>{@code hasMap} and {@code getFirstMap} instead require an embedding of the
+ *  whole query, including every query bond, and permit disconnected queries.
+ *  Their whole-query results can therefore differ from {@code getMaps} results.
+ * <p>Query predicates are directional and must be deterministic during a search.
+ *  Ordinary molecular queries compare elements and optionally strict bond order
+ *  and aromaticity. Mapping-level stereochemistry, reaction mapping and component
+ *  filters from {@link org.openscience.cdk.isomorphism.Pattern} are not applied.
+ * <p>Returned maps and lists are mutable snapshots, with borrowed node/atom/bond
+ *  payloads. Keep the query, target payloads and matchers stable during a search.
+ *  The same mapper instance must not be searched concurrently or recursively.
+ * <p>Each search resets the calling thread's {@link TimeOut} flag and captures its
+ *  cutoff after target preparation. Query compilation and target preparation are
+ *  outside the search budget. Deadlines are cooperative and cannot interrupt a
+ *  predicate. On cancellation the maps found so far may have a suboptimal score
+ *  or omit tied optima; an empty list may be returned before any state is visited.
+ *  Without cancellation, absence of compatible atoms produces one empty maximum
+ *  mapping, as do empty query or target graphs.
+ * <p>The thread-local timeout flag records this operation when it exits. An
+ * independent nested search's recorded status does not cancel its caller.
  *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD is deprecated in CDK. See the separate
+ *             <a href="https://github.com/asad/smsd">SMSD implementation</a>.
  */
 @Deprecated
 public class VFMCSMapper implements IMapper {
 
-    private IQuery                  query;
-    private List<Map<INode, IAtom>> maps;
-    private int                     currentMCSSize = -1;
-    private static TimeManager      timeManager    = null;
+    private final IQuery query;
+    private final List<Map<INode, IAtom>> maps = new ArrayList<>();
+    private final Set<Map<INode, IAtom>> uniqueMaps = new HashSet<>();
+    private int currentMCSSize;
+    private int currentBondCount;
+    private TimeManager searchClock;
+    private double searchTimeout;
+    private boolean searchTimedOut;
+    private static final ThreadLocal<TimeManager> timeManager = new ThreadLocal<>();
+    private static final ThreadLocal<double[]> timeLimit = ThreadLocal.withInitial(() -> new double[]{-1});
 
     /**
-     * @return the timeout
+     * Return the cutoff configured for the calling thread.
+     *
+     * @return cutoff in minutes; a finite negative value disables timing
      */
-    protected synchronized static double getTimeout() {
+    protected static double getTimeout() {
         return TimeOut.getInstance().getTimeOut();
     }
 
     /**
-     * @return the timeManager
-     */
-    protected synchronized static TimeManager getTimeManager() {
-        return timeManager;
-    }
-
-    /**
-     * @param aTimeManager the timeManager to set
-     */
-    protected synchronized static void setTimeManager(TimeManager aTimeManager) {
-        TimeOut.getInstance().setTimeOutFlag(false);
-        timeManager = aTimeManager;
-    }
-
-    /**
+     * Return the compatibility clock recorded for the calling thread.
      *
-     * @param query
+     * @return most recently recorded clock, or {@code null} if no clock is set
+     */
+    protected static TimeManager getTimeManager() {
+        return timeManager.get();
+    }
+
+    /**
+     * Record a compatibility clock and the calling thread's current cutoff.
+     * <p>This hook does not replace a mapper's instance-owned active search budget.
+     *
+     * @param clock clock to record, or {@code null} to disable elapsed-clock checks
+     */
+    protected static void setTimeManager(TimeManager clock) {
+        recordTimeManager(clock, getTimeout());
+    }
+
+    private static void recordTimeManager(TimeManager clock, double timeout) {
+        timeManager.set(clock);
+        timeLimit.get()[0] = timeout;
+    }
+
+    /**
+     * Create a mapper for a compiled directional query.
+     *
+     * @param query valid compiled query, retained for subsequent searches
+     * @throws NullPointerException if {@code query} is null
      */
     public VFMCSMapper(IQuery query) {
-        setTimeManager(new TimeManager());
-        this.query = query;
-        this.maps = new ArrayList<>();
+        this.query = Objects.requireNonNull(query, "Query must not be null");
     }
 
     /**
+     * Compile a simple molecular query for connected common-edge searches.
      *
-     * @param queryMolecule
-     * @param bondMatcher
+     * @param queryMolecule query molecule with unique atoms and two-centre simple bonds
+     * @param bondMatcher whether ordinary bond order and aromaticity must match;
+     *                    explicit query predicates remain authoritative
+     * @throws NullPointerException if the molecule, an atom, a bond or an endpoint is null
+     * @throws IllegalArgumentException if atoms repeat or bonds form self-loops,
+     *                                  parallel edges, foreign endpoints or nonbinary bonds
      */
     public VFMCSMapper(IAtomContainer queryMolecule, boolean bondMatcher) {
-        setTimeManager(new TimeManager());
-        this.query = new QueryCompiler(queryMolecule, bondMatcher).compile();
-        this.maps = new ArrayList<>();
+        this(new QueryCompiler(queryMolecule, bondMatcher).compile());
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule targetMolecule graph
+    /**
+     * Determine whether the whole query embeds in the target.
+     * <p>Every query bond must match, and disconnected queries are allowed. This method
+     *  does not ask whether a partial common subgraph exists.
+     *
+     * @param target target molecule, prepared before the search budget starts
+     * @return {@code true} if a complete embedding is found before cancellation
+     * @throws NullPointerException if the target is null
+     * @throws IllegalArgumentException if target topology is not a simple two-centre graph
      */
     @Override
-    public boolean hasMap(IAtomContainer targetMolecule) {
-        IState state = new VFState(query, new TargetProperties(targetMolecule));
-        maps.clear();
-        return mapFirst(state);
+    public boolean hasMap(IAtomContainer target) {
+        return hasMap(new TargetProperties(target));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Return connected common-edge mappings with maximum atom and then bond counts.
+     * <p>Each map assigns query nodes to target atoms. With no timeout, every tied
+     *  optimum is returned; absence of compatible atoms contributes one empty map.
+     *  Mapping order is unspecified.
+     *
+     * @param target target molecule, prepared before the search budget starts
+     * @return mutable list of mutable snapshots; potentially suboptimal or incomplete on timeout
+     * @throws NullPointerException if the target is null
+     * @throws IllegalArgumentException if target topology is not a simple two-centre graph
+     */
     @Override
     public List<Map<INode, IAtom>> getMaps(IAtomContainer target) {
-        IState state = new VFState(query, new TargetProperties(target));
-        maps.clear();
-        mapAll(state);
-        return new ArrayList<>(maps);
+        return getMaps(new TargetProperties(target));
     }
 
-    /** {@inheritDoc}
+    /**
+     * Return the first embedding of the whole query found before cancellation.
+     * <p>Every query bond must match, and disconnected queries are allowed. This method
+     *  does not return the first connected MCS mapping. The choice of embedding is
+     *  unspecified; an empty map also represents the empty query.
      *
-     * @param target
-     *
+     * @param target target molecule, prepared before the search budget starts
+     * @return mutable query-node to target-atom snapshot, or an empty map if none is found
+     * @throws NullPointerException if the target is null
+     * @throws IllegalArgumentException if target topology is not a simple two-centre graph
      */
     @Override
     public Map<INode, IAtom> getFirstMap(IAtomContainer target) {
-        IState state = new VFState(query, new TargetProperties(target));
-        maps.clear();
-        mapFirst(state);
-        return maps.isEmpty() ? new HashMap<>() : maps.get(0);
+        return getFirstMap(new TargetProperties(target));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Count the retained maximum connected common-edge mappings.
+     * <p>This method materializes mapping results. Absence of compatible atoms contributes
+     *  one empty maximum mapping when the search completes. On timeout, the count can
+     *  describe suboptimal mappings or an incomplete set of tied maxima.
+     *
+     * @param target target molecule, prepared before the search budget starts
+     * @return number of retained mappings, including an empty maximum when applicable
+     * @throws NullPointerException if the target is null
+     * @throws IllegalArgumentException if target topology is not a simple two-centre graph
+     */
     @Override
     public int countMaps(IAtomContainer target) {
-        IState state = new VFState(query, new TargetProperties(target));
-        maps.clear();
-        mapAll(state);
-        return maps.size();
+        return countMaps(new TargetProperties(target));
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule targetMolecule graph
+    /**
+     * Determine whether the whole query embeds in the target.
+     * <p>Every query bond must match, and disconnected queries are allowed. This method
+     *  does not ask whether a partial common subgraph exists.
+     *
+     * @param target prepared target graph with stable borrowed atom/bond payloads
+     * @return {@code true} if a complete embedding is found before cancellation
+     * @throws NullPointerException if the target is null
      */
     @Override
-    public boolean hasMap(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        return mapFirst(state);
+    public boolean hasMap(TargetProperties target) {
+        Objects.requireNonNull(target, "Target graph must not be null");
+        resetSearch();
+        try {
+            return new VFMapper(query).hasMap(target, searchClock, searchTimeout);
+        } finally {
+            finishSearch();
+        }
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule
+    /**
+     * Return connected common-edge mappings with maximum atom and then bond counts.
+     * <p>Each map assigns query nodes to target atoms. With no timeout, every tied
+     *  optimum is returned; absence of compatible atoms contributes one empty map.
+     *  Mapping order is unspecified.
+     *
+     * @param target prepared target graph with stable borrowed atom/bond payloads
+     * @return mutable list of mutable snapshots; potentially suboptimal or incomplete on timeout
+     * @throws NullPointerException if the target is null
      */
     @Override
-    public List<Map<INode, IAtom>> getMaps(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        mapAll(state);
+    public List<Map<INode, IAtom>> getMaps(TargetProperties target) {
+        search(target);
         return new ArrayList<>(maps);
     }
 
-    /** {@inheritDoc}
+    /**
+     * Return the first embedding of the whole query found before cancellation.
+     * <p>Every query bond must match, and disconnected queries are allowed. This method
+     *  does not return the first connected MCS mapping. The choice of embedding is
+     *  unspecified; an empty map also represents the empty query.
      *
-     * @param targetMolecule
-     *
+     * @param target prepared target graph with stable borrowed atom/bond payloads
+     * @return mutable query-node to target-atom snapshot, or an empty map if none is found
+     * @throws NullPointerException if the target is null
      */
     @Override
-    public Map<INode, IAtom> getFirstMap(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        mapFirst(state);
-        return maps.isEmpty() ? new HashMap<>() : maps.get(0);
+    public Map<INode, IAtom> getFirstMap(TargetProperties target) {
+        Objects.requireNonNull(target, "Target graph must not be null");
+        resetSearch();
+        try {
+            return new VFMapper(query).getFirstMap(target, searchClock, searchTimeout);
+        } finally {
+            finishSearch();
+        }
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule
+    /**
+     * Count the retained maximum connected common-edge mappings.
+     * <p>This method materializes mapping results. Absence of compatible atoms contributes
+     *  one empty maximum mapping when the search completes. On timeout, the count can
+     *  describe suboptimal mappings or an incomplete set of tied maxima.
+     *
+     * @param target prepared target graph with stable borrowed atom/bond payloads
+     * @return number of retained mappings, including an empty maximum when applicable
+     * @throws NullPointerException if the target is null
      */
     @Override
-    public int countMaps(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        mapAll(state);
+    public int countMaps(TargetProperties target) {
+        search(target);
         return maps.size();
     }
 
-    private void addMapping(IState state) {
-        Map<INode, IAtom> map = state.getMap();
-        if (!hasMap(map) && map.size() > currentMCSSize) {
-            maps.add(map);
-            currentMCSSize = map.size();
-        } else if (!hasMap(map) && map.size() == currentMCSSize) {
-            maps.add(map);
+    private void resetSearch() {
+        maps.clear();
+        uniqueMaps.clear();
+        currentMCSSize = -1;
+        currentBondCount = -1;
+        TimeOut.getInstance().setTimeOutFlag(false);
+        searchClock = new TimeManager();
+        searchTimeout = getTimeout();
+        searchTimedOut = false;
+        recordTimeManager(searchClock, searchTimeout);
+    }
+
+    private void search(TargetProperties target) {
+        Objects.requireNonNull(target, "Target graph must not be null");
+        resetSearch();
+        try {
+            if (query.countNodes() <= target.getAtomCount() && isConnectedQuery()
+                    && hasCompleteAtomDomains(target)) {
+                List<Map<INode, IAtom>> complete = new VFMapper(query).getMaps(target, searchClock, searchTimeout);
+                if (!complete.isEmpty()) {
+                    maps.addAll(complete);
+                    currentMCSSize = query.countNodes();
+                    currentBondCount = query.countEdges();
+                    return;
+                }
+                if (hasTimedOut()) return;
+            }
+            mapAll(new VFState(query, target, true));
+        } finally {
+            finishSearch();
         }
     }
 
-    private void mapAll(IState state) {
-        if (state.isDead()) {
-            return;
+    private boolean hasTimedOut() {
+        if (!searchTimedOut && searchTimeout >= 0
+                && searchClock.getElapsedTimeInMinutes() > searchTimeout) {
+            searchTimedOut = true;
         }
+        return searchTimedOut;
+    }
 
-        if (state.isGoal()) {
-            Map<INode, IAtom> map = state.getMap();
-            if (!hasMap(map)) {
-                maps.add(state.getMap());
-            } else {
-                state.backTrack();
+    private void finishSearch() {
+        recordTimeManager(searchClock, searchTimeout);
+        TimeOut.getInstance().setTimeOutFlag(hasTimedOut());
+    }
+
+    // A full embedding requires a feasible target for every query atom.
+    // Evaluate the actual matcher so explicit predicates and custom queries are preserved.
+    private boolean hasCompleteAtomDomains(TargetProperties target) {
+        for (INode node : query.nodes()) {
+            boolean found = false;
+            for (int i = 0; i < target.getAtomCount(); i++) {
+                if ((i & 255) == 0 && hasTimedOut()) return false;
+                IAtom atom = target.getAtom(i);
+                if (node.countNeighbors() <= target.countNeighbors(atom)
+                        && node.getAtomMatcher().matches(target, atom)) {
+                    found = true;
+                    break;
+                }
             }
-        } else {
-            addMapping(state);
+            if (!found) return false;
         }
+        return true;
+    }
 
-        while (state.hasNextCandidate()) {
-            Match candidate = state.nextCandidate();
-            if (state.isMatchFeasible(candidate)) {
-                IState nextState = state.nextState(candidate);
-                mapAll(nextState);
-                nextState.backTrack();
+    private boolean isConnectedQuery() {
+        if (query.countNodes() == 0) return false;
+        Set<INode> reached = new HashSet<>();
+        List<INode> pending = new ArrayList<>();
+        pending.add(query.getNode(0));
+        reached.add(query.getNode(0));
+        for (int i = 0; i < pending.size(); i++) {
+            for (INode neighbor : pending.get(i).neighbors()) {
+                if (reached.add(neighbor)) pending.add(neighbor);
             }
+        }
+        return reached.size() == query.countNodes();
+    }
+
+    private void addMapping(VFState state) {
+        int size = state.size();
+        int bonds = state.countCommonBonds();
+        if (size > currentMCSSize || (size == currentMCSSize && bonds > currentBondCount)) {
+            maps.clear();
+            uniqueMaps.clear();
+            currentMCSSize = size;
+            currentBondCount = bonds;
+        }
+        if (size == currentMCSSize && bonds == currentBondCount
+                && !uniqueMaps.contains(state.mappingView())) {
+            Map<INode, IAtom> snapshot = state.getMap();
+            uniqueMaps.add(snapshot);
+            maps.add(snapshot);
         }
     }
 
-    private boolean mapFirst(IState state) {
-        if (state.isDead()) {
-            return false;
-        }
-
-        if (state.isGoal()) {
-            maps.add(state.getMap());
-            return true;
-        }
-
-        boolean found = false;
-        while (!found && state.hasNextCandidate()) {
-            Match candidate = state.nextCandidate();
-            if (state.isMatchFeasible(candidate)) {
-                IState nextState = state.nextState(candidate);
-                found = mapFirst(nextState);
-                nextState.backTrack();
+    private void mapAll(VFState root) {
+        Deque<VFState> states = new ArrayDeque<>();
+        try {
+            if (hasTimedOut() || root.maximumAtomCount() < currentMCSSize) return;
+            addMapping(root);
+            states.push(root);
+            while (!states.isEmpty() && !hasTimedOut()) {
+                VFState state = states.peek();
+                if (state.isGoal() || state.maximumAtomCount() < currentMCSSize || !state.hasNextCandidate()) {
+                    states.pop().backTrack();
+                    continue;
+                }
+                Match candidate = state.nextCandidate();
+                if (state.maximumAtomCount() < currentMCSSize) {
+                    states.pop().backTrack();
+                } else if (state.isMatchFeasible(candidate)) {
+                    VFState child = (VFState) state.nextState(candidate);
+                    if (hasTimedOut() || child.maximumAtomCount() < currentMCSSize) {
+                        child.backTrack();
+                    } else {
+                        states.push(child);
+                        addMapping(child);
+                    }
+                }
             }
+        } finally {
+            while (!states.isEmpty()) states.pop().backTrack();
         }
-        return found;
     }
 
-    private boolean hasMap(Map<INode, IAtom> map) {
-        for (Map<INode, IAtom> storedMap : maps) {
-            if (storedMap.equals(map)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public synchronized static boolean isTimeOut() {
-        if (getTimeout() > -1 && getTimeManager().getElapsedTimeInMinutes() > getTimeout()) {
+    /**
+     * Check the calling thread's timeout flag and compatibility clock.
+     * <p>The clock uses the cutoff captured when it was recorded. It continues running
+     *  after a search returns, so a later call can set the flag because of caller idle
+     *  time. Inspect {@link TimeOut#isTimeOutFlag()} immediately after a search for its
+     *  recorded cancellation status. This helper sets that flag when its captured
+     *  nonnegative cutoff is exceeded.
+     *
+     * @return whether the flag is set or the recorded clock has exceeded its cutoff
+     */
+    public static boolean isTimeOut() {
+        if (TimeOut.getInstance().isTimeOutFlag()) return true;
+        TimeManager clock = getTimeManager();
+        if (clock == null) return false;
+        double timeout = timeLimit.get()[0];
+        if (timeout >= 0 && clock.getElapsedTimeInMinutes() > timeout) {
             TimeOut.getInstance().setTimeOutFlag(true);
             return true;
         }
