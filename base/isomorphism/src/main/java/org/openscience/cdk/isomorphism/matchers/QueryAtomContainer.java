@@ -1696,7 +1696,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      * Note that {@link Expr.Type#FORMAL_CHARGE},
      * {@link Expr.Type#IMPL_H_COUNT}, and {@link Expr.Type#ISOTOPE} are ignored
      * if null. Explicitly setting these to zero (only required for Isotope from
-     * SMILES) forces their inclusion.
+     * SMILES) forces their inclusion. Likewise {@link Expr.Type#TOTAL_DEGREE}
+     * is ignored if the implicit hydrogen count is null, and a bond with a
+     * null order is given no order term.
      * <br>
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 =>
@@ -1788,10 +1790,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 
             if (optset.contains(DEGREE))
                 expr.and(new Expr(DEGREE,
-                        atom.getBondCount()));
-            if (optset.contains(TOTAL_DEGREE))
+                        src.getConnectedBondsCount(atom)));
+            if (optset.contains(TOTAL_DEGREE) && atom.getImplicitHydrogenCount() != null)
                 expr.and(new Expr(TOTAL_DEGREE,
-                        atom.getBondCount() + atom.getImplicitHydrogenCount()));
+                        src.getConnectedBondsCount(atom) + atom.getImplicitHydrogenCount()));
             if (optset.contains(IS_IN_RING) && atom.isInRing())
                 expr.and(new Expr(IS_IN_RING));
             if (optset.contains(IS_IN_CHAIN) && !atom.isInRing())
@@ -1814,10 +1816,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             if (optset.contains(FORMAL_CHARGE) && atom.getFormalCharge() != null)
                 expr.and(new Expr(FORMAL_CHARGE, atom.getFormalCharge()));
 
+            // a query atom already has its stereo element and STEREOCHEMISTRY term
             IStereoElement se = stereos.get(atom);
             if (se != null &&
                     se.getConfigClass() == IStereoElement.TH &&
-                    optset.contains(STEREOCHEMISTRY)) {
+                    optset.contains(STEREOCHEMISTRY) &&
+                    !(atom instanceof IQueryAtom)) {
                 expr.and(new Expr(STEREOCHEMISTRY, se.getConfigOrder()));
                 qstereo.add(se);
             }
@@ -1858,11 +1862,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
                     expr.and(new Expr(Expr.Type.IS_AROMATIC));
                 else if ((optset.contains(SINGLE_OR_AROMATIC) ||
                         optset.contains(DOUBLE_OR_AROMATIC) ||
-                        optset.contains(ALIPHATIC_ORDER)) && !bond.isAromatic())
+                        optset.contains(ALIPHATIC_ORDER)) && !bond.isAromatic() &&
+                        bond.getOrder() != null)
                     expr.and(new Expr(ALIPHATIC_ORDER, bond.getOrder().numeric()));
                 else if (bond.isAromatic() && optset.contains(IS_ALIPHATIC))
                     expr.and(new Expr(IS_ALIPHATIC));
-                else if (optset.contains(ORDER))
+                else if (optset.contains(ORDER) && bond.getOrder() != null)
                     expr.and(new Expr(ORDER, bond.getOrder().numeric()));
 
 
@@ -1906,10 +1911,22 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         switch (expr.type()) {
             case AND:
                 return strip(expr.left(), optset).and(strip(expr.right(), optset));
-            case OR:
-                return strip(expr.left(), optset).or(strip(expr.right(), optset));
-            case NOT:
-                return strip(expr.left(), optset).negate();
+            case OR: {
+                // a side that matches anything makes the whole OR match anything
+                Expr left  = strip(expr.left(), optset);
+                Expr right = strip(expr.right(), optset);
+                if (left.type() == TRUE || right.type() == TRUE)
+                    return new Expr(TRUE);
+                return left.or(right);
+            }
+            case NOT: {
+                // a negated term is only kept if it is unchanged, negating a
+                // relaxed term makes the query stricter, e.g. [!N] => [!#7]
+                Expr sub = strip(expr.left(), optset);
+                if (sub.equals(expr.left()))
+                    return sub.negate();
+                return new Expr(TRUE);
+            }
             case AROMATIC_ELEMENT:
                 if (optset.contains(expr.type()) ||
                     (optset.contains(ELEMENT) && optset.contains(IS_AROMATIC)))
@@ -1983,7 +2000,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      * Note that {@link Expr.Type#FORMAL_CHARGE},
      * {@link Expr.Type#IMPL_H_COUNT}, and {@link Expr.Type#ISOTOPE} are ignored
      * if null. Explicitly setting these to zero (only required for Isotope from
-     * SMILES) forces their inclusion.
+     * SMILES) forces their inclusion. Likewise {@link Expr.Type#TOTAL_DEGREE}
+     * is ignored if the implicit hydrogen count is null, and a bond with a
+     * null order is given no order term.
      * <br>
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 =>
