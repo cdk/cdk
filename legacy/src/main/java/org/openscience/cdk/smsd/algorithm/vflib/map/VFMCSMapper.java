@@ -82,6 +82,9 @@ import org.openscience.cdk.smsd.tools.TimeManager;
  * bonds may be left out on either side. At most {@link #MAX_MAPPINGS}
  * mappings are returned or counted. If the search times out (see
  * {@link TimeOut}) the best mappings found so far are returned.
+ * A mapper made with {@link #VFMCSMapper(IQuery, long, int)} has its own
+ * time limit and maximum number of mappings instead, and neither reads nor
+ * sets {@link TimeOut}.
  * {@link #hasMap} and {@link #getFirstMap} match the whole query, as
  * {@link VFMapper} does, with no time limit.
  * <p>
@@ -111,6 +114,12 @@ public class VFMCSMapper implements IMapper {
     private final List<Map<INode, IAtom>> maps           = new ArrayList<>();
     private int                           currentMCSSize = -1;
     private int                           currentBonds   = -1;
+    // true if the global TimeOut applies, false for a mapper with its own limits
+    private final boolean                 global;
+    // time limit in ns, -1 for none (own limits only)
+    private final long                    timeLimit;
+    private final int                     maxMappings;
+    private long                          start;
     private TimeManager                   clock;
     private boolean                       timedOut;
     private static TimeManager            timeManager    = null;
@@ -145,6 +154,36 @@ public class VFMCSMapper implements IMapper {
     public VFMCSMapper(IQuery query) {
         setTimeManager(new TimeManager());
         this.query = query;
+        this.global = true;
+        this.timeLimit = -1;
+        this.maxMappings = MAX_MAPPINGS;
+    }
+
+    /**
+     * Creates a mapper with its own limits, as used by
+     * {@link org.openscience.cdk.smsd.MCS}. The global {@link TimeOut} is
+     * neither read nor set. {@link #getMaps} and {@link #countMaps} stop when
+     * the time limit is reached or the thread is interrupted, see
+     * {@link #isTimedOut()}. Once {@code maxMappings} equally good mappings
+     * are found, only better ones are searched for, so a limit of 1 finds one
+     * maximum mapping fastest.
+     *
+     * @param query       the compiled query
+     * @param timeLimit   time limit of each search in nanoseconds, or a
+     *                    negative value for none
+     * @param maxMappings the maximum number of equally good mappings to keep,
+     *                    from 1 to {@link #MAX_MAPPINGS}
+     * @throws IllegalArgumentException if {@code maxMappings} is not from 1
+     *                                  to {@link #MAX_MAPPINGS}
+     */
+    public VFMCSMapper(IQuery query, long timeLimit, int maxMappings) {
+        if (maxMappings < 1 || maxMappings > MAX_MAPPINGS) {
+            throw new IllegalArgumentException("maxMappings must be from 1 to " + MAX_MAPPINGS + ": " + maxMappings);
+        }
+        this.query = query;
+        this.global = false;
+        this.timeLimit = timeLimit < 0 ? -1 : timeLimit;
+        this.maxMappings = maxMappings;
     }
 
     /**
@@ -156,6 +195,21 @@ public class VFMCSMapper implements IMapper {
     public VFMCSMapper(IAtomContainer queryMolecule, boolean bondMatcher) {
         setTimeManager(new TimeManager());
         this.query = new QueryCompiler(queryMolecule, bondMatcher).compile();
+        this.global = true;
+        this.timeLimit = -1;
+        this.maxMappings = MAX_MAPPINGS;
+    }
+
+    /**
+     * Returns whether the last {@link #getMaps} or {@link #countMaps} call
+     * stopped before the search was complete. Unlike the static
+     * {@link #isTimeOut()}, this applies to this mapper only.
+     *
+     * @return true if the time limit was reached or, for a mapper with its
+     *         own limits, the thread was interrupted
+     */
+    public boolean isTimedOut() {
+        return timedOut;
     }
 
     /** {@inheritDoc} */
@@ -185,7 +239,7 @@ public class VFMCSMapper implements IMapper {
     /** {@inheritDoc} */
     @Override
     public boolean hasMap(TargetProperties targetMolecule) {
-        return new VFMapper(query).hasMap(targetMolecule);
+        return new VFMapper(query, global).hasMap(targetMolecule);
     }
 
     /** {@inheritDoc} */
@@ -198,7 +252,7 @@ public class VFMCSMapper implements IMapper {
     /** {@inheritDoc} */
     @Override
     public Map<INode, IAtom> getFirstMap(TargetProperties targetMolecule) {
-        return new VFMapper(query).getFirstMap(targetMolecule);
+        return new VFMapper(query, global).getFirstMap(targetMolecule);
     }
 
     /** {@inheritDoc} */
@@ -211,30 +265,52 @@ public class VFMCSMapper implements IMapper {
     private void search(TargetProperties target) {
         maps.clear();
         timedOut = false;
-        clock = new TimeManager();
-        setTimeManager(clock);
+        if (global) {
+            clock = new TimeManager();
+            setTimeManager(clock);
+        } else {
+            start = System.nanoTime();
+        }
         try {
             // if the whole query fits, those mappings are the answer
             if (query.countNodes() <= target.getAtomCount() && isConnected() && canMapAllAtoms(target)) {
-                VFMapper mapper = new VFMapper(query);
-                List<Map<INode, IAtom>> complete = mapper.getMaps(target, this::timeOut, MAX_MAPPINGS);
+                VFMapper mapper = new VFMapper(query, global);
+                List<Map<INode, IAtom>> complete = mapper.getMaps(target, this::timeOut, maxMappings);
                 timedOut = mapper.isTimedOut();
                 if (!complete.isEmpty()) {
                     maps.addAll(complete);
                     return;
                 }
             }
+            // with its own limits a stopped search has no result to keep
+            if (stopEarly()) {
+                return;
+            }
             mapAll(new VFState(query, target, true), target);
         } finally {
-            TimeOut.getInstance().setTimeOutFlag(timedOut);
+            if (global) {
+                TimeOut.getInstance().setTimeOutFlag(timedOut);
+            }
         }
     }
 
     private boolean timeOut() {
         if (!timedOut) {
-            timedOut = getTimeout() > -1 && clock.getElapsedTimeInMinutes() > getTimeout();
+            if (global) {
+                timedOut = getTimeout() > -1 && clock.getElapsedTimeInMinutes() > getTimeout();
+            } else {
+                timedOut = Thread.currentThread().isInterrupted()
+                        || (timeLimit >= 0 && System.nanoTime() - start > timeLimit);
+            }
         }
         return timedOut;
+    }
+
+    // stops the set-up early, for a mapper with its own limits only; with the
+    // global TimeOut the set-up always completes, so a timeout can still
+    // return the greedy mapping
+    private boolean stopEarly() {
+        return !global && timeOut();
     }
 
     private boolean isConnected() {
@@ -247,6 +323,9 @@ public class VFMCSMapper implements IMapper {
         int m = target.getAtomCount();
         boolean[][] fits = new boolean[n][m];
         for (int i = 0; i < n; i++) {
+            if (stopEarly()) {
+                return false;
+            }
             INode node = query.getNode(i);
             for (int j = 0; j < m; j++) {
                 IAtom atom = target.getAtom(j);
@@ -350,7 +429,7 @@ public class VFMCSMapper implements IMapper {
         int[] best = null;
         score[0] = 0;
         score[1] = 0;
-        for (int k = 0; k < Math.min(GREEDY_ROOTS, roots.size()); k++) {
+        for (int k = 0; k < Math.min(GREEDY_ROOTS, roots.size()) && !stopEarly(); k++) {
             int[] map = new int[n];
             boolean[] used = new boolean[m];
             Arrays.fill(map, -1);
@@ -448,7 +527,7 @@ public class VFMCSMapper implements IMapper {
             currentMCSSize = size;
             currentBonds = bonds;
         }
-        if (size == currentMCSSize && bonds == currentBonds && maps.size() < MAX_MAPPINGS) {
+        if (size == currentMCSSize && bonds == currentBonds && maps.size() < maxMappings) {
             maps.add(state.getMap());
         }
     }
@@ -472,7 +551,7 @@ public class VFMCSMapper implements IMapper {
                 }
                 Match candidate = state.nextCandidate();
                 // once enough mappings are kept only better ones are searched for
-                boolean ties = maps.size() < MAX_MAPPINGS;
+                boolean ties = maps.size() < maxMappings;
                 if (state.isMatchFeasible(candidate)
                         && state.canImprove(candidate, currentMCSSize, currentBonds, ties)) {
                     VFState child = (VFState) state.nextState(candidate);

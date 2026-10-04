@@ -129,6 +129,20 @@ public class VFMapper implements IMapper {
         this.query = new QueryCompiler(queryMolecule, bondMatcher).compile();
     }
 
+    /**
+     * Creates a mapper for {@link VFMCSMapper}.
+     *
+     * @param query  the compiled query
+     * @param global true to reset the global {@link TimeOut} flag, as the
+     *               public constructors do, false to leave it unchanged
+     */
+    VFMapper(IQuery query, boolean global) {
+        if (global) {
+            setTimeManager(new TimeManager());
+        }
+        this.query = query;
+    }
+
     /** {@inheritDoc} */
     @Override
     public boolean hasMap(IAtomContainer targetMolecule) {
