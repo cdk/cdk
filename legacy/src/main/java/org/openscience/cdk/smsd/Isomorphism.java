@@ -61,10 +61,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  ii) perform the mapping of a substructure in another structure, and;
  *  iii) map two isomorphic structures.</p>
  *
- *  <p>It also comes with various published algorithms. The user is free to
- *  choose his favorite algorithm to perform MCS or substructure search.
- *  For example 0: Isomorphism algorithm, 1: MCSPlus, 2: VFLibMCS, 3: CDKMCS, 4:
- *  Substructure</p>
+ *  <p>The search is chosen with {@link Algorithm}. {@link Algorithm#DEFAULT},
+ *  {@link Algorithm#MCSPlus} and {@link Algorithm#VFLibMCS} run the same VF based
+ *  MCS search, which returns at most
+ *  {@link org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper#MAX_MAPPINGS}
+ *  maximum mappings. {@link Algorithm#CDKMCS} runs the CDK UIT MCS search, and
+ *  {@link Algorithm#SubStructure} and {@link Algorithm#TurboSubStructure} run a
+ *  substructure search.</p>
  *
  *  <p>It also has a set of robust chemical filters (i.e. bond energy, fragment
  *  count, stereo &amp; bond match) to sort the reported MCS solutions in a chemically
@@ -72,7 +75,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  sensitive mode and with implicit or explicit hydrogens.</p>
  *
  *  <p>If you are using <span style="color: #FF0000">Isomorphism, please cite Rahman <i>et.al. 2009</i></span>
- *  {@cdk.cite SMSD2009}. The Isomorphism algorithm is described in this paper.
+ *  {@cdk.cite SMSD2009}. SMSD is described in this paper.
+ *  The MCS search is based on the VF algorithm {@cdk.cite Cordella04}.
  *  </p>
  *
  *
@@ -117,7 +121,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  IAtomContainer A1 = sp.parseSmiles("C1=CC=CC=C1");
  *  // Napthalene
  *  IAtomContainer A2 = sp.parseSmiles("C1=CC2=C(C=C1)C=CC=C2");
- *  //{ 0: Default Isomorphism Algorithm, 1: MCSPlus Algorithm, 2: VFLibMCS Algorithm, 3: CDKMCS Algorithm}
+ *  // DEFAULT, MCSPlus and VFLibMCS run the VF MCS search, CDKMCS the CDK UIT search
  *  //Bond Sensitive is set true
  *  Isomorphism comparison = new Isomorphism(Algorithm.DEFAULT, true);
  *  // set molecules, remove hydrogens, clean and configure molecule
@@ -186,7 +190,9 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      * <lI>4: SubStructure
      * </OL>
      * @param algorithmType {@link org.openscience.cdk.smsd.interfaces.Algorithm}
-     * @param bondTypeFlag
+     * @param bondTypeFlag true to match bonds (both aromatic, or both not aromatic with
+     *                     the same order) and use the bond sensitive timeout, false to
+     *                     ignore bond orders and use the bond insensitive timeout
      */
     public Isomorphism(Algorithm algorithmType, boolean bondTypeFlag) {
         this.algorithmType = algorithmType;
@@ -498,17 +504,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     private void defaultMCSAlgorithm() {
         try {
-            if (isMatchBonds()) {
-                cdkMCSAlgorithm();
-                if (getFirstMapping() == null || isTimeOut()) {
-                    vfLibMCS();
-                }
-            } else {
-                mcsPlusAlgorithm();
-                if (getFirstMapping() == null || isTimeOut()) {
-                    vfLibMCS();
-                }
-            }
+            vfLibMCS();
         } catch (Exception e) {
             LoggingToolFactory.createLoggingTool(Isomorphism.class)
                               .warn("Unexpected Error:", e);

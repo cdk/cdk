@@ -582,4 +582,17 @@ class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assertions.assertFalse(foundMatches);
     }
+
+    @Test
+    void testDefaultWithBondsOnSteroids() throws CDKException {
+        // DEFAULT used to try CDKMCS first; after its timeout the old VF search returned no mapping
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer testosterone = sp.parseSmiles("CC12CCC3C(C1CCC2O)CCC4=CC(=O)CCC34C");
+        IAtomContainer estradiol = sp.parseSmiles("CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O");
+        Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd.init(testosterone, estradiol, true, true);
+        Assertions.assertFalse(smsd.isTimeOut());
+        Assertions.assertNotNull(smsd.getFirstAtomMapping());
+        Assertions.assertEquals(15, smsd.getFirstAtomMapping().size());
+    }
 }
