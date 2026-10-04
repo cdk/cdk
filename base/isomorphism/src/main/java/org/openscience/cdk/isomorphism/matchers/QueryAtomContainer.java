@@ -1901,6 +1901,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             dst.addStereoElement(se.map(mapping));
     }
 
+    // kept leaves are copied, as and(), or() and negate() change the expression they are called on
     private static Expr strip(Expr expr, Set<Expr.Type> optset) {
         switch (expr.type()) {
             case AND:
@@ -1912,7 +1913,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             case AROMATIC_ELEMENT:
                 if (optset.contains(expr.type()) ||
                     (optset.contains(ELEMENT) && optset.contains(IS_AROMATIC)))
-                    return expr;
+                    return new Expr(expr);
                 if (optset.contains(ELEMENT))
                     return new Expr(ELEMENT, expr.value());
                 if (optset.contains(IS_AROMATIC))
@@ -1921,7 +1922,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             case ALIPHATIC_ELEMENT:
                 if (optset.contains(expr.type()) ||
                     (optset.contains(ELEMENT) && optset.contains(IS_ALIPHATIC)))
-                    return expr;
+                    return new Expr(expr);
                 if (optset.contains(ELEMENT))
                     return new Expr(ELEMENT, expr.value());
                 if (optset.contains(IS_ALIPHATIC))
@@ -1929,7 +1930,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
                 return new Expr(TRUE);
             default:
                 if (optset.contains(expr.type()))
-                    return expr;
+                    return new Expr(expr);
                 return new Expr(TRUE);
         }
     }

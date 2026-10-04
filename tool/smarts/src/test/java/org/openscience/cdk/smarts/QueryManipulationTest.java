@@ -81,4 +81,26 @@ public class QueryManipulationTest {
         Assertions.assertEquals("[D;A,A][AD2][AD2][AD]", result);
     }
 
+    @Test
+    public void testQueryNotChanged() {
+        for (String smarts : new String[]{"[!#6]C", "[#7,#8]C", "[C;R]C"}) {
+            IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
+            Assertions.assertTrue(Smarts.parse(query, smarts));
+            String before = Smarts.generate(query);
+            QueryAtomContainer.create(query, Expr.Type.ELEMENT);
+            QueryAtomContainer.create(query, Expr.Type.ELEMENT, Expr.Type.IS_IN_RING);
+            Assertions.assertEquals(before, Smarts.generate(query), smarts);
+        }
+    }
+
+    @Test
+    public void testNegatedElement() {
+        String smarts = "[!#6]C";
+        IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        Assertions.assertTrue(Smarts.parse(query, smarts));
+        IAtomContainer queryMod = QueryAtomContainer.create(query, Expr.Type.ELEMENT);
+        String result = Smarts.generate(queryMod);
+        Assertions.assertEquals("[!#6][#6]", result);
+    }
+
 }
