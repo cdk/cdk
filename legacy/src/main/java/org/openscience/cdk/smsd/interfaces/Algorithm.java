@@ -49,7 +49,8 @@ public enum Algorithm {
      */
     DEFAULT(0, "Default SMSD algorithm"),
     /**
-     * MCS Plus algorithm.
+     * Runs the same VF based search as {@link #VFLibMCS}, not the clique based
+     * {@link org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlus} search.
      */
     MCSPlus(1, "MCS Plus algorithm"),
     /**
