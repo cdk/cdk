@@ -26,10 +26,10 @@ package org.openscience.cdk.isomorphism;
 
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
@@ -256,26 +256,42 @@ public final class VentoFoggia extends Pattern {
 
     private static final class AdjListCache {
 
-        // 100 ms max age
-        private static final long MAX_AGE = TimeUnit.MILLISECONDS.toNanos(100);
-
+        private final IAtomContainer mol;
         private final int[][] g;
         private final EdgeToBondMap bmap;
-        private final int numAtoms, numBonds;
-        private final long tInit;
+        private final int numAtoms;
+        private final IBond[] bonds;
+        private final int[] ends;
 
         private AdjListCache(IAtomContainer mol) {
+            this.mol = mol;
             this.bmap = EdgeToBondMap.withSpaceFor(mol);
             this.g = GraphUtil.toAdjList(mol, bmap);
             this.numAtoms = mol.getAtomCount();
-            this.numBonds = mol.getBondCount();
-            this.tInit = System.nanoTime();
+            this.bonds = new IBond[mol.getBondCount()];
+            this.ends = new int[2 * bonds.length];
+            for (int i = 0; i < bonds.length; i++) {
+                bonds[i] = mol.getBond(i);
+                ends[2 * i] = mol.indexOf(bonds[i].getBegin());
+                ends[2 * i + 1] = mol.indexOf(bonds[i].getEnd());
+            }
         }
 
+        // same molecule, same number of atoms and the same bond objects
+        // between the same atoms
         private boolean validate(IAtomContainer mol) {
-            return mol.getAtomCount() == numAtoms &&
-                   mol.getBondCount() == numBonds &&
-                   (System.nanoTime() - tInit) < MAX_AGE;
+            if (mol != this.mol ||
+                mol.getAtomCount() != numAtoms ||
+                mol.getBondCount() != bonds.length)
+                return false;
+            for (int i = 0; i < bonds.length; i++) {
+                IBond bond = mol.getBond(i);
+                if (bond != bonds[i] ||
+                    mol.indexOf(bond.getBegin()) != ends[2 * i] ||
+                    mol.indexOf(bond.getEnd()) != ends[2 * i + 1])
+                    return false;
+            }
+            return true;
         }
     }
 }

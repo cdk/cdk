@@ -25,6 +25,11 @@
 package org.openscience.cdk.isomorphism;
 
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -78,5 +83,43 @@ class VentoFoggiaTest {
         int count = VentoFoggia.findSubstructure(TestMoleculeFactory.makeNaphthalene())
                                .matchAll(TestMoleculeFactory.makeBenzene()).count();
         assertThat(count, is(0));
+    }
+
+    @Test
+    void targetEditedInPlace() throws Exception {
+        Pattern pattern = VentoFoggia.findSubstructure(mol("CO", 0, 1, IBond.Order.SINGLE));
+        IAtomContainer target = mol("CCO", 0, 1, IBond.Order.SINGLE); // CC.O
+        assertThat(pattern.matches(target), is(false));
+        target.removeBond(0);
+        target.addBond(1, 2, IBond.Order.SINGLE); // C.CO, same atom and bond count
+        assertThat(pattern.matches(target), is(true));
+    }
+
+    @Test
+    void targetAtomsReordered() throws Exception {
+        Pattern pattern = VentoFoggia.findSubstructure(mol("CO", 0, 1, IBond.Order.SINGLE));
+        IAtomContainer target = mol("CCO", 0, 1, IBond.Order.SINGLE); // CC.O
+        assertThat(pattern.matches(target), is(false));
+        target.setAtoms(new IAtom[]{target.getAtom(0), target.getAtom(2), target.getAtom(1)}); // still CC.O
+        assertThat(pattern.matches(target), is(false));
+    }
+
+    @Test
+    void clonedTargetEdited() throws Exception {
+        Pattern pattern = VentoFoggia.findSubstructure(mol("CO", 0, 1, IBond.Order.DOUBLE));
+        IAtomContainer target = mol("CO", 0, 1, IBond.Order.SINGLE);
+        assertThat(pattern.matches(target), is(false));
+        IAtomContainer copy = target.clone();
+        copy.getBond(0).setOrder(IBond.Order.DOUBLE);
+        assertThat(pattern.matches(copy), is(true));
+    }
+
+    /** A molecule of C and O atoms with one bond. */
+    private static IAtomContainer mol(String elems, int beg, int end, IBond.Order order) {
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        for (char c : elems.toCharArray())
+            mol.newAtom(c == 'C' ? IElement.C : IElement.O);
+        mol.addBond(beg, end, order);
+        return mol;
     }
 }
