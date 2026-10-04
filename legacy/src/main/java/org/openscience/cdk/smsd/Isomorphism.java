@@ -208,6 +208,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private synchronized void mcsBuilder(MolHandler mol1, MolHandler mol2) {
+        // the timeouts can be changed after construction
+        setTime(isMatchBonds());
 
         int rBondCount = mol1.getMolecule().getBondCount();
         int pBondCount = mol2.getMolecule().getBondCount();
@@ -230,6 +232,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private synchronized void mcsBuilder(IQueryAtomContainer mol1, IAtomContainer mol2) {
+        // the timeouts can be changed after construction
+        setTime(isMatchBonds());
 
         int rBondCount = mol1.getBondCount();
         int pBondCount = mol2.getBondCount();
@@ -875,7 +879,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
-     * @return the bondSensitiveTimeOut
+     * @return the bond sensitive timeout in minutes
      */
     @Override
     public double getBondSensitiveTimeOut() {
@@ -884,7 +888,10 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
-     * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.10 min)
+     * The timeout is applied when {@code init} runs the search, and replaces any
+     * value set with {@link TimeOut#setTimeOut(double)}.
+     *
+     * @param bondSensitiveTimeOut the bond sensitive timeout in minutes (default 0.15 min)
      */
     @Override
     public void setBondSensitiveTimeOut(double bondSensitiveTimeOut) {
@@ -893,7 +900,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
-     * @return the bondInSensitiveTimeOut
+     * @return the bond insensitive timeout in minutes
      */
     @Override
     public double getBondInSensitiveTimeOut() {
@@ -902,7 +909,10 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
-     * @param bondInSensitiveTimeOut the bond insensitive Timeout in mins (default 0.15 min)
+     * The timeout is applied when {@code init} runs the search, and replaces any
+     * value set with {@link TimeOut#setTimeOut(double)}.
+     *
+     * @param bondInSensitiveTimeOut the bond insensitive timeout in minutes (default 1.00 min)
      */
     @Override
     public void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut) {
