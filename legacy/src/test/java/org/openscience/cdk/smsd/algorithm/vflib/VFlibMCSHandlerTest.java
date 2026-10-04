@@ -22,6 +22,7 @@
 package org.openscience.cdk.smsd.algorithm.vflib;
 
 import java.io.InputStream;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,9 +35,12 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smarts.Smarts;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest;
 import org.openscience.cdk.smsd.tools.MolHandler;
@@ -237,5 +241,71 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         Assertions.assertNotNull(smsd1.getFirstMapping());
 
         Assertions.assertEquals(7, smsd1.getFirstMapping().size());
+    }
+
+    @Test
+    void testTwoHandlersKeepTheirOwnResults() throws Exception {
+        VFlibMCSHandler first = search("CC", "CCC", true);
+        VFlibMCSHandler second = search("NN", "NNN", true);
+        Assertions.assertEquals(2, first.getFirstMapping().size());
+        Assertions.assertEquals(2, second.getFirstMapping().size());
+        for (IAtom atom : first.getFirstAtomMapping().keySet()) {
+            Assertions.assertEquals("C", atom.getSymbol());
+        }
+    }
+
+    @Test
+    void testCyclohexaneHexane() throws Exception {
+        // VF used to return no mapping when a ring bond had to be left out
+        Assertions.assertEquals(12, search("C1CCCCC1", "CCCCCC", true).getAllMapping().size());
+        Assertions.assertEquals(12, search("CCCCCC", "C1CCCCC1", true).getAllMapping().size());
+        Assertions.assertEquals(6, search("C1CCCCC1", "CCCCCC", true).getFirstMapping().size());
+    }
+
+    @Test
+    void testLargerSourceKeepsSourceIndices() throws Exception {
+        VFlibMCSHandler handler = search("OCCN", "CCO", true);
+        Assertions.assertEquals(3, handler.getFirstMapping().size());
+        for (Map<Integer, Integer> map : handler.getAllMapping()) {
+            Assertions.assertTrue(map.containsKey(0)); // the oxygen
+            Assertions.assertFalse(map.containsKey(3)); // the nitrogen
+        }
+    }
+
+    @Test
+    void testStrictBondOrder() throws Exception {
+        // C=O does not match C-O, in either direction
+        Assertions.assertEquals(6, search("O=C1CCCCC1", "OC1CCCCC1", true).getFirstMapping().size());
+        Assertions.assertEquals(6, search("OC1CCCCC1", "O=C1CCCCC1", true).getFirstMapping().size());
+        Assertions.assertEquals(7, search("O=C1CCCCC1", "OC1CCCCC1", false).getFirstMapping().size());
+    }
+
+    @Test
+    void testDisconnectedInput() throws Exception {
+        // the largest connected common part is mapped
+        Assertions.assertEquals(3, search("CC.NNN", "CC.NNN", true).getFirstMapping().size());
+        Assertions.assertEquals(2, search("CC.NNN", "CC.NO", true).getFirstMapping().size());
+    }
+
+    @Test
+    void testQueryAtomsInAnAtomContainer() throws Exception {
+        // SMARTS atoms are matched by their predicate
+        IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        Assertions.assertTrue(Smarts.parse(query, "[N,O]CCC"));
+        IAtomContainer target = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("OCC");
+        VFlibMCSHandler handler = new VFlibMCSHandler();
+        handler.set(new MolHandler(query, false, false), new MolHandler(target, false, false));
+        handler.searchMCS(true);
+        Assertions.assertEquals(3, handler.getFirstMapping().size());
+        Assertions.assertEquals(Integer.valueOf(0), handler.getFirstMapping().get(0));
+    }
+
+    private static VFlibMCSHandler search(String source, String target, boolean bonds) throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        VFlibMCSHandler handler = new VFlibMCSHandler();
+        handler.set(new MolHandler(sp.parseSmiles(source), false, false),
+                    new MolHandler(sp.parseSmiles(target), false, false));
+        handler.searchMCS(bonds);
+        return handler;
     }
 }

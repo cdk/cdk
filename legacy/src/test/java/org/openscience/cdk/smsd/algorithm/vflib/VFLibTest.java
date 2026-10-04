@@ -91,7 +91,8 @@ class VFLibTest extends CDKTestCase {
             state.nextCandidate();
             count++;
         }
-        Assertions.assertEquals(benzene.getAtomCount() * benzene.getAtomCount(), count);
+        // the whole query must be mapped, so one query atom is tried against every target atom
+        Assertions.assertEquals(benzene.getAtomCount(), count);
     }
 
     @Test
@@ -105,7 +106,8 @@ class VFLibTest extends CDKTestCase {
             candidates.add(newState.nextCandidate());
         }
 
-        Assertions.assertEquals(4, candidates.size());
+        // only one neighbour of the mapped query atom is tried, against the two neighbours of its target atom
+        Assertions.assertEquals(2, candidates.size());
     }
 
     @Test

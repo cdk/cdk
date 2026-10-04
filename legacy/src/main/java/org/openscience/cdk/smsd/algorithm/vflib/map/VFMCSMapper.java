@@ -48,25 +48,48 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.map;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
-import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IState;
 import org.openscience.cdk.smsd.algorithm.vflib.query.QueryCompiler;
 import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
- * This class finds MCS between query and target molecules
- * using VF2 algorithm.
+ * This class finds the maximum common substructure (MCS) of a query and a
+ * target molecule using the VF2 algorithm.
+ * <p>
+ * {@link #getMaps} and {@link #countMaps} find the connected common
+ * substructures with the most atoms and, of those, the most common bonds;
+ * bonds may be left out on either side. At most {@link #MAX_MAPPINGS}
+ * mappings are returned or counted. If the search times out (see
+ * {@link TimeOut}) the best mappings found so far are returned.
+ * {@link #hasMap} and {@link #getFirstMap} match the whole query, as
+ * {@link VFMapper} does, with no time limit.
+ * <p>
+ * The search is exact. It can take long when many mappings are nearly as
+ * good as the best one, e.g. for some large polycyclic molecules, so a time
+ * limit is recommended. When the whole query does not fit, the search order
+ * is taken from the structures, so it hardly depends on the order of their
+ * atoms.
  *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
@@ -75,10 +98,22 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 @Deprecated
 public class VFMCSMapper implements IMapper {
 
-    private IQuery                  query;
-    private List<Map<INode, IAtom>> maps;
-    private int                     currentMCSSize = -1;
-    private static TimeManager      timeManager    = null;
+    /**
+     * Maximum number of equally good mappings kept; symmetric molecules
+     * can have millions of them.
+     */
+    public static final int               MAX_MAPPINGS   = 1000;
+
+    // maximum number of root pairs tried by the greedy mapping
+    private static final int              GREEDY_ROOTS   = 64;
+
+    private final IQuery                  query;
+    private final List<Map<INode, IAtom>> maps           = new ArrayList<>();
+    private int                           currentMCSSize = -1;
+    private int                           currentBonds   = -1;
+    private TimeManager                   clock;
+    private boolean                       timedOut;
+    private static TimeManager            timeManager    = null;
 
     /**
      * @return the timeout
@@ -103,177 +138,357 @@ public class VFMCSMapper implements IMapper {
     }
 
     /**
+     * Creates a mapper that uses the global {@link TimeOut}.
      *
-     * @param query
+     * @param query the compiled query
      */
     public VFMCSMapper(IQuery query) {
         setTimeManager(new TimeManager());
         this.query = query;
-        this.maps = new ArrayList<>();
     }
 
     /**
+     * Creates a mapper that uses the global {@link TimeOut}.
      *
-     * @param queryMolecule
-     * @param bondMatcher
+     * @param queryMolecule the query molecule
+     * @param bondMatcher   true to match bonds by order and aromaticity
      */
     public VFMCSMapper(IAtomContainer queryMolecule, boolean bondMatcher) {
         setTimeManager(new TimeManager());
         this.query = new QueryCompiler(queryMolecule, bondMatcher).compile();
-        this.maps = new ArrayList<>();
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule targetMolecule graph
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean hasMap(IAtomContainer targetMolecule) {
-        IState state = new VFState(query, new TargetProperties(targetMolecule));
-        maps.clear();
-        return mapFirst(state);
+        return hasMap(new TargetProperties(targetMolecule));
     }
 
     /** {@inheritDoc} */
     @Override
     public List<Map<INode, IAtom>> getMaps(IAtomContainer target) {
-        IState state = new VFState(query, new TargetProperties(target));
-        maps.clear();
-        mapAll(state);
-        return new ArrayList<>(maps);
+        return getMaps(new TargetProperties(target));
     }
 
-    /** {@inheritDoc}
-     *
-     * @param target
-     *
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<INode, IAtom> getFirstMap(IAtomContainer target) {
-        IState state = new VFState(query, new TargetProperties(target));
-        maps.clear();
-        mapFirst(state);
-        return maps.isEmpty() ? new HashMap<>() : maps.get(0);
+        return getFirstMap(new TargetProperties(target));
     }
 
     /** {@inheritDoc} */
     @Override
     public int countMaps(IAtomContainer target) {
-        IState state = new VFState(query, new TargetProperties(target));
-        maps.clear();
-        mapAll(state);
-        return maps.size();
+        return countMaps(new TargetProperties(target));
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule targetMolecule graph
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean hasMap(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        return mapFirst(state);
+        return new VFMapper(query).hasMap(targetMolecule);
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule
-     */
+    /** {@inheritDoc} */
     @Override
     public List<Map<INode, IAtom>> getMaps(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        mapAll(state);
+        search(targetMolecule);
         return new ArrayList<>(maps);
     }
 
-    /** {@inheritDoc}
-     *
-     * @param targetMolecule
-     *
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<INode, IAtom> getFirstMap(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        mapFirst(state);
-        return maps.isEmpty() ? new HashMap<>() : maps.get(0);
+        return new VFMapper(query).getFirstMap(targetMolecule);
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule
-     */
+    /** {@inheritDoc} */
     @Override
     public int countMaps(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        mapAll(state);
+        search(targetMolecule);
         return maps.size();
     }
 
-    private void addMapping(IState state) {
-        Map<INode, IAtom> map = state.getMap();
-        if (!hasMap(map) && map.size() > currentMCSSize) {
-            maps.add(map);
-            currentMCSSize = map.size();
-        } else if (!hasMap(map) && map.size() == currentMCSSize) {
-            maps.add(map);
+    private void search(TargetProperties target) {
+        maps.clear();
+        timedOut = false;
+        clock = new TimeManager();
+        setTimeManager(clock);
+        try {
+            // if the whole query fits, those mappings are the answer
+            if (query.countNodes() <= target.getAtomCount() && isConnected() && canMapAllAtoms(target)) {
+                VFMapper mapper = new VFMapper(query);
+                List<Map<INode, IAtom>> complete = mapper.getMaps(target, this::timeOut, MAX_MAPPINGS);
+                timedOut = mapper.isTimedOut();
+                if (!complete.isEmpty()) {
+                    maps.addAll(complete);
+                    return;
+                }
+            }
+            mapAll(new VFState(query, target, true), target);
+        } finally {
+            TimeOut.getInstance().setTimeOutFlag(timedOut);
         }
     }
 
-    private void mapAll(IState state) {
-        if (state.isDead()) {
-            return;
+    private boolean timeOut() {
+        if (!timedOut) {
+            timedOut = getTimeout() > -1 && clock.getElapsedTimeInMinutes() > getTimeout();
         }
-
-        if (state.isGoal()) {
-            Map<INode, IAtom> map = state.getMap();
-            if (!hasMap(map)) {
-                maps.add(state.getMap());
-            } else {
-                state.backTrack();
-            }
-        } else {
-            addMapping(state);
-        }
-
-        while (state.hasNextCandidate()) {
-            Match candidate = state.nextCandidate();
-            if (state.isMatchFeasible(candidate)) {
-                IState nextState = state.nextState(candidate);
-                mapAll(nextState);
-                nextState.backTrack();
-            }
-        }
+        return timedOut;
     }
 
-    private boolean mapFirst(IState state) {
-        if (state.isDead()) {
-            return false;
+    private boolean isConnected() {
+        return query.countNodes() > 0 && VFState.partSizes(query).get(query.getNode(0)) == query.countNodes();
+    }
+
+    // each query atom can be given its own target atom (a bipartite matching)
+    private boolean canMapAllAtoms(TargetProperties target) {
+        int n = query.countNodes();
+        int m = target.getAtomCount();
+        boolean[][] fits = new boolean[n][m];
+        for (int i = 0; i < n; i++) {
+            INode node = query.getNode(i);
+            for (int j = 0; j < m; j++) {
+                IAtom atom = target.getAtom(j);
+                fits[i][j] = node.countNeighbors() <= target.countNeighbors(atom)
+                        && node.getAtomMatcher().matches(target, atom);
+            }
+        }
+        int[] owner = new int[m];
+        Arrays.fill(owner, -1);
+        for (int i = 0; i < n; i++) {
+            if (!VFState.augment(i, fits, owner, new boolean[m])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * A quick connected mapping, grown greedily from the root pairs whose
+     * neighbourhoods look most alike, one root per pair of symmetry classes.
+     * The search uses its size to prune; {@code score} receives its atom and
+     * common bond counts.
+     */
+    private Map<INode, IAtom> greedyMapping(VFState root, TargetProperties target, int[] score) {
+        int n = query.countNodes();
+        int m = target.getAtomCount();
+        // highest ranked query atoms first, so ties hardly depend on the input order
+        INode[] ranked = root.rankedNodes();
+        INode[] nodes = new INode[n];
+        IAtom[] atoms = root.rankedAtoms();
+        Map<INode, Integer> nodeIndex = new IdentityHashMap<>();
+        for (int i = 0; i < n; i++) {
+            nodes[i] = ranked[n - 1 - i];
+            nodeIndex.put(nodes[i], i);
+        }
+        int[][] queryNbrs = new int[n][];
+        int[][] targetNbrs = new int[m][];
+        for (int i = 0; i < n; i++) {
+            List<Integer> nbrs = new ArrayList<>();
+            for (INode nbr : nodes[i].neighbors()) {
+                nbrs.add(nodeIndex.get(nbr));
+            }
+            queryNbrs[i] = VFState.toArray(nbrs);
+            Arrays.sort(queryNbrs[i]);
+        }
+        for (int j = 0; j < m; j++) {
+            List<Integer> nbrs = new ArrayList<>();
+            for (IAtom nbr : target.getNeighbors(atoms[j])) {
+                nbrs.add(root.atomRank.get(AtomRef.deref(nbr)));
+            }
+            targetNbrs[j] = VFState.toArray(nbrs);
+            Arrays.sort(targetNbrs[j]);
         }
 
-        if (state.isGoal()) {
+        // atoms look alike up to radius r if their neighbourhood hashes agree
+        long[] queryHash = new long[n];
+        long[] targetHash = new long[m];
+        for (int i = 0; i < n; i++) {
+            queryHash[i] = 31L * Objects.hashCode(query.getAtom(nodes[i]).getSymbol()) + queryNbrs[i].length;
+        }
+        for (int j = 0; j < m; j++) {
+            targetHash[j] = 31L * Objects.hashCode(atoms[j].getSymbol()) + targetNbrs[j].length;
+        }
+        long[] queryHashStart = queryHash;
+        long[] targetHashStart = targetHash;
+        int[][] alike = new int[n][m];
+        for (int r = 0; r < 4; r++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (alike[i][j] == r && queryHash[i] == targetHash[j]) {
+                        alike[i][j] = r + 1;
+                    }
+                }
+            }
+            queryHash = extend(queryHash, queryNbrs);
+            targetHash = extend(targetHash, targetNbrs);
+        }
+
+        boolean[][] fits = new boolean[n][m];
+        List<int[]> pairs = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                fits[i][j] = nodes[i].getAtomMatcher().matches(target, atoms[j]);
+                if (fits[i][j]) {
+                    pairs.add(new int[]{i, j});
+                }
+            }
+        }
+        Collections.sort(pairs, (a, b) -> alike[b[0]][b[1]] - alike[a[0]][a[1]]);
+        // symmetric roots grow the same mapping, so try a different pair of classes each time
+        int[] queryClass = VFState.symmetryClasses(queryNbrs, invariants(queryHashStart));
+        int[] targetClass = VFState.symmetryClasses(targetNbrs, invariants(targetHashStart));
+        Set<Long> tried = new HashSet<>();
+        List<int[]> roots = new ArrayList<>();
+        for (int[] pair : pairs) {
+            if (tried.add((long) queryClass[pair[0]] << 32 | targetClass[pair[1]])) {
+                roots.add(pair);
+            }
+        }
+
+        int[] best = null;
+        score[0] = 0;
+        score[1] = 0;
+        for (int k = 0; k < Math.min(GREEDY_ROOTS, roots.size()); k++) {
+            int[] map = new int[n];
+            boolean[] used = new boolean[m];
+            Arrays.fill(map, -1);
+            map[roots.get(k)[0]] = roots.get(k)[1];
+            used[roots.get(k)[1]] = true;
+            int size = 1;
+            int bonds = 0;
+            while (true) {
+                // add the most alike pair with the most common bonds to the mapped atoms
+                int bestI = -1;
+                int bestJ = -1;
+                int bestAlike = -1;
+                int bestBonds = 0;
+                for (int i = 0; i < n; i++) {
+                    if (map[i] >= 0) {
+                        continue;
+                    }
+                    for (int a : queryNbrs[i]) {
+                        if (map[a] < 0) {
+                            continue;
+                        }
+                        for (int j : targetNbrs[map[a]]) {
+                            if (used[j] || !fits[i][j]) {
+                                continue;
+                            }
+                            int common = 0;
+                            for (int b : queryNbrs[i]) {
+                                IBond bond = map[b] < 0 ? null : target.getBond(atoms[map[b]], atoms[j]);
+                                if (bond != null
+                                        && query.getEdge(nodes[b], nodes[i]).getBondMatcher().matches(target, bond)) {
+                                    common++;
+                                }
+                            }
+                            if (common > 0 && (alike[i][j] > bestAlike
+                                    || (alike[i][j] == bestAlike && common > bestBonds))) {
+                                bestI = i;
+                                bestJ = j;
+                                bestAlike = alike[i][j];
+                                bestBonds = common;
+                            }
+                        }
+                    }
+                }
+                if (bestI < 0) {
+                    break;
+                }
+                map[bestI] = bestJ;
+                used[bestJ] = true;
+                size++;
+                bonds += bestBonds;
+            }
+            if (size > score[0] || (size == score[0] && bonds > score[1])) {
+                score[0] = size;
+                score[1] = bonds;
+                best = map;
+            }
+        }
+        Map<INode, IAtom> mapping = new HashMap<>();
+        for (int i = 0; best != null && i < n; i++) {
+            if (best[i] >= 0) {
+                mapping.put(nodes[i], atoms[best[i]]);
+            }
+        }
+        return mapping;
+    }
+
+    // hash of an atom together with the sorted hashes of its neighbours
+    private static long[] extend(long[] hash, int[][] nbrs) {
+        long[] next = new long[hash.length];
+        for (int i = 0; i < hash.length; i++) {
+            long[] around = new long[nbrs[i].length];
+            for (int k = 0; k < around.length; k++) {
+                around[k] = hash[nbrs[i][k]];
+            }
+            Arrays.sort(around);
+            next[i] = 1000003L * hash[i] + Arrays.hashCode(around);
+        }
+        return next;
+    }
+
+    // one invariant per atom, compared exactly
+    private static int[][] invariants(long[] hash) {
+        int[][] invariants = new int[hash.length][];
+        for (int i = 0; i < hash.length; i++) {
+            invariants[i] = new int[]{(int) (hash[i] >>> 32), (int) hash[i]};
+        }
+        return invariants;
+    }
+
+    private void addMapping(VFState state) {
+        int size = state.size();
+        int bonds = state.countCommonBonds();
+        if (size > currentMCSSize || (size == currentMCSSize && bonds > currentBonds)) {
+            maps.clear();
+            currentMCSSize = size;
+            currentBonds = bonds;
+        }
+        if (size == currentMCSSize && bonds == currentBonds && maps.size() < MAX_MAPPINGS) {
             maps.add(state.getMap());
-            return true;
         }
-
-        boolean found = false;
-        while (!found && state.hasNextCandidate()) {
-            Match candidate = state.nextCandidate();
-            if (state.isMatchFeasible(candidate)) {
-                IState nextState = state.nextState(candidate);
-                found = mapFirst(nextState);
-                nextState.backTrack();
-            }
-        }
-        return found;
     }
 
-    private boolean hasMap(Map<INode, IAtom> map) {
-        for (Map<INode, IAtom> storedMap : maps) {
-            if (storedMap.equals(map)) {
-                return true;
+    // depth first without recursion, each connected mapping is visited once
+    private void mapAll(VFState root, TargetProperties target) {
+        Deque<VFState> states = new ArrayDeque<>();
+        // start from the greedy size, the search still finds every mapping at
+        // least as good (the greedy one included)
+        int[] score = new int[2];
+        Map<INode, IAtom> greedy = greedyMapping(root, target, score);
+        currentMCSSize = score[0];
+        currentBonds = score[1];
+        states.push(root);
+        try {
+            while (!states.isEmpty() && !timeOut()) {
+                VFState state = states.peek();
+                if (state.isGoal() || !state.hasNextCandidate() || state.maximumAtomCount() < currentMCSSize) {
+                    states.pop().backTrack();
+                    continue;
+                }
+                Match candidate = state.nextCandidate();
+                // once enough mappings are kept only better ones are searched for
+                boolean ties = maps.size() < MAX_MAPPINGS;
+                if (state.isMatchFeasible(candidate)
+                        && state.canImprove(candidate, currentMCSSize, currentBonds, ties)) {
+                    VFState child = (VFState) state.nextState(candidate);
+                    states.push(child);
+                    addMapping(child);
+                }
+            }
+        } finally {
+            while (!states.isEmpty()) {
+                states.pop().backTrack();
+            }
+            // timed out before reaching the greedy size, or nothing matched: return the greedy mapping
+            if (maps.isEmpty()) {
+                maps.add(greedy);
             }
         }
-        return false;
     }
 
     public synchronized static boolean isTimeOut() {
