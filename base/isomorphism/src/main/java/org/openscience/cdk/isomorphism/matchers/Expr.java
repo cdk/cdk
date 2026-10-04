@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.DfPattern;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
@@ -169,55 +168,64 @@ public final class Expr {
     }
 
     private static boolean isInRingSize(IAtom atom, IBond prev, IAtom beg,
-                                        int size, int req) {
-        atom.setFlag(IChemObject.VISITED, true);
+                                        int size, int req, boolean[] visit) {
+        visit[atom.getIndex()] = true;
         for (IBond bond : atom.bonds()) {
             if (bond == prev)
                 continue;
             IAtom nbr = bond.getOther(atom);
-            if (nbr.equals(beg))
-                return size == req;
-            else if (size < req &&
-                     !nbr.getFlag(IChemObject.VISITED) &&
-                     isInRingSize(nbr, bond, beg, size + 1, req))
+            if (nbr.equals(beg)) {
+                if (size == req)
+                    return true;
+            } else if (size < req &&
+                       !visit[nbr.getIndex()] &&
+                       isInRingSize(nbr, bond, beg, size + 1, req, visit))
                 return true;
         }
-        atom.setFlag(IChemObject.VISITED, false);
+        visit[atom.getIndex()] = false;
         return false;
     }
 
     private static boolean isInRingSize(IAtom atom, int size) {
-        for (IAtom a : atom.getContainer().atoms())
-            a.setFlag(IChemObject.VISITED, false);
-        return isInRingSize(atom, null, atom, 1, size);
+        boolean[] visit = new boolean[atom.getContainer().getAtomCount()];
+        return isInRingSize(atom, null, atom, 1, size, visit);
     }
 
     private static boolean isInSmallRingSize(IAtom atom, int size) {
         // invariant: this function is only called on atoms in rings
-        IAtomContainer mol    = atom.getContainer();
-        int[]          distTo = new int[mol.getAtomCount()];
-        Arrays.fill(distTo, 1 + distTo.length);
-        distTo[atom.getIndex()] = 0;
-        Deque<IAtom> queue = new ArrayDeque<>();
-        queue.push(atom);
-        int smallest = 1 + distTo.length;
-        while (!queue.isEmpty()) {
-            IAtom a    = queue.poll();
-            int   dist = 1 + distTo[a.getIndex()];
-            for (IBond b : a.bonds()) {
-                if (!b.isInRing()) continue;
-                IAtom nbr = b.getOther(a);
-                if (dist < distTo[nbr.getIndex()]) {
-                    distTo[nbr.getIndex()] = dist;
-                    queue.add(nbr);
-                } else if (dist != 2 + distTo[nbr.getIndex()]) {
-                    int tmp = dist + distTo[nbr.getIndex()];
-                    if (tmp < smallest)
-                        smallest = tmp;
+        IAtomContainer mol      = atom.getContainer();
+        int[]          distTo   = new int[mol.getAtomCount()];
+        Deque<IAtom>   queue    = new ArrayDeque<>();
+        int            smallest = 1 + distTo.length;
+        // the smallest ring through 'atom' is the shortest path back to it
+        // from a ring neighbour that does not use the bond to that neighbour
+        for (IBond first : atom.bonds()) {
+            if (!first.isInRing())
+                continue;
+            Arrays.fill(distTo, 0);
+            queue.clear();
+            IAtom nbr = first.getOther(atom);
+            distTo[nbr.getIndex()] = 1;
+            queue.add(nbr);
+            while (!queue.isEmpty()) {
+                IAtom a    = queue.poll();
+                int   dist = 1 + distTo[a.getIndex()];
+                if (dist > size || dist >= smallest)
+                    break;
+                for (IBond b : a.bonds()) {
+                    if (b == first || !b.isInRing())
+                        continue;
+                    IAtom c = b.getOther(a);
+                    if (c.equals(atom)) {
+                        smallest = dist;
+                        break;
+                    }
+                    if (distTo[c.getIndex()] == 0) {
+                        distTo[c.getIndex()] = dist;
+                        queue.add(c);
+                    }
                 }
             }
-            if (2 * dist > 1 + size)
-                break;
         }
         return smallest == size;
     }
@@ -296,16 +304,22 @@ public final class Expr {
             case FORMAL_CHARGE:
                 return eq(atom.getFormalCharge(), value);
             case RING_BOND_COUNT:
-                if (!atom.isInRing() || atom.getBondCount() < value)
+                if (!atom.isInRing())
+                    return value == 0;
+                if (atom.getBondCount() < value)
                     return false;
                 int rbonds = 0;
                 for (IBond bond : atom.bonds())
                     rbonds += bond.isInRing() ? 1 : 0;
                 return rbonds == value;
             case RING_COUNT:
-                return atom.isInRing() && getRingCount(atom) == value;
+                if (!atom.isInRing())
+                    return value == 0;
+                return getRingCount(atom) == value;
             case RING_SMALLEST:
-                return atom.isInRing() && isInSmallRingSize(atom, value);
+                if (!atom.isInRing())
+                    return value == 0;
+                return isInSmallRingSize(atom, value);
             case RING_SIZE:
                 return atom.isInRing() && isInRingSize(atom, value);
             case HETERO_SUBSTITUENT_COUNT:
