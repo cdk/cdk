@@ -1002,7 +1002,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 {
                     boolean negate = line.charAt(3) == 'T' ||
                             line.charAt(4) == 'T';
-                    Expr expr = new Expr(Expr.Type.TRUE);
+                    Expr expr = new Expr(Expr.Type.FALSE);
                     for (int i = 11; i < line.length(); i+=4) {
                         int atomicNumber = readUInt(line, i, 3);
                         expr.or(new Expr(Expr.Type.ELEMENT, atomicNumber));
@@ -1037,7 +1037,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     {
                         boolean negate = line.charAt(13) == 'T' ||
                                          line.charAt(14) == 'T';
-                        Expr expr = new Expr(Expr.Type.TRUE);
+                        Expr expr = new Expr(Expr.Type.FALSE);
                         StringBuilder sb = new StringBuilder();
                         for (int i = 16; i < line.length(); i++) {
                             if (line.charAt(i) != ' ') {
