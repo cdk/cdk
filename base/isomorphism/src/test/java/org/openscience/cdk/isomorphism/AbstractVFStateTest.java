@@ -26,6 +26,9 @@ package org.openscience.cdk.isomorphism;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -100,7 +103,7 @@ class AbstractVFStateTest {
 
     @Test
     void addNonFeasible() {
-        AbstractVFState state = new AbstractVFState(new int[4][], new int[6][]) {
+        AbstractVFState state = new AbstractVFState(toMol(new int[4][]), toMol(new int[6][])) {
 
             @Override
             boolean feasible(int n, int m) {
@@ -200,8 +203,24 @@ class AbstractVFStateTest {
         return create(new int[g1Size][0], new int[g2Size][0]);
     }
 
+    IAtomContainer toMol(int[][] g) {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newAtomContainer();
+        for (int i = 0; i < g.length; i++) {
+            mol.newAtom();
+        }
+        for (int i = 0; i < g.length; i++) {
+            if (g[i] != null) {
+                for (int n : g[i]) {
+                    mol.newBond(mol.getAtom(i), mol.getAtom(n));
+                }
+            }
+        }
+        return mol;
+    }
+
     AbstractVFState create(int[][] g1, int[][] g2) {
-        return new AbstractVFState(g1, g2) {
+        return new AbstractVFState(toMol(g1), toMol(g2)) {
 
             @Override
             boolean feasible(int n, int m) {

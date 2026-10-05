@@ -24,10 +24,9 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 /**
  * Vento-Foggia (VF) state for matching subgraph-monomorphisms. The original
@@ -45,15 +44,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  */
 final class VFSubState extends AbstractVFState {
 
-    /** The query (container1) and target (container2) of the subgraph matching. */
-    private final IAtomContainer container1, container2;
-
-    /**
-     * Lookup for the query bonds (bonds1) and target bonds (bonds2) of the
-     * subgraph matching.
-     */
-    private final EdgeToBondMap  bonds1, bonds2;
-
     /** Defines how atoms are matched. */
     private final AtomMatcher    atomMatcher;
 
@@ -66,22 +56,13 @@ final class VFSubState extends AbstractVFState {
      *
      * @param container1  the molecule to search for (query)
      * @param container2  the molecule to search in (target)
-     * @param g1          adjacency list of the query
-     * @param g2          adjacency list of the target
-     * @param bonds1      bond lookup of the query
-     * @param bonds2      bond lookup of the target
      * @param atomMatcher what semantic attributes (symbol, charge, query)
      *                    determines atoms to be compatible
      * @param bondMatcher what semantic attributes (order/aromatic, query)
      *                    determines bonds to be compatible
      */
-    VFSubState(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2, EdgeToBondMap bonds1,
-            EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
-        super(g1, g2);
-        this.container1 = container1;
-        this.container2 = container2;
-        this.bonds1 = bonds1;
-        this.bonds2 = bonds2;
+    VFSubState(IAtomContainer container1, IAtomContainer container2, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
+        super(container1, container2);
         this.atomMatcher = atomMatcher;
         this.bondMatcher = bondMatcher;
     }
@@ -110,8 +91,11 @@ final class VFSubState extends AbstractVFState {
     @Override
     boolean feasible(int n, int m) {
 
+        final IAtom nAtom = mol1.getAtom(n);
+        final IAtom mAtom = mol2.getAtom(m);
+
         // verify atom semantic feasibility
-        if (!atomMatcher.matches(container1.getAtom(n), container2.getAtom(m))) return false;
+        if (!atomMatcher.matches(nAtom, mAtom)) return false;
 
         // unmapped terminal vertices n and m are adjacent to
         int nTerminal1 = 0, nTerminal2 = 0;
@@ -120,16 +104,17 @@ final class VFSubState extends AbstractVFState {
 
         // 0-look-ahead: check each adjacent edge for being mapped, and count
         // terminal or remaining
-        for (int n_prime : g1[n]) {
+        for (IBond bond1 : mol1.getConnectedBondsList(nAtom)) {
+            int n_prime = mol1.indexOf(bond1.getOther(nAtom));
             int m_prime = m1[n_prime];
 
             // v is already mapped, there should be an edge {m, w} in g2.
             if (m_prime != UNMAPPED) {
-                IBond bond2 = bonds2.get(m, m_prime);
+                IBond bond2 = mol2.getBond(mAtom, mol2.getAtom(m_prime));
                 if (bond2 == null) // the bond is not present in the target
                     return false;
                 // verify bond semantic feasibility
-                if (!bondMatcher.matches(bonds1.get(n, n_prime), bond2)) return false;
+                if (!bondMatcher.matches(bond1, bond2)) return false;
             } else {
                 if (t1[n_prime] > 0)
                     nTerminal1++;
@@ -140,7 +125,8 @@ final class VFSubState extends AbstractVFState {
 
         // monomorphism: each mapped edge in g2 doesn't need to be in g1 so
         // only the terminal and remaining edges are counted
-        for (int m_prime : g2[m]) {
+        for (IBond bond : mol2.getConnectedBondsList(mAtom)) {
+            int m_prime = mol2.indexOf(bond.getOther(mAtom));
             if (m2[m_prime] == UNMAPPED) {
                 if (t2[m_prime] > 0)
                     nTerminal2++;

@@ -25,6 +25,10 @@
 package org.openscience.cdk.isomorphism;
 
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+
 import java.util.Arrays;
 
 /**
@@ -40,8 +44,8 @@ abstract class AbstractVFState extends State {
     /** Value indicates a vertex is unmapped. */
     protected static final int UNMAPPED = -1;
 
-    /** Adjacency list representation of the containers. */
-    protected final int[][]    g1, g2;
+    /** The molecules being matched (ideally backed by an adjacency list implementation) */
+    protected final IAtomContainer mol1, mol2;
 
     /** Mapping - m1 is the the mapping from g1 to g1, m2 is from g2 to g1. */
     protected final int[]      m1, m2;
@@ -55,16 +59,16 @@ abstract class AbstractVFState extends State {
     /**
      * Create a state which will be used to match g1 in g2.
      *
-     * @param g1 find this graph
+     * @param mol1 find this graph
      * @param g2 search this graph
      */
-    public AbstractVFState(final int[][] g1, final int[][] g2) {
-        this.g1 = g1;
-        this.g2 = g2;
-        this.m1 = new int[g1.length];
-        this.m2 = new int[g2.length];
-        this.t1 = new int[g1.length];
-        this.t2 = new int[g2.length];
+    public AbstractVFState(final IAtomContainer mol1, final IAtomContainer g2) {
+        this.mol1 = mol1;
+        this.mol2 = g2;
+        this.m1 = new int[mol1.getAtomCount()];
+        this.m2 = new int[g2.getAtomCount()];
+        this.t1 = new int[mol1.getAtomCount()];
+        this.t2 = new int[g2.getAtomCount()];
         size = 0;
         Arrays.fill(m1, UNMAPPED);
         Arrays.fill(m2, UNMAPPED);
@@ -83,9 +87,9 @@ abstract class AbstractVFState extends State {
     @Override
     final int nextN(int n) {
         if (size == 0) return 0;
-        for (int i = n + 1; i < g1.length; i++)
+        for (int i = n + 1; i < mol1.getAtomCount(); i++)
             if (m1[i] == UNMAPPED && t1[i] > 0) return i;
-        for (int i = n + 1; i < g1.length; i++)
+        for (int i = n + 1; i < mol1.getAtomCount(); i++)
             if (m1[i] == UNMAPPED) return i;
         return nMax();
     }
@@ -105,7 +109,7 @@ abstract class AbstractVFState extends State {
         if (size == 0) return m + 1;
         // if the query vertex 'n' is in the terminal set (t1) then the
         // target vertex must be in the terminal set (t2)
-        for (int i = m + 1; i < g2.length; i++)
+        for (int i = m + 1; i < mol2.getAtomCount(); i++)
             if (m2[i] == UNMAPPED && (t1[n] == 0 || t2[i] > 0)) return i;
         return mMax();
     }
@@ -113,13 +117,13 @@ abstract class AbstractVFState extends State {
     /**{@inheritDoc} */
     @Override
     final int nMax() {
-        return g1.length;
+        return mol1.getAtomCount();
     }
 
     /**{@inheritDoc} */
     @Override
     final int mMax() {
-        return g2.length;
+        return mol2.getAtomCount();
     }
 
     /**{@inheritDoc} */
@@ -129,10 +133,16 @@ abstract class AbstractVFState extends State {
         m1[n] = m;
         m2[m] = n;
         size = size + 1;
-        for (int w : g1[n])
-            if (t1[w] == 0) t1[w] = size;
-        for (int w : g2[m])
-            if (t2[w] == 0) t2[w] = size;
+        IAtom nAtom = mol1.getAtom(n);
+        for (IBond bond : mol1.getConnectedBondsList(nAtom)) {
+            int nidx = mol1.indexOf(bond.getOther(nAtom));
+            if (t1[nidx] == 0) t1[nidx] = size;
+        }
+        IAtom mAtom = mol2.getAtom(m);
+        for (IBond bond : mol2.getConnectedBondsList(mAtom)) {
+            int nidx = mol2.indexOf(bond.getOther(mAtom));
+            if (t2[nidx] == 0) t2[nidx] = size;
+        }
         return true;
     }
 
@@ -141,10 +151,16 @@ abstract class AbstractVFState extends State {
     final void remove(int n, int m) {
         m1[n] = m2[m] = UNMAPPED;
         size = size - 1;
-        for (int w : g1[n])
-            if (t1[w] > size) t1[w] = 0;
-        for (int w : g2[m])
-            if (t2[w] > size) t2[w] = 0;
+        IAtom nAtom = mol1.getAtom(n);
+        for (IBond bond : mol1.getConnectedBondsList(nAtom)) {
+            int nidx = mol1.indexOf(bond.getOther(nAtom));
+            if (t1[nidx] > size) t1[nidx] = 0;
+        }
+        IAtom mAtom = mol2.getAtom(m);
+        for (IBond bond : mol2.getConnectedBondsList(mAtom)) {
+            int nidx = mol2.indexOf(bond.getOther(mAtom));
+            if (t2[nidx] > size) t2[nidx] = 0;
+        }
     }
 
     /**
