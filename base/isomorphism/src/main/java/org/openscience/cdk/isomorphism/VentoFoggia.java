@@ -76,12 +76,6 @@ public final class VentoFoggia extends Pattern {
     /** The query structure. */
     private final IAtomContainer query;
 
-    /** The query structure adjacency list. */
-    private final int[][]        g1;
-
-    /** The bonds of the query structure. */
-    private final EdgeToBondMap  bonds1;
-
     /** The atom matcher to determine atom feasibility. */
     private final AtomMatcher    atomMatcher;
 
@@ -103,8 +97,6 @@ public final class VentoFoggia extends Pattern {
         this.query = query;
         this.atomMatcher = atomMatcher;
         this.bondMatcher = bondMatcher;
-        this.bonds1 = EdgeToBondMap.withSpaceFor(query);
-        this.g1 = GraphUtil.toAdjList(query, bonds1);
         this.subgraph = substructure;
         determineFilters(query);
     }
@@ -122,18 +114,7 @@ public final class VentoFoggia extends Pattern {
         final EdgeToBondMap bonds2;
         final int[][]       g2;
 
-        AdjListCache cached = target.getProperty(AdjListCache.class.getName());
-        if (cached == null || !cached.validate(target)) {
-            cached = new AdjListCache(target);
-            target.setProperty(AdjListCache.class.getName(), cached);
-        }
-
-        bonds2 = cached.bmap;
-        g2 = cached.g;
-
         Iterable<int[]> iterable = new VFIterable(query, target,
-                                                  g1, g2,
-                                                  bonds1, bonds2,
                                                   atomMatcher, bondMatcher,
                                                   subgraph);
 
@@ -200,12 +181,6 @@ public final class VentoFoggia extends Pattern {
         /** Query and target containers. */
         private final IAtomContainer container1, container2;
 
-        /** Query and target adjacency lists. */
-        private final int[][]        g1, g2;
-
-        /** Query and target bond lookup. */
-        private final EdgeToBondMap  bonds1, bonds2;
-
         /** How are atoms are matched. */
         private final AtomMatcher    atomMatcher;
 
@@ -220,23 +195,15 @@ public final class VentoFoggia extends Pattern {
          *
          * @param container1  query structure
          * @param container2  target structure
-         * @param g1          query adjacency list
-         * @param g2          target adjacency list
-         * @param bonds1      query bond map
-         * @param bonds2      target bond map
          * @param atomMatcher how atoms are matched
          * @param bondMatcher how bonds are matched
          * @param subgraph    perform subgraph search
          */
-        private VFIterable(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2,
-                EdgeToBondMap bonds1, EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher,
+        private VFIterable(IAtomContainer container1, IAtomContainer container2,
+                           AtomMatcher atomMatcher, BondMatcher bondMatcher,
                 boolean subgraph) {
             this.container1 = container1;
             this.container2 = container2;
-            this.g1 = g1;
-            this.g2 = g2;
-            this.bonds1 = bonds1;
-            this.bonds2 = bonds2;
             this.atomMatcher = atomMatcher;
             this.bondMatcher = bondMatcher;
             this.subgraph = subgraph;
@@ -246,36 +213,10 @@ public final class VentoFoggia extends Pattern {
         @Override
         public Iterator<int[]> iterator() {
             if (subgraph) {
-                return new StateStream(new VFSubState(container1, container2, g1, g2, bonds1, bonds2, atomMatcher,
-                        bondMatcher));
+                return new StateStream(new VFSubState(container1, container2, atomMatcher, bondMatcher));
             }
             return new StateStream(
-                    new VFState(container1, container2, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher));
-        }
-    }
-
-    private static final class AdjListCache {
-
-        // 100 ms max age
-        private static final long MAX_AGE = TimeUnit.MILLISECONDS.toNanos(100);
-
-        private final int[][] g;
-        private final EdgeToBondMap bmap;
-        private final int numAtoms, numBonds;
-        private final long tInit;
-
-        private AdjListCache(IAtomContainer mol) {
-            this.bmap = EdgeToBondMap.withSpaceFor(mol);
-            this.g = GraphUtil.toAdjList(mol, bmap);
-            this.numAtoms = mol.getAtomCount();
-            this.numBonds = mol.getBondCount();
-            this.tInit = System.nanoTime();
-        }
-
-        private boolean validate(IAtomContainer mol) {
-            return mol.getAtomCount() == numAtoms &&
-                   mol.getBondCount() == numBonds &&
-                   (System.nanoTime() - tInit) < MAX_AGE;
+                    new VFState(container1, container2, atomMatcher, bondMatcher));
         }
     }
 }

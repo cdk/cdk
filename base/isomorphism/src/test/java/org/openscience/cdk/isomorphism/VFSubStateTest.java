@@ -111,7 +111,7 @@ class VFSubStateTest {
         GraphUtil.EdgeToBondMap bonds2 = GraphUtil.EdgeToBondMap.withSpaceFor(container2);
         int[][] g1 = GraphUtil.toAdjList(container1, bonds1);
         int[][] g2 = GraphUtil.toAdjList(container2, bonds2);
-        return new VFSubState(container1, container2, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher);
+        return new VFSubState(container1, container2, atomMatcher, bondMatcher);
     }
 
 }
