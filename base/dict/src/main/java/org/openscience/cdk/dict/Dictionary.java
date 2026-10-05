@@ -35,6 +35,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParserFactory;
 
 
@@ -62,10 +63,12 @@ public class Dictionary {
         DictionaryHandler handler = new DictionaryHandler();
         XMLReader parser = null;
         try {
-            SAXParserFactory factor = SAXParserFactory.newInstance();
-            factor.setNamespaceAware(true);
-            factor.setFeature("http://xml.org/sax/features/external-general-entities", false);
-            parser = factor.newSAXParser().getXMLReader();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            parser = factory.newSAXParser().getXMLReader();
+
             logger.debug("Using " + parser);
         } catch (Exception e) {
             logger.error("Could not instantiate any JAXP parser!");
