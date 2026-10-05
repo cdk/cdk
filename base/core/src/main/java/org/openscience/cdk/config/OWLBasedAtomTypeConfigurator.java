@@ -21,6 +21,7 @@ package org.openscience.cdk.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.List;
 
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeReader;
@@ -59,12 +60,16 @@ public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         if (ins == null) throw new IOException("There was a problem getting an input stream");
         OWLAtomTypeReader reader = new OWLAtomTypeReader(new InputStreamReader(ins));
         atomTypes = reader.readAtomTypes(builder);
-        for (IAtomType atomType : atomTypes) {
-            if (atomType == null) {
-                logger.debug("Expecting an object but found null!");
+        if (atomTypes != null) {
+            for (IAtomType atomType : atomTypes) {
+                if (atomType == null) {
+                    logger.debug("Expecting an object but found null!");
+                }
             }
+            return atomTypes;
         }
-        return atomTypes;
+        logger.error("No atom types loaded");
+        return Collections.emptyList();
     }
 
 }
