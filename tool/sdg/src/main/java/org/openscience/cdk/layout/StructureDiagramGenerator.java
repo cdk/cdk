@@ -285,6 +285,12 @@ public class StructureDiagramGenerator {
      * @throws CDKException there was a problem generating the layout
      */
     public final void generateAlignedCoordinates(IAtomContainer mol, IAtomContainer ref, Pattern pattern) throws CDKException {
+
+        if (mol == null)
+            throw new IllegalArgumentException("No molecule provided");
+        if (ref == null)
+            throw new IllegalArgumentException("No reference provided");
+
         Set<IAtom> afix = new HashSet<>();
 
         Map<IChemObject, IChemObject> molMapping = getFirstMapping(mol, pattern);

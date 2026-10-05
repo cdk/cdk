@@ -98,6 +98,8 @@ public final class SmartsPattern extends Pattern {
      * @param builder the builder
      */
     private SmartsPattern(final String smarts, IChemObjectBuilder builder) {
+        if (smarts == null)
+            throw new IllegalArgumentException("No SMARTS provided");
         this.query = new QueryAtomContainer(builder);
         SmartsResult result = Smarts.parseToResult(query, smarts);
         if (!result.ok())

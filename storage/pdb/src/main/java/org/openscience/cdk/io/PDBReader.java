@@ -638,8 +638,11 @@ public class PDBReader extends DefaultChemObjectReader {
         String  resName  = cLine.substring(17, 20).trim();
         String  symbol   = parseAtomSymbol(cLine);
 
-        if (symbol == null)
+        if (symbol == null) {
             handleError("Cannot parse symbol from " + atomName);
+            // handleError will warn and/or through an exception else we set it to R and carry on
+            symbol = "R";
+        }
 
         PDBAtom oAtom = new PDBAtom(symbol, new Point3d(Double.parseDouble(cLine.substring(30, 38)),
                 Double.parseDouble(cLine.substring(38, 46)), Double.parseDouble(cLine.substring(46, 54))));

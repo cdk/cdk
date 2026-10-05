@@ -151,17 +151,21 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
     public DescriptorValue calculate(IAtomContainer container) {
         double weight = 0;
         double hydrogenNaturalMass;
+        Isotopes isotopes;
         try {
-            IIsotope hydrogen = Isotopes.getInstance().getMajorIsotope("H");
-            hydrogenNaturalMass = Isotopes.getInstance().getNaturalMass(hydrogen);
+            isotopes = Isotopes.getInstance();
+            if (isotopes == null)
+                return getDummyDescriptorValue(new NullPointerException("Could not load isotope data"));
         } catch (IOException e) {
             return getDummyDescriptorValue(e);
         }
+        IIsotope hydrogen = isotopes.getMajorIsotope("H");
+        hydrogenNaturalMass = isotopes.getNaturalMass(hydrogen);
 
         if (elementName.equals("*")) {
             try {
                 for (IAtom atom : container.atoms()) {
-                    weight += Isotopes.getInstance().getNaturalMass(atom);
+                    weight += isotopes.getNaturalMass(atom);
                     Integer implicitHydrogenCount = atom.getImplicitHydrogenCount();
                     if (implicitHydrogenCount == CDKConstants.UNSET) {
                         implicitHydrogenCount = 0;
@@ -187,7 +191,7 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
             try {
                 for (IAtom atom : container.atoms()) {
                     if (atom.getSymbol().equals(elementName)) {
-                        weight += Isotopes.getInstance().getNaturalMass(atom);
+                        weight += isotopes.getNaturalMass(atom);
                     }
                 }
             } catch (Exception e) {
