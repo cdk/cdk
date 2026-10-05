@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -145,7 +144,6 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws InvalidSmilesException
      */
     @Test
-    @Disabled("Failing but not going to be fixed")
     void testGetAllAtomMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
@@ -169,7 +167,6 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws InvalidSmilesException
      */
     @Test
-    @Disabled("Failing but not going to be fixed")
     void testGetAllMapping() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
@@ -226,5 +223,35 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         Assertions.assertNotNull(smsd1.getFirstMapping());
 
         Assertions.assertEquals(7, smsd1.getFirstMapping().size());
+    }
+
+    @Test
+    void testTwoHandlersKeepTheirOwnResults() throws Exception {
+        MCSPlusHandler first = search("CC", "CCC");
+        MCSPlusHandler second = search("NN", "NNN");
+        Assertions.assertEquals(2, first.getFirstMapping().size());
+        Assertions.assertEquals(2, second.getFirstMapping().size());
+        Assertions.assertEquals("C", first.getFirstAtomMapping().keySet().iterator().next().getSymbol());
+    }
+
+    @Test
+    void testCyclopentaneCyclohexane() throws Exception {
+        // the clique search found only some of the 60 mappings
+        Assertions.assertEquals(60, search("C1CCCC1", "C1CCCCC1").getAllMapping().size());
+    }
+
+    @Test
+    void testBranchedQuery() throws Exception {
+        MCSPlusHandler handler = search("CC(C)C", "CC(C)(C)O");
+        Assertions.assertEquals(4, handler.getFirstMapping().size());
+    }
+
+    private static MCSPlusHandler search(String source, String target) throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        MCSPlusHandler handler = new MCSPlusHandler();
+        handler.set(new MolHandler(sp.parseSmiles(source), false, false),
+                    new MolHandler(sp.parseSmiles(target), false, false));
+        handler.searchMCS(true);
+        return handler;
     }
 }

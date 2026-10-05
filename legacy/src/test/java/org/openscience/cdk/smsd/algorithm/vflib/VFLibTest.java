@@ -37,6 +37,11 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smarts.Smarts;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultVFAtomMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultVFBondMatcher;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
@@ -86,7 +91,8 @@ class VFLibTest extends CDKTestCase {
             state.nextCandidate();
             count++;
         }
-        Assertions.assertEquals(benzene.getAtomCount() * benzene.getAtomCount(), count);
+        // the whole query must be mapped, so one query atom is tried against every target atom
+        Assertions.assertEquals(benzene.getAtomCount(), count);
     }
 
     @Test
@@ -100,7 +106,8 @@ class VFLibTest extends CDKTestCase {
             candidates.add(newState.nextCandidate());
         }
 
-        Assertions.assertEquals(4, candidates.size());
+        // only one neighbour of the mapped query atom is tried, against the two neighbours of its target atom
+        Assertions.assertEquals(2, candidates.size());
     }
 
     @Test
@@ -286,5 +293,35 @@ class VFLibTest extends CDKTestCase {
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         return result;
+    }
+
+    @Test
+    void testBondOrderMatchesBothWays() throws Exception {
+        // a ketone C=O does not match an alcohol C-O, in either direction
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer ketone = sp.parseSmiles("CC(C)=O");
+        IAtomContainer alcohol = sp.parseSmiles("CC(C)O");
+        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ketone);
+        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(alcohol);
+        IBond carbonyl = ketone.getBond(2);
+        IBond hydroxyl = alcohol.getBond(2);
+        Assertions.assertFalse(new DefaultVFBondMatcher(ketone, carbonyl, true)
+                .matches(new TargetProperties(alcohol), hydroxyl));
+        Assertions.assertFalse(new DefaultVFBondMatcher(alcohol, hydroxyl, true)
+                .matches(new TargetProperties(ketone), carbonyl));
+        Assertions.assertTrue(new DefaultVFBondMatcher(ketone, carbonyl, false)
+                .matches(new TargetProperties(alcohol), hydroxyl));
+    }
+
+    @Test
+    void testQueryAtomAndBondInAtomContainer() throws Exception {
+        IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        Assertions.assertTrue(Smarts.parse(query, "[N,O]~C"));
+        IAtomContainer target = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("O=C");
+        TargetProperties properties = new TargetProperties(target);
+        Assertions.assertTrue(new DefaultVFAtomMatcher(query, query.getAtom(0), true)
+                .matches(properties, target.getAtom(0)));
+        Assertions.assertTrue(new DefaultVFBondMatcher(query, query.getBond(0), true)
+                .matches(properties, target.getBond(0)));
     }
 }

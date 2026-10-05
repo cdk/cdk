@@ -48,10 +48,13 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.map;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -65,8 +68,10 @@ import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
- * This class finds MCS between query and target molecules
- * using VF2 algorithm.
+ * This class finds mappings of the whole query (every query atom and bond)
+ * onto the target molecule using the VF2 algorithm. At most
+ * {@link VFMCSMapper#MAX_MAPPINGS} mappings are returned or counted. The
+ * search has no time limit; the global {@link TimeOut} is not checked.
  *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
@@ -76,9 +81,10 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 public class VFMapper implements IMapper {
 
     private final IQuery                  query;
-    private final List<Map<INode, IAtom>> maps;
-    private int                     currentMCSSize = -1;
-    private static TimeManager      timeManager    = null;
+    private final List<Map<INode, IAtom>> maps        = new ArrayList<>();
+    private BooleanSupplier               stop;
+    private boolean                       timedOut;
+    private static TimeManager            timeManager = null;
 
     /**
      * @return the timeout
@@ -103,179 +109,154 @@ public class VFMapper implements IMapper {
     }
 
     /**
+     * Creates a mapper for a compiled query.
      *
-     * @param query
+     * @param query the compiled query
      */
     public VFMapper(IQuery query) {
         setTimeManager(new TimeManager());
         this.query = query;
-        this.maps = new ArrayList<>();
     }
 
     /**
+     * Creates a mapper for a query molecule.
      *
-     * @param queryMolecule
-     * @param bondMatcher
+     * @param queryMolecule the query molecule
+     * @param bondMatcher   true to match bonds by order and aromaticity
      */
     public VFMapper(IAtomContainer queryMolecule, boolean bondMatcher) {
         setTimeManager(new TimeManager());
         this.query = new QueryCompiler(queryMolecule, bondMatcher).compile();
-        this.maps = new ArrayList<>();
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule targetMolecule graph
+    /**
+     * Creates a mapper for {@link VFMCSMapper}.
+     *
+     * @param query  the compiled query
+     * @param global true to reset the global {@link TimeOut} flag, as the
+     *               public constructors do, false to leave it unchanged
      */
+    VFMapper(IQuery query, boolean global) {
+        if (global) {
+            setTimeManager(new TimeManager());
+        }
+        this.query = query;
+    }
+
+    /** {@inheritDoc} */
     @Override
     public boolean hasMap(IAtomContainer targetMolecule) {
-        IState state = new VFState(query, new TargetProperties(targetMolecule));
-        maps.clear();
-        return mapFirst(state);
+        return hasMap(new TargetProperties(targetMolecule));
     }
 
     /** {@inheritDoc} */
     @Override
     public List<Map<INode, IAtom>> getMaps(IAtomContainer target) {
-        IState state = new VFState(query, new TargetProperties(target));
-        maps.clear();
-        mapAll(state);
-        return new ArrayList<>(maps);
+        return getMaps(new TargetProperties(target));
     }
 
-    /** {@inheritDoc}
-     *
-     * @param target
-     *
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<INode, IAtom> getFirstMap(IAtomContainer target) {
-        IState state = new VFState(query, new TargetProperties(target));
-        maps.clear();
-        mapFirst(state);
-        return maps.isEmpty() ? new HashMap<>() : maps.get(0);
+        return getFirstMap(new TargetProperties(target));
     }
 
     /** {@inheritDoc} */
     @Override
     public int countMaps(IAtomContainer target) {
-        IState state = new VFState(query, new TargetProperties(target));
-        maps.clear();
-        mapAll(state);
-        return maps.size();
+        return countMaps(new TargetProperties(target));
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule targetMolecule graph
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean hasMap(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        return mapFirst(state);
+        search(targetMolecule, 1);
+        return !maps.isEmpty();
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule
-     */
+    /** {@inheritDoc} */
     @Override
     public List<Map<INode, IAtom>> getMaps(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        mapAll(state);
+        search(targetMolecule, VFMCSMapper.MAX_MAPPINGS);
         return new ArrayList<>(maps);
     }
 
-    /** {@inheritDoc}
-     *
-     * @param targetMolecule
-     *
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<INode, IAtom> getFirstMap(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        mapFirst(state);
+        search(targetMolecule, 1);
         return maps.isEmpty() ? new HashMap<>() : maps.get(0);
     }
 
-    /** {@inheritDoc}
-     * @param targetMolecule
-     */
+    /** {@inheritDoc} */
     @Override
     public int countMaps(TargetProperties targetMolecule) {
-        IState state = new VFState(query, targetMolecule);
-        maps.clear();
-        mapAll(state);
+        search(targetMolecule, VFMCSMapper.MAX_MAPPINGS);
         return maps.size();
     }
 
-    private void addMapping(IState state) {
-        Map<INode, IAtom> map = state.getMap();
-        if (!hasMap(map) && map.size() > currentMCSSize) {
-            maps.add(map);
-            currentMCSSize = map.size();
-        } else if (!hasMap(map) && map.size() == currentMCSSize) {
-            maps.add(map);
-        }
+    /**
+     * Finds up to {@code limit} mappings for {@link VFMCSMapper}, stopping
+     * early when {@code stop} returns true.
+     *
+     * @param target the target
+     * @param stop   returns true when the search should stop
+     * @param limit  the maximum number of mappings to find
+     * @return the mappings found
+     */
+    List<Map<INode, IAtom>> getMaps(TargetProperties target, BooleanSupplier stop, int limit) {
+        this.stop = stop;
+        this.timedOut = false;
+        maps.clear();
+        mapAll(new VFState(query, target), limit);
+        return new ArrayList<>(maps);
     }
 
-    private void mapAll(IState state) {
-        if (state.isDead()) {
-            return;
-        }
-
-        if (hasMap(state.getMap())) {
-            state.backTrack();
-        }
-
-        if (state.isGoal()) {
-            Map<INode, IAtom> map = state.getMap();
-            if (!hasMap(map)) {
-                maps.add(state.getMap());
-            } else {
-                state.backTrack();
-            }
-        }
-
-        while (state.hasNextCandidate()) {
-            Match candidate = state.nextCandidate();
-            if (state.isMatchFeasible(candidate)) {
-                IState nextState = state.nextState(candidate);
-                mapAll(nextState);
-                nextState.backTrack();
-            }
-        }
+    boolean isTimedOut() {
+        return timedOut;
     }
 
-    private boolean mapFirst(IState state) {
-        if (state.isDead()) {
-            return false;
-        }
-
-        if (state.isGoal()) {
-            maps.add(state.getMap());
-            return true;
-        }
-
-        boolean found = false;
-        while (!found && state.hasNextCandidate()) {
-            Match candidate = state.nextCandidate();
-            if (state.isMatchFeasible(candidate)) {
-                IState nextState = state.nextState(candidate);
-                found = mapFirst(nextState);
-                nextState.backTrack();
-            }
-        }
-        return found;
+    // the public searches have no time limit
+    private void search(TargetProperties target, int limit) {
+        this.stop = null;
+        this.timedOut = false;
+        maps.clear();
+        mapAll(new VFState(query, target), limit);
     }
 
-    private boolean hasMap(Map<INode, IAtom> map) {
-        for (Map<INode, IAtom> storedMap : maps) {
-            if (storedMap.equals(map)) {
-                return true;
+    private boolean timeOut() {
+        if (!timedOut && stop != null && stop.getAsBoolean()) {
+            timedOut = true;
+        }
+        return timedOut;
+    }
+
+    // depth first without recursion, states are backtracked when popped
+    private void mapAll(IState root, int limit) {
+        Deque<IState> states = new ArrayDeque<>();
+        states.push(root);
+        try {
+            while (!states.isEmpty() && maps.size() < limit && !timeOut()) {
+                IState state = states.peek();
+                if (state.isDead()) {
+                    states.pop().backTrack();
+                } else if (state.isGoal()) {
+                    maps.add(state.getMap());
+                    states.pop().backTrack();
+                } else if (!state.hasNextCandidate()) {
+                    states.pop().backTrack();
+                } else {
+                    Match candidate = state.nextCandidate();
+                    if (state.isMatchFeasible(candidate)) {
+                        states.push(state.nextState(candidate));
+                    }
+                }
+            }
+        } finally {
+            while (!states.isEmpty()) {
+                states.pop().backTrack();
             }
         }
-        return false;
     }
 
     public synchronized static boolean isTimeOut() {

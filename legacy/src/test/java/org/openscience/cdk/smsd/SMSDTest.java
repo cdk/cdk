@@ -582,4 +582,36 @@ class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assertions.assertFalse(foundMatches);
     }
+
+    @Test
+    void testDefaultWithBondsOnSteroids() throws CDKException {
+        // DEFAULT used to try CDKMCS first; after its timeout the old VF search returned no mapping
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer testosterone = sp.parseSmiles("CC12CCC3C(C1CCC2O)CCC4=CC(=O)CCC34C");
+        IAtomContainer estradiol = sp.parseSmiles("CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O");
+        Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd.init(testosterone, estradiol, true, true);
+        Assertions.assertFalse(smsd.isTimeOut());
+        Assertions.assertNotNull(smsd.getFirstAtomMapping());
+        Assertions.assertEquals(15, smsd.getFirstAtomMapping().size());
+    }
+
+    @Test
+    void testTimeOutSetters() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        String cholesterol = "CC(C)CCCC(C)C1CCC2C1(CCC3C2CC=C4C3(CCC(C4)O)C)C";
+        String cholicAcid = "CC(CCC(=O)O)C1CCC2C1(C(CC3C2C(CC4C3(CCC(C4)O)C)O)O)C";
+
+        // 0.00001 min (0.6 ms), far shorter than the search
+        Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd.setBondInSensitiveTimeOut(0.00001);
+        smsd.init(sp.parseSmiles(cholesterol), sp.parseSmiles(cholicAcid), true, true);
+        Assertions.assertTrue(smsd.isTimeOut());
+
+        smsd = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd.setBondInSensitiveTimeOut(1);
+        smsd.init(sp.parseSmiles(cholesterol), sp.parseSmiles(cholicAcid), true, true);
+        Assertions.assertFalse(smsd.isTimeOut());
+        Assertions.assertEquals(25, smsd.getFirstAtomMapping().size());
+    }
 }

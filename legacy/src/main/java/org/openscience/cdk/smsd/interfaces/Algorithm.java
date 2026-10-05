@@ -24,18 +24,10 @@ package org.openscience.cdk.smsd.interfaces;
 
 
 /**
- *
- * This class represents various algorithm type supported by SMSD.
- * Presently SMSD supports 5 different kinds of algorithms:
- *
- * <OL>
- * <lI>0: default,
- * <lI>1: MCSPlus,
- * <lI>2: VFLibMCS,
- * <lI>3: CDKMCS,
- * <lI>4: SubStructure
- * <lI>5: TurboSubStructure
- * </OL>
+ * This enum lists the search algorithms that SMSD supports. {@link #DEFAULT},
+ * {@link #MCSPlus} and {@link #VFLibMCS} run the same VF based MCS search,
+ * {@link #CDKMCS} runs the CDK UIT MCS search, and {@link #SubStructure} and
+ * {@link #TurboSubStructure} run a substructure search.
  *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
@@ -45,11 +37,12 @@ package org.openscience.cdk.smsd.interfaces;
 public enum Algorithm {
 
     /**
-     * Default SMSD algorithm.
+     * Default SMSD algorithm; runs the same search as {@link #VFLibMCS}.
      */
     DEFAULT(0, "Default SMSD algorithm"),
     /**
-     * MCS Plus algorithm.
+     * Runs the same VF based search as {@link #VFLibMCS}, not the clique based
+     * {@link org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlus} search.
      */
     MCSPlus(1, "MCS Plus algorithm"),
     /**

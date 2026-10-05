@@ -493,11 +493,12 @@ public final class Expr {
      */
     public Expr or(Expr expr) {
         if (type == Type.TRUE ||
-            type == Type.FALSE ||
-            type == NONE) {
+            expr.type == Type.TRUE) {
+            setPrimitive(Type.TRUE);
+        } else if (type == Type.FALSE ||
+                   type == NONE) {
             set(expr);
-        } else if (expr.type != Type.TRUE &&
-                   expr.type != Type.FALSE &&
+        } else if (expr.type != Type.FALSE &&
                    expr.type != Type.NONE) {
             if (type.isLogical() && !expr.type.isLogical()) {
                 if (type == OR)

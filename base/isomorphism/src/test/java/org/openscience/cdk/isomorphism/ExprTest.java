@@ -1553,12 +1553,20 @@ class ExprTest {
     void removeFalseOr() {
         assertThat(new Expr(DEGREE, 2).or(new Expr(FALSE)),
                    is(new Expr(DEGREE, 2)));
-        assertThat(new Expr(DEGREE, 2).or(new Expr(TRUE)),
-                   is(new Expr(DEGREE, 2)));
         assertThat(new Expr(FALSE).or(new Expr(DEGREE, 2)),
                    is(new Expr(DEGREE, 2)));
+    }
+
+    @Test
+    void alwaysTrueOr() {
+        assertThat(new Expr(DEGREE, 2).or(new Expr(TRUE)),
+                   is(new Expr(TRUE)));
         assertThat(new Expr(TRUE).or(new Expr(DEGREE, 2)),
-                   is(new Expr(DEGREE, 2)));
+                   is(new Expr(TRUE)));
+        assertThat(new Expr(TRUE).or(new Expr(FALSE)),
+                   is(new Expr(TRUE)));
+        assertThat(new Expr(DEGREE, 2).or(new Expr(DEGREE, 3)).or(new Expr(TRUE)),
+                   is(new Expr(TRUE)));
     }
 
 

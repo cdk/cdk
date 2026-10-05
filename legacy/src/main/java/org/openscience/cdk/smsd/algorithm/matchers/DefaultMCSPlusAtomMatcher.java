@@ -52,7 +52,10 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
- * Checks if atom is matching between query and target molecules.
+ * Checks if an atom is matching between query and target molecules. A query atom
+ * ({@link IQueryAtom}) is matched by its predicate. Otherwise atoms match by symbol
+ * and, when bond matching is on and a neighbor limit is set, by neighbor count.
+ *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
  *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
@@ -64,7 +67,6 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
     static final long  serialVersionUID = -7861469841127327812L;
     private int        maximumNeighbors;
     private String     symbol;
-    private IAtom      qAtom;
     private IQueryAtom smartQueryAtom   = null;
     private boolean    shouldMatchBonds = false;
 
@@ -86,20 +88,23 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
      * Constructor
      */
     public DefaultMCSPlusAtomMatcher() {
-        this.qAtom = null;
         symbol = null;
         maximumNeighbors = -1;
     }
 
     /**
-     * Constructor
-     * @param queryContainer query atom container
+     * Creates a matcher for an atom of the query molecule. If the atom is an
+     * {@link IQueryAtom} it is matched by its predicate, otherwise by symbol.
+     *
+     * @param queryContainer query molecule (not used)
      * @param atom query atom
      * @param shouldMatchBonds bond matching flag
      */
     public DefaultMCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom atom, boolean shouldMatchBonds) {
         this();
-        this.qAtom = atom;
+        if (atom instanceof IQueryAtom) {
+            this.smartQueryAtom = (IQueryAtom) atom;
+        }
         this.symbol = atom.getSymbol();
         setBondMatchFlag(shouldMatchBonds);
 
@@ -171,7 +176,7 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
      */
     @Override
     public boolean matches(IAtomContainer targetContainer, IAtom targetAtom) {
-        if (smartQueryAtom != null && qAtom == null) {
+        if (smartQueryAtom != null) {
             if (!smartQueryAtom.matches(targetAtom)) {
                 return false;
             }

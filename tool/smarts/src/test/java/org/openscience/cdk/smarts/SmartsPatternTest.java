@@ -487,6 +487,14 @@ class SmartsPatternTest {
         assertMatch("[r3]", "C1CC1N2CCOCC2", 3, 3);
     }
 
+    @Test
+    void orWithAnyAtomOrBond() throws Exception {
+        assertMatch("[*,N]", "CC=CC", 4, 4);
+        assertMatch("[N,*]", "CC=CC", 4, 4);
+        assertMatch("C~,=C", "CC=CC", 6, 3);
+        assertMatch("C=,~C", "CC=CC", 6, 3);
+    }
+
     IAtomContainer smi(String smi) throws Exception {
         return new SmilesParser(bldr).parseSmiles(smi);
     }
