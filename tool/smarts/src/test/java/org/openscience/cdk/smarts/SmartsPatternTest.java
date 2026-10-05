@@ -27,11 +27,13 @@ package org.openscience.cdk.smarts;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -440,6 +442,42 @@ class SmartsPatternTest {
         assertMatch("N1CCCCC1.*[C@H](O)C |m:6:0.1.2.3.4.5|", "N1CCCCC1[C@@H](O)C",0, 0);
     }
 
+    @Test
+    void testRingSmallestSpiroAndFused() throws Exception {
+        // spiro[2.5]octane
+        assertMatch("[r3]", "C1CC11CCCCC1", 3, 3);
+        assertMatch("[r5]", "C1CC11CCCCC1", 0, 0);
+        assertMatch("[r6]", "C1CC11CCCCC1", 5, 5);
+        // norcarane
+        assertMatch("[r3]", "C12CCCCC1C2", 3, 3);
+        assertMatch("[r5]", "C12CCCCC1C2", 0, 0);
+        assertMatch("[r6]", "C12CCCCC1C2", 4, 4);
+    }
+
+    @Test
+    void testRingCountsOfZeroMatchChainAtoms() throws Exception {
+        assertMatch("[x0]", "CC1CCCCC1", 1, 1);
+        assertMatch("[R0]", "CC1CCCCC1", 1, 1);
+        assertMatch("[x<2]", "CC1CCCCC1", 1, 1);
+        assertMatch("[R<1]", "CC1CCCCC1", 1, 1);
+        assertMatch("[x>0]", "CC1CCCCC1", 6, 6);
+        assertMatch("[R>0]", "CC1CCCCC1", 6, 6);
+        assertMatch("[x{0-2}]", "CC1CCCCC1", 7, 7);
+        assertMatch("[R{0-1}]", "CC1CCCCC1", 7, 7);
+        assertMatch("[r{0-6}]", "CC1CCCCC1", 7, 7);
+    }
+
+    @Test
+    void testRingSizeFusedAndBridged() throws Exception {
+        // norcarane, every atom is on the 7-ring around the outside
+        assertDaylightMatch("[Z3]", "C12CCCCC1C2", 3);
+        assertDaylightMatch("[Z6]", "C12CCCCC1C2", 6);
+        assertDaylightMatch("[Z7]", "C12CCCCC1C2", 7);
+        // cubane
+        assertDaylightMatch("[Z4]", "C12C3C4C1C5C2C3C45", 8);
+        assertDaylightMatch("[Z8]", "C12C3C4C1C5C2C3C45", 8);
+    }
+
     // https://github.com/cdk/cdk/issues/1271
     @Test
     void testRingSizeCheck() throws Exception {
@@ -463,5 +501,13 @@ class SmartsPatternTest {
 
     IReaction rsmi(String smi) throws Exception {
         return new SmilesParser(bldr).parseReactionSmiles(smi);
+    }
+
+    private void assertDaylightMatch(String sma, String smiles, int uniqNumHits) throws Exception {
+        IAtomContainer query = new QueryAtomContainer(bldr);
+        Assertions.assertTrue(Smarts.parse(query, sma, Smarts.FLAVOR_DAYLIGHT));
+        IAtomContainer mol = smi(smiles);
+        Cycles.markRingAtomsAndBonds(mol);
+        assertThat(Pattern.findSubstructure(query).matchAll(mol).countUnique(), is(uniqNumHits));
     }
 }

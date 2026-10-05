@@ -26,6 +26,7 @@ package org.openscience.cdk.isomorphism;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.config.Elements;
@@ -34,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
@@ -1077,6 +1079,79 @@ class ExprTest {
                 count++;
         }
         assertThat(count, is(2));
+    }
+
+    @Test
+    void testRingValuesZeroMatchChainAtoms() {
+        IAtomContainer mol = TestMoleculeFactory.makeEthylCyclohexane();
+        Cycles.markRingAtomsAndBonds(mol);
+        assertThat(countMatches(new Expr(RING_BOND_COUNT, 0), mol), is(2));
+        assertThat(countMatches(new Expr(RING_COUNT, 0), mol), is(2));
+        assertThat(countMatches(new Expr(RING_SMALLEST, 0), mol), is(2));
+        assertThat(countMatches(new Expr(RING_BOND_COUNT, 2), mol), is(6));
+        assertThat(countMatches(new Expr(RING_COUNT, 1), mol), is(6));
+        assertThat(countMatches(new Expr(RING_SMALLEST, 6), mol), is(6));
+    }
+
+    // C1CC11CCCCC1 spiro[2.5]octane, atoms 3-7 are only in the 6-ring
+    @Test
+    void testRingSmallestSpiro() {
+        IAtomContainer mol = carbonSkeleton(8, 0, 1, 1, 2, 2, 0,
+                                            2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 2);
+        assertThat(countMatches(new Expr(RING_SMALLEST, 3), mol), is(3));
+        assertThat(countMatches(new Expr(RING_SMALLEST, 5), mol), is(0));
+        assertThat(countMatches(new Expr(RING_SMALLEST, 6), mol), is(5));
+    }
+
+    // C12CCCCC1C2 norcarane, atoms 0, 5 and 6 are in the 3-ring
+    @Test
+    void testRingSmallestFused() {
+        IAtomContainer mol = carbonSkeleton(7, 0, 1, 1, 2, 2, 3, 3, 4,
+                                            4, 5, 5, 0, 5, 6, 6, 0);
+        assertThat(countMatches(new Expr(RING_SMALLEST, 3), mol), is(3));
+        assertThat(countMatches(new Expr(RING_SMALLEST, 5), mol), is(0));
+        assertThat(countMatches(new Expr(RING_SMALLEST, 6), mol), is(4));
+    }
+
+    // C12CCCCC1C2 norcarane, every atom is on the 7-ring around the outside
+    @Test
+    void testRingSizeFused() {
+        IAtomContainer mol = carbonSkeleton(7, 0, 1, 1, 2, 2, 3, 3, 4,
+                                            4, 5, 5, 0, 5, 6, 6, 0);
+        assertThat(countMatches(new Expr(RING_SIZE, 3), mol), is(3));
+        assertThat(countMatches(new Expr(RING_SIZE, 6), mol), is(6));
+        assertThat(countMatches(new Expr(RING_SIZE, 7), mol), is(7));
+    }
+
+    @Test
+    void testRingSizeDoesNotChangeVisitedFlags() {
+        IAtomContainer mol = TestMoleculeFactory.makeNaphthalene();
+        Cycles.markRingAtomsAndBonds(mol);
+        mol.getAtom(4).setFlag(IChemObject.VISITED, true);
+        Expr expr = new Expr(RING_SIZE, 6);
+        for (IAtom atom : mol.atoms())
+            Assertions.assertTrue(expr.matches(atom));
+        for (IAtom atom : mol.atoms())
+            assertThat(atom.getFlag(IChemObject.VISITED), is(atom.getIndex() == 4));
+    }
+
+    private static IAtomContainer carbonSkeleton(int numAtoms, int... bonds) {
+        IAtomContainer mol = new AtomContainer();
+        for (int i = 0; i < numAtoms; i++)
+            mol.addAtom(new Atom("C"));
+        for (int i = 0; i < bonds.length; i += 2)
+            mol.addBond(bonds[i], bonds[i + 1], IBond.Order.SINGLE);
+        Cycles.markRingAtomsAndBonds(mol);
+        return mol;
+    }
+
+    private static int countMatches(Expr expr, IAtomContainer mol) {
+        int count = 0;
+        for (IAtom atom : mol.atoms()) {
+            if (expr.matches(atom))
+                count++;
+        }
+        return count;
     }
 
     @Test

@@ -23,10 +23,12 @@
 
 package org.openscience.cdk.smarts;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -121,5 +123,20 @@ class MolToQueryTest {
              Expr.Type.ALIPHATIC_ORDER,
              Expr.Type.ISOTOPE,
              Expr.Type.FORMAL_CHARGE);
+    }
+
+    @Test
+    void complexDocExampleMatchesItself() throws InvalidSmilesException {
+        IAtomContainer mol = smipar.parseSmiles("[nH]1ccc(=O)cc1");
+        Cycles.markRingAtomsAndBonds(mol);
+        IQueryAtomContainer query = QueryAtomContainer.create(mol,
+                                                              Expr.Type.ALIPHATIC_ELEMENT,
+                                                              Expr.Type.AROMATIC_ELEMENT,
+                                                              Expr.Type.SINGLE_OR_AROMATIC,
+                                                              Expr.Type.ALIPHATIC_ORDER,
+                                                              Expr.Type.ISOTOPE,
+                                                              Expr.Type.RING_BOND_COUNT,
+                                                              Expr.Type.FORMAL_CHARGE);
+        Assertions.assertTrue(Pattern.findSubstructure(query).matches(mol));
     }
 }
