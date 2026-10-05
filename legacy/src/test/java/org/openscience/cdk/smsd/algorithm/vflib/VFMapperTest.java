@@ -53,8 +53,11 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.map.VFMapper;
@@ -229,6 +232,35 @@ class VFMapperTest {
         List<Map<INode, IAtom>> maps = mapper.getMaps(naphthalene);
 
         Assertions.assertEquals(24, maps.size());
+    }
+
+    @Test
+    void testItShouldFindAllMapsOfABranchedQuery() throws Exception {
+        // the three methyls of isobutane go onto the four of neopentane: 4 * 3 * 2
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMapper mapper = new VFMapper(sp.parseSmiles("CC(C)C"), true);
+        Assertions.assertEquals(24, mapper.countMaps(sp.parseSmiles("CC(C)(C)C")));
+    }
+
+    @Test
+    void testItShouldMatchADisconnectedQuery() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        Assertions.assertTrue(new VFMapper(sp.parseSmiles("CCC.CC"), true).hasMap(sp.parseSmiles("CC.CCC")));
+    }
+
+    @Test
+    @Timeout(value = 30, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    void testItShouldQuicklyRejectAHydrateThatDoesNotFit() throws Exception {
+        // two sodium ions but only one in the target, so the search must fail without trying every placement of the waters
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer hydrate = sp.parseSmiles("O.O.O.O.O.O.O.OP(=O)([O-])[O-].[Na+].[Na+]");
+        IAtomContainer nadp = sp.parseSmiles("NC(=O)c1ccc[n+](c1)C1OC(COP(=O)([O-])OP(=O)([O-])OCC2OC(n3cnc4c(N)ncnc43)"
+                + "C(OP(=O)(O)O)C2O)C(O)C1O.[Na+]");
+        Assertions.assertFalse(new VFMapper(hydrate, true).hasMap(nadp));
+        // the heptane does not fit, it is tried before the waters
+        IAtomContainer mixture = sp.parseSmiles("OC(O)(C)C.O.O.O.O.O.O.CCCCCCC");
+        IAtomContainer raffinose = sp.parseSmiles("OCC1OC(OCC2OC(OC3(CO)OC(CO)C(O)C3O)C(O)C(O)C2O)C(O)C(O)C1O");
+        Assertions.assertFalse(new VFMapper(mixture, false).hasMap(raffinose));
     }
 
     @Test

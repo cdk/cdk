@@ -61,10 +61,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  ii) perform the mapping of a substructure in another structure, and;
  *  iii) map two isomorphic structures.</p>
  *
- *  <p>It also comes with various published algorithms. The user is free to
- *  choose his favorite algorithm to perform MCS or substructure search.
- *  For example 0: Isomorphism algorithm, 1: MCSPlus, 2: VFLibMCS, 3: CDKMCS, 4:
- *  Substructure</p>
+ *  <p>The search is chosen with {@link Algorithm}. {@link Algorithm#DEFAULT},
+ *  {@link Algorithm#MCSPlus} and {@link Algorithm#VFLibMCS} run the same VF based
+ *  MCS search, which returns at most
+ *  {@link org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper#MAX_MAPPINGS}
+ *  maximum mappings. {@link Algorithm#CDKMCS} runs the CDK UIT MCS search, and
+ *  {@link Algorithm#SubStructure} and {@link Algorithm#TurboSubStructure} run a
+ *  substructure search.</p>
  *
  *  <p>It also has a set of robust chemical filters (i.e. bond energy, fragment
  *  count, stereo &amp; bond match) to sort the reported MCS solutions in a chemically
@@ -72,7 +75,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  sensitive mode and with implicit or explicit hydrogens.</p>
  *
  *  <p>If you are using <span style="color: #FF0000">Isomorphism, please cite Rahman <i>et.al. 2009</i></span>
- *  {@cdk.cite SMSD2009}. The Isomorphism algorithm is described in this paper.
+ *  {@cdk.cite SMSD2009}. SMSD is described in this paper.
+ *  The MCS search is based on the VF algorithm {@cdk.cite Cordella04}.
  *  </p>
  *
  *
@@ -117,7 +121,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  IAtomContainer A1 = sp.parseSmiles("C1=CC=CC=C1");
  *  // Napthalene
  *  IAtomContainer A2 = sp.parseSmiles("C1=CC2=C(C=C1)C=CC=C2");
- *  //{ 0: Default Isomorphism Algorithm, 1: MCSPlus Algorithm, 2: VFLibMCS Algorithm, 3: CDKMCS Algorithm}
+ *  // DEFAULT, MCSPlus and VFLibMCS run the VF MCS search, CDKMCS the CDK UIT search
  *  //Bond Sensitive is set true
  *  Isomorphism comparison = new Isomorphism(Algorithm.DEFAULT, true);
  *  // set molecules, remove hydrogens, clean and configure molecule
@@ -146,8 +150,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.require java1.5+
  *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated A more recent version of SMSD is available at <a href="http://github.com/asad/smsd">
+ * @deprecated Use {@link MCS} for an MCS search and
+ *             {@link org.openscience.cdk.isomorphism.Pattern} for a substructure search.
+ *             A more recent version of SMSD is available at <a href="http://github.com/asad/smsd">
  *             http://github.com/asad/smsd</a>
+ * @see MCS
  */
 @Deprecated
 public final class Isomorphism extends AbstractMCS implements Serializable {
@@ -186,7 +193,9 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      * <lI>4: SubStructure
      * </OL>
      * @param algorithmType {@link org.openscience.cdk.smsd.interfaces.Algorithm}
-     * @param bondTypeFlag
+     * @param bondTypeFlag true to match bonds (both aromatic, or both not aromatic with
+     *                     the same order) and use the bond sensitive timeout, false to
+     *                     ignore bond orders and use the bond insensitive timeout
      */
     public Isomorphism(Algorithm algorithmType, boolean bondTypeFlag) {
         this.algorithmType = algorithmType;
@@ -202,6 +211,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private synchronized void mcsBuilder(MolHandler mol1, MolHandler mol2) {
+        // the timeouts can be changed after construction
+        setTime(isMatchBonds());
 
         int rBondCount = mol1.getMolecule().getBondCount();
         int pBondCount = mol2.getMolecule().getBondCount();
@@ -224,6 +235,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     private synchronized void mcsBuilder(IQueryAtomContainer mol1, IAtomContainer mol2) {
+        // the timeouts can be changed after construction
+        setTime(isMatchBonds());
 
         int rBondCount = mol1.getBondCount();
         int pBondCount = mol2.getBondCount();
@@ -498,17 +511,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     private void defaultMCSAlgorithm() {
         try {
-            if (isMatchBonds()) {
-                cdkMCSAlgorithm();
-                if (getFirstMapping() == null || isTimeOut()) {
-                    vfLibMCS();
-                }
-            } else {
-                mcsPlusAlgorithm();
-                if (getFirstMapping() == null || isTimeOut()) {
-                    vfLibMCS();
-                }
-            }
+            vfLibMCS();
         } catch (Exception e) {
             LoggingToolFactory.createLoggingTool(Isomorphism.class)
                               .warn("Unexpected Error:", e);
@@ -879,7 +882,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
-     * @return the bondSensitiveTimeOut
+     * @return the bond sensitive timeout in minutes
      */
     @Override
     public double getBondSensitiveTimeOut() {
@@ -888,7 +891,10 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
-     * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.10 min)
+     * The timeout is applied when {@code init} runs the search, and replaces any
+     * value set with {@link TimeOut#setTimeOut(double)}.
+     *
+     * @param bondSensitiveTimeOut the bond sensitive timeout in minutes (default 0.15 min)
      */
     @Override
     public void setBondSensitiveTimeOut(double bondSensitiveTimeOut) {
@@ -897,7 +903,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
-     * @return the bondInSensitiveTimeOut
+     * @return the bond insensitive timeout in minutes
      */
     @Override
     public double getBondInSensitiveTimeOut() {
@@ -906,7 +912,10 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
-     * @param bondInSensitiveTimeOut the bond insensitive Timeout in mins (default 0.15 min)
+     * The timeout is applied when {@code init} runs the search, and replaces any
+     * value set with {@link TimeOut#setTimeOut(double)}.
+     *
+     * @param bondInSensitiveTimeOut the bond insensitive timeout in minutes (default 1.00 min)
      */
     @Override
     public void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut) {

@@ -46,7 +46,6 @@
  */
 package org.openscience.cdk.smsd.algorithm.matchers;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -54,7 +53,12 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 
 /**
- * Checks if a bond is matching between query and target molecules.
+ * Checks if a bond is matching between query and target molecules. A query bond
+ * ({@link IQueryBond}) is matched by its predicate. Otherwise, when bond matching is
+ * enabled, both bonds must be aromatic, or both non-aromatic with the same order, as in
+ * {@link org.openscience.cdk.isomorphism.BondMatcher#forStrictOrder()}; when it is
+ * disabled any bond matches.
+ *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
  *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
@@ -65,7 +69,6 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
 
     static final long  serialVersionUID = -7861469841127328812L;
     private IBond      queryBond        = null;
-    private int        unsaturation     = 0;
     private boolean    shouldMatchBonds;
     private IQueryBond smartQueryBond   = null;
 
@@ -77,26 +80,31 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
      */
     public DefaultVFBondMatcher() {
         this.queryBond = null;
-        this.unsaturation = -1;
         shouldMatchBonds = false;
     }
 
     /**
-     * Constructor
-     * @param queryMol query Molecule
-     * @param queryBond query Molecule
-     * @param shouldMatchBonds bond match flag
+     * Creates a matcher for a bond of the query molecule. If the bond is an
+     * {@link IQueryBond} it is matched by its predicate and {@code shouldMatchBonds}
+     * has no effect.
+     *
+     * @param queryMol query molecule (not used)
+     * @param queryBond query bond
+     * @param shouldMatchBonds whether bond order and aromaticity must match
      */
     public DefaultVFBondMatcher(IAtomContainer queryMol, IBond queryBond, boolean shouldMatchBonds) {
         super();
-        this.queryBond = queryBond;
-        this.unsaturation = getUnsaturation(queryMol, this.queryBond);
+        if (queryBond instanceof IQueryBond) {
+            this.smartQueryBond = (IQueryBond) queryBond;
+        } else {
+            this.queryBond = queryBond;
+        }
         setBondMatchFlag(shouldMatchBonds);
     }
 
     /**
      * Constructor
-     * @param queryBond query Molecule
+     * @param queryBond query bond
      */
     public DefaultVFBondMatcher(IQueryBond queryBond) {
         super();
@@ -113,18 +121,8 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
     public boolean matches(TargetProperties targetConatiner, IBond targetBond) {
         if (this.smartQueryBond != null) {
             return smartQueryBond.matches(targetBond);
-        } else {
-            if (!isBondMatchFlag()) {
-                return true;
-            }
-            if (isBondMatchFlag() && isBondTypeMatch(targetBond)) {
-                return true;
-            }
-            if (isBondMatchFlag() && this.unsaturation == getUnsaturation(targetConatiner, targetBond)) {
-                return true;
-            }
         }
-        return false;
+        return !isBondMatchFlag() || isBondTypeMatch(targetBond);
     }
 
     /**
@@ -133,43 +131,15 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
      * @return
      */
     private boolean isBondTypeMatch(IBond targetBond) {
-        int reactantBondType = queryBond.getOrder().numeric();
-        int productBondType = targetBond.getOrder().numeric();
+        IBond.Order queryOrder = queryBond.getOrder();
+        IBond.Order targetOrder = targetBond.getOrder();
         if ((queryBond.getFlag(IChemObject.AROMATIC) == targetBond.getFlag(IChemObject.AROMATIC))
-                && (reactantBondType == productBondType)) {
+                && (queryOrder == targetOrder)) {
             return true;
         } else if (queryBond.getFlag(IChemObject.AROMATIC) && targetBond.getFlag(IChemObject.AROMATIC)) {
             return true;
         }
         return false;
-    }
-
-    private int getUnsaturation(TargetProperties container, IBond bond) {
-        return getUnsaturation(container, bond.getBegin()) + getUnsaturation(container, bond.getEnd());
-    }
-
-    private int getUnsaturation(TargetProperties container, IAtom atom) {
-        return getValency(atom) - container.countNeighbors(atom);
-    }
-
-    private int getValency(IAtom atom) {
-        return (atom.getValency() == null) ? 0 : atom.getValency();
-    }
-
-    private int getUnsaturation(IAtomContainer container, IBond bond) {
-        return getUnsaturation(container, bond.getBegin()) + getUnsaturation(container, bond.getEnd());
-    }
-
-    private int getUnsaturation(IAtomContainer container, IAtom atom) {
-        return getValency(atom) - (countNeighbors(container, atom) + countImplicitHydrogens(atom));
-    }
-
-    private int countNeighbors(IAtomContainer container, IAtom atom) {
-        return container.getConnectedBondsCount(atom);
-    }
-
-    private int countImplicitHydrogens(IAtom atom) {
-        return (atom.getImplicitHydrogenCount() == null) ? 0 : atom.getImplicitHydrogenCount();
     }
 
     /**
