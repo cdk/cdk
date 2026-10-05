@@ -318,10 +318,12 @@ public final class Expr {
                 return getRingCount(atom) == value;
             case RING_SMALLEST:
                 if (!atom.isInRing())
-                    return value == 0;
+                    return value < 3;
                 return isInSmallRingSize(atom, value);
             case RING_SIZE:
-                return atom.isInRing() && isInRingSize(atom, value);
+                if (!atom.isInRing())
+                    return value < 3;
+                return isInRingSize(atom, value);
             case HETERO_SUBSTITUENT_COUNT:
                 if (atom.getBondCount() < value)
                     return false;
