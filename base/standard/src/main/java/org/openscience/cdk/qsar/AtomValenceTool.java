@@ -90,11 +90,7 @@ public class AtomValenceTool {
     }
 
     public static int getValence(IAtom atom) {
-        Integer valence = valencesTable.get(atom.getSymbol());
-        if (valence == null) {
-            throw new IllegalArgumentException("No valence is defined for element " + atom.getSymbol());
-        }
-        return valence;
+        return valencesTable.get(atom.getSymbol());
     }
 
 }
