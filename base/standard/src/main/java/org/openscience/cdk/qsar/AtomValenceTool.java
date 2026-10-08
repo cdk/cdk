@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.interfaces.IAtom;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,61 +34,62 @@ import java.util.Map;
  */
 public class AtomValenceTool {
 
-    private static Map<String, Integer> valencesTable = null;
+    private static final Map<String, Integer> valencesTable = createValencesTable();
+
+    private static Map<String, Integer> createValencesTable() {
+        Map<String, Integer> valences = new HashMap<>();
+        valences.put("H", 1);
+        valences.put("He", 8);
+        valences.put("Ne", 8);
+        valences.put("Ar", 8);
+        valences.put("Kr", 8);
+        valences.put("Xe", 8);
+        valences.put("Hg", 2);
+        valences.put("Rn", 8);
+        valences.put("Li", 1);
+        valences.put("Be", 2);
+        valences.put("B", 3);
+        valences.put("C", 4);
+        valences.put("N", 5);
+        valences.put("O", 6);
+        valences.put("F", 7);
+        valences.put("Na", 1);
+        valences.put("Mg", 2);
+        valences.put("Al", 3);
+        valences.put("Si", 4);
+        valences.put("P", 5);
+        valences.put("S", 6);
+        valences.put("Cl", 7);
+        valences.put("K", 1);
+        valences.put("Ca", 2);
+        valences.put("Ga", 3);
+        valences.put("Ge", 4);
+        valences.put("As", 5);
+        valences.put("Se", 6);
+        valences.put("Br", 7);
+        valences.put("Rb", 1);
+        valences.put("Sr", 2);
+        valences.put("In", 3);
+        valences.put("Sn", 4);
+        valences.put("Sb", 5);
+        valences.put("Te", 6);
+        valences.put("I", 7);
+        valences.put("Cs", 1);
+        valences.put("Ba", 2);
+        valences.put("Tl", 3);
+        valences.put("Pb", 4);
+        valences.put("Bi", 5);
+        valences.put("Po", 6);
+        valences.put("At", 7);
+        valences.put("Fr", 1);
+        valences.put("Ra", 2);
+        valences.put("Cu", 2);
+        valences.put("Mn", 2);
+        valences.put("Co", 2);
+        return Collections.unmodifiableMap(valences);
+    }
 
     public static int getValence(IAtom atom) {
-        if (valencesTable == null) {
-            valencesTable = new HashMap<>();
-            valencesTable.put("H", 1);
-            valencesTable.put("He", 8);
-            valencesTable.put("Ne", 8);
-            valencesTable.put("Ar", 8);
-            valencesTable.put("Kr", 8);
-            valencesTable.put("Xe", 8);
-            valencesTable.put("Hg", 2);
-            valencesTable.put("Rn", 8);
-            valencesTable.put("Li", 1);
-            valencesTable.put("Be", 2);
-            valencesTable.put("B", 3);
-            valencesTable.put("C", 4);
-            valencesTable.put("N", 5);
-            valencesTable.put("O", 6);
-            valencesTable.put("F", 7);
-            valencesTable.put("Na", 1);
-            valencesTable.put("Mg", 2);
-            valencesTable.put("Al", 3);
-            valencesTable.put("Si", 4);
-            valencesTable.put("P", 5);
-            valencesTable.put("S", 6);
-            valencesTable.put("Cl", 7);
-            valencesTable.put("K", 1);
-            valencesTable.put("Ca", 2);
-            valencesTable.put("Ga", 3);
-            valencesTable.put("Ge", 4);
-            valencesTable.put("As", 5);
-            valencesTable.put("Se", 6);
-            valencesTable.put("Br", 7);
-            valencesTable.put("Rb", 1);
-            valencesTable.put("Sr", 2);
-            valencesTable.put("In", 3);
-            valencesTable.put("Sn", 4);
-            valencesTable.put("Sb", 5);
-            valencesTable.put("Te", 6);
-            valencesTable.put("I", 7);
-            valencesTable.put("Cs", 1);
-            valencesTable.put("Ba", 2);
-            valencesTable.put("Tl", 3);
-            valencesTable.put("Pb", 4);
-            valencesTable.put("Bi", 5);
-            valencesTable.put("Po", 6);
-            valencesTable.put("At", 7);
-            valencesTable.put("Fr", 1);
-            valencesTable.put("Ra", 2);
-            valencesTable.put("Cu", 2);
-            valencesTable.put("Mn", 2);
-            valencesTable.put("Co", 2);
-        }
-
         return valencesTable.get(atom.getSymbol());
     }
 
