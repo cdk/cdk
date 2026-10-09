@@ -69,7 +69,7 @@ final class MCSGraph {
     /** The number of symbol classes of both molecules, twice as many with complete rings. */
     final int atomClasses;
     /** Whether the classes decide every pair, as the query has no query atom or bond. */
-    private final boolean plainQuery;
+    final boolean plainQuery;
     /** The compatible bond pairs, bit f of row e, in rows of {@code bondWords} longs. */
     private final int bondWords;
     private long[] bondPairs;
@@ -879,7 +879,7 @@ final class MCSGraph {
         }
 
         /** The label of the bond between atoms {@code a} and {@code b}: the symbols of its ends and its class. */
-        private long bondLabel(int a, int b, int bond, int atomClasses) {
+        long bondLabel(int a, int b, int bond, int atomClasses) {
             int x = atomClass[a], y = atomClass[b];
             return ((long) Math.min(x, y) * atomClasses + Math.max(x, y)) << BOND_CLASS_BITS | bondClass[bond];
         }
@@ -957,9 +957,14 @@ final class MCSGraph {
 
         Rings(int[] start, int[] neighbour, int[] neighbourBond, int bondCount) {
             int n = start.length - 1, refused = 0;
+            ringBond = ringBonds(start, neighbour, neighbourBond, bondCount);
             ringAtom = new boolean[n];
-            ringBond = new boolean[bondCount];
-            findRingBonds(start, neighbour, neighbourBond);
+            for (int a = 0; a < n; a++) {
+                for (int i = start[a]; i < start[a + 1]; i++) {
+                    if (ringBond[neighbourBond[i]])
+                        ringAtom[a] = true;
+                }
+            }
             // The ring systems are the atoms joined by ring bonds.
             List<int[]> found = new ArrayList<>();
             int[] place = new int[n];
@@ -998,13 +1003,15 @@ final class MCSGraph {
         }
 
         /**
-         * Marks the ring bonds and atoms by low-link, without the recursion of
-         * {@code RingSearch}. A tree bond is a ring bond when the atoms below it
-         * reach above it, and any other bond is a ring bond. The bond to the
-         * parent is skipped by its index.
+         * The ring bonds, found by low-link without the recursion of
+         * {@code RingSearch}. A tree bond is a ring bond when the atoms below
+         * it reach above it, and any other bond is a ring bond. The bond to
+         * the parent is skipped by its index. A bond on no ring splits its
+         * part of the molecule in two.
          */
-        private void findRingBonds(int[] start, int[] neighbour, int[] neighbourBond) {
-            int n = ringAtom.length, time = 0;
+        static boolean[] ringBonds(int[] start, int[] neighbour, int[] neighbourBond, int bondCount) {
+            int n = start.length - 1, time = 0;
+            boolean[] ringBond = new boolean[bondCount];
             int[] visited = new int[n], low = new int[n], via = new int[n], next = start.clone(), stack = new int[n];
             for (int r = 0, top = 0; r < n; r++) {
                 if (visited[r] > 0)
@@ -1019,7 +1026,7 @@ final class MCSGraph {
                             int p = stack[top - 1];
                             low[p] = Math.min(low[p], low[a]);
                             if (low[a] <= visited[p])
-                                ringBond[via[a]] = ringAtom[a] = ringAtom[p] = true;
+                                ringBond[via[a]] = true;
                         }
                     } else if (visited[neighbour[i]] == 0) {
                         visited[neighbour[i]] = low[neighbour[i]] = ++time;
@@ -1027,10 +1034,11 @@ final class MCSGraph {
                         stack[top++] = neighbour[i];
                     } else if (neighbourBond[i] != via[a]) {
                         low[a] = Math.min(low[a], visited[neighbour[i]]);
-                        ringBond[neighbourBond[i]] = ringAtom[a] = ringAtom[neighbour[i]] = true;
+                        ringBond[neighbourBond[i]] = true;
                     }
                 }
             }
+            return ringBond;
         }
 
         /** The atoms of the ring system of atom {@code s}, in the order reached, with the index of each in place. */

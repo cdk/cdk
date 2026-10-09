@@ -67,6 +67,12 @@ final class MCSTesting {
     private static final int[] GROUPS = {0, 0, 0, IStereoElement.GRP_RAC1, IStereoElement.GRP_RAC2,
                                          IStereoElement.GRP_REL1};
 
+    /** The amino acids other than glycine, by one-letter code, and their side chains, for {@link #peptide}. */
+    private static final String   RESIDUES    = "AVLIFYWSTCMNQDEKRH";
+    private static final String[] SIDE_CHAINS = {"C", "C(C)C", "CC(C)C", "C(C)CC", "Cc1ccccc1", "Cc1ccc(O)cc1",
+            "Cc1c[nH]c2ccccc12", "CO", "C(C)O", "CS", "CCSC", "CC(N)=O", "CCC(N)=O", "CC(=O)O", "CCC(=O)O", "CCCCN",
+            "CCCNC(=N)N", "Cc1c[nH]cn1"};
+
     private MCSTesting() {
     }
 
@@ -85,6 +91,19 @@ final class MCSTesting {
         char[] chain = new char[count];
         Arrays.fill(chain, 'C');
         return new String(chain);
+    }
+
+    /** A linear peptide from its one-letter sequence, without stereochemistry. */
+    static String peptide(String sequence) {
+        StringBuilder smiles = new StringBuilder();
+        for (char residue : sequence.toCharArray()) {
+            smiles.append("NC");
+            if (residue != 'G') {
+                smiles.append('(').append(SIDE_CHAINS[RESIDUES.indexOf(residue)]).append(')');
+            }
+            smiles.append("C(=O)");
+        }
+        return smiles.append('O').toString();
     }
 
     /** The number of mapped query atoms. */

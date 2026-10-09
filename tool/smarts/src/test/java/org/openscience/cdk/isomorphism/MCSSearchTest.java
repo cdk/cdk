@@ -50,6 +50,7 @@ import static org.openscience.cdk.isomorphism.MCSTesting.completeGraph;
 import static org.openscience.cdk.isomorphism.MCSTesting.exact;
 import static org.openscience.cdk.isomorphism.MCSTesting.graphsOnFourAtoms;
 import static org.openscience.cdk.isomorphism.MCSTesting.keys;
+import static org.openscience.cdk.isomorphism.MCSTesting.peptide;
 import static org.openscience.cdk.isomorphism.MCSTesting.randomGraph;
 import static org.openscience.cdk.isomorphism.MCSTesting.shuffle;
 import static org.openscience.cdk.isomorphism.MCSTesting.smarts;
@@ -460,6 +461,68 @@ final class MCSSearchTest {
     }
 
     @Test
+    void testBridgeBound() throws Exception {
+        // leaves on a ring, part of a ring and separate parts need not match a whole ring, and hubs need not pair
+        // off all their branches
+        String[][] pairs = {{"OC1CC1", "CCCC"}, {"CC1CC1O", "CCCCO"}, {"CC.CCO", "CCC.CO"}, {"NC(=O)CO", "NCCCO"},
+                            {"CCOC(=O)C", "CCCC(=O)OC"}, {"CC(C)(C)CO", "CC(C)CCO"}};
+        for (String[] pair : pairs) {
+            for (String[] order : new String[][]{pair, {pair[1], pair[0]}}) {
+                IAtomContainer query = smi(order[0]), target = smi(order[1]);
+                String what = order[0] + " on " + order[1];
+                MCSSearch.BridgeBound bound = bridgeBound(query, target);
+                Assertions.assertNotNull(bound, what);
+                assertWithinBridgeBound(bound, query, target, what);
+                assertSameSet(exact(query, target, true), run(query, target, true));
+            }
+        }
+    }
+
+    @Test
+    void testBridgeBoundAllFourAtomGraphs() throws Exception {
+        List<IAtomContainer> graphs = graphsOnFourAtoms();
+        for (IAtomContainer query : graphs) {
+            for (IAtomContainer target : graphs) {
+                MCSSearch.BridgeBound bound = bridgeBound(query, target);
+                if (bound != null)
+                    assertWithinBridgeBound(bound, query, target, "four atoms");
+            }
+        }
+    }
+
+    @Test
+    void testBridgeBoundOnChains() throws Exception {
+        // a chain of 70 carbons with two methyls on one of them, on a chain of 100: only the 70 fit, in 31 places
+        // either way
+        IAtomContainer query = smi(carbons(35) + "C(C)(C)" + carbons(34));
+        IAtomContainer target = smi(carbons(100));
+        Set<String> expected = new HashSet<>();
+        for (int start = 0; start + 70 <= 100; start++) {
+            for (boolean reverse : new boolean[]{false, true}) {
+                int[] mapping = new int[72];
+                Arrays.fill(mapping, -1);
+                // the methyls are atoms 36 and 37
+                for (int k = 0; k < 70; k++)
+                    mapping[k < 36 ? k : k + 2] = reverse ? start + 69 - k : start + k;
+                expected.add(Arrays.toString(mapping));
+            }
+        }
+        for (int cap : new int[]{1, 2, 1000})
+            assertMaximumMappings(expected, MCS.find(query).matchAll(target, cap), cap, "chains");
+    }
+
+    @Test
+    @Timeout(value = 5, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    void testBridgeBoundOnPeptides() throws Exception {
+        // glucagon on GLP-1 (7-37): without the bound a maximum mapping takes seconds
+        IAtomContainer query = smi(peptide("HSQGTFTSDYSKYLDSRRAQDFVQWLMNT"));
+        IAtomContainer target = smi(peptide("HAEGTFTSDVSSYLEGQAAKEFIAWLVKGRG"));
+        int[] mapping = MCS.find(query).match(target);
+        Assertions.assertEquals(205, atoms(mapping));
+        Assertions.assertEquals(210, commonBonds(query, target, mapping, true));
+    }
+
+    @Test
     @Tag("SlowTest")
     void testCollect() throws Exception {
         Random random = new Random(2026L);
@@ -648,6 +711,26 @@ final class MCSSearchTest {
             Assertions.assertEquals(global, graph.labelBound(false), a + " / " + b);
             Assertions.assertEquals(connected, graph.labelBound(true), a + " / " + b);
             assertSameSet(exact(pair[0], pair[1], true), new MCSSearch(graph, never(), 0).run(Integer.MAX_VALUE));
+        }
+    }
+
+    private static MCSSearch.BridgeBound bridgeBound(IAtomContainer query, IAtomContainer target) {
+        MCSGraph graph = graph(query, target, true);
+        graph.compatiblePairs(never());
+        return MCSSearch.BridgeBound.create(graph, never());
+    }
+
+    // every maximum mapping is within the bound, and within the bound of each of its pairs
+    private static void assertWithinBridgeBound(MCSSearch.BridgeBound bound, IAtomContainer query,
+                                                IAtomContainer target, String what) {
+        for (String key : exact(query, target, true)) {
+            int[] mapping = parse(key);
+            long score = (long) atoms(mapping) << 32 | commonBonds(query, target, mapping, true);
+            Assertions.assertTrue(score <= bound.upperBound, what);
+            for (int q = 0; q < mapping.length; q++) {
+                if (mapping[q] >= 0)
+                    Assertions.assertTrue(score <= bound.bound(q, mapping[q]), what);
+            }
         }
     }
 

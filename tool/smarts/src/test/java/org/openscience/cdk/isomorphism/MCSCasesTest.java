@@ -65,6 +65,7 @@ import static org.openscience.cdk.isomorphism.MCSCasesTest.Prep.EXPLICIT_H;
 import static org.openscience.cdk.isomorphism.MCSCasesTest.Prep.LEGACY;
 import static org.openscience.cdk.isomorphism.MCSCasesTest.Prep.NONE;
 import static org.openscience.cdk.isomorphism.MCSTesting.keys;
+import static org.openscience.cdk.isomorphism.MCSTesting.peptide;
 import static org.openscience.cdk.isomorphism.MCSTesting.smi;
 
 /**
@@ -217,11 +218,6 @@ final class MCSCasesTest {
     private static final String ALPHA_PINENE = "CC1=CCC2CC1C2(C)C";
     private static final String O_XYLENE     = "CC1=CC=CC=C1C";
     private static final String BUG_2944080  = "CCC(CC)(C(=O)NC(=O)NC(C)=O)Br";
-    /** The amino acids other than glycine, by one-letter code, and their side chains, for peptide. */
-    private static final String   RESIDUES    = "AVLIFYWSTCMNQDEKRH";
-    private static final String[] SIDE_CHAINS = {"C", "C(C)C", "CC(C)C", "C(C)CC", "Cc1ccccc1", "Cc1ccc(O)cc1",
-            "Cc1c[nH]c2ccccc12", "CO", "C(C)O", "CS", "CCSC", "CC(N)=O", "CCC(N)=O", "CC(=O)O", "CCC(=O)O", "CCCCN",
-            "CCCNC(=N)N", "Cc1c[nH]cn1"};
 
     /** Small pairs, searched in every build. */
     private static final Pair[] PAIRS = {
@@ -942,19 +938,6 @@ final class MCSCasesTest {
     /** A pair too large to search again in another atom order. */
     private static Pair large(String name, String query, String target, Case... cases) {
         return new Pair(name, query, target, false, true, cases);
-    }
-
-    /** A linear peptide from its one-letter sequence, without stereochemistry. */
-    private static String peptide(String sequence) {
-        StringBuilder smiles = new StringBuilder();
-        for (char residue : sequence.toCharArray()) {
-            smiles.append("NC");
-            if (residue != 'G') {
-                smiles.append('(').append(SIDE_CHAINS[RESIDUES.indexOf(residue)]).append(')');
-            }
-            smiles.append("C(=O)");
-        }
-        return smiles.append('O').toString();
     }
 
     private static Case row(Condition condition, Prep prep, int atoms, int bonds, int mappings, Known known) {
