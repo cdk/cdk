@@ -379,18 +379,12 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         }
 
         /**
-         * Visit each undirected path once. Identity hashes avoid repeated atom
-         * index lookups, but distinct atoms may have the same hash.
+         * Visit each undirected path once.
          *
          * @return whether to encode this orientation
          */
         public boolean isOrderedPath() {
-            IAtom first = apath.get(0);
-            IAtom last = apath.get(apath.size()-1);
-            int firstHash = System.identityHashCode(first);
-            int lastHash = System.identityHashCode(last);
-            return firstHash < lastHash ||
-                   firstHash == lastHash && mol.indexOf(first) < mol.indexOf(last);
+            return mol.indexOf(apath.get(0)) < mol.indexOf(apath.get(apath.size()-1));
         }
 
         public void storePath() {

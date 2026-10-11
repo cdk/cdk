@@ -33,7 +33,6 @@ import java.util.Random;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.Atom;
@@ -44,7 +43,6 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -53,7 +51,6 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -663,60 +660,5 @@ class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         Assertions.assertEquals(62, cntFp.numOfPopulatedbins());
         BitSet actBitset = foldFp(cntFp, 1024);
         Assertions.assertEquals(expBitset.asBitSet(), actBitset);
-    }
-
-    @Test
-    void pathWithCollidingEndpointIdentityHashes() throws Exception {
-        IAtomContainer target = methanolWithIdentityHashCollision();
-        IAtomContainer query = new AtomContainer();
-        query.newAtom(IAtom.C, 3);
-        query.newAtom(IAtom.O, 1);
-        query.addBond(0, 1, IBond.Order.SINGLE);
-        Assertions.assertTrue(Pattern.findSubstructure(query).matches(target));
-
-        for (Fingerprinter fp : new Fingerprinter[]{new Fingerprinter(), new GraphOnlyFingerprinter(),
-                                                   new HybridizationFingerprinter()}) {
-            IBitFingerprint expectedBits = fp.getBitFingerprint(query);
-            Map<String, Integer> expectedCounts = fp.getRawFingerprint(query);
-            Assertions.assertEquals(expectedBits, fp.getBitFingerprint(target));
-            Assertions.assertEquals(expectedCounts, fp.getRawFingerprint(target));
-
-            ICountFingerprint counts = fp.getCountFingerprint(target);
-            for (Map.Entry<String, Integer> feature : expectedCounts.entrySet())
-                Assertions.assertEquals(feature.getValue().intValue(),
-                                        counts.getCountForHash(feature.getKey().hashCode()));
-
-            target.setAtoms(new IAtom[]{target.getAtom(1), target.getAtom(0)});
-            Assertions.assertEquals(expectedBits, fp.getBitFingerprint(target));
-            Assertions.assertEquals(expectedCounts, fp.getRawFingerprint(target));
-        }
-    }
-
-    private IAtomContainer methanolWithIdentityHashCollision() {
-        IAtomContainer mol = new AtomContainer();
-        Map<Integer, IAtom> seen = new HashMap<>();
-        IAtom first = null;
-        IAtom second = null;
-        for (int i = 0; i < 500000; i++) {
-            IAtom atom = mol.newAtom(IAtom.C, 0);
-            IAtom previous = seen.put(System.identityHashCode(atom), atom);
-            if (previous != null) {
-                first = previous;
-                second = atom;
-                break;
-            }
-        }
-        // Identity hashes need not collide within this bound on every JVM.
-        Assumptions.assumeTrue(first != null, "No identity hash collision found");
-        mol.setAtoms(new IAtom[]{first, second});
-        Assertions.assertNotSame(mol.getAtom(0), mol.getAtom(1));
-        Assertions.assertEquals(System.identityHashCode(mol.getAtom(0)),
-                                System.identityHashCode(mol.getAtom(1)));
-        first.setImplicitHydrogenCount(3);
-        second.setSymbol("O");
-        second.setAtomicNumber(8);
-        second.setImplicitHydrogenCount(1);
-        mol.addBond(0, 1, IBond.Order.SINGLE);
-        return mol;
     }
 }
