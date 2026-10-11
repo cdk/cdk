@@ -30,6 +30,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.similarity.Tanimoto;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -123,8 +124,86 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    void testFunctionalGroupsCount() throws Exception {
-        // TODO: Implement tests
+    void testCountFingerprintBinaryView() throws Exception {
+        SubstructureFingerprinter printer = new SubstructureFingerprinter(new String[]{"C", "O"});
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        ICountFingerprint methane = printer.getCountFingerprint(parser.parseSmiles("C"));
+        ICountFingerprint ethane = printer.getCountFingerprint(parser.parseSmiles("CC"));
+
+        Assertions.assertEquals(2, ethane.getCount(0));
+        Assertions.assertEquals(0.5, Tanimoto.calculate(methane, ethane), 0.001);
+        methane.setBehaveAsBitFingerprint(true);
+        ethane.setBehaveAsBitFingerprint(true);
+        Assertions.assertEquals(1, ethane.getCount(0));
+        Assertions.assertEquals(0, ethane.getCount(1));
+        Assertions.assertEquals(1.0, Tanimoto.calculate(methane, ethane), 0.001);
+        Assertions.assertEquals(2, ethane.getCountForHash(0));
+
+        methane.setBehaveAsBitFingerprint(false);
+        ethane.setBehaveAsBitFingerprint(false);
+        Assertions.assertEquals(2, ethane.getCount(0));
+        Assertions.assertEquals(0.5, Tanimoto.calculate(methane, ethane), 0.001);
+    }
+
+    @Test
+    void testMergeCountFingerprints() throws Exception {
+        SubstructureFingerprinter printer = new SubstructureFingerprinter(new String[]{"C", "O", "N"});
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer molecule = parser.parseSmiles("CCN");
+        BitSet bits = printer.getBitFingerprint(molecule).asBitSet();
+        ICountFingerprint first = printer.getCountFingerprint(molecule);
+        ICountFingerprint second = printer.getCountFingerprint(parser.parseSmiles("COO"));
+
+        first.merge(second);
+
+        Assertions.assertEquals(3, first.size());
+        Assertions.assertEquals(3, first.numOfPopulatedbins());
+        for (int i = 0; i < 3; i++) {
+            Assertions.assertEquals(i, first.getHash(i));
+            Assertions.assertTrue(first.hasHash(i));
+        }
+        Assertions.assertEquals(3, first.getCount(0));
+        Assertions.assertEquals(2, first.getCount(1));
+        Assertions.assertEquals(1, first.getCount(2));
+        Assertions.assertEquals(3, first.getCountForHash(0));
+        Assertions.assertEquals(2, first.getCountForHash(1));
+        Assertions.assertEquals(1, first.getCountForHash(2));
+        Assertions.assertEquals(1, second.getCount(0));
+        Assertions.assertEquals(2, second.getCount(1));
+        Assertions.assertEquals(0, second.getCount(2));
+        Assertions.assertEquals(bits, printer.getBitFingerprint(molecule).asBitSet());
+    }
+
+    @Test
+    void testMergeCountFingerprintsWithBinaryViews() throws Exception {
+        SubstructureFingerprinter printer = new SubstructureFingerprinter(new String[]{"C"});
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        ICountFingerprint first = printer.getCountFingerprint(parser.parseSmiles("CC"));
+        ICountFingerprint second = printer.getCountFingerprint(parser.parseSmiles("CCC"));
+        first.setBehaveAsBitFingerprint(true);
+        second.setBehaveAsBitFingerprint(true);
+
+        first.merge(second);
+
+        Assertions.assertEquals(1, first.getCount(0));
+        Assertions.assertEquals(3, first.getCountForHash(0));
+        first.setBehaveAsBitFingerprint(false);
+        second.setBehaveAsBitFingerprint(false);
+        Assertions.assertEquals(3, first.getCount(0));
+        Assertions.assertEquals(3, second.getCount(0));
+    }
+
+    @Test
+    void testMergeCountFingerprintWithItself() throws Exception {
+        SubstructureFingerprinter printer = new SubstructureFingerprinter(new String[]{"C", "O"});
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        ICountFingerprint fingerprint = printer.getCountFingerprint(parser.parseSmiles("CC"));
+
+        fingerprint.merge(fingerprint);
+
+        Assertions.assertEquals(4, fingerprint.getCount(0));
+        Assertions.assertEquals(0, fingerprint.getCount(1));
+        Assertions.assertEquals(4, fingerprint.getCountForHash(0));
     }
 
     @Test
