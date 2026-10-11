@@ -509,6 +509,32 @@ class BeamToCDKTest {
     }
 
     @Test
+    void testAromaticFlags() throws Exception {
+        IAtomContainer ac = convert("N#Cc1c/c(=N\\CC2CCCO2)/cc[nH]1 CHEMBL4571795\t4571795");
+        int aromAtoms = 0;
+        int aromBonds = 0;
+        for (IBond bond : ac.bonds())
+            if (bond.isAromatic()) aromBonds++;
+        for (IAtom atom : ac.atoms())
+            if (atom.isAromatic()) aromAtoms++;
+        Assertions.assertEquals(6, aromAtoms);
+        Assertions.assertEquals(6, aromBonds);
+    }
+
+    @Test
+    void testAromaticFlagsKekule() throws Exception {
+        IAtomContainer ac = convertKekule("N#Cc1c/c(=N\\CC2CCCO2)/cc[nH]1 CHEMBL4571795\t4571795");
+        int aromAtoms = 0;
+        int aromBonds = 0;
+        for (IBond bond : ac.bonds())
+            if (bond.isAromatic()) aromBonds++;
+        for (IAtom atom : ac.atoms())
+            if (atom.isAromatic()) aromAtoms++;
+        Assertions.assertEquals(6, aromAtoms);
+        Assertions.assertEquals(6, aromBonds);
+    }
+
+    @Test
     void titleWithTab() throws Exception {
         Assertions.assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").getTitle(), "caffeine");
     }
@@ -533,6 +559,12 @@ class BeamToCDKTest {
         BeamToCDK g2c = new BeamToCDK(SilentChemObjectBuilder.getInstance());
         Graph g = Graph.fromSmiles(smi);
         return g2c.toAtomContainer(g, false);
+    }
+
+    IAtomContainer convertKekule(String smi) throws IOException {
+        BeamToCDK g2c = new BeamToCDK(SilentChemObjectBuilder.getInstance());
+        Graph g = Graph.fromSmiles(smi).kekule();
+        return g2c.toAtomContainer(g, true);
     }
 
 }
