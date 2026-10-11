@@ -37,6 +37,7 @@ Thierry Hanser
 Cyrus Harmon
 Kai Hartmann
 Tobias Helmus
+Steffen Heuckeroth
 Christian Hoppe
 Oliver Horlacher
 Miguel Howard
@@ -63,6 +64,7 @@ Xavier Linn
 Qinqing Liu
 Edgar Luttmann
 Matthias Mailänder
+Kamel Mansouri
 Jean Marois
 Todd Martin
 John Mayfield
@@ -92,6 +94,7 @@ David Robinson
 Miguel Rojas Cherto
 Bhupinder Sandhu
 Jonas Schaub
+Manuel Schauer
 Robin Schmid
 Jean-Sebastien Senecal
 Onkar Shinde
