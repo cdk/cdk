@@ -379,19 +379,18 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         }
 
         /**
-         * Optimisation - determine if the path if lexicographically smaller
-         * forwards rather than backwards. When we come to actually hash the
-         * path we hash it forwards and backwards and store the lowest so only
-         * need to do that more expensive encoding once.
-         * We can do this a couple of ways for example atom index - but since
-         * that may be a linear time lookup (at least in the old IAtomContainer
-         * implementation) we use the identity hash code (memory address).
+         * Visit each undirected path once. Identity hashes avoid repeated atom
+         * index lookups, but distinct atoms may have the same hash.
          *
-         * @return true - do encode/false - skip encoding
+         * @return whether to encode this orientation
          */
         public boolean isOrderedPath() {
-            return System.identityHashCode(apath.get(0)) <
-                    System.identityHashCode(apath.get(apath.size()-1));
+            IAtom first = apath.get(0);
+            IAtom last = apath.get(apath.size()-1);
+            int firstHash = System.identityHashCode(first);
+            int lastHash = System.identityHashCode(last);
+            return firstHash < lastHash ||
+                   firstHash == lastHash && mol.indexOf(first) < mol.indexOf(last);
         }
 
         public void storePath() {
