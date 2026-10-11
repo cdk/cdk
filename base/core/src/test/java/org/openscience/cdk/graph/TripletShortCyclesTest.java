@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.graph;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -38,6 +39,29 @@ import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
  * @author John May
  */
 class TripletShortCyclesTest {
+
+    @Test
+    void rejectsUnmanageableNonCanonicalPaths() {
+        int[][] graph = RelevantCyclesTest.cycloparaphenylene(32);
+        // With vertex 0 disconnected, the long route between two neighbours has 2^31 choices.
+        int[][] disconnected = new int[graph.length][];
+        for (int v = 0; v < graph.length; v++) {
+            int count = 0;
+            for (int w : graph[v])
+                if (w != 0) count++;
+            disconnected[v] = new int[count];
+            int i = 0;
+            for (int w : graph[v])
+                if (w != 0) disconnected[v][i++] = w;
+        }
+        disconnected[0] = new int[0];
+        ShortestPaths paths = new ShortestPaths(disconnected, null, 1);
+        Assertions.assertEquals(Integer.MAX_VALUE, paths.nPathsTo(graph[0][2]));
+
+        MinimumCycleBasis mcb = new MinimumCycleBasis(graph);
+        Assertions.assertThrows(IllegalStateException.class, () -> new TripletShortCycles(mcb, false));
+        Assertions.assertEquals(65, new TripletShortCycles(mcb, true).size());
+    }
 
     @Test
     void lexicographic() {

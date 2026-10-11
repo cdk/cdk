@@ -538,7 +538,7 @@ final class InitialCycles {
          * to avoid the potentially exponential reconstruction of all the cycles
          * using {@link #family()}.
          *
-         * @return number of cycles
+         * @return number of cycles, capped at {@link Integer#MAX_VALUE}
          */
         abstract int sizeOfFamily();
 
@@ -593,6 +593,8 @@ final class InitialCycles {
         /**{@inheritDoc} */
         @Override
         int[][] family() {
+            if (sizeOfFamily() == Integer.MAX_VALUE)
+                throw new ShortestPaths.TooManyPathsException("Too many cycles to enumerate");
 
             int[][] pathsToP = paths.pathsTo(p);
             int[][] pathsToQ = paths.pathsTo(q);
@@ -610,7 +612,7 @@ final class InitialCycles {
         /**{@inheritDoc} */
         @Override
         int sizeOfFamily() {
-            return paths.nPathsTo(p) * paths.nPathsTo(q);
+            return (int) Math.min((long) paths.nPathsTo(p) * paths.nPathsTo(q), Integer.MAX_VALUE);
         }
     }
 
@@ -640,6 +642,9 @@ final class InitialCycles {
         /**{@inheritDoc} */
         @Override
         int[][] family() {
+            if (sizeOfFamily() == Integer.MAX_VALUE)
+                throw new ShortestPaths.TooManyPathsException("Too many cycles to enumerate");
+
             int[][] pathsToY = paths.pathsTo(y);
             int[][] pathsToZ = paths.pathsTo(z);
 
@@ -656,7 +661,7 @@ final class InitialCycles {
         /**{@inheritDoc} */
         @Override
         int sizeOfFamily() {
-            return paths.nPathsTo(y) * paths.nPathsTo(z);
+            return (int) Math.min((long) paths.nPathsTo(y) * paths.nPathsTo(z), Integer.MAX_VALUE);
         }
     }
 

@@ -149,9 +149,13 @@ public final class RelevantCycles {
      * }</pre></blockquote>
      *
      * @return array of vertex paths
+     * @throws IllegalStateException the number of cycles has reached {@link Integer#MAX_VALUE}
      */
     public int[][] paths() {
-        final int[][] paths = new int[size()][0];
+        final int size = size();
+        if (size == Integer.MAX_VALUE)
+            throw new ShortestPaths.TooManyPathsException("Too many relevant cycles to enumerate");
+        final int[][] paths = new int[size][0];
         int i = 0;
         for (final Cycle c : basis.members()) {
             for (final int[] path : c.family())
@@ -163,12 +167,12 @@ public final class RelevantCycles {
     /**
      * The number of the relevant cycles.
      *
-     * @return size of relevant cycle set
+     * @return size of relevant cycle set, capped at {@link Integer#MAX_VALUE}
      */
     public int size() {
         int size = 0;
         for (final Cycle c : basis.members())
-            size += c.sizeOfFamily();
+            size = (int) Math.min((long) size + c.sizeOfFamily(), Integer.MAX_VALUE);
         return size;
     }
 }

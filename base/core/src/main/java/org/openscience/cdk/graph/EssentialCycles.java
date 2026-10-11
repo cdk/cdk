@@ -69,6 +69,7 @@ public final class EssentialCycles {
      * org.openscience.cdk.ringsearch.RingSearch}.
      *
      * @param graph a molecule graph
+     * @throws IllegalStateException the number of relevant cycles has reached {@link Integer#MAX_VALUE}
      * @see GraphUtil#toAdjList(org.openscience.cdk.interfaces.IAtomContainer)
      * @see org.openscience.cdk.ringsearch.RingSearch
      */

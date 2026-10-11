@@ -250,6 +250,7 @@ public final class TripletShortCycles {
      *
      * @param mcb       minimum cycle basis
      * @param canonical should the set be canonical (non-unique)
+     * @throws IllegalStateException a non-canonical path count has reached {@link Integer#MAX_VALUE}
      */
     public TripletShortCycles(final MinimumCycleBasis mcb, final boolean canonical) {
 

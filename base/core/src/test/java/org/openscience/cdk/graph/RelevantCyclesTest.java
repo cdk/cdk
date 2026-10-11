@@ -25,6 +25,7 @@ package org.openscience.cdk.graph;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.openscience.cdk.graph.InitialCyclesTest.anthracene;
 import static org.openscience.cdk.graph.InitialCyclesTest.bicyclo;
 import static org.openscience.cdk.graph.InitialCyclesTest.cyclophane_even;
@@ -33,6 +34,10 @@ import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.Intractable;
+import org.openscience.cdk.interfaces.IAtomContainer;
+
+import java.math.BigInteger;
 
 /**
  * @author John May
@@ -157,5 +162,52 @@ class RelevantCyclesTest {
         int[][] cyclophane_even = cyclophane_even();
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         assertThat(relevant.size(), is(3));
+    }
+
+    // [k]cycloparaphenylene has 2^k + k relevant cycles.
+    @Test
+    void size_cycloparaphenylene() {
+        for (int k : new int[]{4, 8, 30, 31, 32, 64}) {
+            BigInteger expected = BigInteger.ONE.shiftLeft(k).add(BigInteger.valueOf(k));
+            int count = expected.min(BigInteger.valueOf(Integer.MAX_VALUE)).intValue();
+            Assertions.assertEquals(count, new RelevantCycles(cycloparaphenylene(k)).size());
+        }
+    }
+
+    @Test
+    void paths_cycloparaphenylene() {
+        int[][] graph = cycloparaphenylene(32);
+        RelevantCycles relevant = new RelevantCycles(graph);
+        // Check the count first so the regression never enumerates an overflowing family.
+        Assertions.assertEquals(Integer.MAX_VALUE, relevant.size());
+        Assertions.assertThrows(IllegalStateException.class, relevant::paths);
+        Assertions.assertThrows(IllegalStateException.class, () -> new EssentialCycles(graph));
+    }
+
+    @Test
+    void intractable_cycloparaphenylene() {
+        for (int k : new int[]{31, 32, 64}) {
+            int[][] graph = cycloparaphenylene(k);
+            Assertions.assertEquals(Integer.MAX_VALUE, new RelevantCycles(graph).size());
+            Assertions.assertThrows(Intractable.class,
+                                    () -> Cycles.relevant().find(mock(IAtomContainer.class), graph, graph.length));
+            Assertions.assertThrows(Intractable.class,
+                                    () -> Cycles.essential().find(mock(IAtomContainer.class), graph, graph.length));
+        }
+    }
+
+    // Six-membered rings joined from the 4-position to the 1-position of the next ring.
+    static int[][] cycloparaphenylene(int k) {
+        int[][] graph = new int[6 * k][];
+        for (int i = 0; i < k; i++) {
+            int a = 6 * i;
+            graph[a] = new int[]{a + 1, a + 5, 6 * ((i + k - 1) % k) + 3};
+            graph[a + 1] = new int[]{a, a + 2};
+            graph[a + 2] = new int[]{a + 1, a + 3};
+            graph[a + 3] = new int[]{a + 2, a + 4, 6 * ((i + 1) % k)};
+            graph[a + 4] = new int[]{a + 3, a + 5};
+            graph[a + 5] = new int[]{a + 4, a};
+        }
+        return graph;
     }
 }

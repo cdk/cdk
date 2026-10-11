@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.exception.Intractable;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -50,6 +51,34 @@ class CyclesTest {
                 actualRingBonds++;
         Assertions.assertEquals(ratoms, actualRingAtoms, "Unexpected ring atom count");
         Assertions.assertEquals(rbonds, actualRingBonds, "Unexpected ring bong count");
+    }
+
+    @Test
+    void pathCountOverflowIsIntractable() throws Exception {
+        IAtomContainer mol = cycloparaphenylene(32);
+        int[][] graph = GraphUtil.toAdjList(mol);
+        // Check before invoking a finder to avoid enumeration if the count regresses.
+        Assertions.assertEquals(Integer.MAX_VALUE, new RelevantCycles(graph).size());
+        for (CycleFinder finder : new CycleFinder[]{Cycles.relevant(), Cycles.essential(), Cycles.tripletShort()}) {
+            Assertions.assertThrows(Intractable.class, () -> finder.find(mol));
+            Assertions.assertThrows(Intractable.class, () -> finder.find(mol, graph.length));
+            Assertions.assertThrows(Intractable.class, () -> finder.find(mol, graph, graph.length));
+            Assertions.assertEquals(33, Cycles.or(finder, Cycles.mcb()).find(mol).numberOfCycles());
+        }
+    }
+
+    private static IAtomContainer cycloparaphenylene(int k) {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newAtomContainer();
+        for (int i = 0; i < 6 * k; i++)
+            mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        for (int i = 0; i < k; i++) {
+            int a = 6 * i;
+            for (int j = 0; j < 6; j++)
+                mol.addBond(a + j, a + (j + 1) % 6, IBond.Order.SINGLE);
+            mol.addBond(a + 3, 6 * ((i + 1) % k), IBond.Order.SINGLE);
+        }
+        return mol;
     }
 
     @Test

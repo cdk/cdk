@@ -34,6 +34,11 @@ import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
+import java.math.BigInteger;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Deque;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -44,6 +49,117 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  */
 class ShortestPathsTest {
+
+    @Test
+    void testNPathsToSaturatesWithoutChangingDistances() {
+        for (int diamonds : new int[]{1, 2, 10, 30, 31, 32, 64}) {
+            IAtomContainer mol = diamondChain(diamonds, false);
+            int[][] graph = GraphUtil.toAdjList(mol);
+            BigInteger[] expected = countShortestPaths(graph, 0);
+            ShortestPaths paths = new ShortestPaths(mol, mol.getAtom(0));
+
+            Assertions.assertEquals(BigInteger.ONE.shiftLeft(diamonds), expected[3 * diamonds]);
+            for (int v = 0; v < graph.length; v++) {
+                int count = expected[v].min(BigInteger.valueOf(Integer.MAX_VALUE)).intValue();
+                Assertions.assertEquals(count, paths.nPathsTo(v));
+                Assertions.assertEquals(count, paths.nPathsTo(mol.getAtom(v)));
+            }
+            Assertions.assertEquals(2 * diamonds, paths.distanceTo(3 * diamonds));
+            Assertions.assertEquals(2 * diamonds + 1, paths.pathTo(3 * diamonds).length);
+        }
+    }
+
+    @Test
+    void testNPathsToSaturatesPrecedingPaths() {
+        IAtomContainer mol = diamondChain(64, false);
+        int[][] graph = GraphUtil.toAdjList(mol);
+        int[] ordering = new int[graph.length];
+        ordering[0] = graph.length;
+        for (int v = 1; v < ordering.length; v++)
+            ordering[v] = v;
+        ShortestPaths paths = new ShortestPaths(graph, mol, 0, ordering);
+        BigInteger[] expected = countShortestPaths(graph, 0);
+
+        for (int v = 0; v < graph.length; v++) {
+            Assertions.assertTrue(paths.isPrecedingPathTo(v));
+            Assertions.assertEquals(expected[v].min(BigInteger.valueOf(Integer.MAX_VALUE)).intValue(),
+                                    paths.nPathsTo(v));
+        }
+        Assertions.assertEquals(128, paths.distanceTo(192));
+    }
+
+    @Test
+    void testNPathsToDoesNotWrapBackToSmallPositiveCount() {
+        IAtomContainer mol = diamondChain(32, true);
+        BigInteger[] expected = countShortestPaths(GraphUtil.toAdjList(mol), 0);
+        ShortestPaths paths = new ShortestPaths(mol, mol.getAtom(0));
+
+        // The extra equal-length route would make an overflowing int wrap back to one.
+        Assertions.assertEquals(BigInteger.ONE.shiftLeft(32).add(BigInteger.ONE), expected[96]);
+        Assertions.assertEquals(Integer.MAX_VALUE, paths.nPathsTo(96));
+        Assertions.assertEquals(64, paths.distanceTo(96));
+    }
+
+    @Test
+    void testPathsToRejectsSaturatedCount() {
+        IAtomContainer mol = diamondChain(31, false);
+        ShortestPaths paths = new ShortestPaths(mol, mol.getAtom(0));
+
+        // Check the guard before requesting enumeration, including when testing the unfixed implementation.
+        Assertions.assertEquals(Integer.MAX_VALUE, paths.nPathsTo(93));
+        Assertions.assertThrows(IllegalStateException.class, () -> paths.pathsTo(93));
+        Assertions.assertThrows(IllegalStateException.class, () -> paths.pathsTo(mol.getAtom(93)));
+        Assertions.assertEquals(63, paths.pathTo(93).length);
+    }
+
+    // Each spirocyclobutane doubles the number of shortest routes between the chain ends.
+    private static IAtomContainer diamondChain(int diamonds, boolean extraRoute) {
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        for (int v = 0; v <= 3 * diamonds; v++)
+            mol.addAtom(new Atom("C"));
+        for (int i = 0; i < diamonds; i++) {
+            int v = 3 * i;
+            mol.addBond(v, v + 1, IBond.Order.SINGLE);
+            mol.addBond(v, v + 2, IBond.Order.SINGLE);
+            mol.addBond(v + 1, v + 3, IBond.Order.SINGLE);
+            mol.addBond(v + 2, v + 3, IBond.Order.SINGLE);
+        }
+        if (extraRoute) {
+            int previous = 0;
+            for (int step = 1; step < 2 * diamonds; step++) {
+                int next = mol.getAtomCount();
+                mol.addAtom(new Atom("C"));
+                mol.addBond(previous, next, IBond.Order.SINGLE);
+                previous = next;
+            }
+            mol.addBond(previous, 3 * diamonds, IBond.Order.SINGLE);
+        }
+        return mol;
+    }
+
+    // Independent unbounded counts; no shortest routes are enumerated.
+    private static BigInteger[] countShortestPaths(int[][] graph, int start) {
+        int[] distances = new int[graph.length];
+        Arrays.fill(distances, -1);
+        BigInteger[] counts = new BigInteger[graph.length];
+        Arrays.fill(counts, BigInteger.ZERO);
+        Deque<Integer> queue = new ArrayDeque<>();
+        distances[start] = 0;
+        counts[start] = BigInteger.ONE;
+        queue.add(start);
+        while (!queue.isEmpty()) {
+            int v = queue.remove();
+            for (int w : graph[v]) {
+                if (distances[w] < 0) {
+                    distances[w] = distances[v] + 1;
+                    queue.add(w);
+                }
+                if (distances[w] == distances[v] + 1)
+                    counts[w] = counts[w].add(counts[v]);
+            }
+        }
+        return counts;
+    }
 
     @Test
     void testConstructor_Container_Empty() {

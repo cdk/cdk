@@ -71,6 +71,16 @@ import java.util.Arrays;
  */
 public final class ShortestPaths {
 
+    /** Signals that a path count cannot be represented by an array size. */
+    static final class TooManyPathsException extends IllegalStateException {
+
+        private static final long serialVersionUID = 1L;
+
+        TooManyPathsException(String message) {
+            super(message);
+        }
+    }
+
     /* empty path when no valid path was found */
     private static final int[]   EMPTY_PATH  = new int[0];
 
@@ -210,7 +220,7 @@ public final class ShortestPaths {
                     queue[n++] = w;
                 } else if (distTo[w] == dist) {
                     routeTo[w] = new Branch(routeTo[w], new SequentialRoute(routeTo[v], w));
-                    nPathsTo[w] += nPathsTo[v];
+                    nPathsTo[w] = sum(nPathsTo[w], nPathsTo[v]);
                 }
             }
         }
@@ -251,7 +261,7 @@ public final class ShortestPaths {
                     if (precedes[v] && ordering[w] < ordering[start]) {
                         if (precedes[w]) {
                             routeTo[w] = new Branch(routeTo[w], new SequentialRoute(routeTo[v], w));
-                            nPathsTo[w] += nPathsTo[v];
+                            nPathsTo[w] = sum(nPathsTo[w], nPathsTo[v]);
                         } else {
                             // we now have a 'preceding' path to the start
                             precedes[w] = true;
@@ -263,6 +273,11 @@ public final class ShortestPaths {
             }
         }
 
+    }
+
+    /** The sum of two path counts, capped at {@link Integer#MAX_VALUE}. */
+    private static int sum(int a, int b) {
+        return (int) Math.min((long) a + b, Integer.MAX_VALUE);
     }
 
     /**
@@ -374,10 +389,13 @@ public final class ShortestPaths {
      *
      * @param end the end vertex
      * @return all shortest paths from the start to the end vertex
+     * @throws IllegalStateException the number of paths has reached {@link Integer#MAX_VALUE}
      */
     public int[][] pathsTo(int end) {
 
         if (end < 0 || end >= routeTo.length) return EMPTY_PATHS;
+        if (nPathsTo[end] == Integer.MAX_VALUE)
+            throw new TooManyPathsException("Too many shortest paths to enumerate");
 
         return routeTo[end] != null ? routeTo[end].toPaths(distTo[end] + 1) : EMPTY_PATHS;
     }
@@ -412,6 +430,7 @@ public final class ShortestPaths {
      *
      * @param end the end atom
      * @return all shortest paths from the start to the end vertex
+     * @throws IllegalStateException the number of paths has reached {@link Integer#MAX_VALUE}
      */
     public int[][] pathsTo(IAtom end) {
         return pathsTo(container.indexOf(end));
@@ -508,7 +527,8 @@ public final class ShortestPaths {
      *
      * @param end the <i>end</i> vertex to which the number of paths will be
      *            returned
-     * @return the number of paths to the end vertex
+     * @return the number of paths to the end vertex, capped at
+     *         {@link Integer#MAX_VALUE}
      */
     public int nPathsTo(int end) {
         return (end < 0 || end >= nPathsTo.length) ? 0 : nPathsTo[end];
@@ -532,7 +552,8 @@ public final class ShortestPaths {
      *
      * @param end the <i>end</i> vertex to which the number of paths will be
      *            returned
-     * @return the number of paths to the end vertex
+     * @return the number of paths to the end vertex, capped at
+     *         {@link Integer#MAX_VALUE}
      */
     public int nPathsTo(IAtom end) {
         return nPathsTo(container.indexOf(end));

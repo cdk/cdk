@@ -973,6 +973,15 @@ public final class Cycles {
          */
         abstract int[][] apply(int[][] graph, int length) throws Intractable;
 
+        /** Preserve the checked failure contract when path enumeration overflows. */
+        private int[][] applyChecked(int[][] graph, int length) throws Intractable {
+            try {
+                return apply(graph, length);
+            } catch (ShortestPaths.TooManyPathsException e) {
+                throw new Intractable(e.getMessage());
+            }
+        }
+
         /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule) throws Intractable {
@@ -1001,7 +1010,7 @@ public final class Cycles {
 
                 // make a subgraph and 'apply' the cycle computation - the walk
                 // (path) is then lifted to the original graph
-                for (int[] cycle : apply(GraphUtil.subgraph(graph, fused), length)) {
+                for (int[] cycle : applyChecked(GraphUtil.subgraph(graph, fused), length)) {
                     walks.add(lift(cycle, fused));
                 }
             }
@@ -1029,7 +1038,7 @@ public final class Cycles {
 
                 // make a subgraph and 'apply' the cycle computation - the walk
                 // (path) is then lifted to the original graph
-                for (int[] cycle : apply(GraphUtil.subgraph(graph, fused), length)) {
+                for (int[] cycle : applyChecked(GraphUtil.subgraph(graph, fused), length)) {
                     walks.add(lift(cycle, fused));
                 }
             }
@@ -1039,8 +1048,11 @@ public final class Cycles {
     }
 
     private static void numberOfCyclesCheck(RelevantCycles rc) throws Intractable {
-        if (rc.size() > MAX_RELEVANT_CYCLES)
-            throw new Intractable("Too many relevant cycles cycles! max=" + MAX_RELEVANT_CYCLES + " was=" + rc.size() + "." +
+        int size = rc.size();
+        if (size == Integer.MAX_VALUE)
+            throw new Intractable("Too many relevant cycles to enumerate (count >= " + Integer.MAX_VALUE + ").");
+        if (size > MAX_RELEVANT_CYCLES)
+            throw new Intractable("Too many relevant cycles cycles! max=" + MAX_RELEVANT_CYCLES + " was=" + size + "." +
                                   " Increase this limit with System property -D" + CDK_MAX_RELEVANT_CYCLES_KEY + "=<num>");
     }
 
