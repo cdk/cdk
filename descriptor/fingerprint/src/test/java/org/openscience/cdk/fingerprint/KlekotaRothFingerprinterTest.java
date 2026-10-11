@@ -47,7 +47,30 @@ class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
-    public void testGetCountFingerprint() throws Exception {}
+    public void testGetCountFingerprint() throws Exception {
+        KlekotaRothFingerprinter printer = new KlekotaRothFingerprinter();
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        int carbon = -1;
+        for (int i = 0; i < printer.getSize(); i++) {
+            if ("C".equals(printer.getSubstructure(i))) {
+                carbon = i;
+                break;
+            }
+        }
+        Assertions.assertTrue(carbon >= 0);
+        ICountFingerprint ethane = printer.getCountFingerprint(parser.parseSmiles("CC"));
+        ICountFingerprint methane = printer.getCountFingerprint(parser.parseSmiles("C"));
+        Assertions.assertEquals(2, ethane.getCount(carbon));
+
+        ethane.setBehaveAsBitFingerprint(true);
+        Assertions.assertEquals(1, ethane.getCount(carbon));
+        ethane.merge(methane);
+        Assertions.assertEquals(1, ethane.getCount(carbon));
+        ethane.setBehaveAsBitFingerprint(false);
+        Assertions.assertEquals(3, ethane.getCount(carbon));
+        Assertions.assertEquals(3, ethane.getCountForHash(carbon));
+        Assertions.assertEquals(4860, ethane.size());
+    }
 
     @Test
     void testFingerprint() throws Exception {
