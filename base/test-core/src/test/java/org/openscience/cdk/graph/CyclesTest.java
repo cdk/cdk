@@ -443,6 +443,27 @@ class CyclesTest {
     }
 
     @Test
+    void testSmallRing_atom_fusedDifferentSizes() throws InvalidSmilesException {
+        assertAtomRingSizes("C1C2CCC12", 3, 3, 4, 4, 3);
+        assertAtomRingSizes("C12CC1CC2", 3, 3, 3, 4, 4);
+    }
+
+    @Test
+    void testSmallRing_atom_spiroDifferentSizes() throws InvalidSmilesException {
+        assertAtomRingSizes("C1CC11CCC1", 3, 3, 3, 4, 4, 4);
+    }
+
+    private static void assertAtomRingSizes(String smi, int... expected) throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles(smi);
+        Cycles.markRingAtomsAndBonds(mol);
+        for (int i = 0; i < expected.length; i++) {
+            Assertions.assertEquals(expected[i], Cycles.smallRingSize(mol.getAtom(i)));
+            Assertions.assertEquals(expected[i], Cycles.smallRingSize(mol.getAtom(i), expected[i]));
+            Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(i), expected[i] - 1));
+        }
+    }
+
+    @Test
     void testSmallRing_bond_spiro() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("C1CCCC11CCC1");
         Cycles.markRingAtomsAndBonds(mol); // required

@@ -482,9 +482,12 @@ public final class Cycles {
         for (IBond bond : atom.bonds()) {
             if (!bond.isInRing())
                 continue;
-            if (prev != null)
-                smallest = Math.min(smallest,
-                                    smallRingSize(prev, visit, smallest));
+            if (prev != null) {
+                int size = smallRingSize(prev, visit, smallest);
+                // A bounded search returns zero when no ring is within the limit.
+                if (size > 0)
+                    smallest = Math.min(smallest, size);
+            }
             prev = bond;
         }
         return smallest <= max ? smallest : 0;
