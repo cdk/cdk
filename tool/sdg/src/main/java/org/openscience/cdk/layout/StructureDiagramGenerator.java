@@ -288,8 +288,6 @@ public class StructureDiagramGenerator {
 
         if (mol == null)
             throw new IllegalArgumentException("No molecule provided");
-        if (ref == null)
-            throw new IllegalArgumentException("No reference provided");
 
         Set<IAtom> afix = new HashSet<>();
 
