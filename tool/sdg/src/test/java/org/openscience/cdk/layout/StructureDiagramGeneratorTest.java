@@ -47,6 +47,7 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.Mol2Reader;
+import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -1378,6 +1379,37 @@ class StructureDiagramGeneratorTest {
         Assertions.assertEquals(4, rset.getAtomContainerCount());
         for (IAtomContainer ring : rset.atomContainers()) {
             assertConvex(AtomContainerManipulator.getAtomArray(ring));
+        }
+    }
+
+    @Test
+    void testAlignedCoordinatesWithoutReference() throws CDKException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        Pattern pattern = Pattern.findSubstructure(parser.parseSmiles("c1ccccc1"));
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        IAtomContainer first = parser.parseSmiles("CCc1ccccc1");
+        IAtomContainer second = parser.parseSmiles("OCc1ccccc1");
+
+        sdg.generateAlignedCoordinates(first, pattern);
+        sdg.generateAlignedCoordinates(second, pattern);
+
+        for (IAtomContainer mol : Arrays.asList(first, second)) {
+            for (IAtom atom : mol.atoms()) {
+                Point2d point = atom.getPoint2d();
+                Assertions.assertNotNull(point);
+                Assertions.assertTrue(Double.isFinite(point.x));
+                Assertions.assertTrue(Double.isFinite(point.y));
+            }
+        }
+
+        int[] firstMapping = pattern.match(first);
+        int[] secondMapping = pattern.match(second);
+        Assertions.assertEquals(6, firstMapping.length);
+        Assertions.assertEquals(6, secondMapping.length);
+        for (int i = 0; i < firstMapping.length; i++) {
+            Point2d firstPoint = first.getAtom(firstMapping[i]).getPoint2d();
+            Point2d secondPoint = second.getAtom(secondMapping[i]).getPoint2d();
+            Assertions.assertEquals(0, firstPoint.distance(secondPoint), 1e-6);
         }
     }
 
