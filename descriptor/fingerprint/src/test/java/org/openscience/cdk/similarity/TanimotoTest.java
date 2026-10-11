@@ -172,6 +172,43 @@ class TanimotoTest extends CDKTestCase {
     }
 
     @Test
+    void countFingerprintSimilarityIsSymmetric() throws CDKException {
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        Fingerprinter fingerprinter = new Fingerprinter();
+        ICountFingerprint ethanol = fingerprinter.getCountFingerprint(parser.parseSmiles("CCO"));
+        ICountFingerprint ethylamine = fingerprinter.getCountFingerprint(parser.parseSmiles("CCN"));
+
+        Assertions.assertEquals(1.0 / 3.0, Tanimoto.calculate(ethanol, ethylamine), 0.0001);
+        Assertions.assertEquals(1.0 / 3.0, Tanimoto.calculate(ethylamine, ethanol), 0.0001);
+    }
+
+    @Test
+    void method2IncludesRemainingCounts() {
+        Map<String, Integer> features1 = new HashMap<>();
+        features1.put("A", 3);
+        Map<String, Integer> features2 = new HashMap<>();
+        features2.put("A", 4);
+        features2.put("B", 2);
+        features2.put("C", 5);
+        ICountFingerprint fp1 = new IntArrayCountFingerprint(features1);
+        ICountFingerprint fp2 = new IntArrayCountFingerprint(features2);
+
+        Assertions.assertEquals(3.0 / 11.0, Tanimoto.method2(fp1, fp2), 0.0001);
+        Assertions.assertEquals(3.0 / 11.0, Tanimoto.method2(fp2, fp1), 0.0001);
+    }
+
+    @Test
+    void method2WithOneEmptyFingerprint() {
+        Map<String, Integer> features = new HashMap<>();
+        features.put("A", 3);
+        ICountFingerprint populated = new IntArrayCountFingerprint(features);
+        ICountFingerprint empty = new IntArrayCountFingerprint();
+
+        Assertions.assertEquals(0.0, Tanimoto.method2(empty, populated));
+        Assertions.assertEquals(0.0, Tanimoto.method2(populated, empty));
+    }
+
+    @Test
     void testCompareBitSetandBitFingerprintTanimoto() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.make123Triazole();
         IAtomContainer mol2 = TestMoleculeFactory.makeImidazole();
