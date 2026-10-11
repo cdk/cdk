@@ -452,32 +452,55 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
 
         final int length = keys.size();
         final int size = map.size();
-        final int[] hash = new int[size], count = new int[size];
+        final int[] hashes = new int[size], counts = new int[size];
         int n = 0;
         for (int h : map.keySet()) {
-            hash[n] = h;
-            count[n++] = map.get(h);
+            hashes[n] = h;
+            counts[n++] = map.get(h);
         }
 
         return new ICountFingerprint() {
+
+            private int[] hash = hashes;
+            private int[] count = counts;
+            private boolean behaveAsBitFingerprint;
 
             @Override
             public long size() { return length; }
 
             @Override
-            public int numOfPopulatedbins() { return size; }
+            public int numOfPopulatedbins() { return hash.length; }
 
             @Override
-            public int getCount(int index) { return count[index]; }
+            public int getCount(int index) {
+                return behaveAsBitFingerprint && count[index] != 0 ? 1 : count[index];
+            }
 
             @Override
             public int getHash(int index) { return hash[index]; }
 
             @Override
-            public void merge(ICountFingerprint fp) {}
+            public void merge(ICountFingerprint fp) {
+                Map<Integer, Integer> merged = new TreeMap<>(map);
+                for (int i = 0; i < fp.numOfPopulatedbins(); i++) {
+                    int h = fp.getHash(i);
+                    merged.put(h, merged.getOrDefault(h, 0) + fp.getCount(i));
+                }
+                map.clear();
+                map.putAll(merged);
+                hash = new int[map.size()];
+                count = new int[map.size()];
+                int n = 0;
+                for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                    hash[n] = entry.getKey();
+                    count[n++] = entry.getValue();
+                }
+            }
 
             @Override
-            public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {}
+            public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {
+                this.behaveAsBitFingerprint = behaveAsBitFingerprint;
+            }
 
             @Override
             public boolean hasHash(int hash) { return map.containsKey(hash); }
