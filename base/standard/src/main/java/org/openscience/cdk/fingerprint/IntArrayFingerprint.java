@@ -116,7 +116,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
         trueBits = new int[tmp.size()];
         i = 0;
         for (Integer t : tmp) {
-            trueBits[i] = t;
+            trueBits[i++] = t;
         }
         Arrays.sort(trueBits);
     }

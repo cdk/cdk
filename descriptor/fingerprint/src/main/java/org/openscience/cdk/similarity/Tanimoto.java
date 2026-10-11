@@ -253,7 +253,7 @@ public class Tanimoto {
             maxSum += fp1.getCount(i);
         }
         for (;j < fp2.numOfPopulatedbins(); j++) {
-            maxSum += fp2.getCount(i);
+            maxSum += fp2.getCount(j);
         }
         return ((double) minSum) / maxSum;
     }
