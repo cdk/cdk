@@ -547,4 +547,30 @@ class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         Assertions.assertNotEquals(abilify.getBondCount(), abilifyExplH.getBondCount());
     }
 
+    @Test
+    void massRangesDistinguishAlkanes() throws CDKException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer tridecane = parser.parseSmiles("CCCCCCCCCCCCC");
+        IAtomContainer tetradecane = parser.parseSmiles("CCCCCCCCCCCCCC");
+        IAtomContainer pentadecane = parser.parseSmiles("CCCCCCCCCCCCCCC");
+        ExtendedFingerprinter fp = new ExtendedFingerprinter();
+
+        // These chains have the same path bits, but only pentadecane exceeds 200 Da.
+        Assertions.assertEquals(fp.getBitFingerprint(tridecane), fp.getBitFingerprint(tetradecane));
+        Assertions.assertNotEquals(fp.getBitFingerprint(tetradecane), fp.getBitFingerprint(pentadecane));
+    }
+
+    @Test
+    void massRangesUseSpecifiedIsotopes() throws CDKException, CloneNotSupportedException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer natural = parser.parseSmiles("CCCCCCCCCCCCCC");
+        IAtomContainer labelled = natural.clone();
+        for (IAtom atom : labelled.atoms())
+            atom.setMassNumber(13);
+
+        // Carbon-13 labelling takes tetradecane from 198 Da to 212 Da.
+        ExtendedFingerprinter fp = new ExtendedFingerprinter();
+        Assertions.assertNotEquals(fp.getBitFingerprint(natural), fp.getBitFingerprint(labelled));
+    }
+
 }
