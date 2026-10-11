@@ -384,6 +384,9 @@ class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         BitSet bs1 = fingerprinter.getBitFingerprint(molsingle).asBitSet();
         BitSet bs2 = fingerprinter.getBitFingerprint(molcondensed).asBitSet();
 
+        // Compare the ring/path features independently of molecular mass.
+        bs1.clear(fingerprinter.getSize() - 25, fingerprinter.getSize() - 15);
+        bs2.clear(fingerprinter.getSize() - 25, fingerprinter.getSize() - 15);
         Assertions.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
         Assertions.assertTrue(FingerprinterTool.isSubset(bs2, bs1));
 
