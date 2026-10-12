@@ -220,11 +220,11 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         IAtomContainer mol3 = parser.parseSmiles("CC(N)CCC");
         IAtomContainer mol4 = parser.parseSmiles("CCCC");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol4);
+        AtomContainerManipulator.configure(mol0);
+        AtomContainerManipulator.configure(mol1);
+        AtomContainerManipulator.configure(mol2);
+        AtomContainerManipulator.configure(mol3);
+        AtomContainerManipulator.configure(mol4);
 
         Aromaticity.cdkLegacy().apply(mol0);
         Aromaticity.cdkLegacy().apply(mol1);
@@ -260,7 +260,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Test molecule 1
         mol = parser.parseSmiles("C([S](O)(=O)=O)C1=C(C=CC=C1)CCCC[N+](=O)[O-]");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         bs = printer.getBitFingerprint(mol).asBitSet();
@@ -281,7 +281,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Test molecule 2: Diatrizoic acid
         mol = parser.parseSmiles("CC(=O)NC1=C(C(=C(C(=C1I)C(=O)O)I)NC(=O)C)I");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         bs = printer.getBitFingerprint(mol).asBitSet();
 
@@ -308,7 +308,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Test molecule 1
         mol = parser.parseSmiles("C([S](O)(=O)=O)C1=C(C=CC=C1)CCCC[N+](=O)[O-]");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
@@ -328,7 +328,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Test molecule 2: Diatrizoic acid
         mol = parser.parseSmiles("CC(=O)NC1=C(C(=C(C(=C1I)C(=O)O)I)NC(=O)C)I");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
@@ -350,7 +350,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Aromatic 6-rings
         mol = parser.parseSmiles("C1=CC=CC(=C1)CCCC2=CC=CC=C2");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
@@ -362,7 +362,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Non-aromatic 6-rings
         mol = parser.parseSmiles("C1CC(CCC1)CCCCC2CCCCC2");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
@@ -374,7 +374,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Aromatic 6-ring, 3-ring and 4-ring
         mol = parser.parseSmiles("C1CC1C(CCC2CCC2)CC3=CC=CC=C3");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
@@ -388,7 +388,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Aromatic 6-ring, 3-ring and 4-ring
         mol = parser.parseSmiles("C1(CC1C(CCC2CCC2)CC3=CC=CC=C3)C(C(C(C4CC4)C5CC5)C6CC6)C7CC7");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
@@ -410,7 +410,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Aromatic 6-rings
         mol = parser.parseSmiles("C1=CC=CC(=C1)CCCC2=CC=CC=C2");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         bs = printer.getBitFingerprint(mol).asBitSet();
 
@@ -422,7 +422,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Non-aromatic 6-rings
         mol = parser.parseSmiles("C1CC(CCC1)CCCCC2CCCCC2");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         bs = printer.getBitFingerprint(mol).asBitSet();
 
@@ -434,7 +434,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Aromatic 6-ring, 3-ring and 4-ring
         mol = parser.parseSmiles("C1CC1C(CCC2CCC2)CC3=CC=CC=C3");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         bs = printer.getBitFingerprint(mol).asBitSet();
 
@@ -448,7 +448,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         // Aromatic 6-ring, 3-ring and 4-ring
         mol = parser.parseSmiles("C1(CC1C(CCC2CCC2)CC3=CC=CC=C3)C(C(C(C4CC4)C5CC5)C6CC6)C7CC7");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         bs = printer.getBitFingerprint(mol).asBitSet();
 

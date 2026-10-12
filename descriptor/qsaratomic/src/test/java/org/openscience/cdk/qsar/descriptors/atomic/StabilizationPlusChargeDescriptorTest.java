@@ -68,7 +68,7 @@ class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
         mol.addAtom(builder.newInstance(IAtom.class, "F"));
         mol.addBond(1, 2, Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -92,7 +92,7 @@ class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
         mol.addAtom(builder.newInstance(IAtom.class, "F"));
         mol.addBond(1, 2, Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -120,7 +120,7 @@ class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
         mol.addAtom(builder.newInstance(IAtom.class, "F"));
         mol.addBond(1, 2, Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
@@ -148,7 +148,7 @@ class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
         mol1.addBond(1, 2, Order.SINGLE);
         mol1.addAtom(builder.newInstance(IAtom.class, "O"));
         mol1.addBond(1, 3, Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.configure(mol1);
         addExplicitHydrogens(mol1);
         lpcheck.saturate(mol1);
 
@@ -161,7 +161,7 @@ class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
         mol2.addBond(0, 1, Order.SINGLE);
         mol2.addAtom(builder.newInstance(IAtom.class, "O"));
         mol2.addBond(1, 2, Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.configure(mol2);
         addExplicitHydrogens(mol2);
         lpcheck.saturate(mol2);
 
@@ -174,7 +174,7 @@ class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
         mol3.addBond(0, 1, Order.SINGLE);
         mol3.addAtom(builder.newInstance(IAtom.class, "C"));
         mol3.addBond(1, 2, Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
+        AtomContainerManipulator.configure(mol3);
         addExplicitHydrogens(mol3);
         lpcheck.saturate(mol3);
 
@@ -202,7 +202,7 @@ class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
         molA.addAtom(builder.newInstance(IAtom.class, "Cl"));
         molA.addBond(2, 3, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molA);
+        AtomContainerManipulator.configure(molA);
         addExplicitHydrogens(molA);
         lpcheck.saturate(molA);
 
@@ -221,7 +221,7 @@ class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
         molB.addLonePair(3);
         molB.addBond(2, 3, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molB);
+        AtomContainerManipulator.configure(molB);
         addExplicitHydrogens(molB);
         lpcheck.saturate(molB);
 

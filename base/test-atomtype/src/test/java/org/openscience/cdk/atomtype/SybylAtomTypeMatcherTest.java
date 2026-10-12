@@ -199,7 +199,7 @@ class SybylAtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
-        percieveAtomTypesAndConfigureAtoms(molecule);
+        configure(molecule);
         Iterator<IAtom> refAtoms = reference.atoms().iterator();
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
@@ -306,7 +306,7 @@ class SybylAtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
-        percieveAtomTypesAndConfigureAtoms(molecule);
+        configure(molecule);
         Iterator<IAtom> refAtoms = reference.atoms().iterator();
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
@@ -393,7 +393,7 @@ class SybylAtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtomContainer reference = m.clone();
 
         // test if the perceived atom types match that
-        percieveAtomTypesAndConfigureAtoms(m);
+        configure(m);
         Iterator<IAtom> refAtoms = reference.atoms().iterator();
         Iterator<IAtom> atoms = m.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
@@ -468,7 +468,7 @@ class SybylAtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtomContainer reference = m.clone();
 
         // test if the perceived atom types match that
-        percieveAtomTypesAndConfigureAtoms(m);
+        configure(m);
         Iterator<IAtom> refAtoms = reference.atoms().iterator();
         Iterator<IAtom> atoms = m.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
@@ -478,7 +478,7 @@ class SybylAtomTypeMatcherTest extends AbstractAtomTypeTest {
         }
     }
 
-    private void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws Exception {
+    private void configure(IAtomContainer container) throws Exception {
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(container.getBuilder());
         for (IAtom atom : container.atoms()) {
             atom.setAtomTypeName(null);

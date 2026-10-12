@@ -120,7 +120,7 @@ class MurckoFragmenterTest {
     @Test
     void testMF2() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         fragmenter.generateFragments(mol);
 
@@ -151,7 +151,7 @@ class MurckoFragmenterTest {
     @Test
     void testMF4() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("c1ccc(cc1)c2c(oc(n2)N(CCO)CCO)c3ccccc3");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         fragmenter.generateFragments(mol);
 
         List<String> frameworks = Arrays.asList(fragmenter.getFrameworks());
@@ -215,7 +215,7 @@ class MurckoFragmenterTest {
     @Test
     void testCarbinoxamine_Bug3088164() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("CN(C)CCOC(C1=CC=C(Cl)C=C1)C1=CC=CC=N1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
         fragmenter.generateFragments(mol);
@@ -243,7 +243,7 @@ class MurckoFragmenterTest {
 
         IAtomContainer mol = smilesParser.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
         AtomContainerManipulator.clearAtomConfigurations(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
         fragmenter.generateFragments(mol);
@@ -255,7 +255,7 @@ class MurckoFragmenterTest {
         Assertions.assertEquals(f.length, fc.length);
 
         AtomContainerManipulator.clearAtomConfigurations(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
@@ -275,7 +275,7 @@ class MurckoFragmenterTest {
         SmilesGenerator sg = SmilesGenerator.unique().aromatic();
 
         IAtomContainer mol = smilesParser.parseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
         fragmenter.generateFragments(mol);
@@ -297,7 +297,7 @@ class MurckoFragmenterTest {
     void testGetFragmentsAsContainers() throws Exception {
 
         IAtomContainer biphenyl = TestMoleculeFactory.makeBiphenyl();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl);
+        AtomContainerManipulator.configure(biphenyl);
         Aromaticity.cdkLegacy().apply(biphenyl);
 
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
@@ -320,7 +320,7 @@ class MurckoFragmenterTest {
     void testMacrocycle() throws Exception {
         IAtomContainer mol = smilesParser
                 .parseSmiles("C1=C(C=C(C(=C1O)O)O)C(=O)OC2=CC(=CC(=C2O)O)C(=O)OCC3C(C(C(C(O3)OC(=O)C4=CC(=C(C(=C4)OC(=O)C5=CC(=C(C(=C5)O)O)O)O)O)OC(=O)C6=CC(=C(C(=C6)OC(=O)C7=CC(=C(C(=C7)O)O)O)O)O)OC(=O)C8=CC(=C(C(=C8)OC(=O)C9=CC(=C(C(=C9)O)O)O)O)O)OC(=O)C1=CC(=C(C(=C1)OC(=O)C1=CC(=C(C(=C1)O)O)O)O)O");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
         fragmenter.generateFragments(mol);

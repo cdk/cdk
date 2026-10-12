@@ -96,11 +96,9 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
             return getDummyDescriptorValue(new CDKException("Could not add hydrogens: " + e.getMessage(), e));
         }
 
-        // do aromaticity detecttion for calculating polarizability later on
-        try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        } catch (CDKException e) {
-            return getDummyDescriptorValue(new CDKException("Could not percieve atom types: " + e.getMessage(), e));
+        // do aromaticity detection for calculating polarizability later on
+        if (!AtomContainerManipulator.configure(molecule)) {
+            return getDummyDescriptorValue(new CDKException("Could not perceive atom types"));
         }
         try {
             Aromaticity.cdkLegacy().apply(molecule);

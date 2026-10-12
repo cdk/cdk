@@ -20,6 +20,7 @@ package org.openscience.cdk.qsar.descriptors.bond;
 
 import org.openscience.cdk.charges.Electronegativity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.AbstractBondDescriptor;
@@ -134,8 +135,10 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
         try {
             ac = atomContainer.clone();
             bond = ac.getBond(atomContainer.indexOf(aBond));
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-        } catch (CDKException | CloneNotSupportedException e) {
+            if (!AtomContainerManipulator.configure(ac)) {
+                return getDummyDescriptorValue(new NoSuchAtomTypeException("Could not configure molecule"));
+            }
+        } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
 

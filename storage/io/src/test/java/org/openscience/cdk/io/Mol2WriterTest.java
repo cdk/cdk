@@ -135,7 +135,7 @@ class Mol2WriterTest extends ChemObjectIOTest {
         reader.close();
         List<IAtomContainer> molecules = ChemFileManipulator.getAllAtomContainers(fileContents);
         IAtomContainer mol = molecules.get(0);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         StringWriter writer = new StringWriter();

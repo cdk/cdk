@@ -70,7 +70,7 @@ class SugarRemovalUtilityTest {
         boolean sugarsWereRemoved = sugarRemovalUtil.removeCircularAndLinearSugars(molecule);
         if (sugarsWereRemoved) {
             //saturate open valences where sugars were situated if needed
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.configure(molecule);
             CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(molecule);
         }
     }
@@ -1644,7 +1644,7 @@ class SugarRemovalUtilityTest {
      */
     protected void saturate(IAtomContainer molecule) throws CDKException {
         if (!molecule.isEmpty()) {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.configure(molecule);
             CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(molecule);
         }
     }

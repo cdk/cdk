@@ -270,7 +270,7 @@ public class SMARTSQueryTool {
      * for (IAtomContainer molecule : molecules) {
      *
      *     // CDK Aromatic model needs atom types
-     *     AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+     *     AtomContainerManipulator.configure(molecule);
      *
      *     sqt.matches(molecule);
      * }

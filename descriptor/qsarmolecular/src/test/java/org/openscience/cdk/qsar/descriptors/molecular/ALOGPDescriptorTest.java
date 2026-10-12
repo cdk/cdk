@@ -60,7 +60,7 @@ class ALOGPDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(new Bond(c1, c2));
         mol.addBond(new Bond(c2, c3));
         mol.addBond(new Bond(c3, cl));
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
                 //TODO: doesn't the descriptor need explicit hydrogens?
                         .addImplicitHydrogens(mol);

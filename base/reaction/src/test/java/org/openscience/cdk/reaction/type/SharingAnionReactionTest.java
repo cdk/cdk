@@ -165,7 +165,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
         addExplicitHydrogens(molecule);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.reconfigure(molecule);
 
         lpcheck.saturate(molecule);
 
@@ -191,7 +191,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
         molecule2.addBond(0, 1, IBond.Order.DOUBLE);
 
         addExplicitHydrogens(molecule2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        AtomContainerManipulator.reconfigure(molecule2);
         lpcheck.saturate(molecule2);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
@@ -306,7 +306,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 
         try {
             addExplicitHydrogens(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
 
             lpcheck.saturate(molecule);
         } catch (Exception e) {
@@ -333,7 +333,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 
         try {
             addExplicitHydrogens(molecule);
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
 
             lpcheck.saturate(molecule);
         } catch (Exception e) {

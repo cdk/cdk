@@ -122,7 +122,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
         // do aromaticity detection
         if (this.checkAromaticity) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+                AtomContainerManipulator.configure(atomContainer);
                 Aromaticity.cdkLegacy().apply(atomContainer);
             } catch (CDKException exception) {
                 return getDummyDescriptorValue(exception);

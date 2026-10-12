@@ -161,7 +161,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
 
         if (checkAromaticity) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+                AtomContainerManipulator.configure(ac);
                 Aromaticity.cdkLegacy().apply(ac);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);

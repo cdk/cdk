@@ -82,7 +82,7 @@ abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularDescript
     @Test
     void descriptorDoesNotChangeFlags() throws CDKException {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Cycles.markRingAtomsAndBonds(mol);
         Number   mflags = mol.getFlagValue();
         Number[] aflags = getAtomFlags(mol);
@@ -215,8 +215,8 @@ abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularDescript
         methane2.addBond(0, 3, Order.SINGLE);
         methane2.addBond(0, 4, Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane2);
+        AtomContainerManipulator.configure(methane1);
+        AtomContainerManipulator.configure(methane2);
         addImplicitHydrogens(methane1);
         addImplicitHydrogens(methane2);
 
@@ -270,8 +270,8 @@ abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularDescript
         ethane2.addBond(1, 6, Order.SINGLE);
         ethane2.addBond(1, 7, Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ethane1);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ethane2);
+        AtomContainerManipulator.configure(ethane1);
+        AtomContainerManipulator.configure(ethane2);
         addImplicitHydrogens(ethane1);
         addImplicitHydrogens(ethane2);
 
@@ -359,7 +359,7 @@ abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularDescript
         sodium.setFormalCharge(+1);
         disconnected.addAtom(sodium);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(disconnected);
+        AtomContainerManipulator.configure(disconnected);
         addImplicitHydrogens(disconnected);
 
         IDescriptorResult v1 = descriptor.calculate(disconnected).getValue();
@@ -407,7 +407,7 @@ abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularDescript
         mol.addAtom(h2);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(0, 2, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addImplicitHydrogens(mol);
         return mol;
     }

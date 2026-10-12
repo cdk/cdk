@@ -111,7 +111,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "H"));
         molecule.addBond(3, 5, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -163,7 +163,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -210,7 +210,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(new Atom("Cl"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -253,7 +253,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(new Atom("Br"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -300,7 +300,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(new Atom("I"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -334,7 +334,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "Br"));
         molecule.addBond(2, 3, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -380,7 +380,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
 
         for (int i = 0; i < 6; i++) {
@@ -414,7 +414,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addBond(3, 4, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -451,7 +451,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
         molecule.addBond(2, 3, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -494,7 +494,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "S"));
         molecule.addBond(2, 3, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -659,7 +659,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "H"));
         molecule.addBond(1, 3, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -718,7 +718,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "H"));
         molecule.addBond(3, 5, IBond.Order.SINGLE);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        AtomContainerManipulator.configure(molecule);
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
@@ -783,7 +783,7 @@ class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         double[] testResult = {0.0835, 0.0265, -0.2622, 0.0265, 0.0835, -0.0444, 0.064, -0.0596, 0.0626, -0.0444, 0.064};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Integer[] object = {6};
         descriptor.setParameters(object);

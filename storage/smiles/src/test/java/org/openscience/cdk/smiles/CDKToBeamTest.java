@@ -651,7 +651,7 @@ class CDKToBeamTest {
     }
 
     static Graph convert(IAtomContainer ac, boolean perceiveAromaticity, int options) throws Exception {
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        AtomContainerManipulator.configure(ac);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(ac);
         if (perceiveAromaticity) Aromaticity.cdkLegacy().apply(ac);
         return new CDKToBeam(options).toBeamGraph(ac);

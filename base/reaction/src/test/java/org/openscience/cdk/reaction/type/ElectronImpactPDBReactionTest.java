@@ -112,7 +112,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(reactant);
 
         /* initiate */
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+        AtomContainerManipulator.reconfigure(reactant);
         makeSureAtomTypesAreRecognized(reactant);
 
         IReactionProcess type = new ElectronImpactPDBReaction();
@@ -162,7 +162,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(reactant);
 
         /* initiate */
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+        AtomContainerManipulator.reconfigure(reactant);
         makeSureAtomTypesAreRecognized(reactant);
 
         IReactionProcess type = new ElectronImpactPDBReaction();
@@ -210,7 +210,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(reactant);
 
         /* initiate */
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+        AtomContainerManipulator.reconfigure(reactant);
         makeSureAtomTypesAreRecognized(reactant);
 
         IReactionProcess type = new ElectronImpactPDBReaction();
@@ -356,7 +356,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         molecule.addBond(2, 8, IBond.Order.SINGLE);
 
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             lpcheck.saturate(molecule);
         } catch (CDKException e) {
             LoggingToolFactory.createLoggingTool(getClass())

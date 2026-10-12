@@ -310,7 +310,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
 
         // add H's in case they're not present
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.configure(molecule);
             CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
             hAdder.addImplicitHydrogens(molecule);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
@@ -320,10 +320,8 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
 
         // do aromaticity detecttion for calculating polarizability later on
         if (this.checkAromaticity) {
-            try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-            } catch (CDKException e) {
-                return getDummyDescriptorValue(new CDKException("Error in atom typing: " + e.getMessage(), e));
+            if (!AtomContainerManipulator.configure(molecule)) {
+                return getDummyDescriptorValue(new CDKException("Error in atom typing"));
             }
             try {
                 Aromaticity.cdkLegacy().apply(molecule);

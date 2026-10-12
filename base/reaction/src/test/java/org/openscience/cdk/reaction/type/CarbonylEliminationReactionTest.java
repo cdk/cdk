@@ -223,7 +223,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         molecule.addBond(4, 5, IBond.Order.TRIPLE);
 
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
 
             lpcheck.saturate(molecule);
             makeSureAtomTypesAreRecognized(molecule);

@@ -224,7 +224,7 @@ class DaylightModelTest {
     }
 
     static IAtomContainer addHydrogens(IAtomContainer container) throws CDKException {
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        AtomContainerManipulator.configure(container);
         CDKHydrogenAdder.getInstance(container.getBuilder()).addImplicitHydrogens(container);
         return container;
     }
@@ -235,7 +235,7 @@ class DaylightModelTest {
 
     /** Check the electron contribution is the same as expected. */
     static void test(IAtomContainer m, int... expected) throws CDKException {
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
+        AtomContainerManipulator.configure(m);
         Cycles.markRingAtomsAndBonds(m);
         assertThat(model.contribution(m), is(expected));
     }

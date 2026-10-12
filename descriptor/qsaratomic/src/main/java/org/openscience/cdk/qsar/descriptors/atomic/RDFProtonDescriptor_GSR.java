@@ -196,7 +196,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         }
         if (checkAromaticity) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
+                AtomContainerManipulator.configure(varAtomContainer);
                 Aromaticity.cdkLegacy().apply(varAtomContainer);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);

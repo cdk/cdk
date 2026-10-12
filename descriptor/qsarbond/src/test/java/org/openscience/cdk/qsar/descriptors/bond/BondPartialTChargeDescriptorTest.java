@@ -64,7 +64,7 @@ class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CF");
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
 
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -113,7 +113,7 @@ class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CCBr");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.saturate(mol);
@@ -138,7 +138,7 @@ class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
         double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         Assertions.assertEquals(testResult, result, 0.001);
@@ -180,7 +180,7 @@ class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CCS");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.configure(mol);
         addExplicitHydrogens(mol);
 
         for (int i = 0; i < 9; i++) {

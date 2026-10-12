@@ -235,7 +235,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
         // check aromaticity if the descriptor parameter is set to true
         if (checkAromaticity) {
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+                AtomContainerManipulator.configure(ac);
                 Aromaticity.cdkLegacy().apply(ac);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);

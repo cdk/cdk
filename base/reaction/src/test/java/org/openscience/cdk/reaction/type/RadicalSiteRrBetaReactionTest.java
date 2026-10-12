@@ -145,7 +145,7 @@ public class RadicalSiteRrBetaReactionTest extends ReactionProcessTest {
         molecule.addSingleElectron(new SingleElectron(molecule.getAtom(4)));
 
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (CDKException e) {
             LoggingToolFactory.createLoggingTool(getClass())
@@ -190,7 +190,7 @@ public class RadicalSiteRrBetaReactionTest extends ReactionProcessTest {
         molecule.addSingleElectron(new SingleElectron(molecule.getAtom(0)));
 
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.reconfigure(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (CDKException e) {
             LoggingToolFactory.createLoggingTool(getClass())
