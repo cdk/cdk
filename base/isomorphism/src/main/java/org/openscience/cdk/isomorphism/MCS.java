@@ -149,17 +149,21 @@ public final class MCS {
 
     /** The most atom pairs a search takes, query atoms times target atoms, as a pair is packed in an int. */
     private static final long MAX_PAIRS = 1L << 30;
+    /** The most mappings {@link #matchAll(IAtomContainer)} returns. */
     private static final int MAX_MAPPINGS = 1000;
 
+    /** The query molecule, which is only read. */
     private final IAtomContainer query;
     /** The expression types for {@link QueryAtomContainer#create}, or null for the default matching. */
     private final Expr.Type[] matching;
     /** The time limit in nanoseconds, or -1 for none. */
     private final long timeLimit;
+    /** Whether rings are mapped only whole, and whether stereochemistry is checked. */
     private final boolean completeRings, checkStereo;
     /** The fewest common bonds of a fragment of a disconnected MCS, or 0 for the connected MCS. */
     private final int minBonds;
 
+    /** Holds the options as given; {@link #find} and the {@code with...} methods check them first. */
     private MCS(IAtomContainer query, Expr.Type[] matching, long timeLimit, boolean completeRings,
                 boolean checkStereo, int minBonds) {
         this.query = query;
@@ -350,7 +354,13 @@ public final class MCS {
         return Collections.unmodifiableList(search(target, limit));
     }
 
-    /** The mappings of a search, at most {@code maxMappings}, from the query to the target atoms. */
+    /**
+     * The mappings of a search, at most {@code maxMappings}, from the query to
+     * the target atoms. Under the default matching the smaller molecule is
+     * searched as the query, as that is faster, and the mappings are turned
+     * round afterwards. The time limit and interrupts are checked by the
+     * clock as the search runs, and end it with {@link Intractable}.
+     */
     private List<int[]> search(IAtomContainer target, int maxMappings) throws Intractable {
         Objects.requireNonNull(target, "target");
         if ((long) query.getAtomCount() * target.getAtomCount() > MAX_PAIRS) {

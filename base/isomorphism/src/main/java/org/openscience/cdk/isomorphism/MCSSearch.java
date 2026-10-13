@@ -25,19 +25,30 @@ import java.util.List;
 import java.util.stream.LongStream;
 
 /**
- * The search behind {@link MCS}, on the int graphs of an {@link MCSGraph}.
- * It finds the connected mappings from the query to the target with the most
- * atoms and then the most common bonds. For a maximum common edge subgraph
- * (MCES), whose common bonds may form several fragments, it finds the most
- * common bonds and then the most atoms. When a connected query fits whole in
- * the target, its embeddings are the answer.
- * Otherwise a depth-first branch and bound grows the mappings pair by pair,
- * starting from the score of a greedy seed. After the first pair of a
- * fragment, each pair maps a query atom next to the fragment onto a free
- * neighbour of the image of one of its mapped neighbours, so the targets are
- * read from the neighbour lists, as {@link DfPattern} does. The search
- * follows SMSD {@cdk.cite SMSD2009}, and its label bound is that of SMSD Pro
- * {@cdk.cite SMSDPro2026}.
+ * The search behind {@link MCS}, on the int graphs of an {@link MCSGraph}. It
+ * finds the connected mappings from the query to the target with the most
+ * atoms and then the most common bonds or, for a maximum common edge subgraph
+ * (MCES) whose common bonds may form several fragments, the most common bonds
+ * and then the most atoms. When the whole query embeds in the target, the
+ * embeddings are the answer ({@link Embedding}). Otherwise the query atoms are
+ * ranked, fewest candidates first, greedy seeds give a score to beat, and a
+ * depth-first branch and bound tries each query atom as a root, highest rank
+ * first, and grows the mapping pair by pair on an explicit stack of
+ * {@link Level}s, one for each mapped pair. After the first pair of a fragment,
+ * each pair maps a query atom next to the fragment onto a free neighbour of the
+ * image of one of its mapped neighbours, read from the neighbour lists as
+ * {@link DfPattern} does. A level holds its pair, what taking it off restores,
+ * the candidates and targets it has left to try, and a bound: from the pairs
+ * its fragment reaches ({@link Reach}), in MCES from the bond labels of the open
+ * atoms ({@link EdgeBound}) and, for large molecules, from the branches at chain
+ * atoms ({@link BridgeBound}). A level that cannot beat the best score, or tie
+ * with it while fewer mappings than wanted are held, is taken off, and the pair
+ * it tried is excluded below its later siblings, so each mapping is found once.
+ * A mapping that beats the best score replaces the mappings held, and one that
+ * ties is added. Every loop ticks the {@link MCSGraph.Clock}, which throws
+ * {@link MCSGraph.Stop} when the time limit is reached or the thread is
+ * interrupted. The search follows SMSD {@cdk.cite SMSD2009}, and its label
+ * bound is that of SMSD Pro {@cdk.cite SMSDPro2026}.
  *
  * @author Syed Asad Rahman
  */
@@ -53,11 +64,16 @@ final class MCSSearch {
     private static final int BRIDGE_BOUND_ATOMS = 64;
     /** The further pairs the connected bound reaches at a time. */
     private static final int REACH_BATCH = 64;
+    /** The first capacity of a list of pairs that grows as needed. */
     private static final int INITIAL_PAIRS = 64;
+    /** An empty list of atoms, shared by every level that has nothing to try. */
     private static final int[] NONE = new int[0];
 
+    /** The graphs of both molecules, with their compatible pairs, bond classes and configurations. */
     private final MCSGraph graph;
+    /** The query and target graphs of {@link #graph}. */
     private final MCSGraph.Side query, target;
+    /** Counts the work of every loop and ends the search with {@link MCSGraph.Stop} when told to. */
     private final MCSGraph.Clock clock;
     /** In MCES, the fewest common bonds of a fragment; 0 for the connected MCS. */
     private final int minBonds;
@@ -72,11 +88,13 @@ final class MCSSearch {
     private final int[] queryToTarget, targetToQuery;
     /** The mapped pairs in the order they were mapped, the first {@link #depth} of the array. */
     private final Level[] levels;
+    /** The number of mapped pairs, and the common bonds between them. */
     private int depth, commonBonds;
-    /** The pairs excluded so far, put back as the levels that tried them are taken off. */
+    /** The pairs excluded so far, the first {@link #excludedCount}, put back as the levels that tried them go. */
     private int[] excluded = new int[INITIAL_PAIRS];
+    /** The number of excluded pairs. */
     private int excludedCount;
-    /** The atoms by rank, lowest first, and the rank of each atom. */
+    /** The atoms by rank, lowest first, and the rank of each atom, see {@link #rank}. */
     private int[] queryOrder, queryRank, targetOrder, targetRank;
     /** The cell of each atom: atoms that look alike share a cell. */
     private int[] queryCell, targetCell;
@@ -86,22 +104,28 @@ final class MCSSearch {
     private int[] queryTwin, targetTwin;
     /** The best score so far, see {@link #score}, and a score that no mapping beats. */
     private long bestScore, upperBound;
-    /** The mappings with the best score so far, and the most wanted. */
+    /** The mappings with the best score so far, see {@link #record}. */
     private List<int[]> mappings;
+    /** The most mappings wanted. */
     private int maxMappings;
     /** The seed, held at the front of the mappings from the start until the search finds it again. */
     private int[] heldSeed;
-    /** The pairs reached from a state, for its bound, and in MCES the bound itself. */
+    /** The pairs reached from a state, for its bound. */
     private final Reach reach;
+    /** The bound in MCES, or null in connected mode. */
     private final EdgeBound edgeBound;
     /**
      * The bound from the branches at chain atoms, see {@link BridgeBound}, or
-     * null. {@link #run} builds it only when the whole query does not embed,
-     * as building it can take far longer than finding an embedding.
+     * null. It is built only when the whole query does not embed, as building
+     * it can take far longer than finding an embedding.
      */
     private BridgeBound bridgeBound;
 
-    /** With {@code minBonds} above 0 the search finds an MCES whose fragments have that many common bonds or more. */
+    /**
+     * A search of {@code graph}, whose compatible pairs are worked out here.
+     * With {@code minBonds} above 0 the search finds an MCES whose fragments
+     * have that many common bonds or more.
+     */
     MCSSearch(MCSGraph graph, MCSGraph.Clock clock, int minBonds) {
         this.graph = graph;
         this.clock = clock;
@@ -122,20 +146,18 @@ final class MCSSearch {
     }
 
     /**
-     * The maximum mappings, at most {@code maxMappings}. In MCES the best score
-     * is found first, level by level of common bonds down from the upper bound.
-     * Twins can then be skipped all along, see {@link #twinExcluded}. A second
-     * search then collects the mappings of that score in the order a search
-     * from the seed finds them.
+     * The maximum mappings, at most {@code maxMappings}. There is none when no
+     * pair is compatible or, in MCES, when either molecule has fewer bonds
+     * than a fragment needs. When the whole query embeds, the embeddings are
+     * the result; that search checks the time limit and stereochemistry as it
+     * goes, and complete rings on each embedding. Otherwise the atoms are
+     * ranked, a greedy seed gives the score to start from, and the branch and
+     * bound collects the mappings.
      */
     List<int[]> run(int maxMappings) {
         clock.poll();
-        // In MCES a fragment needs minBonds common bonds.
         if (!anyCompatible() || Math.min(query.bondCount, target.bondCount) < minBonds)
             return new ArrayList<>();
-        // When the whole query embeds, those embeddings are the result. This search
-        // checks the time limit and stereochemistry as it goes, and complete rings
-        // on each embedding.
         Embedding embedding = embedding();
         List<int[]> embeddings = embedding != null ? embedding.all(maxMappings) : new ArrayList<>();
         if (!embeddings.isEmpty())
@@ -147,17 +169,39 @@ final class MCSSearch {
         if (seed != null && query.rings != null && !complete(seed, false))
             seed = null;
         long start = seed != null ? score(seed) : belowEveryMapping();
-        if (minBonds == 0) {
-            if (start < bound && Math.min(queryCount, targetCount) >= BRIDGE_BOUND_ATOMS)
-                bridgeBound = BridgeBound.create(graph, clock);
-            if (bridgeBound != null)
-                bound = Math.min(bound, bridgeBound.upperBound);
-            return collect(seed, start, bound, maxMappings);
-        }
+        return minBonds == 0 ? collectConnected(seed, start, bound, maxMappings)
+                             : collectDisconnected(seed, start, bound, maxMappings);
+    }
+
+    /**
+     * The connected mappings, at most {@code maxMappings}, from the score
+     * {@code start} that the {@code seed} holds. The bridge bound is built
+     * only when both molecules are large and the seed does not reach the
+     * {@code bound}, as it costs more than a search that ends at once.
+     */
+    private List<int[]> collectConnected(int[] seed, long start, long bound, int maxMappings) {
+        if (start < bound && Math.min(queryCount, targetCount) >= BRIDGE_BOUND_ATOMS)
+            bridgeBound = BridgeBound.create(graph, clock);
+        if (bridgeBound != null)
+            bound = Math.min(bound, bridgeBound.upperBound);
+        return collect(seed, start, bound, maxMappings);
+    }
+
+    /**
+     * The MCES mappings, at most {@code maxMappings}. The best score is found
+     * first, level by level of common bonds down from the {@code bound} to the
+     * score {@code start} that the {@code seed} holds: each level asks for one
+     * mapping with at least that many bonds, and without one the bound comes
+     * down. Twins can then be skipped all along, see {@link #twinExcluded}. A
+     * second search collects the mappings of that score in the order a search
+     * from the seed finds them.
+     */
+    private List<int[]> collectDisconnected(int[] seed, long start, long bound, int maxMappings) {
         List<int[]> mapping = new ArrayList<>();
         for (int triedBonds = bonds(bound); mapping.isEmpty() && triedBonds > bonds(start); triedBonds--) {
             mapping = collect(null, score(0, triedBonds) - 1, bound, 1);
-            // No mapping has that many common bonds, so the bound comes down by one.
+            // No mapping has that many bonds. With one bond fewer there are at most as many atoms, or one more for
+            // each fragment of minBonds bonds.
             if (mapping.isEmpty())
                 bound = score(Math.min(atoms(bound), triedBonds - 1 + (triedBonds - 1) / minBonds), triedBonds - 1);
         }
@@ -199,6 +243,7 @@ final class MCSSearch {
         return minBonds > 0 ? score(queryCount + 1, minBonds - 1) : 0;
     }
 
+    /** Whether any pair of atoms is compatible. */
     private boolean anyCompatible() {
         for (long word : allowed) {
             if (word != 0)
@@ -209,7 +254,11 @@ final class MCSSearch {
 
     /**
      * Ranks the atoms and works out their signatures. Query atoms with the
-     * fewest candidates, then the most bonds, rank highest.
+     * fewest candidates, then the most bonds, rank highest; ties are broken by
+     * colour refinement, so that the order is the same for the same graph.
+     * The search tries the roots from the highest rank down, and below a root
+     * maps only atoms of lower rank. Target atoms are ranked by their cell
+     * only, in input order within it.
      */
     void rank() {
         querySignature = query.signatures(clock);
@@ -348,9 +397,11 @@ final class MCSSearch {
     }
 
     /**
-     * Grows a seed from the root pair, each time by the frontier pair most
-     * alike, then with the most common bonds. The seed is left mapped, with its
-     * query atoms in {@code mapped} in order. The result is its score.
+     * Grows a seed from the root pair, each time by the best frontier pair, see
+     * {@link #bestSeedPair}. The frontier is the free query atoms next to the
+     * seed, each listed once by marking it with {@code round} in {@code added}.
+     * The seed is left mapped, with its query atoms in {@code mapped} in order.
+     * The result is its score.
      */
     private long growSeed(int root, int[] frontier, int[] mapped, int[] added, int round) {
         int count = 0, frontierSize = 0, seedBonds = 0;
@@ -366,47 +417,63 @@ final class MCSSearch {
                     frontier[frontierSize++] = queryNeighbour;
                 }
             }
-            int likest = -1, links = 0;
-            pair = -1;
+            long best = -1;
             for (int frontierIndex = 0; frontierIndex < frontierSize; ) {
                 int frontierAtom = frontier[frontierIndex];
+                // The atom just mapped leaves the frontier.
                 if (queryToTarget[frontierAtom] >= 0) {
                     frontier[frontierIndex] = frontier[--frontierSize];
                     continue;
                 }
                 frontierIndex++;
-                for (int queryPlace = query.start[frontierAtom]; queryPlace < query.start[frontierAtom + 1];
-                     queryPlace++) {
-                    int neighbourImage = queryToTarget[query.neighbour[queryPlace]];
-                    // Next to a hub, the first few free targets are as good for a seed as all of them.
-                    for (int targetPlace = neighbourImage < 0 ? 0 : target.start[neighbourImage], freeCount = 0;
-                         neighbourImage >= 0 && targetPlace < target.start[neighbourImage + 1]
-                         && freeCount < HUB_TARGETS; targetPlace++) {
-                        int candidateTarget = target.neighbour[targetPlace];
-                        clock.tick();
-                        if (targetToQuery[candidateTarget] >= 0 || !has(allowed, frontierAtom, candidateTarget)
-                            || !graph.bondsMatch(query.neighbourBond[queryPlace], target.neighbourBond[targetPlace]))
-                            continue;
-                        freeCount++;
-                        int level = likeness(frontierAtom, candidateTarget);
-                        if (level < likest)
-                            continue;
-                        int newBonds = common(frontierAtom, candidateTarget);
-                        // Ties go to the higher ranked query atom, then to the lower ranked target atom.
-                        if (level > likest || newBonds > links
-                            || newBonds == links && (queryRank[frontierAtom] > queryRank[queryAtom(pair)]
-                                || frontierAtom == queryAtom(pair)
-                                   && targetRank[candidateTarget] < targetRank[targetAtom(pair)])) {
-                            pair = pair(frontierAtom, candidateTarget);
-                            likest = level;
-                            links = newBonds;
-                        }
-                    }
-                }
+                best = bestSeedPair(frontierAtom, best);
             }
-            seedBonds += links;
+            pair = best < 0 ? -1 : (int) best;
+            seedBonds += best < 0 ? 0 : (int) (best >>> 32);
         }
         return score(count, seedBonds);
+    }
+
+    /**
+     * The best pair of {@code frontierAtom} with a free target next to the
+     * image of one of its mapped neighbours, through a compatible bond, unless
+     * the pair {@code held} beats it: the most alike pair, then the one with
+     * the most common bonds. Ties go to the higher ranked query atom, then to
+     * the lower ranked target atom. The pair is returned in the low int, with
+     * its common bonds in the high int, or -1 if there is none; {@code held}
+     * is read the same way. Next to a hub, the first few free targets are as
+     * good for a seed as all of them.
+     */
+    private long bestSeedPair(int frontierAtom, long held) {
+        int pair = held < 0 ? -1 : (int) held, links = held < 0 ? 0 : (int) (held >>> 32);
+        int likest = pair < 0 ? -1 : likeness(queryAtom(pair), targetAtom(pair));
+        for (int queryPlace = query.start[frontierAtom]; queryPlace < query.start[frontierAtom + 1]; queryPlace++) {
+            int neighbourImage = queryToTarget[query.neighbour[queryPlace]];
+            if (neighbourImage < 0)
+                continue;
+            for (int targetPlace = target.start[neighbourImage], freeCount = 0;
+                 targetPlace < target.start[neighbourImage + 1] && freeCount < HUB_TARGETS; targetPlace++) {
+                int candidateTarget = target.neighbour[targetPlace];
+                clock.tick();
+                if (targetToQuery[candidateTarget] >= 0 || !has(allowed, frontierAtom, candidateTarget)
+                    || !graph.bondsMatch(query.neighbourBond[queryPlace], target.neighbourBond[targetPlace]))
+                    continue;
+                freeCount++;
+                int level = likeness(frontierAtom, candidateTarget);
+                if (level < likest)
+                    continue;
+                int newBonds = common(frontierAtom, candidateTarget);
+                if (level > likest || newBonds > links
+                    || newBonds == links && (queryRank[frontierAtom] > queryRank[queryAtom(pair)]
+                        || frontierAtom == queryAtom(pair)
+                           && targetRank[candidateTarget] < targetRank[targetAtom(pair)])) {
+                    pair = pair(frontierAtom, candidateTarget);
+                    likest = level;
+                    links = newBonds;
+                }
+            }
+        }
+        return pair < 0 ? -1 : (long) links << 32 | pair;
     }
 
     /** The number of radii, from 0, at which {@code queryAtom} and {@code targetAtom} look alike. */
@@ -488,11 +555,11 @@ final class MCSSearch {
     }
 
     /**
-     * Maps {@code queryAtom} onto {@code targetAtom} as a new level of the fragment that starts
-     * at level {@code fragmentStart}. The level has the bound of the state it
-     * extends, or the bridge bound of the pair if that is lower, until it has
-     * its own. False, with the pair left unmapped, if the bound prunes it or
-     * it breaks a configuration.
+     * Maps {@code queryAtom} onto {@code targetAtom} as a new level of the
+     * fragment that starts at level {@code fragmentStart}. The level has the
+     * bound of the state it extends, or the bridge bound of the pair if that
+     * is lower, until it has its own. False, with the pair left unmapped, if
+     * the bound prunes it or it breaks a configuration.
      */
     private boolean push(int queryAtom, int targetAtom, int fragmentStart, long bound) {
         if (bridgeBound != null) {
@@ -500,6 +567,26 @@ final class MCSSearch {
             if (!canImprove(bound))
                 return false;
         }
+        Level level = map(queryAtom, targetAtom, fragmentStart, bound);
+        // A mapping that breaks a configuration still breaks it with any pair added. The pair is rejected at once.
+        if (!graph.stereoConsistent(queryToTarget, clock)) {
+            takeOff();
+            return false;
+        }
+        record(fragmentStart);
+        return isLeaf() || branch(level, fragmentStart, bound);
+    }
+
+    /**
+     * Maps {@code queryAtom} onto {@code targetAtom} as the level at
+     * {@link #depth}, of the fragment that starts at level {@code fragmentStart}
+     * and with {@code bound} until the level has its own. The level records
+     * what taking the pair off restores, the common bonds and the excluded
+     * pairs before it, and for the bound the query and target bonds with no
+     * end mapped once it is. It has nothing to try until {@link #branch} gives
+     * it candidates.
+     */
+    private Level map(int queryAtom, int targetAtom, int fragmentStart, long bound) {
         if (levels[depth] == null)
             levels[depth] = new Level();
         Level level = levels[depth];
@@ -507,7 +594,6 @@ final class MCSSearch {
         level.targetAtom = targetAtom;
         level.commonBondsBefore = commonBonds;
         level.excludedBefore = excludedCount;
-        int addedBonds = common(queryAtom, targetAtom);
         level.freeQueryBonds = depth > 0 ? levels[depth - 1].freeQueryBonds : query.bondCount;
         level.freeTargetBonds = depth > 0 ? levels[depth - 1].freeTargetBonds : target.bondCount;
         for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
@@ -522,21 +608,33 @@ final class MCSSearch {
         level.bound = bound;
         level.candidates = level.targets = NONE;
         level.nextCandidate = level.nextTarget = level.rootRank = 0;
+        commonBonds += common(queryAtom, targetAtom);
         queryToTarget[queryAtom] = targetAtom;
         targetToQuery[targetAtom] = queryAtom;
         depth++;
-        commonBonds += addedBonds;
-        // A mapping that breaks a configuration still breaks it with any pair added. The pair is rejected at once.
-        if (!graph.stereoConsistent(queryToTarget, clock)) {
-            takeOff();
-            return false;
-        }
-        record(fragmentStart);
-        // A leaf has nothing left to try. Every query atom up to the rank of the root is mapped, or every target
-        // atom is, or the mapping has the atoms of the upper bound, in MCES its common bonds.
-        if (done() || depth == queryRank[levels[0].queryAtom] + 1 || depth == targetCount
-            || (minBonds > 0 ? commonBonds == bonds(upperBound) : depth == atoms(upperBound)))
-            return true;
+        return level;
+    }
+
+    /**
+     * Whether the mapping is a leaf, with nothing left to try: the search
+     * holds what it wants, every query atom up to the rank of the root is
+     * mapped, or every target atom is, or the mapping has the atoms of the
+     * upper bound, in MCES its common bonds.
+     */
+    private boolean isLeaf() {
+        return done() || depth == queryRank[levels[0].queryAtom] + 1 || depth == targetCount
+               || (minBonds > 0 ? commonBonds == bonds(upperBound) : depth == atoms(upperBound));
+    }
+
+    /**
+     * Gives the top {@code level}, whose fragment starts at level
+     * {@code fragmentStart} and whose bound is {@code bound} so far, its own
+     * bound and the candidates whose targets it tries. In MCES a fragment with
+     * enough bonds also offers the roots of new fragments once its candidates
+     * are done; these rank below its own root. False, with the pair taken off,
+     * if the bound prunes the level.
+     */
+    private boolean branch(Level level, int fragmentStart, long bound) {
         level.bound = bound(fragmentStart, bound);
         if (level.bound < 0) {
             takeOff();
@@ -544,8 +642,6 @@ final class MCSSearch {
         }
         level.candidates = candidates();
         clock.tick(level.candidates.length);
-        // In MCES a fragment with enough bonds offers new roots once its candidates are done. These rank below its
-        // own root.
         if (minBonds > 0 && fragmentBonds(fragmentStart) >= minBonds)
             level.rootRank = queryRank[levels[fragmentStart].queryAtom];
         return true;
@@ -712,15 +808,21 @@ final class MCSSearch {
         return edgeBound.bound(rankLimit, 0);
     }
 
-    /** The score of a mapping, which compares by atoms first, or in MCES by common bonds first. */
+    /**
+     * The score of a mapping of {@code atomCount} atoms with {@code bondCount}
+     * common bonds, packed as in {@link MCSGraph#score}: by atoms first, or in
+     * MCES by common bonds first, so that scores compare as longs.
+     */
     private long score(int atomCount, int bondCount) {
         return MCSGraph.score(atomCount, bondCount, minBonds > 0);
     }
 
+    /** The atoms of a score of this search. */
     private int atoms(long score) {
         return MCSGraph.atoms(score, minBonds > 0);
     }
 
+    /** The common bonds of a score of this search. */
     private int bonds(long score) {
         return MCSGraph.bonds(score, minBonds > 0);
     }
@@ -810,6 +912,7 @@ final class MCSSearch {
                | queryCount - 1 - queryRank[queryAtom];
     }
 
+    /** The candidate of a key from {@link #candidateKey}. */
     private int candidateOf(long key) {
         return queryOrder[queryCount - 1 - (int) (key & Integer.MAX_VALUE)];
     }
@@ -861,6 +964,7 @@ final class MCSSearch {
                | targetCount - 1 - targetRank[targetAtom];
     }
 
+    /** The target of a key from {@link #targetKey}. */
     private int targetOf(long key) {
         return targetOrder[targetCount - 1 - (int) key];
     }
@@ -1057,6 +1161,7 @@ final class MCSSearch {
         return hasDistinctTargets(candidateRows, queryCount, words, clock) ? new Embedding(candidateRows) : null;
     }
 
+    /** Whether every query atom is reached from the first by bonds. */
     private boolean queryConnected() {
         int[] queue = new int[queryCount];
         boolean[] reached = new boolean[queryCount];
@@ -1074,22 +1179,30 @@ final class MCSSearch {
     }
 
     /**
-     * A pair of query atom and target atom as one int, which fits as {@link MCS}
-     * limits the pairs. Pairs sort by query atom, then by target atom.
+     * The pair of {@code queryAtom} and {@code targetAtom} as one int,
+     * {@code queryAtom * targetCount + targetAtom}, which fits as {@link MCS}
+     * allows at most 2<sup>30</sup> pairs. Pairs sort by query atom, then by
+     * target atom.
      */
     private int pair(int queryAtom, int targetAtom) {
         return queryAtom * targetCount + targetAtom;
     }
 
+    /** The query atom of a packed pair. */
     private int queryAtom(int pair) {
         return pair / targetCount;
     }
 
+    /** The target atom of a packed pair. */
     private int targetAtom(int pair) {
         return pair % targetCount;
     }
 
-    /** A mapped pair of the branch and bound, with what it restores when taken off and what it has left to try. */
+    /**
+     * A mapped pair of the branch and bound, one for each depth, with what it
+     * restores when taken off and what it has left to try. The levels are
+     * made once and reused, see {@link #map}.
+     */
     private static final class Level {
 
         /** The mapped pair. */
@@ -1100,16 +1213,17 @@ final class MCSSearch {
         int freeQueryBonds, freeTargetBonds;
         /** The level that starts the open fragment. In MCES, closing the fragment sets this to the next level. */
         int fragmentStart;
+        /** A score that no mapping below the level beats, see {@link MCSSearch#bound}. */
         long bound;
-        /**
-         * The candidates whose targets the level tries, the candidate being
-         * tried, and its targets. The next candidate and the next target to
-         * try are kept as places in these lists.
-         */
+        /** The candidates whose targets the level tries, in order, see {@link MCSSearch#candidates}. */
         int[] candidates;
+        /** The place in {@link #candidates} of the next candidate to try. */
         int nextCandidate;
+        /** The candidate being tried. */
         int triedAtom;
+        /** The targets of {@link #triedAtom}, in order, see {@link MCSSearch#targets}. */
         int[] targets;
+        /** The place in {@link #targets} of the next target to try. */
         int nextTarget;
         /** In MCES, once the fragment is closed, the roots of new fragments offered are ranked below this. */
         int rootRank;
@@ -1128,22 +1242,30 @@ final class MCSSearch {
         private final long[] seen = new long[queryCount * words];
         /** The reached pairs in the order they were reached, the first {@link #count} of the array. */
         private int[] pairs = new int[INITIAL_PAIRS];
+        /** The number of reached pairs. */
         private int count;
+        /** The number of pairs reached from the fragment itself, which come first and give the candidates. */
         private int firstLayer;
-        /** The stamp of each query and target bond counted as a link, and the numbers of these links. */
+        /** The stamp of each query bond counted as a link, see {@link #stamp}. */
         private final int[] queryBondStamp = new int[query.bondCount];
+        /** The stamp of each target bond counted as a link. */
         private final int[] targetBondStamp = new int[target.bondCount];
+        /** The numbers of query and target bonds counted as links. */
         private int queryLinks, targetLinks;
-        /** The union-find: the stamp and parent of each atom, and the atoms of each side in each group. */
+        /** The stamp of each atom of the union-find, the target atoms numbered after the query atoms. */
         private final int[] atomStamp = new int[queryCount + targetCount];
+        /** The parent of each atom in the union-find, itself for the root of a group. */
         private final int[] parent = new int[queryCount + targetCount];
+        /** The query atoms in the group of each root. */
         private final int[] queryAtoms = new int[queryCount + targetCount];
+        /** The target atoms in the group of each root. */
         private final int[] targetAtoms = new int[queryCount + targetCount];
         /** The sum, over the groups, of the fewer atoms of either side. */
         private int groupSum;
         /** The stamp of this use, so that no marks have to be cleared. */
         private int stamp;
 
+        /** Starts a use with nothing reached. Every mark is cleared when the stamp would overflow. */
         void start() {
             if (++stamp == Integer.MAX_VALUE) {
                 Arrays.fill(queryBondStamp, 0);
@@ -1191,6 +1313,7 @@ final class MCSSearch {
             return (onQuery ? queryBondStamp : targetBondStamp)[bond] == stamp;
         }
 
+        /** Joins the groups of the two atoms of {@code pair}, and updates the sum over the groups. */
         void join(int pair) {
             int queryRoot = root(queryAtom(pair)), targetRoot = root(queryCount + targetAtom(pair));
             if (queryRoot != targetRoot) {
@@ -1235,6 +1358,7 @@ final class MCSSearch {
 
         /** The compatible pairs before any is excluded, see {@link #hasPendantPair}. */
         private final long[] compatible = allowed.clone();
+        /** The labels of the query and of the target, with the open atoms of the state being bounded. */
         private final Labels queryLabels, targetLabels;
         /** The symbol at each slot. A label has a slot for each end, the second -1 if both ends share a symbol. */
         private final int[] slotSymbol;
@@ -1473,9 +1597,16 @@ final class MCSSearch {
         final int[] bySymbol;
         /** The open atoms, the first {@link #openCount} of the array. */
         final int[] openAtoms;
+        /** Whether each atom is open. */
         final boolean[] isOpen;
+        /** The number of open atoms. */
         int openCount;
 
+        /**
+         * The labels of a molecule from the {@code symbol} of each atom and the
+         * {@code slot} at each place, with a histogram of {@code histogramSize}
+         * and a count for each of the {@code symbols}.
+         */
         Labels(int[] symbol, int[] slot, int histogramSize, int symbols) {
             this.symbol = symbol;
             this.slot = slot;
@@ -1485,11 +1616,13 @@ final class MCSSearch {
             isOpen = new boolean[symbol.length];
         }
 
+        /** Marks {@code atom}, which is not yet open, as open. */
         void markOpen(int atom) {
             isOpen[atom] = true;
             openAtoms[openCount++] = atom;
         }
 
+        /** Closes every open atom. */
         void clearOpen() {
             for (int openIndex = 0; openIndex < openCount; openIndex++)
                 isOpen[openAtoms[openIndex]] = false;
@@ -1518,10 +1651,12 @@ final class MCSSearch {
         private static final long MAX_PART_PAIRS = 1_000_000;
         /** The most counts of symbols and bond labels for the parts of both molecules, 8 MB. */
         private static final long MAX_COUNTS = 2_000_000;
-        private static final long ONE_ATOM = MCSGraph.score(1, 0, false);
-        private static final long ONE_BOND = MCSGraph.score(0, 1, false);
+        /** The score of one atom, and of one bond, by atoms first; bounds add up in these units. */
+        private static final long ONE_ATOM = MCSGraph.score(1, 0, false), ONE_BOND = MCSGraph.score(0, 1, false);
 
+        /** The graphs, for their atom classes and compatible bonds. */
         private final MCSGraph graph;
+        /** The parts of the query and of the target. */
         private final Parts queryParts, targetParts;
         /**
          * The bound of each pair of parts, in a row of target parts for each
@@ -1554,6 +1689,11 @@ final class MCSSearch {
             return new BridgeBound(graph, queryRingBonds, targetRingBonds, clock);
         }
 
+        /**
+         * Works out the bound of every pair of parts, the smallest parts
+         * first so that the branches of a part are bounded before it, and
+         * then the upper bound from the pairs of anchors.
+         */
         private BridgeBound(MCSGraph graph, boolean[] queryRingBonds, boolean[] targetRingBonds,
                             MCSGraph.Clock clock) {
             this.graph = graph;
@@ -1668,6 +1808,7 @@ final class MCSSearch {
          */
         private static final class Parts {
 
+            /** The number of parts. */
             final int count;
             /** The root of each part, and the bond into it, or -1 for an atom with all its branches. */
             final int[] root, parentBond;
@@ -1830,6 +1971,7 @@ final class MCSSearch {
         }
     }
 
+    /** A union-find over {@code size} items, each in a set of its own: the parent of each item is itself. */
     private static int[] singletons(int size) {
         int[] parent = new int[size];
         for (int i = 0; i < size; i++)
@@ -1837,12 +1979,14 @@ final class MCSSearch {
         return parent;
     }
 
+    /** The root of the set of {@code item}, halving the path to it on the way. */
     private static int find(int[] parent, int item) {
         while (parent[item] != item)
             item = parent[item] = parent[parent[item]];
         return item;
     }
 
+    /** Joins the sets of {@code first} and {@code second}. */
     private static void unite(int[] parent, int first, int second) {
         parent[find(parent, first)] = find(parent, second);
     }
@@ -1872,6 +2016,7 @@ final class MCSSearch {
         private final int[] freeCount;
         /** The unplaced query atoms that have candidates, the first {@link #frontierSize}, in any order. */
         private final int[] frontier;
+        /** The number of atoms on the frontier. */
         private int frontierSize;
         /** Room for the candidates of a neighbour while they are found, before they are copied. */
         private final int[] scratch;
@@ -2107,10 +2252,16 @@ final class MCSSearch {
      */
     private static final class Placement {
 
-        int atom, frontierPlace, nextCandidate, changedCount;
+        /** The placed atom, the place it had on the frontier, and the next of its candidates to try. */
+        int atom, frontierPlace, nextCandidate;
+        /** The number of changes recorded. */
+        int changedCount;
+        /** The atoms whose candidates or counts changed, the first {@link #changedCount}, and their old counts. */
         int[] changedAtoms = new int[4], oldFreeCounts = new int[4];
+        /** The old candidates of each changed atom, null where it had none. */
         int[][] oldCandidates = new int[4][];
 
+        /** Starts placing {@code atom}, from place {@code frontierPlace} of the frontier, at its first candidate. */
         Placement enter(int atom, int frontierPlace) {
             this.atom = atom;
             this.frontierPlace = frontierPlace;
@@ -2188,10 +2339,12 @@ final class MCSSearch {
         return (rows[row * words + (bit >>> 6)] & 1L << bit) != 0;
     }
 
+    /** Sets bit {@code bit} of row {@code row}. */
     private void set(long[] rows, int row, int bit) {
         rows[row * words + (bit >>> 6)] |= 1L << bit;
     }
 
+    /** Clears bit {@code bit} of row {@code row}. */
     private void clear(long[] rows, int row, int bit) {
         rows[row * words + (bit >>> 6)] &= ~(1L << bit);
     }
@@ -2210,6 +2363,7 @@ final class MCSSearch {
         return (wordIndex << 6) + Long.numberOfTrailingZeros(word);
     }
 
+    /** The inverse of a permutation: the position of each value. */
     private static int[] inverse(int[] permutation) {
         int[] inverse = new int[permutation.length];
         for (int i = 0; i < permutation.length; i++)

@@ -41,10 +41,18 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
  * The query and target of an {@link MCS} search as int graphs, with the atom
- * and bond pairs that may be mapped onto each other. A query atom or bond
- * with an expression ({@link IQueryAtom}, {@link IQueryBond}) is matched by
- * that expression. Any other atom is matched by its symbol, and any other
- * bond by its class. The molecules are only read.
+ * and bond pairs that may be mapped onto each other. Each molecule is a
+ * {@link Side}: its neighbour lists in arrays, a symbol class for each atom, a
+ * class for each bond and, with the options, its relevant rings
+ * ({@link Rings}) and its configurations ({@link Stereo}). A query atom or
+ * bond with an expression ({@link IQueryAtom}, {@link IQueryBond}) is matched
+ * by that expression. Any other atom is matched by its symbol, and any other
+ * bond by its class: aromatic, or by order. {@link #compatiblePairs} gives the
+ * atom pairs as bit rows and works out the bond pairs that {@link #bondsMatch}
+ * reads. The graph also gives the search its label bound, the check that a
+ * mapping keeps the configurations, and colour refinement for the search
+ * order. A {@link Clock} counts the work of every loop and throws
+ * {@link Stop} when the search is to end. The molecules are only read.
  *
  * @author Syed Asad Rahman
  */
@@ -65,16 +73,19 @@ final class MCSGraph {
     /** The odd constant that mixes the signature of an atom with those of its neighbours. */
     private static final long GOLDEN_GAMMA = 0x9e3779b97f4a7c15L;
 
+    /** The graphs of the query and of the target. */
     final Side query, target;
     /** The number of symbol classes of both molecules, twice as many with complete rings. */
     final int atomClasses;
     /** Whether the classes decide every pair, as the query has no query atom or bond. */
     final boolean plainQuery;
-    /**
-     * The compatible bond pairs: a row of {@code bondWords} longs for each query
-     * bond, with a bit for each target bond.
-     */
+    /** The number of longs in a row of target bonds. */
     private final int bondWords;
+    /**
+     * The compatible bond pairs: a row of {@link #bondWords} longs for each
+     * query bond, with a bit for each target bond. Null until
+     * {@link #compatiblePairs} has run.
+     */
     private long[] bondPairs;
     /**
      * Scratch of {@link #stereoConsistent}: a union-find over the configuration
@@ -113,22 +124,27 @@ final class MCSGraph {
         carrierPlaces = stereo ? new int[CARRIERS] : null;
     }
 
+    /** The number of longs that hold {@code bits} bits. */
     static int words(int bits) {
         return (bits + 63) >>> 6;
     }
 
     /**
-     * Packs a number of atoms and a number of bonds into a score, which
-     * compares by atoms first or, with {@code bondsFirst}, by bonds first.
+     * Packs a number of atoms and a number of bonds into a score,
+     * {@code atoms << 32 | bonds}, which compares by atoms first or, with
+     * {@code bondsFirst}, {@code bonds << 32 | atoms}, which compares by bonds
+     * first. Both counts are non-negative, so scores compare as longs.
      */
     static long score(int atoms, int bonds, boolean bondsFirst) {
         return bondsFirst ? (long) bonds << 32 | atoms : (long) atoms << 32 | bonds;
     }
 
+    /** The atoms of a score packed with the same {@code bondsFirst}. */
     static int atoms(long score, boolean bondsFirst) {
         return (int) (bondsFirst ? score : score >>> 32);
     }
 
+    /** The bonds of a score packed with the same {@code bondsFirst}. */
     static int bonds(long score, boolean bondsFirst) {
         return (int) (bondsFirst ? score >>> 32 : score);
     }
@@ -396,25 +412,33 @@ final class MCSGraph {
      */
     private static final class Refinement {
 
+        /** The neighbour lists, as in {@link Side#start} and {@link Side#neighbour}. */
         private final int[] start, neighbour;
+        /** Counts the work of each round. */
         private final Clock clock;
+        /** The number of atoms. */
         private final int atomCount;
         /** The atoms in rank order, and the place of each atom in it. */
         private final int[] order, place;
         /** The cell of each atom, and the place where each cell starts and its size. */
         private final int[] cell, cellStart, cellSize;
+        /** The number of cells. */
         private int cells;
         /** The sorted ranks of the neighbours of each atom, at its places in the neighbour list. */
         private final int[] ranks;
         /** The atoms to sort in a round, the first {@link #toSortCount}, and the last round each was listed for. */
         private final int[] toSort, listed;
+        /** The number of atoms to sort. */
         private int toSortCount;
         /** The atoms that changed cell in a round, the first {@link #movedCount}. */
         private final int[] moved;
+        /** The number of atoms that changed cell in the round. */
         private int movedCount;
+        /** The round being run, from 1, which stamps {@link #listed}. */
         private int round = 1;
-        /** Room to sort the atoms of one cell, and the atoms to sort as keys by cell. */
+        /** Room to sort the atoms of one cell. */
         private final Integer[] sorting;
+        /** Room for the atoms to sort as keys by cell, see {@link #sortByCell}. */
         private final long[] byCell;
         /** Orders atoms by the sorted ranks of their neighbours. */
         private final Comparator<Integer> byNeighbours;
@@ -651,6 +675,7 @@ final class MCSGraph {
             place[atom] = newPlace;
         }
 
+        /** Puts {@code atom} in cell {@code cellName}, and notes that it moved. */
         private void changeCell(int atom, int cellName) {
             cell[atom] = cellName;
             moved[movedCount++] = atom;
@@ -694,9 +719,10 @@ final class MCSGraph {
         return value ^ value >>> 31;
     }
 
-    /** One molecule of the search as an int graph. */
+    /** One molecule of the search as an int graph, with the atoms and bonds numbered as in the molecule. */
     static final class Side {
 
+        /** The numbers of atoms and bonds. */
         final int atomCount, bondCount;
         /** The neighbours of an atom, and the bonds to them, are at places start[atom] to start[atom + 1] - 1. */
         final int[] start, neighbour, neighbourBond;
@@ -704,12 +730,19 @@ final class MCSGraph {
         final int[] symbolHash;
         /** The symbol class of each atom, negative for an atom without a symbol, which matches nothing. */
         final int[] atomClass;
+        /**
+         * The class of each bond: 0 for aromatic, 1 for no order, and 2 plus
+         * the ordinal of the order otherwise. With complete rings it is
+         * doubled, plus 1 for a ring bond, as the atom classes are.
+         */
         final int[] bondClass;
         /** The ring atoms, bonds and rings, for complete rings, or null. */
         final Rings rings;
         /** The configurations, or null unless stereochemistry is checked. */
         final Stereo stereo;
+        /** The atoms by index, for the expressions of a query. */
         final IAtom[] atoms;
+        /** The bonds by index, for the expressions of a query. */
         final IBond[] bonds;
 
         /**
@@ -752,10 +785,12 @@ final class MCSGraph {
             stereo = withStereo ? new Stereo(original, start, neighbour, firstGroup) : null;
         }
 
+        /** The number of bonds at {@code atom}. */
         int degree(int atom) {
             return start[atom + 1] - start[atom];
         }
 
+        /** The most bonds at any atom. */
         int maxDegree() {
             int max = 0;
             for (int atom = 0; atom < atomCount; atom++)
@@ -975,7 +1010,9 @@ final class MCSGraph {
      */
     static final class Rings {
 
+        /** Whether each atom, and each bond, is on a ring. */
         final boolean[] ringAtom, ringBond;
+        /** The relevant rings, each as its atoms in ring order followed by the bond from each atom to the next. */
         final int[][] rings;
         /**
          * The atoms of a ring system with too many relevant rings, or 0. The
@@ -983,6 +1020,11 @@ final class MCSGraph {
          */
         final int refusedAtoms;
 
+        /**
+         * Finds the ring bonds and atoms of the graph given as neighbour
+         * lists, then the relevant rings of each ring system, the atoms joined
+         * by ring bonds, until a system has too many.
+         */
         Rings(int[] start, int[] neighbour, int[] neighbourBond, int bondCount) {
             int atomCount = start.length - 1, refused = 0;
             ringBond = ringBonds(start, neighbour, neighbourBond, bondCount);
@@ -993,42 +1035,49 @@ final class MCSGraph {
                         ringAtom[atom] = true;
                 }
             }
-            // The ring systems are the atoms joined by ring bonds.
             List<int[]> found = new ArrayList<>();
             int[] memberPlace = new int[atomCount];
             Arrays.fill(memberPlace, -1);
-            for (int origin = 0; origin < atomCount && refused == 0; origin++) {
+            for (int origin = 0; origin < atomCount; origin++) {
                 if (!ringAtom[origin] || memberPlace[origin] >= 0)
                     continue;
                 int[] members = members(origin, start, neighbour, neighbourBond, memberPlace);
                 int[][] system = new int[members.length][];
-                int bonds = 0;
                 for (int memberIndex = 0; memberIndex < members.length; memberIndex++) {
                     system[memberIndex] = neighbours(members[memberIndex], start, neighbour, neighbourBond,
                                                      memberPlace);
-                    bonds += system[memberIndex].length;
                 }
-                bonds /= 2;
-                // Each ring as a closed path, with its first atom again at the end.
-                int[][] paths = new int[0][];
-                if (bonds == members.length) {
-                    // As many bonds as atoms is a single ring.
-                    paths = new int[][]{GraphUtil.cycle(system, IntStream.range(0, members.length).toArray())};
-                } else if (bonds - members.length + 1 > MAX_RINGS) {
-                    // There are at least as many relevant rings as the cyclomatic number. They need not be found.
+                int[][] paths = relevantPaths(system);
+                if (paths == null) {
                     refused = members.length;
-                } else {
-                    RelevantCycles relevant = ringBound(system) < RING_BOUND_CAP ? new RelevantCycles(system) : null;
-                    if (relevant == null || relevant.size() > MAX_RINGS)
-                        refused = members.length;
-                    else
-                        paths = relevant.paths();
+                    break;
                 }
                 for (int[] path : paths)
                     found.add(ring(path, members, start, neighbour, neighbourBond));
             }
             rings = found.toArray(new int[0][]);
             this.refusedAtoms = refused;
+        }
+
+        /**
+         * The relevant rings of a ring system as closed paths of its places,
+         * each with its first place again at the end, or null if there are
+         * more than {@link #MAX_RINGS}. A system with as many bonds as atoms
+         * is a single ring. Otherwise there are at least as many relevant rings
+         * as the cyclomatic number, bonds less atoms plus one, and they are
+         * found only when the bound on their number is below the cap.
+         */
+        private static int[][] relevantPaths(int[][] system) {
+            int bonds = 0;
+            for (int[] row : system)
+                bonds += row.length;
+            bonds /= 2;
+            if (bonds == system.length)
+                return new int[][]{GraphUtil.cycle(system, IntStream.range(0, system.length).toArray())};
+            if (bonds - system.length + 1 > MAX_RINGS)
+                return null;
+            RelevantCycles relevant = ringBound(system) < RING_BOUND_CAP ? new RelevantCycles(system) : null;
+            return relevant == null || relevant.size() > MAX_RINGS ? null : relevant.paths();
         }
 
         /**
@@ -1141,6 +1190,7 @@ final class MCSGraph {
             return true;
         }
 
+        /** Whether every atom of {@code ring} is mapped or open, and every bond between two mapped atoms common. */
         private static boolean coversRing(int[] ring, boolean[] mapped, boolean[] open, boolean[] common) {
             int len = ring.length / 2;
             for (int step = 0; step < len; step++) {
@@ -1215,9 +1265,14 @@ final class MCSGraph {
         final int[] specified;
         /** Whether a configuration reads each atom, see {@link Side#configured}. */
         final boolean[] reads;
+        /** The number of indices with a configuration. */
         int count;
 
-        /** Reads the stereo elements, and numbers the racemic and relative groups from {@code firstGroup}. */
+        /**
+         * Reads the tetrahedral centres and double bonds of {@code molecule},
+         * whose neighbour lists are given, and numbers its racemic and relative
+         * groups from {@code firstGroup}. Other stereo elements are left out.
+         */
         Stereo(IAtomContainer molecule, int[] start, int[] neighbour, int firstGroup) {
             int atomCount = molecule.getAtomCount();
             config = new int[atomCount + molecule.getBondCount()];
@@ -1227,76 +1282,109 @@ final class MCSGraph {
             reads = new boolean[atomCount];
             Map<Integer, Integer> groups = new HashMap<>();
             for (IStereoElement<?, ?> element : molecule.stereoElements()) {
-                int index, order = element.getConfigOrder();
-                if (element.getConfigClass() == IStereoElement.TH) {
-                    index = molecule.indexOf((IAtom) element.getFocus());
-                    for (int i = 0; i < CARRIERS; i++)
-                        carriers[CARRIERS * index + i] = molecule.indexOf((IAtom) element.getCarriers().get(i));
-                } else if (element.getConfigClass() == IStereoElement.CT) {
-                    IBond bond = (IBond) element.getFocus();
-                    int beginAtom = molecule.indexOf(bond.getBegin()), endAtom = molecule.indexOf(bond.getEnd());
-                    if (start[beginAtom + 1] - start[beginAtom] > 3 || start[endAtom + 1] - start[endAtom] > 3)
-                        continue;
-                    index = atomCount + molecule.indexOf(bond);
-                    carriers[CARRIERS * index + FIRST_END] = beginAtom;
-                    carriers[CARRIERS * index + SECOND_END] = endAtom;
-                    // The stored neighbour of an end is the other atom of the carrier bond there.
-                    for (Object carrier : element.getCarriers()) {
-                        int carrierBegin = molecule.indexOf(((IBond) carrier).getBegin());
-                        int carrierEnd = molecule.indexOf(((IBond) carrier).getEnd());
-                        carriers[CARRIERS * index
-                                 + (carrierBegin == beginAtom || carrierEnd == beginAtom ? 0 : 1)]
-                                = carrierBegin == beginAtom || carrierBegin == endAtom ? carrierEnd : carrierBegin;
-                    }
-                } else {
+                int index = element.getConfigClass() == IStereoElement.TH ? readCentre(molecule, element)
+                            : element.getConfigClass() == IStereoElement.CT ? readDoubleBond(molecule, element, start)
+                            : -1;
+                if (index < 0)
                     continue;
-                }
+                int order = element.getConfigOrder();
                 config[index] = order == 1 || order == 2 ? order : 0;
                 int info = element.getGroupInfo();
                 group[index] = info == 0 ? 0 : firstGroup + groups.computeIfAbsent(info, key -> groups.size());
             }
             groupCount = groups.size();
             for (int index = 0; index < config.length; index++) {
-                if (config[index] == 0)
-                    continue;
-                specified[count++] = index;
-                // A centre reads itself and its carriers. A double bond reads its ends and all their neighbours,
-                // as any neighbour stands in for the stored one when it alone is mapped.
-                for (int i = 0; i < CARRIERS; i++)
-                    reads[carriers[CARRIERS * index + i]] = true;
-                if (index < atomCount) {
-                    reads[index] = true;
-                } else {
-                    for (int endPlace = FIRST_END; endPlace <= SECOND_END; endPlace++) {
-                        int end = carriers[CARRIERS * index + endPlace];
-                        for (int i = start[end]; i < start[end + 1]; i++)
-                            reads[neighbour[i]] = true;
-                    }
+                if (config[index] != 0) {
+                    specified[count++] = index;
+                    markReads(index, atomCount, start, neighbour);
                 }
             }
         }
 
+        /** Reads a tetrahedral centre, whose carriers are its four neighbours, and gives its atom index. */
+        private int readCentre(IAtomContainer molecule, IStereoElement<?, ?> element) {
+            int index = molecule.indexOf((IAtom) element.getFocus());
+            for (int i = 0; i < CARRIERS; i++)
+                carriers[CARRIERS * index + i] = molecule.indexOf((IAtom) element.getCarriers().get(i));
+            return index;
+        }
+
+        /**
+         * Reads a double bond and gives its index, the atom count plus the
+         * bond index, or -1 if an end has three or more other neighbours. The
+         * ends go to the places {@link #FIRST_END} and {@link #SECOND_END}, and
+         * the stored neighbour of each end, the other atom of the carrier bond
+         * there, to places 0 and 1.
+         */
+        private int readDoubleBond(IAtomContainer molecule, IStereoElement<?, ?> element, int[] start) {
+            IBond bond = (IBond) element.getFocus();
+            int beginAtom = molecule.indexOf(bond.getBegin()), endAtom = molecule.indexOf(bond.getEnd());
+            if (start[beginAtom + 1] - start[beginAtom] > 3 || start[endAtom + 1] - start[endAtom] > 3)
+                return -1;
+            int index = molecule.getAtomCount() + molecule.indexOf(bond);
+            carriers[CARRIERS * index + FIRST_END] = beginAtom;
+            carriers[CARRIERS * index + SECOND_END] = endAtom;
+            for (Object carrier : element.getCarriers()) {
+                int carrierBegin = molecule.indexOf(((IBond) carrier).getBegin());
+                int carrierEnd = molecule.indexOf(((IBond) carrier).getEnd());
+                carriers[CARRIERS * index + (carrierBegin == beginAtom || carrierEnd == beginAtom ? 0 : 1)]
+                        = carrierBegin == beginAtom || carrierBegin == endAtom ? carrierEnd : carrierBegin;
+            }
+            return index;
+        }
+
+        /**
+         * Marks the atoms that the configuration at {@code index} reads. A
+         * centre reads itself and its carriers. A double bond reads its ends
+         * and all their neighbours, as any neighbour stands in for the stored
+         * one when it alone is mapped.
+         */
+        private void markReads(int index, int atomCount, int[] start, int[] neighbour) {
+            for (int i = 0; i < CARRIERS; i++)
+                reads[carriers[CARRIERS * index + i]] = true;
+            if (index < atomCount) {
+                reads[index] = true;
+                return;
+            }
+            for (int endPlace = FIRST_END; endPlace <= SECOND_END; endPlace++) {
+                int end = carriers[CARRIERS * index + endPlace];
+                for (int i = start[end]; i < start[end + 1]; i++)
+                    reads[neighbour[i]] = true;
+            }
+        }
+
+        /** The carrier at {@code place} of the configuration at {@code index}, see {@link #carriers}. */
         int carrier(int index, int place) {
             return carriers[CARRIERS * index + place];
         }
     }
 
-    /** Asks whether to stop every {@link #POLL_INTERVAL} units of work ticked, or at once with {@link #poll()}. */
+    /**
+     * Counts the work of the search in units, about one for each step of an
+     * inner loop, and asks whether to stop every {@link #POLL_INTERVAL} units,
+     * or at once with {@link #poll()}. The search ends with {@link Stop} when
+     * the answer is yes, so every loop of the search ticks the clock.
+     */
     static final class Clock {
 
+        /** The units of work between two checks. */
         private static final int POLL_INTERVAL = 1024;
+        /** Whether to stop now: the time limit was reached or the thread was interrupted. */
         private final BooleanSupplier stop;
         /** The units of work ticked since the last check. */
         private int work;
 
+        /** A clock that stops the search once {@code stop} says so. */
         Clock(BooleanSupplier stop) {
             this.stop = stop;
         }
 
+        /** Counts one unit of work. */
         void tick() {
             tick(1);
         }
 
+        /** Counts {@code units} of work, and checks whether to stop once the interval is reached. */
         void tick(int units) {
             work += units;
             if (work >= POLL_INTERVAL) {
@@ -1315,6 +1403,7 @@ final class MCSGraph {
     /** Ends a search: the time limit was reached or the thread was interrupted. */
     static final class Stop extends RuntimeException {
 
+        /** The serial version, as for any exception. */
         private static final long serialVersionUID = 1L;
 
         /** A signal, so no message and no stack trace. */
