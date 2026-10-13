@@ -63,8 +63,6 @@ final class MCSSearch {
     private final int minBonds;
     /** The numbers of query and target atoms, and of longs in a row of target atoms. */
     private final int n, m, words;
-    /** The bits a target atom takes in a pair, see {@link #pair}. */
-    private final int targetBits;
     /** The compatible pairs that are not excluded: bit t of row q, see {@link MCSGraph#compatiblePairs}. */
     private final long[] allowed;
     /** The mapping both ways, -1 where unmapped. */
@@ -110,7 +108,6 @@ final class MCSSearch {
         n = query.atomCount;
         m = target.atomCount;
         words = MCSGraph.words(m);
-        targetBits = 32 - Integer.numberOfLeadingZeros(Math.max(m - 1, 1));
         allowed = graph.compatiblePairs(clock);
         queryToTarget = new int[n];
         targetToQuery = new int[m];
@@ -437,7 +434,7 @@ final class MCSSearch {
             int u = queryOrder[k];
             for (int j = m - 1; j >= 0 && !done(); j--) {
                 clock.tick();
-                if (has(allowed, u, targetOrder[j]) && push(u, targetOrder[j], 0, 0, upperBound))
+                if (has(allowed, u, targetOrder[j]) && push(u, targetOrder[j], 0, upperBound))
                     search();
             }
         }
@@ -459,7 +456,7 @@ final class MCSSearch {
                 pop();
             } else if (level.nextTarget < level.targets.length) {
                 int u = level.triedAtom, v = level.targets[level.nextTarget++];
-                if (twinExcluded(u, v) || !push(u, v, level.fragmentStart, level.bondsBefore, level.bound))
+                if (twinExcluded(u, v) || !push(u, v, level.fragmentStart, level.bound))
                     exclude(u, v);
             } else if (level.nextCandidate < level.candidates.length) {
                 // The targets tried so far are now excluded, which can lower the bound.
@@ -477,13 +474,13 @@ final class MCSSearch {
     }
 
     /**
-     * Maps {@code u} onto {@code v} as a new level. Its fragment starts at
-     * level {@code fragmentStart}, after {@code bondsBefore} common bonds. The
-     * level has the bound of the state it extends, or the bridge bound of the
-     * pair if that is lower, until it has its own. False, with the pair left
-     * unmapped, if the bound prunes it or it breaks a configuration.
+     * Maps {@code u} onto {@code v} as a new level of the fragment that starts
+     * at level {@code fragmentStart}. The level has the bound of the state it
+     * extends, or the bridge bound of the pair if that is lower, until it has
+     * its own. False, with the pair left unmapped, if the bound prunes it or
+     * it breaks a configuration.
      */
-    private boolean push(int u, int v, int fragmentStart, int bondsBefore, long bound) {
+    private boolean push(int u, int v, int fragmentStart, long bound) {
         if (bridgeBound != null) {
             bound = Math.min(bound, bridgeBound.bound(u, v));
             if (!canImprove(bound))
@@ -494,7 +491,9 @@ final class MCSSearch {
         Level level = levels[depth];
         level.queryAtom = u;
         level.targetAtom = v;
-        level.addedBonds = common(u, v);
+        level.commonBondsBefore = commonBonds;
+        level.excludedBefore = excludedCount;
+        int addedBonds = common(u, v);
         level.freeQueryBonds = depth > 0 ? levels[depth - 1].freeQueryBonds : query.bondCount;
         level.freeTargetBonds = depth > 0 ? levels[depth - 1].freeTargetBonds : target.bondCount;
         for (int i = query.start[u]; i < query.start[u + 1]; i++) {
@@ -505,23 +504,20 @@ final class MCSSearch {
             if (targetToQuery[target.neighbour[j]] < 0)
                 level.freeTargetBonds--;
         }
-        level.excludedBefore = excludedCount;
         level.fragmentStart = fragmentStart;
-        level.bondsBefore = bondsBefore;
         level.bound = bound;
         level.candidates = level.targets = NONE;
         level.nextCandidate = level.nextTarget = level.rootRank = 0;
-        level.closed = false;
         queryToTarget[u] = v;
         targetToQuery[v] = u;
         depth++;
-        commonBonds += level.addedBonds;
+        commonBonds += addedBonds;
         // A mapping that breaks a configuration still breaks it with any pair added. The pair is rejected at once.
         if (!graph.stereoConsistent(queryToTarget, clock)) {
             takeOff();
             return false;
         }
-        record(bondsBefore);
+        record(fragmentStart);
         // A leaf has nothing left to try. Every query atom up to the rank of the root is mapped, or every target
         // atom is, or the mapping has the atoms of the upper bound, in MCES its common bonds.
         if (done() || depth == queryRank[levels[0].queryAtom] + 1 || depth == m
@@ -536,9 +532,14 @@ final class MCSSearch {
         clock.tick(level.candidates.length);
         // In MCES a fragment with enough bonds offers new roots once its candidates are done. These rank below its
         // own root.
-        if (minBonds > 0 && commonBonds - bondsBefore >= minBonds)
+        if (minBonds > 0 && fragmentBonds(fragmentStart) >= minBonds)
             level.rootRank = queryRank[levels[fragmentStart].queryAtom];
         return true;
+    }
+
+    /** The common bonds of the open fragment, which starts at level {@code fragmentStart}. */
+    private int fragmentBonds(int fragmentStart) {
+        return commonBonds - levels[fragmentStart].commonBondsBefore;
     }
 
     /** Takes the top level off, and excludes its pair for its later siblings and everything below them. */
@@ -553,16 +554,12 @@ final class MCSSearch {
     private void takeOff() {
         Level level = levels[--depth];
         while (excludedCount > level.excludedBefore) {
-            int p = excluded[--excludedCount];
-            allow(queryAtom(p), targetAtom(p));
+            int pair = excluded[--excludedCount];
+            set(allowed, queryAtom(pair), targetAtom(pair));
         }
         queryToTarget[level.queryAtom] = -1;
         targetToQuery[level.targetAtom] = -1;
-        commonBonds -= level.addedBonds;
-    }
-
-    private void allow(int u, int v) {
-        set(allowed, u, v);
+        commonBonds = level.commonBondsBefore;
     }
 
     /** Excludes the pair of {@code u} and {@code v}, which must be allowed. */
@@ -584,13 +581,12 @@ final class MCSSearch {
     private boolean nextRoot(Level level) {
         if (level.rootRank == 0)
             return false;
-        if (!level.closed) {
+        // The fragment is closed once it is set to start at the next level, where the roots offered start fragments
+        // of their own.
+        if (level.fragmentStart < depth) {
             if (hasPendantPair(level.fragmentStart))
                 return false;
-            // The roots offered start a fragment of their own.
-            level.closed = true;
             level.fragmentStart = depth;
-            level.bondsBefore = commonBonds;
         }
         while (--level.rootRank >= 0) {
             int u = queryOrder[level.rootRank];
@@ -610,15 +606,16 @@ final class MCSSearch {
 
     /**
      * Keeps the mapping if it beats the best score, or ties with it while
-     * fewer than wanted are held. In MCES the open fragment must have enough
-     * bonds. With complete rings the mapping must be complete.
+     * fewer than wanted are held. In MCES the open fragment, from level
+     * {@code fragmentStart}, must have enough bonds. With complete rings the
+     * mapping must be complete.
      */
-    private void record(int bondsBefore) {
+    private void record(int fragmentStart) {
         long current = score(depth, commonBonds);
         if (current < bestScore || current == bestScore && mappings.size() == maxMappings)
             return;
         // In MCES a fragment needs minBonds common bonds. The open one may still get them further down.
-        if (commonBonds - bondsBefore < minBonds)
+        if (fragmentBonds(fragmentStart) < minBonds)
             return;
         if (query.rings != null && !complete(queryToTarget, false))
             return;
@@ -720,18 +717,35 @@ final class MCSSearch {
      */
     long score(int[] mapping) {
         int atomCount = 0, bondCount = 0;
-        for (int a = 0; a < n; a++) {
-            int x = mapping[a];
-            if (x < 0)
-                continue;
-            atomCount++;
-            for (int i = query.start[a]; i < query.start[a + 1]; i++) {
-                int b = query.neighbour[i], f = b < a && mapping[b] >= 0 ? target.bondBetween(x, mapping[b]) : -1;
-                if (f >= 0 && graph.bondsMatch(query.neighbourBond[i], f))
-                    bondCount++;
+        for (int queryAtom = 0; queryAtom < n; queryAtom++) {
+            if (mapping[queryAtom] >= 0) {
+                atomCount++;
+                bondCount += commonBondsAt(mapping, queryAtom, null, null);
             }
         }
         return score(atomCount, bondCount);
+    }
+
+    /**
+     * The compatible bonds from {@code queryAtom} to the lower mapped atoms of
+     * {@code mapping} that the target has between their images, so that each
+     * common bond counts once. Unless these are null, the bonds are also
+     * marked in {@code queryCommon} and {@code targetCommon}.
+     */
+    private int commonBondsAt(int[] mapping, int queryAtom, boolean[] queryCommon, boolean[] targetCommon) {
+        int targetAtom = mapping[queryAtom], count = 0;
+        for (int i = query.start[queryAtom]; i < query.start[queryAtom + 1]; i++) {
+            int other = query.neighbour[i];
+            if (other >= queryAtom || mapping[other] < 0)
+                continue;
+            int targetBond = target.bondBetween(targetAtom, mapping[other]);
+            if (targetBond < 0 || !graph.bondsMatch(query.neighbourBond[i], targetBond))
+                continue;
+            count++;
+            if (queryCommon != null)
+                queryCommon[query.neighbourBond[i]] = targetCommon[targetBond] = true;
+        }
+        return count;
     }
 
     /**
@@ -976,17 +990,13 @@ final class MCSSearch {
             queryOpen[queryAtom(reach.pairs[i])] = true;
             targetOpen[targetAtom(reach.pairs[i])] = true;
         }
-        for (int a = 0; a < n; a++) {
-            int x = mapping[a];
-            if (x < 0)
+        for (int queryAtom = 0; queryAtom < n; queryAtom++) {
+            int targetAtom = mapping[queryAtom];
+            if (targetAtom < 0)
                 continue;
-            queryMapped[a] = targetMapped[x] = true;
-            clock.tick(1 + query.degree(a) + target.degree(x));
-            for (int i = query.start[a]; i < query.start[a + 1]; i++) {
-                int b = query.neighbour[i], f = b < a && mapping[b] >= 0 ? target.bondBetween(x, mapping[b]) : -1;
-                if (f >= 0 && graph.bondsMatch(query.neighbourBond[i], f))
-                    queryCommon[query.neighbourBond[i]] = targetCommon[f] = true;
-            }
+            queryMapped[queryAtom] = targetMapped[targetAtom] = true;
+            clock.tick(1 + query.degree(queryAtom) + target.degree(targetAtom));
+            commonBondsAt(mapping, queryAtom, queryCommon, targetCommon);
         }
         clock.tick(query.rings.rings.length + target.rings.rings.length);
         return query.rings.covers(queryMapped, queryOpen, queryCommon)
@@ -1033,30 +1043,33 @@ final class MCSSearch {
         return count == n;
     }
 
-    /** A pair of query atom {@code q} and target atom {@code t} as one int, which fits as the pairs are limited. */
-    private int pair(int q, int t) {
-        return q << targetBits | t;
+    /**
+     * A pair of query atom and target atom as one int, which fits as {@link MCS}
+     * limits the pairs. Pairs sort by query atom, then by target atom.
+     */
+    private int pair(int queryAtom, int targetAtom) {
+        return queryAtom * m + targetAtom;
     }
 
     private int queryAtom(int pair) {
-        return pair >>> targetBits;
+        return pair / m;
     }
 
     private int targetAtom(int pair) {
-        return pair & (1 << targetBits) - 1;
+        return pair % m;
     }
 
     /** A mapped pair of the branch and bound, with what it restores when taken off and what it has left to try. */
     private static final class Level {
 
-        /** The pair, and the common bonds it adds. */
-        int queryAtom, targetAtom, addedBonds;
+        /** The mapped pair. */
+        int queryAtom, targetAtom;
+        /** The common bonds and the excluded pairs before the pair was mapped, put back when it is taken off. */
+        int commonBondsBefore, excludedBefore;
         /** The query and target bonds with no end mapped, once the pair is mapped. */
         int freeQueryBonds, freeTargetBonds;
-        /** The number of excluded pairs before the pair was mapped. */
-        int excludedBefore;
-        /** The level that starts the open fragment, and the common bonds before it. */
-        int fragmentStart, bondsBefore;
+        /** The level that starts the open fragment. In MCES, closing the fragment sets this to the next level. */
+        int fragmentStart;
         long bound;
         /**
          * The candidates whose targets the level tries, the candidate being
@@ -1070,7 +1083,6 @@ final class MCSSearch {
         int nextTarget;
         /** In MCES, once the fragment is closed, the roots of new fragments offered are ranked below this. */
         int rootRank;
-        boolean closed;
     }
 
     /**
