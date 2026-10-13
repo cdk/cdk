@@ -746,6 +746,14 @@ final class MCSGraph {
         }
 
         /**
+         * Whether each bond is on a ring. With complete rings this is the
+         * array held by {@link #rings}, so callers must not change it.
+         */
+        boolean[] ringBonds() {
+            return rings != null ? rings.ringBond : Rings.ringBonds(start, neighbour, neighbourBond, bondCount);
+        }
+
+        /**
          * A bound on the bonds among at most {@code kept} atoms. Leaving out
          * one atom loses at least the smallest degree. Leaving out two loses
          * at least the sum of the two smallest degrees, or one less if two
@@ -1003,11 +1011,11 @@ final class MCSGraph {
         }
 
         /**
-         * The ring bonds, found by low-link without the recursion of
-         * {@code RingSearch}. A tree bond is a ring bond when the atoms below
-         * it reach above it, and any other bond is a ring bond. The bond to
-         * the parent is skipped by its index. A bond on no ring splits its
-         * part of the molecule in two.
+         * The ring bonds, found by low-link with an explicit stack of atoms, so
+         * that a long chain cannot overflow the call stack. A tree bond is a
+         * ring bond when the atoms below it reach above it, and any other bond
+         * is a ring bond. The bond to the parent is skipped by its index. A
+         * bond on no ring splits its part of the molecule in two.
          */
         static boolean[] ringBonds(int[] start, int[] neighbour, int[] neighbourBond, int bondCount) {
             int n = start.length - 1, time = 0;

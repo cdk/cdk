@@ -31,10 +31,12 @@ import java.util.stream.LongStream;
  * (MCES), whose common bonds may form several fragments, it finds the most
  * common bonds and then the most atoms. When a connected query fits whole in
  * the target, its embeddings are the answer.
- * Otherwise a depth-first branch and bound grows the mappings pair by pair
- * from the neighbours of the mapped atoms, as VF2 does {@cdk.cite Cordella04},
- * starting from the score of a greedy seed. The search follows SMSD
- * {@cdk.cite SMSD2009}, and its label bound is that of SMSD Pro
+ * Otherwise a depth-first branch and bound grows the mappings pair by pair,
+ * starting from the score of a greedy seed. After the first pair of a
+ * fragment, each pair maps a query atom next to the fragment onto a free
+ * neighbour of the image of one of its mapped neighbours, so the targets are
+ * read from the neighbour lists, as {@link DfPattern} does. The search
+ * follows SMSD {@cdk.cite SMSD2009}, and its label bound is that of SMSD Pro
  * {@cdk.cite SMSDPro2026}.
  *
  * @author Syed Asad Rahman
@@ -91,7 +93,11 @@ final class MCSSearch {
     /** The pairs reached from a state, for its bound, and in MCES the bound itself. */
     private final Reach reach;
     private final EdgeBound edgeBound;
-    /** The bound from the branches at chain atoms, or null, see {@link BridgeBound}. */
+    /**
+     * The bound from the branches at chain atoms, see {@link BridgeBound}, or
+     * null. {@link #run} builds it only when the whole query does not embed,
+     * as building it can take far longer than finding an embedding.
+     */
     private BridgeBound bridgeBound;
 
     /** With {@code minBonds} above 0 the search finds an MCES whose fragments have that many common bonds or more. */
@@ -474,8 +480,8 @@ final class MCSSearch {
      * Maps {@code u} onto {@code v} as a new level. Its fragment starts at
      * level {@code fragmentStart}, after {@code bondsBefore} common bonds. The
      * level has the bound of the state it extends, or the bridge bound of the
-     * pair if that is lower, until it has its own. False, with the pair taken
-     * off again, if the bound prunes it or it breaks a configuration.
+     * pair if that is lower, until it has its own. False, with the pair left
+     * unmapped, if the bound prunes it or it breaks a configuration.
      */
     private boolean push(int u, int v, int fragmentStart, int bondsBefore, long bound) {
         if (bridgeBound != null) {
@@ -1456,21 +1462,21 @@ final class MCSSearch {
 
         /** The most branches at an atom that are paired off. */
         private static final int MAX_BRANCHES = 8;
-        /** The most pairs of query and target states, 8 MB of bounds. */
-        private static final long MAX_PAIRS = 1_000_000;
-        /** The most counts of symbols and bond labels for the states of both molecules, 8 MB. */
+        /** The most pairs of query and target parts, 8 MB of bounds. */
+        private static final long MAX_PART_PAIRS = 1_000_000;
+        /** The most counts of symbols and bond labels for the parts of both molecules, 8 MB. */
         private static final long MAX_COUNTS = 2_000_000;
         private static final long ONE_ATOM = MCSGraph.score(1, 0, false);
         private static final long ONE_BOND = MCSGraph.score(0, 1, false);
 
         private final MCSGraph graph;
-        private final Branches query, target;
+        private final Parts queryParts, targetParts;
         /**
-         * The bound of each pair of states, in a row of target states for each
-         * query state, or 0 if their first atoms do not match. The first rows
-         * and columns are the atoms, so a pair of atoms is read directly.
+         * The bound of each pair of parts, in a row of target parts for each
+         * query part, or 0 if their roots do not match. The first rows and
+         * columns are the atoms, so a pair of atoms is read directly.
          */
-        private final long[] stateBound;
+        private final long[] pairBounds;
         /** Scratch of {@link #pairing}: the best score for each set of target branches used. */
         private final long[] bestByUsed = new long[1 << MAX_BRANCHES];
         /** A score that no connected mapping beats. */
@@ -1485,15 +1491,13 @@ final class MCSSearch {
             if (!graph.plainQuery)
                 return null;
             MCSGraph.Side query = graph.query, target = graph.target;
-            boolean[] queryRingBonds = MCSGraph.Rings.ringBonds(query.start, query.neighbour, query.neighbourBond,
-                                                                query.bondCount);
-            boolean[] targetRingBonds = MCSGraph.Rings.ringBonds(target.start, target.neighbour, target.neighbourBond,
-                                                                 target.bondCount);
-            long queryStates = Branches.count(query, queryRingBonds);
-            long targetStates = Branches.count(target, targetRingBonds);
+            boolean[] queryRingBonds = query.ringBonds(), targetRingBonds = target.ringBonds();
+            long queryPartCount = Parts.count(query, queryRingBonds);
+            long targetPartCount = Parts.count(target, targetRingBonds);
             long labels = graph.atomClasses + query.bondCount + target.bondCount;
-            if (queryStates == query.atomCount || targetStates == target.atomCount
-                || queryStates * targetStates > MAX_PAIRS || (queryStates + targetStates) * labels > MAX_COUNTS)
+            if (queryPartCount == query.atomCount || targetPartCount == target.atomCount
+                || queryPartCount * targetPartCount > MAX_PART_PAIRS
+                || (queryPartCount + targetPartCount) * labels > MAX_COUNTS)
                 return null;
             return new BridgeBound(graph, queryRingBonds, targetRingBonds, clock);
         }
@@ -1503,24 +1507,24 @@ final class MCSSearch {
             this.graph = graph;
             // Only the bond labels of the target can be common.
             long[] labels = LongStream.of(graph.target.bondLabels(graph.atomClasses)).distinct().toArray();
-            query = new Branches(graph.query, queryRingBonds, graph.atomClasses, labels, clock);
-            target = new Branches(graph.target, targetRingBonds, graph.atomClasses, labels, clock);
-            stateBound = new long[query.count * target.count];
-            for (int queryState : query.order) {
-                for (int targetState : target.order) {
+            queryParts = new Parts(graph.query, queryRingBonds, graph.atomClasses, labels, clock);
+            targetParts = new Parts(graph.target, targetRingBonds, graph.atomClasses, labels, clock);
+            pairBounds = new long[queryParts.count * targetParts.count];
+            for (int queryPart : queryParts.order) {
+                for (int targetPart : targetParts.order) {
                     clock.tick();
-                    stateBound[queryState * target.count + targetState] = pairBound(queryState, targetState, clock);
+                    pairBounds[queryPart * targetParts.count + targetPart] = pairBound(queryPart, targetPart, clock);
                 }
             }
             // Without a pair of anchors, each mapped pair has an atom that is no anchor on one side or the other.
-            long best = MCSGraph.score(query.nonAnchors + target.nonAnchors,
+            long best = MCSGraph.score(queryParts.nonAnchors + targetParts.nonAnchors,
                                        Math.min(graph.query.bondCount, graph.target.bondCount), false);
             for (int q = 0; q < graph.query.atomCount; q++) {
-                if (!query.anchor[q])
+                if (!queryParts.anchor[q])
                     continue;
                 for (int t = 0; t < graph.target.atomCount; t++) {
                     clock.tick();
-                    if (target.anchor[t])
+                    if (targetParts.anchor[t])
                         best = Math.max(best, bound(q, t));
                 }
             }
@@ -1529,33 +1533,33 @@ final class MCSSearch {
 
         /** A score that no connected mapping that maps query atom {@code q} onto target atom {@code t} beats. */
         long bound(int q, int t) {
-            return stateBound[q * target.count + t];
+            return pairBounds[q * targetParts.count + t];
         }
 
         /**
-         * The bound of two states: the symbols and bond labels they have in
+         * The bound of two parts: the symbols and bond labels they have in
          * common and, for two chain atoms, the best pairing of their branches.
          */
-        private long pairBound(int queryState, int targetState, MCSGraph.Clock clock) {
-            int q = query.root[queryState], t = target.root[targetState];
+        private long pairBound(int queryPart, int targetPart, MCSGraph.Clock clock) {
+            int q = queryParts.root[queryPart], t = targetParts.root[targetPart];
             int atomClass = graph.query.atomClass[q];
             if (atomClass < 0 || atomClass != graph.target.atomClass[t])
                 return 0;
-            long bound = labelBound(queryState, targetState, clock);
-            if (query.chainAtom[q] && target.chainAtom[t]
-                && query.branches[queryState].length <= MAX_BRANCHES
-                && target.branches[targetState].length <= MAX_BRANCHES)
-                bound = Math.min(bound, ONE_ATOM + pairing(queryState, targetState, clock));
+            long bound = labelBound(queryPart, targetPart, clock);
+            if (queryParts.chainAtom[q] && targetParts.chainAtom[t]
+                && queryParts.branches[queryPart].length <= MAX_BRANCHES
+                && targetParts.branches[targetPart].length <= MAX_BRANCHES)
+                bound = Math.min(bound, ONE_ATOM + pairing(queryPart, targetPart, clock));
             return bound;
         }
 
         /**
-         * The atoms and bonds two states have in common by symbol and by bond
+         * The atoms and bonds two parts have in common by symbol and by bond
          * label, with no more bonds than the atoms can hold.
          */
-        private long labelBound(int queryState, int targetState, MCSGraph.Clock clock) {
-            int[] queryAtoms = query.atomCounts[queryState], targetAtoms = target.atomCounts[targetState];
-            int[] queryBonds = query.bondCounts[queryState], targetBonds = target.bondCounts[targetState];
+        private long labelBound(int queryPart, int targetPart, MCSGraph.Clock clock) {
+            int[] queryAtoms = queryParts.atomCounts[queryPart], targetAtoms = targetParts.atomCounts[targetPart];
+            int[] queryBonds = queryParts.bondCounts[queryPart], targetBonds = targetParts.bondCounts[targetPart];
             clock.tick(queryAtoms.length + queryBonds.length);
             int atoms = 0;
             for (int c = 0; c < queryAtoms.length; c++)
@@ -1572,8 +1576,8 @@ final class MCSSearch {
          * through matching bonds, and adds the bound of the pair and the bond
          * to it. A branch may also be left out.
          */
-        private long pairing(int queryState, int targetState, MCSGraph.Clock clock) {
-            int[] queryBranches = query.branches[queryState], targetBranches = target.branches[targetState];
+        private long pairing(int queryPart, int targetPart, MCSGraph.Clock clock) {
+            int[] queryBranches = queryParts.branches[queryPart], targetBranches = targetParts.branches[targetPart];
             int sets = 1 << targetBranches.length;
             long[] best = bestByUsed;
             // -1 where no pairing uses the set
@@ -1581,16 +1585,16 @@ final class MCSSearch {
             best[0] = 0;
             for (int queryBranch : queryBranches) {
                 clock.tick(sets * (1 + targetBranches.length));
-                int queryBond = query.parentBond[queryBranch];
-                // The larger sets first, so that the query branch is paired once.
+                int queryBond = queryParts.parentBond[queryBranch];
+                // Supersets first, so that each query branch is paired at most once.
                 for (int used = sets - 1; used >= 0; used--) {
                     if (best[used] < 0)
                         continue;
                     for (int j = 0; j < targetBranches.length; j++) {
                         int targetBranch = targetBranches[j];
-                        long pair = stateBound[queryBranch * target.count + targetBranch];
+                        long pair = pairBounds[queryBranch * targetParts.count + targetBranch];
                         if ((used & 1 << j) != 0 || pair == 0
-                            || !graph.bondsMatch(queryBond, target.parentBond[targetBranch]))
+                            || !graph.bondsMatch(queryBond, targetParts.parentBond[targetBranch]))
                             continue;
                         int with = used | 1 << j;
                         best[with] = Math.max(best[with], best[used] + pair + ONE_BOND);
@@ -1604,21 +1608,25 @@ final class MCSSearch {
         }
 
         /**
-         * The states of one molecule, for {@link BridgeBound}. A state is a
-         * first atom and the atoms reached from it. The first states are the
-         * atoms, each with all the atoms joined to it. Then each bond on no
-         * ring gives two states, the atoms on either side of it.
+         * The parts of one molecule, for {@link BridgeBound}. A part is a root
+         * atom and the atoms reached from it. The first parts are the atoms,
+         * each with every atom connected to it. Then each bond on no ring
+         * gives two parts, the atoms on either side of it, rooted at the end
+         * on that side.
          */
-        private static final class Branches {
+        private static final class Parts {
 
             final int count;
-            /** The first atom of each state, and the bond into it, or -1 for an atom with all its branches. */
+            /** The root of each part, and the bond into it, or -1 for an atom with all its branches. */
             final int[] root, parentBond;
-            /** The states of the branches at the first atom of each state, other than back through its bond. */
+            /**
+             * The branches at the root of each part: the parts beyond its
+             * bonds on no ring, other than the bond into the part.
+             */
             final int[][] branches;
-            /** The atoms of each state by symbol class, and its bonds by label. */
+            /** The atoms of each part by symbol class, and its bonds by label. */
             final int[][] atomCounts, bondCounts;
-            /** The states, the smallest first, so that a branch comes before the states that hold it. */
+            /** The parts, the smallest first, so that a branch comes before the parts that hold it. */
             final int[] order;
             /** The atoms with no ring bonds. */
             final boolean[] chainAtom;
@@ -1627,18 +1635,19 @@ final class MCSSearch {
             /** The atoms that are no anchor. */
             final int nonAnchors;
 
-            /** The states of {@code side}, its bond labels numbered by their place in {@code labels}. */
-            Branches(MCSGraph.Side side, boolean[] ringBond, int atomClasses, long[] labels, MCSGraph.Clock clock) {
+            /** The parts of {@code side}, its bond labels numbered by their place in {@code labels}. */
+            Parts(MCSGraph.Side side, boolean[] ringBond, int atomClasses, long[] labels, MCSGraph.Clock clock) {
                 count = count(side, ringBond);
                 root = new int[count];
                 parentBond = new int[count];
                 chainAtom = new boolean[side.atomCount];
-                int[] beyond = numberStates(side, ringBond);
+                int[] beyond = numberParts(side, ringBond);
                 anchor = new boolean[side.atomCount];
                 int others = 0;
                 for (int a = 0; a < side.atomCount; a++) {
                     // A leaf on a ring atom is no anchor, as the branch from it holds the whole ring system.
-                    anchor[a] = chainAtom[a] && !(side.degree(a) == 1 && !chainAtom[side.neighbour[side.start[a]]]);
+                    boolean leafOnRing = side.degree(a) == 1 && !chainAtom[side.neighbour[side.start[a]]];
+                    anchor[a] = chainAtom[a] && !leafOnRing;
                     if (!anchor[a])
                         others++;
                 }
@@ -1648,14 +1657,14 @@ final class MCSSearch {
                 bondCounts = new int[count][labels.length];
                 int[] bondLabel = bondLabels(side, atomClasses, labels);
                 int[] size = new int[count], queue = new int[side.atomCount], seen = new int[side.atomCount];
-                for (int s = 0; s < count; s++) {
-                    branches[s] = branchesAt(side, s, beyond);
-                    size[s] = countLabels(side, s, bondLabel, queue, seen, clock);
+                for (int p = 0; p < count; p++) {
+                    branches[p] = branchesAt(side, p, beyond);
+                    size[p] = countLabels(side, p, bondLabel, queue, seen, clock);
                 }
                 order = bySize(size);
             }
 
-            /** The number of states: one for each atom, and two for each bond on no ring. */
+            /** The number of parts: one for each atom, and two for each bond on no ring. */
             static int count(MCSGraph.Side side, boolean[] ringBond) {
                 int count = side.atomCount;
                 for (boolean ring : ringBond) {
@@ -1666,11 +1675,11 @@ final class MCSSearch {
             }
 
             /**
-             * Sets the first atom and bond of each state and marks the chain
-             * atoms. Returns the state beyond each place of the neighbour
+             * Sets the root of each part and the bond into it, and marks the
+             * chain atoms. Returns the part beyond each place of the neighbour
              * lists, or -1 for a ring bond.
              */
-            private int[] numberStates(MCSGraph.Side side, boolean[] ringBond) {
+            private int[] numberParts(MCSGraph.Side side, boolean[] ringBond) {
                 int[] beyond = new int[side.neighbour.length];
                 Arrays.fill(beyond, -1);
                 Arrays.fill(parentBond, -1);
@@ -1692,42 +1701,45 @@ final class MCSSearch {
                 return beyond;
             }
 
-            /** The states of the branches at the first atom of state {@code s}, other than back through its bond. */
-            private int[] branchesAt(MCSGraph.Side side, int s, int[] beyond) {
-                int a = root[s];
+            /**
+             * The branches at the root of part {@code p}: the parts beyond its
+             * bonds on no ring, other than the bond into the part.
+             */
+            private int[] branchesAt(MCSGraph.Side side, int p, int[] beyond) {
+                int a = root[p];
                 int[] found = new int[side.degree(a)];
                 int size = 0;
                 for (int i = side.start[a]; i < side.start[a + 1]; i++) {
-                    if (beyond[i] >= 0 && side.neighbourBond[i] != parentBond[s])
+                    if (beyond[i] >= 0 && side.neighbourBond[i] != parentBond[p])
                         found[size++] = beyond[i];
                 }
                 return Arrays.copyOf(found, size);
             }
 
             /**
-             * Counts the atoms of state {@code s} by symbol class and its bonds
+             * Counts the atoms of part {@code p} by symbol class and its bonds
              * by label, and returns its number of atoms. The atoms reached are
-             * marked with s + 1 in {@code seen}.
+             * marked with p + 1 in {@code seen}.
              */
-            private int countLabels(MCSGraph.Side side, int s, int[] bondLabel, int[] queue, int[] seen,
+            private int countLabels(MCSGraph.Side side, int p, int[] bondLabel, int[] queue, int[] seen,
                                     MCSGraph.Clock clock) {
                 int size = 1;
-                queue[0] = root[s];
-                seen[root[s]] = s + 1;
+                queue[0] = root[p];
+                seen[root[p]] = p + 1;
                 for (int k = 0; k < size; k++) {
                     int a = queue[k];
                     clock.tick(1 + side.degree(a));
                     if (side.atomClass[a] >= 0)
-                        atomCounts[s][side.atomClass[a]]++;
+                        atomCounts[p][side.atomClass[a]]++;
                     for (int i = side.start[a]; i < side.start[a + 1]; i++) {
                         int b = side.neighbour[i], bond = side.neighbourBond[i];
-                        if (bond == parentBond[s])
+                        if (bond == parentBond[p])
                             continue;
                         // Each bond is counted at its higher end.
                         if (b < a && bondLabel[bond] >= 0)
-                            bondCounts[s][bondLabel[bond]]++;
-                        if (seen[b] != s + 1) {
-                            seen[b] = s + 1;
+                            bondCounts[p][bondLabel[bond]]++;
+                        if (seen[b] != p + 1) {
+                            seen[b] = p + 1;
                             queue[size++] = b;
                         }
                     }
@@ -1752,15 +1764,15 @@ final class MCSSearch {
                 return place;
             }
 
-            /** The states by size, the smallest first. */
+            /** The parts by size, the smallest first. */
             private static int[] bySize(int[] size) {
-                Integer[] states = new Integer[size.length];
-                for (int s = 0; s < size.length; s++)
-                    states[s] = s;
-                Arrays.sort(states, Comparator.comparingInt(s -> size[s]));
+                Integer[] parts = new Integer[size.length];
+                for (int p = 0; p < size.length; p++)
+                    parts[p] = p;
+                Arrays.sort(parts, Comparator.comparingInt(p -> size[p]));
                 int[] order = new int[size.length];
                 for (int k = 0; k < size.length; k++)
-                    order[k] = states[k];
+                    order[k] = parts[k];
                 return order;
             }
         }

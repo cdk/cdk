@@ -180,7 +180,7 @@ final class MCSCasesTest {
         NONE,
         /** Atom types and the CDK legacy aromaticity, as the SMSD tests prepared them. */
         LEGACY,
-        /** The Daylight aromaticity, as the MCS documentation advises. */
+        /** The Daylight aromaticity. */
         DAYLIGHT,
         /** Explicit hydrogens. */
         EXPLICIT_H

@@ -137,7 +137,6 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
  * <ul>
  *     <li>{@cdk.cite SMSD2009}</li>
  *     <li>{@cdk.cite SMSDPro2026}</li>
- *     <li>{@cdk.cite Cordella04}</li>
  * </ul>
  *
  * @author Syed Asad Rahman
