@@ -70,7 +70,10 @@ final class MCSGraph {
     final int atomClasses;
     /** Whether the classes decide every pair, as the query has no query atom or bond. */
     final boolean plainQuery;
-    /** The compatible bond pairs, bit f of row e, in rows of {@code bondWords} longs. */
+    /**
+     * The compatible bond pairs: a row of {@code bondWords} longs for each query
+     * bond, with a bit for each target bond.
+     */
     private final int bondWords;
     private long[] bondPairs;
     /**
@@ -130,12 +133,18 @@ final class MCSGraph {
         return (int) (bondsFirst ? score >>> 32 : score);
     }
 
-    /** Whether query bond {@code e} may be mapped onto target bond {@code f}, once {@link #compatiblePairs} has run. */
-    boolean bondsMatch(int e, int f) {
-        return (bondPairs[e * bondWords + (f >>> 6)] & 1L << f) != 0;
+    /**
+     * Whether query bond {@code queryBond} may be mapped onto target bond
+     * {@code targetBond}, once {@link #compatiblePairs} has run.
+     */
+    boolean bondsMatch(int queryBond, int targetBond) {
+        return (bondPairs[queryBond * bondWords + (targetBond >>> 6)] & 1L << targetBond) != 0;
     }
 
-    /** The compatible atom pairs, bit t of row q. This also works out the bond pairs that {@link #bondsMatch} reads. */
+    /**
+     * The compatible atom pairs: a row for each query atom, with a bit for each
+     * target atom. This also works out the bond pairs that {@link #bondsMatch} reads.
+     */
     long[] compatiblePairs(Clock clock) {
         // With complete rings the lowest bit of each class is the ring status, also for an atom without a symbol.
         int ringBit = query.rings != null ? 1 : 0;
@@ -154,25 +163,25 @@ final class MCSGraph {
                                         int[] targetClass, int classes, int ringBit, Clock clock) {
         int words = words(targetItems.length);
         long[] rows = new long[queryItems.length * words], byClass = new long[classes * words];
-        for (int j = 0; j < targetItems.length; j++) {
-            if (targetClass[j] >= 0)
-                byClass[targetClass[j] * words + (j >>> 6)] |= 1L << j;
+        for (int targetIndex = 0; targetIndex < targetItems.length; targetIndex++) {
+            if (targetClass[targetIndex] >= 0)
+                byClass[targetClass[targetIndex] * words + (targetIndex >>> 6)] |= 1L << targetIndex;
         }
-        for (int i = 0; i < queryItems.length; i++) {
-            IChemObject item = queryItems[i];
+        for (int queryIndex = 0; queryIndex < queryItems.length; queryIndex++) {
+            IChemObject item = queryItems[queryIndex];
             if (item instanceof IQueryAtom || item instanceof IQueryBond) {
                 // A recursive expression can cost a search of its own for each target atom.
                 clock.poll();
-                for (int j = 0; j < targetItems.length; j++) {
+                for (int targetIndex = 0; targetIndex < targetItems.length; targetIndex++) {
                     clock.tick();
-                    if (((queryClass[i] ^ targetClass[j]) & ringBit) == 0
-                        && (item instanceof IQueryAtom ? ((IQueryAtom) item).matches((IAtom) targetItems[j])
-                                                       : ((IQueryBond) item).matches((IBond) targetItems[j])))
-                        rows[i * words + (j >>> 6)] |= 1L << j;
+                    if (((queryClass[queryIndex] ^ targetClass[targetIndex]) & ringBit) == 0
+                        && (item instanceof IQueryAtom ? ((IQueryAtom) item).matches((IAtom) targetItems[targetIndex])
+                                                       : ((IQueryBond) item).matches((IBond) targetItems[targetIndex])))
+                        rows[queryIndex * words + (targetIndex >>> 6)] |= 1L << targetIndex;
                 }
-            } else if (queryClass[i] >= 0) {
+            } else if (queryClass[queryIndex] >= 0) {
                 clock.tick(words);
-                System.arraycopy(byClass, queryClass[i] * words, rows, i * words, words);
+                System.arraycopy(byClass, queryClass[queryIndex] * words, rows, queryIndex * words, words);
             }
         }
         return rows;
@@ -193,28 +202,29 @@ final class MCSGraph {
     long labelBound(boolean connected) {
         if (!plainQuery)
             return -1;
-        int[] queryCount = new int[atomClasses], targetCount = new int[atomClasses];
-        for (int c : query.atomClass) {
-            if (c >= 0)
-                queryCount[c]++;
+        int[] queryAtomsByClass = new int[atomClasses], targetAtomsByClass = new int[atomClasses];
+        for (int atomClass : query.atomClass) {
+            if (atomClass >= 0)
+                queryAtomsByClass[atomClass]++;
         }
-        for (int c : target.atomClass) {
-            if (c >= 0)
-                targetCount[c]++;
+        for (int atomClass : target.atomClass) {
+            if (atomClass >= 0)
+                targetAtomsByClass[atomClass]++;
         }
         long mostAtoms = 0, mostBonds = 0;
-        for (int c = 0; c < atomClasses; c++)
-            mostAtoms += Math.min(queryCount[c], targetCount[c]);
+        for (int atomClass = 0; atomClass < atomClasses; atomClass++)
+            mostAtoms += Math.min(queryAtomsByClass[atomClass], targetAtomsByClass[atomClass]);
         long[] queryLabels = query.bondLabels(atomClasses), targetLabels = target.bondLabels(atomClasses);
-        for (int i = 0, j = 0; i < queryLabels.length && j < targetLabels.length; ) {
-            if (queryLabels[i] < targetLabels[j]) {
-                i++;
-            } else if (queryLabels[i] > targetLabels[j]) {
-                j++;
+        for (int queryIndex = 0, targetIndex = 0;
+             queryIndex < queryLabels.length && targetIndex < targetLabels.length; ) {
+            if (queryLabels[queryIndex] < targetLabels[targetIndex]) {
+                queryIndex++;
+            } else if (queryLabels[queryIndex] > targetLabels[targetIndex]) {
+                targetIndex++;
             } else {
                 mostBonds++;
-                i++;
-                j++;
+                queryIndex++;
+                targetIndex++;
             }
         }
         if (connected) {
@@ -235,54 +245,55 @@ final class MCSGraph {
         if (query.stereo == null)
             return true;
         clock.tick(query.stereo.count);
-        for (int g = 0; g < groupParent.length; g++) {
-            groupParent[g] = g;
-            groupParity[g] = 0;
+        for (int group = 0; group < groupParent.length; group++) {
+            groupParent[group] = group;
+            groupParity[group] = 0;
         }
-        for (int i = 0; i < query.stereo.count; i++) {
-            int x = query.stereo.specified[i], y = image(queryToTarget, x);
-            if (y < 0 || target.stereo.config[y] == 0)
+        for (int position = 0; position < query.stereo.count; position++) {
+            int queryIndex = query.stereo.specified[position], targetIndex = image(queryToTarget, queryIndex);
+            if (targetIndex < 0 || target.stereo.config[targetIndex] == 0)
                 continue;
-            int parity = x < query.atomCount ? centre(queryToTarget, x, y) : doubleBond(queryToTarget, x, y);
-            if (parity >= 0 && !join(query.stereo.group[x], target.stereo.group[y], parity))
+            int parity = queryIndex < query.atomCount ? centre(queryToTarget, queryIndex, targetIndex)
+                                                      : doubleBond(queryToTarget, queryIndex, targetIndex);
+            if (parity >= 0 && !join(query.stereo.group[queryIndex], target.stereo.group[targetIndex], parity))
                 return false;
         }
         return true;
     }
 
     /**
-     * The target index at the image of query index {@code x}: the image of a
+     * The target index at the image of query index {@code queryIndex}: the image of a
      * centre, or the bond between the images of the ends of a double bond. It
      * is -1 if there is none.
      */
-    private int image(int[] queryToTarget, int x) {
-        if (x < query.atomCount)
-            return queryToTarget[x];
-        int v1 = queryToTarget[query.stereo.carrier(x, Stereo.FIRST_END)];
-        int v2 = queryToTarget[query.stereo.carrier(x, Stereo.SECOND_END)];
-        int f = v1 < 0 || v2 < 0 ? -1 : target.bondBetween(v1, v2);
-        return f < 0 ? -1 : target.atomCount + f;
+    private int image(int[] queryToTarget, int queryIndex) {
+        if (queryIndex < query.atomCount)
+            return queryToTarget[queryIndex];
+        int firstEnd = queryToTarget[query.stereo.carrier(queryIndex, Stereo.FIRST_END)];
+        int secondEnd = queryToTarget[query.stereo.carrier(queryIndex, Stereo.SECOND_END)];
+        int targetBond = firstEnd < 0 || secondEnd < 0 ? -1 : target.bondBetween(firstEnd, secondEnd);
+        return targetBond < 0 ? -1 : target.atomCount + targetBond;
     }
 
     /**
-     * Compares query centre {@code u} with target centre {@code v}, its image,
+     * Compares query centre {@code queryCentre} with target centre {@code targetCentre}, its image,
      * through the permutation that pairs their carriers. The result is 1 when
      * they disagree and 0 when they agree. It is -1 when fewer than three
      * carriers pair up.
      */
-    private int centre(int[] queryToTarget, int u, int v) {
+    private int centre(int[] queryToTarget, int queryCentre, int targetCentre) {
         int paired = 0, taken = 0;
-        for (int i = 0; i < CARRIERS; i++) {
-            int c = query.stereo.carrier(u, i);
-            int x = c == u ? -1 : queryToTarget[c];
-            carrierPlaces[i] = -1;
-            for (int j = 0; x >= 0 && j < CARRIERS; j++) {
-                if (target.stereo.carrier(v, j) == x)
-                    carrierPlaces[i] = j;
+        for (int queryPlace = 0; queryPlace < CARRIERS; queryPlace++) {
+            int carrier = query.stereo.carrier(queryCentre, queryPlace);
+            int carrierImage = carrier == queryCentre ? -1 : queryToTarget[carrier];
+            carrierPlaces[queryPlace] = -1;
+            for (int targetPlace = 0; carrierImage >= 0 && targetPlace < CARRIERS; targetPlace++) {
+                if (target.stereo.carrier(targetCentre, targetPlace) == carrierImage)
+                    carrierPlaces[queryPlace] = targetPlace;
             }
-            if (carrierPlaces[i] >= 0) {
+            if (carrierPlaces[queryPlace] >= 0) {
                 paired++;
-                taken |= 1 << carrierPlaces[i];
+                taken |= 1 << carrierPlaces[queryPlace];
             }
         }
         if (paired < CARRIERS - 1)
@@ -291,12 +302,12 @@ final class MCSGraph {
         int left = 0;
         while ((taken & 1 << left) != 0)
             left++;
-        int parity = query.stereo.config[u] == target.stereo.config[v] ? 0 : 1;
-        for (int i = 0; i < CARRIERS; i++) {
-            if (carrierPlaces[i] < 0)
-                carrierPlaces[i] = left;
-            for (int j = 0; j < i; j++) {
-                if (carrierPlaces[j] > carrierPlaces[i])
+        int parity = query.stereo.config[queryCentre] == target.stereo.config[targetCentre] ? 0 : 1;
+        for (int queryPlace = 0; queryPlace < CARRIERS; queryPlace++) {
+            if (carrierPlaces[queryPlace] < 0)
+                carrierPlaces[queryPlace] = left;
+            for (int earlierPlace = 0; earlierPlace < queryPlace; earlierPlace++) {
+                if (carrierPlaces[earlierPlace] > carrierPlaces[queryPlace])
                     parity ^= 1;
             }
         }
@@ -304,57 +315,62 @@ final class MCSGraph {
     }
 
     /**
-     * Compares query double bond {@code x} with target double bond {@code y}
+     * Compares query double bond {@code queryIndex} with target double bond {@code targetIndex}
      * between the images of its ends, as {@link #centre} does for a centre. A
      * mapped neighbour of an end that is not the stored one reads the
      * configuration inverted.
      */
-    private int doubleBond(int[] queryToTarget, int x, int y) {
-        int u1 = query.stereo.carrier(x, Stereo.FIRST_END), u2 = query.stereo.carrier(x, Stereo.SECOND_END);
-        int v1 = queryToTarget[u1], v2 = queryToTarget[u2];
-        // The place of the stored neighbour at target end v1.
-        int first = target.stereo.carrier(y, Stereo.FIRST_END) == v1 ? 0 : 1;
-        int a = end(queryToTarget, u1, u2, v1, query.stereo.carrier(x, 0), target.stereo.carrier(y, first));
-        int b = end(queryToTarget, u2, u1, v2, query.stereo.carrier(x, 1), target.stereo.carrier(y, 1 - first));
-        if (a < 0 || b < 0)
+    private int doubleBond(int[] queryToTarget, int queryIndex, int targetIndex) {
+        int queryFirstEnd = query.stereo.carrier(queryIndex, Stereo.FIRST_END);
+        int querySecondEnd = query.stereo.carrier(queryIndex, Stereo.SECOND_END);
+        int targetFirstEnd = queryToTarget[queryFirstEnd], targetSecondEnd = queryToTarget[querySecondEnd];
+        // The place of the stored neighbour at the first target end.
+        int first = target.stereo.carrier(targetIndex, Stereo.FIRST_END) == targetFirstEnd ? 0 : 1;
+        int firstParity = end(queryToTarget, queryFirstEnd, querySecondEnd, targetFirstEnd,
+                              query.stereo.carrier(queryIndex, 0), target.stereo.carrier(targetIndex, first));
+        int secondParity = end(queryToTarget, querySecondEnd, queryFirstEnd, targetSecondEnd,
+                               query.stereo.carrier(queryIndex, 1), target.stereo.carrier(targetIndex, 1 - first));
+        if (firstParity < 0 || secondParity < 0)
             return -1;
-        return a ^ b ^ (query.stereo.config[x] == target.stereo.config[y] ? 0 : 1);
+        return firstParity ^ secondParity
+               ^ (query.stereo.config[queryIndex] == target.stereo.config[targetIndex] ? 0 : 1);
     }
 
     /**
-     * Compares the stored neighbours at query end {@code u} and its image,
-     * target end {@code v}. They are compared through a neighbour of
-     * {@code u}, other than {@code w}, whose image is next to {@code v}. The
+     * Compares the stored neighbours at query end {@code queryEnd} and its image,
+     * target end {@code targetEnd}. They are compared through a neighbour of
+     * {@code queryEnd}, other than {@code otherEnd}, whose image is next to {@code targetEnd}. The
      * result is 1 when it is the stored one on one side only, 0 when on both
      * or neither, and -1 when there is no such neighbour.
      */
-    private int end(int[] queryToTarget, int u, int w, int v, int queryStored, int targetStored) {
-        for (int i = query.start[u]; i < query.start[u + 1]; i++) {
-            int x = query.neighbour[i], y = x == w ? -1 : queryToTarget[x];
-            if (y >= 0 && target.bondBetween(v, y) >= 0)
-                return (x == queryStored) == (y == targetStored) ? 0 : 1;
+    private int end(int[] queryToTarget, int queryEnd, int otherEnd, int targetEnd, int queryStored, int targetStored) {
+        for (int place = query.start[queryEnd]; place < query.start[queryEnd + 1]; place++) {
+            int queryNeighbour = query.neighbour[place];
+            int neighbourImage = queryNeighbour == otherEnd ? -1 : queryToTarget[queryNeighbour];
+            if (neighbourImage >= 0 && target.bondBetween(targetEnd, neighbourImage) >= 0)
+                return (queryNeighbour == queryStored) == (neighbourImage == targetStored) ? 0 : 1;
         }
         return -1;
     }
 
     /**
-     * Whether groups {@code a} and {@code b} can each be kept or inverted so
+     * Whether groups {@code queryGroup} and {@code targetGroup} can each be kept or inverted so
      * that one more pair of configurations agrees, given the pairs compared
      * before. The {@code parity} is 1 when the two disagree as they are.
      */
-    private boolean join(int a, int b, int parity) {
-        while (groupParent[a] != a) {
-            parity ^= groupParity[a];
-            a = groupParent[a];
+    private boolean join(int queryGroup, int targetGroup, int parity) {
+        while (groupParent[queryGroup] != queryGroup) {
+            parity ^= groupParity[queryGroup];
+            queryGroup = groupParent[queryGroup];
         }
-        while (groupParent[b] != b) {
-            parity ^= groupParity[b];
-            b = groupParent[b];
+        while (groupParent[targetGroup] != targetGroup) {
+            parity ^= groupParity[targetGroup];
+            targetGroup = groupParent[targetGroup];
         }
-        if (a == b)
+        if (queryGroup == targetGroup)
             return parity == 0;
-        groupParent[a] = b;
-        groupParity[a] = parity;
+        groupParent[queryGroup] = targetGroup;
+        groupParity[queryGroup] = parity;
         return true;
     }
 
@@ -382,7 +398,7 @@ final class MCSGraph {
 
         private final int[] start, neighbour;
         private final Clock clock;
-        private final int n;
+        private final int atomCount;
         /** The atoms in rank order, and the place of each atom in it. */
         private final int[] order, place;
         /** The cell of each atom, and the place where each cell starts and its size. */
@@ -408,38 +424,39 @@ final class MCSGraph {
             this.start = start;
             this.neighbour = neighbour;
             this.clock = clock;
-            n = colour.length;
-            order = new int[n];
-            place = new int[n];
-            cell = new int[n];
-            cellStart = new int[n];
-            cellSize = new int[n];
+            atomCount = colour.length;
+            order = new int[atomCount];
+            place = new int[atomCount];
+            cell = new int[atomCount];
+            cellStart = new int[atomCount];
+            cellSize = new int[atomCount];
             ranks = new int[neighbour.length];
-            toSort = new int[n];
-            listed = new int[n];
-            moved = new int[n];
-            sorting = new Integer[n];
-            byCell = new long[n];
-            byNeighbours = (a, b) -> {
-                int c = Integer.compare(start[a + 1] - start[a], start[b + 1] - start[b]);
-                for (int i = start[a], j = start[b]; c == 0 && i < start[a + 1]; i++, j++)
-                    c = Integer.compare(ranks[i], ranks[j]);
-                return c;
+            toSort = new int[atomCount];
+            listed = new int[atomCount];
+            moved = new int[atomCount];
+            sorting = new Integer[atomCount];
+            byCell = new long[atomCount];
+            byNeighbours = (left, right) -> {
+                int comparison = Integer.compare(start[left + 1] - start[left], start[right + 1] - start[right]);
+                for (int leftPlace = start[left], rightPlace = start[right];
+                     comparison == 0 && leftPlace < start[left + 1]; leftPlace++, rightPlace++)
+                    comparison = Integer.compare(ranks[leftPlace], ranks[rightPlace]);
+                return comparison;
             };
-            for (int c : colour)
-                cellSize[c]++;
-            while (cells < n && cellSize[cells] > 0) {
+            for (int atomColour : colour)
+                cellSize[atomColour]++;
+            while (cells < atomCount && cellSize[cells] > 0) {
                 cellStart[cells] = cells == 0 ? 0 : cellStart[cells - 1] + cellSize[cells - 1];
                 cells++;
             }
-            int[] filled = new int[n];
-            for (int a = 0; a < n; a++) {
-                cell[a] = colour[a];
-                place[a] = cellStart[cell[a]] + filled[cell[a]]++;
-                order[place[a]] = a;
-                toSort[a] = a;
+            int[] filled = new int[atomCount];
+            for (int atom = 0; atom < atomCount; atom++) {
+                cell[atom] = colour[atom];
+                place[atom] = cellStart[cell[atom]] + filled[cell[atom]]++;
+                order[place[atom]] = atom;
+                toSort[atom] = atom;
             }
-            toSortCount = n;
+            toSortCount = atomCount;
             Arrays.fill(listed, round);
         }
 
@@ -449,26 +466,26 @@ final class MCSGraph {
                 movedCount = 0;
                 int shared = sortByCell();
                 // Every rank is read before any cell splits.
-                for (int i = 0, j; i < shared; i = j) {
-                    j = cellEnd(i, shared);
-                    readRanks(i, j);
+                for (int from = 0, to; from < shared; from = to) {
+                    to = cellEnd(from, shared);
+                    readRanks(from, to);
                 }
-                for (int i = 0, j; i < shared; i = j) {
-                    j = cellEnd(i, shared);
-                    splitCell(i, j);
+                for (int from = 0, to; from < shared; from = to) {
+                    to = cellEnd(from, shared);
+                    splitCell(from, to);
                 }
                 if (movedCount == 0) {
-                    while (firstShared < n && cellSize[cell[order[firstShared]]] == 1)
+                    while (firstShared < atomCount && cellSize[cell[order[firstShared]]] == 1)
                         firstShared++;
-                    if (!individualise || firstShared == n)
+                    if (!individualise || firstShared == atomCount)
                         break;
                     individualise(firstShared);
                 }
                 listNeighbours();
             }
-            int[] rank = new int[n];
-            for (int a = 0; a < n; a++)
-                rank[a] = cellStart[cell[a]];
+            int[] rank = new int[atomCount];
+            for (int atom = 0; atom < atomCount; atom++)
+                rank[atom] = cellStart[cell[atom]];
             return rank;
         }
 
@@ -479,9 +496,9 @@ final class MCSGraph {
         private int sortByCell() {
             int shared = 0;
             for (int i = 0; i < toSortCount; i++) {
-                int a = toSort[i];
-                if (cellSize[cell[a]] > 1)
-                    byCell[shared++] = (long) cell[a] << 32 | a;
+                int atom = toSort[i];
+                if (cellSize[cell[atom]] > 1)
+                    byCell[shared++] = (long) cell[atom] << 32 | atom;
             }
             Arrays.sort(byCell, 0, shared);
             for (int i = 0; i < shared; i++)
@@ -489,12 +506,12 @@ final class MCSGraph {
             return shared;
         }
 
-        /** The end of the atoms to sort from place {@code i} that are in its cell. */
-        private int cellEnd(int i, int shared) {
-            int j = i + 1;
-            while (j < shared && cell[toSort[j]] == cell[toSort[i]])
-                j++;
-            return j;
+        /** The end of the atoms to sort from place {@code from} that are in its cell. */
+        private int cellEnd(int from, int shared) {
+            int to = from + 1;
+            while (to < shared && cell[toSort[to]] == cell[toSort[from]])
+                to++;
+            return to;
         }
 
         /**
@@ -511,19 +528,19 @@ final class MCSGraph {
                 sortNeighbourRanks(standIn);
         }
 
-        /** Puts the sorted ranks of the neighbours of atom {@code a} at its places in {@link #ranks}. */
-        private void sortNeighbourRanks(int a) {
-            clock.tick(1 + start[a + 1] - start[a]);
-            for (int j = start[a]; j < start[a + 1]; j++)
-                ranks[j] = cellStart[cell[neighbour[j]]];
-            Arrays.sort(ranks, start[a], start[a + 1]);
+        /** Puts the sorted ranks of the neighbours of {@code atom} at its places in {@link #ranks}. */
+        private void sortNeighbourRanks(int atom) {
+            clock.tick(1 + start[atom + 1] - start[atom]);
+            for (int neighbourPlace = start[atom]; neighbourPlace < start[atom + 1]; neighbourPlace++)
+                ranks[neighbourPlace] = cellStart[cell[neighbour[neighbourPlace]]];
+            Arrays.sort(ranks, start[atom], start[atom + 1]);
         }
 
-        /** An atom of cell {@code c} that is not listed for this round, or -1 if there is none. */
-        private int unlisted(int c) {
-            for (int p = cellStart[c]; p < cellStart[c] + cellSize[c]; p++) {
-                if (listed[order[p]] != round)
-                    return order[p];
+        /** An atom of cell {@code cellName} that is not listed for this round, or -1 if there is none. */
+        private int unlisted(int cellName) {
+            for (int position = cellStart[cellName]; position < cellStart[cellName] + cellSize[cellName]; position++) {
+                if (listed[order[position]] != round)
+                    return order[position];
             }
             return -1;
         }
@@ -535,7 +552,8 @@ final class MCSGraph {
          * becomes a cell, and the largest keeps the name of the cell.
          */
         private void splitCell(int from, int to) {
-            int c = cell[toSort[from]], standIn = unlisted(c), unlistedCount = cellSize[c] - (to - from);
+            int cellName = cell[toSort[from]], standIn = unlisted(cellName);
+            int unlistedCount = cellSize[cellName] - (to - from);
             int count = 0;
             for (int i = from; i < to; i++)
                 sorting[count++] = toSort[i];
@@ -546,61 +564,61 @@ final class MCSGraph {
             if (runEnd(0, count) == count)
                 return;
             int largestRun = 0, largestSize = 0, standInRun = -1;
-            for (int x = 0, y; x < count; x = y) {
-                y = runEnd(x, count);
-                int size = runSize(x, y, standIn, unlistedCount);
+            for (int runFrom = 0, runTo; runFrom < count; runFrom = runTo) {
+                runTo = runEnd(runFrom, count);
+                int size = runSize(runFrom, runTo, standIn, unlistedCount);
                 if (size > largestSize) {
-                    largestRun = x;
+                    largestRun = runFrom;
                     largestSize = size;
                 }
-                for (int z = x; z < y; z++) {
-                    if (sorting[z] == standIn)
-                        standInRun = x;
+                for (int sortedPlace = runFrom; sortedPlace < runTo; sortedPlace++) {
+                    if (sorting[sortedPlace] == standIn)
+                        standInRun = runFrom;
                 }
             }
             // The listed atoms move to their places in run order, around the run of the stand-in. That run then
             // holds the unlisted atoms.
             int renamed = -1;
-            for (int x = 0, y, p = cellStart[c]; x < count; x = y) {
-                y = runEnd(x, count);
-                int size = runSize(x, y, standIn, unlistedCount);
-                int name = x == largestRun ? c : cells++;
-                cellStart[name] = p;
-                cellSize[name] = size;
-                if (x == standInRun) {
-                    if (name != c)
-                        renamed = name;
+            for (int runFrom = 0, runTo, position = cellStart[cellName]; runFrom < count; runFrom = runTo) {
+                runTo = runEnd(runFrom, count);
+                int size = runSize(runFrom, runTo, standIn, unlistedCount);
+                int runCell = runFrom == largestRun ? cellName : cells++;
+                cellStart[runCell] = position;
+                cellSize[runCell] = size;
+                if (runFrom == standInRun) {
+                    if (runCell != cellName)
+                        renamed = runCell;
                 } else {
-                    for (int z = x; z < y; z++) {
-                        moveTo(sorting[z], p + z - x);
-                        if (name != c)
-                            changeCell(sorting[z], name);
+                    for (int sortedPlace = runFrom; sortedPlace < runTo; sortedPlace++) {
+                        moveTo(sorting[sortedPlace], position + sortedPlace - runFrom);
+                        if (runCell != cellName)
+                            changeCell(sorting[sortedPlace], runCell);
                     }
                 }
-                p += size;
+                position += size;
             }
             if (renamed >= 0) {
-                for (int p = cellStart[renamed]; p < cellStart[renamed] + cellSize[renamed]; p++)
-                    changeCell(order[p], renamed);
+                for (int position = cellStart[renamed]; position < cellStart[renamed] + cellSize[renamed]; position++)
+                    changeCell(order[position], renamed);
             }
         }
 
-        /** The end of the run of sorted atoms from {@code x} with equal neighbour ranks. */
-        private int runEnd(int x, int count) {
-            int y = x + 1;
-            while (y < count && byNeighbours.compare(sorting[x], sorting[y]) == 0)
-                y++;
-            return y;
+        /** The end of the run of sorted atoms from {@code runFrom} with equal neighbour ranks. */
+        private int runEnd(int runFrom, int count) {
+            int runTo = runFrom + 1;
+            while (runTo < count && byNeighbours.compare(sorting[runFrom], sorting[runTo]) == 0)
+                runTo++;
+            return runTo;
         }
 
         /**
-         * The atoms in the run of sorted atoms from {@code x} to {@code y - 1}.
+         * The atoms in the run of sorted atoms from {@code runFrom} to {@code runTo - 1}.
          * The stand-in counts for every unlisted atom.
          */
-        private int runSize(int x, int y, int standIn, int unlistedCount) {
+        private int runSize(int runFrom, int runTo, int standIn, int unlistedCount) {
             int size = 0;
-            for (int z = x; z < y; z++)
-                size += sorting[z] == standIn ? unlistedCount : 1;
+            for (int sortedPlace = runFrom; sortedPlace < runTo; sortedPlace++)
+                size += sorting[sortedPlace] == standIn ? unlistedCount : 1;
             return size;
         }
 
@@ -609,45 +627,45 @@ final class MCSGraph {
          * {@code first} in a cell of its own, before its peers.
          */
         private void individualise(int first) {
-            int c = cell[order[first]], pick = first;
-            clock.tick(cellSize[c]);
-            for (int p = first + 1; p < first + cellSize[c]; p++) {
-                if (order[p] < order[pick])
-                    pick = p;
+            int cellName = cell[order[first]], pick = first;
+            clock.tick(cellSize[cellName]);
+            for (int position = first + 1; position < first + cellSize[cellName]; position++) {
+                if (order[position] < order[pick])
+                    pick = position;
             }
-            int a = order[pick];
-            moveTo(a, first);
+            int atom = order[pick];
+            moveTo(atom, first);
             cellStart[cells] = first;
             cellSize[cells] = 1;
-            cellStart[c]++;
-            cellSize[c]--;
-            changeCell(a, cells++);
+            cellStart[cellName]++;
+            cellSize[cellName]--;
+            changeCell(atom, cells++);
         }
 
-        /** Puts atom {@code a} at place {@code p}, and the atom that was there at the old place of a. */
-        private void moveTo(int a, int p) {
-            int b = order[p];
-            order[place[a]] = b;
-            place[b] = place[a];
-            order[p] = a;
-            place[a] = p;
+        /** Puts {@code atom} at place {@code newPlace}, and the atom that was there at its old place. */
+        private void moveTo(int atom, int newPlace) {
+            int displaced = order[newPlace];
+            order[place[atom]] = displaced;
+            place[displaced] = place[atom];
+            order[newPlace] = atom;
+            place[atom] = newPlace;
         }
 
-        private void changeCell(int a, int c) {
-            cell[a] = c;
-            moved[movedCount++] = a;
+        private void changeCell(int atom, int cellName) {
+            cell[atom] = cellName;
+            moved[movedCount++] = atom;
         }
 
         /** Lists the neighbours of the atoms that changed cell, to sort in the next round. */
         private void listNeighbours() {
             toSortCount = 0;
-            for (int i = 0; i < movedCount; i++) {
-                int a = moved[i];
-                clock.tick(1 + start[a + 1] - start[a]);
-                for (int j = start[a]; j < start[a + 1]; j++) {
-                    if (listed[neighbour[j]] != round + 1) {
-                        listed[neighbour[j]] = round + 1;
-                        toSort[toSortCount++] = neighbour[j];
+            for (int movedIndex = 0; movedIndex < movedCount; movedIndex++) {
+                int atom = moved[movedIndex];
+                clock.tick(1 + start[atom + 1] - start[atom]);
+                for (int neighbourPlace = start[atom]; neighbourPlace < start[atom + 1]; neighbourPlace++) {
+                    if (listed[neighbour[neighbourPlace]] != round + 1) {
+                        listed[neighbour[neighbourPlace]] = round + 1;
+                        toSort[toSortCount++] = neighbour[neighbourPlace];
                     }
                 }
             }
@@ -669,18 +687,18 @@ final class MCSGraph {
         return ranks;
     }
 
-    /** Mixes the bits of {@code x}, with the finaliser of SplitMix64. */
-    private static long mix(long x) {
-        x = (x ^ x >>> 30) * 0xbf58476d1ce4e5b9L;
-        x = (x ^ x >>> 27) * 0x94d049bb133111ebL;
-        return x ^ x >>> 31;
+    /** Mixes the bits of {@code value}, with the finaliser of SplitMix64. */
+    private static long mix(long value) {
+        value = (value ^ value >>> 30) * 0xbf58476d1ce4e5b9L;
+        value = (value ^ value >>> 27) * 0x94d049bb133111ebL;
+        return value ^ value >>> 31;
     }
 
     /** One molecule of the search as an int graph. */
     static final class Side {
 
         final int atomCount, bondCount;
-        /** The neighbours of atom a, and the bonds to them, are at places start[a] to start[a + 1] - 1. */
+        /** The neighbours of an atom, and the bonds to them, are at places start[atom] to start[atom + 1] - 1. */
         final int[] start, neighbour, neighbourBond;
         /** The hash of the symbol of each atom of the original molecule, 0 for none, for the search order and seed. */
         final int[] symbolHash;
@@ -717,31 +735,31 @@ final class MCSGraph {
             rings = withRings ? new Rings(start, neighbour, neighbourBond, bondCount) : null;
             symbolHash = new int[atomCount];
             atomClass = new int[atomCount];
-            for (int i = 0; i < atomCount; i++) {
-                String label = original.getAtom(i).getSymbol(), symbol = atoms[i].getSymbol();
-                symbolHash[i] = label == null ? 0 : label.hashCode();
-                atomClass[i] = symbol == null ? -1 : symbols.computeIfAbsent(symbol, s -> symbols.size());
+            for (int atom = 0; atom < atomCount; atom++) {
+                String label = original.getAtom(atom).getSymbol(), symbol = atoms[atom].getSymbol();
+                symbolHash[atom] = label == null ? 0 : label.hashCode();
+                atomClass[atom] = symbol == null ? -1 : symbols.computeIfAbsent(symbol, key -> symbols.size());
                 if (withRings)
-                    atomClass[i] = 2 * atomClass[i] + (rings.ringAtom[i] ? 1 : 0);
+                    atomClass[atom] = 2 * atomClass[atom] + (rings.ringAtom[atom] ? 1 : 0);
             }
             bondClass = new int[bondCount];
-            for (int i = 0; i < bondCount; i++) {
-                IBond.Order order = bonds[i].getOrder();
-                bondClass[i] = bonds[i].isAromatic() ? 0 : order == null ? 1 : 2 + order.ordinal();
+            for (int bond = 0; bond < bondCount; bond++) {
+                IBond.Order order = bonds[bond].getOrder();
+                bondClass[bond] = bonds[bond].isAromatic() ? 0 : order == null ? 1 : 2 + order.ordinal();
                 if (withRings)
-                    bondClass[i] = 2 * bondClass[i] + (rings.ringBond[i] ? 1 : 0);
+                    bondClass[bond] = 2 * bondClass[bond] + (rings.ringBond[bond] ? 1 : 0);
             }
             stereo = withStereo ? new Stereo(original, start, neighbour, firstGroup) : null;
         }
 
-        int degree(int a) {
-            return start[a + 1] - start[a];
+        int degree(int atom) {
+            return start[atom + 1] - start[atom];
         }
 
         int maxDegree() {
             int max = 0;
-            for (int a = 0; a < atomCount; a++)
-                max = Math.max(max, degree(a));
+            for (int atom = 0; atom < atomCount; atom++)
+                max = Math.max(max, degree(atom));
             return max;
         }
 
@@ -767,9 +785,9 @@ final class MCSGraph {
             if (omitted < 1 || omitted > 2)
                 return bondCount;
             int first = Integer.MAX_VALUE, second = Integer.MAX_VALUE;
-            for (int a = 0; a < atomCount; a++) {
+            for (int atom = 0; atom < atomCount; atom++) {
                 clock.tick();
-                int degree = degree(a);
+                int degree = degree(atom);
                 if (degree < first) {
                     second = first;
                     first = degree;
@@ -780,59 +798,59 @@ final class MCSGraph {
             if (omitted == 1)
                 return bondCount - first;
             int sum = first + second;
-            for (int a = 0; a < atomCount; a++) {
-                clock.tick(1 + degree(a));
-                for (int i = start[a]; i < start[a + 1]; i++) {
-                    if (degree(a) + degree(neighbour[i]) == sum)
+            for (int atom = 0; atom < atomCount; atom++) {
+                clock.tick(1 + degree(atom));
+                for (int i = start[atom]; i < start[atom + 1]; i++) {
+                    if (degree(atom) + degree(neighbour[i]) == sum)
                         return bondCount - sum + 1;
                 }
             }
             return bondCount - sum;
         }
 
-        /** The bond between atoms {@code a} and {@code b}, or -1 if there is none. */
-        int bondBetween(int a, int b) {
-            for (int i = start[a]; i < start[a + 1]; i++) {
-                if (neighbour[i] == b)
+        /** The bond between atoms {@code atom} and {@code other}, or -1 if there is none. */
+        int bondBetween(int atom, int other) {
+            for (int i = start[atom]; i < start[atom + 1]; i++) {
+                if (neighbour[i] == other)
                     return neighbourBond[i];
             }
             return -1;
         }
 
         /**
-         * Whether a configuration reads atom {@code a}, as a centre or carrier,
+         * Whether a configuration reads {@code atom}, as a centre or carrier,
          * or as an end of a double bond or next to one. Mapping or swapping
          * such an atom can change what {@link MCSGraph#stereoConsistent} finds.
          * False unless stereochemistry is checked.
          */
-        boolean configured(int a) {
-            return stereo != null && stereo.reads[a];
+        boolean configured(int atom) {
+            return stereo != null && stereo.reads[atom];
         }
 
         /** The dense ranks of the atoms by their number of choices, then their degree, then their symbol. */
         int[] invariants(int[] choices) {
             long[] keys = new long[atomCount];
-            for (int a = 0; a < atomCount; a++)
-                keys[a] = symbolHash[a];
+            for (int atom = 0; atom < atomCount; atom++)
+                keys[atom] = symbolHash[atom];
             int[] symbol = denseRanks(keys);
             long degrees = maxDegree() + 1;
-            for (int a = 0; a < atomCount; a++)
-                keys[a] = (choices[a] * degrees + degree(a)) * atomCount + symbol[a];
+            for (int atom = 0; atom < atomCount; atom++)
+                keys[atom] = (choices[atom] * degrees + degree(atom)) * atomCount + symbol[atom];
             return denseRanks(keys);
         }
 
         /** Atom signatures by radius: symbol and degree at 0, then each mixed with the sum over its neighbours. */
         long[][] signatures(Clock clock) {
             long[][] signature = new long[RADII][atomCount];
-            for (int a = 0; a < atomCount; a++)
-                signature[0][a] = mix(symbolHash[a] * 31L + degree(a));
-            for (int r = 1; r < RADII; r++) {
-                for (int a = 0; a < atomCount; a++) {
-                    clock.tick(1 + degree(a));
+            for (int atom = 0; atom < atomCount; atom++)
+                signature[0][atom] = mix(symbolHash[atom] * 31L + degree(atom));
+            for (int radius = 1; radius < RADII; radius++) {
+                for (int atom = 0; atom < atomCount; atom++) {
+                    clock.tick(1 + degree(atom));
                     long sum = 0;
-                    for (int i = start[a]; i < start[a + 1]; i++)
-                        sum += mix(signature[r - 1][neighbour[i]]);
-                    signature[r][a] = mix(signature[r - 1][a] * GOLDEN_GAMMA + sum);
+                    for (int i = start[atom]; i < start[atom + 1]; i++)
+                        sum += mix(signature[radius - 1][neighbour[i]]);
+                    signature[radius][atom] = mix(signature[radius - 1][atom] * GOLDEN_GAMMA + sum);
                 }
             }
             return signature;
@@ -842,11 +860,11 @@ final class MCSGraph {
         long[] bondLabels(int atomClasses) {
             long[] labels = new long[bondCount];
             int size = 0;
-            for (int a = 0; a < atomCount; a++) {
-                for (int i = start[a]; i < start[a + 1]; i++) {
-                    int b = neighbour[i];
-                    if (b > a && atomClass[a] >= 0 && atomClass[b] >= 0)
-                        labels[size++] = bondLabel(a, b, neighbourBond[i], atomClasses);
+            for (int atom = 0; atom < atomCount; atom++) {
+                for (int i = start[atom]; i < start[atom + 1]; i++) {
+                    int other = neighbour[i];
+                    if (other > atom && atomClass[atom] >= 0 && atomClass[other] >= 0)
+                        labels[size++] = bondLabel(atom, other, neighbourBond[i], atomClasses);
                 }
             }
             labels = Arrays.copyOf(labels, size);
@@ -865,17 +883,18 @@ final class MCSGraph {
                 int size = 1, links = 0;
                 queue[0] = root;
                 seen[root] = true;
-                for (int k = 0; k < size; k++) {
-                    int a = queue[k];
-                    for (int i = start[a]; i < start[a + 1]; i++) {
-                        int b = neighbour[i];
-                        if (atomClass[b] < 0
-                            || Arrays.binarySearch(otherLabels, bondLabel(a, b, neighbourBond[i], atomClasses)) < 0)
+                for (int head = 0; head < size; head++) {
+                    int atom = queue[head];
+                    for (int place = start[atom]; place < start[atom + 1]; place++) {
+                        int other = neighbour[place];
+                        if (atomClass[other] < 0
+                            || Arrays.binarySearch(otherLabels,
+                                                   bondLabel(atom, other, neighbourBond[place], atomClasses)) < 0)
                             continue;
                         links++;
-                        if (!seen[b]) {
-                            seen[b] = true;
-                            queue[size++] = b;
+                        if (!seen[other]) {
+                            seen[other] = true;
+                            queue[size++] = other;
                         }
                     }
                 }
@@ -886,10 +905,11 @@ final class MCSGraph {
             return score(mostAtoms, mostBonds, false);
         }
 
-        /** The label of the bond between atoms {@code a} and {@code b}: the symbols of its ends and its class. */
-        long bondLabel(int a, int b, int bond, int atomClasses) {
-            int x = atomClass[a], y = atomClass[b];
-            return ((long) Math.min(x, y) * atomClasses + Math.max(x, y)) << BOND_CLASS_BITS | bondClass[bond];
+        /** The label of the bond from {@code atom} to {@code other}: the symbols of its ends and its class. */
+        long bondLabel(int atom, int other, int bond, int atomClasses) {
+            int firstClass = atomClass[atom], secondClass = atomClass[other];
+            return ((long) Math.min(firstClass, secondClass) * atomClasses + Math.max(firstClass, secondClass))
+                   << BOND_CLASS_BITS | bondClass[bond];
         }
     }
 
@@ -897,22 +917,22 @@ final class MCSGraph {
     private static int[] ends(IAtom[] atoms, IBond[] bonds) {
         int[] ends = new int[2 * bonds.length];
         Map<IAtom, Integer> index = null;
-        for (int e = 0; e < ends.length; e++) {
-            IAtom atom = (e & 1) == 0 ? bonds[e >> 1].getBegin() : bonds[e >> 1].getEnd();
-            int i = atom != null ? atom.getIndex() : -1;
-            if (atom != null && (i < 0 || i >= atoms.length || atoms[i] != atom)) {
+        for (int endIndex = 0; endIndex < ends.length; endIndex++) {
+            IAtom atom = (endIndex & 1) == 0 ? bonds[endIndex >> 1].getBegin() : bonds[endIndex >> 1].getEnd();
+            int atomIndex = atom != null ? atom.getIndex() : -1;
+            if (atom != null && (atomIndex < 0 || atomIndex >= atoms.length || atoms[atomIndex] != atom)) {
                 // The atom does not know its index. Look up its underlying atom by identity, in a map built once.
                 if (index == null) {
                     index = new IdentityHashMap<>();
-                    for (int a = 0; a < atoms.length; a++)
-                        index.put(AtomRef.deref(atoms[a]), a);
+                    for (int position = 0; position < atoms.length; position++)
+                        index.put(AtomRef.deref(atoms[position]), position);
                 }
                 Integer known = index.get(AtomRef.deref(atom));
-                i = known != null ? known : -1;
+                atomIndex = known != null ? known : -1;
             }
-            if (i < 0)
+            if (atomIndex < 0)
                 throw new IllegalArgumentException("A bond joins an atom that is not in the molecule");
-            ends[e] = i;
+            ends[endIndex] = atomIndex;
         }
         return ends;
     }
@@ -922,26 +942,26 @@ final class MCSGraph {
      * bonds to them. A bond from an atom to itself, or a second bond between
      * the same atoms, is refused, as it is not a molecule.
      */
-    private static int[][] adjacency(int[] ends, int atoms) {
-        int[] start = new int[atoms + 1];
+    private static int[][] adjacency(int[] ends, int atomCount) {
+        int[] start = new int[atomCount + 1];
         for (int end : ends)
             start[end + 1]++;
-        for (int a = 0; a < atoms; a++)
-            start[a + 1] += start[a];
-        int[] next = Arrays.copyOf(start, atoms), neighbour = new int[ends.length], bond = new int[ends.length];
-        for (int e = 0; e < ends.length; e++) {
-            int a = ends[e];
-            neighbour[next[a]] = ends[e ^ 1];
-            bond[next[a]++] = e >> 1;
+        for (int atom = 0; atom < atomCount; atom++)
+            start[atom + 1] += start[atom];
+        int[] next = Arrays.copyOf(start, atomCount), neighbour = new int[ends.length], bond = new int[ends.length];
+        for (int endIndex = 0; endIndex < ends.length; endIndex++) {
+            int atom = ends[endIndex];
+            neighbour[next[atom]] = ends[endIndex ^ 1];
+            bond[next[atom]++] = endIndex >> 1;
         }
-        int[] seen = new int[atoms];
-        for (int a = 0; a < atoms; a++) {
-            for (int i = start[a]; i < start[a + 1]; i++) {
-                if (neighbour[i] == a)
+        int[] seen = new int[atomCount];
+        for (int atom = 0; atom < atomCount; atom++) {
+            for (int place = start[atom]; place < start[atom + 1]; place++) {
+                if (neighbour[place] == atom)
                     throw new IllegalArgumentException("A bond joins an atom to itself");
-                if (seen[neighbour[i]] == a + 1)
+                if (seen[neighbour[place]] == atom + 1)
                     throw new IllegalArgumentException("Two bonds join the same atoms");
-                seen[neighbour[i]] = a + 1;
+                seen[neighbour[place]] = atom + 1;
             }
         }
         return new int[][]{start, neighbour, bond};
@@ -964,28 +984,29 @@ final class MCSGraph {
         final int refusedAtoms;
 
         Rings(int[] start, int[] neighbour, int[] neighbourBond, int bondCount) {
-            int n = start.length - 1, refused = 0;
+            int atomCount = start.length - 1, refused = 0;
             ringBond = ringBonds(start, neighbour, neighbourBond, bondCount);
-            ringAtom = new boolean[n];
-            for (int a = 0; a < n; a++) {
-                for (int i = start[a]; i < start[a + 1]; i++) {
+            ringAtom = new boolean[atomCount];
+            for (int atom = 0; atom < atomCount; atom++) {
+                for (int i = start[atom]; i < start[atom + 1]; i++) {
                     if (ringBond[neighbourBond[i]])
-                        ringAtom[a] = true;
+                        ringAtom[atom] = true;
                 }
             }
             // The ring systems are the atoms joined by ring bonds.
             List<int[]> found = new ArrayList<>();
-            int[] place = new int[n];
-            Arrays.fill(place, -1);
-            for (int s = 0; s < n && refused == 0; s++) {
-                if (!ringAtom[s] || place[s] >= 0)
+            int[] memberPlace = new int[atomCount];
+            Arrays.fill(memberPlace, -1);
+            for (int origin = 0; origin < atomCount && refused == 0; origin++) {
+                if (!ringAtom[origin] || memberPlace[origin] >= 0)
                     continue;
-                int[] members = members(s, start, neighbour, neighbourBond, place);
+                int[] members = members(origin, start, neighbour, neighbourBond, memberPlace);
                 int[][] system = new int[members.length][];
                 int bonds = 0;
-                for (int k = 0; k < members.length; k++) {
-                    system[k] = neighbours(members[k], start, neighbour, neighbourBond, place);
-                    bonds += system[k].length;
+                for (int memberIndex = 0; memberIndex < members.length; memberIndex++) {
+                    system[memberIndex] = neighbours(members[memberIndex], start, neighbour, neighbourBond,
+                                                     memberPlace);
+                    bonds += system[memberIndex].length;
                 }
                 bonds /= 2;
                 // Each ring as a closed path, with its first atom again at the end.
@@ -1018,75 +1039,79 @@ final class MCSGraph {
          * bond on no ring splits its part of the molecule in two.
          */
         static boolean[] ringBonds(int[] start, int[] neighbour, int[] neighbourBond, int bondCount) {
-            int n = start.length - 1, time = 0;
+            int atomCount = start.length - 1, time = 0;
             boolean[] ringBond = new boolean[bondCount];
-            int[] visited = new int[n], low = new int[n], via = new int[n], next = start.clone(), stack = new int[n];
-            for (int r = 0, top = 0; r < n; r++) {
-                if (visited[r] > 0)
+            int[] visited = new int[atomCount], low = new int[atomCount], via = new int[atomCount];
+            int[] next = start.clone(), stack = new int[atomCount];
+            for (int root = 0, top = 0; root < atomCount; root++) {
+                if (visited[root] > 0)
                     continue;
-                visited[r] = low[r] = ++time;
-                via[r] = -1;
-                stack[top++] = r;
+                visited[root] = low[root] = ++time;
+                via[root] = -1;
+                stack[top++] = root;
                 while (top > 0) {
-                    int a = stack[top - 1], i = next[a]++;
-                    if (i == start[a + 1]) {
+                    int atom = stack[top - 1], place = next[atom]++;
+                    if (place == start[atom + 1]) {
                         if (--top > 0) {
-                            int p = stack[top - 1];
-                            low[p] = Math.min(low[p], low[a]);
-                            if (low[a] <= visited[p])
-                                ringBond[via[a]] = true;
+                            int parent = stack[top - 1];
+                            low[parent] = Math.min(low[parent], low[atom]);
+                            if (low[atom] <= visited[parent])
+                                ringBond[via[atom]] = true;
                         }
-                    } else if (visited[neighbour[i]] == 0) {
-                        visited[neighbour[i]] = low[neighbour[i]] = ++time;
-                        via[neighbour[i]] = neighbourBond[i];
-                        stack[top++] = neighbour[i];
-                    } else if (neighbourBond[i] != via[a]) {
-                        low[a] = Math.min(low[a], visited[neighbour[i]]);
-                        ringBond[neighbourBond[i]] = true;
+                    } else if (visited[neighbour[place]] == 0) {
+                        visited[neighbour[place]] = low[neighbour[place]] = ++time;
+                        via[neighbour[place]] = neighbourBond[place];
+                        stack[top++] = neighbour[place];
+                    } else if (neighbourBond[place] != via[atom]) {
+                        low[atom] = Math.min(low[atom], visited[neighbour[place]]);
+                        ringBond[neighbourBond[place]] = true;
                     }
                 }
             }
             return ringBond;
         }
 
-        /** The atoms of the ring system of atom {@code s}, in the order reached, with the index of each in place. */
-        private int[] members(int s, int[] start, int[] neighbour, int[] neighbourBond, int[] place) {
+        /**
+         * The atoms of the ring system of {@code origin}, in the order reached. The
+         * place of each in that order is set in {@code memberPlace}.
+         */
+        private int[] members(int origin, int[] start, int[] neighbour, int[] neighbourBond, int[] memberPlace) {
             int[] members = new int[ringAtom.length];
             int size = 1;
-            members[0] = s;
-            place[s] = 0;
-            for (int k = 0; k < size; k++) {
-                for (int i = start[members[k]]; i < start[members[k] + 1]; i++) {
-                    if (ringBond[neighbourBond[i]] && place[neighbour[i]] < 0) {
-                        place[neighbour[i]] = size;
-                        members[size++] = neighbour[i];
+            members[0] = origin;
+            memberPlace[origin] = 0;
+            for (int head = 0; head < size; head++) {
+                for (int place = start[members[head]]; place < start[members[head] + 1]; place++) {
+                    if (ringBond[neighbourBond[place]] && memberPlace[neighbour[place]] < 0) {
+                        memberPlace[neighbour[place]] = size;
+                        members[size++] = neighbour[place];
                     }
                 }
             }
             return Arrays.copyOf(members, size);
         }
 
-        /** The places of the neighbours of atom {@code a} through ring bonds. */
-        private int[] neighbours(int a, int[] start, int[] neighbour, int[] neighbourBond, int[] place) {
-            int[] row = new int[start[a + 1] - start[a]];
-            int d = 0;
-            for (int i = start[a]; i < start[a + 1]; i++) {
+        /** The places of the neighbours of {@code atom} through ring bonds. */
+        private int[] neighbours(int atom, int[] start, int[] neighbour, int[] neighbourBond, int[] memberPlace) {
+            int[] row = new int[start[atom + 1] - start[atom]];
+            int count = 0;
+            for (int i = start[atom]; i < start[atom + 1]; i++) {
                 if (ringBond[neighbourBond[i]])
-                    row[d++] = place[neighbour[i]];
+                    row[count++] = memberPlace[neighbour[i]];
             }
-            return Arrays.copyOf(row, d);
+            return Arrays.copyOf(row, count);
         }
 
         /** A closed path of places as the atoms of a ring, followed by the bond from each atom to the next. */
         private static int[] ring(int[] path, int[] members, int[] start, int[] neighbour, int[] neighbourBond) {
             int len = path.length - 1;
             int[] ring = new int[2 * len];
-            for (int k = 0; k < len; k++) {
-                int a = members[path[k]], b = members[path[k + 1]], i = start[a];
-                while (neighbour[i] != b)
-                    i++;
-                ring[k] = a;
-                ring[len + k] = neighbourBond[i];
+            for (int step = 0; step < len; step++) {
+                int atom = members[path[step]], nextAtom = members[path[step + 1]], place = start[atom];
+                while (neighbour[place] != nextAtom)
+                    place++;
+                ring[step] = atom;
+                ring[len + step] = neighbourBond[place];
             }
             return ring;
         }
@@ -1102,15 +1127,15 @@ final class MCSGraph {
                 int len = ring.length / 2;
                 if (!coversRing(ring, mapped, open, common))
                     continue;
-                for (int k = 0; k < len; k++)
-                    atomCovered[ring[k]] = bondCovered[ring[len + k]] = true;
+                for (int step = 0; step < len; step++)
+                    atomCovered[ring[step]] = bondCovered[ring[len + step]] = true;
             }
-            for (int a = 0; a < ringAtom.length; a++) {
-                if (ringAtom[a] && mapped[a] && !atomCovered[a])
+            for (int atom = 0; atom < ringAtom.length; atom++) {
+                if (ringAtom[atom] && mapped[atom] && !atomCovered[atom])
                     return false;
             }
-            for (int e = 0; e < ringBond.length; e++) {
-                if (ringBond[e] && common[e] && !bondCovered[e])
+            for (int bond = 0; bond < ringBond.length; bond++) {
+                if (ringBond[bond] && common[bond] && !bondCovered[bond])
                     return false;
             }
             return true;
@@ -1118,9 +1143,9 @@ final class MCSGraph {
 
         private static boolean coversRing(int[] ring, boolean[] mapped, boolean[] open, boolean[] common) {
             int len = ring.length / 2;
-            for (int k = 0; k < len; k++) {
-                int a = ring[k], b = ring[(k + 1) % len];
-                if (!mapped[a] && !open[a] || mapped[a] && mapped[b] && !common[ring[len + k]])
+            for (int step = 0; step < len; step++) {
+                int atom = ring[step], nextAtom = ring[(step + 1) % len];
+                if (!mapped[atom] && !open[atom] || mapped[atom] && mapped[nextAtom] && !common[ring[len + step]])
                     return false;
             }
             return true;
@@ -1137,28 +1162,28 @@ final class MCSGraph {
         long bound = 0;
         int[] dist = new int[graph.length], queue = new int[graph.length];
         long[] paths = new long[graph.length];
-        for (int r = 0; r < graph.length && bound < RING_BOUND_CAP; r++) {
+        for (int root = 0; root < graph.length && bound < RING_BOUND_CAP; root++) {
             Arrays.fill(dist, -1);
-            dist[r] = 0;
-            paths[r] = 1;
-            queue[0] = r;
+            dist[root] = 0;
+            paths[root] = 1;
+            queue[0] = root;
             // The shortest paths to an atom are all counted once it leaves the queue.
             for (int head = 0, tail = 1; head < tail; head++) {
-                int a = queue[head];
+                int atom = queue[head];
                 long before = 0;
-                for (int b : graph[a]) {
-                    if (dist[b] < 0) {
-                        dist[b] = dist[a] + 1;
-                        paths[b] = 0;
-                        queue[tail++] = b;
+                for (int other : graph[atom]) {
+                    if (dist[other] < 0) {
+                        dist[other] = dist[atom] + 1;
+                        paths[other] = 0;
+                        queue[tail++] = other;
                     }
-                    if (dist[b] > dist[a])
-                        paths[b] = Math.min(paths[b] + paths[a], RING_BOUND_CAP);
-                    else if (dist[b] == dist[a] && b < a)
-                        bound = Math.min(bound + paths[a] * paths[b], RING_BOUND_CAP);
-                    else if (dist[b] < dist[a]) {
-                        bound = Math.min(bound + before * paths[b], RING_BOUND_CAP);
-                        before = Math.min(before + paths[b], RING_BOUND_CAP);
+                    if (dist[other] > dist[atom])
+                        paths[other] = Math.min(paths[other] + paths[atom], RING_BOUND_CAP);
+                    else if (dist[other] == dist[atom] && other < atom)
+                        bound = Math.min(bound + paths[atom] * paths[other], RING_BOUND_CAP);
+                    else if (dist[other] < dist[atom]) {
+                        bound = Math.min(bound + before * paths[other], RING_BOUND_CAP);
+                        before = Math.min(before + paths[other], RING_BOUND_CAP);
                     }
                 }
             }
@@ -1167,9 +1192,9 @@ final class MCSGraph {
     }
 
     /**
-     * The configurations of a molecule. Index x is a tetrahedral centre when
-     * it is below the atom count, and otherwise the double bond x minus the
-     * atom count. A configuration is 1 or 2, or 0 for none. The carriers of a
+     * The configurations of a molecule. An index below the atom count is a
+     * tetrahedral centre, and otherwise it is the atom count plus the index of
+     * a double bond. A configuration is 1 or 2, or 0 for none. The carriers of a
      * centre are its four neighbours, where the centre itself stands for an
      * implicit hydrogen. A double bond with an end of three or more other
      * neighbours is left out, as one neighbour does not stand for its side.
@@ -1194,54 +1219,56 @@ final class MCSGraph {
 
         /** Reads the stereo elements, and numbers the racemic and relative groups from {@code firstGroup}. */
         Stereo(IAtomContainer molecule, int[] start, int[] neighbour, int firstGroup) {
-            int atoms = molecule.getAtomCount();
-            config = new int[atoms + molecule.getBondCount()];
+            int atomCount = molecule.getAtomCount();
+            config = new int[atomCount + molecule.getBondCount()];
             group = new int[config.length];
             carriers = new int[CARRIERS * config.length];
             specified = new int[config.length];
-            reads = new boolean[atoms];
+            reads = new boolean[atomCount];
             Map<Integer, Integer> groups = new HashMap<>();
             for (IStereoElement<?, ?> element : molecule.stereoElements()) {
-                int x, order = element.getConfigOrder();
+                int index, order = element.getConfigOrder();
                 if (element.getConfigClass() == IStereoElement.TH) {
-                    x = molecule.indexOf((IAtom) element.getFocus());
+                    index = molecule.indexOf((IAtom) element.getFocus());
                     for (int i = 0; i < CARRIERS; i++)
-                        carriers[CARRIERS * x + i] = molecule.indexOf((IAtom) element.getCarriers().get(i));
+                        carriers[CARRIERS * index + i] = molecule.indexOf((IAtom) element.getCarriers().get(i));
                 } else if (element.getConfigClass() == IStereoElement.CT) {
                     IBond bond = (IBond) element.getFocus();
-                    int u = molecule.indexOf(bond.getBegin()), v = molecule.indexOf(bond.getEnd());
-                    if (start[u + 1] - start[u] > 3 || start[v + 1] - start[v] > 3)
+                    int beginAtom = molecule.indexOf(bond.getBegin()), endAtom = molecule.indexOf(bond.getEnd());
+                    if (start[beginAtom + 1] - start[beginAtom] > 3 || start[endAtom + 1] - start[endAtom] > 3)
                         continue;
-                    x = atoms + molecule.indexOf(bond);
-                    carriers[CARRIERS * x + FIRST_END] = u;
-                    carriers[CARRIERS * x + SECOND_END] = v;
+                    index = atomCount + molecule.indexOf(bond);
+                    carriers[CARRIERS * index + FIRST_END] = beginAtom;
+                    carriers[CARRIERS * index + SECOND_END] = endAtom;
                     // The stored neighbour of an end is the other atom of the carrier bond there.
                     for (Object carrier : element.getCarriers()) {
-                        int a = molecule.indexOf(((IBond) carrier).getBegin());
-                        int b = molecule.indexOf(((IBond) carrier).getEnd());
-                        carriers[CARRIERS * x + (a == u || b == u ? 0 : 1)] = a == u || a == v ? b : a;
+                        int carrierBegin = molecule.indexOf(((IBond) carrier).getBegin());
+                        int carrierEnd = molecule.indexOf(((IBond) carrier).getEnd());
+                        carriers[CARRIERS * index
+                                 + (carrierBegin == beginAtom || carrierEnd == beginAtom ? 0 : 1)]
+                                = carrierBegin == beginAtom || carrierBegin == endAtom ? carrierEnd : carrierBegin;
                     }
                 } else {
                     continue;
                 }
-                config[x] = order == 1 || order == 2 ? order : 0;
+                config[index] = order == 1 || order == 2 ? order : 0;
                 int info = element.getGroupInfo();
-                group[x] = info == 0 ? 0 : firstGroup + groups.computeIfAbsent(info, g -> groups.size());
+                group[index] = info == 0 ? 0 : firstGroup + groups.computeIfAbsent(info, key -> groups.size());
             }
             groupCount = groups.size();
-            for (int x = 0; x < config.length; x++) {
-                if (config[x] == 0)
+            for (int index = 0; index < config.length; index++) {
+                if (config[index] == 0)
                     continue;
-                specified[count++] = x;
+                specified[count++] = index;
                 // A centre reads itself and its carriers. A double bond reads its ends and all their neighbours,
                 // as any neighbour stands in for the stored one when it alone is mapped.
                 for (int i = 0; i < CARRIERS; i++)
-                    reads[carriers[CARRIERS * x + i]] = true;
-                if (x < atoms) {
-                    reads[x] = true;
+                    reads[carriers[CARRIERS * index + i]] = true;
+                if (index < atomCount) {
+                    reads[index] = true;
                 } else {
-                    for (int u = FIRST_END; u <= SECOND_END; u++) {
-                        int end = carriers[CARRIERS * x + u];
+                    for (int endPlace = FIRST_END; endPlace <= SECOND_END; endPlace++) {
+                        int end = carriers[CARRIERS * index + endPlace];
                         for (int i = start[end]; i < start[end + 1]; i++)
                             reads[neighbour[i]] = true;
                     }
@@ -1249,8 +1276,8 @@ final class MCSGraph {
             }
         }
 
-        int carrier(int x, int place) {
-            return carriers[CARRIERS * x + place];
+        int carrier(int index, int place) {
+            return carriers[CARRIERS * index + place];
         }
     }
 

@@ -62,8 +62,11 @@ final class MCSSearch {
     /** In MCES, the fewest common bonds of a fragment; 0 for the connected MCS. */
     private final int minBonds;
     /** The numbers of query and target atoms, and of longs in a row of target atoms. */
-    private final int n, m, words;
-    /** The compatible pairs that are not excluded: bit t of row q, see {@link MCSGraph#compatiblePairs}. */
+    private final int queryCount, targetCount, words;
+    /**
+     * The compatible pairs that are not excluded: a row for each query atom,
+     * with a bit for each target atom, see {@link MCSGraph#compatiblePairs}.
+     */
     private final long[] allowed;
     /** The mapping both ways, -1 where unmapped. */
     private final int[] queryToTarget, targetToQuery;
@@ -105,15 +108,15 @@ final class MCSSearch {
         this.minBonds = minBonds;
         query = graph.query;
         target = graph.target;
-        n = query.atomCount;
-        m = target.atomCount;
-        words = MCSGraph.words(m);
+        queryCount = query.atomCount;
+        targetCount = target.atomCount;
+        words = MCSGraph.words(targetCount);
         allowed = graph.compatiblePairs(clock);
-        queryToTarget = new int[n];
-        targetToQuery = new int[m];
+        queryToTarget = new int[queryCount];
+        targetToQuery = new int[targetCount];
         Arrays.fill(queryToTarget, -1);
         Arrays.fill(targetToQuery, -1);
-        levels = new Level[Math.min(n, m)];
+        levels = new Level[Math.min(queryCount, targetCount)];
         reach = new Reach();
         edgeBound = minBonds > 0 ? new EdgeBound() : null;
     }
@@ -145,18 +148,18 @@ final class MCSSearch {
             seed = null;
         long start = seed != null ? score(seed) : belowEveryMapping();
         if (minBonds == 0) {
-            if (start < bound && Math.min(n, m) >= BRIDGE_BOUND_ATOMS)
+            if (start < bound && Math.min(queryCount, targetCount) >= BRIDGE_BOUND_ATOMS)
                 bridgeBound = BridgeBound.create(graph, clock);
             if (bridgeBound != null)
                 bound = Math.min(bound, bridgeBound.upperBound);
             return collect(seed, start, bound, maxMappings);
         }
         List<int[]> mapping = new ArrayList<>();
-        for (int b = bonds(bound); mapping.isEmpty() && b > bonds(start); b--) {
-            mapping = collect(null, score(0, b) - 1, bound, 1);
-            // No mapping has b common bonds, so the bound comes down to b - 1.
+        for (int triedBonds = bonds(bound); mapping.isEmpty() && triedBonds > bonds(start); triedBonds--) {
+            mapping = collect(null, score(0, triedBonds) - 1, bound, 1);
+            // No mapping has that many common bonds, so the bound comes down by one.
             if (mapping.isEmpty())
-                bound = score(Math.min(atoms(bound), b - 1 + (b - 1) / minBonds), b - 1);
+                bound = score(Math.min(atoms(bound), triedBonds - 1 + (triedBonds - 1) / minBonds), triedBonds - 1);
         }
         if (mapping.isEmpty())
             mapping = collect(seed, start, bound, 1);
@@ -169,11 +172,11 @@ final class MCSSearch {
 
     /** A score that no mapping beats, when the query does not fit whole. */
     private long bestPossible() {
-        long bound = score(Math.min(n, m), Math.min(query.bondCount, target.bondCount));
+        long bound = score(Math.min(queryCount, targetCount), Math.min(query.bondCount, target.bondCount));
         // Without an embedding no mapping has every query atom and bond. In MCES a query in parts may still have
         // every bond.
         if (minBonds > 0 ? queryConnected() : query.bondCount > 0)
-            bound = Math.min(bound, score(n, query.bondCount - 1));
+            bound = Math.min(bound, score(queryCount, query.bondCount - 1));
         long label = graph.labelBound(minBonds == 0);
         if (label >= 0) {
             int labelAtoms = MCSGraph.atoms(label, false), labelBonds = MCSGraph.bonds(label, false);
@@ -193,7 +196,7 @@ final class MCSSearch {
 
     /** A score below that of every mapping. In MCES every mapping has at least minBonds common bonds. */
     private long belowEveryMapping() {
-        return minBonds > 0 ? score(n + 1, minBonds - 1) : 0;
+        return minBonds > 0 ? score(queryCount + 1, minBonds - 1) : 0;
     }
 
     private boolean anyCompatible() {
@@ -211,12 +214,13 @@ final class MCSSearch {
     void rank() {
         querySignature = query.signatures(clock);
         targetSignature = target.signatures(clock);
-        int[] queryChoices = new int[n], targetChoices = new int[m];
-        for (int q = 0; q < n; q++) {
-            for (int t = nextBit(allowed, q * words, words, 0); t >= 0; t = nextBit(allowed, q * words, words, t + 1)) {
+        int[] queryChoices = new int[queryCount], targetChoices = new int[targetCount];
+        for (int queryAtom = 0; queryAtom < queryCount; queryAtom++) {
+            for (int targetAtom = nextBit(allowed, queryAtom * words, words, 0); targetAtom >= 0;
+                 targetAtom = nextBit(allowed, queryAtom * words, words, targetAtom + 1)) {
                 clock.tick();
-                queryChoices[q]++;
-                targetChoices[t]++;
+                queryChoices[queryAtom]++;
+                targetChoices[targetAtom]++;
             }
         }
         int[] colours = query.invariants(queryChoices);
@@ -225,24 +229,24 @@ final class MCSSearch {
         // Ties among target atoms stay in input order. Breaking them one atom at a time costs a round per atom on a
         // symmetric target, and the order only has to be repeatable.
         targetCell = MCSGraph.refine(target.start, target.neighbour, target.invariants(targetChoices), false, clock);
-        int[] next = new int[m];
-        targetRank = new int[m];
-        for (int t = 0; t < m; t++)
-            next[targetCell[t]] = targetCell[t];
-        for (int t = 0; t < m; t++)
-            targetRank[t] = next[targetCell[t]]++;
+        int[] next = new int[targetCount];
+        targetRank = new int[targetCount];
+        for (int targetAtom = 0; targetAtom < targetCount; targetAtom++)
+            next[targetCell[targetAtom]] = targetCell[targetAtom];
+        for (int targetAtom = 0; targetAtom < targetCount; targetAtom++)
+            targetRank[targetAtom] = next[targetCell[targetAtom]]++;
         targetOrder = inverse(targetRank);
-        Integer[] byRank = new Integer[n];
-        for (int q = 0; q < n; q++)
-            byRank[q] = q;
+        Integer[] byRank = new Integer[queryCount];
+        for (int queryAtom = 0; queryAtom < queryCount; queryAtom++)
+            byRank[queryAtom] = queryAtom;
         // The most choices come first, then the fewest bonds, then the lowest canonical rank.
-        Comparator<Integer> byChoices = Comparator.comparingInt(q -> -queryChoices[q]);
-        Arrays.sort(byRank, byChoices.thenComparingInt(query::degree).thenComparingInt(q -> canon[q]));
-        queryOrder = new int[n];
-        queryRank = new int[n];
-        for (int k = 0; k < n; k++) {
-            queryOrder[k] = byRank[k];
-            queryRank[queryOrder[k]] = k;
+        Comparator<Integer> byChoices = Comparator.comparingInt(queryAtom -> -queryChoices[queryAtom]);
+        Arrays.sort(byRank, byChoices.thenComparingInt(query::degree).thenComparingInt(queryAtom -> canon[queryAtom]));
+        queryOrder = new int[queryCount];
+        queryRank = new int[queryCount];
+        for (int rank = 0; rank < queryCount; rank++) {
+            queryOrder[rank] = byRank[rank];
+            queryRank[queryOrder[rank]] = rank;
         }
     }
 
@@ -254,9 +258,9 @@ final class MCSSearch {
      * another on the free atoms. It needs {@link #rank} first.
      */
     int[] seed(long bound) {
-        long[] taken = new long[n * words];
+        long[] taken = new long[queryCount * words];
         int[] roots = new int[LIKENESS_LEVELS * SEEDS], rootCount = new int[LIKENESS_LEVELS];
-        int[] frontier = new int[n], mapped = new int[n], added = new int[n];
+        int[] frontier = new int[queryCount], mapped = new int[queryCount], added = new int[queryCount];
         long bestSeed = belowEveryMapping();
         int[] best = null;
         boolean extend = true;
@@ -264,8 +268,9 @@ final class MCSSearch {
             long before = bestSeed;
             seedRoots(roots, rootCount, taken);
             for (int level = MCSGraph.RADII, tried = 0; level >= 0 && bestSeed != bound; level--) {
-                for (int i = 0; i < rootCount[level] && tried < SEEDS && bestSeed != bound; i++, tried++) {
-                    long grown = growSeed(roots[level * SEEDS + i], frontier, mapped, added, ++round);
+                for (int rootIndex = 0; rootIndex < rootCount[level] && tried < SEEDS && bestSeed != bound;
+                     rootIndex++, tried++) {
+                    long grown = growSeed(roots[level * SEEDS + rootIndex], frontier, mapped, added, ++round);
                     long kept = cutBack(grown, mapped);
                     int seedAtoms = atoms(kept), seedBonds = bonds(kept);
                     if (seedBonds >= minBonds && score(keptAtoms + seedAtoms, keptBonds + seedBonds) > bestSeed) {
@@ -273,9 +278,9 @@ final class MCSSearch {
                         best = queryToTarget.clone();
                         extend = kept == grown;
                     }
-                    for (int a = 0; a < seedAtoms; a++) {
-                        targetToQuery[queryToTarget[mapped[a]]] = -1;
-                        queryToTarget[mapped[a]] = -1;
+                    for (int mappedIndex = 0; mappedIndex < seedAtoms; mappedIndex++) {
+                        targetToQuery[queryToTarget[mapped[mappedIndex]]] = -1;
+                        queryToTarget[mapped[mappedIndex]] = -1;
                     }
                 }
             }
@@ -287,10 +292,10 @@ final class MCSSearch {
             // since each grew until no pair next to it was left.
             keptAtoms = atoms(bestSeed);
             keptBonds = bonds(bestSeed);
-            System.arraycopy(best, 0, queryToTarget, 0, n);
-            for (int q = 0; q < n; q++) {
-                if (queryToTarget[q] >= 0)
-                    targetToQuery[queryToTarget[q]] = q;
+            System.arraycopy(best, 0, queryToTarget, 0, queryCount);
+            for (int queryAtom = 0; queryAtom < queryCount; queryAtom++) {
+                if (queryToTarget[queryAtom] >= 0)
+                    targetToQuery[queryToTarget[queryAtom]] = queryAtom;
             }
         }
         Arrays.fill(queryToTarget, -1);
@@ -306,10 +311,10 @@ final class MCSSearch {
     private long cutBack(long grown, int[] mapped) {
         long kept = grown;
         while (!graph.stereoConsistent(queryToTarget, clock)) {
-            int a = mapped[atoms(kept) - 1], v = queryToTarget[a];
-            queryToTarget[a] = -1;
-            targetToQuery[v] = -1;
-            kept = score(atoms(kept) - 1, bonds(kept) - common(a, v));
+            int queryAtom = mapped[atoms(kept) - 1], targetAtom = queryToTarget[queryAtom];
+            queryToTarget[queryAtom] = -1;
+            targetToQuery[targetAtom] = -1;
+            kept = score(atoms(kept) - 1, bonds(kept) - common(queryAtom, targetAtom));
         }
         return kept;
     }
@@ -325,17 +330,18 @@ final class MCSSearch {
         Arrays.fill(rootCount, 0);
         int likest = MCSGraph.RADII;
         // The most alike roots are tried first. Once there are enough of them, the rest are not needed.
-        for (int k = n - 1; k >= 0 && rootCount[likest] < SEEDS; k--) {
-            int q = queryOrder[k];
-            for (int j = 0; j < m && rootCount[likest] < SEEDS && queryToTarget[q] < 0; j++) {
-                int t = targetOrder[j];
+        for (int rank = queryCount - 1; rank >= 0 && rootCount[likest] < SEEDS; rank--) {
+            int queryAtom = queryOrder[rank];
+            for (int targetPosition = 0; targetPosition < targetCount && rootCount[likest] < SEEDS
+                                         && queryToTarget[queryAtom] < 0; targetPosition++) {
+                int targetAtom = targetOrder[targetPosition];
                 clock.tick();
-                if (targetToQuery[t] >= 0 || !has(allowed, q, t))
+                if (targetToQuery[targetAtom] >= 0 || !has(allowed, queryAtom, targetAtom))
                     continue;
-                int level = likeness(q, t);
-                if (rootCount[level] < SEEDS && !has(taken, queryCell[q], targetCell[t])) {
-                    set(taken, queryCell[q], targetCell[t]);
-                    roots[level * SEEDS + rootCount[level]++] = pair(q, t);
+                int level = likeness(queryAtom, targetAtom);
+                if (rootCount[level] < SEEDS && !has(taken, queryCell[queryAtom], targetCell[targetAtom])) {
+                    set(taken, queryCell[queryAtom], targetCell[targetAtom]);
+                    roots[level * SEEDS + rootCount[level]++] = pair(queryAtom, targetAtom);
                 }
             }
         }
@@ -348,48 +354,52 @@ final class MCSSearch {
      */
     private long growSeed(int root, int[] frontier, int[] mapped, int[] added, int round) {
         int count = 0, frontierSize = 0, seedBonds = 0;
-        for (int p = root; p >= 0; ) {
-            int u = queryAtom(p), v = targetAtom(p);
-            queryToTarget[u] = v;
-            targetToQuery[v] = u;
-            mapped[count++] = u;
-            for (int i = query.start[u]; i < query.start[u + 1]; i++) {
-                int w = query.neighbour[i];
-                if (queryToTarget[w] < 0 && added[w] != round) {
-                    added[w] = round;
-                    frontier[frontierSize++] = w;
+        for (int pair = root; pair >= 0; ) {
+            int queryAtom = queryAtom(pair), targetAtom = targetAtom(pair);
+            queryToTarget[queryAtom] = targetAtom;
+            targetToQuery[targetAtom] = queryAtom;
+            mapped[count++] = queryAtom;
+            for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+                int queryNeighbour = query.neighbour[queryPlace];
+                if (queryToTarget[queryNeighbour] < 0 && added[queryNeighbour] != round) {
+                    added[queryNeighbour] = round;
+                    frontier[frontierSize++] = queryNeighbour;
                 }
             }
             int likest = -1, links = 0;
-            p = -1;
-            for (int f = 0; f < frontierSize; ) {
-                int a = frontier[f];
-                if (queryToTarget[a] >= 0) {
-                    frontier[f] = frontier[--frontierSize];
+            pair = -1;
+            for (int frontierIndex = 0; frontierIndex < frontierSize; ) {
+                int frontierAtom = frontier[frontierIndex];
+                if (queryToTarget[frontierAtom] >= 0) {
+                    frontier[frontierIndex] = frontier[--frontierSize];
                     continue;
                 }
-                f++;
-                for (int i = query.start[a]; i < query.start[a + 1]; i++) {
-                    int x = queryToTarget[query.neighbour[i]];
+                frontierIndex++;
+                for (int queryPlace = query.start[frontierAtom]; queryPlace < query.start[frontierAtom + 1];
+                     queryPlace++) {
+                    int neighbourImage = queryToTarget[query.neighbour[queryPlace]];
                     // Next to a hub, the first few free targets are as good for a seed as all of them.
-                    for (int j = x < 0 ? 0 : target.start[x], freeCount = 0;
-                         x >= 0 && j < target.start[x + 1] && freeCount < HUB_TARGETS; j++) {
-                        int b = target.neighbour[j];
+                    for (int targetPlace = neighbourImage < 0 ? 0 : target.start[neighbourImage], freeCount = 0;
+                         neighbourImage >= 0 && targetPlace < target.start[neighbourImage + 1]
+                         && freeCount < HUB_TARGETS; targetPlace++) {
+                        int candidateTarget = target.neighbour[targetPlace];
                         clock.tick();
-                        if (targetToQuery[b] >= 0 || !has(allowed, a, b)
-                            || !graph.bondsMatch(query.neighbourBond[i], target.neighbourBond[j]))
+                        if (targetToQuery[candidateTarget] >= 0 || !has(allowed, frontierAtom, candidateTarget)
+                            || !graph.bondsMatch(query.neighbourBond[queryPlace], target.neighbourBond[targetPlace]))
                             continue;
                         freeCount++;
-                        int l = likeness(a, b);
-                        if (l < likest)
+                        int level = likeness(frontierAtom, candidateTarget);
+                        if (level < likest)
                             continue;
-                        int c = common(a, b);
+                        int newBonds = common(frontierAtom, candidateTarget);
                         // Ties go to the higher ranked query atom, then to the lower ranked target atom.
-                        if (l > likest || c > links || c == links && (queryRank[a] > queryRank[queryAtom(p)]
-                                || a == queryAtom(p) && targetRank[b] < targetRank[targetAtom(p)])) {
-                            p = pair(a, b);
-                            likest = l;
-                            links = c;
+                        if (level > likest || newBonds > links
+                            || newBonds == links && (queryRank[frontierAtom] > queryRank[queryAtom(pair)]
+                                || frontierAtom == queryAtom(pair)
+                                   && targetRank[candidateTarget] < targetRank[targetAtom(pair)])) {
+                            pair = pair(frontierAtom, candidateTarget);
+                            likest = level;
+                            links = newBonds;
                         }
                     }
                 }
@@ -399,10 +409,10 @@ final class MCSSearch {
         return score(count, seedBonds);
     }
 
-    /** The number of radii, from 0, at which query atom {@code q} and target atom {@code t} look alike. */
-    private int likeness(int q, int t) {
+    /** The number of radii, from 0, at which {@code queryAtom} and {@code targetAtom} look alike. */
+    private int likeness(int queryAtom, int targetAtom) {
         int level = 0;
-        while (level < MCSGraph.RADII && querySignature[level][q] == targetSignature[level][t])
+        while (level < MCSGraph.RADII && querySignature[level][queryAtom] == targetSignature[level][targetAtom])
             level++;
         return level;
     }
@@ -429,12 +439,15 @@ final class MCSSearch {
             targetTwin = twins(target, false);
         }
         // Below a root only lower ranked query atoms are mapped, so a root of rank k has at most k + 1 atoms.
-        for (int k = n - 1; k >= 0 && !done() && (minBonds > 0 ? canImprove(rootBound(k))
-                                                             : Math.min(k + 1, m) >= atoms(bestScore)); k--) {
-            int u = queryOrder[k];
-            for (int j = m - 1; j >= 0 && !done(); j--) {
+        for (int rank = queryCount - 1;
+             rank >= 0 && !done() && (minBonds > 0 ? canImprove(rootBound(rank))
+                                                   : Math.min(rank + 1, targetCount) >= atoms(bestScore));
+             rank--) {
+            int queryAtom = queryOrder[rank];
+            for (int targetPosition = targetCount - 1; targetPosition >= 0 && !done(); targetPosition--) {
                 clock.tick();
-                if (has(allowed, u, targetOrder[j]) && push(u, targetOrder[j], 0, upperBound))
+                if (has(allowed, queryAtom, targetOrder[targetPosition])
+                    && push(queryAtom, targetOrder[targetPosition], 0, upperBound))
                     search();
             }
         }
@@ -455,9 +468,10 @@ final class MCSSearch {
             if (done() || !canImprove(level.bound)) {
                 pop();
             } else if (level.nextTarget < level.targets.length) {
-                int u = level.triedAtom, v = level.targets[level.nextTarget++];
-                if (twinExcluded(u, v) || !push(u, v, level.fragmentStart, level.bound))
-                    exclude(u, v);
+                int queryAtom = level.triedAtom, targetAtom = level.targets[level.nextTarget++];
+                if (twinExcluded(queryAtom, targetAtom)
+                    || !push(queryAtom, targetAtom, level.fragmentStart, level.bound))
+                    exclude(queryAtom, targetAtom);
             } else if (level.nextCandidate < level.candidates.length) {
                 // The targets tried so far are now excluded, which can lower the bound.
                 if (level.nextCandidate > 0 && (level.bound = bound(level.fragmentStart, level.bound)) < 0) {
@@ -474,42 +488,42 @@ final class MCSSearch {
     }
 
     /**
-     * Maps {@code u} onto {@code v} as a new level of the fragment that starts
+     * Maps {@code queryAtom} onto {@code targetAtom} as a new level of the fragment that starts
      * at level {@code fragmentStart}. The level has the bound of the state it
      * extends, or the bridge bound of the pair if that is lower, until it has
      * its own. False, with the pair left unmapped, if the bound prunes it or
      * it breaks a configuration.
      */
-    private boolean push(int u, int v, int fragmentStart, long bound) {
+    private boolean push(int queryAtom, int targetAtom, int fragmentStart, long bound) {
         if (bridgeBound != null) {
-            bound = Math.min(bound, bridgeBound.bound(u, v));
+            bound = Math.min(bound, bridgeBound.bound(queryAtom, targetAtom));
             if (!canImprove(bound))
                 return false;
         }
         if (levels[depth] == null)
             levels[depth] = new Level();
         Level level = levels[depth];
-        level.queryAtom = u;
-        level.targetAtom = v;
+        level.queryAtom = queryAtom;
+        level.targetAtom = targetAtom;
         level.commonBondsBefore = commonBonds;
         level.excludedBefore = excludedCount;
-        int addedBonds = common(u, v);
+        int addedBonds = common(queryAtom, targetAtom);
         level.freeQueryBonds = depth > 0 ? levels[depth - 1].freeQueryBonds : query.bondCount;
         level.freeTargetBonds = depth > 0 ? levels[depth - 1].freeTargetBonds : target.bondCount;
-        for (int i = query.start[u]; i < query.start[u + 1]; i++) {
-            if (queryToTarget[query.neighbour[i]] < 0)
+        for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+            if (queryToTarget[query.neighbour[queryPlace]] < 0)
                 level.freeQueryBonds--;
         }
-        for (int j = target.start[v]; j < target.start[v + 1]; j++) {
-            if (targetToQuery[target.neighbour[j]] < 0)
+        for (int targetPlace = target.start[targetAtom]; targetPlace < target.start[targetAtom + 1]; targetPlace++) {
+            if (targetToQuery[target.neighbour[targetPlace]] < 0)
                 level.freeTargetBonds--;
         }
         level.fragmentStart = fragmentStart;
         level.bound = bound;
         level.candidates = level.targets = NONE;
         level.nextCandidate = level.nextTarget = level.rootRank = 0;
-        queryToTarget[u] = v;
-        targetToQuery[v] = u;
+        queryToTarget[queryAtom] = targetAtom;
+        targetToQuery[targetAtom] = queryAtom;
         depth++;
         commonBonds += addedBonds;
         // A mapping that breaks a configuration still breaks it with any pair added. The pair is rejected at once.
@@ -520,7 +534,7 @@ final class MCSSearch {
         record(fragmentStart);
         // A leaf has nothing left to try. Every query atom up to the rank of the root is mapped, or every target
         // atom is, or the mapping has the atoms of the upper bound, in MCES its common bonds.
-        if (done() || depth == queryRank[levels[0].queryAtom] + 1 || depth == m
+        if (done() || depth == queryRank[levels[0].queryAtom] + 1 || depth == targetCount
             || (minBonds > 0 ? commonBonds == bonds(upperBound) : depth == atoms(upperBound)))
             return true;
         level.bound = bound(fragmentStart, bound);
@@ -562,12 +576,12 @@ final class MCSSearch {
         commonBonds = level.commonBondsBefore;
     }
 
-    /** Excludes the pair of {@code u} and {@code v}, which must be allowed. */
-    private void exclude(int u, int v) {
-        clear(allowed, u, v);
+    /** Excludes the pair of {@code queryAtom} and {@code targetAtom}, which must be allowed. */
+    private void exclude(int queryAtom, int targetAtom) {
+        clear(allowed, queryAtom, targetAtom);
         if (excludedCount == excluded.length)
             excluded = Arrays.copyOf(excluded, 2 * excluded.length);
-        excluded[excludedCount++] = pair(u, v);
+        excluded[excludedCount++] = pair(queryAtom, targetAtom);
     }
 
     /**
@@ -589,14 +603,14 @@ final class MCSSearch {
             level.fragmentStart = depth;
         }
         while (--level.rootRank >= 0) {
-            int u = queryOrder[level.rootRank];
-            if (queryToTarget[u] >= 0)
+            int queryAtom = queryOrder[level.rootRank];
+            if (queryToTarget[queryAtom] >= 0)
                 continue;
             level.bound = rootBound(level.rootRank);
             if (!canImprove(level.bound))
                 return false;
-            level.triedAtom = u;
-            level.targets = freeTargets(u);
+            level.triedAtom = queryAtom;
+            level.targets = freeTargets(queryAtom);
             level.nextTarget = 0;
             if (level.targets.length > 0)
                 return true;
@@ -656,7 +670,7 @@ final class MCSSearch {
         Level top = levels[depth - 1];
         // In MCES the atoms of the upper bound cap only a mapping with as many bonds. A mapping with fewer bonds
         // may have more atoms.
-        int mostAtoms = minBonds > 0 ? Math.min(n, m) : atoms(upperBound);
+        int mostAtoms = minBonds > 0 ? Math.min(queryCount, targetCount) : atoms(upperBound);
         int mostBonds = commonBonds + open + Math.min(top.freeQueryBonds, top.freeTargetBonds);
         long result = canImprove(capped(mostAtoms, mostBonds)) ? current : -1;
         if (result >= 0 && minBonds > 0) {
@@ -674,20 +688,20 @@ final class MCSSearch {
     /** The bound in connected mode, from the groups of atoms the reached pairs join. Pairs are reached in batches. */
     private long groupBound(int open, long current) {
         int queryLinks = reach.queryLinks, targetLinks = reach.targetLinks;
-        for (int i = 0, joined = 0; ; ) {
+        for (int linked = 0, joined = 0; ; ) {
             for (; joined < reach.count; joined++)
                 reach.join(reach.pairs[joined]);
             int links = Math.min(reach.queryLinks - queryLinks, reach.targetLinks - targetLinks);
             long bound = capped(depth + reach.groupSum, commonBonds + open + links);
-            if (i == reach.count)
+            if (linked == reach.count)
                 return canImprove(bound) ? bound : -1;
             // With complete rings every pair is reached, as complete() reads the atoms of the reached pairs.
             if (query.rings == null && canImprove(bound))
                 return current;
-            for (int end = Math.min(i + REACH_BATCH, reach.count); i < end; i++) {
+            for (int end = Math.min(linked + REACH_BATCH, reach.count); linked < end; linked++) {
                 clock.tick();
-                int p = reach.pairs[i];
-                reach.link(queryAtom(p), targetAtom(p));
+                int pair = reach.pairs[linked];
+                reach.link(queryAtom(pair), targetAtom(pair));
             }
         }
     }
@@ -717,7 +731,7 @@ final class MCSSearch {
      */
     long score(int[] mapping) {
         int atomCount = 0, bondCount = 0;
-        for (int queryAtom = 0; queryAtom < n; queryAtom++) {
+        for (int queryAtom = 0; queryAtom < queryCount; queryAtom++) {
             if (mapping[queryAtom] >= 0) {
                 atomCount++;
                 bondCount += commonBondsAt(mapping, queryAtom, null, null);
@@ -734,16 +748,16 @@ final class MCSSearch {
      */
     private int commonBondsAt(int[] mapping, int queryAtom, boolean[] queryCommon, boolean[] targetCommon) {
         int targetAtom = mapping[queryAtom], count = 0;
-        for (int i = query.start[queryAtom]; i < query.start[queryAtom + 1]; i++) {
-            int other = query.neighbour[i];
+        for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+            int other = query.neighbour[queryPlace];
             if (other >= queryAtom || mapping[other] < 0)
                 continue;
             int targetBond = target.bondBetween(targetAtom, mapping[other]);
-            if (targetBond < 0 || !graph.bondsMatch(query.neighbourBond[i], targetBond))
+            if (targetBond < 0 || !graph.bondsMatch(query.neighbourBond[queryPlace], targetBond))
                 continue;
             count++;
             if (queryCommon != null)
-                queryCommon[query.neighbourBond[i]] = targetCommon[targetBond] = true;
+                queryCommon[query.neighbourBond[queryPlace]] = targetCommon[targetBond] = true;
         }
         return count;
     }
@@ -773,12 +787,12 @@ final class MCSSearch {
         Arrays.sort(layer);
         long[] keys = new long[layer.length];
         int count = 0;
-        for (int i = 0, j; i < layer.length; i = j) {
-            int u = queryAtom(layer[i]);
-            j = i + 1;
-            while (j < layer.length && queryAtom(layer[j]) == u)
-                j++;
-            keys[count++] = candidateKey(u, j - i);
+        for (int from = 0, to; from < layer.length; from = to) {
+            int queryAtom = queryAtom(layer[from]);
+            to = from + 1;
+            while (to < layer.length && queryAtom(layer[to]) == queryAtom)
+                to++;
+            keys[count++] = candidateKey(queryAtom, to - from);
         }
         Arrays.sort(keys, 0, count);
         int[] sorted = new int[count];
@@ -787,39 +801,44 @@ final class MCSSearch {
         return sorted;
     }
 
-    /** The sort key of candidate {@code u}: whether it is terminal, its number of pairs, then its rank in reverse. */
-    private long candidateKey(int u, int pairs) {
-        return (query.degree(u) == 1 ? 1L << 62 : 0) | (long) pairs << 31 | n - 1 - queryRank[u];
+    /**
+     * The sort key of candidate {@code queryAtom}: whether it is terminal, its
+     * number of pairs, then its rank in reverse.
+     */
+    private long candidateKey(int queryAtom, int pairs) {
+        return (query.degree(queryAtom) == 1 ? 1L << 62 : 0) | (long) pairs << 31
+               | queryCount - 1 - queryRank[queryAtom];
     }
 
     private int candidateOf(long key) {
-        return queryOrder[n - 1 - (int) (key & Integer.MAX_VALUE)];
+        return queryOrder[queryCount - 1 - (int) (key & Integer.MAX_VALUE)];
     }
 
     /**
-     * The targets of query atom {@code u}. These are the free neighbours of
+     * The targets of query atom {@code queryAtom}. These are the free neighbours of
      * the images of its mapped neighbours, joined by compatible bonds, in pairs
      * not excluded. The most alike come first, then by descending rank. The
      * order decides only which mappings are found first.
      */
-    private int[] targets(int u) {
+    private int[] targets(int queryAtom) {
         int capacity = 0;
-        for (int i = query.start[u]; i < query.start[u + 1]; i++) {
-            if (queryToTarget[query.neighbour[i]] >= 0)
-                capacity += target.degree(queryToTarget[query.neighbour[i]]);
+        for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+            if (queryToTarget[query.neighbour[queryPlace]] >= 0)
+                capacity += target.degree(queryToTarget[query.neighbour[queryPlace]]);
         }
         long[] keys = new long[capacity];
         int count = 0;
-        for (int i = query.start[u]; i < query.start[u + 1]; i++) {
-            int x = queryToTarget[query.neighbour[i]];
-            if (x < 0)
+        for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+            int neighbourImage = queryToTarget[query.neighbour[queryPlace]];
+            if (neighbourImage < 0)
                 continue;
-            clock.tick(1 + target.degree(x));
-            for (int j = target.start[x]; j < target.start[x + 1]; j++) {
-                int v = target.neighbour[j];
-                if (targetToQuery[v] < 0 && has(allowed, u, v)
-                    && graph.bondsMatch(query.neighbourBond[i], target.neighbourBond[j]))
-                    keys[count++] = targetKey(u, v);
+            clock.tick(1 + target.degree(neighbourImage));
+            for (int targetPlace = target.start[neighbourImage]; targetPlace < target.start[neighbourImage + 1];
+                 targetPlace++) {
+                int targetAtom = target.neighbour[targetPlace];
+                if (targetToQuery[targetAtom] < 0 && has(allowed, queryAtom, targetAtom)
+                    && graph.bondsMatch(query.neighbourBond[queryPlace], target.neighbourBond[targetPlace]))
+                    keys[count++] = targetKey(queryAtom, targetAtom);
             }
         }
         // A target next to two mapped neighbours is listed twice, with the same key.
@@ -833,37 +852,44 @@ final class MCSSearch {
         return Arrays.copyOf(targets, unique);
     }
 
-    /** The sort key of target {@code v} of query atom {@code u}: how unlike the two are, then the rank in reverse. */
-    private long targetKey(int u, int v) {
-        return (long) (MCSGraph.RADII - likeness(u, v)) << 32 | m - 1 - targetRank[v];
+    /**
+     * The sort key of target {@code targetAtom} of query atom {@code queryAtom}:
+     * how unlike the two are, then the rank in reverse.
+     */
+    private long targetKey(int queryAtom, int targetAtom) {
+        return (long) (MCSGraph.RADII - likeness(queryAtom, targetAtom)) << 32
+               | targetCount - 1 - targetRank[targetAtom];
     }
 
     private int targetOf(long key) {
-        return targetOrder[m - 1 - (int) key];
+        return targetOrder[targetCount - 1 - (int) key];
     }
 
     /** The free targets of a root, by descending rank. */
-    private int[] freeTargets(int u) {
-        int[] targets = new int[m];
+    private int[] freeTargets(int queryAtom) {
+        int[] targets = new int[targetCount];
         int count = 0;
-        clock.tick(m);
-        for (int j = m - 1; j >= 0; j--) {
-            if (targetToQuery[targetOrder[j]] < 0 && has(allowed, u, targetOrder[j]))
-                targets[count++] = targetOrder[j];
+        clock.tick(targetCount);
+        for (int targetPosition = targetCount - 1; targetPosition >= 0; targetPosition--) {
+            if (targetToQuery[targetOrder[targetPosition]] < 0 && has(allowed, queryAtom, targetOrder[targetPosition]))
+                targets[count++] = targetOrder[targetPosition];
         }
         return Arrays.copyOf(targets, count);
     }
 
-    /** The compatible bonds from {@code u} to mapped atoms that the target has from {@code v} to their images. */
-    private int common(int u, int v) {
+    /**
+     * The compatible bonds from {@code queryAtom} to mapped atoms that the
+     * target has from {@code targetAtom} to their images.
+     */
+    private int common(int queryAtom, int targetAtom) {
         int count = 0;
-        for (int i = query.start[u]; i < query.start[u + 1]; i++) {
-            int x = queryToTarget[query.neighbour[i]];
-            if (x < 0)
+        for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+            int neighbourImage = queryToTarget[query.neighbour[queryPlace]];
+            if (neighbourImage < 0)
                 continue;
-            clock.tick(1 + target.degree(v));
-            int f = target.bondBetween(v, x);
-            if (f >= 0 && graph.bondsMatch(query.neighbourBond[i], f))
+            clock.tick(1 + target.degree(targetAtom));
+            int targetBond = target.bondBetween(targetAtom, neighbourImage);
+            if (targetBond >= 0 && graph.bondsMatch(query.neighbourBond[queryPlace], targetBond))
                 count++;
         }
         return count;
@@ -878,45 +904,45 @@ final class MCSSearch {
     private int[] twins(MCSGraph.Side side, boolean onQuery) {
         int[] next = new int[side.atomCount];
         Arrays.fill(next, -1);
-        for (int p = 0; p < side.atomCount; p++) {
-            for (int i = side.start[p]; i < side.start[p + 1]; i++) {
-                int a = side.neighbour[i], last = a;
-                if (next[a] >= 0 || side.degree(a) != 1 || side.configured(a))
+        for (int parent = 0; parent < side.atomCount; parent++) {
+            for (int place = side.start[parent]; place < side.start[parent + 1]; place++) {
+                int first = side.neighbour[place], last = first;
+                if (next[first] >= 0 || side.degree(first) != 1 || side.configured(first))
                     continue;
-                for (int j = i + 1; j < side.start[p + 1]; j++) {
-                    int b = side.neighbour[j];
-                    if (next[b] < 0 && side.degree(b) == 1 && !side.configured(b)
-                        && alike(onQuery, a, side.neighbourBond[i], b, side.neighbourBond[j])) {
-                        next[last] = b;
-                        last = b;
+                for (int laterPlace = place + 1; laterPlace < side.start[parent + 1]; laterPlace++) {
+                    int other = side.neighbour[laterPlace];
+                    if (next[other] < 0 && side.degree(other) == 1 && !side.configured(other)
+                        && alike(onQuery, first, side.neighbourBond[place], other, side.neighbourBond[laterPlace])) {
+                        next[last] = other;
+                        last = other;
                     }
                 }
-                if (last != a)
-                    next[last] = a;
+                if (last != first)
+                    next[last] = first;
             }
         }
         return next;
     }
 
-    /** Whether atoms {@code a} and {@code b}, with their bonds {@code e} and {@code f}, match alike. */
-    private boolean alike(boolean onQuery, int a, int e, int b, int f) {
-        clock.tick(words + n + query.bondCount + target.bondCount);
+    /** Whether {@code atom} and {@code other}, with their bonds {@code bond} and {@code otherBond}, match alike. */
+    private boolean alike(boolean onQuery, int atom, int bond, int other, int otherBond) {
+        clock.tick(words + queryCount + query.bondCount + target.bondCount);
         if (onQuery) {
-            for (int x = 0; x < words; x++) {
-                if (allowed[a * words + x] != allowed[b * words + x])
+            for (int word = 0; word < words; word++) {
+                if (allowed[atom * words + word] != allowed[other * words + word])
                     return false;
             }
-            for (int x = 0; x < target.bondCount; x++) {
-                if (graph.bondsMatch(e, x) != graph.bondsMatch(f, x))
+            for (int targetBond = 0; targetBond < target.bondCount; targetBond++) {
+                if (graph.bondsMatch(bond, targetBond) != graph.bondsMatch(otherBond, targetBond))
                     return false;
             }
         } else {
-            for (int x = 0; x < n; x++) {
-                if (has(allowed, x, a) != has(allowed, x, b))
+            for (int queryAtom = 0; queryAtom < queryCount; queryAtom++) {
+                if (has(allowed, queryAtom, atom) != has(allowed, queryAtom, other))
                     return false;
             }
-            for (int x = 0; x < query.bondCount; x++) {
-                if (graph.bondsMatch(x, e) != graph.bondsMatch(x, f))
+            for (int queryBond = 0; queryBond < query.bondCount; queryBond++) {
+                if (graph.bondsMatch(queryBond, bond) != graph.bondsMatch(queryBond, otherBond))
                     return false;
             }
         }
@@ -924,7 +950,7 @@ final class MCSSearch {
     }
 
     /**
-     * Whether the pair of {@code u} and {@code v} can be skipped, as a free
+     * Whether the pair of {@code queryAtom} and {@code targetAtom} can be skipped, as a free
      * twin of one has its pair with the other excluded. Swapping the twins
      * turns every mapping below this pair into one of the same score below the
      * excluded pair, which was tried before. So this holds only while no
@@ -932,17 +958,17 @@ final class MCSSearch {
      * as wanted, and in MCES also when nothing but the seed is held, see
      * {@link #run}.
      */
-    private boolean twinExcluded(int u, int v) {
+    private boolean twinExcluded(int queryAtom, int targetAtom) {
         boolean full = mappings.size() == maxMappings;
         boolean onlySeed = minBonds > 0 && mappings.size() == (heldSeed != null ? 1 : 0);
         if (!full && !onlySeed)
             return false;
-        for (int w = queryTwin[u]; w >= 0 && w != u; w = queryTwin[w]) {
-            if (queryToTarget[w] < 0 && !has(allowed, w, v))
+        for (int twin = queryTwin[queryAtom]; twin >= 0 && twin != queryAtom; twin = queryTwin[twin]) {
+            if (queryToTarget[twin] < 0 && !has(allowed, twin, targetAtom))
                 return true;
         }
-        for (int y = targetTwin[v]; y >= 0 && y != v; y = targetTwin[y]) {
-            if (targetToQuery[y] < 0 && !has(allowed, u, y))
+        for (int twin = targetTwin[targetAtom]; twin >= 0 && twin != targetAtom; twin = targetTwin[twin]) {
+            if (targetToQuery[twin] < 0 && !has(allowed, queryAtom, twin))
                 return true;
         }
         return false;
@@ -957,18 +983,21 @@ final class MCSSearch {
      * beats it.
      */
     private boolean hasPendantPair(int fragmentStart) {
-        for (int k = fragmentStart; k < depth; k++) {
-            int p = levels[k].queryAtom, x = levels[k].targetAtom;
-            clock.tick(query.degree(p) * target.degree(x));
-            for (int i = query.start[p]; i < query.start[p + 1]; i++) {
-                int h = query.neighbour[i];
-                if (queryToTarget[h] >= 0 || query.degree(h) != 1 || query.configured(h))
+        for (int level = fragmentStart; level < depth; level++) {
+            int queryAtom = levels[level].queryAtom, targetAtom = levels[level].targetAtom;
+            clock.tick(query.degree(queryAtom) * target.degree(targetAtom));
+            for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+                int queryNeighbour = query.neighbour[queryPlace];
+                if (queryToTarget[queryNeighbour] >= 0 || query.degree(queryNeighbour) != 1
+                    || query.configured(queryNeighbour))
                     continue;
-                for (int j = target.start[x]; j < target.start[x + 1]; j++) {
-                    int y = target.neighbour[j];
-                    if (targetToQuery[y] < 0 && target.degree(y) == 1 && !target.configured(y)
-                        && has(edgeBound.compatible, h, y)
-                        && graph.bondsMatch(query.neighbourBond[i], target.neighbourBond[j]))
+                for (int targetPlace = target.start[targetAtom]; targetPlace < target.start[targetAtom + 1];
+                     targetPlace++) {
+                    int targetNeighbour = target.neighbour[targetPlace];
+                    if (targetToQuery[targetNeighbour] < 0 && target.degree(targetNeighbour) == 1
+                        && !target.configured(targetNeighbour)
+                        && has(edgeBound.compatible, queryNeighbour, targetNeighbour)
+                        && graph.bondsMatch(query.neighbourBond[queryPlace], target.neighbourBond[targetPlace]))
                         return true;
                 }
             }
@@ -983,14 +1012,14 @@ final class MCSSearch {
      * pairs can be.
      */
     private boolean complete(int[] mapping, boolean open) {
-        boolean[] queryMapped = new boolean[n], targetMapped = new boolean[m];
-        boolean[] queryOpen = new boolean[n], targetOpen = new boolean[m];
+        boolean[] queryMapped = new boolean[queryCount], targetMapped = new boolean[targetCount];
+        boolean[] queryOpen = new boolean[queryCount], targetOpen = new boolean[targetCount];
         boolean[] queryCommon = new boolean[query.bondCount], targetCommon = new boolean[target.bondCount];
         for (int i = 0; open && i < reach.count; i++) {
             queryOpen[queryAtom(reach.pairs[i])] = true;
             targetOpen[targetAtom(reach.pairs[i])] = true;
         }
-        for (int queryAtom = 0; queryAtom < n; queryAtom++) {
+        for (int queryAtom = 0; queryAtom < queryCount; queryAtom++) {
             int targetAtom = mapping[queryAtom];
             if (targetAtom < 0)
                 continue;
@@ -1009,38 +1038,39 @@ final class MCSSearch {
      * target atom of its own with at least as many bonds. Null if not.
      */
     Embedding embedding() {
-        if (n > m || !queryConnected())
+        if (queryCount > targetCount || !queryConnected())
             return null;
-        // Row k holds the target atoms with at least k bonds, up to the most a query atom has. The last row is empty.
+        // A row for each number of bonds holds the target atoms with at least that many, up to the most a query atom
+        // has. The last row is empty.
         int rows = Math.min(query.maxDegree(), target.maxDegree()) + 1;
         long[] atLeast = new long[(rows + 1) * words];
-        for (int t = 0; t < m; t++)
-            for (int k = Math.min(target.degree(t), rows); k >= 0; k--)
-                set(atLeast, k, t);
-        long[] candidateRows = new long[n * words];
-        for (int q = 0; q < n; q++) {
+        for (int targetAtom = 0; targetAtom < targetCount; targetAtom++)
+            for (int fewestBonds = Math.min(target.degree(targetAtom), rows); fewestBonds >= 0; fewestBonds--)
+                set(atLeast, fewestBonds, targetAtom);
+        long[] candidateRows = new long[queryCount * words];
+        for (int queryAtom = 0; queryAtom < queryCount; queryAtom++) {
             clock.tick(words);
-            int row = Math.min(query.degree(q), rows) * words;
+            int row = Math.min(query.degree(queryAtom), rows) * words;
             for (int i = 0; i < words; i++)
-                candidateRows[q * words + i] = allowed[q * words + i] & atLeast[row + i];
+                candidateRows[queryAtom * words + i] = allowed[queryAtom * words + i] & atLeast[row + i];
         }
-        return hasDistinctTargets(candidateRows, n, words, clock) ? new Embedding(candidateRows) : null;
+        return hasDistinctTargets(candidateRows, queryCount, words, clock) ? new Embedding(candidateRows) : null;
     }
 
     private boolean queryConnected() {
-        int[] queue = new int[n];
-        boolean[] in = new boolean[n];
+        int[] queue = new int[queryCount];
+        boolean[] reached = new boolean[queryCount];
         int count = 1;
-        in[0] = true;
-        for (int i = 0; i < count; i++) {
-            for (int j = query.start[queue[i]]; j < query.start[queue[i] + 1]; j++) {
-                if (!in[query.neighbour[j]]) {
-                    in[query.neighbour[j]] = true;
-                    queue[count++] = query.neighbour[j];
+        reached[0] = true;
+        for (int head = 0; head < count; head++) {
+            for (int place = query.start[queue[head]]; place < query.start[queue[head] + 1]; place++) {
+                if (!reached[query.neighbour[place]]) {
+                    reached[query.neighbour[place]] = true;
+                    queue[count++] = query.neighbour[place];
                 }
             }
         }
-        return count == n;
+        return count == queryCount;
     }
 
     /**
@@ -1048,15 +1078,15 @@ final class MCSSearch {
      * limits the pairs. Pairs sort by query atom, then by target atom.
      */
     private int pair(int queryAtom, int targetAtom) {
-        return queryAtom * m + targetAtom;
+        return queryAtom * targetCount + targetAtom;
     }
 
     private int queryAtom(int pair) {
-        return pair / m;
+        return pair / targetCount;
     }
 
     private int targetAtom(int pair) {
-        return pair % m;
+        return pair % targetCount;
     }
 
     /** A mapped pair of the branch and bound, with what it restores when taken off and what it has left to try. */
@@ -1088,13 +1118,14 @@ final class MCSSearch {
     /**
      * The open pairs reached from the open fragment of a state through
      * compatible bonds, see {@link #bound}. The bonds that link them are
-     * counted once on each side. A union-find over their atoms, with target
-     * atom t as n + t, sums the fewer atoms of either side over the groups.
+     * counted once on each side. A union-find over their atoms, the target
+     * atoms numbered after the query atoms, sums the fewer atoms of either
+     * side over the groups.
      */
     private final class Reach {
 
         /** The reached pairs as bits, rows by query atom. */
-        private final long[] seen = new long[n * words];
+        private final long[] seen = new long[queryCount * words];
         /** The reached pairs in the order they were reached, the first {@link #count} of the array. */
         private int[] pairs = new int[INITIAL_PAIRS];
         private int count;
@@ -1104,10 +1135,10 @@ final class MCSSearch {
         private final int[] targetBondStamp = new int[target.bondCount];
         private int queryLinks, targetLinks;
         /** The union-find: the stamp and parent of each atom, and the atoms of each side in each group. */
-        private final int[] atomStamp = new int[n + m];
-        private final int[] parent = new int[n + m];
-        private final int[] queryAtoms = new int[n + m];
-        private final int[] targetAtoms = new int[n + m];
+        private final int[] atomStamp = new int[queryCount + targetCount];
+        private final int[] parent = new int[queryCount + targetCount];
+        private final int[] queryAtoms = new int[queryCount + targetCount];
+        private final int[] targetAtoms = new int[queryCount + targetCount];
         /** The sum, over the groups, of the fewer atoms of either side. */
         private int groupSum;
         /** The stamp of this use, so that no marks have to be cleared. */
@@ -1123,31 +1154,33 @@ final class MCSSearch {
             count = queryLinks = targetLinks = groupSum = 0;
         }
 
-        /** Reaches the open pairs next to the pair of {@code a} and {@code x}. */
-        void link(int a, int x) {
-            int from = target.start[x], to = target.start[x + 1], rootRank = queryRank[levels[0].queryAtom];
-            for (int i = query.start[a]; i < query.start[a + 1]; i++) {
-                int u = query.neighbour[i], e = query.neighbourBond[i];
-                if (queryToTarget[u] >= 0 || queryRank[u] > rootRank)
+        /** Reaches the open pairs next to the pair of {@code queryAtom} and {@code targetAtom}. */
+        void link(int queryAtom, int targetAtom) {
+            int from = target.start[targetAtom], to = target.start[targetAtom + 1];
+            int rootRank = queryRank[levels[0].queryAtom];
+            for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+                int queryNeighbour = query.neighbour[queryPlace], queryBond = query.neighbourBond[queryPlace];
+                if (queryToTarget[queryNeighbour] >= 0 || queryRank[queryNeighbour] > rootRank)
                     continue;
                 clock.tick(1 + to - from);
-                for (int j = from; j < to; j++) {
-                    int v = target.neighbour[j], f = target.neighbourBond[j];
-                    if (targetToQuery[v] >= 0 || !has(allowed, u, v) || !graph.bondsMatch(e, f))
+                for (int targetPlace = from; targetPlace < to; targetPlace++) {
+                    int targetNeighbour = target.neighbour[targetPlace], targetBond = target.neighbourBond[targetPlace];
+                    if (targetToQuery[targetNeighbour] >= 0 || !has(allowed, queryNeighbour, targetNeighbour)
+                        || !graph.bondsMatch(queryBond, targetBond))
                         continue;
-                    if (queryBondStamp[e] != stamp) {
-                        queryBondStamp[e] = stamp;
+                    if (queryBondStamp[queryBond] != stamp) {
+                        queryBondStamp[queryBond] = stamp;
                         queryLinks++;
                     }
-                    if (targetBondStamp[f] != stamp) {
-                        targetBondStamp[f] = stamp;
+                    if (targetBondStamp[targetBond] != stamp) {
+                        targetBondStamp[targetBond] = stamp;
                         targetLinks++;
                     }
-                    if (!has(seen, u, v)) {
-                        set(seen, u, v);
+                    if (!has(seen, queryNeighbour, targetNeighbour)) {
+                        set(seen, queryNeighbour, targetNeighbour);
                         if (count == pairs.length)
                             pairs = Arrays.copyOf(pairs, 2 * pairs.length);
-                        pairs[count++] = pair(u, v);
+                        pairs[count++] = pair(queryNeighbour, targetNeighbour);
                     }
                 }
             }
@@ -1159,27 +1192,28 @@ final class MCSSearch {
         }
 
         void join(int pair) {
-            int a = root(queryAtom(pair)), b = root(n + targetAtom(pair));
-            if (a != b) {
-                groupSum -= Math.min(queryAtoms[a], targetAtoms[a]) + Math.min(queryAtoms[b], targetAtoms[b]);
-                parent[b] = a;
-                queryAtoms[a] += queryAtoms[b];
-                targetAtoms[a] += targetAtoms[b];
-                groupSum += Math.min(queryAtoms[a], targetAtoms[a]);
+            int queryRoot = root(queryAtom(pair)), targetRoot = root(queryCount + targetAtom(pair));
+            if (queryRoot != targetRoot) {
+                groupSum -= Math.min(queryAtoms[queryRoot], targetAtoms[queryRoot])
+                            + Math.min(queryAtoms[targetRoot], targetAtoms[targetRoot]);
+                parent[targetRoot] = queryRoot;
+                queryAtoms[queryRoot] += queryAtoms[targetRoot];
+                targetAtoms[queryRoot] += targetAtoms[targetRoot];
+                groupSum += Math.min(queryAtoms[queryRoot], targetAtoms[queryRoot]);
             }
         }
 
-        /** The root of the group of atom {@code x}, which starts as a group of its own in each use. */
-        private int root(int x) {
-            if (atomStamp[x] != stamp) {
-                atomStamp[x] = stamp;
-                parent[x] = x;
-                queryAtoms[x] = x < n ? 1 : 0;
-                targetAtoms[x] = 1 - queryAtoms[x];
+        /** The root of the group of {@code atom}, which starts as a group of its own in each use. */
+        private int root(int atom) {
+            if (atomStamp[atom] != stamp) {
+                atomStamp[atom] = stamp;
+                parent[atom] = atom;
+                queryAtoms[atom] = atom < queryCount ? 1 : 0;
+                targetAtoms[atom] = 1 - queryAtoms[atom];
             }
-            while (parent[x] != x)
-                x = parent[x] = parent[parent[x]];
-            return x;
+            while (parent[atom] != atom)
+                atom = parent[atom] = parent[parent[atom]];
+            return atom;
         }
 
         /** Ends this use by clearing the bits of the reached pairs. */
@@ -1223,9 +1257,10 @@ final class MCSSearch {
             int queryBonds = query.bondCount, bondTotal = queryBonds + target.bondCount;
             int[] symbol = atomSymbols(), bondSets = bondSets();
             int symbols = 0;
-            for (int x : symbol)
-                symbols = Math.max(symbols, x + 1);
-            int[] querySymbol = Arrays.copyOfRange(symbol, 0, n), targetSymbol = Arrays.copyOfRange(symbol, n, n + m);
+            for (int atomSymbol : symbol)
+                symbols = Math.max(symbols, atomSymbol + 1);
+            int[] querySymbol = Arrays.copyOfRange(symbol, 0, queryCount);
+            int[] targetSymbol = Arrays.copyOfRange(symbol, queryCount, queryCount + targetCount);
             // The symbols at the ends of each bond, the lower first, or -1 if an end has none.
             int[] low = new int[bondTotal], high = new int[bondTotal];
             Arrays.fill(low, -1);
@@ -1233,17 +1268,18 @@ final class MCSSearch {
             endSymbols(target, targetSymbol, queryBonds, low, high);
             // The keys sort the bonds by the symbols at their ends, then by their bond set.
             long[] keys = new long[bondTotal];
-            for (int e = 0; e < bondTotal; e++)
-                keys[e] = low[e] < 0 ? -1 : ((long) low[e] * symbols + high[e]) * bondTotal + find(bondSets, e);
+            for (int bond = 0; bond < bondTotal; bond++)
+                keys[bond] = low[bond] < 0 ? -1 : ((long) low[bond] * symbols + high[bond]) * bondTotal
+                                                  + find(bondSets, bond);
             int[] labelOf = labels(keys, queryBonds);
             int labels = 0;
-            for (int l : labelOf)
-                labels = Math.max(labels, l + 1);
+            for (int bondLabel : labelOf)
+                labels = Math.max(labels, bondLabel + 1);
             slotSymbol = new int[2 * labels];
-            for (int e = 0; e < bondTotal; e++) {
-                if (labelOf[e] >= 0) {
-                    slotSymbol[2 * labelOf[e]] = low[e];
-                    slotSymbol[2 * labelOf[e] + 1] = low[e] == high[e] ? -1 : high[e];
+            for (int bond = 0; bond < bondTotal; bond++) {
+                if (labelOf[bond] >= 0) {
+                    slotSymbol[2 * labelOf[bond]] = low[bond];
+                    slotSymbol[2 * labelOf[bond] + 1] = low[bond] == high[bond] ? -1 : high[bond];
                 }
             }
             histogramWidth = Math.max(query.maxDegree(), target.maxDegree()) + 1;
@@ -1256,38 +1292,40 @@ final class MCSSearch {
         }
 
         /**
-         * The symbol of each atom, with target atom b at n + b. Atoms joined by
-         * compatible pairs share a symbol. An atom without a compatible pair is
-         * never mapped and has none, -1.
+         * The symbol of each atom, the target atoms after the query atoms. Atoms
+         * joined by compatible pairs share a symbol. An atom without a compatible
+         * pair is never mapped and has none, -1.
          */
         private int[] atomSymbols() {
-            int[] atomSets = singletons(n + m);
-            for (int a = 0; a < n; a++) {
+            int[] atomSets = singletons(queryCount + targetCount);
+            for (int queryAtom = 0; queryAtom < queryCount; queryAtom++) {
                 clock.tick(words);
-                int row = a * words;
-                for (int b = nextBit(allowed, row, words, 0); b >= 0; b = nextBit(allowed, row, words, b + 1))
-                    unite(atomSets, a, n + b);
+                int row = queryAtom * words;
+                for (int targetAtom = nextBit(allowed, row, words, 0); targetAtom >= 0;
+                     targetAtom = nextBit(allowed, row, words, targetAtom + 1))
+                    unite(atomSets, queryAtom, queryCount + targetAtom);
             }
-            int[] members = new int[n + m], setSymbol = new int[n + m], symbol = new int[n + m];
+            int[] members = new int[queryCount + targetCount], setSymbol = new int[queryCount + targetCount];
+            int[] symbol = new int[queryCount + targetCount];
             int count = 0;
-            for (int a = 0; a < n + m; a++)
-                members[find(atomSets, a)]++;
-            for (int a = 0; a < n + m; a++)
-                setSymbol[a] = members[a] > 1 ? count++ : -1;
-            for (int a = 0; a < n + m; a++)
-                symbol[a] = setSymbol[find(atomSets, a)];
+            for (int atom = 0; atom < queryCount + targetCount; atom++)
+                members[find(atomSets, atom)]++;
+            for (int atom = 0; atom < queryCount + targetCount; atom++)
+                setSymbol[atom] = members[atom] > 1 ? count++ : -1;
+            for (int atom = 0; atom < queryCount + targetCount; atom++)
+                symbol[atom] = setSymbol[find(atomSets, atom)];
             return symbol;
         }
 
-        /** The sets of bonds joined by compatible bond pairs, with target bond f after the query bonds. */
+        /** The sets of bonds joined by compatible bond pairs, the target bonds after the query bonds. */
         private int[] bondSets() {
             int queryBonds = query.bondCount, targetBonds = target.bondCount;
             int[] bondSets = singletons(queryBonds + targetBonds);
-            for (int e = 0; e < queryBonds; e++) {
+            for (int queryBond = 0; queryBond < queryBonds; queryBond++) {
                 clock.tick(targetBonds);
-                for (int f = 0; f < targetBonds; f++) {
-                    if (graph.bondsMatch(e, f))
-                        unite(bondSets, e, queryBonds + f);
+                for (int targetBond = 0; targetBond < targetBonds; targetBond++) {
+                    if (graph.bondsMatch(queryBond, targetBond))
+                        unite(bondSets, queryBond, queryBonds + targetBond);
                 }
             }
             return bondSets;
@@ -1295,12 +1333,12 @@ final class MCSSearch {
 
         /** Sets the symbols at the ends of each bond of {@code side} whose ends have symbols, the lower first. */
         private void endSymbols(MCSGraph.Side side, int[] symbol, int offset, int[] low, int[] high) {
-            for (int a = 0; a < side.atomCount; a++) {
-                for (int i = side.start[a]; i < side.start[a + 1]; i++) {
-                    int b = side.neighbour[i], bond = offset + side.neighbourBond[i];
-                    if (b > a && symbol[a] >= 0 && symbol[b] >= 0) {
-                        low[bond] = Math.min(symbol[a], symbol[b]);
-                        high[bond] = Math.max(symbol[a], symbol[b]);
+            for (int atom = 0; atom < side.atomCount; atom++) {
+                for (int place = side.start[atom]; place < side.start[atom + 1]; place++) {
+                    int other = side.neighbour[place], bond = offset + side.neighbourBond[place];
+                    if (other > atom && symbol[atom] >= 0 && symbol[other] >= 0) {
+                        low[bond] = Math.min(symbol[atom], symbol[other]);
+                        high[bond] = Math.max(symbol[atom], symbol[other]);
                     }
                 }
             }
@@ -1313,17 +1351,17 @@ final class MCSSearch {
         private int[] labels(long[] keys, int queryBonds) {
             int[] rank = MCSGraph.denseRanks(keys), label = new int[keys.length], labelOf = new int[keys.length];
             boolean[] inQuery = new boolean[keys.length], inTarget = new boolean[keys.length];
-            for (int e = 0; e < keys.length; e++) {
-                if (keys[e] >= 0 && e < queryBonds)
-                    inQuery[rank[e]] = true;
-                else if (keys[e] >= 0)
-                    inTarget[rank[e]] = true;
+            for (int bond = 0; bond < keys.length; bond++) {
+                if (keys[bond] >= 0 && bond < queryBonds)
+                    inQuery[rank[bond]] = true;
+                else if (keys[bond] >= 0)
+                    inTarget[rank[bond]] = true;
             }
             int labels = 0;
-            for (int r = 0; r < keys.length; r++)
-                label[r] = inQuery[r] && inTarget[r] ? labels++ : -1;
-            for (int e = 0; e < keys.length; e++)
-                labelOf[e] = keys[e] < 0 ? -1 : label[rank[e]];
+            for (int keyRank = 0; keyRank < keys.length; keyRank++)
+                label[keyRank] = inQuery[keyRank] && inTarget[keyRank] ? labels++ : -1;
+            for (int bond = 0; bond < keys.length; bond++)
+                labelOf[bond] = keys[bond] < 0 ? -1 : label[rank[bond]];
             return labelOf;
         }
 
@@ -1339,27 +1377,29 @@ final class MCSSearch {
                 clear(unusedTargets, 0, levels[i].targetAtom);
             Arrays.fill(reachableTargets, 0);
             int added = open, newAtoms = 0;
-            for (int r = 0; r <= rankLimit; r++) {
-                int u = queryOrder[r];
+            for (int rank = 0; rank <= rankLimit; rank++) {
+                int queryAtom = queryOrder[rank];
                 long any = 0;
                 clock.tick(words);
-                for (int i = 0; queryToTarget[u] < 0 && i < words; i++) {
-                    long x = allowed[u * words + i] & unusedTargets[i];
-                    reachableTargets[i] |= x;
-                    any |= x;
+                for (int word = 0; queryToTarget[queryAtom] < 0 && word < words; word++) {
+                    long reachable = allowed[queryAtom * words + word] & unusedTargets[word];
+                    reachableTargets[word] |= reachable;
+                    any |= reachable;
                 }
                 if (any != 0)
-                    queryLabels.markOpen(u);
+                    queryLabels.markOpen(queryAtom);
             }
-            for (int t = nextBit(reachableTargets, 0, words, 0); t >= 0; t = nextBit(reachableTargets, 0, words, t + 1))
-                targetLabels.markOpen(t);
+            for (int targetAtom = nextBit(reachableTargets, 0, words, 0); targetAtom >= 0;
+                 targetAtom = nextBit(reachableTargets, 0, words, targetAtom + 1))
+                targetLabels.markOpen(targetAtom);
             countOpen(queryLabels, query, true);
             countOpen(targetLabels, target, false);
-            for (int e = 0; e < slotSymbol.length; e += 2)
-                added += slotSymbol[e + 1] < 0 ? slotBonds(e) / 2 : Math.min(slotBonds(e), slotBonds(e + 1));
-            for (int c = 0; c < queryLabels.bySymbol.length; c++) {
-                newAtoms += Math.min(queryLabels.bySymbol[c], targetLabels.bySymbol[c]);
-                queryLabels.bySymbol[c] = targetLabels.bySymbol[c] = 0;
+            for (int slot = 0; slot < slotSymbol.length; slot += 2)
+                added += slotSymbol[slot + 1] < 0 ? slotBonds(slot) / 2
+                                                  : Math.min(slotBonds(slot), slotBonds(slot + 1));
+            for (int symbol = 0; symbol < queryLabels.bySymbol.length; symbol++) {
+                newAtoms += Math.min(queryLabels.bySymbol[symbol], targetLabels.bySymbol[symbol]);
+                queryLabels.bySymbol[symbol] = targetLabels.bySymbol[symbol] = 0;
             }
             queryLabels.clearOpen();
             targetLabels.clearOpen();
@@ -1372,23 +1412,23 @@ final class MCSSearch {
          */
         private void countOpen(Labels labels, MCSGraph.Side side, boolean onQuery) {
             int work = labels.openCount;
-            for (int k = 0; k < labels.openCount; k++) {
-                int a = labels.openAtoms[k], count = 0;
+            for (int openIndex = 0; openIndex < labels.openCount; openIndex++) {
+                int atom = labels.openAtoms[openIndex], count = 0;
                 boolean link = false;
-                work += side.degree(a);
-                for (int i = side.start[a]; i < side.start[a + 1]; i++) {
-                    int slot = labels.slot[i];
-                    if (slot < 0 || !labels.isOpen[side.neighbour[i]])
-                        link |= reach.isLink(onQuery, side.neighbourBond[i]);
+                work += side.degree(atom);
+                for (int place = side.start[atom]; place < side.start[atom + 1]; place++) {
+                    int slot = labels.slot[place];
+                    if (slot < 0 || !labels.isOpen[side.neighbour[place]])
+                        link |= reach.isLink(onQuery, side.neighbourBond[place]);
                     else if (slotCount[slot]++ == 0)
                         slotsAt[count++] = slot;
                 }
-                for (int j = 0; j < count; j++) {
-                    labels.histogram[slotsAt[j] * histogramWidth + slotCount[slotsAt[j]]]++;
-                    slotCount[slotsAt[j]] = 0;
+                for (int slotIndex = 0; slotIndex < count; slotIndex++) {
+                    labels.histogram[slotsAt[slotIndex] * histogramWidth + slotCount[slotsAt[slotIndex]]]++;
+                    slotCount[slotsAt[slotIndex]] = 0;
                 }
                 if (count > 0 || link)
-                    labels.bySymbol[labels.symbol[a]]++;
+                    labels.bySymbol[labels.symbol[atom]]++;
             }
             clock.tick(work);
         }
@@ -1399,11 +1439,11 @@ final class MCSSearch {
          */
         private int slotBonds(int slot) {
             int sum = 0;
-            for (int c = histogramWidth - 1, queryAtoms = 0, targetAtoms = 0; c > 0; c--) {
-                queryAtoms += queryLabels.histogram[slot * histogramWidth + c];
-                targetAtoms += targetLabels.histogram[slot * histogramWidth + c];
-                queryLabels.histogram[slot * histogramWidth + c] = 0;
-                targetLabels.histogram[slot * histogramWidth + c] = 0;
+            for (int openBonds = histogramWidth - 1, queryAtoms = 0, targetAtoms = 0; openBonds > 0; openBonds--) {
+                queryAtoms += queryLabels.histogram[slot * histogramWidth + openBonds];
+                targetAtoms += targetLabels.histogram[slot * histogramWidth + openBonds];
+                queryLabels.histogram[slot * histogramWidth + openBonds] = 0;
+                targetLabels.histogram[slot * histogramWidth + openBonds] = 0;
                 sum += Math.min(queryAtoms, targetAtoms);
             }
             return sum;
@@ -1412,10 +1452,10 @@ final class MCSSearch {
         /** The slot at each place, or -1 for none: twice the label of its bond, plus one at the second symbol. */
         private int[] slots(MCSGraph.Side side, int[] symbol, int[] labelOf, int offset) {
             int[] slot = new int[side.neighbour.length];
-            for (int a = 0; a < side.atomCount; a++) {
-                for (int i = side.start[a]; i < side.start[a + 1]; i++) {
-                    int l = labelOf[offset + side.neighbourBond[i]];
-                    slot[i] = l < 0 ? -1 : 2 * l + (symbol[a] == slotSymbol[2 * l] ? 0 : 1);
+            for (int atom = 0; atom < side.atomCount; atom++) {
+                for (int place = side.start[atom]; place < side.start[atom + 1]; place++) {
+                    int label = labelOf[offset + side.neighbourBond[place]];
+                    slot[place] = label < 0 ? -1 : 2 * label + (symbol[atom] == slotSymbol[2 * label] ? 0 : 1);
                 }
             }
             return slot;
@@ -1445,14 +1485,14 @@ final class MCSSearch {
             isOpen = new boolean[symbol.length];
         }
 
-        void markOpen(int a) {
-            isOpen[a] = true;
-            openAtoms[openCount++] = a;
+        void markOpen(int atom) {
+            isOpen[atom] = true;
+            openAtoms[openCount++] = atom;
         }
 
         void clearOpen() {
-            for (int k = 0; k < openCount; k++)
-                isOpen[openAtoms[k]] = false;
+            for (int openIndex = 0; openIndex < openCount; openIndex++)
+                isOpen[openAtoms[openIndex]] = false;
             openCount = 0;
         }
     }
@@ -1531,21 +1571,21 @@ final class MCSSearch {
             // Without a pair of anchors, each mapped pair has an atom that is no anchor on one side or the other.
             long best = MCSGraph.score(queryParts.nonAnchors + targetParts.nonAnchors,
                                        Math.min(graph.query.bondCount, graph.target.bondCount), false);
-            for (int q = 0; q < graph.query.atomCount; q++) {
-                if (!queryParts.anchor[q])
+            for (int queryAtom = 0; queryAtom < graph.query.atomCount; queryAtom++) {
+                if (!queryParts.anchor[queryAtom])
                     continue;
-                for (int t = 0; t < graph.target.atomCount; t++) {
+                for (int targetAtom = 0; targetAtom < graph.target.atomCount; targetAtom++) {
                     clock.tick();
-                    if (targetParts.anchor[t])
-                        best = Math.max(best, bound(q, t));
+                    if (targetParts.anchor[targetAtom])
+                        best = Math.max(best, bound(queryAtom, targetAtom));
                 }
             }
             upperBound = best;
         }
 
-        /** A score that no connected mapping that maps query atom {@code q} onto target atom {@code t} beats. */
-        long bound(int q, int t) {
-            return pairBounds[q * targetParts.count + t];
+        /** A score that no connected mapping of {@code queryAtom} onto {@code targetAtom} beats. */
+        long bound(int queryAtom, int targetAtom) {
+            return pairBounds[queryAtom * targetParts.count + targetAtom];
         }
 
         /**
@@ -1553,12 +1593,12 @@ final class MCSSearch {
          * common and, for two chain atoms, the best pairing of their branches.
          */
         private long pairBound(int queryPart, int targetPart, MCSGraph.Clock clock) {
-            int q = queryParts.root[queryPart], t = targetParts.root[targetPart];
-            int atomClass = graph.query.atomClass[q];
-            if (atomClass < 0 || atomClass != graph.target.atomClass[t])
+            int queryRoot = queryParts.root[queryPart], targetRoot = targetParts.root[targetPart];
+            int atomClass = graph.query.atomClass[queryRoot];
+            if (atomClass < 0 || atomClass != graph.target.atomClass[targetRoot])
                 return 0;
             long bound = labelBound(queryPart, targetPart, clock);
-            if (queryParts.chainAtom[q] && targetParts.chainAtom[t]
+            if (queryParts.chainAtom[queryRoot] && targetParts.chainAtom[targetRoot]
                 && queryParts.branches[queryPart].length <= MAX_BRANCHES
                 && targetParts.branches[targetPart].length <= MAX_BRANCHES)
                 bound = Math.min(bound, ONE_ATOM + pairing(queryPart, targetPart, clock));
@@ -1574,11 +1614,11 @@ final class MCSSearch {
             int[] queryBonds = queryParts.bondCounts[queryPart], targetBonds = targetParts.bondCounts[targetPart];
             clock.tick(queryAtoms.length + queryBonds.length);
             int atoms = 0;
-            for (int c = 0; c < queryAtoms.length; c++)
-                atoms += Math.min(queryAtoms[c], targetAtoms[c]);
+            for (int atomClass = 0; atomClass < queryAtoms.length; atomClass++)
+                atoms += Math.min(queryAtoms[atomClass], targetAtoms[atomClass]);
             int bonds = 0;
-            for (int l = 0; l < queryBonds.length; l++)
-                bonds += Math.min(queryBonds[l], targetBonds[l]);
+            for (int label = 0; label < queryBonds.length; label++)
+                bonds += Math.min(queryBonds[label], targetBonds[label]);
             return MCSGraph.score(atoms, Math.min(bonds, atoms * (atoms - 1) / 2), false);
         }
 
@@ -1602,13 +1642,13 @@ final class MCSSearch {
                 for (int used = sets - 1; used >= 0; used--) {
                     if (best[used] < 0)
                         continue;
-                    for (int j = 0; j < targetBranches.length; j++) {
-                        int targetBranch = targetBranches[j];
+                    for (int branchIndex = 0; branchIndex < targetBranches.length; branchIndex++) {
+                        int targetBranch = targetBranches[branchIndex];
                         long pair = pairBounds[queryBranch * targetParts.count + targetBranch];
-                        if ((used & 1 << j) != 0 || pair == 0
+                        if ((used & 1 << branchIndex) != 0 || pair == 0
                             || !graph.bondsMatch(queryBond, targetParts.parentBond[targetBranch]))
                             continue;
-                        int with = used | 1 << j;
+                        int with = used | 1 << branchIndex;
                         best[with] = Math.max(best[with], best[used] + pair + ONE_BOND);
                     }
                 }
@@ -1656,11 +1696,11 @@ final class MCSSearch {
                 int[] beyond = numberParts(side, ringBond);
                 anchor = new boolean[side.atomCount];
                 int others = 0;
-                for (int a = 0; a < side.atomCount; a++) {
+                for (int atom = 0; atom < side.atomCount; atom++) {
                     // A leaf on a ring atom is no anchor, as the branch from it holds the whole ring system.
-                    boolean leafOnRing = side.degree(a) == 1 && !chainAtom[side.neighbour[side.start[a]]];
-                    anchor[a] = chainAtom[a] && !leafOnRing;
-                    if (!anchor[a])
+                    boolean leafOnRing = side.degree(atom) == 1 && !chainAtom[side.neighbour[side.start[atom]]];
+                    anchor[atom] = chainAtom[atom] && !leafOnRing;
+                    if (!anchor[atom])
                         others++;
                 }
                 nonAnchors = others;
@@ -1669,9 +1709,9 @@ final class MCSSearch {
                 bondCounts = new int[count][labels.length];
                 int[] bondLabel = bondLabels(side, atomClasses, labels);
                 int[] size = new int[count], queue = new int[side.atomCount], seen = new int[side.atomCount];
-                for (int p = 0; p < count; p++) {
-                    branches[p] = branchesAt(side, p, beyond);
-                    size[p] = countLabels(side, p, bondLabel, queue, seen, clock);
+                for (int part = 0; part < count; part++) {
+                    branches[part] = branchesAt(side, part, beyond);
+                    size[part] = countLabels(side, part, bondLabel, queue, seen, clock);
                 }
                 order = bySize(size);
             }
@@ -1696,16 +1736,16 @@ final class MCSSearch {
                 Arrays.fill(beyond, -1);
                 Arrays.fill(parentBond, -1);
                 int next = side.atomCount;
-                for (int a = 0; a < side.atomCount; a++) {
-                    root[a] = a;
-                    chainAtom[a] = true;
-                    for (int i = side.start[a]; i < side.start[a + 1]; i++) {
-                        if (ringBond[side.neighbourBond[i]]) {
-                            chainAtom[a] = false;
+                for (int atom = 0; atom < side.atomCount; atom++) {
+                    root[atom] = atom;
+                    chainAtom[atom] = true;
+                    for (int place = side.start[atom]; place < side.start[atom + 1]; place++) {
+                        if (ringBond[side.neighbourBond[place]]) {
+                            chainAtom[atom] = false;
                         } else {
-                            beyond[i] = next;
-                            root[next] = side.neighbour[i];
-                            parentBond[next] = side.neighbourBond[i];
+                            beyond[place] = next;
+                            root[next] = side.neighbour[place];
+                            parentBond[next] = side.neighbourBond[place];
                             next++;
                         }
                     }
@@ -1714,45 +1754,45 @@ final class MCSSearch {
             }
 
             /**
-             * The branches at the root of part {@code p}: the parts beyond its
+             * The branches at the root of {@code part}: the parts beyond its
              * bonds on no ring, other than the bond into the part.
              */
-            private int[] branchesAt(MCSGraph.Side side, int p, int[] beyond) {
-                int a = root[p];
-                int[] found = new int[side.degree(a)];
+            private int[] branchesAt(MCSGraph.Side side, int part, int[] beyond) {
+                int atom = root[part];
+                int[] found = new int[side.degree(atom)];
                 int size = 0;
-                for (int i = side.start[a]; i < side.start[a + 1]; i++) {
-                    if (beyond[i] >= 0 && side.neighbourBond[i] != parentBond[p])
+                for (int i = side.start[atom]; i < side.start[atom + 1]; i++) {
+                    if (beyond[i] >= 0 && side.neighbourBond[i] != parentBond[part])
                         found[size++] = beyond[i];
                 }
                 return Arrays.copyOf(found, size);
             }
 
             /**
-             * Counts the atoms of part {@code p} by symbol class and its bonds
+             * Counts the atoms of {@code part} by symbol class and its bonds
              * by label, and returns its number of atoms. The atoms reached are
              * marked with p + 1 in {@code seen}.
              */
-            private int countLabels(MCSGraph.Side side, int p, int[] bondLabel, int[] queue, int[] seen,
+            private int countLabels(MCSGraph.Side side, int part, int[] bondLabel, int[] queue, int[] seen,
                                     MCSGraph.Clock clock) {
                 int size = 1;
-                queue[0] = root[p];
-                seen[root[p]] = p + 1;
-                for (int k = 0; k < size; k++) {
-                    int a = queue[k];
-                    clock.tick(1 + side.degree(a));
-                    if (side.atomClass[a] >= 0)
-                        atomCounts[p][side.atomClass[a]]++;
-                    for (int i = side.start[a]; i < side.start[a + 1]; i++) {
-                        int b = side.neighbour[i], bond = side.neighbourBond[i];
-                        if (bond == parentBond[p])
+                queue[0] = root[part];
+                seen[root[part]] = part + 1;
+                for (int head = 0; head < size; head++) {
+                    int atom = queue[head];
+                    clock.tick(1 + side.degree(atom));
+                    if (side.atomClass[atom] >= 0)
+                        atomCounts[part][side.atomClass[atom]]++;
+                    for (int place = side.start[atom]; place < side.start[atom + 1]; place++) {
+                        int other = side.neighbour[place], bond = side.neighbourBond[place];
+                        if (bond == parentBond[part])
                             continue;
                         // Each bond is counted at its higher end.
-                        if (b < a && bondLabel[bond] >= 0)
-                            bondCounts[p][bondLabel[bond]]++;
-                        if (seen[b] != p + 1) {
-                            seen[b] = p + 1;
-                            queue[size++] = b;
+                        if (other < atom && bondLabel[bond] >= 0)
+                            bondCounts[part][bondLabel[bond]]++;
+                        if (seen[other] != part + 1) {
+                            seen[other] = part + 1;
+                            queue[size++] = other;
                         }
                     }
                 }
@@ -1761,30 +1801,30 @@ final class MCSSearch {
 
             /** The place of the label of each bond in {@code labels}, or -1 if it is not there. */
             private static int[] bondLabels(MCSGraph.Side side, int atomClasses, long[] labels) {
-                int[] place = new int[side.bondCount];
-                Arrays.fill(place, -1);
-                for (int a = 0; a < side.atomCount; a++) {
-                    for (int i = side.start[a]; i < side.start[a + 1]; i++) {
-                        int b = side.neighbour[i], bond = side.neighbourBond[i];
-                        if (side.atomClass[a] < 0 || side.atomClass[b] < 0)
+                int[] labelPlace = new int[side.bondCount];
+                Arrays.fill(labelPlace, -1);
+                for (int atom = 0; atom < side.atomCount; atom++) {
+                    for (int place = side.start[atom]; place < side.start[atom + 1]; place++) {
+                        int other = side.neighbour[place], bond = side.neighbourBond[place];
+                        if (side.atomClass[atom] < 0 || side.atomClass[other] < 0)
                             continue;
-                        int found = Arrays.binarySearch(labels, side.bondLabel(a, b, bond, atomClasses));
+                        int found = Arrays.binarySearch(labels, side.bondLabel(atom, other, bond, atomClasses));
                         if (found >= 0)
-                            place[bond] = found;
+                            labelPlace[bond] = found;
                     }
                 }
-                return place;
+                return labelPlace;
             }
 
             /** The parts by size, the smallest first. */
             private static int[] bySize(int[] size) {
                 Integer[] parts = new Integer[size.length];
-                for (int p = 0; p < size.length; p++)
-                    parts[p] = p;
-                Arrays.sort(parts, Comparator.comparingInt(p -> size[p]));
+                for (int part = 0; part < size.length; part++)
+                    parts[part] = part;
+                Arrays.sort(parts, Comparator.comparingInt(part -> size[part]));
                 int[] order = new int[size.length];
-                for (int k = 0; k < size.length; k++)
-                    order[k] = parts[k];
+                for (int position = 0; position < size.length; position++)
+                    order[position] = parts[position];
                 return order;
             }
         }
@@ -1797,14 +1837,14 @@ final class MCSSearch {
         return parent;
     }
 
-    private static int find(int[] parent, int a) {
-        while (parent[a] != a)
-            a = parent[a] = parent[parent[a]];
-        return a;
+    private static int find(int[] parent, int item) {
+        while (parent[item] != item)
+            item = parent[item] = parent[parent[item]];
+        return item;
     }
 
-    private static void unite(int[] parent, int a, int b) {
-        parent[find(parent, a)] = find(parent, b);
+    private static void unite(int[] parent, int first, int second) {
+        parent[find(parent, first)] = find(parent, second);
     }
 
     /**
@@ -1838,29 +1878,30 @@ final class MCSSearch {
 
         /** Starts from the query atom with the fewest targets it may have, then most bonds, then lowest index. */
         private Embedding(long[] candidateRows) {
-            placedOn = new int[n];
-            placedAtom = new int[m];
+            placedOn = new int[queryCount];
+            placedAtom = new int[targetCount];
             Arrays.fill(placedOn, -1);
             Arrays.fill(placedAtom, -1);
-            candidates = new int[n][];
-            freeCount = new int[n];
-            frontier = new int[n];
+            candidates = new int[queryCount][];
+            freeCount = new int[queryCount];
+            frontier = new int[queryCount];
             scratch = new int[target.maxDegree()];
             int root = 0, fewest = Integer.MAX_VALUE;
-            for (int q = 0; q < n; q++) {
+            for (int queryAtom = 0; queryAtom < queryCount; queryAtom++) {
                 int count = 0;
                 for (int i = 0; i < words; i++)
-                    count += Long.bitCount(candidateRows[q * words + i]);
-                if (count < fewest || count == fewest && query.degree(q) > query.degree(root)) {
-                    root = q;
+                    count += Long.bitCount(candidateRows[queryAtom * words + i]);
+                if (count < fewest || count == fewest && query.degree(queryAtom) > query.degree(root)) {
+                    root = queryAtom;
                     fewest = count;
                 }
             }
             int[] targets = new int[fewest];
             int row = root * words;
-            int k = 0;
-            for (int t = nextBit(candidateRows, row, words, 0); t >= 0; t = nextBit(candidateRows, row, words, t + 1))
-                targets[k++] = t;
+            int filled = 0;
+            for (int targetAtom = nextBit(candidateRows, row, words, 0); targetAtom >= 0;
+                 targetAtom = nextBit(candidateRows, row, words, targetAtom + 1))
+                targets[filled++] = targetAtom;
             candidates[root] = targets;
             freeCount[root] = fewest;
             frontier[frontierSize++] = root;
@@ -1869,23 +1910,23 @@ final class MCSSearch {
         /** The embeddings, at most {@code maxMappings}. Called once only, from the state the constructor sets up. */
         List<int[]> all(int maxMappings) {
             List<int[]> embeddings = new ArrayList<>();
-            Placement[] placements = new Placement[n];
+            Placement[] placements = new Placement[queryCount];
             placements[0] = new Placement().enter(frontier[0], 0);
             for (int placed = 1; placed > 0; ) {
                 clock.tick();
                 Placement top = placements[placed - 1];
                 if (placedOn[top.atom] >= 0)
                     unplace(top);
-                int t = nextTarget(top);
-                if (t < 0) {
+                int targetAtom = nextTarget(top);
+                if (targetAtom < 0) {
                     placed--;
-                } else if (place(top, t) && graph.stereoConsistent(placedOn, clock)) {
+                } else if (place(top, targetAtom) && graph.stereoConsistent(placedOn, clock)) {
                     int next = choose();
                     if (next >= 0) {
                         if (placements[placed] == null)
                             placements[placed] = new Placement();
                         placements[placed++].enter(frontier[next], next);
-                    } else if (placed == n && (query.rings == null || complete(placedOn, false))) {
+                    } else if (placed == queryCount && (query.rings == null || complete(placedOn, false))) {
                         embeddings.add(placedOn.clone());
                         if (embeddings.size() == maxMappings)
                             return embeddings;
@@ -1895,76 +1936,80 @@ final class MCSSearch {
             return embeddings;
         }
 
-        /** The next free candidate of the atom of {@code p}, or -1 once it has tried them all. */
-        private int nextTarget(Placement p) {
-            int[] targets = candidates[p.atom];
-            while (p.nextCandidate < targets.length) {
-                int t = targets[p.nextCandidate++];
-                if (placedAtom[t] < 0)
-                    return t;
+        /** The next free candidate of the atom of {@code placement}, or -1 once it has tried them all. */
+        private int nextTarget(Placement placement) {
+            int[] targets = candidates[placement.atom];
+            while (placement.nextCandidate < targets.length) {
+                int targetAtom = targets[placement.nextCandidate++];
+                if (placedAtom[targetAtom] < 0)
+                    return targetAtom;
             }
             return -1;
         }
 
-        /** Places the atom of {@code p} on {@code t} and records the changes in {@code p}, to be undone on failure. */
-        private boolean place(Placement p, int t) {
-            int q = p.atom;
-            frontier[p.frontierPlace] = frontier[--frontierSize];
-            placedOn[q] = t;
-            placedAtom[t] = q;
-            take(p, t);
-            int from = target.start[t], degree = target.degree(t), open = 0, narrowed = 0;
-            clock.tick(1 + query.degree(q));
-            for (int i = query.start[q]; i < query.start[q + 1]; i++)
-                if (placedOn[query.neighbour[i]] < 0)
+        /**
+         * Places the atom of {@code placement} on {@code targetAtom} and records
+         * the changes in {@code placement}, to be undone on failure.
+         */
+        private boolean place(Placement placement, int targetAtom) {
+            int queryAtom = placement.atom;
+            frontier[placement.frontierPlace] = frontier[--frontierSize];
+            placedOn[queryAtom] = targetAtom;
+            placedAtom[targetAtom] = queryAtom;
+            take(placement, targetAtom);
+            int from = target.start[targetAtom], degree = target.degree(targetAtom), open = 0, narrowed = 0;
+            clock.tick(1 + query.degree(queryAtom));
+            for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++)
+                if (placedOn[query.neighbour[queryPlace]] < 0)
                     open++;
-            // The candidates of each neighbour, as places among the neighbours of t, for the check at the end.
+            // The candidates of each neighbour as places among the target's neighbours, for the check at the end.
             long[] rows = open > 1 && degree <= Long.SIZE ? new long[open] : null;
-            for (int i = query.start[q]; i < query.start[q + 1]; i++) {
-                int u = query.neighbour[i], count = 0;
-                if (placedOn[u] >= 0)
+            for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+                int queryNeighbour = query.neighbour[queryPlace], count = 0;
+                if (placedOn[queryNeighbour] >= 0)
                     continue;
                 // A neighbour with candidates has another placed neighbour, so it closes a ring.
-                boolean closes = candidates[u] != null;
-                clock.tick(1 + (closes ? degree * (1 + query.degree(u)) : degree));
+                boolean closes = candidates[queryNeighbour] != null;
+                clock.tick(1 + (closes ? degree * (1 + query.degree(queryNeighbour)) : degree));
                 long bits = 0;
-                for (int j = 0; j < degree; j++) {
-                    int v = target.neighbour[from + j];
-                    if (placedAtom[v] < 0
-                        && graph.bondsMatch(query.neighbourBond[i], target.neighbourBond[from + j]) && mayMap(u, v)
-                        && (!closes || bondsFit(u, v, q))) {
-                        scratch[count++] = v;
-                        bits |= 1L << j;
+                for (int offset = 0; offset < degree; offset++) {
+                    int candidateTarget = target.neighbour[from + offset];
+                    if (placedAtom[candidateTarget] < 0
+                        && graph.bondsMatch(query.neighbourBond[queryPlace], target.neighbourBond[from + offset])
+                        && mayMap(queryNeighbour, candidateTarget)
+                        && (!closes || bondsFit(queryNeighbour, candidateTarget, queryAtom))) {
+                        scratch[count++] = candidateTarget;
+                        bits |= 1L << offset;
                     }
                 }
                 if (count == 0)
                     return false;
                 if (!closes)
-                    frontier[frontierSize++] = u;
-                p.remember(u, candidates[u], freeCount[u]);
-                candidates[u] = Arrays.copyOf(scratch, count);
-                freeCount[u] = count;
+                    frontier[frontierSize++] = queryNeighbour;
+                placement.remember(queryNeighbour, candidates[queryNeighbour], freeCount[queryNeighbour]);
+                candidates[queryNeighbour] = Arrays.copyOf(scratch, count);
+                freeCount[queryNeighbour] = count;
                 if (rows != null)
                     rows[narrowed++] = bits;
             }
             return rows == null || hasDistinctTargets(rows, narrowed, 1, clock);
         }
 
-        /** Takes the atom of {@code p} off its target, and puts back everything that placing it changed. */
-        private void unplace(Placement p) {
-            int q = p.atom;
-            while (p.changedCount > 0) {
-                int k = --p.changedCount, u = p.changedAtoms[k];
+        /** Takes the atom of {@code placement} off its target, and puts back everything that placing it changed. */
+        private void unplace(Placement placement) {
+            int queryAtom = placement.atom;
+            while (placement.changedCount > 0) {
+                int changed = --placement.changedCount, changedAtom = placement.changedAtoms[changed];
                 // A neighbour that had no candidates came on the frontier last.
-                if (p.oldCandidates[k] == null)
+                if (placement.oldCandidates[changed] == null)
                     frontierSize--;
-                candidates[u] = p.oldCandidates[k];
-                freeCount[u] = p.oldFreeCounts[k];
+                candidates[changedAtom] = placement.oldCandidates[changed];
+                freeCount[changedAtom] = placement.oldFreeCounts[changed];
             }
-            placedAtom[placedOn[q]] = -1;
-            placedOn[q] = -1;
-            frontier[frontierSize++] = frontier[p.frontierPlace];
-            frontier[p.frontierPlace] = q;
+            placedAtom[placedOn[queryAtom]] = -1;
+            placedOn[queryAtom] = -1;
+            frontier[frontierSize++] = frontier[placement.frontierPlace];
+            frontier[placement.frontierPlace] = queryAtom;
         }
 
         /**
@@ -1975,67 +2020,78 @@ final class MCSSearch {
         private int choose() {
             clock.tick(frontierSize);
             int pick = -1;
-            for (int k = 0; k < frontierSize; k++) {
-                int u = frontier[k], v = pick < 0 ? -1 : frontier[pick];
-                if (freeCount[u] == 0)
+            for (int frontierIndex = 0; frontierIndex < frontierSize; frontierIndex++) {
+                int candidate = frontier[frontierIndex], picked = pick < 0 ? -1 : frontier[pick];
+                if (freeCount[candidate] == 0)
                     return -1;
-                if (v < 0 || freeCount[u] < freeCount[v] || freeCount[u] == freeCount[v]
-                        && (query.degree(u) > query.degree(v) || query.degree(u) == query.degree(v) && u < v))
-                    pick = k;
+                if (picked < 0 || freeCount[candidate] < freeCount[picked]
+                    || freeCount[candidate] == freeCount[picked]
+                       && (query.degree(candidate) > query.degree(picked)
+                           || query.degree(candidate) == query.degree(picked) && candidate < picked))
+                    pick = frontierIndex;
             }
             return pick;
         }
 
         /**
-         * Takes target atom {@code t} from the free candidates of the unplaced
-         * atoms that have it, remembering their counts in {@code p}. Such an
-         * atom may map onto {@code t} with compatible bonds to the targets of
+         * Takes target atom {@code targetAtom} from the free candidates of the unplaced
+         * atoms that have it, remembering their counts in {@code placement}. Such an
+         * atom may map onto {@code targetAtom} with compatible bonds to the targets of
          * all its placed neighbours, and is counted from the first of these.
          */
-        private void take(Placement p, int t) {
-            int work = 1 + target.degree(t);
-            for (int j = target.start[t]; j < target.start[t + 1]; j++) {
-                int w = placedAtom[target.neighbour[j]];
-                if (w < 0)
+        private void take(Placement placement, int targetAtom) {
+            int work = 1 + target.degree(targetAtom);
+            for (int targetPlace = target.start[targetAtom]; targetPlace < target.start[targetAtom + 1];
+                 targetPlace++) {
+                int placedNeighbour = placedAtom[target.neighbour[targetPlace]];
+                if (placedNeighbour < 0)
                     continue;
-                for (int i = query.start[w]; i < query.start[w + 1]; i++) {
-                    int u = query.neighbour[i];
+                for (int queryPlace = query.start[placedNeighbour]; queryPlace < query.start[placedNeighbour + 1];
+                     queryPlace++) {
+                    int queryNeighbour = query.neighbour[queryPlace];
                     work++;
-                    if (placedOn[u] >= 0 || !graph.bondsMatch(query.neighbourBond[i], target.neighbourBond[j])
-                        || !mayMap(u, t))
+                    if (placedOn[queryNeighbour] >= 0
+                        || !graph.bondsMatch(query.neighbourBond[queryPlace], target.neighbourBond[targetPlace])
+                        || !mayMap(queryNeighbour, targetAtom))
                         continue;
-                    work += query.degree(u);
-                    if (firstPlacedNeighbour(u) == w && bondsFit(u, t, w)) {
-                        p.remember(u, candidates[u], freeCount[u]);
-                        freeCount[u]--;
+                    work += query.degree(queryNeighbour);
+                    if (firstPlacedNeighbour(queryNeighbour) == placedNeighbour
+                        && bondsFit(queryNeighbour, targetAtom, placedNeighbour)) {
+                        placement.remember(queryNeighbour, candidates[queryNeighbour], freeCount[queryNeighbour]);
+                        freeCount[queryNeighbour]--;
                     }
                 }
             }
             clock.tick(work);
         }
 
-        /** Whether query atom {@code u} may map onto target atom {@code v}: they match, and v has as many bonds. */
-        private boolean mayMap(int u, int v) {
-            return has(allowed, u, v) && target.degree(v) >= query.degree(u);
+        /** Whether {@code queryAtom} may map onto {@code targetAtom}: they match, and the target has as many bonds. */
+        private boolean mayMap(int queryAtom, int targetAtom) {
+            return has(allowed, queryAtom, targetAtom) && target.degree(targetAtom) >= query.degree(queryAtom);
         }
 
-        /** Whether {@code v} has compatible bonds to the images of the placed neighbours of {@code u} but {@code w}. */
-        private boolean bondsFit(int u, int v, int w) {
-            for (int i = query.start[u]; i < query.start[u + 1]; i++) {
-                int x = query.neighbour[i], y = placedOn[x];
-                if (y < 0 || x == w)
+        /**
+         * Whether {@code targetAtom} has compatible bonds to the images of the
+         * placed neighbours of {@code queryAtom} other than {@code skipped}.
+         */
+        private boolean bondsFit(int queryAtom, int targetAtom, int skipped) {
+            for (int queryPlace = query.start[queryAtom]; queryPlace < query.start[queryAtom + 1]; queryPlace++) {
+                int queryNeighbour = query.neighbour[queryPlace], neighbourImage = placedOn[queryNeighbour];
+                if (neighbourImage < 0 || queryNeighbour == skipped)
                     continue;
                 // Search the shorter list of neighbours, as one may be a hub.
-                int f = target.degree(v) <= target.degree(y) ? target.bondBetween(v, y) : target.bondBetween(y, v);
-                if (f < 0 || !graph.bondsMatch(query.neighbourBond[i], f))
+                int targetBond = target.degree(targetAtom) <= target.degree(neighbourImage)
+                                 ? target.bondBetween(targetAtom, neighbourImage)
+                                 : target.bondBetween(neighbourImage, targetAtom);
+                if (targetBond < 0 || !graph.bondsMatch(query.neighbourBond[queryPlace], targetBond))
                     return false;
             }
             return true;
         }
 
-        /** The first placed neighbour of query atom {@code u}, or -1 if none is placed. */
-        private int firstPlacedNeighbour(int u) {
-            for (int i = query.start[u]; i < query.start[u + 1]; i++) {
+        /** The first placed neighbour of query atom {@code queryAtom}, or -1 if none is placed. */
+        private int firstPlacedNeighbour(int queryAtom) {
+            for (int i = query.start[queryAtom]; i < query.start[queryAtom + 1]; i++) {
                 if (placedOn[query.neighbour[i]] >= 0)
                     return query.neighbour[i];
             }
@@ -2062,14 +2118,14 @@ final class MCSSearch {
             return this;
         }
 
-        /** Remembers that atom {@code u} had these candidates, and this count of free ones. */
-        void remember(int u, int[] candidates, int freeCount) {
+        /** Remembers that {@code atom} had these candidates, and this count of free ones. */
+        void remember(int atom, int[] candidates, int freeCount) {
             if (changedCount == changedAtoms.length) {
                 changedAtoms = Arrays.copyOf(changedAtoms, 2 * changedCount);
                 oldFreeCounts = Arrays.copyOf(oldFreeCounts, 2 * changedCount);
                 oldCandidates = Arrays.copyOf(oldCandidates, 2 * changedCount);
             }
-            changedAtoms[changedCount] = u;
+            changedAtoms[changedCount] = atom;
             oldCandidates[changedCount] = candidates;
             oldFreeCounts[changedCount++] = freeCount;
         }
@@ -2077,10 +2133,9 @@ final class MCSSearch {
 
     /**
      * Whether each of the first {@code count} rows can have a column of its
-     * own. The columns of row r are the bits of the {@code words} longs from
-     * {@code rows[r * words]}. A row takes a free column, or else follows an
-     * augmenting path. There is no recursion, as there may be a row for each
-     * query atom.
+     * own. Each row is {@code words} longs of {@code rows}, and its columns are
+     * their bits. A row takes a free column, or else follows an augmenting
+     * path. There is no recursion, as there may be a row for each query atom.
      */
     private static boolean hasDistinctTargets(long[] rows, int count, int words, MCSGraph.Clock clock) {
         int columns = words << 6;
@@ -2088,42 +2143,42 @@ final class MCSSearch {
         long[] freeColumns = new long[words];
         Arrays.fill(owner, -1);
         Arrays.fill(freeColumns, -1L);
-        for (int r = 0; r < count; r++) {
+        for (int newRow = 0; newRow < count; newRow++) {
             clock.tick(words);
-            int c = -1, step = 0;
-            for (int i = 0; i < words && c < 0; i++) {
-                long x = rows[r * words + i] & freeColumns[i];
-                if (x != 0)
-                    c = (i << 6) + Long.numberOfTrailingZeros(x);
+            int column = -1, step = 0;
+            for (int word = 0; word < words && column < 0; word++) {
+                long freeBits = rows[newRow * words + word] & freeColumns[word];
+                if (freeBits != 0)
+                    column = (word << 6) + Long.numberOfTrailingZeros(freeBits);
             }
-            path[0] = r;
+            path[0] = newRow;
             resume[0] = 0;
-            while (c < 0) {
+            while (column < 0) {
                 clock.tick();
                 int row = path[step];
-                c = nextBit(rows, row * words, words, resume[step]);
-                while (c >= 0 && visited[c] == r + 1) {
+                column = nextBit(rows, row * words, words, resume[step]);
+                while (column >= 0 && visited[column] == newRow + 1) {
                     clock.tick();
-                    c = nextBit(rows, row * words, words, c + 1);
+                    column = nextBit(rows, row * words, words, column + 1);
                 }
-                if (c < 0) {
+                if (column < 0) {
                     if (--step < 0)
                         return false;
                     continue;
                 }
-                resume[step] = c + 1;
-                visited[c] = r + 1;
-                if (owner[c] >= 0) {
-                    path[++step] = owner[c];
+                resume[step] = column + 1;
+                visited[column] = newRow + 1;
+                if (owner[column] >= 0) {
+                    path[++step] = owner[column];
                     resume[step] = 0;
-                    c = -1;
+                    column = -1;
                 }
             }
             // Each row on the path takes the column it reached. The last row takes a free column.
-            freeColumns[c >>> 6] &= ~(1L << c);
-            owner[c] = path[step];
-            for (int d = step - 1; d >= 0; d--)
-                owner[resume[d] - 1] = path[d];
+            freeColumns[column >>> 6] &= ~(1L << column);
+            owner[column] = path[step];
+            for (int earlier = step - 1; earlier >= 0; earlier--)
+                owner[resume[earlier] - 1] = path[earlier];
         }
         return true;
     }
@@ -2143,16 +2198,16 @@ final class MCSSearch {
 
     /** The first set bit of a row of {@code words} longs from {@code start}, at or after bit {@code from}, or -1. */
     private static int nextBit(long[] bits, int start, int words, int from) {
-        int w = from >>> 6;
-        if (w >= words)
+        int wordIndex = from >>> 6;
+        if (wordIndex >= words)
             return -1;
-        long word = bits[start + w] & -1L << from;
+        long word = bits[start + wordIndex] & -1L << from;
         while (word == 0) {
-            if (++w == words)
+            if (++wordIndex == words)
                 return -1;
-            word = bits[start + w];
+            word = bits[start + wordIndex];
         }
-        return (w << 6) + Long.numberOfTrailingZeros(word);
+        return (wordIndex << 6) + Long.numberOfTrailingZeros(word);
     }
 
     private static int[] inverse(int[] permutation) {

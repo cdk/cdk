@@ -381,7 +381,7 @@ public final class MCS {
         List<int[]> found;
         try {
             found = new MCSSearch(graph, clock, minBonds).run(maxMappings);
-        } catch (MCSGraph.Stop e) {
+        } catch (MCSGraph.Stop stop) {
             if (thread.isInterrupted()) {
                 throw new Intractable("MCS search was interrupted");
             }
@@ -395,9 +395,9 @@ public final class MCS {
         for (int[] inverse : found) {
             int[] mapping = new int[query.getAtomCount()];
             Arrays.fill(mapping, -1);
-            for (int i = 0; i < inverse.length; i++) {
-                if (inverse[i] >= 0) {
-                    mapping[inverse[i]] = i;
+            for (int targetAtom = 0; targetAtom < inverse.length; targetAtom++) {
+                if (inverse[targetAtom] >= 0) {
+                    mapping[inverse[targetAtom]] = targetAtom;
                 }
             }
             mappings.add(mapping);
