@@ -539,7 +539,7 @@ public final class Cycles {
                         smallest = tmp;
                 }
             }
-            if ((2 * Math.abs(dist)) - 1 > max)
+            if ((2 * Math.abs(dist)) - 2 > max)
                 break;
         }
         return smallest <= max ? smallest : 0;
