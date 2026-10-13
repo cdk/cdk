@@ -365,31 +365,6 @@ final class MCSSearchTest {
     // the bounds
 
     @Test
-    void testBondBound() throws Exception {
-        // against the bonds of every induced subgraph, connected or not
-        for (IAtomContainer mol : graphsOnFourAtoms()) {
-            MCSGraph.Side side = graph(mol, mol, true).query;
-            for (int kept = 0; kept <= 4; kept++) {
-                int most = 0;
-                for (int mask = 0; mask < 16; mask++) {
-                    if (Integer.bitCount(mask) > kept)
-                        continue;
-                    int bonds = 0;
-                    for (IBond bond : mol.bonds()) {
-                        int ends = 1 << mol.indexOf(bond.getBegin()) | 1 << mol.indexOf(bond.getEnd());
-                        if ((mask & ends) == ends)
-                            bonds++;
-                    }
-                    most = Math.max(most, bonds);
-                }
-                Assertions.assertEquals(most, side.bondBound(kept, never()));
-            }
-        }
-        IAtomContainer adamantane = smi("C1C2CC3CC1CC(C2)C3");
-        Assertions.assertEquals(8, graph(adamantane, adamantane, true).query.bondBound(8, never()));
-    }
-
-    @Test
     void testBondBoundMappings() throws Exception {
         // size or elements leave one or two atoms out, yet every maximum is found
         for (String[] pair : new String[][]{{"C1CCC1", "C1CCCC1"}, {"C1CCC1", "C1CCCCC1"},

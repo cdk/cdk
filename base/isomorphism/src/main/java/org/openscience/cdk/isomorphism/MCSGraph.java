@@ -806,43 +806,6 @@ final class MCSGraph {
             return rings != null ? rings.ringBond : Rings.ringBonds(start, neighbour, neighbourBond, bondCount);
         }
 
-        /**
-         * A bound on the bonds among at most {@code kept} atoms. Leaving out
-         * one atom loses at least the smallest degree. Leaving out two loses
-         * at least the sum of the two smallest degrees, or one less if two
-         * bonded atoms have that sum. With more atoms left out, every bond is
-         * counted.
-         */
-        int bondBound(int kept, Clock clock) {
-            if (kept < 2)
-                return 0;
-            int omitted = atomCount - kept;
-            if (omitted < 1 || omitted > 2)
-                return bondCount;
-            int first = Integer.MAX_VALUE, second = Integer.MAX_VALUE;
-            for (int atom = 0; atom < atomCount; atom++) {
-                clock.tick();
-                int degree = degree(atom);
-                if (degree < first) {
-                    second = first;
-                    first = degree;
-                } else if (degree < second) {
-                    second = degree;
-                }
-            }
-            if (omitted == 1)
-                return bondCount - first;
-            int sum = first + second;
-            for (int atom = 0; atom < atomCount; atom++) {
-                clock.tick(1 + degree(atom));
-                for (int i = start[atom]; i < start[atom + 1]; i++) {
-                    if (degree(atom) + degree(neighbour[i]) == sum)
-                        return bondCount - sum + 1;
-                }
-            }
-            return bondCount - sum;
-        }
-
         /** The bond between atoms {@code atom} and {@code other}, or -1 if there is none. */
         int bondBetween(int atom, int other) {
             for (int i = start[atom]; i < start[atom + 1]; i++) {

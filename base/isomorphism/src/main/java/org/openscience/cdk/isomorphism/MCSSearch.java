@@ -230,11 +230,6 @@ final class MCSSearch {
                 labelAtoms = Math.min(labelAtoms, labelBonds + labelBonds / minBonds);
             bound = Math.min(bound, score(labelAtoms, labelBonds));
         }
-        if (minBonds == 0) {
-            int mostAtoms = atoms(bound);
-            int mostBonds = Math.min(query.bondBound(mostAtoms, clock), target.bondBound(mostAtoms, clock));
-            bound = score(mostAtoms, Math.min(bonds(bound), mostBonds));
-        }
         return bound;
     }
 
