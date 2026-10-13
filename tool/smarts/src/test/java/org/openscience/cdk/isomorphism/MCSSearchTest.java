@@ -301,6 +301,47 @@ final class MCSSearchTest {
         Assertions.assertThrows(MCSGraph.Stop.class, () -> search.seed(NONE));
     }
 
+    @Test
+    void testFoundWhenStopped() throws Exception {
+        // sertraline on fluoxetine, connected and in fragments: stopped after any number of polls, the search holds
+        // valid mappings of one score, which never gets worse the longer it runs, and some before it finishes
+        IAtomContainer query = smi("CNC1CCC(C2=CC=CC=C12)C3=CC(=C(C=C3)Cl)Cl");
+        IAtomContainer target = smi("CNCCC(C1=CC=CC=C1)OC2=CC=C(C=C2)C(F)(F)F");
+        for (int minBonds : new int[]{0, 1}) {
+            AtomicInteger asked = new AtomicInteger(), stopAt = new AtomicInteger(Integer.MAX_VALUE);
+            MCSGraph.Clock clock = new MCSGraph.Clock(() -> asked.incrementAndGet() > stopAt.get());
+            long best = -1;
+            int partial = 0;
+            for (int polls = 1; ; polls *= 2) {
+                // the compatible pairs are worked out without a stop, so that found() has a search to ask
+                MCSSearch search = search(query, target, true, clock, minBonds);
+                asked.set(0);
+                stopAt.set(polls);
+                List<int[]> found;
+                boolean stopped = false;
+                try {
+                    found = search.run(1000);
+                } catch (MCSGraph.Stop stop) {
+                    found = search.found();
+                    stopped = true;
+                }
+                long score = found.isEmpty() ? -1 : MCSTesting.score(query, target, found.get(0), true, minBonds);
+                for (int[] mapping : found) {
+                    Assertions.assertEquals(score, MCSTesting.score(query, target, mapping, true, minBonds));
+                    if (minBonds == 0)
+                        assertValid(query, target, mapping, true);
+                }
+                Assertions.assertTrue(score >= best, polls + " polls: " + score + " after " + best);
+                best = score;
+                if (!stopped)
+                    break;
+                if (!found.isEmpty())
+                    partial++;
+            }
+            Assertions.assertTrue(best > 0 && partial > 0, "minBonds " + minBonds);
+        }
+    }
+
     // the search order
 
     @Test

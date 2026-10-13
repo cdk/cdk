@@ -62,6 +62,12 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
  * for (int[] p : mcs.matchAll(target)) {
  *     // p is a mapping as above
  * }
+ *
+ * // the best mapping found within the 10 seconds, and whether the search finished
+ * MCS.Result result = mcs.search(target);
+ * if (!result.complete()) {
+ *     // result.mapping() may be smaller than the MCS
+ * }
  * }</pre>
  * Each {@code with...} method returns a new instance and leaves the old one
  * as it is. An instance keeps no other state, so one instance can be used for
@@ -123,7 +129,11 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
  * <b>Limits</b>
  * <br><br>
  * The search is exact. Large or highly symmetric molecules can take a long
- * time, so a time limit is recommended; there is none by default. A search
+ * time, so a time limit is recommended; there is none by default. When the
+ * time runs out, {@link #match(IAtomContainer)} and
+ * {@link #matchAll(IAtomContainer)} throw {@link Intractable}, while
+ * {@link #search(IAtomContainer)} and {@link #searchAll(IAtomContainer)}
+ * return the best mappings found so far, see {@link Result}. A search
  * of more than 2<sup>30</sup> atom pairs, query atoms times target atoms
  * (about 32,000 atoms in each molecule), is refused. Searches requiring
  * more than {@link Integer#MAX_VALUE} entries in a bond adjacency or
@@ -149,7 +159,7 @@ public final class MCS {
 
     /** The most atom pairs a search takes, query atoms times target atoms, as a pair is packed in an int. */
     private static final long MAX_PAIRS = 1L << 30;
-    /** The most mappings {@link #matchAll(IAtomContainer)} returns. */
+    /** The most mappings {@link #matchAll(IAtomContainer)} and {@link #searchAll(IAtomContainer)} return. */
     private static final int MAX_MAPPINGS = 1000;
 
     /** The query molecule, which is only read. */
@@ -211,9 +221,12 @@ public final class MCS {
     }
 
     /**
-     * Stop each search that runs longer than the given time, see
-     * {@link #match(IAtomContainer)}. The limit is checked as the search
-     * runs, including while it is set up, so a search can take slightly
+     * Stop each search that runs longer than the given time:
+     * {@link #match(IAtomContainer)} and {@link #matchAll(IAtomContainer)}
+     * then throw {@link Intractable}, while {@link #search(IAtomContainer)}
+     * and {@link #searchAll(IAtomContainer)} return the best mappings found
+     * so far, see {@link Result#complete()}. The limit is checked as the
+     * search runs, including while it is set up, so a search can take slightly
      * longer. Building the query and target graphs beforehand, and the query
      * expressions of {@link #withMatching(Expr.Type...)}, is not counted.
      *
@@ -311,7 +324,7 @@ public final class MCS {
      *                     interrupted, or the molecules are too large
      */
     public int[] match(IAtomContainer target) throws Intractable {
-        List<int[]> mappings = search(target, 1);
+        List<int[]> mappings = finished(searchAll(target, 1));
         return mappings.isEmpty() ? new int[0] : mappings.get(0);
     }
 
@@ -348,20 +361,66 @@ public final class MCS {
      *                     interrupted, or the molecules are too large
      */
     public List<int[]> matchAll(IAtomContainer target, int limit) throws Intractable {
-        if (limit <= 0) {
-            throw new IllegalArgumentException("The limit must be greater than zero: " + limit);
-        }
-        return Collections.unmodifiableList(search(target, limit));
+        return finished(searchAll(target, limit));
     }
 
     /**
-     * The mappings of a search, at most {@code maxMappings}, from the query to
-     * the target atoms. Under the default matching the smaller molecule is
-     * searched as the query, as that is faster, and the mappings are turned
-     * round afterwards. The time limit and interrupts are checked by the
-     * clock as the search runs, and end it with {@link Intractable}.
+     * Find a maximum common substructure of the query and the {@code target},
+     * and return the best mapping found even when the time limit ends the
+     * search first. {@link Result#mapping()} is the mapping as
+     * {@link #match(IAtomContainer)} returns it, one entry per query atom, and
+     * {@link Result#complete()} tells whether the search finished, which
+     * proves the mapping maximum. For example:
+     * <pre>{@code
+     * MCS.Result result = MCS.find(query).withTimeout(1, TimeUnit.SECONDS).search(target);
+     * int[] mapping = result.mapping();   // the best mapping found within a second
+     * if (!result.complete()) {
+     *     // the time ran out: a larger common substructure may exist
+     * }
+     * }</pre>
+     *
+     * @param target the target molecule
+     * @return the best mapping found and whether the search finished
+     * @throws Intractable the molecules are too large to search
      */
-    private List<int[]> search(IAtomContainer target, int maxMappings) throws Intractable {
+    public Result search(IAtomContainer target) throws Intractable {
+        return searchAll(target, 1);
+    }
+
+    /**
+     * Find every maximum common substructure mapping of the query and the
+     * {@code target}, up to 1000 of them as {@link #matchAll(IAtomContainer)}
+     * does, and return those found even when the time limit ends the search
+     * first.
+     *
+     * @param target the target molecule
+     * @return the best mappings found and whether the search finished
+     * @throws Intractable the molecules are too large to search
+     */
+    public Result searchAll(IAtomContainer target) throws Intractable {
+        return searchAll(target, MAX_MAPPINGS);
+    }
+
+    /**
+     * Find maximum common substructure mappings of the query and the
+     * {@code target}, at most {@code limit} of them as
+     * {@link #matchAll(IAtomContainer, int)} does, and return those found even
+     * when the time limit ends the search first. The mappings of a search
+     * that did not finish all have the best score found so far, and there can
+     * be fewer than the search would have found. Under the default matching
+     * the smaller molecule is searched as the query, as that is faster, and
+     * the mappings are turned round afterwards.
+     *
+     * @param target the target molecule
+     * @param limit  the most mappings to return, greater than zero
+     * @return the best mappings found and whether the search finished
+     * @throws IllegalArgumentException the limit is not greater than zero
+     * @throws Intractable the molecules are too large to search
+     */
+    public Result searchAll(IAtomContainer target, int limit) throws Intractable {
+        if (limit <= 0) {
+            throw new IllegalArgumentException("The limit must be greater than zero: " + limit);
+        }
         Objects.requireNonNull(target, "target");
         if ((long) query.getAtomCount() * target.getAtomCount() > MAX_PAIRS) {
             throw new Intractable("MCS search too large: " + query.getAtomCount() + " x "
@@ -388,22 +447,45 @@ public final class MCS {
         Thread thread = Thread.currentThread();
         MCSGraph.Clock clock = new MCSGraph.Clock(
                 () -> thread.isInterrupted() || timeLimit >= 0 && System.nanoTime() - start > timeLimit);
-        List<int[]> found;
+        List<int[]> found = Collections.emptyList();
+        boolean complete = false;
+        MCSSearch search = null;
         try {
-            found = new MCSSearch(graph, clock, minBonds).run(maxMappings);
+            search = new MCSSearch(graph, clock, minBonds);
+            found = search.run(limit);
+            complete = true;
         } catch (MCSGraph.Stop stop) {
-            if (thread.isInterrupted()) {
-                throw new Intractable("MCS search was interrupted");
+            // The time ran out or the thread was interrupted. What the search found by then is the result.
+            if (search != null) {
+                found = search.found();
             }
-            throw Intractable.timeout("MCS search", TimeUnit.NANOSECONDS.toMillis(timeLimit));
         }
-        if (!swap) {
-            return found;
+        return new Result(swap ? turnRound(found, query.getAtomCount()) : found, complete, query.getAtomCount());
+    }
+
+    /**
+     * The mappings of a search that finished. One the time limit or an
+     * interrupt stopped is {@link Intractable}, as its mappings are not shown
+     * to be maximum.
+     */
+    private List<int[]> finished(Result result) throws Intractable {
+        if (result.complete()) {
+            return result.mappings();
         }
-        // The search ran from the target to the query.
-        List<int[]> mappings = new ArrayList<>(found.size());
-        for (int[] inverse : found) {
-            int[] mapping = new int[query.getAtomCount()];
+        if (Thread.currentThread().isInterrupted()) {
+            throw new Intractable("MCS search was interrupted");
+        }
+        throw Intractable.timeout("MCS search", TimeUnit.NANOSECONDS.toMillis(timeLimit));
+    }
+
+    /**
+     * The mappings of a search that ran from the target to the query, turned
+     * round so that each runs from the query atoms to the target atoms.
+     */
+    private static List<int[]> turnRound(List<int[]> inverses, int queryAtoms) {
+        List<int[]> mappings = new ArrayList<>(inverses.size());
+        for (int[] inverse : inverses) {
+            int[] mapping = new int[queryAtoms];
             Arrays.fill(mapping, -1);
             for (int targetAtom = 0; targetAtom < inverse.length; targetAtom++) {
                 if (inverse[targetAtom] >= 0) {
@@ -438,5 +520,76 @@ public final class MCS {
             }
         }
         return false;
+    }
+
+    /**
+     * The outcome of a search: the best mappings found and whether the search
+     * finished. A search that the time limit, or an interrupt of the thread,
+     * ended early gives what it had found by then, so a caller can use a good
+     * common substructure rather than none; see {@link #complete()}.
+     */
+    public static final class Result {
+
+        /** The best mappings found, each from the query to the target atoms; an unmodifiable list. */
+        private final List<int[]> mappings;
+        /** The first of the mappings, or every query atom unmapped when there is none. */
+        private final int[] mapping;
+        /** Whether the search finished. */
+        private final boolean complete;
+
+        /**
+         * Holds the {@code mappings} found, each from the query to the target
+         * atoms, for a query of {@code queryAtoms} atoms.
+         */
+        private Result(List<int[]> mappings, boolean complete, int queryAtoms) {
+            this.mappings = Collections.unmodifiableList(mappings);
+            this.complete = complete;
+            if (mappings.isEmpty()) {
+                mapping = new int[queryAtoms];
+                Arrays.fill(mapping, -1);
+            } else {
+                mapping = mappings.get(0);
+            }
+        }
+
+        /**
+         * The best mapping found: one entry per query atom, the index of the
+         * target atom it is mapped to or -1, as {@link MCS#match(IAtomContainer)}
+         * returns it. Every entry is -1 when nothing was found, whether the
+         * molecules have nothing in common or the search was stopped before
+         * it found a mapping.
+         *
+         * @return the best mapping found
+         */
+        public int[] mapping() {
+            return mapping;
+        }
+
+        /**
+         * The best mappings found, at most as many as asked for: one for
+         * {@link MCS#search(IAtomContainer)}, and for
+         * {@link MCS#searchAll(IAtomContainer)} the mappings of the best score
+         * found, as {@link MCS#matchAll(IAtomContainer)} returns them. The
+         * first is {@link #mapping()}.
+         *
+         * @return the best mappings found; an unmodifiable list, empty if
+         *         nothing was found
+         */
+        public List<int[]> mappings() {
+            return mappings;
+        }
+
+        /**
+         * Whether the search finished, which proves the mappings maximum. It
+         * is false when the time limit, see
+         * {@link MCS#withTimeout(long, TimeUnit)}, or an interrupt of the
+         * thread ended the search first: the mappings are then the best found
+         * by then, and a larger common substructure may exist.
+         *
+         * @return whether the search finished
+         */
+        public boolean complete() {
+            return complete;
+        }
     }
 }

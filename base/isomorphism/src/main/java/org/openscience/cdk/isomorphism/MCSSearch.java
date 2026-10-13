@@ -20,6 +20,7 @@ package org.openscience.cdk.isomorphism;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.LongStream;
@@ -47,8 +48,9 @@ import java.util.stream.LongStream;
  * A mapping that beats the best score replaces the mappings held, and one that
  * ties is added. Every loop ticks the {@link MCSGraph.Clock}, which throws
  * {@link MCSGraph.Stop} when the time limit is reached or the thread is
- * interrupted. The search follows SMSD {@cdk.cite SMSD2009}, and its label
- * bound is that of SMSD Pro {@cdk.cite SMSDPro2026}.
+ * interrupted; the best mappings found by then are kept ({@link #found}). The
+ * search follows SMSD {@cdk.cite SMSD2009}, and its label bound is that of
+ * SMSD Pro {@cdk.cite SMSDPro2026}.
  *
  * @author Syed Asad Rahman
  */
@@ -104,12 +106,18 @@ final class MCSSearch {
     private int[] queryTwin, targetTwin;
     /** The best score so far, see {@link #score}, and a score that no mapping beats. */
     private long bestScore, upperBound;
-    /** The mappings with the best score so far, see {@link #record}. */
+    /** The mappings held: the embeddings found, or those with the best score so far, see {@link #record}. */
     private List<int[]> mappings;
     /** The most mappings wanted. */
     private int maxMappings;
     /** The seed, held at the front of the mappings from the start until the search finds it again. */
     private int[] heldSeed;
+    /**
+     * The mapping a stopped search falls back on while the pass under way
+     * holds none: the seed or, in MCES, the first mapping of the best score;
+     * null until the seed is grown. See {@link #found}.
+     */
+    private int[] fallback;
     /** The pairs reached from a state, for its bound. */
     private final Reach reach;
     /** The bound in MCES, or null in connected mode. */
@@ -168,9 +176,24 @@ final class MCSSearch {
         // A seed without complete rings is dropped. The search then starts from nothing.
         if (seed != null && query.rings != null && !complete(seed, false))
             seed = null;
+        fallback = seed;
         long start = seed != null ? score(seed) : belowEveryMapping();
         return minBonds == 0 ? collectConnected(seed, start, bound, maxMappings)
                              : collectDisconnected(seed, start, bound, maxMappings);
+    }
+
+    /**
+     * The best mappings found so far, for a search the clock stopped: the
+     * mappings held or, while the pass under way holds none, the one it falls
+     * back on. Empty when nothing was found. Each is complete, as a mapping is
+     * held only once it is recorded whole.
+     */
+    List<int[]> found() {
+        if (mappings != null && !mappings.isEmpty())
+            return mappings;
+        if (fallback != null)
+            return Collections.singletonList(fallback);
+        return Collections.emptyList();
     }
 
     /**
@@ -211,6 +234,8 @@ final class MCSSearch {
             return mapping;
         if (bestScore == start)
             return collect(seed, start, bestScore, maxMappings);
+        // The mapping found stands in for the seed until the second search finds one of its score.
+        fallback = mapping.get(0);
         return collect(null, bestScore - 1, bestScore, maxMappings);
     }
 
@@ -2047,9 +2072,13 @@ final class MCSSearch {
             frontier[frontierSize++] = root;
         }
 
-        /** The embeddings, at most {@code maxMappings}. Called once only, from the state the constructor sets up. */
+        /**
+         * The embeddings, at most {@code maxMappings}, held as the mappings as
+         * they are found. Called once only, from the state the constructor
+         * sets up.
+         */
         List<int[]> all(int maxMappings) {
-            List<int[]> embeddings = new ArrayList<>();
+            mappings = new ArrayList<>();
             Placement[] placements = new Placement[queryCount];
             placements[0] = new Placement().enter(frontier[0], 0);
             for (int placed = 1; placed > 0; ) {
@@ -2067,13 +2096,13 @@ final class MCSSearch {
                             placements[placed] = new Placement();
                         placements[placed++].enter(frontier[next], next);
                     } else if (placed == queryCount && (query.rings == null || complete(placedOn, false))) {
-                        embeddings.add(placedOn.clone());
-                        if (embeddings.size() == maxMappings)
-                            return embeddings;
+                        mappings.add(placedOn.clone());
+                        if (mappings.size() == maxMappings)
+                            return mappings;
                     }
                 }
             }
-            return embeddings;
+            return mappings;
         }
 
         /** The next free candidate of the atom of {@code placement}, or -1 once it has tried them all. */

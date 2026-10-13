@@ -693,6 +693,65 @@ final class MCSTest {
     }
 
     @Test
+    void testSearch() throws Exception {
+        // N-methylacetamide on propanamide, as in testAmides: a search that finishes gives what match gives
+        IAtomContainer query = smi("CC(=O)NC"), target = smi("CCC(=O)N");
+        MCS mcs = MCS.find(query);
+        MCS.Result result = mcs.search(target);
+        Assertions.assertTrue(result.complete());
+        Assertions.assertArrayEquals(new int[]{1, 2, 3, 4, -1}, result.mapping());
+        Assertions.assertArrayEquals(mcs.match(target), result.mapping());
+        Assertions.assertEquals(1, result.mappings().size());
+        Assertions.assertSame(result.mapping(), result.mappings().get(0));
+        // and every mapping, as matchAll gives them; the list cannot be changed
+        MCS.Result all = MCS.find(smi("CC")).searchAll(smi("CCC"));
+        Assertions.assertTrue(all.complete());
+        Assertions.assertEquals(keys(MCS.find(smi("CC")).matchAll(smi("CCC"))), keys(all.mappings()));
+        Assertions.assertEquals(4, all.mappings().size());
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> all.mappings().remove(0));
+        // the larger molecule as the query is searched the other way round, and the mappings turned back
+        MCS larger = MCS.find(smi("OCCc1ccccc1"));
+        IAtomContainer benzene = smi("c1ccccc1");
+        MCS.Result turned = larger.search(benzene);
+        Assertions.assertTrue(turned.complete());
+        Assertions.assertArrayEquals(new int[]{-1, -1, -1}, Arrays.copyOf(turned.mapping(), 3));
+        Assertions.assertEquals(6, atoms(turned.mapping()));
+        Assertions.assertEquals(keys(larger.matchAll(benzene)), keys(larger.searchAll(benzene).mappings()));
+        // nothing in common: every query atom unmapped, no mappings
+        for (MCS none : new MCS[]{MCS.find(smi("CCN")), MCS.find(smi("CCN")).withMatching(ELEMENT)}) {
+            MCS.Result nothing = none.search(smi("O"));
+            Assertions.assertTrue(nothing.complete());
+            Assertions.assertArrayEquals(new int[]{-1, -1, -1}, nothing.mapping());
+            Assertions.assertTrue(nothing.mappings().isEmpty());
+            Assertions.assertTrue(none.searchAll(smi("O")).mappings().isEmpty());
+        }
+        Assertions.assertThrows(NullPointerException.class, () -> mcs.search(null));
+        Assertions.assertThrows(NullPointerException.class, () -> mcs.searchAll(null));
+    }
+
+    @Test
+    void testSearchAllWithLimit() throws Exception {
+        // cyclopentane on cyclohexane, as in testMatchAllWithLimit: the limit cuts the 60 mappings short, and so
+        // does the default of 1000 for K5 on K7 with its 2520 embeddings; the search finished either way
+        MCS cyclopentane = MCS.find(smi("C1CCCC1"));
+        IAtomContainer cyclohexane = smi("C1CCCCC1");
+        MCS.Result ten = cyclopentane.searchAll(cyclohexane, 10), sixty = cyclopentane.searchAll(cyclohexane, 100);
+        Assertions.assertTrue(ten.complete() && sixty.complete());
+        Assertions.assertEquals(10, keys(ten.mappings()).size());
+        Assertions.assertEquals(60, keys(sixty.mappings()).size());
+        Assertions.assertEquals(keys(cyclopentane.matchAll(cyclohexane)),
+                                keys(cyclopentane.searchAll(cyclohexane).mappings()));
+        MCS.Result thousand = MCS.find(completeGraph(5)).searchAll(completeGraph(7));
+        Assertions.assertTrue(thousand.complete());
+        Assertions.assertEquals(1000, keys(thousand.mappings()).size());
+        for (int limit : new int[]{0, -1}) {
+            IllegalArgumentException e = Assertions.assertThrows(IllegalArgumentException.class,
+                    () -> cyclopentane.searchAll(cyclohexane, limit));
+            Assertions.assertEquals("The limit must be greater than zero: " + limit, e.getMessage());
+        }
+    }
+
+    @Test
     void testCompleteRings() throws Exception {
         // ring atoms on ring atoms only, a ring on a ring of its size
         assertCompleteRings("C1CCCCC1", "CCCCCC", score(6, 5, 12), NONE);
@@ -1184,6 +1243,42 @@ final class MCSTest {
     }
 
     @Test
+    void testSearchOutOfTime() throws Exception {
+        // coronene against C60: the exact search takes far longer than the limit, so match gives up, while search
+        // returns the best mapping it had, which on a slow machine may still be none
+        IAtomContainer query = smi(CORONENE), target = smi(C60);
+        MCS mcs = MCS.find(query).withTimeout(1, TimeUnit.MILLISECONDS);
+        Assertions.assertThrows(Intractable.class, () -> mcs.match(target));
+        Assertions.assertThrows(Intractable.class, () -> mcs.matchAll(target));
+        assertStopped(mcs.search(target), query, target, true);
+        assertStopped(mcs.searchAll(target), query, target, true);
+        assertStopped(mcs.withCompleteRings().search(target), query, target, true);
+        assertStopped(mcs.withMatching(ELEMENT).search(target), query, target, false);
+        // the time can run out while the atoms are ordered, before anything is found
+        IAtomContainer chain = chain(32000);
+        assertStopped(MCS.find(smi("CN")).withTimeout(1, TimeUnit.MILLISECONDS).search(chain), smi("CN"), chain,
+                      true);
+    }
+
+    @Test
+    void testSearchInterrupted() throws Exception {
+        // an interrupt stops the search as it starts, before it finds anything, and is kept for the caller
+        MCS mcs = MCS.find(smi("C1CCCCC1"));
+        IAtomContainer target = smi("CCCCCC");
+        Thread.currentThread().interrupt();
+        try {
+            MCS.Result result = mcs.search(target);
+            Assertions.assertFalse(result.complete());
+            Assertions.assertArrayEquals(new int[]{-1, -1, -1, -1, -1, -1}, result.mapping());
+            Assertions.assertTrue(result.mappings().isEmpty());
+            Assertions.assertTrue(Thread.currentThread().isInterrupted());
+        } finally {
+            Thread.interrupted();
+        }
+        Assertions.assertTrue(mcs.search(target).complete());
+    }
+
+    @Test
     @Tag("SlowTest")
     void testTimeoutMessage() throws Exception {
         // the exact search of coronene against C60 takes far longer than this
@@ -1232,6 +1327,23 @@ final class MCSTest {
         thread.join(TimeUnit.SECONDS.toMillis(10));
         Assertions.assertFalse(thread.isAlive());
         Assertions.assertTrue(thrown[0] instanceof Intractable);
+    }
+
+    /**
+     * A search that ran out of time: not complete, and what it found by then
+     * is valid and all of one score, or nothing at all.
+     */
+    private static void assertStopped(MCS.Result result, IAtomContainer query, IAtomContainer target,
+                                      boolean orders) {
+        Assertions.assertFalse(result.complete());
+        Assertions.assertEquals(query.getAtomCount(), result.mapping().length);
+        if (result.mappings().isEmpty()) {
+            Assertions.assertEquals(0, atoms(result.mapping()));
+        } else {
+            Assertions.assertSame(result.mappings().get(0), result.mapping());
+            assertScore(query, target, result.mappings(), atoms(result.mapping()),
+                        commonBonds(query, target, result.mapping(), orders), orders);
+        }
     }
 
     @Test
