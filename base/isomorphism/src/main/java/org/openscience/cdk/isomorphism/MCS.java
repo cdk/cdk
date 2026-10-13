@@ -316,7 +316,8 @@ public final class MCS {
      * The mapping has one entry per query atom: the index of the target atom
      * it is mapped to, or -1 if the atom is not in the common substructure.
      * If there is no common substructure, for example no atom in common, an
-     * empty array is returned.
+     * empty array is returned, where {@link Result#mapping()} has every
+     * entry -1.
      *
      * @param target the target molecule
      * @return the mapping from the query to the target atoms
@@ -367,10 +368,10 @@ public final class MCS {
     /**
      * Find a maximum common substructure of the query and the {@code target},
      * and return the best mapping found even when the time limit ends the
-     * search first. {@link Result#mapping()} is the mapping as
-     * {@link #match(IAtomContainer)} returns it, one entry per query atom, and
-     * {@link Result#complete()} tells whether the search finished, which
-     * proves the mapping maximum. For example:
+     * search first. {@link Result#mapping()} has one entry per query atom,
+     * the target atom it is mapped to or -1, and {@link Result#complete()}
+     * tells whether the search finished, which proves the mapping maximum.
+     * For example:
      * <pre>{@code
      * MCS.Result result = MCS.find(query).withTimeout(1, TimeUnit.SECONDS).search(target);
      * int[] mapping = result.mapping();   // the best mapping found within a second
@@ -407,9 +408,7 @@ public final class MCS {
      * {@link #matchAll(IAtomContainer, int)} does, and return those found even
      * when the time limit ends the search first. The mappings of a search
      * that did not finish all have the best score found so far, and there can
-     * be fewer than the search would have found. Under the default matching
-     * the smaller molecule is searched as the query, as that is faster, and
-     * the mappings are turned round afterwards.
+     * be fewer than the search would have found.
      *
      * @param target the target molecule
      * @param limit  the most mappings to return, greater than zero
@@ -464,9 +463,9 @@ public final class MCS {
     }
 
     /**
-     * The mappings of a search that finished. One the time limit or an
-     * interrupt stopped is {@link Intractable}, as its mappings are not shown
-     * to be maximum.
+     * The mappings of a search that finished. For one that the time limit or
+     * an interrupt stopped, {@link Intractable} is thrown instead, as its
+     * mappings are not shown to be maximum.
      */
     private List<int[]> finished(Result result) throws Intractable {
         if (result.complete()) {
@@ -554,8 +553,10 @@ public final class MCS {
 
         /**
          * The best mapping found: one entry per query atom, the index of the
-         * target atom it is mapped to or -1, as {@link MCS#match(IAtomContainer)}
-         * returns it. Every entry is -1 when nothing was found, whether the
+         * target atom it is mapped to or -1. Unlike
+         * {@link MCS#match(IAtomContainer)}, which returns an empty array when
+         * there is no common substructure, it always has one entry per query
+         * atom: every entry is -1 when nothing was found, whether the
          * molecules have nothing in common or the search was stopped before
          * it found a mapping.
          *

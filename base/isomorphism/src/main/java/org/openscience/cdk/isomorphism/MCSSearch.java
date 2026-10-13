@@ -1792,7 +1792,7 @@ final class MCSSearch {
             int[] queryBranches = queryParts.branches[queryPart], targetBranches = targetParts.branches[targetPart];
             int sets = 1 << targetBranches.length;
             long[] best = bestByUsed;
-            // -1 where no pairing uses the set
+            // A set that no pairing uses yet holds -1.
             Arrays.fill(best, 0, sets, -1);
             best[0] = 0;
             for (int queryBranch : queryBranches) {
@@ -1932,7 +1932,7 @@ final class MCSSearch {
             /**
              * Counts the atoms of {@code part} by symbol class and its bonds
              * by label, and returns its number of atoms. The atoms reached are
-             * marked with p + 1 in {@code seen}.
+             * marked with {@code part + 1} in {@code seen}.
              */
             private int countLabels(MCSGraph.Side side, int part, int[] bondLabel, int[] queue, int[] seen,
                                     MCSGraph.Clock clock) {
