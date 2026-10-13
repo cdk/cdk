@@ -479,6 +479,23 @@ final class MCSSearchTest {
     }
 
     @Test
+    void testBridgeBoundWithMixedParts() throws Exception {
+        // ring-attached branches, separate components and labels absent from the other molecule
+        String[][] pairs = {{"NC1OC1C", "NC1CC1O"}, {"NCC.O", "NCO.C"}, {"N=CCO", "NCCO"}, {"NCCC", "CCCC"}};
+        for (String[] pair : pairs) {
+            for (String[] order : new String[][]{pair, {pair[1], pair[0]}}) {
+                IAtomContainer query = smi(order[0]), target = smi(order[1]);
+                String what = order[0] + " on " + order[1];
+                MCSSearch.BridgeBound bound = bridgeBound(query, target);
+                Assertions.assertNotNull(bound, what);
+                assertWithinBridgeBound(bound, query, target, what);
+                assertSameSet(exact(query, target, true), run(query, target, true));
+            }
+        }
+    }
+
+    @Test
+    @Tag("SlowTest")
     void testBridgeBoundAllFourAtomGraphs() throws Exception {
         List<IAtomContainer> graphs = graphsOnFourAtoms();
         for (IAtomContainer query : graphs) {
@@ -492,18 +509,30 @@ final class MCSSearchTest {
 
     @Test
     void testBridgeBoundOnChains() throws Exception {
-        // a chain of 70 carbons with two methyls on one of them, on a chain of 100: only the 70 fit, in 31 places
-        // either way
-        IAtomContainer query = smi(carbons(35) + "C(C)(C)" + carbons(34));
-        IAtomContainer target = smi(carbons(100));
+        // both chains are large enough for the bridge bound, with only six maxima to collect
+        assertBridgeBoundOnChains(64, 66);
+    }
+
+    @Test
+    @Tag("SlowTest")
+    void testBridgeBoundOnLongChains() throws Exception {
+        assertBridgeBoundOnChains(70, 100);
+    }
+
+    private static void assertBridgeBoundOnChains(int queryAtoms, int targetAtoms) throws Exception {
+        // the two methyls cannot fit on the target chain, so every placement of the query backbone, either way
+        // round, is a maximum mapping, whatever the mapping limit
+        int branch = queryAtoms / 2;
+        IAtomContainer query = smi(carbons(branch) + "C(C)(C)" + carbons(queryAtoms - branch - 1));
+        IAtomContainer target = smi(carbons(targetAtoms));
         Set<String> expected = new HashSet<>();
-        for (int start = 0; start + 70 <= 100; start++) {
+        for (int start = 0; start + queryAtoms <= targetAtoms; start++) {
             for (boolean reverse : new boolean[]{false, true}) {
-                int[] mapping = new int[72];
+                int[] mapping = new int[queryAtoms + 2];
                 Arrays.fill(mapping, -1);
-                // the methyls are atoms 36 and 37
-                for (int k = 0; k < 70; k++)
-                    mapping[k < 36 ? k : k + 2] = reverse ? start + 69 - k : start + k;
+                // the methyls follow the branch atom in the SMILES atom order
+                for (int k = 0; k < queryAtoms; k++)
+                    mapping[k <= branch ? k : k + 2] = reverse ? start + queryAtoms - 1 - k : start + k;
                 expected.add(Arrays.toString(mapping));
             }
         }
@@ -520,6 +549,17 @@ final class MCSSearchTest {
         int[] mapping = MCS.find(query).match(target);
         Assertions.assertEquals(205, atoms(mapping));
         Assertions.assertEquals(210, commonBonds(query, target, mapping, true));
+    }
+
+    @Test
+    @Tag("SlowTest")
+    void testBridgeBoundOnPeptidesWithCompleteRings() throws Exception {
+        // without the bound this takes over a minute
+        IAtomContainer query = smi(peptide("HSQGTFTSDYSKYLDSRRAQDFVQWLMNT"));
+        IAtomContainer target = smi(peptide("HAEGTFTSDVSSYLEGQAAKEFIAWLVKGRG"));
+        int[] mapping = MCS.find(query).withCompleteRings().match(target);
+        Assertions.assertEquals(204, atoms(mapping));
+        Assertions.assertEquals(209, commonBonds(query, target, mapping, true));
     }
 
     @Test
