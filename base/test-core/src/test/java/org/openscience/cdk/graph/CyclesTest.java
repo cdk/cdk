@@ -483,4 +483,23 @@ class CyclesTest {
         Assertions.assertEquals(0, Cycles.smallRingSize(mol.getBond(3), 3));
         Assertions.assertEquals(0, Cycles.smallRingSize(mol.getBond(7), 3));
     }
+
+    @Test
+    void testSmallRing_bond_fusedDifferentSizes() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles("C1C2CCC12");
+        Cycles.markRingAtomsAndBonds(mol); // required
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getBond(1), 3));
+        Assertions.assertEquals(4, Cycles.smallRingSize(mol.getBond(1), 4));
+        Assertions.assertEquals(4, Cycles.smallRingSize(mol.getBond(1), 5));
+    }
+
+    @Test
+    void testSmallRing_bond_naphthalene() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles("c1ccc2ccccc2c1");
+        Cycles.markRingAtomsAndBonds(mol); // required
+        for (IBond bond : mol.bonds()) {
+            Assertions.assertEquals(0, Cycles.smallRingSize(bond, 5));
+            Assertions.assertEquals(6, Cycles.smallRingSize(bond, 6));
+        }
+    }
 }

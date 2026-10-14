@@ -2758,6 +2758,36 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     }
 
     @Test
+    public void testRemoveBondUpdatesBondStereo() {
+        // x       y
+        //  \     /
+        //   u = v
+        //  /     \
+        // w       z
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom u = mol.newAtom();
+        IAtom v = mol.newAtom();
+        IAtom w = mol.newAtom();
+        IAtom x = mol.newAtom();
+        IAtom y = mol.newAtom();
+        IAtom z = mol.newAtom();
+        IBond uv = mol.newBond(u, v, IBond.Order.DOUBLE);
+        mol.newBond(u, w);
+        IBond ux = mol.newBond(u, x);
+        IBond vy = mol.newBond(v, y);
+        IBond vz = mol.newBond(v, z);
+        mol.addStereoElement(new DoubleBondStereochemistry(uv, new IBond[]{ux, vz},
+                                                           IDoubleBondStereochemistry.Conformation.TOGETHER));
+
+        mol.removeBond(vz);
+
+        // x and z are cis so x and y are trans
+        IDoubleBondStereochemistry se = (IDoubleBondStereochemistry) mol.stereoElements().iterator().next();
+        assertThat(se.getBonds(), is(new IBond[]{ux, vy}));
+        assertThat(se.getStereo(), is(IDoubleBondStereochemistry.Conformation.OPPOSITE));
+    }
+
+    @Test
     public void testGetConnectedBondsCount_IAtom() {
         IAtomContainer acetone = (IAtomContainer) newChemObject();
         IAtom c = acetone.getBuilder().newInstance(IAtom.class, "C");

@@ -1489,4 +1489,17 @@ class StructureDiagramGeneratorTest {
         Map<IAtom,Integer> charges = StructureDiagramGenerator.calculateEffectiveCharges(mol);
         Assertions.assertEquals(0, charges.size());
     }
+
+    @Test
+    void noOverlappingAtoms() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("COC(=O)C=C(C(=O)O)C(CC1=C(Br)C(O)=C(O)C(Br)=C1Br)C(=O)O");
+        layout(mol);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            for (int j = i + 1; j < mol.getAtomCount(); j++) {
+                assertThat(mol.getAtom(i).getPoint2d().distance(mol.getAtom(j).getPoint2d()),
+                           is(greaterThan(SDG.getBondLength() / 4)));
+            }
+        }
+    }
 }

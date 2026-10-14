@@ -126,7 +126,7 @@ final class Congestion {
                 final double  y    = p1.y - p2.y;
                 final double  dist2 = x * x + y * y;
                 final double  contrib = dist2 > MIN_DIST ? 1 / dist2 : MAX_SCORE;
-                score += contribution[w][v] = contribution[v][w] = 1 / contrib;
+                score += contribution[w][v] = contribution[v][w] = contrib;
             }
         }
         score -= subtract;
