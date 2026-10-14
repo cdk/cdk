@@ -36,6 +36,7 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -209,6 +210,19 @@ class CxSmilesGeneratorTest {
         IAtomContainer  mol    = smipar.parseSmiles("C[C@H](O)[C@H](O)C1CCCCC1 |r|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
         assertThat(smigen.create(mol), is("C[C@H](O)[C@H](O)C1CCCCC1"));
+    }
+
+    @Test
+    void enhancedStereoReorderedAtoms() throws Exception {
+        SmilesParser    smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer  mol    = smipar.parseSmiles("C[C@H](O)[C@H](N)C |&1:1,o1:3|");
+        IAtom[]         atoms  = AtomContainerManipulator.getAtomArray(mol);
+        Collections.reverse(Arrays.asList(atoms));
+        mol.setAtoms(atoms);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxEnhancedStereo);
+        String          smi    = smigen.create(mol);
+        assertThat(smi, is("C[C@H]([C@H](C)O)N |o1:1,&1:2|"));
+        assertThat(smigen.create(smipar.parseSmiles(smi)), is(smi));
     }
 
     @Test
