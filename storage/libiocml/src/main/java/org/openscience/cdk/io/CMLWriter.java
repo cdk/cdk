@@ -293,25 +293,25 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
     private void initIOSettings() {
         cmlIds = addSetting(new BooleanIOSetting("CMLIDs", IOSetting.Importance.LOW,
-                "Should the output use CML identifiers?", "true"));
+                "Should the output use CML identifiers?", true));
 
         namespacedOutput = addSetting(new BooleanIOSetting("NamespacedOutput", IOSetting.Importance.LOW,
-                "Should the output use namespaced output?", "true"));
+                "Should the output use namespaced output?", true));
 
         namespacePrefix = addSetting(new StringIOSetting("NamespacePrefix", IOSetting.Importance.LOW,
                 "What should the namespace prefix be? [empty is no prefix]", ""));
 
         schemaInstanceOutput = addSetting(new BooleanIOSetting("SchemaInstance", IOSetting.Importance.LOW,
-                "Should the output use the Schema-Instance attribute?", "false"));
+                "Should the output use the Schema-Instance attribute?", false));
 
         instanceLocation = addSetting(new StringIOSetting("InstanceLocation", IOSetting.Importance.LOW,
                 "Where is the schema found?", ""));
 
         indent = addSetting(new BooleanIOSetting("Indenting", IOSetting.Importance.LOW,
-                "Should the output be indented?", "true"));
+                "Should the output be indented?", true));
 
         xmlDeclaration = addSetting(new BooleanIOSetting("XMLDeclaration", IOSetting.Importance.LOW,
-                "Should the output contain an XML declaration?", "true"));
+                "Should the output contain an XML declaration?", true));
     }
 
     private void customizeJob() {
