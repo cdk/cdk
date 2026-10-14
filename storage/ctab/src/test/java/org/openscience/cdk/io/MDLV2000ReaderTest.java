@@ -833,7 +833,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertEquals(2, mol.getAtom(0).getValency().intValue());
         Assertions.assertEquals(3, mol.getAtom(1).getValency().intValue());
         org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), is(not(0)));
-        org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), isNull()); // not 4 as it is default!
+        Assertions.assertNull(mol.getAtom(2).getValency()); // not 4 as it is default!
         Assertions.assertEquals(0, mol.getAtom(3).getValency().intValue());
     }
 
