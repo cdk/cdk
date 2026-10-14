@@ -1452,7 +1452,7 @@ class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles(smi);
         mol.removeBond(mol.getBond(2));
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
-        Assertions.assertEquals("C/C=[C]/CC.[CH3]", smigen.create(mol));
+        Assertions.assertEquals("C/C=[C]\\CC.[CH3]", smigen.create(mol));
     }
 
 
