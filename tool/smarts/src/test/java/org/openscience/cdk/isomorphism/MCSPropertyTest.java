@@ -145,6 +145,7 @@ final class MCSPropertyTest {
     // exactness against the brute force search
 
     @Test
+    @Tag("SlowTest")
     void testAllPairsUpToFourAtoms() throws Exception {
         // 10 graphs, 100 ordered pairs, plain and labelled
         assertAllPairs(() -> graphsUpTo(4, false));

@@ -1233,6 +1233,7 @@ final class MCSTest {
     // limits and threads
 
     @Test
+    @Tag("SlowTest")
     void testTimeoutDuringSetUp() throws Exception {
         // ordering the atoms of a long chain takes milliseconds, the limit must stop it early
         MCS mcs = MCS.find(smi("CN")).withTimeout(1, TimeUnit.MILLISECONDS);
@@ -1243,6 +1244,7 @@ final class MCSTest {
     }
 
     @Test
+    @Tag("SlowTest")
     void testSearchOutOfTime() throws Exception {
         // coronene against C60: the exact search takes far longer than the limit, so match gives up, while search
         // returns the best mapping it had, which on a slow machine may still be none

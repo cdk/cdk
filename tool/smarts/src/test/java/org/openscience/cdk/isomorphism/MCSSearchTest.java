@@ -368,6 +368,7 @@ final class MCSSearchTest {
     // the whole query
 
     @Test
+    @Tag("SlowTest")
     void testEmbeddings() throws Exception {
         assertEmbeddings(smi("c1ccccc1"), smi("c1ccc2ccccc2c1"), 24);
         // the three methyls of isobutane on the four of neopentane: 4 x 3 x 2
@@ -406,6 +407,7 @@ final class MCSSearchTest {
     // the bounds
 
     @Test
+    @Tag("SlowTest")
     void testBondBoundMappings() throws Exception {
         // size or elements leave one or two atoms out, yet every maximum is found
         for (String[] pair : new String[][]{{"C1CCC1", "C1CCCC1"}, {"C1CCC1", "C1CCCCC1"},
@@ -470,6 +472,7 @@ final class MCSSearchTest {
     }
 
     @Test
+    @Tag("SlowTest")
     void testConnectedLabelBound() throws Exception {
         assertConnectedBound("NC=O", "NCO", 3L << 32 | 1, 2L << 32 | 1);
         assertConnectedBound("CC=CC=CC", "CCCCCC", 6L << 32 | 3, 2L << 32 | 1);
@@ -524,6 +527,7 @@ final class MCSSearchTest {
     }
 
     @Test
+    @Tag("SlowTest")
     void testBridgeBoundOnChains() throws Exception {
         // both chains are large enough for the bridge bound, with only six maxima to collect
         assertBridgeBoundOnChains(64, 66);
@@ -557,6 +561,7 @@ final class MCSSearchTest {
     }
 
     @Test
+    @Tag("SlowTest")
     @Timeout(value = 5, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     void testBridgeBoundOnPeptides() throws Exception {
         // glucagon on GLP-1 (7-37): without the bound a maximum mapping takes seconds
