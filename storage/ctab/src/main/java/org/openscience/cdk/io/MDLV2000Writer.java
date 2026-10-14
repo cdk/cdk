@@ -125,6 +125,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public static final String OptWriteDefaultProperties = "WriteDefaultProperties";
     public static final String OptProgramName = "ProgramName";
     public static final String OptWriteData = "writeProperties";
+    public static final String OptAlwaysWriteValence = "AlwaysWriteValence";
     public static final String OptTruncateLongData = "TruncateLongData";
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
@@ -222,6 +223,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private BooleanIOSetting writeDataOpt;
 
     private BooleanIOSetting truncateDataOpt;
+
+    private BooleanIOSetting writeValenceAlways;
 
     private StringIOSetting programNameOpt;
 
@@ -1083,6 +1086,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 else if (actual > 0 && actual < 15)
                     return actual;
             }
+
+            // the valence is 'default' but was explicitly specifed so should
+            // we write it or not
+            if (writeValenceAlways.isSet() &&
+                atom.getValency() != null &&
+                atom.getValency() == actual)
+                return actual;
         }
         return valence;
     }
@@ -1558,6 +1568,12 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writeDataOpt = addSetting(new BooleanIOSetting(OptWriteData,
                 IOSetting.Importance.LOW,
                 "Should molecule properties be written as non-structural data", "false"));
+        // should probably be an enum: always (true), when-needed (false), never
+        writeValenceAlways = addSetting(new BooleanIOSetting(OptAlwaysWriteValence,
+                                                             IOSetting.Importance.LOW,
+                                                             "The valence of an atoms is written when they differ from MDL's defaults (table driven)." +
+                                                             "If the valency is explicitly set (atom.setValency(int)) but is the same as the default should it still be written?",
+                                                             "false"));
         truncateDataOpt = addSetting(new BooleanIOSetting(OptTruncateLongData,
                 IOSetting.Importance.LOW,
                 "Truncate long data files >200 characters", "false"));

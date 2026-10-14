@@ -74,6 +74,30 @@ class MDLV3000WriterTest {
     }
 
     @Test
+    void outputDefaultValencyWhenRequested() throws CDKException, IOException {
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atom = molecule.newAtom(IElement.C);
+        atom.setImplicitHydrogenCount(4);
+        atom.setValency(4);
+
+        // with the option of we write a '0' (default)
+        Properties options = new Properties();
+        options.setProperty(MDLV3000Writer.OptAlwaysWriteValence, "false");
+        String output1 = writeToStr(molecule, options);
+        MatcherAssert.assertThat(output1,
+                                 containsString("C 0 0 0 0\n"));
+        MatcherAssert.assertThat(output1,
+                                 not(containsString("C 0 0 0 0 VAL=4\n")));
+
+        options.setProperty(MDLV3000Writer.OptAlwaysWriteValence, "true");
+        String output2 = writeToStr(molecule, options);
+        MatcherAssert.assertThat(output2,
+                                 containsString("C 0 0 0 0 VAL=4\n"));
+        MatcherAssert.assertThat(output2,
+                                 not(containsString("C 0 0 0 0\n")));
+    }
+
+    @Test
     void outputFormalCharge() throws IOException, CDKException {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         mol.addAtom(new Atom("O"));
@@ -498,12 +522,18 @@ class MDLV3000WriterTest {
         assertThat(sw.toString(), containsString("FakeNews"));
     }
 
-    private String writeToStr(IAtomContainer mol) throws IOException, CDKException {
+    private String writeToStr(IAtomContainer mol, Properties props) throws IOException, CDKException {
         final StringWriter sw = new StringWriter();
         try (final MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
+            mdlw.addChemObjectIOListener(new PropertiesListener(props));
+            mdlw.customizeJob();
             mdlw.write(mol);
         }
         return sw.toString();
+    }
+
+    private String writeToStr(IAtomContainer mol) throws IOException, CDKException {
+        return writeToStr(mol, new Properties());
     }
 
     @Test

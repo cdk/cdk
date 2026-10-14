@@ -87,6 +87,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -832,7 +833,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertEquals(2, mol.getAtom(0).getValency().intValue());
         Assertions.assertEquals(3, mol.getAtom(1).getValency().intValue());
         org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), is(not(0)));
-        org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), is(4));
+        org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), isNull()); // not 4 as it is default!
         Assertions.assertEquals(0, mol.getAtom(3).getValency().intValue());
     }
 
@@ -1430,7 +1431,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         for (IAtom atom : container.atoms()) {
             assertThat(atom.getImplicitHydrogenCount(), is(greaterThanOrEqualTo(0)));
-            assertThat(atom.getValency(), is(notNullValue()));
         }
     }
 

@@ -581,7 +581,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @param explicitValence the explicit valence (bond order sum)
      */
     private void applyMDLValenceModel(IAtom atom, int explicitValence, int unpaired) {
-
         if (atom.getValency() != null) {
             if (atom.getValency() >= explicitValence)
                 atom.setImplicitHydrogenCount(atom.getValency() - (explicitValence - unpaired));
@@ -596,10 +595,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             int implicitValence = MDLValence.implicitValence(element, charge, explicitValence);
             if (implicitValence < explicitValence) {
-                atom.setValency(explicitValence);
                 atom.setImplicitHydrogenCount(0);
             } else {
-                atom.setValency(implicitValence);
                 atom.setImplicitHydrogenCount(implicitValence - explicitValence);
             }
         }
