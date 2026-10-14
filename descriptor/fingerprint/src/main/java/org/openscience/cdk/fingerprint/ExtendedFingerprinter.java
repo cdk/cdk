@@ -158,7 +158,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
 
         IBitFingerprint fingerprint = fingerprinter.getBitFingerprint(container);
         int size = this.getSize();
-        double weight = MolecularFormulaManipulator.getTotalNaturalAbundance(MolecularFormulaManipulator
+        double weight = MolecularFormulaManipulator.getMass(MolecularFormulaManipulator
                 .getMolecularFormula(container));
         for (int i = 1; i < 11; i++) {
             if (weight > (100 * i)) fingerprint.set(size - 26 + i); // 26 := RESERVED_BITS+1
