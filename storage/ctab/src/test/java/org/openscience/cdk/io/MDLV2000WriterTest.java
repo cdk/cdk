@@ -24,6 +24,7 @@
 package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -145,6 +146,42 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         String output = writer.toString();
         Assertions.assertTrue(output.contains("Fe  0  0  0  0  0  3  0  0  0  0  0  0"));
+    }
+
+    private String writeToString(IAtomContainer mol, Properties props) throws CDKException, IOException {
+        try (StringWriter   writer   = new StringWriter();
+             MDLV2000Writer mdlWriter = new MDLV2000Writer(writer)) {
+            mdlWriter.addChemObjectIOListener(new PropertiesListener(props));
+//            mdlWriter.customizeJob();
+            mdlWriter.write(mol);
+            return writer.toString();
+        }
+    }
+
+    @Test
+    void testWriteValenceAlways() throws CDKException, IOException {
+
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atom = molecule.newAtom(IElement.C);
+        atom.setImplicitHydrogenCount(4);
+        atom.setValency(4);
+
+        // with the option of we write a '0' (default)
+        Properties options = new Properties();
+        options.setProperty(MDLV2000Writer.OptAlwaysWriteValence, "false");
+        String output1 = writeToString(molecule, options);
+        MatcherAssert.assertThat(output1,
+                                 containsString("C   0  0  0  0  0  0  0"));
+        MatcherAssert.assertThat(output1,
+                                 not(containsString("C   0  0  0  0  0  4")));
+
+
+        options.setProperty(MDLV2000Writer.OptAlwaysWriteValence, "true");
+        String output2 = writeToString(molecule, options);
+        MatcherAssert.assertThat(output2,
+                                 containsString("C   0  0  0  0  0  4"));
+        MatcherAssert.assertThat(output2,
+                                 not(containsString("C   0  0  0  0  0  0")));
     }
 
     @Test
