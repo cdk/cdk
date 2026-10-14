@@ -1550,24 +1550,24 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      */
     private void initIOSettings() {
         forceWriteAs2DCoords = addSetting(new BooleanIOSetting(OptForceWriteAs2DCoordinates, IOSetting.Importance.LOW,
-                "Should coordinates always be written as 2D?", "false"));
+                "Should coordinates always be written as 2D?", false));
         writeMajorIsotopes = addSetting(new BooleanIOSetting(OptWriteMajorIsotopes, IOSetting.Importance.LOW,
                 "Write atomic mass of any non-null atomic mass including major isotopes (e.g. [12]C)", "true"));
         writeAromaticBondTypes = addSetting(new BooleanIOSetting(OptWriteAromaticBondTypes, IOSetting.Importance.LOW,
-                "Should aromatic bonds be written as bond type 4?", "false"));
+                "Should aromatic bonds be written as bond type 4?", false));
         writeQueryFormatValencies = addSetting(new BooleanIOSetting(OptWriteQueryFormatValencies,
                 IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
         writeTrailingZeros = addSetting(new BooleanIOSetting(OptWriteDefaultProperties,
                 IOSetting.Importance.LOW,
                 "Write trailing zero's on atom/bond property blocks even if they're not used.",
-                "true"));
+                true));
         programNameOpt = addSetting(new StringIOSetting(OptProgramName,
                 IOSetting.Importance.LOW,
                 "Program name to write at the top of the molfile header, should be exactly 8 characters long",
                 "CDK"));
         writeDataOpt = addSetting(new BooleanIOSetting(OptWriteData,
                 IOSetting.Importance.LOW,
-                "Should molecule properties be written as non-structural data", "false"));
+                "Should molecule properties be written as non-structural data", false));
         // should probably be an enum: always (true), when-needed (false), never
         writeValenceAlways = addSetting(new BooleanIOSetting(OptAlwaysWriteValence,
                                                              IOSetting.Importance.LOW,
@@ -1576,7 +1576,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                                              "false"));
         truncateDataOpt = addSetting(new BooleanIOSetting(OptTruncateLongData,
                 IOSetting.Importance.LOW,
-                "Truncate long data files >200 characters", "false"));
+                "Truncate long data files >200 characters", false));
     }
 
     /**

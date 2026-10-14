@@ -630,13 +630,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
     private void initIOSettings() {
         optForce3d = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
-                "Should coordinates always be read as 3D?", "false"));
+                "Should coordinates always be read as 3D?", false));
         optHydIso = addSetting(new BooleanIOSetting("InterpretHydrogenIsotopes",
-                IOSetting.Importance.LOW, "Should D and T be interpreted as hydrogen isotopes?", "true"));
+                IOSetting.Importance.LOW, "Should D and T be interpreted as hydrogen isotopes?", true));
         optStereoPerc = addSetting(new BooleanIOSetting("AddStereoElements", IOSetting.Importance.LOW,
-                "Detect and create IStereoElements for the input.", "true"));
+                "Detect and create IStereoElements for the input.", true));
         optStereo0d = addSetting(new BooleanIOSetting("AddStereo0d", IOSetting.Importance.LOW,
-                "Allow stereo created from parity value when no coordinates", "true"));
+                "Allow stereo created from parity value when no coordinates", true));
     }
 
     public void customizeJob() {

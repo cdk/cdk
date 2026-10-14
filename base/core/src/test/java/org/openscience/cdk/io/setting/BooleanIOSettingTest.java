@@ -27,7 +27,7 @@ class BooleanIOSettingTest {
 
     @Test
     void testConstructure() {
-        IOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", "true");
+        IOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", true);
         Assertions.assertNotNull(setting);
         Assertions.assertEquals("Glossy", setting.getName());
         Assertions.assertEquals(Importance.LOW, setting.getLevel());
@@ -37,14 +37,14 @@ class BooleanIOSettingTest {
 
     @Test
     void testIsSet() {
-        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", "true");
+        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", true);
         Assertions.assertNotNull(setting);
         Assertions.assertTrue(setting.isSet());
     }
 
     @Test
     void testSetSetting() {
-        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", "true");
+        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", true);
         Assertions.assertEquals("true", setting.getSetting());
         try {
 			setting.setSetting("false");
@@ -56,7 +56,7 @@ class BooleanIOSettingTest {
 
     @Test
     void testSetSetting_Variants() throws CDKException {
-        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", "true");
+        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", true);
 		setting.setSetting("yes"); Assertions.assertEquals("true", setting.getSetting());
 		setting.setSetting("no"); Assertions.assertEquals("false", setting.getSetting());
 		setting.setSetting("y"); Assertions.assertEquals("true", setting.getSetting());
@@ -65,7 +65,7 @@ class BooleanIOSettingTest {
 
     @Test
     void testSetSetting_InvalidValue() {
-        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", "true");
+        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", true);
         try {
 			setting.setSetting("fake");
 			Assertions.fail("Expected exception was not thrown"); // should not happen

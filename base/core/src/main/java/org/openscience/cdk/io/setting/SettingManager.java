@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
  * <pre>{@code
  * // create the manager and add a setting
  * SettingManager<IOSetting>   manager = new SettingManager<IOSetting>();
- * manager.add(new BooleanIOSetting("Sample", IOSetting.MEDIUM, "This is a sample?", "true"));
+ * manager.add(new BooleanIOSetting("Sample", IOSetting.MEDIUM, "This is a sample?", true));
  *
  * // check the setting is present (case insensitive
  * if(manager.has("sample")) {

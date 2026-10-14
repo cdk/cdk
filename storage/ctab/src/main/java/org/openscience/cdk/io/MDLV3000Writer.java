@@ -95,10 +95,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
 
     // shared options with V2000
-    public static String OptProgramName = MDLV2000Writer.OptProgramName;
-    public static String OptTruncateLongData = MDLV2000Writer.OptTruncateLongData;
-    public static String OptWriteData = MDLV2000Writer.OptWriteData;
-    public static String OptAlwaysWriteValence = MDLV2000Writer.OptAlwaysWriteValence;
+    public static final String OptProgramName = MDLV2000Writer.OptProgramName;
+    public static final String OptTruncateLongData = MDLV2000Writer.OptTruncateLongData;
+    public static final String OptWriteData = MDLV2000Writer.OptWriteData;
+    public static final String OptAlwaysWriteValence = MDLV2000Writer.OptAlwaysWriteValence;
 
     /**
      * Enum representing the different types of bonds in MDL format.
@@ -1127,10 +1127,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                                                         "CDK"));
         writeDataOpt = addSetting(new BooleanIOSetting(OptWriteData,
                                                        IOSetting.Importance.LOW,
-                                                       "Should molecule properties be written as non-structural data", "false"));
+                                                       "Should molecule properties be written as non-structural data", false));
         truncateDataOpt = addSetting(new BooleanIOSetting(OptTruncateLongData,
                                                           IOSetting.Importance.LOW,
-                                                          "Truncate long data files >200 characters", "false"));
+                                                          "Truncate long data files >200 characters", false));
         writeValenceAlways = addSetting(new BooleanIOSetting(OptAlwaysWriteValence,
                                                              IOSetting.Importance.LOW,
                                                              "The valence of an atoms is written when they differ from MDL's defaults (table driven)." +

@@ -250,13 +250,13 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
                 "How much memory do you want to use?", "unset"));
 
         shell = addSetting(new BooleanIOSetting("OpenShell", IOSetting.Importance.MEDIUM,
-                "Should the calculation be open shell?", "false"));
+                "Should the calculation be open shell?", false));
 
         proccount = addSetting(new IntegerIOSetting("ProcessorCount", IOSetting.Importance.LOW,
                 "How many processors should be used by Gaussian?", "1"));
 
         usecheckpoint = new BooleanIOSetting("UseCheckPointFile", IOSetting.Importance.LOW,
-                "Should a check point file be saved?", "false");
+                "Should a check point file be saved?", false);
     }
 
     private void customizeJob() {

@@ -329,13 +329,13 @@ public class SDFWriter extends DefaultChemObjectWriter {
         }
         addSetting(new BooleanIOSetting(OptWriteData,
                                         IOSetting.Importance.LOW,
-                                        "Should molecule properties be written as non-structural data", "true"));
+                                        "Should molecule properties be written as non-structural data", true));
         addSetting(new BooleanIOSetting(OptTruncateLongData,
                                         IOSetting.Importance.LOW,
-                                        "Truncate long data files >200 characters", "false"));
+                                        "Truncate long data files >200 characters", false));
         paramWriteV3000 = addSetting(new BooleanIOSetting(OptAlwaysV3000,
                                                           IOSetting.Importance.LOW,
-                                                          "Write all records as V3000", "false"));
+                                                          "Write all records as V3000", false));
     }
 
     public void setAlwaysV3000(boolean val) {
