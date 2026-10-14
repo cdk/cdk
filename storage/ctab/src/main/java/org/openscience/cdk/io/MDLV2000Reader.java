@@ -77,6 +77,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -538,7 +539,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         int numNbrs = 0;
         IAtom[] carriers = new IAtom[4];
         int idxOfHyd = -1;
-        for (IAtom nbr : mol.getConnectedAtomsList(focus)) {
+        List<IAtom> nbrs = mol.getConnectedAtomsList(focus);
+        nbrs.sort(Comparator.comparingInt(mol::indexOf));
+        for (IAtom nbr : nbrs) {
             if (numNbrs == 4)
                 return null; // too many neighbors
             if (nbr.getAtomicNumber() == IElement.H) {

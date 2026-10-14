@@ -1113,9 +1113,9 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     int a = outputOrder.get(carriers[i]);
                     int b = outputOrder.get(carriers[j]);
                     if (i == hidx)
-                        a = container.getAtomCount();
+                        a = container.getAtomCount() + 1;
                     if (j == hidx)
-                        b = container.getAtomCount();
+                        b = container.getAtomCount() + 1;
                     if (a > b)
                         parity ^= 0x3;
                 }

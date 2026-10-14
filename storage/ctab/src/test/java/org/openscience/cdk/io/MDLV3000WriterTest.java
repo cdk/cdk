@@ -304,7 +304,7 @@ class MDLV3000WriterTest {
                                                                   mol.getAtom(4)}, // Me
                                                       ITetrahedralChirality.Stereo.CLOCKWISE));
         String res = writeToStr(mol);
-        assertThat(res, CoreMatchers.containsString("M  V30 2 C 0 0 0 0 CFG=1\n"));
+        assertThat(res, CoreMatchers.containsString("M  V30 2 C 0 0 0 0 CFG=2\n"));
     }
 
     @Test
@@ -331,7 +331,7 @@ class MDLV3000WriterTest {
                                                                   mol.getAtom(4)}, // Me
                                                       ITetrahedralChirality.Stereo.CLOCKWISE));
         String res = writeToStr(mol);
-        assertThat(res, CoreMatchers.containsString("M  V30 2 C 0 0 0 0 CFG=2\n"));
+        assertThat(res, CoreMatchers.containsString("M  V30 2 C 0 0 0 0 CFG=1\n"));
     }
 
     @Test
