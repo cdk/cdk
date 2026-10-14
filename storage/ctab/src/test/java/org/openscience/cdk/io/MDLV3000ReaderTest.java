@@ -31,6 +31,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
@@ -788,6 +789,42 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             }
             Assertions.assertEquals(0, numTetrahedrals);
         }
+    }
+
+    // the parity refers to atom numbers, the order of the bond lines does not matter
+    @Test
+    void testStereo0dIndependentOfBondOrder() throws Exception {
+        String atoms = "L-alanine\n"
+                       + "\n"
+                       + "\n"
+                       + "  0  0  0     0  0            999 V3000\n"
+                       + "M  V30 BEGIN CTAB\n"
+                       + "M  V30 COUNTS 6 5 0 0 1\n"
+                       + "M  V30 BEGIN ATOM\n"
+                       + "M  V30 1 N 0 0 0 0\n"
+                       + "M  V30 2 C 0 0 0 0 CFG=1\n"
+                       + "M  V30 3 C 0 0 0 0\n"
+                       + "M  V30 4 C 0 0 0 0\n"
+                       + "M  V30 5 O 0 0 0 0\n"
+                       + "M  V30 6 O 0 0 0 0\n"
+                       + "M  V30 END ATOM\n"
+                       + "M  V30 BEGIN BOND\n";
+        String bonds = "M  V30 3 1 2 4\n"
+                       + "M  V30 4 2 4 5\n"
+                       + "M  V30 5 1 4 6\n"
+                       + "M  V30 END BOND\n"
+                       + "M  V30 END CTAB\n"
+                       + "M  END\n";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IAtomContainer sorted, swapped;
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(atoms + "M  V30 1 1 1 2\n" + "M  V30 2 1 2 3\n" + bonds))) {
+            sorted = mdlr.read(bldr.newAtomContainer());
+        }
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(atoms + "M  V30 1 1 2 3\n" + "M  V30 2 1 1 2\n" + bonds))) {
+            swapped = mdlr.read(bldr.newAtomContainer());
+        }
+        Assertions.assertTrue(sorted.stereoElements().iterator().hasNext());
+        Assertions.assertTrue(VentoFoggia.findIdentical(sorted).matches(swapped));
     }
 
     @Test

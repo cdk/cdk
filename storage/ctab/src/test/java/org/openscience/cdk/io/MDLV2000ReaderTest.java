@@ -49,6 +49,7 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
@@ -1730,6 +1731,34 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(((ITetrahedralChirality) se).getLigands(), is(new IAtom[]{container.getAtom(0), container.getAtom(2), container.getAtom(3), container.getAtom(4)}));
             Assertions.assertFalse(siter.hasNext());
         }
+    }
+
+    // the parity refers to atom numbers, the order of the bond lines does not matter
+    @Test
+    void reading0DStereochemistryIndependentOfBondOrder() throws Exception {
+        String atoms = "L-alanine\n"
+                       + "\n"
+                       + "\n"
+                       + "  6  5  0  0  1  0            999 V2000\n"
+                       + "    0.0000    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n";
+        String bonds = "  2  4  1  0  0  0  0\n"
+                       + "  4  5  2  0  0  0  0\n"
+                       + "  4  6  1  0  0  0  0\n"
+                       + "M  END\n";
+        IAtomContainer sorted, swapped;
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(atoms + "  1  2  1  0  0  0  0\n" + "  2  3  1  0  0  0  0\n" + bonds))) {
+            sorted = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+        }
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(atoms + "  2  3  1  0  0  0  0\n" + "  1  2  1  0  0  0  0\n" + bonds))) {
+            swapped = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+        }
+        Assertions.assertTrue(sorted.stereoElements().iterator().hasNext());
+        Assertions.assertTrue(VentoFoggia.findIdentical(sorted).matches(swapped));
     }
 
     /**
