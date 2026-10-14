@@ -214,8 +214,8 @@ public class CxSmilesGenerator {
                     // make sure we have a consistent ordering
                     List<Map.Entry<Integer, List<Integer>>> entries = new ArrayList<>(grpToIdxs.entrySet());
                     for (Map.Entry<Integer,List<Integer>> e : entries)
-                        e.getValue().sort(invComp);
-                    entries.sort((o1, o2) -> invComp.compare(o1.getValue().get(0), o2.getValue().get(0)));
+                        e.getValue().sort(comp);
+                    entries.sort((o1, o2) -> comp.compare(o1.getValue().get(0), o2.getValue().get(0)));
 
                     int numRac = 0;
                     int numRel = 0;
@@ -241,7 +241,7 @@ public class CxSmilesGenerator {
                                 throw new IllegalStateException("Unexpected stereo group");
                         }
                         sb.append(":");
-                        appendIntegers(invorder, ',', sb, e.getValue());
+                        appendIntegers(ordering, ',', sb, e.getValue());
                     }
                 }
             }
