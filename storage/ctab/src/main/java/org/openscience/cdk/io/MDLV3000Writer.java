@@ -62,17 +62,21 @@ import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
-import static org.openscience.cdk.io.MDLV2000Writer.OptAlwaysWriteValence;
-import static org.openscience.cdk.io.MDLV2000Writer.OptProgramName;
-import static org.openscience.cdk.io.MDLV2000Writer.OptTruncateLongData;
-import static org.openscience.cdk.io.MDLV2000Writer.OptWriteData;
 
 /**
  * Ctab V3000 format output. This writer provides output to the more modern (but less widely
