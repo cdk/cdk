@@ -37,6 +37,7 @@ public abstract class IOSetting<T> implements ISetting {
     protected final String     name;
     protected final String     question;
     protected T                setting;
+    protected T                defaultSetting;
 
     /**
      * The default constructor that sets this field. All textual
@@ -55,6 +56,7 @@ public abstract class IOSetting<T> implements ISetting {
         this.name = name;
         this.question = question;
         this.setting = defaultSetting;
+        this.defaultSetting = defaultSetting;
     }
 
     @Override
@@ -67,7 +69,7 @@ public abstract class IOSetting<T> implements ISetting {
     }
 
     public String getDefaultSetting() {
-        return this.setting.toString();
+        return this.defaultSetting.toString();
     }
 
     public Importance getLevel() {
