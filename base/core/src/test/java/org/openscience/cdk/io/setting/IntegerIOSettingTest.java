@@ -64,4 +64,11 @@ class IntegerIOSettingTest {
 			// should happen
 		}
     }
+
+    @Test
+    void testDefaultValue() throws CDKException {
+        IntegerIOSetting setting = new IntegerIOSetting("Number of files", Importance.LOW, "How many copies do you want?", 1);
+        setting.setSetting("2");
+        Assertions.assertEquals("1", setting.getDefaultSetting());
+    }
 }
