@@ -201,6 +201,34 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
                                  not(containsString("C   0  0  0  0  0  0")));
     }
 
+    // Don't write the default valence explicitly unless atom.setValency() is
+    // called
+    @Test
+    void testWriteValenceOnlySpecified() throws CDKException, IOException {
+
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atom = molecule.newAtom(IElement.C);
+        atom.setImplicitHydrogenCount(4);
+
+        // with the option of we write a '0' (default)
+        Properties options = new Properties();
+        options.setProperty(MDLV2000Writer.OptAlwaysWriteValence, "true");
+        String output1 = writeToString(molecule, options);
+        MatcherAssert.assertThat(output1,
+                                 containsString("C   0  0  0  0  0  0"));
+        MatcherAssert.assertThat(output1,
+                                 not(containsString("C   0  0  0  0  0  4")));
+
+        atom.setValency(4);
+        options.setProperty(MDLV2000Writer.OptAlwaysWriteValence, "true");
+        String output2 = writeToString(molecule, options);
+        MatcherAssert.assertThat(output2,
+                                 containsString("C   0  0  0  0  0  4"));
+        MatcherAssert.assertThat(output2,
+                                 not(containsString("C   0  0  0  0  0  0")));
+
+    }
+
     @Test
     void testWriteAtomAtomMapping() throws Exception {
         StringWriter   writer   = new StringWriter();
