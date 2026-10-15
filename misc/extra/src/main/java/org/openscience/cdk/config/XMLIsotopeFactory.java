@@ -20,6 +20,8 @@ package org.openscience.cdk.config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openscience.cdk.config.isotopes.IsotopeReader;
@@ -51,10 +53,11 @@ import org.openscience.cdk.interfaces.IIsotope;
  * @cdk.keyword    isotope
  * @cdk.keyword    element
  */
-public class XMLIsotopeFactory extends IsotopeFactory {
+public class XMLIsotopeFactory implements IsotopeFactory {
 
     private static XMLIsotopeFactory ifac  = null;
     private final boolean                  debug = false;
+    private final List<IIsotope> isotopes;
 
     /**
      * Private constructor for the IsotopeFactory object.
@@ -84,9 +87,7 @@ public class XMLIsotopeFactory extends IsotopeFactory {
         }
         IsotopeReader reader = new IsotopeReader(ins, builder);
         //in = new ObjIn(ins, new Config().aliasID(false));
-        List<IIsotope> isotopes = reader.readIsotopes();
-        for (IIsotope isotope : isotopes)
-            add(isotope);
+        isotopes = Collections.unmodifiableList(reader.readIsotopes());
         if (debug) logger.debug("Found #isotopes in file: ", isotopes.size());
         /*
          * for (int f = 0; f < isotopes.size(); f++) { Isotope isotope =
@@ -108,4 +109,17 @@ public class XMLIsotopeFactory extends IsotopeFactory {
         return ifac;
     }
 
+    @Override
+    public List<IIsotope> isotopes() {
+        // these isotopes are immutable so make a copy of them
+        List<IIsotope> copy = new ArrayList<>();
+        for (IIsotope isotope : isotopes) {
+            try {
+                copy.add((IIsotope)isotope.clone());
+            } catch (CloneNotSupportedException e) {
+                logger.error("Could not clone the isotope");
+            }
+        }
+        return copy;
+    }
 }

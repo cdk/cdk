@@ -30,6 +30,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -50,14 +51,16 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * from the original BODR files using tools from the <code>cdk-build-util</code>
  * repository.
  *
- * @author      egonw
+ * @author Egon Willighagen
+ * @author John Mayfield
  */
-public class Isotopes extends IsotopeFactory {
+public class Isotopes implements IsotopeFactory {
 
     private static final ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(Isotopes.class);
 
     private static Isotopes myself = null;
+    private final List<IIsotope> isotopes;
 
     /**
      * Returns a singleton instance of this class.
@@ -82,6 +85,7 @@ public class Isotopes extends IsotopeFactory {
                     fcIn.read(bin);
                     ((Buffer) bin).position(0);
                     int isotopeCount = bin.getInt();
+                    List<IIsotope> tmp = new ArrayList<>(isotopeCount);
                     for (int i = 0; i < isotopeCount; i++) {
                         int atomicNum = bin.get();
                         int massNum = bin.getShort();
@@ -89,11 +93,17 @@ public class Isotopes extends IsotopeFactory {
                         double natAbund = bin.get() == 1 ? bin.getDouble() : 0.0;
                         IIsotope isotope = new BODRIsotope(PeriodicTable.getSymbol(atomicNum), atomicNum, massNum, exactMass,
                                 natAbund);
-                        add(isotope);
+                        tmp.add(isotope);
                     }
+                    isotopes = Collections.unmodifiableList(tmp);
                 }
             }
         }
+    }
+
+    @Override
+    public List<IIsotope> isotopes() {
+        return isotopes;
     }
 
     private static boolean isMajor(IIsotope atom) {
