@@ -1885,7 +1885,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         logger.debug("Atom type: ", element);
         IsotopeFactory isotopeFactory = Isotopes.getInstance();
-        if (isotopeFactory.isElement(element)) {
+        if (Elements.isValid(element)) {
             atom = isotopeFactory.configure(builder.newInstance(IAtom.class, element));
         } else if ("A".equals(element)) {
             atom = builder.newInstance(IPseudoAtom.class, element);

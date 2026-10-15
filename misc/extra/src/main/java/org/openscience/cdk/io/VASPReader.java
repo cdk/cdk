@@ -31,6 +31,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -215,11 +216,7 @@ public class VASPReader extends DefaultChemObjectReader {
 
             for (int i = 0; i < ntype; i++) {
                 for (int j = 0; j < natom_type[i]; j++) {
-                    try {
-                        atomType[atomIndex] = Isotopes.getInstance().getElement(anames[i]).getAtomicNumber();
-                    } catch (Exception exception) {
-                        throw new CDKException("Could not determine atomic number!", exception);
-                    }
+                    atomType[atomIndex] = Elements.ofString(anames[i]).number();
                     logger.debug("aname: " + anames[i]);
                     logger.debug("atomType: " + atomType[atomIndex]);
 
@@ -241,7 +238,7 @@ public class VASPReader extends DefaultChemObjectReader {
             for (int i = 0; i < atomType.length; i++) {
                 String symbol;
                 try {
-                    symbol = Isotopes.getInstance().getElement(atomType[i]).getSymbol();
+                    symbol = Elements.ofNumber(atomType[i]).symbol();
                 } catch (Exception exception) {
                     throw new CDKException("Could not determine element symbol!", exception);
                 }

@@ -35,6 +35,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -399,7 +400,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
 
                 logger.debug("Atom type: ", element);
-                if (isotopeFactory.isElement(element)) {
+                if (Elements.isValid(element)) {
                     atom = isotopeFactory.configure(molecule.getBuilder().newInstance(IAtom.class, element));
                 } else if ("A".equals(element)) {
                     atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
