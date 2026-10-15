@@ -1065,6 +1065,22 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         }
     }
 
+    /**
+     * Calculates the valence to be stored as a property of the atom.
+     * The valence (bond orders + impl H) is only stored if the element is
+     * defined and either the implicit hydrogen count or the valence property
+     * is set.
+     * <br/>
+     * The valence is used by the reader to determine how many hydrogens to add.
+     * If the stored value is 0 (default) then the number of hydrogens is table
+     * driven, values 1 ... 14 this is used to calculate the number of
+     * hydrogens. A stored value of 15 indicated 0 valence and no hydrogens
+     * should be added.
+     *
+     * @param container the container
+     * @param atom the atom
+     * @return the valence value (0=default,1,2,3,4,15=0)
+     */
     private int determineValence(IAtomContainer container, IAtom atom) {
         if (atom.getAtomicNumber() == null)
             return 0;
