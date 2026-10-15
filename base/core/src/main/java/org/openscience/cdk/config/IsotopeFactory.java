@@ -83,7 +83,7 @@ public interface IsotopeFactory {
                 major = isotope;
             }
         }
-        if (major != null) {
+        if (major == null) {
             logger.warn("Could not find major isotope for: ", elem);
         }
         return major;

@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
@@ -182,9 +183,7 @@ public class BasicValidator extends AbstractValidator {
         } else {
             // check whether atom is really an element
             try {
-                IsotopeFactory isotopeFactory = Isotopes.getInstance();
-                IElement element = isotopeFactory.getElement(atom.getSymbol());
-                if (element == null) {
+                if (!Elements.isValid(atom.getSymbol())) {
                     isElementOrPseudo.setDetails("Element " + atom.getSymbol() + " does not exist.");
                     report.addError(isElementOrPseudo);
                 } else {

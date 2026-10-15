@@ -19,6 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -144,19 +145,17 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      *
      *@param  container  The {@link IAtomContainer} for which the descriptor is to be calculated
      *@return The sum of atomic polarizabilities
-     * {@link org.openscience.cdk.config.XMLIsotopeFactory}
      */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         double apol = 0;
         int atomicNumber;
         try {
-            IsotopeFactory ifac = Isotopes.getInstance();
             IElement element;
             String symbol;
             for (IAtom atom : container.atoms()) {
                 symbol = atom.getSymbol();
-                element = ifac.getElement(symbol);
+                element = Elements.ofString(symbol).toIElement();
                 atomicNumber = element.getAtomicNumber();
                 apol += polarizabilities[atomicNumber];
                 if (atom.getImplicitHydrogenCount() != CDKConstants.UNSET) {

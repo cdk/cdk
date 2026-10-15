@@ -29,6 +29,7 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -242,13 +243,13 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
                             IAtom atom = model.getBuilder().newInstance(IAtom.class,
-                                    Isotopes.getInstance().getElementSymbol(atoms[i]));
+                                                                        Elements.ofNumber(atoms[i]).symbol());
                             atom.setAtomicNumber(atoms[i]);
                             atom.setPoint3d(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);
                             container.addAtom(atom);
                             logger.debug("Stored atom: " + atom);
-                        } catch (IOException | IllegalArgumentException exception) {
+                        } catch (IllegalArgumentException exception) {
                             logger.error("Cannot create an atom with atomic number: " + atoms[i]);
                             logger.debug(exception);
                         }
