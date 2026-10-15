@@ -80,6 +80,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -1104,7 +1105,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 return 15;
             else if (valence < 15)
                 return valence;
-        } else if (writeValenceAlways.isSet()) {
+        } else if (writeValenceAlways.isSet() &&
+                   Objects.equals(atom.getValency(), valence)) {
             return valence;
         }
         return 0;
