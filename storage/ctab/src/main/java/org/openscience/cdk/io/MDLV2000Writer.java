@@ -1066,35 +1066,32 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     }
 
     private int determineValence(IAtomContainer container, IAtom atom) {
-        int explicitValence = (int) AtomContainerManipulator.getBondOrderSum(container, atom);
-        int charge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
-        Integer element = atom.getAtomicNumber();
-        int valence = 0;
-
-        if (element != null) {
-            int implied = MDLValence.implicitValence(element, charge, explicitValence);
-            int actual;
-            if (atom.getImplicitHydrogenCount() != null)
-                actual = explicitValence + atom.getImplicitHydrogenCount();
-            else if (atom.getValency() != null)
-                actual = atom.getValency();
-            else
-                return 0;
-            if (implied != actual) {
-                if (actual == 0)
-                    return 15;
-                else if (actual > 0 && actual < 15)
-                    return actual;
-            }
-
-            // the valence is 'default' but was explicitly specifed so should
-            // we write it or not
-            if (writeValenceAlways.isSet() &&
-                atom.getValency() != null &&
-                atom.getValency() == actual)
-                return actual;
+        if (atom.getAtomicNumber() == null)
+            return 0;
+        int bondedValence = (int) AtomContainerManipulator.getBondOrderSum(container, atom);
+        Integer valence = null;
+        Integer hcount  = atom.getImplicitHydrogenCount();
+        if (hcount != null) {
+            valence = bondedValence + hcount;
+        } else if (atom.getValency() != null) {
+            valence = atom.getValency();
+        } else {
+            return 0;
         }
-        return valence;
+
+        int charge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
+
+        int implied = MDLValence.implicitValence(atom.getAtomicNumber(), charge, bondedValence);
+
+        if (implied != valence) {
+            if (valence <= 0)
+                return 15;
+            else if (valence < 15)
+                return valence;
+        } else if (writeValenceAlways.isSet()) {
+            return valence;
+        }
+        return 0;
     }
 
     static int determineStereoParity(IAtomContainer container,
