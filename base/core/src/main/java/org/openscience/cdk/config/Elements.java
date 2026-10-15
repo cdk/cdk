@@ -590,4 +590,26 @@ public enum Elements {
         return atom.getAtomicNumber() != null &&
                 isMetalloid(atom.getAtomicNumber());
     }
+
+    /**
+     * Check if the element symbol is valid (in the periodic table).
+     * Note R is not considered an element.
+     *
+     * @param symbol the symbol
+     * @return the symbol is valid
+     */
+    public static boolean isValid(String symbol) {
+        return Elements.ofString(symbol) != Elements.Unknown;
+    }
+
+    /**
+     * Check if the atomic number is valid.
+     *
+     * @param atomicNum
+     * @return the symbol is valid
+     */
+    public static boolean isValid(int atomicNum) {
+        return (atomicNum >= Hydrogen.number() && atomicNum <= Oganesson.number()) ||
+               Elements.ofNumber(atomicNum) != Elements.Unknown;
+    }
 }
