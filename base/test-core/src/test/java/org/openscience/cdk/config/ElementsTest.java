@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  */
@@ -82,5 +83,23 @@ class ElementsTest {
         Assertions.assertFalse(Elements.isMetalloid(new Atom(IAtom.Wildcard)));
         Assertions.assertFalse(Elements.isMetalloid(new Atom(Elements.SODIUM)));
         Assertions.assertFalse(Elements.isMetalloid(new Atom(Elements.GOLD)));
+    }
+
+    @Test
+    public void testIsValid_Symbol() {
+        Assertions.assertTrue(Elements.isValid("C"));
+        Assertions.assertTrue(Elements.isValid("Cl"));
+        Assertions.assertTrue(Elements.isValid("cl")); // case-insensitive
+        Assertions.assertFalse(Elements.isValid("lc"));
+        Assertions.assertFalse(Elements.isValid("R"));
+        Assertions.assertFalse(Elements.isValid("R1"));
+    }
+
+    @Test
+    public void testIsValid_Number() {
+        Assertions.assertFalse(Elements.isValid(0));
+        Assertions.assertTrue(Elements.isValid(IElement.C));
+        Assertions.assertTrue(Elements.isValid(IElement.Br));
+        Assertions.assertFalse(Elements.isValid(20000));
     }
 }
