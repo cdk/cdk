@@ -93,8 +93,8 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
     @Test
     public void testGetIOSetting() {
-        IOSetting[] settings = chemObjectIO.getIOSettings();
-        for (IOSetting setting : settings) {
+        IOSetting<?>[] settings = chemObjectIO.getIOSettings();
+        for (IOSetting<?> setting : settings) {
             Assertions.assertNotNull(setting);
             Assertions.assertNotNull(setting.getDefaultSetting());
             Assertions.assertNotNull(setting.getName());
@@ -114,7 +114,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         private int timesCalled = 0;
 
         @Override
-        public void processIOSettingQuestion(IOSetting setting) {
+        public void processIOSettingQuestion(IOSetting<?> setting) {
             timesCalled++;
         }
     }

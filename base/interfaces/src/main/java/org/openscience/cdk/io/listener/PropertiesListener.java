@@ -77,7 +77,7 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
      * does not wait for an answer, and takes the default.
      */
     @Override
-    public void processIOSettingQuestion(IOSetting setting) {
+    public void processIOSettingQuestion(IOSetting<?> setting) {
         String questionName = setting.getName();
         if (props != null) {
             String propValue = props.getProperty(questionName, setting.getSetting());

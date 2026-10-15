@@ -21,14 +21,14 @@ package org.openscience.cdk.io.setting;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * An class for a reader setting which must be of type String.
- *
+ * A class for a reader setting which must be of type String.
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-public class StringIOSetting extends IOSetting {
+public class StringIOSetting extends IOSetting<String> {
 
-    public StringIOSetting(String name, Importance level, String question, String defaultSetting) {
+    public StringIOSetting(String name, Importance level, String question,
+                           String defaultSetting) {
         super(name, level, question, defaultSetting);
     }
 
@@ -39,7 +39,6 @@ public class StringIOSetting extends IOSetting {
     @Override
     public void setSetting(String setting) throws CDKException {
         // anything is accepted
-        super.setSetting(setting);
+        this.setting = setting;
     }
-
 }

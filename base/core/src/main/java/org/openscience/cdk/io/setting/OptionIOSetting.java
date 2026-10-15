@@ -23,13 +23,13 @@ import java.util.List;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * An class for a reader setting which must be found in the list
+ * A class for a reader setting which must be found in the list
  * of possible settings.
  *
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-public class OptionIOSetting extends IOSetting {
+public class OptionIOSetting extends IOSetting<String> {
 
     private final List<String> settings;
 
@@ -37,7 +37,8 @@ public class OptionIOSetting extends IOSetting {
      * OptionIOSetting is IOSetting for which the value must be
      * in the list of possible options.
      */
-    public OptionIOSetting(String name, Importance level, String question, List<String> settings, String defaultSetting) {
+    public OptionIOSetting(String name, Importance level, String question,
+                           List<String> settings, String defaultSetting) {
         super(name, level, question, defaultSetting);
         this.settings = settings;
         if (!this.settings.contains(defaultSetting)) {

@@ -640,7 +640,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     public void customizeJob() {
-        for (IOSetting setting : getSettings()) {
+        for (IOSetting<?> setting : getSettings()) {
             fireIOSettingQuestion(setting);
         }
     }

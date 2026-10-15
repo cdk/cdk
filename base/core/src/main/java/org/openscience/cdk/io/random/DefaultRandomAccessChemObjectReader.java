@@ -52,14 +52,14 @@ public abstract class DefaultRandomAccessChemObjectReader implements IRandomAcce
 
     /* Extra convenience methods */
 
-    protected void fireIOSettingQuestion(IOSetting setting) {
+    protected void fireIOSettingQuestion(IOSetting<?> setting) {
         for (IChemObjectIOListener listener : listenerList) {
             listener.processIOSettingQuestion(setting);
         }
     }
 
-    public IOSetting[] getIOSettings() {
-        return new IOSetting[0];
+    public IOSetting<?>[] getIOSettings() {
+        return new IOSetting<?>[0];
     }
 
     public void setReaderMode(ISimpleChemObjectReader.Mode mode) {

@@ -21,32 +21,43 @@ package org.openscience.cdk.io.setting;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * An class for a reader setting which must be of type String.
- *
+ * A class for a reader setting which must be of type Integer.
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-public class IntegerIOSetting extends IOSetting {
+public class IntegerIOSetting extends IOSetting<Integer> {
 
-    public IntegerIOSetting(String name, Importance level, String question, String defaultSetting) {
+    public IntegerIOSetting(String name, Importance level, String question,
+                            String defaultSetting) {
+        this(name, level, question, parseString(defaultSetting));
+    }
+
+    public IntegerIOSetting(String name, Importance level, String question,
+                            Integer defaultSetting) {
         super(name, level, question, defaultSetting);
+    }
+
+    private static Integer parseString(String str) {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException ex) {
+            return null;
+        }
     }
 
     /**
      * Sets the setting for a certain question. The setting
      * is a boolean, and it accepts only "true" and "false".
      */
-    @Override
     public void setSetting(String setting) throws CDKException {
-        try {
-            Integer.parseInt(setting);
-            this.setting = setting;
-        } catch (NumberFormatException exception) {
-            throw new CDKException("Setting " + setting + " is not an integer.", exception);
-        }
+        Integer value = parseString(setting);
+        if (value != null)
+            super.setting = value;
+        else
+            throw new CDKException("Setting " + setting + " is not an integer.");
     }
 
     public int getSettingValue() {
-        return Integer.parseInt(this.setting);
+        return setting;
     }
 }

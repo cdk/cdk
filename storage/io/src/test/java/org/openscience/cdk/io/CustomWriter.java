@@ -64,7 +64,7 @@ class CustomWriter extends ChemObjectIO implements IChemObjectWriter {
     }
 
     @Override
-    public IOSetting[] getIOSettings() {
+    public IOSetting<?>[] getIOSettings() {
         return null;
     }
 

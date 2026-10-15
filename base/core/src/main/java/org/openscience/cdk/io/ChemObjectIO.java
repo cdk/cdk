@@ -48,8 +48,8 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     /**
      * Holder of reader event listeners.
      */
-    private final List<IChemObjectIOListener> listeners = new ArrayList<>(2);
-    private final SettingManager<IOSetting>   settings  = new SettingManager<>();
+    private final List<IChemObjectIOListener>  listeners = new ArrayList<>(2);
+    private final SettingManager<IOSetting<?>> settings  = new SettingManager<>();
 
     /**
      *{@inheritDoc}
@@ -79,7 +79,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
      *{@inheritDoc}
      */
     @Override
-    public <S extends IOSetting> S addSetting(IOSetting setting) {
+    public <S extends IOSetting<?>> S addSetting(IOSetting<?> setting) {
         if (hasSetting(setting.getName())) {
             try {
                 S current = getSetting(setting.getName());
@@ -97,8 +97,8 @@ public abstract class ChemObjectIO implements IChemObjectIO {
      *{@inheritDoc}
      */
     @Override
-    public void addSettings(Collection<IOSetting> settings) {
-        for (IOSetting setting : settings) {
+    public void addSettings(Collection<IOSetting<?>> settings) {
+        for (IOSetting<?> setting : settings) {
             addSetting(setting);
         }
     }
@@ -115,7 +115,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
      *{@inheritDoc}
      */
     @Override
-    public <S extends IOSetting> S getSetting(String name) {
+    public <S extends IOSetting<?>> S getSetting(String name) {
         return settings.get(name);
     }
 
@@ -123,7 +123,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
      *{@inheritDoc}
      */
     @Override
-    public <S extends IOSetting> S getSetting(String name, Class<S> c) {
+    public <S extends IOSetting<?>> S getSetting(String name, Class<S> c) {
         return settings.get(name, c);
     }
 
@@ -131,7 +131,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
      *{@inheritDoc}
      */
     @Override
-    public IOSetting[] getIOSettings() {
+    public IOSetting<?>[] getIOSettings() {
         return settings.toArray(new IOSetting[0]);
     }
 
@@ -139,7 +139,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
      *{@inheritDoc}
      */
     @Override
-    public Collection<IOSetting> getSettings() {
+    public Collection<IOSetting<?>> getSettings() {
         return settings.getSettings();
     }
 
@@ -149,7 +149,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
      *
      * @param setting the setting to process
      */
-    protected void fireIOSettingQuestion(IOSetting setting) {
+    protected void fireIOSettingQuestion(IOSetting<?> setting) {
         for (IChemObjectIOListener listener : listeners) {
             listener.processIOSettingQuestion(setting);
         }

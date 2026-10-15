@@ -27,7 +27,7 @@ class IntegerIOSettingTest {
 
     @Test
     void testConstructure() {
-        IOSetting setting = new IntegerIOSetting("Number of files", Importance.LOW, "How many copies do you want?", "1");
+        IntegerIOSetting setting = new IntegerIOSetting("Number of files", Importance.LOW, "How many copies do you want?", 1);
         Assertions.assertNotNull(setting);
         Assertions.assertEquals("Number of files", setting.getName());
         Assertions.assertEquals(Importance.LOW, setting.getLevel());
@@ -37,14 +37,14 @@ class IntegerIOSettingTest {
 
     @Test
     void testIsSet() {
-        IntegerIOSetting setting = new IntegerIOSetting("Number of files", Importance.LOW, "How many copies do you want?", "1");
+        IntegerIOSetting setting = new IntegerIOSetting("Number of files", Importance.LOW, "How many copies do you want?", 1);
         Assertions.assertNotNull(setting);
         Assertions.assertEquals(1, setting.getSettingValue());
     }
 
     @Test
     void testSetSetting() {
-        IOSetting setting = new IntegerIOSetting("Number of files", Importance.LOW, "How many copies do you want?", "1");
+        IntegerIOSetting setting = new IntegerIOSetting("Number of files", Importance.LOW, "How many copies do you want?", 1);
         Assertions.assertEquals("1", setting.getSetting());
         try {
 			setting.setSetting("2");
@@ -56,7 +56,7 @@ class IntegerIOSettingTest {
 
     @Test
     void testSetSetting_InvalidValue() {
-        IOSetting setting = new IntegerIOSetting("Number of files", Importance.LOW, "How many copies do you want?", "1");
+        IntegerIOSetting setting = new IntegerIOSetting("Number of files", Importance.LOW, "How many copies do you want?", 1);
         try {
 			setting.setSetting("false");
 			Assertions.fail("Expected exception was not thrown"); // should not happen

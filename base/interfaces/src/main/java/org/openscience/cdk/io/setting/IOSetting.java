@@ -25,10 +25,9 @@ import org.openscience.cdk.interfaces.ISetting;
  * An interface for reader settings. It is subclassed by implementations,
  * one for each type of field, e.g. IntReaderSetting.
  *
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-public abstract class IOSetting implements ISetting {
+public abstract class IOSetting<T> implements ISetting {
 
     public enum Importance {
         HIGH, MEDIUM, LOW
@@ -37,7 +36,7 @@ public abstract class IOSetting implements ISetting {
     protected final Importance level;
     protected final String     name;
     protected final String     question;
-    protected String     setting;
+    protected T                setting;
 
     /**
      * The default constructor that sets this field. All textual
@@ -51,7 +50,7 @@ public abstract class IOSetting implements ISetting {
      * @param defaultSetting The default setting, used if not overwritten
      *                       by a user
      */
-    public IOSetting(String name, Importance level, String question, String defaultSetting) {
+    public IOSetting(String name, Importance level, String question, T defaultSetting) {
         this.level = level;
         this.name = name;
         this.question = question;
@@ -68,22 +67,14 @@ public abstract class IOSetting implements ISetting {
     }
 
     public String getDefaultSetting() {
-        return this.setting;
+        return this.setting.toString();
     }
 
     public Importance getLevel() {
         return this.level;
     }
 
-    /**
-     * Sets the setting for a certain question. It will throw
-     * a CDKException when the setting is not valid.
-     *
-     */
-    public void setSetting(String setting) throws CDKException {
-        // by default, except all input, so no setting checking
-        this.setting = setting;
-    }
+    abstract public void setSetting(String setting) throws CDKException;
 
     /**
      * Sets the setting for a certain question. It will throw
@@ -92,6 +83,22 @@ public abstract class IOSetting implements ISetting {
      */
     public String getSetting() {
         // by default, except all input, so no setting checking
-        return this.setting;
+        return this.setting.toString();
+    }
+
+    /**
+     * Access the current value of this option.
+     * @return the value
+     */
+    public T get() {
+        return setting;
+    }
+
+    /**
+     * Set the current value of this option.
+     * @param value the new value
+     */
+    public void set(T value) {
+        this.setting = value;
     }
 }

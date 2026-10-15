@@ -36,6 +36,6 @@ public interface IChemObjectIOListener extends EventListener {
      * user, disregard it (and let the Reader take the default),
      * or answer it itself.
      */
-    void processIOSettingQuestion(IOSetting setting);
+    void processIOSettingQuestion(IOSetting<?> setting);
 
 }

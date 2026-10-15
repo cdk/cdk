@@ -348,7 +348,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     public void customizeJob() {
-        for (IOSetting setting : getSettings()) {
+        for (IOSetting<?> setting : getSettings()) {
             fireIOSettingQuestion(setting);
         }
     }

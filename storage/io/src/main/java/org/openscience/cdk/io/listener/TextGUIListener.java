@@ -98,7 +98,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
      * does not wait for an answer, and takes the default.
      */
     @Override
-    public void processIOSettingQuestion(IOSetting setting) {
+    public void processIOSettingQuestion(IOSetting<?> setting) {
         // post the question
         if (setting.getLevel().ordinal() <= this.level.ordinal()) {
             // output the option name

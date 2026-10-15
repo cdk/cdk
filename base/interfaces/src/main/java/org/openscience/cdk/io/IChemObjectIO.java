@@ -72,7 +72,7 @@ public interface IChemObjectIO extends Closeable {
      *
      * @return the {@link IOSetting}s for this class.
      */
-    IOSetting[] getIOSettings();
+    IOSetting<?>[] getIOSettings();
 
     /**
      * Adds a {@link IChemObjectIOListener} to this IChemObjectIO.
@@ -119,7 +119,7 @@ public interface IChemObjectIO extends Closeable {
      *
      * @see org.openscience.cdk.io.setting.SettingManager#add(org.openscience.cdk.interfaces.ISetting)
      */
-    <S extends IOSetting> S addSetting(IOSetting setting);
+    <S extends IOSetting<?>> S addSetting(IOSetting<?> setting);
 
     /**
      * Adds a collection of {@link IOSetting}s to the reader/writer. This
@@ -144,7 +144,7 @@ public interface IChemObjectIO extends Closeable {
      * @param settings collection of settings to add
      * @see #getSettings()
      */
-    void addSettings(Collection<IOSetting> settings);
+    void addSettings(Collection<IOSetting<?>> settings);
 
     /**
      * Determine whether this reader/writer has a setting of the
@@ -170,7 +170,7 @@ public interface IChemObjectIO extends Closeable {
      * @see #getSetting(String, Class)
      * @see org.openscience.cdk.io.setting.SettingManager#get(String)
      */
-    <S extends IOSetting> S getSetting(String name);
+    <S extends IOSetting<?>> S getSetting(String name);
 
     /**
      * Access a named setting managed by this reader/writer.
@@ -186,13 +186,13 @@ public interface IChemObjectIO extends Closeable {
      * @see #getSetting(String)
      * @see org.openscience.cdk.io.setting.SettingManager#get(String, Class)
      */
-    <S extends IOSetting> S getSetting(String name, Class<S> c);
+    <S extends IOSetting<?>> S getSetting(String name, Class<S> c);
 
     /**
      * Access a collection of {@link IOSetting}s for this reader/writer.
      * @return collection of IOSetting's
      * @see #addSettings(java.util.Collection)
      */
-    Collection<IOSetting> getSettings();
+    Collection<IOSetting<?>> getSettings();
 
 }

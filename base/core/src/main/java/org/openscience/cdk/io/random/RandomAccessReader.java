@@ -59,7 +59,6 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
 
     protected static final ILoggingTool     logger        = LoggingToolFactory.createLoggingTool(RandomAccessReader.class);
     protected RandomAccessFile        raFile;
-    protected IOSetting[]             headerOptions = null;
     private final String              filename;
     protected ISimpleChemObjectReader chemObjectReader;
     protected final int                     indexVersion  = 1;

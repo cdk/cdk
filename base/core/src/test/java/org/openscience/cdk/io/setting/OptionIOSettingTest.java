@@ -33,7 +33,7 @@ class OptionIOSettingTest {
     	List<String> options = new ArrayList<>();
     	options.add("Option1");
     	options.add("Option2");
-        IOSetting setting = new OptionIOSetting("Menu", Importance.LOW, "What option do you want?", options, "Option1");
+        OptionIOSetting setting = new OptionIOSetting("Menu", Importance.LOW, "What option do you want?", options, "Option1");
         Assertions.assertNotNull(setting);
         Assertions.assertEquals("Menu", setting.getName());
         Assertions.assertEquals(Importance.LOW, setting.getLevel());
@@ -46,7 +46,7 @@ class OptionIOSettingTest {
     	List<String> options = new ArrayList<>();
     	options.add("Option1");
     	options.add("Option2");
-        IOSetting setting = new OptionIOSetting("Menu", Importance.LOW, "What option do you want?", options, "Option1");
+        OptionIOSetting setting = new OptionIOSetting("Menu", Importance.LOW, "What option do you want?", options, "Option1");
         Assertions.assertEquals("Option1", setting.getSetting());
         try {
 			setting.setSetting("Option2");
@@ -61,7 +61,7 @@ class OptionIOSettingTest {
     	List<String> options = new ArrayList<>();
     	options.add("Option1");
     	options.add("Option2");
-        IOSetting setting = new OptionIOSetting("Menu", Importance.LOW, "What option do you want?", options, "Option1");
+        OptionIOSetting setting = new OptionIOSetting("Menu", Importance.LOW, "What option do you want?", options, "Option1");
         try {
 			setting.setSetting("Option3");
 			Assertions.fail("Expected exception was not thrown"); // should not happen

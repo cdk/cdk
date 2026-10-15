@@ -27,7 +27,7 @@ class BooleanIOSettingTest {
 
     @Test
     void testConstructure() {
-        IOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", true);
+        BooleanIOSetting setting = new BooleanIOSetting("Glossy", Importance.LOW, "Want glossy?", true);
         Assertions.assertNotNull(setting);
         Assertions.assertEquals("Glossy", setting.getName());
         Assertions.assertEquals(Importance.LOW, setting.getLevel());

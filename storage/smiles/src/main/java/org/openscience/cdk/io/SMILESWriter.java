@@ -205,7 +205,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 
     private void initIOSettings() {
         flavorSetting = addSetting(new IntegerIOSetting("SmilesFlavor", IOSetting.Importance.HIGH,
-                "Output SMILES flavor, binary option", Integer.toString(SmiFlavor.Default)));
+                "Output SMILES flavor, binary option", SmiFlavor.Default));
         titleSetting = addSetting(new BooleanIOSetting("WriteTitle", IOSetting.Importance.HIGH,
                 "Write the molecule title after the SMILES", true));
         aromSetting = addSetting(new BooleanIOSetting("UseAromaticity", IOSetting.Importance.LOW,

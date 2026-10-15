@@ -1139,11 +1139,11 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                                                              IOSetting.Importance.LOW,
                                                              "The valence of an atoms is written when they differ from MDL's defaults (table driven)." +
                                                              "If the valency is explicitly set (atom.setValency(int)) but is the same as the default should it still be written?",
-                                                             "false"));
+                                                             false));
     }
 
     public void customizeJob() {
-        for (IOSetting setting : getSettings()) {
+        for (IOSetting<?> setting : getSettings()) {
             fireIOSettingQuestion(setting);
         }
     }

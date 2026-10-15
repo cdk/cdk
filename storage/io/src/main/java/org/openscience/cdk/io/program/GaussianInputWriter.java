@@ -55,14 +55,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
 
     static BufferedWriter writer;
 
-    IOSetting             method;
-    IOSetting             basis;
-    IOSetting             comment;
-    IOSetting             command;
-    IOSetting             memory;
-    BooleanIOSetting      shell;
-    IntegerIOSetting      proccount;
-    BooleanIOSetting      usecheckpoint;
+    OptionIOSetting method;
+    OptionIOSetting basis;
+    OptionIOSetting command;
+    StringIOSetting comment;
+    StringIOSetting memory;
+    BooleanIOSetting shell;
+    IntegerIOSetting proccount;
+    BooleanIOSetting usecheckpoint;
 
     /**
     * Constructs a new writer that produces input files to run a
@@ -253,14 +253,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
                 "Should the calculation be open shell?", false));
 
         proccount = addSetting(new IntegerIOSetting("ProcessorCount", IOSetting.Importance.LOW,
-                "How many processors should be used by Gaussian?", "1"));
+                "How many processors should be used by Gaussian?", 1));
 
         usecheckpoint = new BooleanIOSetting("UseCheckPointFile", IOSetting.Importance.LOW,
                 "Should a check point file be saved?", false);
     }
 
     private void customizeJob() {
-        for (IOSetting setting : getSettings()) {
+        for (IOSetting<?> setting : getSettings()) {
             fireIOSettingQuestion(setting);
         }
     }

@@ -21,39 +21,47 @@ package org.openscience.cdk.io.setting;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * An class for a reader setting which must be of type String.
- *
+ * A class for a reader setting which must be of type boolean.
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-public class BooleanIOSetting extends IOSetting {
+public class BooleanIOSetting extends IOSetting<Boolean> {
 
-    public BooleanIOSetting(String name, Importance level, String question, String defaultSetting) {
+    public BooleanIOSetting(String name, Importance level, String question,
+                            String defaultSetting) {
+        this(name, level, question, parseString(defaultSetting));
+    }
+
+    public BooleanIOSetting(String name, Importance level, String question,
+                            Boolean defaultSetting) {
         super(name, level, question, defaultSetting);
     }
 
-    public BooleanIOSetting(String name, Importance level, String question, boolean defaultSetting) {
-        super(name, level, question, Boolean.toString(defaultSetting));
+    private static Boolean parseString(String str) {
+        if (str.equalsIgnoreCase("true") ||
+            str.equalsIgnoreCase("yes") ||
+            str.equalsIgnoreCase("y"))
+            return true;
+        else if (str.equalsIgnoreCase("false") ||
+                 str.equalsIgnoreCase("no") ||
+                 str.equalsIgnoreCase("n"))
+            return false;
+        return null;
     }
 
     /**
      * Sets the setting for a certain question. The setting
      * is a boolean, and it accepts only "true" and "false".
      */
-    @Override
     public void setSetting(String setting) throws CDKException {
-        if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("false")) {
-            this.setting = setting;
-        } else if (setting.equalsIgnoreCase("yes") || setting.equalsIgnoreCase("y")) {
-            this.setting = "true";
-        } else if (setting.equalsIgnoreCase("no") || setting.equalsIgnoreCase("n")) {
-            this.setting = "false";
-        } else {
+        Boolean value = parseString(setting);
+        if (value != null)
+            super.setting = value;
+        else
             throw new CDKException("Setting " + setting + " is not a boolean.");
-        }
     }
 
     public boolean isSet() {
-        return setting.equals("true");
+        return super.setting;
     }
 }
