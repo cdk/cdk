@@ -12,6 +12,7 @@ import java.math.RoundingMode;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,20 @@ public class GenerateIsotopeData {
         return runs;
     }
 
+    public static BigDecimal getAvgMass(List<IIsotope> isotopes) {
+        BigDecimal summedAbundances = BigDecimal.ZERO;
+        BigDecimal summedWeightedAbundances = BigDecimal.ZERO;
+        BigDecimal getNaturalMass = BigDecimal.ZERO;
+        for (IIsotope isotope : isotopes) {
+            BigDecimal abundance = isotope.getProperty(XMLIsotopeFactory.NaturalAbundance);
+            BigDecimal mass = isotope.getProperty(XMLIsotopeFactory.ExactMass);
+            summedAbundances = summedAbundances.add(abundance);
+            summedWeightedAbundances = summedWeightedAbundances.add(abundance.multiply(mass));
+            getNaturalMass = summedWeightedAbundances.divide(summedAbundances, RoundingMode.HALF_UP);
+        }
+        return getNaturalMass;
+    }
+
     public static void main(String[] args) throws IOException {
         String path = "base/core/src/main/resources/org/openscience/cdk/config/data/isotopes.dat";
         IsotopeFactory fac = XMLIsotopeFactory.getInstance(SilentChemObjectBuilder.getInstance());
@@ -95,6 +110,10 @@ public class GenerateIsotopeData {
                                .add(isotope);
             }
         }
+
+        StringBuilder sb = generateArrays(naturalIsotopes);
+
+        System.out.println(sb);
 
         bout.putInt(allIsotopes.size());
         /* We write all the natural isotopes (have an abundance) */
@@ -136,6 +155,53 @@ public class GenerateIsotopeData {
              FileChannel fc = out.getChannel()) {
             fc.write(bout);
         }
+    }
+
+    private static StringBuilder generateArrays(Map<Integer, List<IIsotope>> naturalIsotopes) {
+        int maxNat = 0;
+        for (Integer elem : naturalIsotopes.keySet())
+            maxNat = Math.max(elem, maxNat);
+        /* Generate Avg Natural Mass Constants */
+        String[] avgMass = new String[maxNat];
+        Arrays.fill(avgMass, "0");
+        for (Map.Entry<Integer,List<IIsotope>> e : naturalIsotopes.entrySet()) {
+            avgMass[e.getKey()-1] = getAvgMass(e.getValue()).setScale(5, RoundingMode.HALF_UP).stripTrailingZeros().toString();
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("/* Auto-generated from BODR - see GenerateIsotopeData */\n");
+        sb.append("private static final double[] AVG_MASS = new double[]{\n");
+        for (int i = 0; i < avgMass.length; i++) {
+            String mass = avgMass[i];
+            sb.append("    ").append(mass);
+            if (i+1 < avgMass.length) sb.append(',');
+            sb.append(" // ").append(Elements.ofNumber(i+1).symbol() + "\n");
+        }
+        sb.append("};\n");
+
+        /* Generate Major Isotopes */
+        String[] majorIsotopes = new String[maxNat];
+        for (Map.Entry<Integer,List<IIsotope>> e : naturalIsotopes.entrySet()) {
+            List<IIsotope> tmp = new ArrayList<>(e.getValue());
+            tmp.sort(Comparator.comparingDouble(IIsotope::getNaturalAbundance));
+            IIsotope major = tmp.get(tmp.size()-1);
+            BigDecimal exactMass = major.getProperty(XMLIsotopeFactory.ExactMass);
+            BigDecimal abundance = major.getProperty(XMLIsotopeFactory.NaturalAbundance);
+            majorIsotopes[e.getKey() - 1] = String.format("new ImmutableIsotope(%s,%d,%s,%s)",
+                                                          major.getSymbol(),
+                                                          major.getMassNumber(),
+                                                          exactMass.stripTrailingZeros().toPlainString(),
+                                                          abundance.stripTrailingZeros().toPlainString());
+        }
+        sb.append('\n');
+        sb.append("/* Auto-generated from BODR - see GenerateIsotopeData */\n");
+        sb.append("private static final ImmutableIsotope[] MAJOR_ISOTOPES = new ImmutableIsotope[] {\n");
+        for (String major : majorIsotopes) {
+            sb.append("    ").append(major).append(",\n");
+        }
+        sb.setLength(sb.length()-2);
+        sb.append('\n');
+        sb.append("};\n");
+        return sb;
     }
 
     private static void putIsotope(IIsotope isotope, ByteBuffer bout) {
