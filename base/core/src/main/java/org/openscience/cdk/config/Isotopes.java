@@ -23,6 +23,13 @@
  */
 package org.openscience.cdk.config;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.Buffer;
@@ -32,13 +39,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * List of isotopes. Data is taken from the <a href="https://github.com/egonw/bodr">Blue Obelisk Data Repository</a>,
@@ -54,9 +54,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author John Mayfield
  */
 public class Isotopes implements IsotopeFactory {
-
+    
     private static final ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(Isotopes.class);
+            LoggingToolFactory.createLoggingTool(Isotopes.class);
 
     private static Isotopes myself = null;
     private final List<IIsotope> isotopes;
@@ -83,23 +83,72 @@ public class Isotopes implements IsotopeFactory {
                     ByteBuffer bin = ByteBuffer.allocate(streamSize);
                     fcIn.read(bin);
                     ((Buffer) bin).position(0);
-                    int isotopeCount = bin.getInt();
-                    List<IIsotope> tmp = new ArrayList<>(isotopeCount);
-                    for (int i = 0; i < isotopeCount; i++) {
-                        int atomicNum = bin.get();
-                        int massNum = bin.getShort();
-                        double exactMass = bin.getDouble();
-                        double natAbund = bin.get() == 1 ? bin.getDouble() : 0.0;
-                        IIsotope isotope = new ImmutableIsotope(atomicNum,
-                                                                massNum,
-                                                                exactMass,
-                                                                natAbund);
-                        tmp.add(isotope);
-                    }
+                    int numIsotopes = bin.getInt();
+                    int numNatural  = bin.getShort() & 0xffff;
+                    List<IIsotope> tmp = new ArrayList<>(numIsotopes);
+                    while (tmp.size() < numNatural)
+                        readIsotopes(tmp, bin, true);
+                    while (tmp.size() < numIsotopes)
+                        readIsotopes(tmp, bin, false);
                     isotopes = Collections.unmodifiableList(tmp);
                 }
             }
         }
+    }
+
+    /**
+     * Read a run of binary isotope data. The first values says how many
+     * numbers there are in this run, then the atomic number and mass are
+     * written (mass as a delta from the atomic number). Then the
+     * sequence of mass values (written as fixed precision). If
+     * abundance information is stored then these are alternate with the
+     * exact mass.
+     *
+     * <pre>{@code
+     * {count:n} {elem} {massNum} {mass0} {mass1} {mass2} ..  {massN}
+     * {count:n} {elem} {massNum} {mass0} {abun0} {mass1} {abun1} ..  {massN} {abunN}
+     * }</pre>
+     *
+     * @param isotopes where to store the read isotopes.
+     * @param buffer input buffer
+     * @param abundance abundance is stored
+     */
+    private void readIsotopes(List<IIsotope> isotopes, ByteBuffer buffer, boolean abundance) {
+        int count = buffer.get() & 0xff;
+        int atomicNum = buffer.get() & 0xff;
+        int massNum = atomicNum + (buffer.get() & 0xff);
+        for (int i = 0; i < count; i++) {
+            long fixedMass = buffer.getInt() & 0xffffffffL;
+            if (abundance) {
+                long fixedAbundance = buffer.getInt() & 0xffffffffL;
+                isotopes.add(new ImmutableIsotope(atomicNum, massNum,
+                                                  toDecimal(massNum, fixedMass),
+                                                  toDecimal(100, fixedAbundance)));
+            } else {
+                isotopes.add(new ImmutableIsotope(atomicNum,
+                                                  massNum,
+                                                  toDecimal(massNum, fixedMass), 0));
+            }
+            massNum++;
+        }
+    }
+
+    /**
+     * Convert a value stored as a 4-byte integer (represented as a long here
+     * to keep things unsigned) to the decimal value. The scaling depends on
+     * the mass number.
+     *
+     * @param massNum mass number
+     * @param v the value to convert
+     * @return the decimal value
+     */
+    private double toDecimal(int massNum, long v) {
+        // could use BigDecimal
+        if (massNum < 4)
+            return v / 1e9; // 1 billion
+        else if (massNum < 40)
+            return v / 1e8; // 100 million
+        return v / 1e7; // 10 million
     }
 
     @Override
@@ -126,6 +175,7 @@ public class Isotopes implements IsotopeFactory {
     /**
      * Clear the isotope information from atoms that are major isotopes (e.g.
      * <sup>12</sup>C, <sup>1</sup>H, etc).
+     *
      * @param mol the molecule
      */
     public static void clearMajorIsotopes(IAtomContainer mol) {
@@ -140,6 +190,7 @@ public class Isotopes implements IsotopeFactory {
     /**
      * Clear the isotope information from istopes that are major (e.g.
      * <sup>12</sup>C, <sup>1</sup>H, etc).
+     *
      * @param formula the formula
      */
     public static void clearMajorIsotopes(IMolecularFormula formula) {
