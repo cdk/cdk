@@ -56,7 +56,7 @@ public interface IsotopeFactory {
 
     default List<IIsotope> isotopes(int atomicNumber) {
         List<IIsotope> isotopes = new ArrayList<>();
-        for (IIsotope isotope : getIsotopes()) {
+        for (IIsotope isotope : isotopes()) {
             if (isotope.getAtomicNumber() == atomicNumber)
                 isotopes.add(isotope);
         }
@@ -100,7 +100,7 @@ public interface IsotopeFactory {
         double summedAbundances = 0;
         double summedWeightedAbundances = 0;
         double getNaturalMass = 0;
-        for (IIsotope isotope : getIsotopes(atomicNum)) {
+        for (IIsotope isotope : isotopes(atomicNum)) {
             summedAbundances += isotope.getNaturalAbundance();
             summedWeightedAbundances += isotope.getNaturalAbundance() * isotope.getExactMass();
             getNaturalMass = summedWeightedAbundances / summedAbundances;
@@ -150,7 +150,7 @@ public interface IsotopeFactory {
      */
     default IIsotope[] getIsotopes(double exactMass, double difference) {
         List<IIsotope> list = new ArrayList<>();
-        for (IIsotope isotope : getIsotopes()) {
+        for (IIsotope isotope : isotopes()) {
             if (Math.abs(isotope.getExactMass() - exactMass) <= difference)
                 list.add(isotope);
         }
@@ -165,7 +165,7 @@ public interface IsotopeFactory {
      * @return the corresponding isotope
      */
     default IIsotope getIsotope(String symbol, int massNumber) {
-        for (IIsotope isotope : getIsotopes(symbol)) {
+        for (IIsotope isotope : isotopes(Elements.ofString(symbol).number())) {
             if (isotope.getSymbol().equals(symbol) && isotope.getMassNumber() == massNumber) {
                 return isotope;
             }
@@ -184,7 +184,7 @@ public interface IsotopeFactory {
     default IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
         IIsotope ret = null;
         double minDiff = Double.MAX_VALUE;
-        for (IIsotope isotope : getIsotopes(symbol)) {
+        for (IIsotope isotope : isotopes(Elements.ofString(symbol).number())) {
             double diff = Math.abs(isotope.getExactMass() - exactMass);
             if (isotope.getSymbol().equals(symbol) && diff <= tolerance && diff < minDiff) {
                 ret = isotope;
@@ -222,7 +222,7 @@ public interface IsotopeFactory {
     default double getExactMass(Integer atomicNumber, Integer massNumber) {
         if (atomicNumber == null || massNumber == null)
             return 0;
-        for (IIsotope isotope : getIsotopes(atomicNumber)) {
+        for (IIsotope isotope : isotopes(atomicNumber)) {
             if (isotope.getMassNumber().equals(massNumber))
                 return isotope.getExactMass();
         }
@@ -357,6 +357,6 @@ public interface IsotopeFactory {
      */
     @Deprecated
     default int getSize() {
-        return getIsotopes().length;
+        return isotopes().size();
     }
 }
