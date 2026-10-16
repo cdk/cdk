@@ -31,7 +31,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
@@ -823,8 +822,11 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(atoms + "M  V30 1 1 2 3\n" + "M  V30 2 1 1 2\n" + bonds))) {
             swapped = mdlr.read(bldr.newAtomContainer());
         }
-        Assertions.assertTrue(sorted.stereoElements().iterator().hasNext());
-        Assertions.assertTrue(VentoFoggia.findIdentical(sorted).matches(swapped));
+        for (IAtomContainer mol : new IAtomContainer[]{sorted, swapped}) {
+            ITetrahedralChirality tc = (ITetrahedralChirality) mol.stereoElements().iterator().next();
+            assertThat(tc.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
+            assertThat(tc.getLigands(), is(new IAtom[]{mol.getAtom(0), mol.getAtom(2), mol.getAtom(3), mol.getAtom(1)}));
+        }
     }
 
     @Test

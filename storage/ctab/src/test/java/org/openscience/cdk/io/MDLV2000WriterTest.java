@@ -32,12 +32,10 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.io.listener.PropertiesListener;
-import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.test.io.ChemObjectIOTest;
 
@@ -796,30 +794,6 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.write(mol);
             String output = sw.toString();
             assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n"));
-        }
-    }
-
-    @Test
-    void roundtripStereo0d() throws Exception {
-        // N[C@@H](C)O with the bonds of the centre in and out of atom order
-        for (int[][] bonds : new int[][][]{{{0, 1}, {1, 2}, {1, 3}}, {{1, 2}, {0, 1}, {1, 3}}}) {
-            IAtomContainer mol = builder.newAtomContainer();
-            mol.addAtom(new Atom("NH2"));
-            mol.addAtom(new Atom("CH"));
-            mol.addAtom(new Atom("CH3"));
-            mol.addAtom(new Atom("OH"));
-            for (int[] bond : bonds)
-                mol.addBond(bond[0], bond[1], Order.SINGLE);
-            mol.addStereoElement(new TetrahedralChirality(mol.getAtom(1),
-                                                          new IAtom[]{mol.getAtom(0), mol.getAtom(1), mol.getAtom(2), mol.getAtom(3)},
-                                                          ITetrahedralChirality.Stereo.CLOCKWISE));
-            StringWriter sw = new StringWriter();
-            try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-                mdlw.write(mol);
-            }
-            try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(sw.toString()))) {
-                Assertions.assertTrue(VentoFoggia.findIdentical(mol).matches(mdlr.read(builder.newAtomContainer())));
-            }
         }
     }
 

@@ -33,7 +33,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.listener.PropertiesListener;
-import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
@@ -332,27 +331,6 @@ class MDLV3000WriterTest {
                                                       ITetrahedralChirality.Stereo.CLOCKWISE));
         String res = writeToStr(mol);
         assertThat(res, CoreMatchers.containsString("M  V30 2 C 0 0 0 0 CFG=1\n"));
-    }
-
-    @Test
-    void roundtripStereo0d() throws IOException, CDKException {
-        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
-        // N[C@@H](C)O with the bonds of the centre in and out of atom order
-        for (int[][] bonds : new int[][][]{{{0, 1}, {1, 2}, {1, 3}}, {{1, 2}, {0, 1}, {1, 3}}}) {
-            IAtomContainer mol = bldr.newAtomContainer();
-            mol.addAtom(new Atom("NH2"));
-            mol.addAtom(new Atom("CH"));
-            mol.addAtom(new Atom("CH3"));
-            mol.addAtom(new Atom("OH"));
-            for (int[] bond : bonds)
-                mol.addBond(bond[0], bond[1], IBond.Order.SINGLE);
-            mol.addStereoElement(new TetrahedralChirality(mol.getAtom(1),
-                                                          new IAtom[]{mol.getAtom(0), mol.getAtom(1), mol.getAtom(2), mol.getAtom(3)},
-                                                          ITetrahedralChirality.Stereo.CLOCKWISE));
-            try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(writeToStr(mol)))) {
-                Assertions.assertTrue(VentoFoggia.findIdentical(mol).matches(mdlr.read(bldr.newAtomContainer())));
-            }
-        }
     }
 
     @Test

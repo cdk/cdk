@@ -49,7 +49,6 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
-import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
@@ -1757,8 +1756,11 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(atoms + "  2  3  1  0  0  0  0\n" + "  1  2  1  0  0  0  0\n" + bonds))) {
             swapped = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
         }
-        Assertions.assertTrue(sorted.stereoElements().iterator().hasNext());
-        Assertions.assertTrue(VentoFoggia.findIdentical(sorted).matches(swapped));
+        for (IAtomContainer mol : new IAtomContainer[]{sorted, swapped}) {
+            ITetrahedralChirality tc = (ITetrahedralChirality) mol.stereoElements().iterator().next();
+            assertThat(tc.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
+            assertThat(tc.getLigands(), is(new IAtom[]{mol.getAtom(0), mol.getAtom(2), mol.getAtom(3), mol.getAtom(1)}));
+        }
     }
 
     /**
