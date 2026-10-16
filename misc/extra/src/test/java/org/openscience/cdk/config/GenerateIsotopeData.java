@@ -20,8 +20,10 @@
  */
 package org.openscience.cdk.config;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.Isotope;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
@@ -37,9 +39,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 public class GenerateIsotopeData {
+
+
 
     private static final BigDecimal TEN_MILLION = new BigDecimal(10000000);
     private static final BigDecimal ONE_HUNDRED_MILLION = new BigDecimal(100000000);
@@ -109,6 +114,46 @@ public class GenerateIsotopeData {
     }
 
     public static void main(String[] args) throws IOException {
+
+        // Common Isotopes (counts computed from PubChem Compound ~ 2023)
+        List<IAtom> commonIsotopes = Arrays.asList(
+                new Atom("D"),	 // 3170299
+                new Atom("T"),   // 111355
+                new Atom("13C"), // 65899
+                new Atom("18F"), // 15915
+                new Atom("15N"), // 12169
+                new Atom("14C"), // 9989
+                new Atom("11C"), // 3785
+                new Atom("18O"), // 2781
+                new Atom("99Tc"), // 2177
+                new Atom("125I"), // 2151
+                new Atom("10B"), // 1959
+                new Atom("123I"), // 1775
+                new Atom("131I"), // 1101
+                new Atom("11B"), // 738
+                new Atom("1H"), // 655
+                new Atom("12C"), // 631
+                new Atom("19F"), // 627
+                new Atom("124I"), // 523
+                new Atom("64Cu"), // 444
+                new Atom("17O"), // 419
+                new Atom("76Br"), // 412
+                new Atom("16O"), //  355
+                new Atom("68Ga"), // 278
+                new Atom("221At"), // 278
+                new Atom("111In"), // 228
+                new Atom("35S"), // 197
+                new Atom("32P"), // 180
+                new Atom("14N"), // 175
+                new Atom("177Lu"), // 146
+                new Atom("77Br"), // 118
+                new Atom("16N") //	104
+        );
+
+        for (IAtom atom : commonIsotopes) {
+            System.err.println(atom);
+        }
+
         String path = "base/core/src/main/resources/org/openscience/cdk/config/data/isotopes.dat";
         IsotopeFactory fac = XMLIsotopeFactory.getInstance(SilentChemObjectBuilder.getInstance());
         List<IIsotope> allIsotopes = new ArrayList<>(fac.isotopes());
@@ -131,7 +176,9 @@ public class GenerateIsotopeData {
             }
         }
 
-        StringBuilder sb = generateArrays(naturalIsotopes);
+        StringBuilder sb = generateArrays(fac,
+                                          naturalIsotopes,
+                                          commonIsotopes);
 
         System.out.println(sb);
 
@@ -196,7 +243,9 @@ public class GenerateIsotopeData {
         }
     }
 
-    private static StringBuilder generateArrays(Map<Integer, List<IIsotope>> naturalIsotopes) {
+    private static StringBuilder generateArrays(IsotopeFactory factory,
+                                                Map<Integer, List<IIsotope>> naturalIsotopes,
+                                                List<IAtom> commonIsotopes) {
         int maxNat = 0;
         for (Integer elem : naturalIsotopes.keySet())
             maxNat = Math.max(elem, maxNat);
@@ -240,6 +289,29 @@ public class GenerateIsotopeData {
         sb.setLength(sb.length()-2);
         sb.append('\n');
         sb.append("};\n");
+        sb.append("/* Auto-generated from BODR - see GenerateIsotopeData */\n");
+        sb.append("private static final ImmutableIsotope[] COMMON_ISOTOPES = new ImmutableIsotope[] {\n");
+        commonIsotopes.sort((o1, o2) -> Integer.compare(o1.getAtomicNumber(), o2.getAtomicNumber()));
+        for (int i = 0; i < commonIsotopes.size(); i++) {
+            IAtom common = commonIsotopes.get(i);
+            IIsotope major = factory.getMajorIsotope(common.getAtomicNumber());
+            if (major == null || !Objects.equals(major.getMassNumber(), common.getMassNumber())) {
+                IIsotope isotope = factory.getIsotope(common.getSymbol(), common.getMassNumber());
+                BigDecimal exactMass = isotope.getProperty(XMLIsotopeFactory.ExactMass);
+                BigDecimal abundance = isotope.getProperty(XMLIsotopeFactory.NaturalAbundance);
+                sb.append("    ").append(String.format("new ImmutableIsotope(%s,%d,%s,%s)",
+                                                       isotope.getSymbol(),
+                                                       isotope.getMassNumber(),
+                                                       exactMass.stripTrailingZeros().toPlainString(),
+                                                       abundance != null ? abundance.stripTrailingZeros().toPlainString() : 0));
+                if (i+1 < commonIsotopes.size())
+                    sb.append(',');
+                sb.append(" // ").append(common.getMassNumber()).append("-").append(common.getSymbol());
+                sb.append('\n');
+            }
+        }
+        sb.append("};\n");
+
         return sb;
     }
 
