@@ -605,27 +605,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
     }
 
-    private void fixHydrogenIsotopes(IAtomContainer molecule, IsotopeFactory isotopeFactory) {
-        for (IAtom atom : AtomContainerManipulator.getAtomArray(molecule)) {
-            if (atom instanceof IPseudoAtom) {
-                IPseudoAtom pseudo = (IPseudoAtom) atom;
-                if ("D".equals(pseudo.getLabel())) {
-                    IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class, atom);
-                    newAtom.setSymbol("H");
-                    newAtom.setAtomicNumber(1);
-                    isotopeFactory.configure(newAtom, isotopeFactory.getIsotope("H", 2));
-                    AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
-                } else if ("T".equals(pseudo.getLabel())) {
-                    IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class, atom);
-                    newAtom.setSymbol("H");
-                    newAtom.setAtomicNumber(1);
-                    isotopeFactory.configure(newAtom, isotopeFactory.getIsotope("H", 3));
-                    AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
-                }
-            }
-        }
-    }
-
     @Override
     public void close() throws IOException {
         input.close();
@@ -768,7 +747,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         if (massDiff != 0 && atom.getAtomicNumber() > 0) {
             // TODO: Ctab doesn't actually use major isotopes but
             //       rather a fixed table, we should put that in
-            IIsotope majorIsotope = Isotopes.getInstance().getMajorIsotope(atom.getAtomicNumber());
+            IIsotope majorIsotope = Isotopes.major(atom.getAtomicNumber());
             if (majorIsotope == null) {
                 handleError("Ignored relative mass number (no major isotope) " + atom.getSymbol() + line);
             } else if (majorIsotope.getMassNumber() + massDiff < 0) {
@@ -1881,9 +1860,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
 
         logger.debug("Atom type: ", element);
-        IsotopeFactory isotopeFactory = Isotopes.getInstance();
         if (Elements.isValid(element)) {
-            atom = isotopeFactory.configure(builder.newInstance(IAtom.class, element));
+            atom = builder.newInstance(IAtom.class, element);
         } else if ("A".equals(element)) {
             atom = builder.newInstance(IPseudoAtom.class, element);
         } else if ("Q".equals(element)) {
@@ -1931,7 +1909,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     if (massDiff != 0) {
                         // TODO: Ctab doesn't actually use major isotopes but
                         //       rather a fixed table, we should put that in
-                        IIsotope major = Isotopes.getInstance().getMajorIsotope(element);
+                        IIsotope major = Isotopes.major(Elements.ofString(element).number());
                         if (major == null) {
                             handleError("Ignored relative mass number (no major isotope) " + atom.getSymbol() + line);
                         } else if (major.getMassNumber() + massDiff < 0) {
@@ -1940,7 +1918,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             atom.setMassNumber(major.getMassNumber() + massDiff);
                         }
                     }
-                } catch (NumberFormatException | IOException exception) {
+                } catch (NumberFormatException exception) {
                     handleError("Could not parse mass difference field.", linecount, 35, 37, exception);
                 }
             } else {

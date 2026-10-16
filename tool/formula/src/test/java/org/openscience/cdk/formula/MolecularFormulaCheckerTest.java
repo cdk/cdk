@@ -18,21 +18,19 @@
  */
 package org.openscience.cdk.formula;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.MMElementRule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Checks the functionality of the MolecularFormulaChecker.
@@ -41,21 +39,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 class MolecularFormulaCheckerTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    private IsotopeFactory                  ifac;
 
     /**
      *  Constructor for the MolecularFormulaCheckerTest object.
      *
      */
     public MolecularFormulaCheckerTest() {
-
         super();
-        try {
-            ifac = Isotopes.getInstance();
-        } catch (IOException e) {
-            LoggingToolFactory.createLoggingTool(MolecularFormulaCheckerTest.class)
-                              .warn("Unexpected Error:", e);
-        }
     }
 
     /**
@@ -91,8 +81,8 @@ class MolecularFormulaCheckerTest {
     void testIsValidSum_IMolecularFormula() {
 
         IMolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
-        formula.addIsotope(ifac.getMajorIsotope("H"), 100);
+        formula.addIsotope(Isotopes.major(IElement.C), 1);
+        formula.addIsotope(Isotopes.major(IElement.H), 100);
 
         List<IRule> rules = new ArrayList<>();
         rules.add(new MMElementRule());
@@ -112,8 +102,8 @@ class MolecularFormulaCheckerTest {
     void testIsValid_NOT() {
 
         IMolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
-        formula.addIsotope(ifac.getMajorIsotope("H"), 100);
+        formula.addIsotope(Isotopes.major(IElement.C), 1);
+        formula.addIsotope(Isotopes.major(IElement.H), 100);
 
         List<IRule> rules = new ArrayList<>();
         rules.add(new MMElementRule());
@@ -135,8 +125,8 @@ class MolecularFormulaCheckerTest {
     void testIsValid_IMolecularFormula() {
 
         IMolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
-        formula.addIsotope(ifac.getMajorIsotope("H"), 100);
+        formula.addIsotope(Isotopes.major(IElement.C), 1);
+        formula.addIsotope(Isotopes.major(IElement.H), 100);
         formula.setCharge(0);
 
         List<IRule> rules = new ArrayList<>();
@@ -158,8 +148,8 @@ class MolecularFormulaCheckerTest {
     void testIsValid_NOT_2Rules() {
 
         IMolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
-        formula.addIsotope(ifac.getMajorIsotope("H"), 100);
+        formula.addIsotope(Isotopes.major(IElement.C), 1);
+        formula.addIsotope(Isotopes.major(IElement.H), 100);
         formula.setCharge(0);
 
         List<IRule> rules = new ArrayList<>();
@@ -184,8 +174,8 @@ class MolecularFormulaCheckerTest {
     void testIsValidSum_True_2Rules() {
 
         IMolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
-        formula.addIsotope(ifac.getMajorIsotope("H"), 4);
+        formula.addIsotope(Isotopes.major(IElement.C), 1);
+        formula.addIsotope(Isotopes.major(IElement.H), 4);
         formula.setCharge(0);
 
         List<IRule> rules = new ArrayList<>();
@@ -207,8 +197,8 @@ class MolecularFormulaCheckerTest {
     void testIsValid_True_2Rules() {
 
         IMolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
-        formula.addIsotope(ifac.getMajorIsotope("H"), 4);
+        formula.addIsotope(Isotopes.major(IElement.C), 1);
+        formula.addIsotope(Isotopes.major(IElement.H), 4);
         formula.setCharge(0);
 
         List<IRule> rules = new ArrayList<>();

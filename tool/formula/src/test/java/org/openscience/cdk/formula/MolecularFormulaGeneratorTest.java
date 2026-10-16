@@ -18,11 +18,12 @@
  */
 package org.openscience.cdk.formula;
 
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
@@ -47,11 +48,10 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testGetNextFormula() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 10);
@@ -75,11 +75,10 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testGetAllFormulas() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 10);
@@ -104,11 +103,11 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testGetFinishedPercentage() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 10);
@@ -148,13 +147,13 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testCancel() throws Exception {
         Assertions.assertTimeout(Duration.ofMillis(1000), () -> {
-            IsotopeFactory ifac = Isotopes.getInstance();
-            IIsotope c = ifac.getMajorIsotope("C");
-            IIsotope h = ifac.getMajorIsotope("H");
-            IIsotope n = ifac.getMajorIsotope("N");
-            IIsotope o = ifac.getMajorIsotope("O");
-            IIsotope p = ifac.getMajorIsotope("P");
-            IIsotope s = ifac.getMajorIsotope("S");
+    
+            IIsotope c = Isotopes.major(IElement.C);
+            IIsotope h = Isotopes.major(IElement.H);
+            IIsotope n = Isotopes.major(IElement.N);
+            IIsotope o = Isotopes.major(IElement.O);
+            IIsotope p = Isotopes.major(IElement.P);
+            IIsotope s = Isotopes.major(IElement.S);
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
             mfRange.addIsotope(c, 0, 1000);
@@ -214,8 +213,8 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testNegativeMass() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
+
+        IIsotope c = Isotopes.major(IElement.C);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 100);
@@ -233,11 +232,11 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testMinCounts() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 5, 20);
@@ -270,11 +269,11 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testMaxCounts() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 3, 7);
@@ -305,8 +304,8 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testSingleCarbon() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
+
+        IIsotope c = Isotopes.major(IElement.C);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 100);
@@ -330,8 +329,8 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testCarbons() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
+
+        IIsotope c = Isotopes.major(IElement.C);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 100000);
@@ -355,13 +354,13 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testWater() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
-        IIsotope p = ifac.getMajorIsotope("P");
-        IIsotope s = ifac.getMajorIsotope("S");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
+        IIsotope p = Isotopes.major(IElement.P);
+        IIsotope s = Isotopes.major(IElement.S);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 10);
@@ -396,10 +395,10 @@ class MolecularFormulaGeneratorTest {
      */
     @Test
     void testUseFullEnumerationWhenNoHydrogen() throws Exception {
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 50);
@@ -416,11 +415,11 @@ class MolecularFormulaGeneratorTest {
      */
     @Test
     void testUseFullEnumerationWhenSuperLargeMassDeviation() throws Exception {
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 20);
@@ -439,11 +438,11 @@ class MolecularFormulaGeneratorTest {
      */
     @Test
     void testUseFullEnumerationWhenExceedIntegerSpace() throws Exception {
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 20);
@@ -461,11 +460,11 @@ class MolecularFormulaGeneratorTest {
      */
     @Test
     void testUseRoundRobinWheneverPossible() throws Exception {
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 20);
@@ -483,11 +482,11 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testSmallMass() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 20);
@@ -515,11 +514,11 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testMiddleMass() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 50);
@@ -547,12 +546,12 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testHighMass() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
-        IIsotope s = ifac.getMajorIsotope("S");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
+        IIsotope s = Isotopes.major(IElement.S);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 350, 400);
@@ -586,11 +585,11 @@ class MolecularFormulaGeneratorTest {
      */
     @Test
     void testFormulaFoundInRange() throws Exception {
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 1, 50);
@@ -624,11 +623,11 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testFormulaFoundInRange2() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 1, 50);
@@ -663,14 +662,14 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testCompoundWith7Elements() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
-        IIsotope s = ifac.getMajorIsotope("S");
-        IIsotope p = ifac.getMajorIsotope("P");
-        IIsotope cl = ifac.getMajorIsotope("Cl");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
+        IIsotope s = Isotopes.major(IElement.S);
+        IIsotope p = Isotopes.major(IElement.P);
+        IIsotope cl = Isotopes.major(IElement.Cl);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 7, 9);
@@ -701,10 +700,10 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testDifferentIsotopes() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope c13 = ifac.getIsotope("C", 13); // 13
-        IIsotope h = ifac.getMajorIsotope("H");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope c13 = Isotopes.get(IElement.C, 13); // 13
+        IIsotope h = Isotopes.major(IElement.H);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 11);
@@ -742,11 +741,11 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testFixedElementCounts() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 7, 7);
@@ -775,11 +774,11 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testMassRangeTooHigh() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 10);
@@ -806,11 +805,11 @@ class MolecularFormulaGeneratorTest {
     @Test
     void testMassRangeTooLow() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
+
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 100, 200);

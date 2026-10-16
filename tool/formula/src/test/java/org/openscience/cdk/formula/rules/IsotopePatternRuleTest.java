@@ -18,25 +18,24 @@
  */
 package org.openscience.cdk.formula.rules;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  */
 public class IsotopePatternRuleTest extends FormulaRuleTest {
 
     private static IChemObjectBuilder builder;
-    private static IsotopeFactory     ifac;
 
     /**
      *  The JUnit setup method
@@ -44,7 +43,6 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     @BeforeAll
     static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
-        ifac = Isotopes.getInstance();
         setRule(IsotopePatternRule.class);
     }
 
@@ -117,8 +115,8 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
         rule.setParameters(params);
 
         IMolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 2);
-        formula.addIsotope(ifac.getMajorIsotope("Br"), 2);
+        formula.addIsotope(Isotopes.major(IElement.C), 2);
+        formula.addIsotope(Isotopes.major(IElement.Br), 2);
         formula.setCharge(0);
 
         Assertions.assertEquals(0.0, rule.validate(formula), 0.0001);
@@ -133,10 +131,10 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     void testValidate_IMolecularFormula() throws Exception {
 
         IMolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 5);
-        formula.addIsotope(ifac.getMajorIsotope("H"), 13);
-        formula.addIsotope(ifac.getMajorIsotope("N"), 2);
-        formula.addIsotope(ifac.getMajorIsotope("O"), 2);
+        formula.addIsotope(Isotopes.major(IElement.C), 5);
+        formula.addIsotope(Isotopes.major(IElement.H), 13);
+        formula.addIsotope(Isotopes.major(IElement.N), 2);
+        formula.addIsotope(Isotopes.major(IElement.O), 2);
         formula.setCharge(0);
 
         /** experimental results*/

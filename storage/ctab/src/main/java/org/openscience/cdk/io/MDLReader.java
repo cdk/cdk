@@ -330,8 +330,6 @@ public class MDLReader extends DefaultChemObjectReader {
         String line = "";
 
         try {
-            IsotopeFactory isotopeFactory = Isotopes.getInstance();
-
             logger.info("Reading header");
             line = input.readLine();
             linecount++;
@@ -401,7 +399,7 @@ public class MDLReader extends DefaultChemObjectReader {
 
                 logger.debug("Atom type: ", element);
                 if (Elements.isValid(element)) {
-                    atom = isotopeFactory.configure(molecule.getBuilder().newInstance(IAtom.class, element));
+                    atom = molecule.getBuilder().newInstance(IAtom.class, element);
                 } else if ("A".equals(element)) {
                     atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
                 } else if ("Q".equals(element)) {
@@ -446,10 +444,10 @@ public class MDLReader extends DefaultChemObjectReader {
                         try {
                             int massDiff = Integer.parseInt(massDiffString);
                             if (massDiff != 0) {
-                                IIsotope major = Isotopes.getInstance().getMajorIsotope(element);
+                                IIsotope major = Isotopes.major(Elements.ofString(element).number());
                                 atom.setMassNumber(major.getMassNumber() + massDiff);
                             }
-                        } catch (NumberFormatException | IOException exception) {
+                        } catch (NumberFormatException exception) {
                             logger.error("Could not parse mass difference field");
                         }
                     } else {

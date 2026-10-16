@@ -27,7 +27,6 @@ package org.openscience.cdk.tools.manipulator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -323,20 +322,29 @@ public class AtomContainerManipulator {
         return atom.getMassNumber() != null && atom.getMassNumber() != 0;
     }
 
-    private static double getExactMass(IsotopeFactory isofact, IIsotope atom) {
+    private static double getExactMass(IIsotope atom) {
         if (atom.getExactMass() != null)
             return atom.getExactMass();
-        else if (atom.getMassNumber() != null)
-            return isofact.getExactMass(getAtomicNum(atom),
-                                        atom.getMassNumber());
-        else
-            return isofact.getMajorIsotopeMass(getAtomicNum(atom));
+        else {
+            int elem = getAtomicNum(atom);
+            if (atom.getMassNumber() != null) {
+                IIsotope isotope = Isotopes.get(elem,
+                                                atom.getMassNumber());
+                if (isotope != null)
+                    return isotope.getExactMass();
+                return atom.getMassNumber();
+            } else {
+                IIsotope major = Isotopes.major(elem);
+                return major != null ? major.getExactMass() : 2*elem;
+            }
+        }
     }
 
-    private static double getMassOrAvg(IsotopeFactory isofact, IIsotope atom) {
+    private static double getMassOrAvg(IIsotope atom) {
         if (!hasIsotopeSpecified(atom))
-            return isofact.getNaturalMass(atom);
-        return getExactMass(isofact, atom);
+            return Isotopes.average(atom.getAtomicNumber());
+        IIsotope isotope = Isotopes.get(atom.getAtomicNumber(), atom.getMassNumber());
+        return isotope != null ? isotope.getExactMass() : atom.getMassNumber();
     }
 
     public static final Comparator<IIsotope> NAT_ABUN_COMP = new Comparator<IIsotope>() {
@@ -347,24 +355,22 @@ public class AtomContainerManipulator {
         }
     };
 
-    private static double getDistMass(IsotopeFactory isofact,
-                                      IIsotope[] isos, int idx, int count) {
+    private static double getDistMass(List<IIsotope> isos, int idx, int count) {
         if (count == 0)
             return 0;
         double frac = 100d;
         double res  = 0;
         for (int i = 0; i < idx; i++)
-            frac -= isos[i].getNaturalAbundance();
-        double p    = isos[idx].getNaturalAbundance() / frac;
+            frac -= isos.get(i).getNaturalAbundance();
+        double p    = isos.get(idx).getNaturalAbundance() / frac;
         if (p >= 1.0)
-            return count * isos[idx].getExactMass();
+            return count * isos.get(idx).getExactMass();
         double kMin = (count + 1) * (1 - p) - 1;
         double kMax = (count + 1) * (1 - p);
         if ((int) Math.ceil(kMin) == (int) Math.floor(kMax)) {
             int k = (int) kMax;
-            res = (count - k) * getExactMass(isofact,
-                                             isos[idx]);
-            res += getDistMass(isofact, isos, idx + 1, k);
+            res = (count - k) * getExactMass(isos.get(idx));
+            res += getDistMass(isos, idx + 1, k);
         }
         return res;
     }
@@ -417,43 +423,36 @@ public class AtomContainerManipulator {
      */
     public static double getMass(IAtomContainer mol, int flav) {
 
-        final Isotopes isofact;
-        try {
-            isofact = Isotopes.getInstance();
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not load Isotopes!");
-        }
-
         double mass = 0;
         int    hcnt = 0;
 
         switch (flav & 0xf) {
             case MolWeight:
                 for (IAtom atom : mol.atoms()) {
-                    mass += getMassOrAvg(isofact, atom);
+                    mass += getMassOrAvg(atom);
                     hcnt += getImplHCount(atom);
                 }
-                mass += hcnt * isofact.getNaturalMass(1);
+                mass += hcnt * Isotopes.average(IElement.H);
                 break;
             case MolWeightIgnoreSpecified:
                 for (IAtom atom : mol.atoms()) {
-                    mass += isofact.getNaturalMass(getAtomicNum(atom));
+                    mass += Isotopes.average(getAtomicNum(atom));
                     hcnt += getImplHCount(atom);
                 }
-                mass += hcnt * isofact.getNaturalMass(1);
+                mass += hcnt * Isotopes.average(IElement.H);
                 break;
             case MonoIsotopic:
                 for (IAtom atom : mol.atoms()) {
-                    mass += getExactMass(isofact, atom);
+                    mass += getExactMass(atom);
                     hcnt += getImplHCount(atom);
                 }
-                mass += hcnt * isofact.getMajorIsotopeMass(1);
+                mass += hcnt * Isotopes.major(IElement.H).getExactMass();
                 break;
             case MostAbundant:
                 int[] mf = new int[128];
                 for (IAtom atom : mol.atoms()) {
                     if (hasIsotopeSpecified(atom))
-                        mass += getExactMass(isofact, atom);
+                        mass += getExactMass(atom);
                     else
                         mf[getAtomicNum(atom)]++;
                     mf[1] += atom.getImplicitHydrogenCount();
@@ -462,9 +461,9 @@ public class AtomContainerManipulator {
                 for (int atno = 0; atno < mf.length; atno++) {
                     if (mf[atno] == 0)
                         continue;
-                    IIsotope[] isotopes = isofact.getIsotopes(atno);
-                    Arrays.sort(isotopes, NAT_ABUN_COMP);
-                    mass += getDistMass(isofact, isotopes, 0, mf[atno]);
+                    List<IIsotope> isotopes = new ArrayList<>(Isotopes.get(atno));
+                    isotopes.sort(NAT_ABUN_COMP);
+                    mass += getDistMass(isotopes, 0, mf[atno]);
                 }
                 break;
         }
@@ -538,26 +537,21 @@ public class AtomContainerManipulator {
      * @return The summed natural abundance of all atoms in this AtomContainer.
      */
     public static double getTotalNaturalAbundance(IAtomContainer atomContainer) {
-        try {
-            Isotopes isotopes = Isotopes.getInstance();
-            double abundance = 1.0;
-            double hAbundance = isotopes.getMajorIsotope(1).getNaturalAbundance();
+        double abundance = 1.0;
+        double hAbundance = Isotopes.major(IElement.H).getNaturalAbundance();
+        int nImplH = 0;
 
-            int nImplH = 0;
-
-            for (IAtom atom : atomContainer.atoms()) {
-                if (atom.getImplicitHydrogenCount() == null)
-                    throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
-                abundance *= atom.getNaturalAbundance();
-                for (int h = 0; h < atom.getImplicitHydrogenCount(); h++)
-                    abundance *= hAbundance;
-                nImplH += atom.getImplicitHydrogenCount();
-            }
-            int acount = atomContainer.getAtomCount();
-            return abundance / Math.pow(100, (double)nImplH + acount);
-        } catch (IOException e) {
-            throw new RuntimeException("Isotopes definitions could not be loaded", e);
+        for (IAtom atom : atomContainer.atoms()) {
+            if (atom.getImplicitHydrogenCount() == null)
+                throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
+            abundance *= atom.getNaturalAbundance();
+            for (int h = 0; h < atom.getImplicitHydrogenCount(); h++)
+                abundance *= hAbundance;
+            nImplH += atom.getImplicitHydrogenCount();
         }
+        int acount = atomContainer.getAtomCount();
+        return abundance / Math.pow(100, (double)nImplH + acount);
+
     }
 
     /**

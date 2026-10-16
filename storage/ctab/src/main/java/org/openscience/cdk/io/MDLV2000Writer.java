@@ -1027,14 +1027,9 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     private int determineIsotope(IAtom atom) {
         Integer mass = atom.getMassNumber();
-        IIsotope major = null;
         if (mass == null)
             return 0;
-        try {
-            major = Isotopes.getInstance().getMajorIsotope(atom.getSymbol());
-        } catch (IOException e) {
-            // ignored
-        }
+        IIsotope major = Isotopes.major(atom.getAtomicNumber());
         if (!writeMajorIsotopes.isSet() &&
                 major != null &&
                 mass.equals(major.getMassNumber()))
@@ -1152,12 +1147,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private boolean isMajorIsotope(IAtom atom) {
         if (atom.getMassNumber() == null)
             return false;
-        try {
-            IIsotope major = Isotopes.getInstance().getMajorIsotope(atom.getSymbol());
-            return major != null && major.getMassNumber().equals(atom.getMassNumber());
-        } catch (IOException ex) {
-            return false;
-        }
+        IIsotope major = Isotopes.major(atom.getAtomicNumber());
+        return major != null && major.getMassNumber().equals(atom.getMassNumber());
     }
 
     private void writeSgroups(IAtomContainer container, BufferedWriter writer, Map<IAtom, Integer> atomidxs) throws IOException {

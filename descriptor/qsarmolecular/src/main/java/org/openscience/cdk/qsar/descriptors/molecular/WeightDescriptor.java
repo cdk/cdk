@@ -25,6 +25,7 @@ import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -151,21 +152,13 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
     public DescriptorValue calculate(IAtomContainer container) {
         double weight = 0;
         double hydrogenNaturalMass;
-        Isotopes isotopes;
-        try {
-            isotopes = Isotopes.getInstance();
-            if (isotopes == null)
-                return getDummyDescriptorValue(new NullPointerException("Could not load isotope data"));
-        } catch (IOException e) {
-            return getDummyDescriptorValue(e);
-        }
-        IIsotope hydrogen = isotopes.getMajorIsotope("H");
-        hydrogenNaturalMass = isotopes.getNaturalMass(hydrogen);
+        IIsotope hydrogen = Isotopes.major(IElement.H);
+        hydrogenNaturalMass = Isotopes.average(IElement.H);
 
         if (elementName.equals("*")) {
             try {
                 for (IAtom atom : container.atoms()) {
-                    weight += isotopes.getNaturalMass(atom);
+                    weight += Isotopes.average(atom.getAtomicNumber());
                     Integer implicitHydrogenCount = atom.getImplicitHydrogenCount();
                     if (implicitHydrogenCount == CDKConstants.UNSET) {
                         implicitHydrogenCount = 0;
@@ -191,7 +184,7 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
             try {
                 for (IAtom atom : container.atoms()) {
                     if (atom.getSymbol().equals(elementName)) {
-                        weight += isotopes.getNaturalMass(atom);
+                        weight += Isotopes.average(atom.getAtomicNumber());
                     }
                 }
             } catch (Exception e) {
