@@ -24,11 +24,11 @@ import org.openscience.cdk.interfaces.IIsotope;
 
 /**
  */
-class BODRIsotopeTest {
+class ImmutableIsotopeTest {
 
     @Test
     void testConstructor() {
-        IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
+        IIsotope isotope = new ImmutableIsotope(6, 12, 12.0, 99.0);
         Assertions.assertEquals("C", isotope.getSymbol());
         Assertions.assertEquals(6, isotope.getAtomicNumber().intValue());
         Assertions.assertEquals(12, isotope.getMassNumber().intValue());
@@ -38,14 +38,14 @@ class BODRIsotopeTest {
 
     @Test
     void testNonclonable() throws CloneNotSupportedException {
-        IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
+        IIsotope isotope = new ImmutableIsotope(6, 12, 12.0, 99.0);
         IIsotope clone = (IIsotope) isotope.clone();
         Assertions.assertEquals(isotope, clone);
     }
 
     @Test
     void testImmutable() {
-        IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
+        IIsotope isotope = new ImmutableIsotope(6, 12, 12.0, 99.0);
         // try mutations
         isotope.setSymbol("N");
         isotope.setAtomicNumber(5);

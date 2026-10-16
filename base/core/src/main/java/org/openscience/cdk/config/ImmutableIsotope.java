@@ -31,22 +31,22 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
- * A read-only class used by {@link Isotopes} for the natural elements. This class is not to
- * be used than by only {@link Isotopes}.
+ * A read-only class used by {@link Isotopes} for the natural elements.
+ * This class is not to be used than by only {@link Isotopes}.
  *
- * @author      egonw
+ * @author egonw
  */
-final class BODRIsotope implements IIsotope {
+final class ImmutableIsotope implements IIsotope {
 
-    private final String  element;
-    private final Integer atomicNumber;
-    private final Double  naturalAbundance;
-    private final Double  exactMass;
-    private final Integer massNumber;
+    private final int    atomicNumber;
+    private final int    massNumber;
+    private final double naturalAbundance;
+    private final double exactMass;
 
-    protected BODRIsotope(String element, Integer atomicNumber, Integer massNumber, Double exactMass,
-            Double naturalAbundance) {
-        this.element = element;
+    ImmutableIsotope(int atomicNumber,
+                     int massNumber,
+                     double exactMass,
+                     double naturalAbundance) {
         this.atomicNumber = atomicNumber;
         this.massNumber = massNumber;
         this.naturalAbundance = naturalAbundance;
@@ -182,7 +182,7 @@ final class BODRIsotope implements IIsotope {
 
     @Override
     public String getSymbol() {
-        return element;
+        return Elements.ofNumber(atomicNumber).symbol();
     }
 
     @Override
@@ -210,4 +210,8 @@ final class BODRIsotope implements IIsotope {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return massNumber + "-" + getSymbol() + " isotope [" + exactMass + ", " + naturalAbundance + "%]";
+    }
 }
