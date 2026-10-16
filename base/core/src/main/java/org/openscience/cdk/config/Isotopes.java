@@ -25,6 +25,7 @@ package org.openscience.cdk.config;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -40,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.openscience.cdk.interfaces.IElement.*;
+
 /**
  * List of isotopes. Data is taken from the <a href="https://github.com/egonw/bodr">Blue Obelisk Data Repository</a>,
  * <a href="https://github.com/egonw/bodr/releases/tag/BODR-10">version 10</a> {@cdk.cite BODR10}.
@@ -47,19 +50,238 @@ import java.util.List;
  *
  * <p>The <code>isotopes.dat</code> file that is used by this class is a binary class
  * of this data, improving loading times over the BODR XML representation. It is created
- * from the original BODR files using tools from the <code>cdk-build-util</code>
- * repository.
+ * from the original BODR files using tools from the <code>GenerateIsotopeData</code>
+ * in 'cdk-extra' tests.
  *
  * @author Egon Willighagen
  * @author John Mayfield
  */
 public class Isotopes implements IsotopeFactory {
-    
+
+    /* Auto-generated from BODR - see GenerateIsotopeData */
+    private static final double[] AVG_MASS = new double[]{
+            1.00794, // H
+            4.0026, // He
+            6.94004, // Li
+            9.01218, // Be
+            10.81103, // B
+            12.01074, // C
+            14.0067, // N
+            15.9994, // O
+            18.9984, // F
+            20.18005, // Ne
+            22.98977, // Na
+            24.30505, // Mg
+            26.98154, // Al
+            28.08538, // Si
+            30.97376, // P
+            32.06608, // S
+            35.45294, // Cl
+            39.94768, // Ar
+            39.0983, // K
+            40.07802, // Ca
+            44.95591, // Sc
+            47.86675, // Ti
+            50.94147, // V
+            51.99613, // Cr
+            54.93805, // Mn
+            55.84515, // Fe
+            58.9332, // Co
+            58.69335, // Ni
+            63.54564, // Cu
+            65.39556, // Zn
+            69.72307, // Ga
+            72.61276, // Ge
+            74.9216, // As
+            78.95939, // Se
+            79.90353, // Br
+            83.79932, // Kr
+            85.46766, // Rb
+            87.61664, // Sr
+            88.90585, // Y
+            91.22365, // Zr
+            92.90638, // Nb
+            95.93129, // Mo
+            0, // Tc
+            101.06495, // Ru
+            102.9055, // Rh
+            106.41533, // Pd
+            107.86815, // Ag
+            112.41155, // Cd
+            114.81809, // In
+            118.71011, // Sn
+            121.75979, // Sb
+            127.60313, // Te
+            126.90447, // I
+            131.29248, // Xe
+            132.90545, // Cs
+            137.32689, // Ba
+            138.90545, // La
+            140.11573, // Ce
+            140.90765, // Pr
+            144.23613, // Nd
+            0, // Pm
+            150.36635, // Sm
+            151.96437, // Eu
+            157.25212, // Gd
+            158.92535, // Tb
+            162.49703, // Dy
+            164.93032, // Ho
+            167.2563, // Er
+            168.93421, // Tm
+            173.0377, // Yb
+            174.96672, // Lu
+            178.48497, // Hf
+            180.94788, // Ta
+            183.84178, // W
+            186.20671, // Re
+            190.22486, // Os
+            192.21606, // Ir
+            195.07781, // Pt
+            196.96657, // Au
+            200.59917, // Hg
+            204.38333, // Tl
+            207.21691, // Pb
+            208.9804, // Bi
+            0, // Po
+            0, // At
+            0, // Rn
+            0, // Fr
+            0, // Ra
+            0, // Ac
+            232.03806, // Th
+            231.03588, // Pa
+            238.02892 // U
+    };
+
+    /* Auto-generated from BODR - see GenerateIsotopeData */
+    private static final ImmutableIsotope[] MAJOR_ISOTOPES = new ImmutableIsotope[] {
+            new ImmutableIsotope(H,1,1.007825032,99.9885),
+            new ImmutableIsotope(He,4,4.002603254,99.999863),
+            new ImmutableIsotope(Li,7,7.01600455,92.41),
+            new ImmutableIsotope(Be,9,9.0121822,100),
+            new ImmutableIsotope(B,11,11.0093054,80.1),
+            new ImmutableIsotope(C,12,12,98.93),
+            new ImmutableIsotope(N,14,14.003074,99.636),
+            new ImmutableIsotope(O,16,15.99491462,99.757),
+            new ImmutableIsotope(F,19,18.99840322,100),
+            new ImmutableIsotope(Ne,20,19.99244018,90.48),
+            new ImmutableIsotope(Na,23,22.98976928,100),
+            new ImmutableIsotope(Mg,24,23.9850417,78.99),
+            new ImmutableIsotope(Al,27,26.98153863,100),
+            new ImmutableIsotope(Si,28,27.97692653,92.2297),
+            new ImmutableIsotope(P,31,30.97376163,100),
+            new ImmutableIsotope(S,32,31.972071,94.93),
+            new ImmutableIsotope(Cl,35,34.96885268,75.76),
+            new ImmutableIsotope(Ar,40,39.96238312,99.6003),
+            new ImmutableIsotope(K,39,38.96370668,93.2581),
+            new ImmutableIsotope(Ca,40,39.96259098,96.941),
+            new ImmutableIsotope(Sc,45,44.9559119,100),
+            new ImmutableIsotope(Ti,48,47.9479463,73.72),
+            new ImmutableIsotope(V,51,50.9439595,99.75),
+            new ImmutableIsotope(Cr,52,51.9405075,83.789),
+            new ImmutableIsotope(Mn,55,54.9380451,100),
+            new ImmutableIsotope(Fe,56,55.9349375,91.754),
+            new ImmutableIsotope(Co,59,58.933195,100),
+            new ImmutableIsotope(Ni,58,57.9353429,68.0769),
+            new ImmutableIsotope(Cu,63,62.9295975,69.17),
+            new ImmutableIsotope(Zn,64,63.9291422,48.63),
+            new ImmutableIsotope(Ga,69,68.9255736,60.108),
+            new ImmutableIsotope(Ge,74,73.9211778,36.28),
+            new ImmutableIsotope(As,75,74.9215965,100),
+            new ImmutableIsotope(Se,80,79.9165213,49.61),
+            new ImmutableIsotope(Br,79,78.9183371,50.69),
+            new ImmutableIsotope(Kr,84,83.911507,57),
+            new ImmutableIsotope(Rb,85,84.91178974,72.17),
+            new ImmutableIsotope(Sr,88,87.9056121,82.58),
+            new ImmutableIsotope(Y,89,88.9058483,100),
+            new ImmutableIsotope(Zr,90,89.9047044,51.45),
+            new ImmutableIsotope(Nb,93,92.9063781,100),
+            new ImmutableIsotope(Mo,98,97.9054082,24.13),
+            null,
+            new ImmutableIsotope(Ru,102,101.9043493,31.55),
+            new ImmutableIsotope(Rh,103,102.905504,100),
+            new ImmutableIsotope(Pd,106,105.903486,27.33),
+            new ImmutableIsotope(Ag,107,106.905097,51.839),
+            new ImmutableIsotope(Cd,114,113.9033585,28.73),
+            new ImmutableIsotope(In,115,114.903878,95.71),
+            new ImmutableIsotope(Sn,120,119.9021947,32.58),
+            new ImmutableIsotope(Sb,121,120.9038157,57.21),
+            new ImmutableIsotope(Te,130,129.9062244,34.08),
+            new ImmutableIsotope(I,127,126.904473,100),
+            new ImmutableIsotope(Xe,132,131.9041535,26.89),
+            new ImmutableIsotope(Cs,133,132.9054519,100),
+            new ImmutableIsotope(Ba,138,137.9052472,71.698),
+            new ImmutableIsotope(La,139,138.9063533,99.91),
+            new ImmutableIsotope(Ce,140,139.9054387,88.45),
+            new ImmutableIsotope(Pr,141,140.9076528,100),
+            new ImmutableIsotope(Nd,142,141.9077233,27.2),
+            null,
+            new ImmutableIsotope(Sm,152,151.9197324,26.75),
+            new ImmutableIsotope(Eu,153,152.9212303,52.19),
+            new ImmutableIsotope(Gd,158,157.9241039,24.84),
+            new ImmutableIsotope(Tb,159,158.9253468,100),
+            new ImmutableIsotope(Dy,164,163.9291748,28.18),
+            new ImmutableIsotope(Ho,165,164.9303221,100),
+            new ImmutableIsotope(Er,166,165.9302931,33.61),
+            new ImmutableIsotope(Tm,169,168.9342133,100),
+            new ImmutableIsotope(Yb,174,173.9388621,31.83),
+            new ImmutableIsotope(Lu,175,174.9407718,97.41),
+            new ImmutableIsotope(Hf,180,179.94655,35.08),
+            new ImmutableIsotope(Ta,181,180.9479958,99.988),
+            new ImmutableIsotope(W,184,183.9509312,30.64),
+            new ImmutableIsotope(Re,187,186.9557531,62.6),
+            new ImmutableIsotope(Os,192,191.9614807,40.78),
+            new ImmutableIsotope(Ir,193,192.9629264,62.7),
+            new ImmutableIsotope(Pt,195,194.9647911,33.832),
+            new ImmutableIsotope(Au,197,196.9665687,100),
+            new ImmutableIsotope(Hg,202,201.970643,29.86),
+            new ImmutableIsotope(Tl,205,204.9744275,70.476),
+            new ImmutableIsotope(Pb,208,207.9766521,52.4),
+            new ImmutableIsotope(Bi,209,208.9803987,100),
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            new ImmutableIsotope(Th,232,232.0380553,100),
+            new ImmutableIsotope(Pa,231,231.035884,100),
+            new ImmutableIsotope(U,238,238.0507882,99.2745)
+    };
+
     private static final ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(Isotopes.class);
 
     private static Isotopes myself = null;
     private final List<IIsotope> isotopes;
+
+    public static double average(int elem) {
+        if (elem > 0 && elem <= AVG_MASS.length)
+            return AVG_MASS[elem-1];
+        return 0d;
+    }
+
+    public static IIsotope major(int elem) {
+        if (elem > 0 && elem <= MAJOR_ISOTOPES.length)
+            return MAJOR_ISOTOPES[elem-1];
+        return null;
+    }
+
+    @Override
+    public List<IIsotope> isotopes() {
+        return isotopes;
+    }
+
+    @Override
+    public double getNaturalMass(int atomicNum) {
+        return average(atomicNum);
+    }
+
+    @Override
+    public IIsotope getMajorIsotope(int elem) {
+        return major(elem);
+    }
 
     /**
      * Returns a singleton instance of this class.
@@ -151,25 +373,14 @@ public class Isotopes implements IsotopeFactory {
         return v / 1e7; // 10 million
     }
 
-    @Override
-    public List<IIsotope> isotopes() {
-        return isotopes;
-    }
-
     private static boolean isMajor(IIsotope atom) {
         Integer mass = atom.getMassNumber();
         if (mass == null)
             return false;
-        try {
-            Isotopes instance = Isotopes.getInstance();
-            IIsotope major = instance.getMajorIsotope(atom.getAtomicNumber());
-            if (major == null)
-                return false; // no major isotope
-            return major.getMassNumber().equals(mass);
-        } catch (IOException e) {
-            logger.error("Could not load Isotope data: ", e.getMessage());
-            return false;
-        }
+        IIsotope major = major(atom.getAtomicNumber());
+        if (major == null)
+            return false; // no major isotope
+        return major.getMassNumber().equals(mass);
     }
 
     /**
