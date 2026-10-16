@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-package org.openscience.cdk.config.isotopes;
+package org.openscience.cdk.config;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -34,13 +34,13 @@ class IsotopeHandlerTest {
 
     @Test
     void testIsotopeHandler_IChemObjectBuilder() {
-        IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
+        XMLIsotopeFactory.IsotopeHandler handler = new XMLIsotopeFactory.IsotopeHandler(new ChemObject().getBuilder());
         Assertions.assertNotNull(handler);
     }
 
     @Test
     void testGetIsotopes() {
-        IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
+        XMLIsotopeFactory.IsotopeHandler handler = new XMLIsotopeFactory.IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read
         Assertions.assertNotNull(handler);
         Assertions.assertNull(handler.getIsotopes());
@@ -48,7 +48,7 @@ class IsotopeHandlerTest {
 
     @Test
     void testStartDocument() {
-        IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
+        XMLIsotopeFactory.IsotopeHandler handler = new XMLIsotopeFactory.IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
         Assertions.assertNotNull(handler);
         Assertions.assertNull(handler.getIsotopes());

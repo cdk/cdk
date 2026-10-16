@@ -91,8 +91,10 @@ public class Isotopes implements IsotopeFactory {
                         int massNum = bin.getShort();
                         double exactMass = bin.getDouble();
                         double natAbund = bin.get() == 1 ? bin.getDouble() : 0.0;
-                        IIsotope isotope = new BODRIsotope(PeriodicTable.getSymbol(atomicNum), atomicNum, massNum, exactMass,
-                                natAbund);
+                        IIsotope isotope = new ImmutableIsotope(atomicNum,
+                                                                massNum,
+                                                                exactMass,
+                                                                natAbund);
                         tmp.add(isotope);
                     }
                     isotopes = Collections.unmodifiableList(tmp);
