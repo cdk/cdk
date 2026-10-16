@@ -115,6 +115,23 @@ public class GenerateIsotopeData {
 
         System.out.println(sb);
 
+        // the offset table allows quick lookup of elements, and sort the data
+        // as it is read
+        Integer maxAtomicNum = allIsotopes.get(allIsotopes.size() - 1).getAtomicNumber();
+        short[] offsets = new short[maxAtomicNum+2];
+        Integer prev = 0;
+        for (int i = 0; i < allIsotopes.size(); i++) {
+            IIsotope isotope = allIsotopes.get(i);
+            if (!isotope.getAtomicNumber().equals(prev))
+                offsets[prev+2] = (short)i;
+            prev = isotope.getAtomicNumber();
+        }
+
+        bout.put((byte)offsets.length);
+        for (int offset : offsets) {
+            bout.putShort((short) offset);
+        }
+
         bout.putInt(allIsotopes.size());
         /* We write all the natural isotopes (have an abundance) */
         bout.putShort((short)numNatural);
@@ -148,6 +165,8 @@ public class GenerateIsotopeData {
                 }
             }
         }
+
+
 
         System.err.println(bout.position() + " bytes");
         bout.limit(bout.position()).position(0);

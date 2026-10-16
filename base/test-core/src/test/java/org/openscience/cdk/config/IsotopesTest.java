@@ -165,6 +165,21 @@ class IsotopesTest extends CDKTestCase {
         Assertions.assertEquals(13.00335484, isofac.getIsotope("C", 13).getExactMass(), 0.0000001);
     }
 
+    @Test
+    void testGetIsotopesMc() throws Exception {
+        Assertions.assertEquals(5, Isotopes.getInstance().isotopes(IElement.Mc).size());
+    }
+
+    @Test
+    void testGetIsotopesOg() throws Exception {
+        Assertions.assertEquals(0, Isotopes.getInstance().isotopes(IElement.Og).size());
+    }
+
+    @Test
+    void testGetIsotopesWildcard() throws Exception {
+        Assertions.assertEquals(0, Isotopes.getInstance().isotopes(IElement.Wildcard).size());
+    }
+
     /**
      * Elements without a major isotope should return null.
      */

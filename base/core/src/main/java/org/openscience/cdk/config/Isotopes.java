@@ -25,7 +25,6 @@ package org.openscience.cdk.config;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -38,6 +37,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,7 +56,7 @@ import static org.openscience.cdk.interfaces.IElement.*;
  * @author Egon Willighagen
  * @author John Mayfield
  */
-public class Isotopes implements IsotopeFactory {
+public final class Isotopes implements IsotopeFactory {
 
     /* Auto-generated from BODR - see GenerateIsotopeData */
     private static final double[] AVG_MASS = new double[]{
@@ -250,11 +250,13 @@ public class Isotopes implements IsotopeFactory {
             new ImmutableIsotope(U,238,238.0507882,99.2745)
     };
 
+
     private static final ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(Isotopes.class);
 
     private static Isotopes myself = null;
-    private final List<IIsotope> isotopes;
+    private short[]        offsets   = null;
+    private List<IIsotope> isotopes  = Collections.emptyList();
 
     public static double average(int elem) {
         if (elem > 0 && elem <= AVG_MASS.length)
@@ -268,9 +270,48 @@ public class Isotopes implements IsotopeFactory {
         return null;
     }
 
+    private Isotopes() throws IOException {
+        final String configFile = "data/isotopes.dat";
+        try (InputStream ins = this.getClass().getResourceAsStream(configFile)) {
+            if (ins == null) {
+                throw new IOException("Could not load isotope data");
+            } else {
+                int streamSize = ins.available();
+                try (ReadableByteChannel fcIn = Channels.newChannel(ins)) {
+                    ByteBuffer bin = ByteBuffer.allocate(streamSize);
+                    fcIn.read(bin);
+                    bin.flip();
+                    short[] buckets = new short[bin.get()];
+                    for (int i=0; i<buckets.length; i++)
+                        buckets[i] = bin.getShort();
+
+                    int numIsotopes = bin.getInt();
+                    int numNatural  = bin.getShort() & 0xffff;
+                    int numExtra    = numIsotopes - numNatural;
+                    IIsotope[] tmp = new IIsotope[numIsotopes];
+                    while (numNatural > 0)
+                        numNatural -= readIsotopes(tmp, buckets, bin, true);
+                    while (numExtra > 0)
+                        numExtra -= readIsotopes(tmp, buckets, bin, false);
+                    offsets = buckets;
+                    isotopes = Collections.unmodifiableList(Arrays.asList(tmp));
+                }
+            }
+        }
+    }
+
     @Override
     public List<IIsotope> isotopes() {
         return isotopes;
+    }
+
+    @Override
+    public List<IIsotope> isotopes(int atomicNum) {
+        if (atomicNum > 0 && atomicNum+1 < offsets.length) {
+            return isotopes.subList(offsets[atomicNum],
+                                    offsets[atomicNum+1]);
+        }
+        return Collections.emptyList();
     }
 
     @Override
@@ -279,8 +320,8 @@ public class Isotopes implements IsotopeFactory {
     }
 
     @Override
-    public IIsotope getMajorIsotope(int elem) {
-        return major(elem);
+    public IIsotope getMajorIsotope(int atomicNum) {
+        return major(atomicNum);
     }
 
     /**
@@ -292,30 +333,6 @@ public class Isotopes implements IsotopeFactory {
     public static Isotopes getInstance() throws IOException {
         if (myself == null) myself = new Isotopes();
         return myself;
-    }
-
-    private Isotopes() throws IOException {
-        String configFile = "org/openscience/cdk/config/data/isotopes.dat";
-        try (InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile)) {
-            if (ins == null) {
-                throw new IllegalStateException("Could not load isotope data");
-            } else {
-                int streamSize = ins.available();
-                try (ReadableByteChannel fcIn = Channels.newChannel(ins)) {
-                    ByteBuffer bin = ByteBuffer.allocate(streamSize);
-                    fcIn.read(bin);
-                    ((Buffer) bin).position(0);
-                    int numIsotopes = bin.getInt();
-                    int numNatural  = bin.getShort() & 0xffff;
-                    List<IIsotope> tmp = new ArrayList<>(numIsotopes);
-                    while (tmp.size() < numNatural)
-                        readIsotopes(tmp, bin, true);
-                    while (tmp.size() < numIsotopes)
-                        readIsotopes(tmp, bin, false);
-                    isotopes = Collections.unmodifiableList(tmp);
-                }
-            }
-        }
     }
 
     /**
@@ -332,27 +349,34 @@ public class Isotopes implements IsotopeFactory {
      * }</pre>
      *
      * @param isotopes where to store the read isotopes.
+     * @param buckets used to insert the isotopes into sorted (atomic num) position
      * @param buffer input buffer
      * @param abundance abundance is stored
      */
-    private void readIsotopes(List<IIsotope> isotopes, ByteBuffer buffer, boolean abundance) {
+    private int readIsotopes(IIsotope[] isotopes,
+                             short[] buckets,
+                             ByteBuffer buffer,
+                             boolean abundance) {
         int count = buffer.get() & 0xff;
         int atomicNum = buffer.get() & 0xff;
         int massNum = atomicNum + (buffer.get() & 0xff);
         for (int i = 0; i < count; i++) {
             long fixedMass = buffer.getInt() & 0xffffffffL;
+            final ImmutableIsotope isotope;
             if (abundance) {
                 long fixedAbundance = buffer.getInt() & 0xffffffffL;
-                isotopes.add(new ImmutableIsotope(atomicNum, massNum,
-                                                  toDecimal(massNum, fixedMass),
-                                                  toDecimal(100, fixedAbundance)));
+                isotope = new ImmutableIsotope(atomicNum, massNum,
+                                               toDecimal(massNum, fixedMass),
+                                               toDecimal(100, fixedAbundance));
             } else {
-                isotopes.add(new ImmutableIsotope(atomicNum,
-                                                  massNum,
-                                                  toDecimal(massNum, fixedMass), 0));
+                isotope = new ImmutableIsotope(atomicNum,
+                                               massNum,
+                                               toDecimal(massNum, fixedMass), 0);
             }
+            isotopes[buckets[atomicNum+1]++] = isotope;
             massNum++;
         }
+        return count;
     }
 
     /**
