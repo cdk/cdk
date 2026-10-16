@@ -703,8 +703,7 @@ class MolecularFormulaGeneratorTest {
 
         IsotopeFactory ifac = Isotopes.getInstance();
         IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope[] carbons = ifac.getIsotopes("C");
-        IIsotope c13 = carbons[5]; // 13
+        IIsotope c13 = ifac.getIsotope("C", 13); // 13
         IIsotope h = ifac.getMajorIsotope("H");
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();

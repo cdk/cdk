@@ -748,8 +748,7 @@ class MassToFormulaToolTest extends CDKTestCase {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         IIsotope carbon12 = ifac.getMajorIsotope("C");
         mfRange.addIsotope(carbon12, 0, 11);
-        IIsotope[] carbons = ifac.getIsotopes("C");
-        IIsotope carbon13 = carbons[5]; // 13
+        IIsotope carbon13 = ifac.getIsotope("C", 13);
         mfRange.addIsotope(carbon13, 0, 10);
         mfRange.addIsotope(ifac.getMajorIsotope("H"), 0, 10);
         params[0] = mfRange;
