@@ -1394,6 +1394,16 @@ Method </bibtex:title>
         </bibtex:article>
     </bibtex:entry>
 
+    <bibtex:entry id="SMSDPro2026">
+        <bibtex:misc>
+            <bibtex:author>Rahman, S.A.</bibtex:author>
+            <bibtex:title>SMSD Pro: Coverage-Driven, Tautomer-Aware Maximum Common Substructure Search</bibtex:title>
+            <bibtex:howpublished>ChemRxiv</bibtex:howpublished>
+            <bibtex:year>2026</bibtex:year>
+            <bibtex:doi>10.26434/chemrxiv.15001534/v1</bibtex:doi>
+        </bibtex:misc>
+    </bibtex:entry>
+
    <bibtex:entry id="YANG2010">
         <bibtex:article>
             <bibtex:author>Yang, Y. and Chen, H. and Nilsson, I. and Muresan, S. and Engkvist, O.</bibtex:author>
@@ -1493,6 +1503,43 @@ Method </bibtex:title>
       <bibtex:journal>Bioinformatics</bibtex:journal>
   	</bibtex:article>
   </bibtex:entry>
+
+    <bibtex:entry id="HaralickElliott80">
+        <bibtex:article>
+            <bibtex:author>Haralick, R.M. and Elliott, G.L.</bibtex:author>
+            <bibtex:title>Increasing Tree Search Efficiency for Constraint Satisfaction Problems</bibtex:title>
+            <bibtex:journal>Artificial Intelligence</bibtex:journal>
+            <bibtex:year>1980</bibtex:year>
+            <bibtex:volume>14</bibtex:volume>
+            <bibtex:number>3</bibtex:number>
+            <bibtex:pages>263-313</bibtex:pages>
+            <bibtex:doi>10.1016/0004-3702(80)90051-X</bibtex:doi>
+        </bibtex:article>
+    </bibtex:entry>
+
+    <bibtex:entry id="McCreesh17">
+        <bibtex:inproceedings>
+            <bibtex:author>McCreesh, C. and Prosser, P. and Trimble, J.</bibtex:author>
+            <bibtex:title>A Partitioning Algorithm for Maximum Common Subgraph Problems</bibtex:title>
+            <bibtex:booktitle>Proceedings of the Twenty-Sixth International Joint Conference on Artificial Intelligence (IJCAI-17)</bibtex:booktitle>
+            <bibtex:year>2017</bibtex:year>
+            <bibtex:pages>712-719</bibtex:pages>
+            <bibtex:doi>10.24963/ijcai.2017/99</bibtex:doi>
+        </bibtex:inproceedings>
+    </bibtex:entry>
+
+    <bibtex:entry id="Raymond02">
+        <bibtex:article>
+            <bibtex:author>Raymond, J.W. and Gardiner, E.J. and Willett, P.</bibtex:author>
+            <bibtex:title>RASCAL: Calculation of Graph Similarity using Maximum Common Edge Subgraphs</bibtex:title>
+            <bibtex:journal>The Computer Journal</bibtex:journal>
+            <bibtex:year>2002</bibtex:year>
+            <bibtex:volume>45</bibtex:volume>
+            <bibtex:number>6</bibtex:number>
+            <bibtex:pages>631-644</bibtex:pages>
+            <bibtex:doi>10.1093/comjnl/45.6.631</bibtex:doi>
+        </bibtex:article>
+    </bibtex:entry>
 
     <bibtex:entry id="Ullmann76">
         <bibtex:article>

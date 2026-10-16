@@ -150,11 +150,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.require java1.5+
  *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated Use {@link MCS} for an MCS search and
+ * @deprecated Use {@link org.openscience.cdk.isomorphism.MCS} for an MCS search and
  *             {@link org.openscience.cdk.isomorphism.Pattern} for a substructure search.
  *             A more recent version of SMSD is available at <a href="http://github.com/asad/smsd">
  *             http://github.com/asad/smsd</a>
- * @see MCS
+ * @see org.openscience.cdk.isomorphism.MCS
  */
 @Deprecated
 public final class Isomorphism extends AbstractMCS implements Serializable {
