@@ -19,7 +19,6 @@
  */
 package org.openscience.cdk.formula;
 
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -43,7 +42,6 @@ import java.util.List;
 public class IsotopePatternGenerator {
 
     private IChemObjectBuilder builder        = null;
-    private IsotopeFactory     isoFactory;
 
     private final ILoggingTool       logger         = LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class);
 
@@ -114,7 +112,6 @@ public class IsotopePatternGenerator {
 
         if (builder == null) {
             try {
-                isoFactory = Isotopes.getInstance();
                 builder = molFor.getBuilder();
             } catch (Exception e) {
                 LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class)
@@ -128,13 +125,12 @@ public class IsotopePatternGenerator {
         IsotopePattern abundance_Mass = null;
 
         for (IIsotope isos : molecularFormula.isotopes()) {
-            String elementSymbol = isos.getSymbol();
             int atomCount = molecularFormula.getIsotopeCount(isos);
 
             // Generate possible isotope containers for the current atom's
             // these will then me 'multiplied' with the existing patten
             List<IsotopeContainer> additional = new ArrayList<>();
-            for (IIsotope isotope : isoFactory.getIsotopes(elementSymbol)) {
+            for (IIsotope isotope : Isotopes.get(isos.getAtomicNumber())) {
                 double mass      = isotope.getExactMass();
                 double abundance = isotope.getNaturalAbundance();
                 if (abundance <= 0.000000001)

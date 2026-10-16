@@ -29,6 +29,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -171,12 +172,9 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
         IAtomContainer clone;
-        IsotopeFactory factory;
         try {
             clone = container.clone();
-            factory = Isotopes.getInstance();
-            factory.configureAtoms(clone);
-        } catch (CloneNotSupportedException | IOException e) {
+        } catch (CloneNotSupportedException e) {
             logger.debug(e);
             return getDummyDescriptorValue(e);
         }
@@ -198,9 +196,13 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         for (int i = 0; i < clone.getAtomCount(); i++) {
             IAtom currentAtom = clone.getAtom(i);
 
-            Double mass = factory.getMajorIsotope(currentAtom.getSymbol()).getExactMass();
-            if (mass == null)
-                mass = factory.getNaturalMass(currentAtom);
+            IIsotope major = Isotopes.major(currentAtom.getAtomicNumber());
+            double mass;
+            if (major != null) {
+                mass = major.getExactMass();
+            } else {
+                mass = Isotopes.average(currentAtom.getAtomicNumber());
+            }
 
             xdif = currentAtom.getPoint3d().x - centerOfMass.x;
             ydif = currentAtom.getPoint3d().y - centerOfMass.y;

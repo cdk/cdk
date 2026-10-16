@@ -26,7 +26,6 @@ package org.openscience.cdk.tools.manipulator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
@@ -712,13 +711,9 @@ public class MolecularFormulaManipulator {
         if (mass != 0)
             isotope.setMassNumber(mass);
         else if (setMajor) {
-            try {
-                IIsotope major = Isotopes.getInstance().getMajorIsotope(elem.number());
-                if (major != null)
-                    isotope.setMassNumber(major.getMassNumber());
-            } catch (IOException ex) {
-                // ignored
-            }
+            IIsotope major = Isotopes.major(elem.number());
+            if (major != null)
+                isotope.setMassNumber(major.getMassNumber());
         }
         mf.addIsotope(isotope, count);
         return true;
@@ -864,35 +859,37 @@ public class MolecularFormulaManipulator {
     public static double getTotalMassNumber(IMolecularFormula formula) {
         double mass = 0.0;
         for (IIsotope isotope : formula.isotopes()) {
-            try {
-                IIsotope isotope2 = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
-                if (isotope2 != null) {
-                    mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
-                }
-            } catch (IOException e) {
-                LoggingToolFactory.createLoggingTool(MolecularFormulaManipulator.class)
-                                  .warn("Unexpected Error:", e);
+            IIsotope isotope2 = Isotopes.major(isotope.getAtomicNumber());
+            if (isotope2 != null) {
+                mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
             }
         }
         return mass;
     }
 
-    private static double getExactMass(IsotopeFactory isofact, IIsotope atom) {
+    private static double getExactMass(IIsotope atom) {
         if (atom.getExactMass() != null)
             return atom.getExactMass();
-        else if (atom.getMassNumber() != null)
-            return isofact.getExactMass(atom.getAtomicNumber(),
-                                        atom.getMassNumber());
-        else
-            return isofact.getMajorIsotopeMass(atom.getAtomicNumber());
+        else if (atom.getMassNumber() != null) {
+            IIsotope isotope = Isotopes.get(atom.getAtomicNumber(),
+                                            atom.getMassNumber());
+            if (isotope != null)
+                return isotope.getExactMass();
+            return atom.getMassNumber();
+        } else {
+            IIsotope major = Isotopes.major(atom.getAtomicNumber());
+            if (major != null)
+                return major.getExactMass();
+            return 2*atom.getAtomicNumber();
+        }
     }
 
-    private static double getMassOrAvg(IsotopeFactory isofact, IIsotope atom) {
+    private static double getMassOrAvg(IIsotope atom) {
         if (atom.getMassNumber() == null ||
             atom.getMassNumber() == 0)
-            return isofact.getNaturalMass(atom);
+            return Isotopes.average(atom.getAtomicNumber());
         else
-            return getExactMass(isofact, atom);
+            return getExactMass(atom);
     }
 
     /**
@@ -928,31 +925,24 @@ public class MolecularFormulaManipulator {
      * @see #MostAbundant
      */
     public static double getMass(IMolecularFormula mf, int flav) {
-        final Isotopes isofact;
-        try {
-            isofact = Isotopes.getInstance();
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not load Isotopes!");
-        }
-
         double mass = 0;
         switch (flav & 0xf) {
             case MolWeight:
                 for (IIsotope iso : mf.isotopes()) {
                     mass += mf.getIsotopeCount(iso) *
-                            getMassOrAvg(isofact, iso);
+                            getMassOrAvg(iso);
                 }
                 break;
             case MolWeightIgnoreSpecified:
                 for (IIsotope iso : mf.isotopes()) {
                     mass += mf.getIsotopeCount(iso) *
-                            isofact.getNaturalMass(iso.getAtomicNumber());
+                            Isotopes.average(iso.getAtomicNumber());
                 }
                 break;
             case MonoIsotopic:
                 for (IIsotope iso : mf.isotopes()) {
                     mass += mf.getIsotopeCount(iso) *
-                            getExactMass(isofact, iso);
+                            getExactMass(iso);
                 }
                 break;
             case MostAbundant:
@@ -1594,17 +1584,17 @@ public class MolecularFormulaManipulator {
      * @return the distribution is unique (or not)
      */
     private static boolean addIsotopeDist(IMolecularFormula mf,
-                                          IIsotope[] isotopes,
+                                          List<IIsotope> isotopes,
                                           int idx, int count) {
         if (count == 0)
             return true;
         double frac = 100d;
         for (int i = 0; i < idx; i++)
-            frac -= isotopes[i].getNaturalAbundance();
-        double p = isotopes[idx].getNaturalAbundance() / frac;
+            frac -= isotopes.get(i).getNaturalAbundance();
+        double p = isotopes.get(idx).getNaturalAbundance() / frac;
 
         if (p >= 1.0) {
-            mf.addIsotope(isotopes[idx], count);
+            mf.addIsotope(isotopes.get(idx), count);
             return true;
         }
 
@@ -1612,7 +1602,7 @@ public class MolecularFormulaManipulator {
         double kMax = (count + 1) * (1 - p);
         if ((int) Math.ceil(kMin) == (int) Math.floor(kMax)) {
             int k = (int) kMax;
-            mf.addIsotope(isotopes[idx], count - k);
+            mf.addIsotope(isotopes.get(idx), count - k);
             // recurse with remaining
             return addIsotopeDist(mf, isotopes, idx + 1, k);
         }
@@ -1629,19 +1619,13 @@ public class MolecularFormulaManipulator {
      * @return the most abundant MF, or null if it could not be computed
      */
     public static IMolecularFormula getMostAbundant(IMolecularFormula mf) {
-        final Isotopes isofact;
-        try {
-            isofact = Isotopes.getInstance();
-        } catch (IOException e) {
-            return null;
-        }
         IMolecularFormula res = mf.getBuilder()
                                   .newInstance(IMolecularFormula.class);
         for (IIsotope iso : mf.isotopes()) {
             int count = mf.getIsotopeCount(iso);
             if (iso.getMassNumber() == null || iso.getMassNumber() == 0) {
-                IIsotope[] isotopes = isofact.getIsotopes(iso.getSymbol());
-                Arrays.sort(isotopes, NAT_ABUN_COMP);
+                List<IIsotope> isotopes = new ArrayList<>(Isotopes.get(iso.getAtomicNumber()));
+                isotopes.sort(NAT_ABUN_COMP);
                 if (!addIsotopeDist(res, isotopes, 0, count))
                     return null;
             } else

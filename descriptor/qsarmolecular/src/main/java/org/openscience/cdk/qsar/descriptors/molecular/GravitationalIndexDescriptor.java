@@ -23,12 +23,13 @@ import java.util.ArrayList;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -176,14 +177,8 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         if (!GeometryUtil.has3DCoordinates(container))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
-        IsotopeFactory factory = null;
         double mass1;
         double mass2;
-        try {
-            factory = Isotopes.getInstance();
-        } catch (Exception e) {
-            logger.debug(e);
-        }
 
         double sum = 0;
         for (int i = 0; i < container.getBondCount(); i++) {
@@ -193,8 +188,8 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
                 return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
-            mass1 = factory.getMajorIsotope(bond.getBegin().getSymbol()).getMassNumber();
-            mass2 = factory.getMajorIsotope(bond.getEnd().getSymbol()).getMassNumber();
+            mass1 = getMassNumber(bond.getBegin());
+            mass2 = getMassNumber(bond.getEnd());
 
             Point3d p1 = bond.getBegin().getPoint3d();
             Point3d p2 = bond.getEnd().getPoint3d();
@@ -221,8 +216,8 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
 
             if (b.getBegin().getAtomicNumber() == IElement.H || b.getEnd().getAtomicNumber() == IElement.H) continue;
 
-            mass1 = factory.getMajorIsotope(b.getBegin().getSymbol()).getMassNumber();
-            mass2 = factory.getMajorIsotope(b.getEnd().getSymbol()).getMassNumber();
+            mass1 = getMassNumber(b.getBegin());
+            mass2 = getMassNumber(b.getEnd());
 
             Point3d point0 = b.getBegin().getPoint3d();
             Point3d point1 = b.getEnd().getPoint3d();
@@ -267,8 +262,8 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
             int atomNumber1 = aP.x;
             int atomNumber2 = aP.y;
 
-            mass1 = factory.getMajorIsotope(container.getAtom(atomNumber1).getSymbol()).getMassNumber();
-            mass2 = factory.getMajorIsotope(container.getAtom(atomNumber2).getSymbol()).getMassNumber();
+            mass1 = getMassNumber(container.getAtom(atomNumber1));
+            mass2 = getMassNumber(container.getAtom(atomNumber2));
 
             double x1 = container.getAtom(atomNumber1).getPoint3d().x;
             double y1 = container.getAtom(atomNumber1).getPoint3d().y;
@@ -296,6 +291,13 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
                 getDescriptorNames());
+    }
+
+    private static Integer getMassNumber(IAtom atom) {
+        IIsotope isotope = Isotopes.major(atom.getAtomicNumber());
+        if (isotope != null)
+            return isotope.getMassNumber();
+        return 2*atom.getAtomicNumber();
     }
 
     /**

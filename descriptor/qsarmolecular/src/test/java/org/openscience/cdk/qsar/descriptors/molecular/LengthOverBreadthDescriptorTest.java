@@ -37,8 +37,6 @@ class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
-        Isotopes.getInstance().configureAtoms(ac);
-
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         Assertions.assertEquals(3.5029, result.get(0), 0.001);
@@ -53,7 +51,6 @@ class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(1);
-        Isotopes.getInstance().configureAtoms(ac);
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
@@ -70,8 +67,6 @@ class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(2);
 
-        Isotopes.getInstance().configureAtoms(ac);
-
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         Assertions.assertEquals(1.3083278, result.get(0), 0.01);
@@ -86,8 +81,6 @@ class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(3);
-        Isotopes.getInstance().configureAtoms(ac);
-
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         Assertions.assertEquals(2.0880171, result.get(0), 0.000001);

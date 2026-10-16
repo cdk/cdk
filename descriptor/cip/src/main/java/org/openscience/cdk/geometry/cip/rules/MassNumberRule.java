@@ -23,10 +23,7 @@
  */
 package org.openscience.cdk.geometry.cip.rules;
 
-import java.io.IOException;
-
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.geometry.cip.ILigand;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -39,30 +36,18 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 class MassNumberRule implements ISequenceSubRule<ILigand> {
 
     final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(MassNumberRule.class);
-    IsotopeFactory factory;
 
     /** {@inheritDoc} */
     @Override
     public int compare(ILigand ligand1, ILigand ligand2) {
-        ensureFactory();
         return getMassNumber(ligand1).compareTo(getMassNumber(ligand2));
-    }
-
-    private void ensureFactory() {
-        if (factory == null) {
-            try {
-                factory = Isotopes.getInstance();
-            } catch (IOException exception) {
-                logger.error("Could not load the IsotopeFactory: " + exception.getMessage());
-            }
-        }
     }
 
     private Integer getMassNumber(ILigand ligand) {
         Integer massNumber = ligand.getLigandAtom().getMassNumber();
         if (massNumber != null) return massNumber;
-        if (factory == null) return 0;
-        IIsotope isotope = factory.getMajorIsotope(ligand.getLigandAtom().getSymbol());
+        Integer elem = ligand.getLigandAtom().getAtomicNumber();
+        IIsotope isotope = Isotopes.major(elem);
         if (isotope == null) return 0;
         return isotope.getMassNumber();
     }

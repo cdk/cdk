@@ -28,7 +28,6 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -163,9 +162,6 @@ class SmilesGeneratorTest extends CDKTestCase {
         mol1.addBond(5, 12, IBond.Order.SINGLE);
         addImplicitHydrogens(mol1);
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        ifac.configureAtoms(mol1);
-
         define(mol1, anticlockwise(mol1, 1, 0, 2, 3, 4));
 
         String smiles1 = sg.create(mol1);
@@ -253,9 +249,6 @@ class SmilesGeneratorTest extends CDKTestCase {
         mol1.addBond(8, 19, IBond.Order.SINGLE);
 
         addImplicitHydrogens(mol1);
-        IsotopeFactory ifac = Isotopes.getInstance();
-
-        ifac.configureAtoms(mol1);
         define(mol1, clockwise(mol1, 2, 0, 1, 3, 7), clockwise(mol1, 7, 2, 6, 8, 9));
         String smiles1 = sg.create(mol1);
         Assertions.assertNotNull(smiles1);
@@ -341,8 +334,6 @@ class SmilesGeneratorTest extends CDKTestCase {
         mol1.addAtom(new Atom("H", new Point2d(-0.84, -2.75)));
         mol1.addBond(11, 27, IBond.Order.SINGLE);
         addImplicitHydrogens(mol1);
-        IsotopeFactory ifac = Isotopes.getInstance();
-        ifac.configureAtoms(mol1);
         define(mol1, clockwise(mol1, 1, 0, 2, 4, 8), clockwise(mol1, 2, 1, 3, 7, 1));
         String smiles1 = sg.create(mol1);
         Assertions.assertNotNull(smiles1);
@@ -385,8 +376,6 @@ class SmilesGeneratorTest extends CDKTestCase {
         mol1.addBond(3, 5, IBond.Order.SINGLE);
         // 4
         addImplicitHydrogens(mol1);
-        IsotopeFactory ifac = Isotopes.getInstance();
-        ifac.configureAtoms(mol1);
 
         mol1.setStereoElements(new ArrayList<>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2), new IBond[]{mol1.getBond(1),
@@ -1107,10 +1096,6 @@ class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer m1 = sp.parseSmiles(s1);
         IAtomContainer m2 = sp.parseSmiles(s2);
 
-        IsotopeFactory fact = Isotopes.getInstance();
-        fact.configureAtoms(m1);
-        fact.configureAtoms(m2);
-
         SmilesGenerator sg = SmilesGenerator.unique();
         String o1 = sg.create(m1);
         String o2 = sg.create(m2);
@@ -1126,8 +1111,6 @@ class SmilesGeneratorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String testSmiles = "C1(C(C(C(C(C1Br)Br)Br)Br)Br)Br";
         IAtomContainer mol = sp.parseSmiles(testSmiles);
-        IsotopeFactory fact = Isotopes.getInstance();
-        fact.configureAtoms(mol);
         SmilesGenerator sg = new SmilesGenerator();
         String smiles = sg.create(mol);
         IAtomContainer mol2 = sp.parseSmiles(smiles);

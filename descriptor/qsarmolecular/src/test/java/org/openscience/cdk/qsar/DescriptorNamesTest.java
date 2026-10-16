@@ -60,7 +60,6 @@ class DescriptorNamesTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-        Isotopes.getInstance().configureAtoms(ac);
         engine.process(ac);
 
         int ncalc = 0;

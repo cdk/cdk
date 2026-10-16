@@ -1011,9 +1011,9 @@ class AtomContainerManipulatorTest extends CDKTestCase {
         mol.getAtom(1).setImplicitHydrogenCount(1);
 
         double expectedMass = 0.0;
-        expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class, "C"));
-        expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class, "Cl"));
-        expectedMass += 5 * Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class, "H"));
+        expectedMass += Isotopes.average(IElement.C);
+        expectedMass += Isotopes.average(IElement.Cl);
+        expectedMass += 5 * Isotopes.average(IElement.H);
 
         double totalExactMass = AtomContainerManipulator.getNaturalExactMass(mol);
 

@@ -20,18 +20,16 @@
 
 package org.openscience.cdk.geometry.alignment;
 
-import javax.vecmath.Point3d;
-
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import javax.vecmath.Point3d;
 
 /**
  * Aligns two structures to minimize the RMSD using the Kabsch algorithm.
@@ -122,34 +120,16 @@ public class KabschAlignment {
 
     private double[] getAtomicMasses(IAtom[] a) {
         double[] am = new double[a.length];
-        IsotopeFactory factory = null;
-        try {
-            factory = Isotopes.getInstance();
-        } catch (Exception e) {
-            logger.error("Error while instantiating the isotope factory: ", e.getMessage());
-            logger.debug(e);
-        }
-
-        assert factory != null;
         for (int i = 0; i < a.length; i++) {
-            am[i] = factory.getMajorIsotope(a[i].getSymbol()).getExactMass();
+            am[i] = Isotopes.major(a[i].getAtomicNumber()).getExactMass();
         }
         return (am);
     }
 
     private double[] getAtomicMasses(IAtomContainer ac) {
         double[] am = new double[ac.getAtomCount()];
-        IsotopeFactory factory = null;
-        try {
-            factory = Isotopes.getInstance();
-        } catch (Exception e) {
-            logger.error("Error while instantiating the isotope factory: ", e.getMessage());
-            logger.debug(e);
-        }
-
-        assert factory != null;
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            am[i] = factory.getMajorIsotope(ac.getAtom(i).getSymbol()).getExactMass();
+            am[i] = Isotopes.major(ac.getAtom(i).getAtomicNumber()).getExactMass();
         }
         return (am);
     }

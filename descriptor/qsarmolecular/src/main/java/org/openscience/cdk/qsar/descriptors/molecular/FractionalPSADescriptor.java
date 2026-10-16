@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -130,11 +131,17 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
 
             //  molecular weight
             for (IAtom atom : mol.atoms()) {
-                weight += Isotopes.getInstance().getMajorIsotope(atom.getSymbol()).getExactMass();
+                IIsotope major = Isotopes.major(atom.getAtomicNumber());
+                if (major != null)
+                    weight += major.getExactMass();
+                else if (atom.getMassNumber() != null)
+                    weight += atom.getMassNumber();
+                else
+                    weight += 2*atom.getAtomicNumber();
                 Integer hcount = atom.getImplicitHydrogenCount();
                 if (hcount != CDKConstants.UNSET) weight += hcount * 1.00782504;
             }
-        } catch (CDKException | IOException exception) {
+        } catch (CDKException exception) {
             return getDummyDescriptorValue(exception);
         }
 

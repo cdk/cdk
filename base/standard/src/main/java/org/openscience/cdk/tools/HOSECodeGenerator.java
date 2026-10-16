@@ -24,17 +24,8 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
@@ -46,6 +37,14 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.InvPair;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Generates HOSE codes {@cdk.cite BRE78}.
@@ -180,18 +179,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
         this(DEFAULT_MODE);
     }
 
-    private IsotopeFactory isotopeFac = null;
-
-    private void ensureIsotopeFactory() throws CDKException {
-        if (isotopeFac == null) {
-            try {
-                isotopeFac = Isotopes.getInstance();
-            } catch (IOException e) {
-                throw new CDKException("Could not instantiate the IsotopeFactory: " + e.getMessage(), e);
-            }
-        }
-    }
-
     /**
      *  This method is intended to be used to get the atoms around an atom in spheres. It is not used in this class, but is provided for other classes to use.
      *  It also creates the HOSE code in HOSECode as a side-effect.
@@ -204,7 +191,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
      **/
     public List<IAtom>[] getSpheres(IAtomContainer ac, IAtom root, int noOfSpheres, boolean ringsize)
             throws CDKException {
-        ensureIsotopeFactory();
         centerCode = "";
         this.atomContainer = ac;
         maxSphere = noOfSpheres;
@@ -269,7 +255,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
      * @exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
      */
     public String getHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres, boolean ringsize) throws CDKException {
-        ensureIsotopeFactory();
         CanonicalLabeler canLabler = new CanonicalLabeler();
         canLabler.canonLabel(ac);
         centerCode = "";
@@ -569,8 +554,8 @@ public class HOSECodeGenerator implements java.io.Serializable {
     private long getElementRank(String symbol) {
         if(rankedSymbols.containsKey(symbol))
         	return rankedSymbols.get(symbol);
-        IIsotope isotope = isotopeFac.getMajorIsotope(symbol);
-        if (isotope.getMassNumber() != null) {
+        IIsotope isotope = Isotopes.major(Elements.ofString(symbol).number());
+        if (isotope != null && isotope.getMassNumber() != null) {
             return ((long) 800000 - isotope.getMassNumber());
         }
         return 800000;

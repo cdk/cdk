@@ -347,7 +347,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         try {
             for (int i = 0; i < molecule.getAtomCount(); i++) {
                 if (molecule.getAtom(i).getAtomicNumber() == IElement.H) continue;
-                diagvalue[counter] = Isotopes.getInstance().getMajorIsotope(molecule.getAtom(i).getSymbol())
+                diagvalue[counter] = Isotopes.major(molecule.getAtom(i).getAtomicNumber())
                         .getExactMass();
                 counter++;
             }

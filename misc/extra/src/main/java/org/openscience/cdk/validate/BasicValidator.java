@@ -20,12 +20,12 @@
 package org.openscience.cdk.validate;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -261,20 +261,12 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest isotopeExists = new ValidationTest(isotope,
                 "Isotope with this mass number is not known for this element.");
         try {
-            IsotopeFactory isotopeFac = Isotopes.getInstance();
-            IIsotope[] isotopes = isotopeFac.getIsotopes(isotope.getSymbol());
             if (isotope.getMassNumber() != null &&
                 isotope.getMassNumber() != 0) {
-                boolean foundKnownIsotope = false;
-                for (IIsotope iIsotope : isotopes) {
-                    if (Objects.equals(iIsotope.getMassNumber(), isotope.getMassNumber())) {
-                        foundKnownIsotope = true;
-                    }
-                }
-                if (!foundKnownIsotope) {
-                    report.addError(isotopeExists);
-                } else {
+                if (Isotopes.get(isotope.getAtomicNumber(), isotope.getMassNumber()) != null) {
                     report.addOK(isotopeExists);
+                } else {
+                    report.addError(isotopeExists);
                 }
             } else {
                 // isotopic is unspecified

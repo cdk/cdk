@@ -173,7 +173,6 @@ class BasicMoleculeHashGeneratorTest {
         atomContainer.addBond(bond12);
         atomContainer.addBond(bond13);
 
-        Isotopes.getInstance().configureAtoms(atomContainer);
         MoleculeHashGenerator generator = new HashGeneratorMaker().depth(12).elemental().isotopic().orbital().charged().chiral().molecular();
 
         // act & assert
@@ -227,7 +226,6 @@ class BasicMoleculeHashGeneratorTest {
         atomContainer.addBond(bond10);
         atomContainer.addBond(bond11);
 
-        Isotopes.getInstance().configureAtoms(atomContainer);
         MoleculeHashGenerator generator = new HashGeneratorMaker().depth(12).elemental().isotopic().orbital().charged().chiral().molecular();
 
         // act & assert
@@ -297,7 +295,6 @@ class BasicMoleculeHashGeneratorTest {
         atomContainer.addBond(bond14);
         atomContainer.addBond(bond15);
 
-        Isotopes.getInstance().configureAtoms(atomContainer);
         MoleculeHashGenerator generator = new HashGeneratorMaker().depth(12).elemental().isotopic().orbital().charged().chiral().molecular();
 
         // act & assert
@@ -379,7 +376,6 @@ class BasicMoleculeHashGeneratorTest {
         atomContainer.addBond(bond17);
         atomContainer.addBond(bond18);
 
-        Isotopes.getInstance().configureAtoms(atomContainer);
         MoleculeHashGenerator generator = new HashGeneratorMaker().depth(12).elemental().isotopic().orbital().charged().chiral().molecular();
 
         // act & assert
@@ -445,7 +441,6 @@ class BasicMoleculeHashGeneratorTest {
         atomContainer.addBond(bond13);
         atomContainer.addBond(bond14);
 
-        Isotopes.getInstance().configureAtoms(atomContainer);
         MoleculeHashGenerator generator = new HashGeneratorMaker().depth(12).elemental().isotopic().orbital().charged().chiral().molecular();
 
         // act & assert
@@ -539,7 +534,6 @@ class BasicMoleculeHashGeneratorTest {
         atomContainer.addBond(bond20);
         atomContainer.addBond(bond21);
 
-        Isotopes.getInstance().configureAtoms(atomContainer);
         MoleculeHashGenerator generator = new HashGeneratorMaker().depth(12).elemental().isotopic().orbital().charged().chiral().molecular();
 
         // act & assert

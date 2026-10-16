@@ -22,7 +22,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -73,7 +72,6 @@ public class MoleculeFactory {
         mol.addBond(5, 7, IBond.Order.SINGLE); // 9
         mol.addBond(7, 8, IBond.Order.SINGLE); // 10
         mol.addBond(7, 9, IBond.Order.SINGLE); // 11
-        configureAtoms(mol);
         return mol;
     }
 
@@ -515,7 +513,6 @@ public class MoleculeFactory {
         mol.addBond(12, 16, IBond.Order.SINGLE); // 12
         mol.addBond(16, 17, IBond.Order.SINGLE); // 12
         mol.addBond(17, 18, IBond.Order.SINGLE); // 12
-        configureAtoms(mol);
         return mol;
     }
 
@@ -559,8 +556,6 @@ public class MoleculeFactory {
         mol.addBond(14, 15, IBond.Order.SINGLE); // 19
         mol.addBond(15, 16, IBond.Order.SINGLE); // 20
         mol.addBond(16, 12, IBond.Order.SINGLE); // 21
-
-        configureAtoms(mol);
         return mol;
     }
 
@@ -1320,14 +1315,4 @@ public class MoleculeFactory {
 
         return mol;
     }
-
-    private static void configureAtoms(IAtomContainer mol) {
-        try {
-            Isotopes.getInstance().configureAtoms(mol);
-        } catch (Exception exc) {
-            logger.error("Could not configure molecule!");
-            logger.debug(exc);
-        }
-    }
-
 }

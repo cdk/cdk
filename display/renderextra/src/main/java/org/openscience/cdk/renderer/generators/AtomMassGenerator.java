@@ -23,6 +23,7 @@ import java.io.IOException;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -46,15 +47,10 @@ public class AtomMassGenerator extends BasicAtomGenerator {
      */
     @Override
     public boolean showCarbon(IAtom atom, IAtomContainer container, RendererModel model) {
-
         Integer massNumber = atom.getMassNumber();
         if (massNumber != null) {
-            try {
-                Integer expectedMassNumber = Isotopes.getInstance().getMajorIsotope(atom.getSymbol()).getMassNumber();
-                if (!massNumber.equals(expectedMassNumber)) return true;
-            } catch (IOException e) {
-                logger.warn(e);
-            }
+            // 12-C Major Isotope for always (hopefully)
+            if (!massNumber.equals(12)) return true;
         }
         return super.showCarbon(atom, container, model);
     }
