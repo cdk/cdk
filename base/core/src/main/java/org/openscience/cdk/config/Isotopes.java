@@ -249,6 +249,34 @@ public final class Isotopes implements IsotopeFactory {
             new ImmutableIsotope(Pa, 231, 231.035884, 100),
             new ImmutableIsotope(U, 238, 238.0507882, 99.2745)
     };
+    /* Auto-generated from BODR - see GenerateIsotopeData */
+    private static final ImmutableIsotope[] COMMON_ISOTOPES = new ImmutableIsotope[] {
+            new ImmutableIsotope(H,2,2.014101778,0.0115), // 2-H
+            new ImmutableIsotope(H,3,3.016049278,0), // 3-H
+            new ImmutableIsotope(B,10,10.012937,19.9), // 10-B
+            new ImmutableIsotope(C,13,13.00335484,1.07), // 13-C
+            new ImmutableIsotope(C,14,14.00324199,0), // 14-C
+            new ImmutableIsotope(C,11,11.0114336,0), // 11-C
+            new ImmutableIsotope(N,15,15.0001089,0.364), // 15-N
+            new ImmutableIsotope(N,16,16.0061017,0), // 16-N
+            new ImmutableIsotope(O,18,17.999161,0.205), // 18-O
+            new ImmutableIsotope(O,17,16.9991317,0.038), // 17-O
+            new ImmutableIsotope(F,18,18.000938,0), // 18-F
+            new ImmutableIsotope(P,32,31.97390727,0), // 32-P
+            new ImmutableIsotope(S,35,34.96903216,0), // 35-S
+            new ImmutableIsotope(Cu,64,63.9297642,0), // 64-Cu
+            new ImmutableIsotope(Ga,68,67.9279801,0), // 68-Ga
+            new ImmutableIsotope(Br,76,75.924541,0), // 76-Br
+            new ImmutableIsotope(Br,77,76.921379,0), // 77-Br
+            new ImmutableIsotope(Tc,99,98.9062547,0), // 99-Tc
+            new ImmutableIsotope(In,111,110.905103,0), // 111-In
+            new ImmutableIsotope(I,125,124.9046302,0), // 125-I
+            new ImmutableIsotope(I,123,122.905589,0), // 123-I
+            new ImmutableIsotope(I,131,130.9061246,0), // 131-I
+            new ImmutableIsotope(I,124,123.9062099,0), // 124-I
+            new ImmutableIsotope(Lu,177,176.9437581,0), // 177-Lu
+            new ImmutableIsotope(At,221,221.01805,0) // 221-At
+    };
 
     public static double average(int elem) {
         if (elem > 0 && elem <= AVG_MASS.length)
@@ -267,9 +295,20 @@ public final class Isotopes implements IsotopeFactory {
     }
 
     public static IIsotope get(int elem, int mass) {
+        if (mass == 0)
+            return null;
+        // is it the major isotope?
         IIsotope major = major(elem);
         if (major != null && major.getMassNumber().equals(mass))
             return major;
+        // is it a common isotope?
+        for (IIsotope isotope : COMMON_ISOTOPES) {
+            if (isotope.getMassNumber() == mass)
+                return isotope;
+            if (isotope.getAtomicNumber() > elem)
+                break;
+        }
+        // check the full data store
         for (IIsotope isotope : get(elem)) {
             if (isotope.getMassNumber() == mass)
                 return isotope;
@@ -277,8 +316,10 @@ public final class Isotopes implements IsotopeFactory {
         return null;
     }
 
+
     /**
-     * Inner singleton, only loaded when required.
+     * Inner singleton, only loaded when required. There is an associated
+     * "istopes.dat"
      */
     private enum Data {
         INSTANCE;
@@ -353,8 +394,8 @@ public final class Isotopes implements IsotopeFactory {
         }
 
         Data() {
-            System.err.println("Loading isotope data!");
             final String configFile = "data/isotopes.dat";
+            IsotopeFactory.logger.debug("Loading " + configFile);
             try (InputStream ins = this.getClass().getResourceAsStream(configFile)) {
                 if (ins == null) {
                     exception = new IOException("Isotope data: " + configFile + " was (null)");
