@@ -1,5 +1,6 @@
 /* Copyright (C) 2001-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *               2013,2016  Egon Willighagen <egonw@users.sf.net>
+ *               2026       John Mayfield
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,8 +28,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,14 +43,25 @@ import java.util.List;
 import static org.openscience.cdk.interfaces.IElement.*;
 
 /**
- * List of isotopes. Data is taken from the <a href="https://github.com/egonw/bodr">Blue Obelisk Data Repository</a>,
- * <a href="https://github.com/egonw/bodr/releases/tag/BODR-10">version 10</a> {@cdk.cite BODR10}.
- * The data set is described in the first Blue Obelisk paper {@cdk.cite Guha2006}.
- *
- * <p>The <code>isotopes.dat</code> file that is used by this class is a binary class
- * of this data, improving loading times over the BODR XML representation. It is created
- * from the original BODR files using tools from the <code>GenerateIsotopeData</code>
- * in 'cdk-extra' tests.
+ * Static utility functions for working with isotopes with efficient retrieving
+ * the major isotope of an element ({@link #major(int)})
+ * as well as it's average/natural mass ({@link #average(int)}). You can also
+ * fetch a specific isotope with {@link #get(int, int)}.
+ * <p/>
+ * For backwards compatibility you can obtain an instance of the class which
+ * implements the {@link IsotopeFactory} API.
+ * <p/>
+ * Data is taken from the <a href="https://github.com/egonw/bodr">Blue Obelisk
+ * Data Repository</a>,
+ * <a href="https://github.com/egonw/bodr/releases/tag/BODR-10">version 10</a>
+ * {@cdk.cite BODR10}. The data set is described in the first Blue Obelisk
+ * paper {@cdk.cite Guha2006}.
+ * <p/>
+ * <p>The <code>isotopes.dat</code> file that is optionally used by this class
+ * is a binary class of this data, improving loading times over the BODR XML
+ * representation. It is only used for the uncommon isotopes and is not loaded
+ * unless required. It is created from the original BODR files using tools from
+ * the <code>GenerateIsotopeData</code> in 'cdk-extra' tests.
  *
  * @author Egon Willighagen
  * @author John Mayfield
@@ -278,22 +288,73 @@ public final class Isotopes implements IsotopeFactory {
             new ImmutableIsotope(At,221,221.01805,0) // 221-At
     };
 
+    /**
+     * Obtain the average/natural atomic mass for a given element based on its
+     * natural abundance.
+     *
+     * <pre>{@code
+     * Isotopes.average(IElement.C); // 12.01074
+     * Isotopes.average(IElement.N); // 14.0067
+     * Isotopes.average(IElement.Tc); // 0.0 (no natural isotopes)
+     * }</pre>
+     *
+     * @param elem the atomic number of element
+     * @return the average/natural mass, 0 if no natural isotopes
+     */
     public static double average(int elem) {
         if (elem > 0 && elem <= AVG_MASS.length)
             return AVG_MASS[elem - 1];
         return 0d;
     }
 
+    /**
+     * Obtain the major isotope for a given element based on its
+     * natural abundance.
+     *
+     * <pre>{@code
+     * Isotopes.major(IElement.C); // 12-C
+     * Isotopes.major(IElement.N); // 14-C
+     * Isotopes.major(IElement.Tc); // null (no major isotopes)
+     * }</pre>
+     *
+     * @param elem the atomic number of element
+     * @return the major isotope, or null if there isn't one
+     */
     public static IIsotope major(int elem) {
         if (elem > 0 && elem <= MAJOR_ISOTOPES.length)
             return MAJOR_ISOTOPES[elem - 1];
         return null;
     }
 
+    /**
+     * Obtain a list of all known isotopes for an element. This requires loading
+     * a resource file.
+     *
+     * <pre>{@code
+     * Isotopes.major(IElement.C);  // [12-C, 13-C, 8-C, 9-C, ...]
+     * Isotopes.major(IElement.Mc); // [287-Mc, 288-Mc, ...]
+     * }</pre>
+     * @param elem the atomic number
+     * @return the known isotopes, the order is not guaranteed
+     */
     public static List<IIsotope> get(int elem) {
         return Data.INSTANCE.isotopes(elem);
     }
 
+    /**
+     * Get an isotope of an element loaded with the exact mass and natural
+     * abundance (if any).
+     *
+     * <pre>{@code
+     * Isotopes.get(IElement.H, 2); // deuterium
+     * Isotopes.get(IElement.C, 12);  // carbon-12
+     * Isotopes.get(IElement.C, 13); // carbon-13
+     * Isotopes.get(IElement.C, 99); // null - carbon-99 doesn't exist!
+     * }</pre>
+     * @param elem the atomic number
+     * @param mass the mass number
+     * @return the isotope, null if not found
+     */
     public static IIsotope get(int elem, int mass) {
         if (mass == 0)
             return null;
@@ -316,16 +377,109 @@ public final class Isotopes implements IsotopeFactory {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IIsotope> isotopes() {
+        return Data.INSTANCE.isotopes;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see #get(int)
+     */
+    @Override
+    public List<IIsotope> isotopes(int atomicNum) {
+       return Data.INSTANCE.isotopes(atomicNum);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see #average(int)
+     */
+    @Override
+    public double getNaturalMass(int atomicNum) {
+        return average(atomicNum);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see #major(int)
+     */
+    @Override
+    public IIsotope getMajorIsotope(int atomicNum) {
+        return major(atomicNum);
+    }
+
+    /**
+     * Returns a singleton instance of this class.
+     *
+     * @return the singleton
+     * @throws IOException when reading of the data file did not work
+     */
+    public static Isotopes getInstance() throws IOException {
+        if (Data.INSTANCE.exception != null)
+            throw Data.INSTANCE.exception;
+        return new Isotopes();
+    }
+
+    private static boolean isMajor(IIsotope atom) {
+        Integer mass = atom.getMassNumber();
+        if (mass == null)
+            return false;
+        IIsotope major = major(atom.getAtomicNumber());
+        if (major == null)
+            return false; // no major isotope
+        return major.getMassNumber().equals(mass);
+    }
+
+    /**
+     * Clear the isotope information from atoms that are major isotopes (e.g.
+     * <sup>12</sup>C, <sup>1</sup>H, etc).
+     *
+     * @param mol the molecule
+     */
+    public static void clearMajorIsotopes(IAtomContainer mol) {
+        for (IAtom atom : mol.atoms())
+            if (isMajor(atom)) {
+                atom.setMassNumber(null);
+                atom.setExactMass(null);
+                atom.setNaturalAbundance(null);
+            }
+    }
+
+    /**
+     * Clear the isotope information from istopes that are major (e.g.
+     * <sup>12</sup>C, <sup>1</sup>H, etc).
+     *
+     * @param formula the formula
+     */
+    public static void clearMajorIsotopes(IMolecularFormula formula) {
+        List<IIsotope> majorIsotopes = new ArrayList<>();
+        formula.isotopes().forEach(i -> {
+            if (isMajor(i)) majorIsotopes.add(i);
+        });
+        for (IIsotope iso : majorIsotopes) {
+            int count = formula.getIsotopeCount(iso);
+            formula.removeIsotope(iso);
+            if (iso instanceof ImmutableIsotope) {
+                iso = formula.getBuilder().newInstance(IIsotope.class, iso.getSymbol());
+                iso.setAtomicNumber(iso.getAtomicNumber());
+                iso.setMassNumber(null);
+                iso.setExactMass(null);
+                iso.setNaturalAbundance(null);
+            }
+            formula.addIsotope(iso, count);
+        }
+    }
 
     /**
      * Inner singleton, only loaded when required. There is an associated
-     * "istopes.dat"
+     * resource "isotopes.dat".
      */
     private enum Data {
         INSTANCE;
-
-        private static final ILoggingTool logger =
-                LoggingToolFactory.createLoggingTool(Isotopes.class);
 
         private IOException exception = null;
         private short[] offsets = new short[0];
@@ -438,88 +592,6 @@ public final class Isotopes implements IsotopeFactory {
                 return Collections.unmodifiableList(tmp);
             }
             return Collections.emptyList();
-        }
-    }
-
-    @Override
-    public List<IIsotope> isotopes() {
-        return Data.INSTANCE.isotopes;
-    }
-
-    @Override
-    public List<IIsotope> isotopes(int atomicNum) {
-       return Data.INSTANCE.isotopes(atomicNum);
-    }
-
-    @Override
-    public double getNaturalMass(int atomicNum) {
-        return average(atomicNum);
-    }
-
-    @Override
-    public IIsotope getMajorIsotope(int atomicNum) {
-        return major(atomicNum);
-    }
-
-    /**
-     * Returns a singleton instance of this class.
-     *
-     * @return the singleton
-     * @throws IOException when reading of the data file did not work
-     */
-    public static Isotopes getInstance() throws IOException {
-        if (Data.INSTANCE.exception != null)
-            throw Data.INSTANCE.exception;
-        return new Isotopes();
-    }
-
-    private static boolean isMajor(IIsotope atom) {
-        Integer mass = atom.getMassNumber();
-        if (mass == null)
-            return false;
-        IIsotope major = major(atom.getAtomicNumber());
-        if (major == null)
-            return false; // no major isotope
-        return major.getMassNumber().equals(mass);
-    }
-
-    /**
-     * Clear the isotope information from atoms that are major isotopes (e.g.
-     * <sup>12</sup>C, <sup>1</sup>H, etc).
-     *
-     * @param mol the molecule
-     */
-    public static void clearMajorIsotopes(IAtomContainer mol) {
-        for (IAtom atom : mol.atoms())
-            if (isMajor(atom)) {
-                atom.setMassNumber(null);
-                atom.setExactMass(null);
-                atom.setNaturalAbundance(null);
-            }
-    }
-
-    /**
-     * Clear the isotope information from istopes that are major (e.g.
-     * <sup>12</sup>C, <sup>1</sup>H, etc).
-     *
-     * @param formula the formula
-     */
-    public static void clearMajorIsotopes(IMolecularFormula formula) {
-        List<IIsotope> majorIsotopes = new ArrayList<>();
-        formula.isotopes().forEach(i -> {
-            if (isMajor(i)) majorIsotopes.add(i);
-        });
-        for (IIsotope iso : majorIsotopes) {
-            int count = formula.getIsotopeCount(iso);
-            formula.removeIsotope(iso);
-            if (iso instanceof ImmutableIsotope) {
-                iso = formula.getBuilder().newInstance(IIsotope.class, iso.getSymbol());
-                iso.setAtomicNumber(iso.getAtomicNumber());
-                iso.setMassNumber(null);
-                iso.setExactMass(null);
-                iso.setNaturalAbundance(null);
-            }
-            formula.addIsotope(iso, count);
         }
     }
 }
