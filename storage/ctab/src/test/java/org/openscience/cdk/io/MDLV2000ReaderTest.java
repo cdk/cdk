@@ -1732,6 +1732,37 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    // the parity refers to atom numbers, the order of the bond lines does not matter
+    @Test
+    void reading0DStereochemistryIndependentOfBondOrder() throws Exception {
+        String atoms = "L-alanine\n"
+                       + "\n"
+                       + "\n"
+                       + "  6  5  0  0  1  0            999 V2000\n"
+                       + "    0.0000    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n";
+        String bonds = "  2  4  1  0  0  0  0\n"
+                       + "  4  5  2  0  0  0  0\n"
+                       + "  4  6  1  0  0  0  0\n"
+                       + "M  END\n";
+        IAtomContainer sorted, swapped;
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(atoms + "  1  2  1  0  0  0  0\n" + "  2  3  1  0  0  0  0\n" + bonds))) {
+            sorted = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+        }
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(atoms + "  2  3  1  0  0  0  0\n" + "  1  2  1  0  0  0  0\n" + bonds))) {
+            swapped = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+        }
+        for (IAtomContainer mol : new IAtomContainer[]{sorted, swapped}) {
+            ITetrahedralChirality tc = (ITetrahedralChirality) mol.stereoElements().iterator().next();
+            assertThat(tc.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
+            assertThat(tc.getLigands(), is(new IAtom[]{mol.getAtom(0), mol.getAtom(2), mol.getAtom(3), mol.getAtom(1)}));
+        }
+    }
+
     /**
      * When atomic mass is defined as a delta some atoms don't have a reasonable
      * default. Most tools will output an 'M  ISO' property, so can be specified
