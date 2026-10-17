@@ -880,7 +880,7 @@ public class MolecularFormulaManipulator {
             IIsotope major = Isotopes.major(atom.getAtomicNumber());
             if (major != null)
                 return major.getExactMass();
-            return 2*atom.getAtomicNumber();
+            return 2d*atom.getAtomicNumber();
         }
     }
 

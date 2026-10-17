@@ -48,10 +48,8 @@ public class AtomMassGenerator extends BasicAtomGenerator {
     @Override
     public boolean showCarbon(IAtom atom, IAtomContainer container, RendererModel model) {
         Integer massNumber = atom.getMassNumber();
-        if (massNumber != null) {
-            // 12-C Major Isotope for always (hopefully)
-            if (!massNumber.equals(12)) return true;
-        }
+        // 12-C Major Isotope for always (hopefully)
+        if (massNumber != null && !massNumber.equals(12)) return true;
         return super.showCarbon(atom, container, model);
     }
 }

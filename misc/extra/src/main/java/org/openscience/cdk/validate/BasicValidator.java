@@ -19,10 +19,6 @@
  */
 package org.openscience.cdk.validate;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
@@ -38,6 +34,9 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Validator which tests a number of basic chemical semantics.

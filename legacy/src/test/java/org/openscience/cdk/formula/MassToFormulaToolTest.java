@@ -541,8 +541,6 @@ class MassToFormulaToolTest extends CDKTestCase {
         mfRange.addIsotope(Isotopes.major(IElement.H), 1, 100);
         mfRange.addIsotope(Isotopes.major(IElement.O), 1, 50);
         mfRange.addIsotope(Isotopes.major(IElement.N), 1, 50);
-        //    	mfRange.addIsotope( Isotopes.major(IElement.S), 0, 50);
-        //    	mfRange.addIsotope( Isotopes.major(IElement.P), 0, 50);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);

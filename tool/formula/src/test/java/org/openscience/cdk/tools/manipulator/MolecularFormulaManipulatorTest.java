@@ -1302,8 +1302,6 @@ class MolecularFormulaManipulatorTest {
 
     @Test
     void testMassNumberDisplay() throws Exception {
-        IIsotope br81 = Isotopes.get(IElement.Br, 81);
-
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = bldr.newInstance(IMolecularFormula.class);
 
