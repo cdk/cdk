@@ -18,12 +18,8 @@
  */
 package org.openscience.cdk.renderer.generators;
 
-import java.io.IOException;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
