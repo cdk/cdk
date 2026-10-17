@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.Isotope;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.io.FileOutputStream;
@@ -36,7 +35,6 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
