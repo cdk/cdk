@@ -150,14 +150,13 @@ public class Isotopes implements IsotopeFactory {
         for (IIsotope iso : majorIsotopes) {
             int count = formula.getIsotopeCount(iso);
             formula.removeIsotope(iso);
-            iso.setMassNumber(null);
-            // may be immutable
-            if (iso.getMassNumber() != null) {
+            if (iso instanceof ImmutableIsotope) {
                 iso = formula.getBuilder().newInstance(IIsotope.class, iso.getSymbol());
                 iso.setAtomicNumber(iso.getAtomicNumber());
+                iso.setMassNumber(null);
+                iso.setExactMass(null);
+                iso.setNaturalAbundance(null);
             }
-            iso.setExactMass(null);
-            iso.setNaturalAbundance(null);
             formula.addIsotope(iso, count);
         }
     }
