@@ -348,10 +348,11 @@ public class XMLIsotopeFactory implements IsotopeFactory {
             if (!success) {
                 try {
                     parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
-                            .newInstance();
+                                             .getDeclaredConstructor()
+                                             .newInstance();
                     logger.info("Using Xerces XML parser.");
                     success = true;
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     logger.warn("Could not instantiate Xerces XML reader!");
                     logger.debug(e);
                 }
