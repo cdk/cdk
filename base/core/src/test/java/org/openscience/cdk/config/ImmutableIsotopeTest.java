@@ -47,11 +47,21 @@ class ImmutableIsotopeTest {
     void testImmutable() {
         IIsotope isotope = new ImmutableIsotope(6, 12, 12.0, 99.0);
         // try mutations
-        isotope.setSymbol("N");
-        isotope.setAtomicNumber(5);
-        isotope.setMassNumber(15);
-        isotope.setExactMass(15.000);
-        isotope.setNaturalAbundance(0.364);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            isotope.setSymbol("N");
+        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            isotope.setAtomicNumber(5);
+        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            isotope.setMassNumber(15);
+        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            isotope.setExactMass(15.000);
+        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            isotope.setNaturalAbundance(0.364);
+        });
         // check if original
         Assertions.assertEquals(6, isotope.getAtomicNumber().intValue());
         Assertions.assertEquals(12, isotope.getMassNumber().intValue());
