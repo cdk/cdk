@@ -344,7 +344,8 @@ public class AtomContainerManipulator {
         if (!hasIsotopeSpecified(atom))
             return Isotopes.average(atom.getAtomicNumber());
         IIsotope isotope = Isotopes.get(atom.getAtomicNumber(), atom.getMassNumber());
-        return isotope != null ? isotope.getExactMass() : atom.getMassNumber();
+        return (isotope != null) ? isotope.getExactMass()
+                                 : (double)atom.getMassNumber();
     }
 
     public static final Comparator<IIsotope> NAT_ABUN_COMP = new Comparator<IIsotope>() {

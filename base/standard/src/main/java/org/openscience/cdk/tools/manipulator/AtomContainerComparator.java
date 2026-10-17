@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.IOException;
 import java.util.Comparator;
 
 /**

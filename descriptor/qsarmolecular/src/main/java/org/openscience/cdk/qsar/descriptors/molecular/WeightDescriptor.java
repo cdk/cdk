@@ -151,9 +151,7 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         double weight = 0;
-        double hydrogenNaturalMass;
-        IIsotope hydrogen = Isotopes.major(IElement.H);
-        hydrogenNaturalMass = Isotopes.average(IElement.H);
+        double hydrogenNaturalMass = Isotopes.average(IElement.H);
 
         if (elementName.equals("*")) {
             try {
