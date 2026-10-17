@@ -20,6 +20,7 @@ package org.openscience.cdk.config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -317,27 +318,28 @@ public class XMLIsotopeFactory implements IsotopeFactory {
         private void init() {
             boolean success = false;
             // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
-            if (!success) {
-                try {
-                    javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-                    spf.setNamespaceAware(true);
-                    javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
-                    parser = saxParser.getXMLReader();
-                    logger.info("Using JAXP/SAX XML parser.");
-                    success = true;
-                } catch (ParserConfigurationException | SAXException exception) {
-                    logger.warn("Could not instantiate JAXP/SAX XML reader!");
-                    logger.debug(exception);
-                }
+            try {
+                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                spf.setNamespaceAware(true);
+                javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
+                parser = saxParser.getXMLReader();
+                logger.info("Using JAXP/SAX XML parser.");
+                success = true;
+            } catch (ParserConfigurationException | SAXException exception) {
+                logger.warn("Could not instantiate JAXP/SAX XML reader!");
+                logger.debug(exception);
             }
+
             // Aelfred is first alternative.
             if (!success) {
                 try {
-                    parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
-                            .newInstance();
+                    parser = (XMLReader) this.getClass().getClassLoader()
+                                             .loadClass("gnu.xml.aelfred2.XmlReader")
+                                             .getDeclaredConstructor()
+                                             .newInstance();
                     logger.info("Using Aelfred2 XML parser.");
                     success = true;
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     logger.warn("Could not instantiate Aelfred2 XML reader!");
                     logger.debug(e);
                 }
