@@ -46,7 +46,8 @@ public class VerifyIsotopesTest {
         Assertions.assertEquals(actualIsotopes.size(),
                                 expectedIsotopes.size());
 
-        Comparator<IIsotope> comparator = Comparator.comparingInt((IIsotope o) -> o.getAtomicNumber()).thenComparingInt(IIsotope::getMassNumber);
+        Comparator<IIsotope> comparator = Comparator.comparingInt(IIsotope::getAtomicNumber)
+                                                    .thenComparingInt(IIsotope::getMassNumber);
         expectedIsotopes.sort(comparator);
         actualIsotopes.sort(comparator);
 
