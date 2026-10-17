@@ -295,8 +295,9 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
                 if (doubleBondCount > 0) maxBondOrder = 2.0;
                 if (tripleBondCount > 0) maxBondOrder = 3.0;
 
-                // isIn3MemberRing checker
-                if (rs.contains(atom)) {
+                // Only nitrogen and oxygen fragments distinguish three-membered rings.
+                if ((atom.getAtomicNumber() == IElement.N || atom.getAtomicNumber() == IElement.O)
+                        && rs.contains(atom)) {
                     IRingSet rsAtom = rs.getRings(atom);
                     for (int ringSetIndex = 0; ringSetIndex < rsAtom.getAtomContainerCount(); ringSetIndex++) {
                         IRing ring = (IRing) rsAtom.getAtomContainer(ringSetIndex);
