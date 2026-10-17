@@ -110,15 +110,14 @@ class TPSADescriptorTest extends MolecularDescriptorTest {
         IAtomContainer phosphorus = sp.parseSmiles("CP1CC1");
         IAtomContainer nitrogen = sp.parseSmiles("C1CN1");
         IAtomContainer oxygen = sp.parseSmiles("C1CO1");
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(25.30,
-                        ((DoubleResult) tpsa.calculate(sulfur).getValue()).doubleValue(), 0.01),
-                () -> Assertions.assertEquals(13.59,
-                        ((DoubleResult) tpsa.calculate(phosphorus).getValue()).doubleValue(), 0.01),
-                () -> Assertions.assertEquals(21.94,
-                        ((DoubleResult) tpsa.calculate(nitrogen).getValue()).doubleValue(), 0.01),
-                () -> Assertions.assertEquals(12.53,
-                        ((DoubleResult) tpsa.calculate(oxygen).getValue()).doubleValue(), 0.01));
+        Assertions.assertEquals(25.30,
+                        ((DoubleResult) tpsa.calculate(sulfur).getValue()).doubleValue(), 0.01);
+        Assertions.assertEquals(13.59,
+                        ((DoubleResult) tpsa.calculate(phosphorus).getValue()).doubleValue(), 0.01);
+        Assertions.assertEquals(21.94,
+                        ((DoubleResult) tpsa.calculate(nitrogen).getValue()).doubleValue(), 0.01);
+        Assertions.assertEquals(12.53,
+                        ((DoubleResult) tpsa.calculate(oxygen).getValue()).doubleValue(), 0.01);
     }
 
     @Test
