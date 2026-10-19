@@ -553,7 +553,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
             // atom properties
             int[] atomprops = new int[12];
-            atomprops[0] = determineIsotope(atom);
+            atomprops[0] = MDLIsotope.getRelativeMass(atom);
             atomprops[1] = determineCharge(container, atom);
             atomprops[2] = determineStereoParity(container, atomstereo, atomindex, atom);
             atomprops[5] = determineValence(container, atom);
@@ -1021,22 +1021,6 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 return 2;
             case +3:
                 return 1;
-        }
-        return 0;
-    }
-
-    private int determineIsotope(IAtom atom) {
-        Integer mass = atom.getMassNumber();
-        if (mass == null)
-            return 0;
-        IIsotope major = Isotopes.major(atom.getAtomicNumber());
-        if (!writeMajorIsotopes.isSet() &&
-                major != null &&
-                mass.equals(major.getMassNumber()))
-            mass = null;
-        if (mass != null) {
-            mass -= major != null ? major.getMassNumber() : 0;
-            return mass >= -3 && mass <= 4 ? mass : 0;
         }
         return 0;
     }

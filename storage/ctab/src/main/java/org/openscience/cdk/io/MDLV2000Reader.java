@@ -744,17 +744,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             parities.put(atom, parity);
 
         // if there was a mass difference, set the mass number
-        if (massDiff != 0 && atom.getAtomicNumber() > 0) {
-            // TODO: Ctab doesn't actually use major isotopes but
-            //       rather a fixed table, we should put that in
-            IIsotope majorIsotope = Isotopes.major(atom.getAtomicNumber());
-            if (majorIsotope == null) {
-                handleError("Ignored relative mass number (no major isotope) " + atom.getSymbol() + line);
-            } else if (majorIsotope.getMassNumber() + massDiff < 0) {
-                handleError("Relative mass number is negative " + atom.getSymbol() + " " + massDiff + line);
-            } else {
-                atom.setMassNumber(majorIsotope.getMassNumber() + massDiff);
-            }
+        if (massDiff != 0) {
+            if (!MDLIsotope.setAbsoluteMass(atom, massDiff))
+                handleError("Ignored relative mass number for unknown element:" + atom.getSymbol(), lineNum, 34, 35);
+            if (atom.getMassNumber() != null && atom.getMassNumber() < 0)
+                handleError("Relative mass number is negative " + atom.getSymbol() + " " + massDiff, lineNum, 34, 35);
         }
 
         if (valence > 0 && valence < 16) atom.setValency(valence == 15 ? 0 : valence);
@@ -1903,26 +1897,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         if (line.length() >= 36) {
             String massDiffString = line.substring(34, 36).trim();
             logger.debug("Mass difference: ", massDiffString);
-            if (!(atom instanceof IPseudoAtom)) {
-                try {
-                    int massDiff = Integer.parseInt(massDiffString);
-                    if (massDiff != 0) {
-                        // TODO: Ctab doesn't actually use major isotopes but
-                        //       rather a fixed table, we should put that in
-                        IIsotope major = Isotopes.major(Elements.ofString(element).number());
-                        if (major == null) {
-                            handleError("Ignored relative mass number (no major isotope) " + atom.getSymbol() + line);
-                        } else if (major.getMassNumber() + massDiff < 0) {
-                            handleError("Relative mass number is negative " + atom.getSymbol() + " " + massDiff + line);
-                        } else {
-                            atom.setMassNumber(major.getMassNumber() + massDiff);
-                        }
-                    }
-                } catch (NumberFormatException exception) {
-                    handleError("Could not parse mass difference field.", linecount, 35, 37, exception);
-                }
-            } else {
-                logger.error("Cannot set mass difference for a non-element!");
+            int massDiff = Integer.parseInt(massDiffString);
+            // if there was a mass difference, set the mass number
+            if (massDiff != 0) {
+                if (!MDLIsotope.setAbsoluteMass(atom, massDiff))
+                    handleError("Ignored relative mass number for unknown element:" + atom.getSymbol(), linecount, 34, 35);
+                if (atom.getMassNumber() != null && atom.getMassNumber() < 0)
+                    handleError("Relative mass number is negative " + atom.getSymbol() + " " + massDiff, linecount, 34, 35);
             }
         } else {
             handleError("Mass difference is missing", linecount, 34, 36);

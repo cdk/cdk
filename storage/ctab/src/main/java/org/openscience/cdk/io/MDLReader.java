@@ -439,19 +439,12 @@ public class MDLReader extends DefaultChemObjectReader {
                 // parse further fields
                 if (line.length() >= 36) {
                     String massDiffString = line.substring(34, 36).trim();
-                    logger.debug("Mass difference: ", massDiffString);
-                    if (!(atom instanceof IPseudoAtom)) {
-                        try {
-                            int massDiff = Integer.parseInt(massDiffString);
-                            if (massDiff != 0) {
-                                IIsotope major = Isotopes.major(Elements.ofString(element).number());
-                                atom.setMassNumber(major.getMassNumber() + massDiff);
-                            }
-                        } catch (NumberFormatException exception) {
-                            logger.error("Could not parse mass difference field");
-                        }
-                    } else {
-                        logger.error("Cannot set mass difference for a non-element!");
+                    int massDiff = Integer.parseInt(massDiffString);
+                    if (massDiff != 0) {
+                        if (!MDLIsotope.setAbsoluteMass(atom, massDiff))
+                            handleError("Ignored relative mass number for unknown element:" + atom.getSymbol(), linecount, 34, 35);
+                        if (atom.getMassNumber() != null && atom.getMassNumber() < 0)
+                            handleError("Relative mass number is negative " + atom.getSymbol() + " " + massDiff, linecount, 34, 35);
                     }
                 } else {
                     handleError("Mass difference is missing", linecount, 34, 36);

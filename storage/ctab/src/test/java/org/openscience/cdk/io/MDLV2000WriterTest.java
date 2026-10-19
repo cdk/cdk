@@ -135,6 +135,35 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
     }
 
     @Test
+    void testMassDelta_R() throws CDKException, IOException {
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.newAtom(IElement.Wildcard, 0).setMassNumber(3);
+        String molfile = writeToString(mol, new Properties());
+        MatcherAssert.assertThat(molfile, containsString("R   3"));
+    }
+
+    @Test
+    void testMassDelta_Sg() throws CDKException, IOException {
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.newAtom(IElement.Sg, 0).setMassNumber(265);
+        mol.newAtom(IElement.Sg, 0).setMassNumber(266);
+        mol.newAtom(IElement.Sg, 0).setMassNumber(267);
+        String molfile = writeToString(mol, new Properties());
+        MatcherAssert.assertThat(molfile, containsString("Sg -1"));
+        MatcherAssert.assertThat(molfile, containsString("Sg  0"));
+        MatcherAssert.assertThat(molfile, containsString("Sg  1"));
+    }
+
+    @Test
+    void testMassDeltaTooBig_Sg() throws CDKException, IOException {
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.newAtom(IElement.Sg, 0).setMassNumber(200);
+        String molfile = writeToString(mol, new Properties());
+        MatcherAssert.assertThat(molfile, containsString("Sg  0"));
+        MatcherAssert.assertThat(molfile, containsString("M  ISO  1   1 200"));
+    }
+
+    @Test
     void testWriteValence() throws Exception {
         StringWriter   writer   = new StringWriter();
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();

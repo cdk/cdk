@@ -1759,17 +1759,21 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * When atomic mass is defined as a delta some atoms don't have a reasonable
-     * default. Most tools will output an 'M  ISO' property, so can be specified
+     * default. We used to throw an exception but now we have the correct
+     * reference value of Sg.
+     * <p/>
+     * Note most tools will output an 'M  ISO' property, so can be specified
+     * via an absolute value.
      */
     @Test
     void seaborgiumMassDelta() {
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
-                                         MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
-                                        mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-                                    }
-                                });
+        try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            Assertions.assertEquals(267, mol.getAtom(0).getMassNumber());
+        } catch (IOException | CDKException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -1778,6 +1782,17 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
             IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(mol.getAtom(0).getMassNumber(), is(261));
+        }
+    }
+
+    @Test
+    void rMassDelta() {
+        try (InputStream in = getClass().getResourceAsStream("r-isotope.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            Assertions.assertEquals(1, mol.getAtom(0).getMassNumber());
+        } catch (IOException | CDKException e) {
+            throw new RuntimeException(e);
         }
     }
 
