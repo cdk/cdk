@@ -219,6 +219,23 @@ public final class Bounds implements IRenderingElement {
     }
 
     /**
+     * Returns the center x coordinate.
+     * @return the center x
+     */
+    public double centerX() {
+        return (minX + maxX) / 2;
+    }
+
+    /**
+     * Returns the center y coordinate.
+     * @return the center y
+     */
+    public double centerY() {
+        return (minY + maxY) / 2;
+    }
+
+
+    /**
      * The bounds are empty and contain no elements.
      *
      * @return bounds are empty (true) or not (false)
@@ -240,6 +257,8 @@ public final class Bounds implements IRenderingElement {
      */
     @Override
     public String toString() {
-        return "{{" + minX + ", " + minY + "} - {" + maxX + ", " + maxY + "}}";
+        if (isEmpty()) return "{empty}";
+        return String.format("Bounds{x=%.3f..%.3f,y=%.3f..%.3f}",
+                             minX, maxX, minY, maxY);
     }
 }
