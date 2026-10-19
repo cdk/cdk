@@ -315,6 +315,10 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <outputFile>${project.build.directory}/cdk-${project.parent.version}.jar</outputFile>
+                            <transformers>
+                                <!-- merge META-INF/services files from all modules instead of keeping the first -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
