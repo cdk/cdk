@@ -62,16 +62,21 @@ import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
-import static org.openscience.cdk.io.MDLV2000Writer.OptProgramName;
-import static org.openscience.cdk.io.MDLV2000Writer.OptTruncateLongData;
-import static org.openscience.cdk.io.MDLV2000Writer.OptWriteData;
 
 /**
  * Ctab V3000 format output. This writer provides output to the more modern (but less widely
@@ -92,6 +97,12 @@ import static org.openscience.cdk.io.MDLV2000Writer.OptWriteData;
  */
 public final class MDLV3000Writer extends DefaultChemObjectWriter {
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
+
+    // shared options with V2000
+    public static final String OptProgramName = MDLV2000Writer.OptProgramName;
+    public static final String OptTruncateLongData = MDLV2000Writer.OptTruncateLongData;
+    public static final String OptWriteData = MDLV2000Writer.OptWriteData;
+    public static final String OptAlwaysWriteValence = MDLV2000Writer.OptAlwaysWriteValence;
 
     /**
      * Enum representing the different types of bonds in MDL format.
@@ -154,6 +165,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     private StringIOSetting programNameOpt;
     private BooleanIOSetting writeDataOpt;
     private BooleanIOSetting truncateDataOpt;
+    private BooleanIOSetting writeValenceAlways;
     private Set<String> acceptedSdTags;
 
     /**
@@ -310,17 +322,17 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                     break;
             }
 
-            int expVal = 0;
+            int explicitValence = 0;
             for (IBond bond : mol.getConnectedBondsList(atom)) {
                 // If atom is part of a query bond we cannot calculate its explicit valence.
                 // The value ATOM_PART_OF_QUERY_BOND_EXPLICIT_VALENCE assigned to its explicit
                 // valence allows for easy identification of such atoms in the code below.
                 if (bond instanceof IQueryBond) {
-                    expVal = ATOM_PART_OF_QUERY_BOND_EXPLICIT_VALENCE;
+                    explicitValence = ATOM_PART_OF_QUERY_BOND_EXPLICIT_VALENCE;
                     break;
                 } else if (bond.getOrder() == null)
                     throw new CDKException("Unsupported bond order: " + bond.getOrder());
-                expVal += bond.getOrder().numeric();
+                explicitValence += bond.getOrder().numeric();
             }
 
             String symbol = getSymbol(atom, elem);
@@ -377,12 +389,16 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
             // Determine if we need to write the valence.
             // Valence is not written if atom is part of a query bond.
-            if (expVal != ATOM_PART_OF_QUERY_BOND_EXPLICIT_VALENCE &&
-                    MDLValence.implicitValence(elem, chg, expVal) - expVal != hcnt) {
-                int val = expVal + hcnt;
-                if (val <= 0 || val > 14)
-                    val = -1; // -1 is 0
-                writer.write(" VAL=").write(val);
+            if (explicitValence != ATOM_PART_OF_QUERY_BOND_EXPLICIT_VALENCE) {
+                int defaultValence = MDLValence.implicitValence(elem, chg, explicitValence);
+                Integer val = atom.getValency();
+                if (defaultValence - explicitValence != hcnt ||
+                    (writeValenceAlways.isSet() && val != null && val == defaultValence)) {
+                    val = explicitValence + hcnt;
+                    if (val <= 0 || val > 14)
+                        val = -1; // -1 is 0
+                    writer.write(" VAL=").write(val);
+                }
             }
 
             int i = MDLV2000Writer.determineStereoParity(mol, atomToStereo, idxs, atom);
@@ -1115,10 +1131,15 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                                                         "CDK"));
         writeDataOpt = addSetting(new BooleanIOSetting(OptWriteData,
                                                        IOSetting.Importance.LOW,
-                                                       "Should molecule properties be written as non-structural data", "false"));
+                                                       "Should molecule properties be written as non-structural data", false));
         truncateDataOpt = addSetting(new BooleanIOSetting(OptTruncateLongData,
                                                           IOSetting.Importance.LOW,
-                                                          "Truncate long data files >200 characters", "false"));
+                                                          "Truncate long data files >200 characters", false));
+        writeValenceAlways = addSetting(new BooleanIOSetting(OptAlwaysWriteValence,
+                                                             IOSetting.Importance.LOW,
+                                                             "The valence of an atoms is written when they differ from MDL's defaults (table driven)." +
+                                                             "If the valency is explicitly set (atom.setValency(int)) but is the same as the default should it still be written?",
+                                                             "false"));
     }
 
     public void customizeJob() {

@@ -496,7 +496,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     private void initIOSettings() {
         readOptimizedStructureOnly = addSetting(new BooleanIOSetting("ReadOptimizedStructureOnly",
                 IOSetting.Importance.LOW, "Should I only read the optimized structure from a geometry optimization?",
-                "false"));
+                false));
     }
 
     private void customizeJob() {

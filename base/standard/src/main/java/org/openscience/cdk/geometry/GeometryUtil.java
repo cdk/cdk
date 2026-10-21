@@ -649,19 +649,13 @@ public final class GeometryUtil {
         double zsum = 0.0;
 
         double totalmass = 0.0;
-        Isotopes isotopes;
-        try {
-            isotopes = Isotopes.getInstance();
-        } catch (IOException e) {
-            throw new RuntimeException("Could not initialize Isotopes");
-        }
 
         for (IAtom a : ac.atoms()) {
             Double mass = a.getExactMass();
             // some sanity checking
             if (a.getPoint3d() == null) return null;
             if (mass == null)
-                mass = isotopes.getNaturalMass(a);
+                mass = Isotopes.average(a.getAtomicNumber());
 
             totalmass += mass;
             xsum += mass * a.getPoint3d().x;

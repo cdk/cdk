@@ -106,11 +106,6 @@ class AtomPlacer3DTest {
         mol.addBond(5, 7, IBond.Order.SINGLE);
         mol.addBond(7, 8, IBond.Order.SINGLE);
         mol.addBond(7, 9, IBond.Order.SINGLE);
-        try {
-            Isotopes.getInstance().configureAtoms(mol);
-        } catch (IOException ex) {
-            Logger.getLogger(AtomPlacer3DTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return mol;
     }
 

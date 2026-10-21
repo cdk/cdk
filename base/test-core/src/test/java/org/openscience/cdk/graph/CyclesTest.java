@@ -443,6 +443,27 @@ class CyclesTest {
     }
 
     @Test
+    void testSmallRing_atom_fusedDifferentSizes() throws InvalidSmilesException {
+        assertAtomRingSizes("C1C2CCC12", 3, 3, 4, 4, 3);
+        assertAtomRingSizes("C12CC1CC2", 3, 3, 3, 4, 4);
+    }
+
+    @Test
+    void testSmallRing_atom_spiroDifferentSizes() throws InvalidSmilesException {
+        assertAtomRingSizes("C1CC11CCC1", 3, 3, 3, 4, 4, 4);
+    }
+
+    private static void assertAtomRingSizes(String smi, int... expected) throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles(smi);
+        Cycles.markRingAtomsAndBonds(mol);
+        for (int i = 0; i < expected.length; i++) {
+            Assertions.assertEquals(expected[i], Cycles.smallRingSize(mol.getAtom(i)));
+            Assertions.assertEquals(expected[i], Cycles.smallRingSize(mol.getAtom(i), expected[i]));
+            Assertions.assertEquals(0, Cycles.smallRingSize(mol.getAtom(i), expected[i] - 1));
+        }
+    }
+
+    @Test
     void testSmallRing_bond_spiro() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("C1CCCC11CCC1");
         Cycles.markRingAtomsAndBonds(mol); // required
@@ -461,5 +482,24 @@ class CyclesTest {
         // limit=3
         Assertions.assertEquals(0, Cycles.smallRingSize(mol.getBond(3), 3));
         Assertions.assertEquals(0, Cycles.smallRingSize(mol.getBond(7), 3));
+    }
+
+    @Test
+    void testSmallRing_bond_fusedDifferentSizes() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles("C1C2CCC12");
+        Cycles.markRingAtomsAndBonds(mol); // required
+        Assertions.assertEquals(0, Cycles.smallRingSize(mol.getBond(1), 3));
+        Assertions.assertEquals(4, Cycles.smallRingSize(mol.getBond(1), 4));
+        Assertions.assertEquals(4, Cycles.smallRingSize(mol.getBond(1), 5));
+    }
+
+    @Test
+    void testSmallRing_bond_naphthalene() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles("c1ccc2ccccc2c1");
+        Cycles.markRingAtomsAndBonds(mol); // required
+        for (IBond bond : mol.bonds()) {
+            Assertions.assertEquals(0, Cycles.smallRingSize(bond, 5));
+            Assertions.assertEquals(6, Cycles.smallRingSize(bond, 6));
+        }
     }
 }

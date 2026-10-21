@@ -18,10 +18,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.IOException;
-
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,6 +31,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.IOException;
 
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
@@ -48,9 +47,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
     private final static double   CARBON_MASS = 12.010735896788;
 
     private static double scaledAtomicMasses(IElement element) throws java.io.IOException, ClassNotFoundException {
-
-        IsotopeFactory isofac = Isotopes.getInstance();
-        double realmasses = isofac.getNaturalMass(element);
+        double realmasses = Isotopes.average(element.getAtomicNumber());
         return (realmasses / CARBON_MASS);
 
     }

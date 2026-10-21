@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.io.pubchemxml;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +32,7 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,7 +40,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
@@ -55,14 +52,9 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 public class PubChemXMLHelper {
 
     private final IChemObjectBuilder builder;
-    private final IsotopeFactory     factory;
 
-    /**
-     * @throws java.io.IOException if there is error in getting the {@link IsotopeFactory}
-     */
-    public PubChemXMLHelper(IChemObjectBuilder builder) throws IOException {
+    public PubChemXMLHelper(IChemObjectBuilder builder) {
         this.builder = builder;
-        factory = Isotopes.getInstance();
     }
 
     // general elements
@@ -202,13 +194,12 @@ public class PubChemXMLHelper {
             } else if (parser.getEventType() == XMLEvent.START_ELEMENT) {
                 if (EL_ELEMENT.equals(parser.getLocalName())) {
                     int atomicNumber = Integer.parseInt(parser.getElementText());
-                    IElement element = factory.getElement(atomicNumber);
-                    if (element == null) {
+                    if (!Elements.isValid(atomicNumber)) {
                         IAtom atom = molecule.getBuilder().newInstance(IPseudoAtom.class);
                         molecule.addAtom(atom);
                     } else {
-                        IAtom atom = molecule.getBuilder().newInstance(IAtom.class, element.getSymbol());
-                        atom.setAtomicNumber(element.getAtomicNumber());
+                        IAtom atom = molecule.getBuilder().newAtom();
+                        atom.setAtomicNumber(atomicNumber);
                         molecule.addAtom(atom);
                     }
                 }

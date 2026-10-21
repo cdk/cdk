@@ -27,9 +27,9 @@ import java.util.Stack;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -127,15 +127,10 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
 
         Integer massNumber = atom.getMassNumber();
         if (massNumber != null) {
-            try {
-                IsotopeFactory factory = Isotopes.getInstance();
-                int majorMass = factory.getMajorIsotope(atom.getSymbol()).getMassNumber();
-                if (massNumber != majorMass) {
-                    Position position = getNextPosition(unused);
-                    textGroup.addChild(String.valueOf(massNumber), position);
-                }
-            } catch (IOException io) {
-
+            IIsotope major = Isotopes.major(atom.getAtomicNumber());
+            if (major != null && !massNumber.equals(major.getMassNumber())) {
+                Position position = getNextPosition(unused);
+                textGroup.addChild(String.valueOf(massNumber), position);
             }
         }
     }

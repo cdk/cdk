@@ -104,6 +104,23 @@ class TPSADescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
+    void testThreeMemberedRings() throws Exception {
+        TPSADescriptor tpsa = new TPSADescriptor();
+        IAtomContainer sulfur = sp.parseSmiles("C1CS1");
+        IAtomContainer phosphorus = sp.parseSmiles("CP1CC1");
+        IAtomContainer nitrogen = sp.parseSmiles("C1CN1");
+        IAtomContainer oxygen = sp.parseSmiles("C1CO1");
+        Assertions.assertEquals(25.30,
+                        ((DoubleResult) tpsa.calculate(sulfur).getValue()).doubleValue(), 0.01);
+        Assertions.assertEquals(13.59,
+                        ((DoubleResult) tpsa.calculate(phosphorus).getValue()).doubleValue(), 0.01);
+        Assertions.assertEquals(21.94,
+                        ((DoubleResult) tpsa.calculate(nitrogen).getValue()).doubleValue(), 0.01);
+        Assertions.assertEquals(12.53,
+                        ((DoubleResult) tpsa.calculate(oxygen).getValue()).doubleValue(), 0.01);
+    }
+
+    @Test
     void testRing() throws Exception {
         sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C1CCCC1CCC2CCCNC2");

@@ -202,11 +202,11 @@ public abstract class Pattern {
     /**
      * Create a pattern which can be used to find molecules which contain the
      * {@code query} structure. The default structure search implementation is
-     * {@link VentoFoggia}.
+     * {@link DfPattern}.
      *
      * @param query the substructure to find
      * @return a pattern for finding the {@code query}
-     * @see VentoFoggia
+     * @see DfPattern
      */
     public static Pattern findSubstructure(IAtomContainer query) {
         return DfPattern.findSubstructure(query);

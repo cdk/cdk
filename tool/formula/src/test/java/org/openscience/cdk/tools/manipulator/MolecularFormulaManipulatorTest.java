@@ -25,7 +25,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Isotope;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormula;
@@ -39,7 +38,6 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,20 +56,12 @@ import static org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator.
 class MolecularFormulaManipulatorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    private IsotopeFactory                  ifac;
 
     /**
      *  Constructor for the MolecularFormulaManipulatorTest object.
      */
     MolecularFormulaManipulatorTest() {
-
         super();
-        try {
-            ifac = Isotopes.getInstance();
-        } catch (IOException e) {
-            LoggingToolFactory.createLoggingTool(MolecularFormulaManipulatorTest.class)
-                              .warn("Unexpected Error:", e);
-        }
     }
 
     /** Test atom and isotope count for methyl-group. */
@@ -296,8 +286,8 @@ class MolecularFormulaManipulatorTest {
 
         Assertions.assertEquals(28, getAtomCount(mf2));
         Assertions.assertEquals(2, mf2.getIsotopeCount());
-        IIsotope carbon = Isotopes.getInstance().getMajorIsotope("C");
-        IIsotope hydrogen = Isotopes.getInstance().getMajorIsotope("H");
+        IIsotope carbon = Isotopes.major(IElement.C);
+        IIsotope hydrogen = Isotopes.major(IElement.H);
         double totalMass = carbon.getExactMass() * 11;
         totalMass += hydrogen.getExactMass() * 17;
         Assertions.assertEquals(totalMass, getTotalExactMass(mf2), 0.0000001);
@@ -393,8 +383,8 @@ class MolecularFormulaManipulatorTest {
         formula.addIsotope(builder.newInstance(IIsotope.class, "Cl"));
 
         double expectedMass = 0.0;
-        expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class, "C"));
-        expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class, "Cl"));
+        expectedMass += Isotopes.average(IElement.C);
+        expectedMass += Isotopes.average(IElement.Cl);
 
         double totalExactMass = MolecularFormulaManipulator.getNaturalExactMass(formula);
         Assertions.assertEquals(expectedMass, totalExactMass, 0.000001);
@@ -417,8 +407,8 @@ class MolecularFormulaManipulatorTest {
         formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 4);
 
         double expectedMass = 0.0;
-        expectedMass += Isotopes.getInstance().getMajorIsotope("C").getExactMass();
-        expectedMass += 4.0 * Isotopes.getInstance().getMajorIsotope("H").getExactMass();
+        expectedMass += Isotopes.major(IElement.C).getExactMass();
+        expectedMass += 4.0 * Isotopes.major(IElement.H).getExactMass();
 
         double totalExactMass = MolecularFormulaManipulator.getMajorIsotopeMass(formula);
         Assertions.assertEquals(expectedMass, totalExactMass, 0.000001);
@@ -603,16 +593,16 @@ class MolecularFormulaManipulatorTest {
     @Test
     void testGetHTML_IMolecularFormulaWithIsotope() {
         MolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 2);
-        formula.addIsotope(ifac.getMajorIsotope("H"), 6);
+        formula.addIsotope(Isotopes.major(IElement.C), 2);
+        formula.addIsotope(Isotopes.major(IElement.H), 6);
         Assertions.assertEquals("<sup>12</sup>C<sub>2</sub><sup>1</sup>H<sub>6</sub>", getHTML(formula, false, true));
     }
 
     @Test
     void testGetHTML_IMolecularFormulaWithIsotopeAndCharge() {
         MolecularFormula formula = new MolecularFormula();
-        formula.addIsotope(ifac.getMajorIsotope("C"), 2);
-        formula.addIsotope(ifac.getMajorIsotope("H"), 6);
+        formula.addIsotope(Isotopes.major(IElement.C), 2);
+        formula.addIsotope(Isotopes.major(IElement.H), 6);
         formula.setCharge(1);
         Assertions.assertEquals("<sup>12</sup>C<sub>2</sub><sup>1</sup>H<sub>6</sub><sup>+</sup>", getHTML(formula, true, true));
     }
@@ -1220,8 +1210,7 @@ class MolecularFormulaManipulatorTest {
 
     @Test
     void noNullPointerForStaticIsotopes() throws Exception {
-        Isotopes is = Isotopes.getInstance();
-        IIsotope carbon = is.getMajorIsotope("C");
+        IIsotope carbon = Isotopes.major(IElement.C);
         MolecularFormula mf = new MolecularFormula();
         mf.addIsotope(carbon, 10);
         MolecularFormulaManipulator.getNaturalExactMass(mf);
@@ -1296,12 +1285,12 @@ class MolecularFormulaManipulatorTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = bldr.newInstance(IMolecularFormula.class);
         // [C6DH4O]- (parser not good enough ATM so need to create like this)
-        IIsotope deuterium = Isotopes.getInstance().getIsotope("H", 2);
-        IIsotope hydrogen = Isotopes.getInstance().getMajorIsotope(1);
+        IIsotope deuterium = Isotopes.get(IElement.H, 2);
+        IIsotope hydrogen = Isotopes.major(IElement.H);
         mf.addIsotope(deuterium, 1);
         mf.addIsotope(hydrogen, 4);
-        mf.addIsotope(Isotopes.getInstance().getMajorIsotope(6), 6);
-        mf.addIsotope(Isotopes.getInstance().getMajorIsotope(8), 1);
+        mf.addIsotope(Isotopes.major(IElement.C), 6);
+        mf.addIsotope(Isotopes.major(IElement.O), 1);
         mf.setCharge(-1);
         Assertions.assertTrue(adjustProtonation(mf, +1));
         assertThat(MolecularFormulaManipulator.getString(mf), is("C6H6O"));
@@ -1313,9 +1302,6 @@ class MolecularFormulaManipulatorTest {
 
     @Test
     void testMassNumberDisplay() throws Exception {
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope br81 = ifac.getIsotope("Br", 81);
-
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = bldr.newInstance(IMolecularFormula.class);
 
@@ -1323,7 +1309,7 @@ class MolecularFormulaManipulatorTest {
         mf.addIsotope(new Atom("O"), 3);
         mf.addIsotope(new Atom("H"), 3);
         mf.addIsotope(new Atom("Br"), 1);
-        mf.addIsotope(ifac.getIsotope("Br", 81), 1);
+        mf.addIsotope(Isotopes.get(IElement.Br, 81), 1);
 
         assertThat(MolecularFormulaManipulator.getString(mf, false, false), is("C7H3Br2O3"));
         assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3Br[81]BrO3"));
@@ -1347,16 +1333,14 @@ class MolecularFormulaManipulatorTest {
 
     @Test
     void testMassNumberDisplayWithDefinedIsotopes() throws Exception {
-        IsotopeFactory ifac = Isotopes.getInstance();
-
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = bldr.newInstance(IMolecularFormula.class);
 
-        mf.addIsotope(ifac.getMajorIsotope("C"), 7);
-        mf.addIsotope(ifac.getMajorIsotope("O"), 3);
-        mf.addIsotope(ifac.getMajorIsotope("H"), 3);
-        mf.addIsotope(ifac.getMajorIsotope("Br"), 1);
-        mf.addIsotope(ifac.getIsotope("Br", 81), 1);
+        mf.addIsotope(Isotopes.major(IElement.C), 7);
+        mf.addIsotope(Isotopes.major(IElement.O), 3);
+        mf.addIsotope(Isotopes.major(IElement.H), 3);
+        mf.addIsotope(Isotopes.major(IElement.Br), 1);
+        mf.addIsotope(Isotopes.get(IElement.Br, 81), 1);
         Isotopes.clearMajorIsotopes(mf);
         assertThat(MolecularFormulaManipulator.getString(mf, false, false), is("C7H3Br2O3"));
         assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3Br[81]BrO3"));

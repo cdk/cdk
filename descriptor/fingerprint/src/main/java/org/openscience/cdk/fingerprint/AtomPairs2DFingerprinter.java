@@ -204,6 +204,7 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
     public ICountFingerprint getCountFingerprint(IAtomContainer mol) throws CDKException {
         final Map<String,Integer> raw  = getRawFingerprint(mol);
         final List<String>        keys = new ArrayList<>(raw.keySet());
+        keys.sort((a, b) -> pathToBit.get(a).compareTo(pathToBit.get(b)));
         return new ICountFingerprint() {
             @Override
             public long size() {
@@ -238,12 +239,12 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
 
             @Override
             public boolean hasHash(int hash) {
-                return bitToPath.containsKey(hash);
+                return raw.containsKey(bitToPath.get(hash));
             }
 
             @Override
             public int getCountForHash(int hash) {
-                return raw.get(bitToPath.get(hash));
+                return raw.getOrDefault(bitToPath.get(hash), 0);
             }
         };
     }

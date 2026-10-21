@@ -1202,7 +1202,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
             } else if (se instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
                 final IAtom common = db.getFocus().getConnectedAtom(removedBond);
-                if (common != null) {
+                if (common != null && db.getCarriers().contains(removedBond)) {
                     IBond otherBond = null;
                     // we can pick another bond to use
                     if (common.getBondCount() > 1) {
@@ -1214,7 +1214,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
                         }
                     }
                     if (otherBond != null)
-                        stereo.set(i, ((IStereoElement<IBond, IBond>) se).updateCarriers(removedBond, otherBond));
+                        stereo.set(i, new DoubleBondStereochemistry(db.getStereoBond(), db.getBonds(), db.getStereo().invert())
+                                .updateCarriers(removedBond, otherBond));
                     else
                         invalidated.add(se); // there is no other bond to switch to
                 }

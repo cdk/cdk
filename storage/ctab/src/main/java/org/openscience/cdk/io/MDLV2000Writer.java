@@ -80,6 +80,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -125,6 +126,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public static final String OptWriteDefaultProperties = "WriteDefaultProperties";
     public static final String OptProgramName = "ProgramName";
     public static final String OptWriteData = "writeProperties";
+    public static final String OptAlwaysWriteValence = "AlwaysWriteValence";
     public static final String OptTruncateLongData = "TruncateLongData";
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
@@ -222,6 +224,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private BooleanIOSetting writeDataOpt;
 
     private BooleanIOSetting truncateDataOpt;
+
+    private BooleanIOSetting writeValenceAlways;
 
     private StringIOSetting programNameOpt;
 
@@ -549,7 +553,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
             // atom properties
             int[] atomprops = new int[12];
-            atomprops[0] = determineIsotope(atom);
+            atomprops[0] = MDLIsotope.getRelativeMass(atom);
             atomprops[1] = determineCharge(container, atom);
             atomprops[2] = determineStereoParity(container, atomstereo, atomindex, atom);
             atomprops[5] = determineValence(container, atom);
@@ -1021,27 +1025,6 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         return 0;
     }
 
-    private int determineIsotope(IAtom atom) {
-        Integer mass = atom.getMassNumber();
-        IIsotope major = null;
-        if (mass == null)
-            return 0;
-        try {
-            major = Isotopes.getInstance().getMajorIsotope(atom.getSymbol());
-        } catch (IOException e) {
-            // ignored
-        }
-        if (!writeMajorIsotopes.isSet() &&
-                major != null &&
-                mass.equals(major.getMassNumber()))
-            mass = null;
-        if (mass != null) {
-            mass -= major != null ? major.getMassNumber() : 0;
-            return mass >= -3 && mass <= 4 ? mass : 0;
-        }
-        return 0;
-    }
-
     private int determineAtomMap(IAtom atom) {
         Object amap = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
         if (amap == null)
@@ -1062,29 +1045,50 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         }
     }
 
+    /**
+     * Calculates the valence to be stored as a property of the atom.
+     * The valence (bond orders + impl H) is only stored if the element is
+     * defined and either the implicit hydrogen count or the valence property
+     * is set.
+     * <br/>
+     * The valence is used by the reader to determine how many hydrogens to add.
+     * If the stored value is 0 (default) then the number of hydrogens is table
+     * driven, values 1 ... 14 this is used to calculate the number of
+     * hydrogens. A stored value of 15 indicated 0 valence and no hydrogens
+     * should be added.
+     *
+     * @param container the container
+     * @param atom the atom
+     * @return the valence value (0=default,1,2,3,4,15=0)
+     */
     private int determineValence(IAtomContainer container, IAtom atom) {
-        int explicitValence = (int) AtomContainerManipulator.getBondOrderSum(container, atom);
-        int charge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
-        Integer element = atom.getAtomicNumber();
-        int valence = 0;
-
-        if (element != null) {
-            int implied = MDLValence.implicitValence(element, charge, explicitValence);
-            int actual;
-            if (atom.getImplicitHydrogenCount() != null)
-                actual = explicitValence + atom.getImplicitHydrogenCount();
-            else if (atom.getValency() != null)
-                actual = atom.getValency();
-            else
-                return 0;
-            if (implied != actual) {
-                if (actual == 0)
-                    return 15;
-                else if (actual > 0 && actual < 15)
-                    return actual;
-            }
+        if (atom.getAtomicNumber() == null)
+            return 0;
+        int bondedValence = (int) AtomContainerManipulator.getBondOrderSum(container, atom);
+        Integer valence = null;
+        Integer hcount  = atom.getImplicitHydrogenCount();
+        if (hcount != null) {
+            valence = bondedValence + hcount;
+        } else if (atom.getValency() != null) {
+            valence = atom.getValency();
+        } else {
+            return 0;
         }
-        return valence;
+
+        int charge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
+
+        int implied = MDLValence.implicitValence(atom.getAtomicNumber(), charge, bondedValence);
+
+        if (implied != valence) {
+            if (valence <= 0)
+                return 15;
+            else if (valence < 15)
+                return valence;
+        } else if (writeValenceAlways.isSet() &&
+                   Objects.equals(atom.getValency(), valence)) {
+            return valence;
+        }
+        return 0;
     }
 
     static int determineStereoParity(IAtomContainer container,
@@ -1113,9 +1117,9 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     int a = outputOrder.get(carriers[i]);
                     int b = outputOrder.get(carriers[j]);
                     if (i == hidx)
-                        a = container.getAtomCount();
+                        a = container.getAtomCount() + 1;
                     if (j == hidx)
-                        b = container.getAtomCount();
+                        b = container.getAtomCount() + 1;
                     if (a > b)
                         parity ^= 0x3;
                 }
@@ -1127,12 +1131,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private boolean isMajorIsotope(IAtom atom) {
         if (atom.getMassNumber() == null)
             return false;
-        try {
-            IIsotope major = Isotopes.getInstance().getMajorIsotope(atom.getSymbol());
-            return major != null && major.getMassNumber().equals(atom.getMassNumber());
-        } catch (IOException ex) {
-            return false;
-        }
+        IIsotope major = Isotopes.major(atom.getAtomicNumber());
+        return major != null && major.getMassNumber().equals(atom.getMassNumber());
     }
 
     private void writeSgroups(IAtomContainer container, BufferedWriter writer, Map<IAtom, Integer> atomidxs) throws IOException {
@@ -1540,27 +1540,33 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      */
     private void initIOSettings() {
         forceWriteAs2DCoords = addSetting(new BooleanIOSetting(OptForceWriteAs2DCoordinates, IOSetting.Importance.LOW,
-                "Should coordinates always be written as 2D?", "false"));
+                "Should coordinates always be written as 2D?", false));
         writeMajorIsotopes = addSetting(new BooleanIOSetting(OptWriteMajorIsotopes, IOSetting.Importance.LOW,
                 "Write atomic mass of any non-null atomic mass including major isotopes (e.g. [12]C)", "true"));
         writeAromaticBondTypes = addSetting(new BooleanIOSetting(OptWriteAromaticBondTypes, IOSetting.Importance.LOW,
-                "Should aromatic bonds be written as bond type 4?", "false"));
+                "Should aromatic bonds be written as bond type 4?", false));
         writeQueryFormatValencies = addSetting(new BooleanIOSetting(OptWriteQueryFormatValencies,
                 IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
         writeTrailingZeros = addSetting(new BooleanIOSetting(OptWriteDefaultProperties,
                 IOSetting.Importance.LOW,
                 "Write trailing zero's on atom/bond property blocks even if they're not used.",
-                "true"));
+                true));
         programNameOpt = addSetting(new StringIOSetting(OptProgramName,
                 IOSetting.Importance.LOW,
                 "Program name to write at the top of the molfile header, should be exactly 8 characters long",
                 "CDK"));
         writeDataOpt = addSetting(new BooleanIOSetting(OptWriteData,
                 IOSetting.Importance.LOW,
-                "Should molecule properties be written as non-structural data", "false"));
+                "Should molecule properties be written as non-structural data", false));
+        // should probably be an enum: always (true), when-needed (false), never
+        writeValenceAlways = addSetting(new BooleanIOSetting(OptAlwaysWriteValence,
+                                                             IOSetting.Importance.LOW,
+                                                             "The valence of an atoms is written when they differ from MDL's defaults (table driven)." +
+                                                             "If the valency is explicitly set (atom.setValency(int)) but is the same as the default should it still be written?",
+                                                             "false"));
         truncateDataOpt = addSetting(new BooleanIOSetting(OptTruncateLongData,
                 IOSetting.Importance.LOW,
-                "Truncate long data files >200 characters", "false"));
+                "Truncate long data files >200 characters", false));
     }
 
     /**

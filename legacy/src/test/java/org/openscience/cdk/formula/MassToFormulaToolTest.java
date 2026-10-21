@@ -18,28 +18,26 @@
  */
 package org.openscience.cdk.formula;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.ElementRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.IsotopePatternRule;
 import org.openscience.cdk.formula.rules.ToleranceRangeRule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Checks the functionality of the MassToFormulaTool.
@@ -49,20 +47,12 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 class MassToFormulaToolTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    private IsotopeFactory                  ifac;
 
     /**
      *  Constructor for the MassToFormulaToolTest object.
      */
     MassToFormulaToolTest() {
-
         super();
-        try {
-            ifac = Isotopes.getInstance();
-        } catch (IOException e) {
-            LoggingToolFactory.createLoggingTool(MassToFormulaToolTest.class)
-                              .warn("Unexpected Error:", e);
-        }
     }
 
     /**
@@ -128,14 +118,14 @@ class MassToFormulaToolTest extends CDKTestCase {
         Object[] objects = elemR.getParameters();
         MolecularFormulaRange mfRange = (MolecularFormulaRange) objects[0];
         Assertions.assertEquals(4, mfRange.getIsotopeCount());
-        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("C")));
-        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("C")));
-        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("H")));
-        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("H")));
-        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("N")));
-        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("N")));
-        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(ifac.getMajorIsotope("O")));
-        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(ifac.getMajorIsotope("O")));
+        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(Isotopes.major(IElement.C)));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(Isotopes.major(IElement.C)));
+        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(Isotopes.major(IElement.H)));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(Isotopes.major(IElement.H)));
+        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(Isotopes.major(IElement.N)));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(Isotopes.major(IElement.N)));
+        Assertions.assertEquals(15, mfRange.getIsotopeCountMax(Isotopes.major(IElement.O)));
+        Assertions.assertEquals(0, mfRange.getIsotopeCountMin(Isotopes.major(IElement.O)));
 
         ChargeRule chargeR = (ChargeRule) rules.get(1);
         Assertions.assertEquals(1, chargeR.getParameters().length);
@@ -317,10 +307,10 @@ class MassToFormulaToolTest extends CDKTestCase {
     @Test
     void testValidation_Orthinine() {
 
-        IIsotope carb = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope oxy = ifac.getMajorIsotope("O");
-        IIsotope nit = ifac.getMajorIsotope("N");
+        IIsotope carb = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope oxy = Isotopes.major(IElement.O);
+        IIsotope nit = Isotopes.major(IElement.N);
 
         // FIXME: MF: this looks like two tests... is that really so?
         // FIXME: MF: M: It is only one. But it generates 8 MF and I put two to check
@@ -343,15 +333,15 @@ class MassToFormulaToolTest extends CDKTestCase {
         Assertions.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(0)));
         Assertions.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0).getIsotopeCount());
         Assertions.assertEquals(mf1.getIsotopeCount(carb), mfSet.getMolecularFormula(0).getIsotopeCount(carb));
-        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(0)
-                                                                                     .getIsotopeCount(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(mf1.getIsotopeCount(Isotopes.major(IElement.N)), mfSet.getMolecularFormula(0)
+                                                                                     .getIsotopeCount(Isotopes.major(IElement.N)));
 
         Assertions.assertEquals(MolecularFormulaManipulator.getAtomCount(mf2), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(1)));
         Assertions.assertEquals(mf2.getIsotopeCount(), mfSet.getMolecularFormula(1).getIsotopeCount());
-        Assertions.assertEquals(mf2.getIsotopeCount(ifac.getMajorIsotope("C")), mfSet.getMolecularFormula(1)
-                                                                                     .getIsotopeCount(ifac.getMajorIsotope("C")));
-        Assertions.assertEquals(mf2.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(1)
-                                                                                     .getIsotopeCount(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(mf2.getIsotopeCount(Isotopes.major(IElement.C)), mfSet.getMolecularFormula(1)
+                                                                                     .getIsotopeCount(Isotopes.major(IElement.C)));
+        Assertions.assertEquals(mf2.getIsotopeCount(Isotopes.major(IElement.N)), mfSet.getMolecularFormula(1)
+                                                                                     .getIsotopeCount(Isotopes.major(IElement.N)));
 
     }
 
@@ -364,8 +354,8 @@ class MassToFormulaToolTest extends CDKTestCase {
     @Test
     void testValidation_Orthinine_Restrictions() throws Exception {
 
-        IIsotope carb = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope carb = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
 
         IMolecularFormula mf1 = new MolecularFormula();
         mf1.addIsotope(carb, 10);
@@ -377,10 +367,10 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(ifac.getMajorIsotope("C"), 10, 20);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 0, 20);
-        mfRange.addIsotope(ifac.getMajorIsotope("O"), 0, 1);
-        mfRange.addIsotope(ifac.getMajorIsotope("N"), 0, 1);
+        mfRange.addIsotope(Isotopes.major(IElement.C), 10, 20);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 0, 20);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 0, 1);
+        mfRange.addIsotope(Isotopes.major(IElement.N), 0, 1);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -392,10 +382,10 @@ class MassToFormulaToolTest extends CDKTestCase {
 
         Assertions.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(0)));
         Assertions.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0).getIsotopeCount());
-        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("C")), mfSet.getMolecularFormula(0)
-                                                                                     .getIsotopeCount(ifac.getMajorIsotope("C")));
-        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(0)
-                                                                                     .getIsotopeCount(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(mf1.getIsotopeCount(Isotopes.major(IElement.C)), mfSet.getMolecularFormula(0)
+                                                                                     .getIsotopeCount(Isotopes.major(IElement.C)));
+        Assertions.assertEquals(mf1.getIsotopeCount(Isotopes.major(IElement.N)), mfSet.getMolecularFormula(0)
+                                                                                     .getIsotopeCount(Isotopes.major(IElement.N)));
 
     }
 
@@ -408,10 +398,10 @@ class MassToFormulaToolTest extends CDKTestCase {
     @Test
     void testValidation_Arginine_Restrictions() throws Exception {
 
-        IIsotope carb = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope nitro = ifac.getMajorIsotope("N");
-        IIsotope oxy = ifac.getMajorIsotope("O");
+        IIsotope carb = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope nitro = Isotopes.major(IElement.N);
+        IIsotope oxy = Isotopes.major(IElement.O);
 
         IMolecularFormula mf1 = new MolecularFormula();
         mf1.addIsotope(carb, 6);
@@ -440,10 +430,10 @@ class MassToFormulaToolTest extends CDKTestCase {
 
         Assertions.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(13)));
         Assertions.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(13).getIsotopeCount());
-        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("C")), mfSet.getMolecularFormula(13)
-                                                                                     .getIsotopeCount(ifac.getMajorIsotope("C")));
-        Assertions.assertEquals(mf1.getIsotopeCount(ifac.getMajorIsotope("N")), mfSet.getMolecularFormula(13)
-                                                                                     .getIsotopeCount(ifac.getMajorIsotope("N")));
+        Assertions.assertEquals(mf1.getIsotopeCount(Isotopes.major(IElement.C)), mfSet.getMolecularFormula(13)
+                                                                                     .getIsotopeCount(Isotopes.major(IElement.C)));
+        Assertions.assertEquals(mf1.getIsotopeCount(Isotopes.major(IElement.N)), mfSet.getMolecularFormula(13)
+                                                                                     .getIsotopeCount(Isotopes.major(IElement.N)));
 
     }
 
@@ -462,10 +452,10 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(ifac.getMajorIsotope("C"), 0, 40);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 0, 40);
-        mfRange.addIsotope(ifac.getMajorIsotope("O"), 0, 10);
-        mfRange.addIsotope(ifac.getMajorIsotope("N"), 0, 20);
+        mfRange.addIsotope(Isotopes.major(IElement.C), 0, 40);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 0, 40);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 0, 10);
+        mfRange.addIsotope(Isotopes.major(IElement.N), 0, 20);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -485,13 +475,13 @@ class MassToFormulaToolTest extends CDKTestCase {
         Assertions.assertSame(3, mfSet.size());
 
         IMolecularFormula mf1 = new MolecularFormula();
-        IIsotope carb = ifac.getMajorIsotope("C");
+        IIsotope carb = Isotopes.major(IElement.C);
         mf1.addIsotope(carb, 37);
-        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope h = Isotopes.major(IElement.H);
         mf1.addIsotope(h, 38);
-        IIsotope oxy = ifac.getMajorIsotope("O");
+        IIsotope oxy = Isotopes.major(IElement.O);
         mf1.addIsotope(oxy, 10);
-        IIsotope nit = ifac.getMajorIsotope("N");
+        IIsotope nit = Isotopes.major(IElement.N);
         mf1.addIsotope(nit, 4);
 
         Assertions.assertEquals(MolecularFormulaManipulator.getString(mf1), MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
@@ -513,11 +503,11 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(ifac.getMajorIsotope("C"), 0, 200);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 0, 200);
-        mfRange.addIsotope(ifac.getMajorIsotope("O"), 0, 200);
-        mfRange.addIsotope(ifac.getMajorIsotope("N"), 0, 50);
-        mfRange.addIsotope(ifac.getMajorIsotope("S"), 0, 50);
+        mfRange.addIsotope(Isotopes.major(IElement.C), 0, 200);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 0, 200);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 0, 200);
+        mfRange.addIsotope(Isotopes.major(IElement.N), 0, 50);
+        mfRange.addIsotope(Isotopes.major(IElement.S), 0, 50);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -547,12 +537,10 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(ifac.getMajorIsotope("C"), 1, 50);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 1, 100);
-        mfRange.addIsotope(ifac.getMajorIsotope("O"), 1, 50);
-        mfRange.addIsotope(ifac.getMajorIsotope("N"), 1, 50);
-        //    	mfRange.addIsotope( ifac.getMajorIsotope("S"), 0, 50);
-        //    	mfRange.addIsotope( ifac.getMajorIsotope("P"), 0, 50);
+        mfRange.addIsotope(Isotopes.major(IElement.C), 1, 50);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 1, 100);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 1, 50);
+        mfRange.addIsotope(Isotopes.major(IElement.N), 1, 50);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -593,10 +581,10 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(ifac.getMajorIsotope("C"), 1, 50);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 1, 100);
-        mfRange.addIsotope(ifac.getMajorIsotope("O"), 1, 50);
-        mfRange.addIsotope(ifac.getMajorIsotope("N"), 1, 50);
+        mfRange.addIsotope(Isotopes.major(IElement.C), 1, 50);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 1, 100);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 1, 50);
+        mfRange.addIsotope(Isotopes.major(IElement.N), 1, 50);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -636,10 +624,10 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(ifac.getMajorIsotope("C"), 0, 10);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 7, 15);
-        mfRange.addIsotope(ifac.getMajorIsotope("O"), 0, 5);
-        mfRange.addIsotope(ifac.getMajorIsotope("N"), 0, 9);
+        mfRange.addIsotope(Isotopes.major(IElement.C), 0, 10);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 7, 15);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 0, 5);
+        mfRange.addIsotope(Isotopes.major(IElement.N), 0, 9);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -659,13 +647,13 @@ class MassToFormulaToolTest extends CDKTestCase {
         Assertions.assertNotSame(0, mfSet.size());
 
         IMolecularFormula mf1 = new MolecularFormula();
-        IIsotope carb = ifac.getMajorIsotope("C");
+        IIsotope carb = Isotopes.major(IElement.C);
         mf1.addIsotope(carb, 5);
-        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope h = Isotopes.major(IElement.H);
         mf1.addIsotope(h, 11);
-        IIsotope oxy = ifac.getMajorIsotope("O");
+        IIsotope oxy = Isotopes.major(IElement.O);
         mf1.addIsotope(oxy, 1);
-        IIsotope nit = ifac.getMajorIsotope("N");
+        IIsotope nit = Isotopes.major(IElement.N);
         mf1.addIsotope(nit, 2);
 
         Assertions.assertEquals(MolecularFormulaManipulator.getString(mf1), MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
@@ -687,13 +675,13 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(ifac.getMajorIsotope("C"), 7, 9);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 8, 10);
-        mfRange.addIsotope(ifac.getMajorIsotope("O"), 1, 3);
-        mfRange.addIsotope(ifac.getMajorIsotope("N"), 1, 2);
-        mfRange.addIsotope(ifac.getMajorIsotope("S"), 1, 2);
-        mfRange.addIsotope(ifac.getMajorIsotope("P"), 1, 2);
-        mfRange.addIsotope(ifac.getMajorIsotope("Cl"), 2, 4);
+        mfRange.addIsotope(Isotopes.major(IElement.C), 7, 9);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 8, 10);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 1, 3);
+        mfRange.addIsotope(Isotopes.major(IElement.N), 1, 2);
+        mfRange.addIsotope(Isotopes.major(IElement.S), 1, 2);
+        mfRange.addIsotope(Isotopes.major(IElement.P), 1, 2);
+        mfRange.addIsotope(Isotopes.major(IElement.Cl), 2, 4);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -713,19 +701,19 @@ class MassToFormulaToolTest extends CDKTestCase {
         Assertions.assertNotSame(0, mfSet.size());
 
         IMolecularFormula mf1 = new MolecularFormula();
-        IIsotope carb = ifac.getMajorIsotope("C");
+        IIsotope carb = Isotopes.major(IElement.C);
         mf1.addIsotope(carb, 8);
-        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope h = Isotopes.major(IElement.H);
         mf1.addIsotope(h, 9);
-        IIsotope oxy = ifac.getMajorIsotope("O");
+        IIsotope oxy = Isotopes.major(IElement.O);
         mf1.addIsotope(oxy, 2);
-        IIsotope nit = ifac.getMajorIsotope("N");
+        IIsotope nit = Isotopes.major(IElement.N);
         mf1.addIsotope(nit, 1);
-        IIsotope cl = ifac.getMajorIsotope("Cl");
+        IIsotope cl = Isotopes.major(IElement.Cl);
         mf1.addIsotope(cl, 3);
-        IIsotope pho = ifac.getMajorIsotope("P");
+        IIsotope pho = Isotopes.major(IElement.P);
         mf1.addIsotope(pho);
-        IIsotope sol = ifac.getMajorIsotope("S");
+        IIsotope sol = Isotopes.major(IElement.S);
         mf1.addIsotope(sol);
 
         Assertions.assertEquals(MolecularFormulaManipulator.getString(mf1), MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
@@ -746,12 +734,11 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        IIsotope carbon12 = ifac.getMajorIsotope("C");
+        IIsotope carbon12 = Isotopes.major(IElement.C);
         mfRange.addIsotope(carbon12, 0, 11);
-        IIsotope[] carbons = ifac.getIsotopes("C");
-        IIsotope carbon13 = carbons[5]; // 13
+        IIsotope carbon13 = Isotopes.get(IElement.C, 13);
         mfRange.addIsotope(carbon13, 0, 10);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 0, 10);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 0, 10);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -773,7 +760,7 @@ class MassToFormulaToolTest extends CDKTestCase {
         IMolecularFormula mf1 = new MolecularFormula(); //C3CH5
         mf1.addIsotope(carbon12, 3);
         mf1.addIsotope(carbon13, 1);
-        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope h = Isotopes.major(IElement.H);
         mf1.addIsotope(h, 5);
 
         Assertions.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0).getIsotopeCount());
@@ -791,9 +778,9 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(ifac.getMajorIsotope("C"), 12, 12);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 25, 25);
-        mfRange.addIsotope(ifac.getMajorIsotope("O"), 2, 2);
+        mfRange.addIsotope(Isotopes.major(IElement.C), 12, 12);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 25, 25);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 2, 2);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -822,10 +809,10 @@ class MassToFormulaToolTest extends CDKTestCase {
         IRule rule1 = new ElementRule();
         Object[] params = new Object[1];
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        mfRange.addIsotope(ifac.getMajorIsotope("C"), 7, 7);
-        mfRange.addIsotope(ifac.getMajorIsotope("H"), 15, 15);
-        mfRange.addIsotope(ifac.getMajorIsotope("O"), 4, 4);
-        mfRange.addIsotope(ifac.getMajorIsotope("N"), 2, 2);
+        mfRange.addIsotope(Isotopes.major(IElement.C), 7, 7);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 15, 15);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 4, 4);
+        mfRange.addIsotope(Isotopes.major(IElement.N), 2, 2);
         params[0] = mfRange;
         rule1.setParameters(params);
         myRules.add(rule1);
@@ -844,13 +831,13 @@ class MassToFormulaToolTest extends CDKTestCase {
         Assertions.assertNotNull(mfSet);
 
         IMolecularFormula mf1 = new MolecularFormula();
-        IIsotope carb = ifac.getMajorIsotope("C");
+        IIsotope carb = Isotopes.major(IElement.C);
         mf1.addIsotope(carb, 7);
-        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope h = Isotopes.major(IElement.H);
         mf1.addIsotope(h, 15);
-        IIsotope oxy = ifac.getMajorIsotope("O");
+        IIsotope oxy = Isotopes.major(IElement.O);
         mf1.addIsotope(oxy, 4);
-        IIsotope nit = ifac.getMajorIsotope("N");
+        IIsotope nit = Isotopes.major(IElement.N);
         mf1.addIsotope(nit, 2);
 
         Assertions.assertEquals(MolecularFormulaManipulator.getString(mf1), MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
@@ -863,8 +850,7 @@ class MassToFormulaToolTest extends CDKTestCase {
     @Disabled("Demonstrates a deficiency in the implementation - use MolecularFormulaGenerator")
     void testSingleCarbon() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope c = Isotopes.major(IElement.C);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 100);
@@ -902,13 +888,12 @@ class MassToFormulaToolTest extends CDKTestCase {
     @Disabled("Demonstrates a deficiency in the implementation - use MolecularFormulaGenerator")
     void testWater() throws Exception {
 
-        IsotopeFactory ifac = Isotopes.getInstance();
-        IIsotope c = ifac.getMajorIsotope("C");
-        IIsotope h = ifac.getMajorIsotope("H");
-        IIsotope n = ifac.getMajorIsotope("N");
-        IIsotope o = ifac.getMajorIsotope("O");
-        IIsotope p = ifac.getMajorIsotope("P");
-        IIsotope s = ifac.getMajorIsotope("S");
+        IIsotope c = Isotopes.major(IElement.C);
+        IIsotope h = Isotopes.major(IElement.H);
+        IIsotope n = Isotopes.major(IElement.N);
+        IIsotope o = Isotopes.major(IElement.O);
+        IIsotope p = Isotopes.major(IElement.P);
+        IIsotope s = Isotopes.major(IElement.S);
 
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         mfRange.addIsotope(c, 0, 10);

@@ -114,7 +114,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
         writeAgents = addSetting(new BooleanIOSetting(OptWriteAgents,
                                                       IOSetting.Importance.LOW,
                                                       "Output agents in the RXN file",
-                                                      "true"));
+                                                      true));
     }
 
     @Override

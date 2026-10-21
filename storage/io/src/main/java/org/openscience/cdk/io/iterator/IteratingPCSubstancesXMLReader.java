@@ -28,7 +28,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.NoSuchElementException;
 
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -69,7 +68,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
      *
      * @param in      The input stream
      * @param builder The builder
-     * @throws java.io.IOException if there is error in getting the {@link IsotopeFactory}
+     * @throws java.io.IOException no longer thrown (kept for API stability)
      * @throws XMLStreamException an error in reading XML
      */
     public IteratingPCSubstancesXMLReader(Reader in, IChemObjectBuilder builder) throws IOException,

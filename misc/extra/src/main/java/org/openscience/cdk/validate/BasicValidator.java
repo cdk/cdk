@@ -19,12 +19,9 @@
  */
 package org.openscience.cdk.validate;
 
-import java.util.Iterator;
-import java.util.Objects;
-
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -37,6 +34,9 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Validator which tests a number of basic chemical semantics.
@@ -182,9 +182,7 @@ public class BasicValidator extends AbstractValidator {
         } else {
             // check whether atom is really an element
             try {
-                IsotopeFactory isotopeFactory = Isotopes.getInstance();
-                IElement element = isotopeFactory.getElement(atom.getSymbol());
-                if (element == null) {
+                if (!Elements.isValid(atom.getSymbol())) {
                     isElementOrPseudo.setDetails("Element " + atom.getSymbol() + " does not exist.");
                     report.addError(isElementOrPseudo);
                 } else {
@@ -262,20 +260,12 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest isotopeExists = new ValidationTest(isotope,
                 "Isotope with this mass number is not known for this element.");
         try {
-            IsotopeFactory isotopeFac = Isotopes.getInstance();
-            IIsotope[] isotopes = isotopeFac.getIsotopes(isotope.getSymbol());
             if (isotope.getMassNumber() != null &&
                 isotope.getMassNumber() != 0) {
-                boolean foundKnownIsotope = false;
-                for (IIsotope iIsotope : isotopes) {
-                    if (Objects.equals(iIsotope.getMassNumber(), isotope.getMassNumber())) {
-                        foundKnownIsotope = true;
-                    }
-                }
-                if (!foundKnownIsotope) {
-                    report.addError(isotopeExists);
-                } else {
+                if (Isotopes.get(isotope.getAtomicNumber(), isotope.getMassNumber()) != null) {
                     report.addOK(isotopeExists);
+                } else {
+                    report.addError(isotopeExists);
                 }
             } else {
                 // isotopic is unspecified

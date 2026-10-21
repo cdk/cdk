@@ -50,4 +50,13 @@ class BoundsTest extends AbstractElementTest {
     void testHeight() throws Exception {
         assertThat(new Bounds(2, 2, 7, 6).height(), is(closeTo(4d, 0.1)));
     }
+
+    @Test
+    void testCenters() throws Exception {
+        assertThat(new Bounds(5, 1.2, 17, 6).centerX(), is(closeTo(11d, 0.1)));
+        assertThat(new Bounds(5, 1.3, 17, 6).centerY(), is(closeTo(3.65d, 0.1)));
+        // empty bounds the center has no meaning, 0.0 is OK
+        assertThat(new Bounds().centerX(), is(closeTo(0.0, 0.1)));
+        assertThat(new Bounds().centerY(), is(closeTo(0.0, 0.1)));
+    }
 }

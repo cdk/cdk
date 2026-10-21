@@ -205,7 +205,7 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
 
     private void initIOSettings() {
         optimize = addSetting(new BooleanIOSetting("Optimize", IOSetting.Importance.MEDIUM,
-                "Should the structure be optimized?", "true"));
+                "Should the structure be optimized?", true));
         mopacCommands = addSetting(new StringIOSetting("Commands", IOSetting.Importance.LOW,
                 "What Mopac commands should be used (overwrites other choices)?",
                 "PM3 NOINTER NOMM BONDS MULLIK PRECISE"));

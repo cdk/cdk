@@ -448,6 +448,7 @@ public class PDBConvention extends CMLCoreModule {
                 }
                 currentAtom.setSymbol(symbol);
                 try {
+                    // JWM - probably not needed?
                     Isotopes.getInstance().configure(currentAtom);
                 } catch (Exception e) {
                     logger.error("Could not configure atom: " + currentAtom);

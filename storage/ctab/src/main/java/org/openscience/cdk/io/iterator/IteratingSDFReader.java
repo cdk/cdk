@@ -335,7 +335,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
     private void initIOSettings() {
         forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
-                "Should coordinates always be read as 3D?", "false");
+                "Should coordinates always be read as 3D?", false);
         addSetting(forceReadAs3DCoords);
     }
 

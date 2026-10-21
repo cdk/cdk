@@ -26,7 +26,6 @@ package org.openscience.cdk.smiles;
 
 
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -180,29 +179,23 @@ final class CDKToBeam {
     }
 
     private static Integer getMajorMassNumber(Element e) {
-        try {
-            switch (e) {
-                case Hydrogen:   return 1;
-                case Boron:      return 11;
-                case Carbon:     return 12;
-                case Nitrogen:   return 14;
-                case Oxygen:     return 16;
-                case Fluorine:   return 19;
-                case Silicon:    return 28;
-                case Phosphorus: return 31;
-                case Sulfur:     return 32;
-                case Chlorine:   return 35;
-                case Iodine:     return 127;
-                default:
-                    IsotopeFactory isotopes = Isotopes.getInstance();
-                    IIsotope       isotope  = isotopes.getMajorIsotope(e.symbol());
-                    if (isotope != null)
-                        return isotope.getMassNumber();
-                    return null;
-            }
-
-        } catch (IOException ex) {
-            throw new InternalError("Isotope factory wouldn't load: " + ex.getMessage());
+        switch (e) {
+            case Hydrogen:   return 1;
+            case Boron:      return 11;
+            case Carbon:     return 12;
+            case Nitrogen:   return 14;
+            case Oxygen:     return 16;
+            case Fluorine:   return 19;
+            case Silicon:    return 28;
+            case Phosphorus: return 31;
+            case Sulfur:     return 32;
+            case Chlorine:   return 35;
+            case Iodine:     return 127;
+            default:
+                IIsotope isotope = Isotopes.major(e.atomicNumber());
+                if (isotope != null)
+                    return isotope.getMassNumber();
+                return null;
         }
     }
 

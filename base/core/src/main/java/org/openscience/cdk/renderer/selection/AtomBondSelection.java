@@ -26,6 +26,13 @@ public class AtomBondSelection implements IChemObjectSelection {
     public void select(IChemObject obj) {
         if (obj instanceof IAtom || obj instanceof IBond)
             selected.add(obj);
+        else if (obj instanceof IAtomContainer) {
+            IAtomContainer mol = (IAtomContainer)obj;
+            for (IAtom atom : mol.atoms())
+                this.selected.add(atom);
+            for (IBond bond : mol.bonds())
+                this.selected.add(bond);
+        }
     }
 
     /**

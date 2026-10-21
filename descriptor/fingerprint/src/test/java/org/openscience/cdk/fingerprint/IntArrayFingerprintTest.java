@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -48,6 +49,21 @@ class IntArrayFingerprintTest extends AbstractBitFingerprintTest {
         fp.set(26, true);
         org.hamcrest.MatcherAssert.assertThat(new int[]{1, 3, 26, 55, 219},
                           is(fp.getSetbits()));
+    }
+
+    @Test
+    void testAndPreservesMultipleCommonBits() {
+        IntArrayFingerprint fp1 = new IntArrayFingerprint(new int[]{-1234567, 0, 42, 999});
+        IntArrayFingerprint fp2 = new IntArrayFingerprint(new int[]{-1234567, 0, 7, 42});
+
+        fp1.and(fp2);
+        Assertions.assertArrayEquals(new int[]{-1234567, 0, 42}, fp1.getSetbits());
+
+        fp1.and(fp2);
+        Assertions.assertArrayEquals(new int[]{-1234567, 0, 42}, fp1.getSetbits());
+
+        fp1.and(new IntArrayFingerprint(new int[]{-1234567, 42, 87}));
+        Assertions.assertArrayEquals(new int[]{-1234567, 42}, fp1.getSetbits());
     }
 
 }

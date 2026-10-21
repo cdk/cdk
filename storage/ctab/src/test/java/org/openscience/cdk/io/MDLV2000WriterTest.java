@@ -24,13 +24,29 @@
 package org.openscience.cdk.io;
 
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -52,7 +68,9 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.interfaces.IChemObject.AROMATIC;
 
@@ -117,6 +135,35 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
     }
 
     @Test
+    void testMassDelta_R() throws CDKException, IOException {
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.newAtom(IElement.Wildcard, 0).setMassNumber(3);
+        String molfile = writeToString(mol, new Properties());
+        MatcherAssert.assertThat(molfile, containsString("R   3"));
+    }
+
+    @Test
+    void testMassDelta_Sg() throws CDKException, IOException {
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.newAtom(IElement.Sg, 0).setMassNumber(265);
+        mol.newAtom(IElement.Sg, 0).setMassNumber(266);
+        mol.newAtom(IElement.Sg, 0).setMassNumber(267);
+        String molfile = writeToString(mol, new Properties());
+        MatcherAssert.assertThat(molfile, containsString("Sg -1"));
+        MatcherAssert.assertThat(molfile, containsString("Sg  0"));
+        MatcherAssert.assertThat(molfile, containsString("Sg  1"));
+    }
+
+    @Test
+    void testMassDeltaTooBig_Sg() throws CDKException, IOException {
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.newAtom(IElement.Sg, 0).setMassNumber(200);
+        String molfile = writeToString(mol, new Properties());
+        MatcherAssert.assertThat(molfile, containsString("Sg  0"));
+        MatcherAssert.assertThat(molfile, containsString("M  ISO  1   1 200"));
+    }
+
+    @Test
     void testWriteValence() throws Exception {
         StringWriter   writer   = new StringWriter();
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
@@ -145,6 +192,70 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         String output = writer.toString();
         Assertions.assertTrue(output.contains("Fe  0  0  0  0  0  3  0  0  0  0  0  0"));
+    }
+
+    private String writeToString(IAtomContainer mol, Properties props) throws CDKException, IOException {
+        try (StringWriter   writer   = new StringWriter();
+             MDLV2000Writer mdlWriter = new MDLV2000Writer(writer)) {
+            mdlWriter.addChemObjectIOListener(new PropertiesListener(props));
+//            mdlWriter.customizeJob(); // not needed
+            mdlWriter.write(mol);
+            return writer.toString();
+        }
+    }
+
+    @Test
+    void testWriteValenceAlways() throws CDKException, IOException {
+
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atom = molecule.newAtom(IElement.C);
+        atom.setImplicitHydrogenCount(4);
+        atom.setValency(4);
+
+        // with the option of we write a '0' (default)
+        Properties options = new Properties();
+        options.setProperty(MDLV2000Writer.OptAlwaysWriteValence, "false");
+        String output1 = writeToString(molecule, options);
+        MatcherAssert.assertThat(output1,
+                                 containsString("C   0  0  0  0  0  0  0"));
+        MatcherAssert.assertThat(output1,
+                                 not(containsString("C   0  0  0  0  0  4")));
+
+
+        options.setProperty(MDLV2000Writer.OptAlwaysWriteValence, "true");
+        String output2 = writeToString(molecule, options);
+        MatcherAssert.assertThat(output2,
+                                 containsString("C   0  0  0  0  0  4"));
+        MatcherAssert.assertThat(output2,
+                                 not(containsString("C   0  0  0  0  0  0")));
+    }
+
+    // Don't write the default valence explicitly unless atom.setValency() is
+    // called
+    @Test
+    void testWriteValenceOnlySpecified() throws CDKException, IOException {
+
+        IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atom = molecule.newAtom(IElement.C);
+        atom.setImplicitHydrogenCount(4);
+
+        // with the option of we write a '0' (default)
+        Properties options = new Properties();
+        options.setProperty(MDLV2000Writer.OptAlwaysWriteValence, "true");
+        String output1 = writeToString(molecule, options);
+        MatcherAssert.assertThat(output1,
+                                 containsString("C   0  0  0  0  0  0"));
+        MatcherAssert.assertThat(output1,
+                                 not(containsString("C   0  0  0  0  0  4")));
+
+        atom.setValency(4);
+        options.setProperty(MDLV2000Writer.OptAlwaysWriteValence, "true");
+        String output2 = writeToString(molecule, options);
+        MatcherAssert.assertThat(output2,
+                                 containsString("C   0  0  0  0  0  4"));
+        MatcherAssert.assertThat(output2,
+                                 not(containsString("C   0  0  0  0  0  0")));
+
     }
 
     @Test

@@ -19,8 +19,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -133,7 +132,6 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
         int atomicNumber1;
         double difference;
         try {
-            IsotopeFactory ifac = Isotopes.getInstance();
             IElement element0;
             IElement element1;
 
@@ -145,8 +143,8 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
 
                 symbol0 = atom0.getSymbol();
                 symbol1 = atom1.getSymbol();
-                element0 = ifac.getElement(symbol0);
-                element1 = ifac.getElement(symbol1);
+                element0 = Elements.ofString(symbol0).toIElement();
+                element1 = Elements.ofString(symbol1).toIElement();
                 atomicNumber0 = element0.getAtomicNumber();
                 atomicNumber1 = element1.getAtomicNumber();
                 difference = polarizabilities[atomicNumber0] - polarizabilities[atomicNumber1];
@@ -158,7 +156,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
             // if the count is UNSET, we assume it is 0
             for (IAtom atom : container.atoms()) {
                 int impH = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
-                IElement elem = ifac.getElement(atom.getSymbol());
+                IElement elem = Elements.ofString(atom.getSymbol()).toIElement();
                 int atnum = elem.getAtomicNumber();
                 difference = Math.abs(polarizabilities[atnum] - polarizabilities[1]) * impH;
                 bpol += difference;

@@ -29,7 +29,6 @@ import java.util.List;
 
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.ElementRule;
@@ -194,14 +193,13 @@ public class MassToFormulaTool {
     private void callDefaultRestrictions() throws CDKException, IOException {
 
         List<IRule> rules1 = new ArrayList<>();
-        IsotopeFactory ifac = Isotopes.getInstance();
 
         // restriction for occurrence elements
         MolecularFormulaRange mfRange1 = new MolecularFormulaRange();
-        mfRange1.addIsotope(ifac.getMajorIsotope("C"), 0, 15);
-        mfRange1.addIsotope(ifac.getMajorIsotope("H"), 0, 15);
-        mfRange1.addIsotope(ifac.getMajorIsotope("N"), 0, 15);
-        mfRange1.addIsotope(ifac.getMajorIsotope("O"), 0, 15);
+        mfRange1.addIsotope(Isotopes.major(IElement.C), 0, 15);
+        mfRange1.addIsotope(Isotopes.major(IElement.H), 0, 15);
+        mfRange1.addIsotope(Isotopes.major(IElement.N), 0, 15);
+        mfRange1.addIsotope(Isotopes.major(IElement.O), 0, 15);
 
         IRule rule = new ElementRule();
         Object[] params = new Object[1];

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.similarity.Tanimoto;
 import org.openscience.cdk.test.fingerprint.AbstractFingerprinterTest;
 
 import java.util.Map;
@@ -80,6 +81,31 @@ class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
     }
 
     @Test
+    void countFingerprintSimilarity() throws Exception {
+        IFingerprinter printer = new AtomPairs2DFingerprinter();
+        ICountFingerprint ethane = printer.getCountFingerprint(parser.parseSmiles("CC"));
+        ICountFingerprint propane = printer.getCountFingerprint(parser.parseSmiles("CCC"));
+
+        Assertions.assertEquals(1.0 / 3.0, Tanimoto.calculate(ethane, propane), 0.000001);
+        Assertions.assertEquals(1.0 / 3.0, Tanimoto.calculate(propane, ethane), 0.000001);
+    }
+
+    @Test
+    void countFingerprintHashLookup() throws Exception {
+        IFingerprinter printer = new AtomPairs2DFingerprinter();
+        ICountFingerprint fp = printer.getCountFingerprint(parser.parseSmiles("CC"));
+
+        Assertions.assertTrue(fp.hasHash(0));
+        Assertions.assertEquals(1, fp.getCountForHash(0));
+        Assertions.assertFalse(fp.hasHash(78));
+        Assertions.assertEquals(0, fp.getCountForHash(78));
+        Assertions.assertFalse(fp.hasHash(-1));
+        Assertions.assertEquals(0, fp.getCountForHash(-1));
+        Assertions.assertFalse(fp.hasHash((int) fp.size()));
+        Assertions.assertEquals(0, fp.getCountForHash((int) fp.size()));
+    }
+
+    @Test
     public void testGetRawFingerprint() throws Exception {
         IFingerprinter printer = new AtomPairs2DFingerprinter();
     }
@@ -101,19 +127,19 @@ class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
         IAtomContainer mol = parser.parseSmiles("c1ccccc1O");
         ICountFingerprint fp = fingerprinter.getCountFingerprint(mol);
         Assertions.assertEquals(7, fp.numOfPopulatedbins());
-        Assertions.assertEquals(236, fp.getHash(0));
-        Assertions.assertEquals(1, fp.getCount(0));
-        Assertions.assertEquals(156, fp.getHash(1));
-        Assertions.assertEquals(3, fp.getCount(1));
+        Assertions.assertEquals(0, fp.getHash(0));
+        Assertions.assertEquals(6, fp.getCount(0));
+        Assertions.assertEquals(2, fp.getHash(1));
+        Assertions.assertEquals(1, fp.getCount(1));
         Assertions.assertEquals(78, fp.getHash(2));
         Assertions.assertEquals(6, fp.getCount(2));
-        Assertions.assertEquals(0, fp.getHash(3));
-        Assertions.assertEquals(6, fp.getCount(3));
-        Assertions.assertEquals(80, fp.getHash(4));
-        Assertions.assertEquals(2, fp.getCount(4));
-        Assertions.assertEquals(2, fp.getHash(5));
-        Assertions.assertEquals(1, fp.getCount(5));
-        Assertions.assertEquals(158, fp.getHash(6));
-        Assertions.assertEquals(2, fp.getCount(6));
+        Assertions.assertEquals(80, fp.getHash(3));
+        Assertions.assertEquals(2, fp.getCount(3));
+        Assertions.assertEquals(156, fp.getHash(4));
+        Assertions.assertEquals(3, fp.getCount(4));
+        Assertions.assertEquals(158, fp.getHash(5));
+        Assertions.assertEquals(2, fp.getCount(5));
+        Assertions.assertEquals(236, fp.getHash(6));
+        Assertions.assertEquals(1, fp.getCount(6));
     }
 }

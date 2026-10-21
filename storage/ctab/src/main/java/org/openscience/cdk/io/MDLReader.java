@@ -35,6 +35,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -329,8 +330,6 @@ public class MDLReader extends DefaultChemObjectReader {
         String line = "";
 
         try {
-            IsotopeFactory isotopeFactory = Isotopes.getInstance();
-
             logger.info("Reading header");
             line = input.readLine();
             linecount++;
@@ -399,8 +398,8 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
 
                 logger.debug("Atom type: ", element);
-                if (isotopeFactory.isElement(element)) {
-                    atom = isotopeFactory.configure(molecule.getBuilder().newInstance(IAtom.class, element));
+                if (Elements.isValid(element)) {
+                    atom = molecule.getBuilder().newInstance(IAtom.class, element);
                 } else if ("A".equals(element)) {
                     atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
                 } else if ("Q".equals(element)) {
@@ -440,19 +439,12 @@ public class MDLReader extends DefaultChemObjectReader {
                 // parse further fields
                 if (line.length() >= 36) {
                     String massDiffString = line.substring(34, 36).trim();
-                    logger.debug("Mass difference: ", massDiffString);
-                    if (!(atom instanceof IPseudoAtom)) {
-                        try {
-                            int massDiff = Integer.parseInt(massDiffString);
-                            if (massDiff != 0) {
-                                IIsotope major = Isotopes.getInstance().getMajorIsotope(element);
-                                atom.setMassNumber(major.getMassNumber() + massDiff);
-                            }
-                        } catch (NumberFormatException | IOException exception) {
-                            logger.error("Could not parse mass difference field");
-                        }
-                    } else {
-                        logger.error("Cannot set mass difference for a non-element!");
+                    int massDiff = Integer.parseInt(massDiffString);
+                    if (massDiff != 0) {
+                        if (!MDLIsotope.setAbsoluteMass(atom, massDiff))
+                            handleError("Ignored relative mass number for unknown element:" + atom.getSymbol(), linecount, 34, 35);
+                        if (atom.getMassNumber() != null && atom.getMassNumber() < 0)
+                            handleError("Relative mass number is negative " + atom.getSymbol() + " " + massDiff, linecount, 34, 35);
                     }
                 } else {
                     handleError("Mass difference is missing", linecount, 34, 36);
@@ -594,7 +586,7 @@ public class MDLReader extends DefaultChemObjectReader {
 
     private void initIOSettings() {
         forceReadAs3DCoords = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
-                "Should coordinates always be read as 3D?", "false"));
+                "Should coordinates always be read as 3D?", false));
     }
 
     public void customizeJob() {

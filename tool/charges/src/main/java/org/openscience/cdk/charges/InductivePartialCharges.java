@@ -18,13 +18,8 @@
  */
 package org.openscience.cdk.charges;
 
-import java.io.IOException;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,6 +29,9 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point3d;
+import java.io.IOException;
 
 /**
  * The calculation of the inductive partial atomic charges and equalization of
@@ -48,7 +46,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class InductivePartialCharges implements IChargeCalculator {
 
     private static double[]     pauling;
-    private IsotopeFactory      ifac    = null;
     private AtomTypeFactory     factory = null;
     private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(InductivePartialCharges.class);
 
@@ -136,11 +133,10 @@ public class InductivePartialCharges implements IChargeCalculator {
         String symbol;
         int atomicNumber;
         try {
-            ifac = Isotopes.getInstance();
             for (int i = 0; i < ac.getAtomCount(); i++) {
                 IAtom atom = ac.getAtom(i);
                 symbol = ac.getAtom(i).getSymbol();
-                element = ifac.getElement(symbol);
+                element = Elements.ofString(symbol).toIElement();
                 atomicNumber = element.getAtomicNumber();
                 if (modified) {
                     if (symbol.equals("Cl")) {

@@ -19,10 +19,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.io.IOException;
-
-import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -32,7 +28,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -44,22 +39,9 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
 
-    private static IsotopeFactory factory = null;
-
     private final static String[] NAMES = {"MNDiff"};
 
     public AtomicNumberDifferenceDescriptor() {
-    }
-
-    private void ensureIsotopeFactory() {
-        if (factory == null) {
-            try {
-                factory = Isotopes.getInstance();
-            } catch (IOException e) {
-                LoggingToolFactory.createLoggingTool(AtomicNumberDifferenceDescriptor.class)
-                                  .warn("Unexpected Error:", e);
-            }
-        }
     }
 
     @Override
@@ -85,17 +67,17 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
 
     @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
-        ensureIsotopeFactory();
         if (bond.getAtomCount() != 2) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     Double.NaN), NAMES, new CDKException("Only 2-center bonds are considered"));
         }
 
         IAtom[] atoms = BondManipulator.getAtomArray(bond);
+        Integer atomicNum0 = atoms[0].getAtomicNumber();
+        Integer atomicNum1 = atoms[1].getAtomicNumber();
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Math.abs(factory.getElement(atoms[0].getSymbol()).getAtomicNumber()
-                                 - factory.getElement(atoms[1].getSymbol()).getAtomicNumber())), NAMES);
+                Math.abs(atomicNum0 - atomicNum1)), NAMES);
     }
 
     @Override

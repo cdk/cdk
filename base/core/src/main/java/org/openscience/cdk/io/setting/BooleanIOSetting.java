@@ -32,17 +32,21 @@ public class BooleanIOSetting extends IOSetting {
         super(name, level, question, defaultSetting);
     }
 
+    public BooleanIOSetting(String name, Importance level, String question, boolean defaultSetting) {
+        super(name, level, question, Boolean.toString(defaultSetting));
+    }
+
     /**
      * Sets the setting for a certain question. The setting
      * is a boolean, and it accepts only "true" and "false".
      */
     @Override
     public void setSetting(String setting) throws CDKException {
-        if (setting.equals("true") || setting.equals("false")) {
+        if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("false")) {
             this.setting = setting;
-        } else if (setting.equals("yes") || setting.equals("y")) {
+        } else if (setting.equalsIgnoreCase("yes") || setting.equalsIgnoreCase("y")) {
             this.setting = "true";
-        } else if (setting.equals("no") || setting.equals("n")) {
+        } else if (setting.equalsIgnoreCase("no") || setting.equalsIgnoreCase("n")) {
             this.setting = "false";
         } else {
             throw new CDKException("Setting " + setting + " is not a boolean.");
@@ -50,10 +54,6 @@ public class BooleanIOSetting extends IOSetting {
     }
 
     public boolean isSet() {
-        if (setting.equals("true")) {
-            return true;
-        } else {
-            return false;
-        }
+        return setting.equals("true");
     }
 }

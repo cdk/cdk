@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-package org.openscience.cdk.config.isotopes;
+package org.openscience.cdk.config;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -36,14 +36,14 @@ class IsotopeReaderTest {
 
     @Test
     void testIsotopeReader_InputStream_IChemObjectBuilder() {
-        IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream(new byte[0]), new ChemObject().getBuilder());
+        XMLIsotopeFactory.IsotopeReader reader = new XMLIsotopeFactory.IsotopeReader(new ByteArrayInputStream(new byte[0]), new ChemObject().getBuilder());
         Assertions.assertNotNull(reader);
     }
 
     @Test
     void testReadIsotopes() {
-        IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream("<?xml version=\"1.0\"?><list></list>".getBytes(StandardCharsets.UTF_8)),
-                                                 new ChemObject().getBuilder());
+        XMLIsotopeFactory.IsotopeReader reader = new XMLIsotopeFactory.IsotopeReader(new ByteArrayInputStream("<?xml version=\"1.0\"?><list></list>".getBytes(StandardCharsets.UTF_8)),
+                                                                                     new ChemObject().getBuilder());
         Assertions.assertNotNull(reader);
         List<IIsotope> isotopes = reader.readIsotopes();
         Assertions.assertNotNull(isotopes);
@@ -70,8 +70,8 @@ class IsotopeReaderTest {
                 + "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" + "        </isotope>"
                 + "    </isotopeList>" + "</list>";
 
-        IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream(isotopeData.getBytes()),
-                new ChemObject().getBuilder());
+        XMLIsotopeFactory.IsotopeReader reader = new XMLIsotopeFactory.IsotopeReader(new ByteArrayInputStream(isotopeData.getBytes()),
+                                                                                     new ChemObject().getBuilder());
         Assertions.assertNotNull(reader);
         List<IIsotope> isotopes = reader.readIsotopes();
         Assertions.assertNotNull(isotopes);

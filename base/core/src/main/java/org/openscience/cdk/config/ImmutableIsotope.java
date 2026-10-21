@@ -22,41 +22,42 @@
  */
 package org.openscience.cdk.config;
 
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IIsotope;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
- * A read-only class used by {@link Isotopes} for the natural elements. This class is not to
- * be used than by only {@link Isotopes}.
+ * A read-only class used by {@link Isotopes} for the natural elements.
+ * This class is not to be used than by only {@link Isotopes}.
  *
- * @author      egonw
+ * @author egonw
  */
-final class BODRIsotope implements IIsotope {
+final class ImmutableIsotope implements IIsotope {
 
-    private final String  element;
-    private final Integer atomicNumber;
-    private final Double  naturalAbundance;
-    private final Double  exactMass;
-    private final Integer massNumber;
+    private final int    atomicNumber;
+    private final int    massNumber;
+    private final double naturalAbundance;
+    private final double exactMass;
 
-    protected BODRIsotope(String element, Integer atomicNumber, Integer massNumber, Double exactMass,
-            Double naturalAbundance) {
-        this.element = element;
+    ImmutableIsotope(int atomicNumber,
+                     int massNumber,
+                     double exactMass,
+                     double naturalAbundance) {
         this.atomicNumber = atomicNumber;
         this.massNumber = massNumber;
         this.naturalAbundance = naturalAbundance;
         this.exactMass = exactMass;
     }
 
-    // ignored methods
-
     @Override
-    public void addListener(IChemObjectListener col) {}
+    public void addListener(IChemObjectListener col) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
     public int getListenerCount() {
@@ -64,10 +65,14 @@ final class BODRIsotope implements IIsotope {
     }
 
     @Override
-    public void removeListener(IChemObjectListener col) {}
+    public void removeListener(IChemObjectListener col) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
-    public void setNotification(boolean bool) {}
+    public void setNotification(boolean bool) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
     public boolean getNotification() {
@@ -75,12 +80,14 @@ final class BODRIsotope implements IIsotope {
     }
 
     @Override
-    public void notifyChanged() {}
+    public void notifyChanged() {
+        // ignore any notify
+    }
 
     @Override
-    public void notifyChanged(IChemObjectChangeEvent evt) {}
-
-    // unsupported methods
+    public void notifyChanged(IChemObjectChangeEvent evt) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
     public Number getFlagValue() {
@@ -88,10 +95,14 @@ final class BODRIsotope implements IIsotope {
     }
 
     @Override
-    public void setProperty(Object description, Object property) {}
+    public void setProperty(Object description, Object property) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
-    public void removeProperty(Object description) {}
+    public void removeProperty(Object description) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
     public <T> T getProperty(Object description) {
@@ -105,7 +116,7 @@ final class BODRIsotope implements IIsotope {
 
     @Override
     public Map<Object, Object> getProperties() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override
@@ -114,10 +125,14 @@ final class BODRIsotope implements IIsotope {
     }
 
     @Override
-    public void setID(String identifier) {}
+    public void setID(String identifier) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
-    public void setFlag(int flagType, boolean flagValue) {}
+    public void setFlag(int flagType, boolean flagValue) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
     public boolean getFlag(int flagType) {
@@ -125,13 +140,19 @@ final class BODRIsotope implements IIsotope {
     }
 
     @Override
-    public void setProperties(Map<Object, Object> properties) {}
+    public void setProperties(Map<Object, Object> properties) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
-    public void addProperties(Map<Object, Object> properties) {}
+    public void addProperties(Map<Object, Object> properties) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
-    public void setFlags(boolean[] flagsNew) {}
+    public void setFlags(boolean[] flagsNew) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
     public boolean[] getFlags() {
@@ -140,12 +161,12 @@ final class BODRIsotope implements IIsotope {
 
     @Override
     public void set(int flags) {
-        
+        throw new UnsupportedOperationException("Isotope is read-only");
     }
 
     @Override
     public void clear(int flags) {
-
+        throw new UnsupportedOperationException("Isotope is read-only");
     }
 
     @Override
@@ -164,25 +185,35 @@ final class BODRIsotope implements IIsotope {
     }
 
     @Override
-    public void setAtomicNumber(Integer atomicNumber) {}
+    public void setAtomicNumber(Integer atomicNumber) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
-    public void setSymbol(String symbol) {}
+    public void setSymbol(String symbol) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
-    public void setExactMass(Double exactMass) {}
+    public void setExactMass(Double exactMass) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
-    public void setNaturalAbundance(Double naturalAbundance) {}
+    public void setNaturalAbundance(Double naturalAbundance) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     @Override
-    public void setMassNumber(Integer massNumber) {}
+    public void setMassNumber(Integer massNumber) {
+        throw new UnsupportedOperationException("Isotope is read-only");
+    }
 
     // implemented methods
 
     @Override
     public String getSymbol() {
-        return element;
+        return Elements.ofNumber(atomicNumber).symbol();
     }
 
     @Override
@@ -210,4 +241,8 @@ final class BODRIsotope implements IIsotope {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return massNumber + "-" + getSymbol() + " isotope [" + exactMass + ", " + naturalAbundance + "%]";
+    }
 }

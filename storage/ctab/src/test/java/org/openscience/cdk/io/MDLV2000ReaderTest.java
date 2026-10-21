@@ -78,12 +78,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -832,7 +827,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertEquals(2, mol.getAtom(0).getValency().intValue());
         Assertions.assertEquals(3, mol.getAtom(1).getValency().intValue());
         org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), is(not(0)));
-        org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), is(4));
+        Assertions.assertNull(mol.getAtom(2).getValency()); // not 4 as it is default!
         Assertions.assertEquals(0, mol.getAtom(3).getValency().intValue());
     }
 
@@ -1430,7 +1425,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         for (IAtom atom : container.atoms()) {
             assertThat(atom.getImplicitHydrogenCount(), is(greaterThanOrEqualTo(0)));
-            assertThat(atom.getValency(), is(notNullValue()));
         }
     }
 
@@ -1732,19 +1726,54 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    // the parity refers to atom numbers, the order of the bond lines does not matter
+    @Test
+    void reading0DStereochemistryIndependentOfBondOrder() throws Exception {
+        String atoms = "L-alanine\n"
+                       + "\n"
+                       + "\n"
+                       + "  6  5  0  0  1  0            999 V2000\n"
+                       + "    0.0000    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                       + "    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n";
+        String bonds = "  2  4  1  0  0  0  0\n"
+                       + "  4  5  2  0  0  0  0\n"
+                       + "  4  6  1  0  0  0  0\n"
+                       + "M  END\n";
+        IAtomContainer sorted, swapped;
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(atoms + "  1  2  1  0  0  0  0\n" + "  2  3  1  0  0  0  0\n" + bonds))) {
+            sorted = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+        }
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(atoms + "  2  3  1  0  0  0  0\n" + "  1  2  1  0  0  0  0\n" + bonds))) {
+            swapped = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+        }
+        for (IAtomContainer mol : new IAtomContainer[]{sorted, swapped}) {
+            ITetrahedralChirality tc = (ITetrahedralChirality) mol.stereoElements().iterator().next();
+            assertThat(tc.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
+            assertThat(tc.getLigands(), is(new IAtom[]{mol.getAtom(0), mol.getAtom(2), mol.getAtom(3), mol.getAtom(1)}));
+        }
+    }
+
     /**
      * When atomic mass is defined as a delta some atoms don't have a reasonable
-     * default. Most tools will output an 'M  ISO' property, so can be specified
+     * default. We used to throw an exception but now we have the correct
+     * reference value of Sg.
+     * <p/>
+     * Note most tools will output an 'M  ISO' property, so can be specified
+     * via an absolute value.
      */
     @Test
     void seaborgiumMassDelta() {
-        Assertions.assertThrows(CDKException.class,
-                                () -> {
-                                    try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
-                                         MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
-                                        mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-                                    }
-                                });
+        try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            Assertions.assertEquals(267, mol.getAtom(0).getMassNumber());
+        } catch (IOException | CDKException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -1753,6 +1782,17 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
             IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(mol.getAtom(0).getMassNumber(), is(261));
+        }
+    }
+
+    @Test
+    void rMassDelta() {
+        try (InputStream in = getClass().getResourceAsStream("r-isotope.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            Assertions.assertEquals(1, mol.getAtom(0).getMassNumber());
+        } catch (IOException | CDKException e) {
+            throw new RuntimeException(e);
         }
     }
 
