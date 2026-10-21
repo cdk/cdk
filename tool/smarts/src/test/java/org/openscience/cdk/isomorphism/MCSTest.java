@@ -820,10 +820,11 @@ final class MCSTest {
         MCS cyclohexane = MCS.find(smi("C1CCCCC1")).withCompleteRings();
         // k six-membered rings joined para in a macrocycle have 2^k + k relevant rings: 521 are searched
         Assertions.assertEquals(score(6, 6, 108), scoreOf(smi("C1CCCCC1"), cpp(9), cyclohexane.matchAll(cpp(9)), true));
-        Intractable e = Assertions.assertThrows(Intractable.class, () -> cyclohexane.match(cpp(10)));
+        IllegalArgumentException e = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> cyclohexane.match(cpp(10)));
         Assertions.assertEquals("MCS search too large: a ring system of 60 atoms has too many rings", e.getMessage());
         // RelevantCycles would count 32 rings of [32]CPP, as its count overflows
-        Assertions.assertThrows(Intractable.class, () -> cyclohexane.match(cpp(32)));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> cyclohexane.match(cpp(32)));
     }
 
     @Test
@@ -832,13 +833,14 @@ final class MCSTest {
         MCS cyclohexane = MCS.find(smi("C1CCCCC1")).withCompleteRings();
         // [1025]acene has at least as many rings as its 1025 independent cycles, so it is refused before they are found
         Assertions.assertTimeout(Duration.ofSeconds(1), () -> {
-            Intractable acene = Assertions.assertThrows(Intractable.class, () -> cyclohexane.match(acene(1025)));
+            IllegalArgumentException acene = Assertions.assertThrows(IllegalArgumentException.class,
+                    () -> cyclohexane.match(acene(1025)));
             Assertions.assertEquals("MCS search too large: a ring system of 4102 atoms has too many rings",
                                     acene.getMessage());
         });
         // a benzenoid of 10 x 10 rings is searched, one of 12 x 12 is not
         Assertions.assertEquals(6, atoms(cyclohexane.match(sheet(10))));
-        Assertions.assertThrows(Intractable.class, () -> cyclohexane.match(sheet(12)));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> cyclohexane.match(sheet(12)));
         // C60 on itself: the 120 symmetries
         IAtomContainer c60 = smi(C60);
         Assertions.assertEquals(score(60, 90, 120), scoreOf(c60, c60, MCS.find(c60).withCompleteRings().matchAll(c60),
@@ -1352,8 +1354,11 @@ final class MCSTest {
     void testTooLarge() throws Exception {
         // more than 2^30 atom pairs
         IAtomContainer mol = chain(32769);
-        Intractable e = Assertions.assertThrows(Intractable.class, () -> MCS.find(mol).match(mol));
+        IllegalArgumentException e = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> MCS.find(mol).match(mol));
         Assertions.assertTrue(e.getMessage().contains("too large"), e.getMessage());
+        // search refuses it too
+        Assertions.assertThrows(IllegalArgumentException.class, () -> MCS.find(mol).search(mol));
     }
 
     @Test
@@ -1371,9 +1376,10 @@ final class MCSTest {
                 return 499500;
             }
         };
-        Intractable e = Assertions.assertThrows(Intractable.class, () -> MCS.find(complete).match(complete));
+        IllegalArgumentException e = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> MCS.find(complete).match(complete));
         Assertions.assertEquals("MCS search too large: 499500 x 499500 bonds", e.getMessage());
-        Assertions.assertThrows(Intractable.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> MCS.find(complete).withMatching(ELEMENT).matchAll(complete));
     }
 

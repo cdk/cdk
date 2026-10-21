@@ -130,18 +130,21 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
  * <br><br>
  * The search is exact. Large or highly symmetric molecules can take a long
  * time, so a time limit is recommended; there is none by default. When the
- * time runs out, {@link #match(IAtomContainer)} and
- * {@link #matchAll(IAtomContainer)} throw {@link Intractable}, while
+ * time runs out or the thread is interrupted, {@link #match(IAtomContainer)}
+ * and {@link #matchAll(IAtomContainer)} throw {@link Intractable}, while
  * {@link #search(IAtomContainer)} and {@link #searchAll(IAtomContainer)}
- * return the best mappings found so far, see {@link Result}. A search
+ * return the best mappings found so far, see {@link Result}.
+ * {@link #matchAll(IAtomContainer)} returns at most 1000 mappings,
+ * {@link #matchAll(IAtomContainer, int)} as many as asked for.
+ * <br><br>
+ * Molecules too large to search are refused: the match and search methods
+ * then throw {@link IllegalArgumentException} without searching. A search
  * of more than 2<sup>30</sup> atom pairs, query atoms times target atoms
  * (about 32,000 atoms in each molecule), is refused. Searches requiring
  * more than {@link Integer#MAX_VALUE} entries in a bond adjacency or
- * compatibility table are also refused.
- * {@link #matchAll(IAtomContainer)} returns at most 1000 mappings,
- * {@link #matchAll(IAtomContainer, int)} as many as asked for. With
- * {@link #withCompleteRings()}, a ring system with more than 1024 relevant
- * rings, or a very large fused one such as a graphene sheet, is not searched.
+ * compatibility table are also refused. With {@link #withCompleteRings()},
+ * so is a ring system with more than 1024 relevant rings, or a very large
+ * fused one such as a graphene sheet.
  * <br><br>
  * <b>References</b>
  * <ul>
@@ -321,8 +324,9 @@ public final class MCS {
      *
      * @param target the target molecule
      * @return the mapping from the query to the target atoms
-     * @throws Intractable the time limit was reached, the thread was
-     *                     interrupted, or the molecules are too large
+     * @throws IllegalArgumentException the molecules are too large to search
+     * @throws Intractable the time limit was reached or the thread was
+     *                     interrupted
      */
     public int[] match(IAtomContainer target) throws Intractable {
         List<int[]> mappings = finished(searchAll(target, 1));
@@ -338,8 +342,9 @@ public final class MCS {
      * @return the mappings from the query to the target atoms, see
      *         {@link #match(IAtomContainer)}; an unmodifiable list, empty if
      *         there is no common substructure
-     * @throws Intractable the time limit was reached, the thread was
-     *                     interrupted, or the molecules are too large
+     * @throws IllegalArgumentException the molecules are too large to search
+     * @throws Intractable the time limit was reached or the thread was
+     *                     interrupted
      */
     public List<int[]> matchAll(IAtomContainer target) throws Intractable {
         return matchAll(target, MAX_MAPPINGS);
@@ -357,9 +362,11 @@ public final class MCS {
      * @return the mappings from the query to the target atoms, see
      *         {@link #match(IAtomContainer)}; an unmodifiable list, empty if
      *         there is no common substructure
-     * @throws IllegalArgumentException the limit is not greater than zero
-     * @throws Intractable the time limit was reached, the thread was
-     *                     interrupted, or the molecules are too large
+     * @throws IllegalArgumentException the limit is not greater than zero,
+     *                                  or the molecules are too large to
+     *                                  search
+     * @throws Intractable the time limit was reached or the thread was
+     *                     interrupted
      */
     public List<int[]> matchAll(IAtomContainer target, int limit) throws Intractable {
         return finished(searchAll(target, limit));
@@ -382,9 +389,9 @@ public final class MCS {
      *
      * @param target the target molecule
      * @return the best mapping found and whether the search finished
-     * @throws Intractable the molecules are too large to search
+     * @throws IllegalArgumentException the molecules are too large to search
      */
-    public Result search(IAtomContainer target) throws Intractable {
+    public Result search(IAtomContainer target) {
         return searchAll(target, 1);
     }
 
@@ -396,9 +403,9 @@ public final class MCS {
      *
      * @param target the target molecule
      * @return the best mappings found and whether the search finished
-     * @throws Intractable the molecules are too large to search
+     * @throws IllegalArgumentException the molecules are too large to search
      */
-    public Result searchAll(IAtomContainer target) throws Intractable {
+    public Result searchAll(IAtomContainer target) {
         return searchAll(target, MAX_MAPPINGS);
     }
 
@@ -413,16 +420,17 @@ public final class MCS {
      * @param target the target molecule
      * @param limit  the most mappings to return, greater than zero
      * @return the best mappings found and whether the search finished
-     * @throws IllegalArgumentException the limit is not greater than zero
-     * @throws Intractable the molecules are too large to search
+     * @throws IllegalArgumentException the limit is not greater than zero,
+     *                                  or the molecules are too large to
+     *                                  search
      */
-    public Result searchAll(IAtomContainer target, int limit) throws Intractable {
+    public Result searchAll(IAtomContainer target, int limit) {
         if (limit <= 0) {
             throw new IllegalArgumentException("The limit must be greater than zero: " + limit);
         }
         Objects.requireNonNull(target, "target");
         if ((long) query.getAtomCount() * target.getAtomCount() > MAX_PAIRS) {
-            throw new Intractable("MCS search too large: " + query.getAtomCount() + " x "
+            throw new IllegalArgumentException("MCS search too large: " + query.getAtomCount() + " x "
                     + target.getAtomCount() + " atoms");
         }
         // The smaller molecule makes the faster query. The mappings are turned round afterwards.
@@ -433,14 +441,15 @@ public final class MCS {
         // The two adjacency entries of each bond, and the rows of compatible bond pairs, must fit an int index.
         if (2L * queryBonds > Integer.MAX_VALUE || 2L * targetBonds > Integer.MAX_VALUE
             || queryBonds * ((targetBonds + 63L) >>> 6) > Integer.MAX_VALUE) {
-            throw new Intractable("MCS search too large: " + queryBonds + " x " + targetBonds + " bonds");
+            throw new IllegalArgumentException("MCS search too large: " + queryBonds + " x " + targetBonds + " bonds");
         }
         IAtomContainer matched = matching != null ? QueryAtomContainer.create(query, matching) : query;
         MCSGraph graph = swap ? new MCSGraph(target, target, query, completeRings, checkStereo)
                               : new MCSGraph(matched, query, target, completeRings, checkStereo);
         int refused = completeRings ? Math.max(graph.query.rings.refusedAtoms, graph.target.rings.refusedAtoms) : 0;
         if (refused > 0) {
-            throw new Intractable("MCS search too large: a ring system of " + refused + " atoms has too many rings");
+            throw new IllegalArgumentException("MCS search too large: a ring system of " + refused
+                    + " atoms has too many rings");
         }
         long start = System.nanoTime();
         Thread thread = Thread.currentThread();
