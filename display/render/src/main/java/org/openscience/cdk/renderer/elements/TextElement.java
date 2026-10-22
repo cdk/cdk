@@ -39,6 +39,9 @@ public class TextElement implements IRenderingElement {
     /** The color of the text. */
     public final Color  color;
 
+    /** Background color */
+    public final Color  backColor;
+
     /**
      * Constructs a new TextElement with the content <code>text</code> to be
      * drawn at position (x,y) in the color <code>color</code>.
@@ -53,6 +56,15 @@ public class TextElement implements IRenderingElement {
         this.yCoord = yCoord;
         this.text = text;
         this.color = color;
+        this.backColor = null;
+    }
+
+    public TextElement(double xCoord, double yCoord, String text, Color color, Color backColor) {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
+        this.text = text;
+        this.color = color;
+        this.backColor = backColor;
     }
 
     /** {@inheritDoc} */

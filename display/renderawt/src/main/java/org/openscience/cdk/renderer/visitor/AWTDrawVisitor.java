@@ -266,7 +266,10 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.graphics.setFont(this.fontManager.getFont());
         Point point = this.getTextBasePoint(textElement.text, textElement.xCoord, textElement.yCoord, graphics);
         Rectangle2D textBounds = this.getTextBounds(textElement.text, textElement.xCoord, textElement.yCoord, graphics);
-        this.graphics.setColor(getBackgroundColor());
+        if (textElement.backColor != null)
+            this.graphics.setColor(textElement.backColor);
+        else
+            this.graphics.setColor(getBackgroundColor());
         this.graphics.fill(textBounds);
         this.graphics.setColor(textElement.color);
         this.graphics.drawString(textElement.text, point.x, point.y);

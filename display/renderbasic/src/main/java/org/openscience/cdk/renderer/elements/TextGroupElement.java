@@ -107,6 +107,20 @@ public class TextGroupElement extends TextElement {
     }
 
     /**
+     * Make a text group at (x, y) with the text and color given.
+     *
+     * @param x the x-coordinate of the center of the text
+     * @param y the y-coordinate of the center of the text
+     * @param text the text to render
+     * @param color the color of the text
+     * @param backColor background color of text
+     */
+    public TextGroupElement(double x, double y, String text, Color color, Color backColor) {
+        super(x, y, text, color, backColor);
+        this.children = new ArrayList<>();
+    }
+
+    /**
      * Add a child text element.
      *
      * @param text the child text to add
