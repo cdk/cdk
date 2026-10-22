@@ -26,8 +26,8 @@ package org.openscience.cdk.isomorphism;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -42,10 +42,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.atMost;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * @author John May
@@ -53,58 +49,43 @@ import static org.mockito.Mockito.when;
 class MappingsTest {
 
     @Test
-    @SuppressWarnings("unchecked")
     void filter() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
         int[] p3 = {0, 3, 4};
         int[] p4 = {0, 4, 3};
 
-        when(iterator.hasNext()).thenReturn(true, true, true, true, false);
-        when(iterator.next()).thenReturn(p1, p2, p3, p4);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), Arrays.asList(p1, p2, p3, p4));
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
-
-        Predicate<int[]> f = mock(Predicate.class);
-        when(f.test(p1)).thenReturn(false);
-        when(f.test(p2)).thenReturn(true);
-        when(f.test(p3)).thenReturn(false);
-        when(f.test(p4)).thenReturn(true);
+        Predicate<int[]> f = p -> Arrays.equals(p, p2) || Arrays.equals(p, p4);
 
         assertThat(ms.filter(f).toArray(), is(new int[][]{p2, p4}));
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void map() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
         int[] p3 = {0, 3, 4};
         int[] p4 = {0, 4, 3};
 
-        when(iterator.hasNext()).thenReturn(true, true, true, true, false);
-        when(iterator.next()).thenReturn(p1, p2, p3, p4);
+        List<int[]> mappings = Arrays.asList(p1, p2, p3, p4);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), mappings);
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
-
-        Function<int[], String> f = mock(Function.class);
-        when(f.apply(p1)).thenReturn("p1");
-        when(f.apply(p2)).thenReturn("p2");
-        when(f.apply(p3)).thenReturn("p3");
-        when(f.apply(p4)).thenReturn("p4");
+        int[] calls = {0};
+        Function<int[], String> f = p -> {
+            calls[0]++;
+            for (int i = 0; i < mappings.size(); i++) {
+                if (Arrays.equals(p, mappings.get(i)))
+                    return "p" + (i + 1);
+            }
+            throw new AssertionError("Unexpected mapping: " + Arrays.toString(p));
+        };
 
         Iterable<String> strings = ms.map(f);
         Iterator<String> stringIt = strings.iterator();
 
-        verify(f, atMost(0)).apply(ArgumentMatchers.any());
+        Assertions.assertEquals(0, calls[0]);
 
         Assertions.assertTrue(stringIt.hasNext());
         assertThat(stringIt.next(), is("p1"));
@@ -116,21 +97,17 @@ class MappingsTest {
         assertThat(stringIt.next(), is("p4"));
         Assertions.assertFalse(stringIt.hasNext());
 
-        verify(f, atMost(4)).apply(ArgumentMatchers.any());
+        Assertions.assertEquals(4, calls[0]);
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void limit() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        when(iterator.hasNext()).thenReturn(true, true, true, true, true, false);
-        when(iterator.next()).thenReturn(new int[0]);
+        CountingIterator iterator = new CountingIterator(new int[0], new int[0], new int[0], new int[0], new int[0]);
+        Iterable<int[]> iterable = () -> iterator;
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), iterable);
         assertThat(ms.limit(2).count(), is(2));
-        verify(iterator, atMost(2)).next(); // was only called twice
+        Assertions.assertEquals(2, iterator.nextCalls);
     }
 
     @Test
@@ -149,21 +126,13 @@ class MappingsTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void toArray() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        when(iterator.hasNext()).thenReturn(true, true, true, true, false);
-
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
         int[] p3 = {0, 3, 4};
         int[] p4 = {0, 4, 3};
 
-        when(iterator.next()).thenReturn(p1, p2, p3, p4);
-
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), Arrays.asList(p1, p2, p3, p4));
         assertThat(ms.toArray(), is(new int[][]{p1, p2, p3, p4}));
     }
 
@@ -256,104 +225,105 @@ class MappingsTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void atLeast() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        when(iterator.hasNext()).thenReturn(true, true, true, true, true, false);
-        when(iterator.next()).thenReturn(new int[0]);
+        CountingIterator iterator = new CountingIterator(new int[0], new int[0], new int[0], new int[0], new int[0]);
+        Iterable<int[]> iterable = () -> iterator;
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), iterable);
         Assertions.assertTrue(ms.atLeast(2));
-        verify(iterator, atMost(2)).next(); // was only called twice
+        Assertions.assertEquals(2, iterator.nextCalls);
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void first() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        when(iterator.hasNext()).thenReturn(true, true, false);
-
         int[] p1 = new int[0];
         int[] p2 = new int[0];
 
-        when(iterator.next()).thenReturn(p1, new int[][]{p2});
-
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), Arrays.asList(p1, p2));
         assertThat(ms.first(), is(sameInstance(p1)));
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void count() throws Exception {
         List<int[]> list = Arrays.asList(new int[0],
                                              new int[0],
                                              new int[0],
                                              new int[0],
                                              new int[0]);
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), list);
         assertThat(ms.count(), is(5));
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void countUnique() throws Exception {
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
         int[] p3 = {0, 3, 4};
         int[] p4 = {0, 4, 3};
         List<int[]> list = Arrays.asList(p1, p2, p3, p4);
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), list);
         assertThat(ms.countUnique(), is(2));
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void countUnique2() throws Exception {
         int[] p1 = {0, 1};
         int[] p2 = {0, 2};
         int[] p3 = {0, 3};
         int[] p4 = {0, 4};
         List<int[]> list = Arrays.asList(p1, p2, p3, p4);
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), list);
         assertThat(ms.countUnique(), is(4));
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void countExclusive() throws Exception {
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
         int[] p3 = {0, 3, 4};
         int[] p4 = {0, 4, 3};
         List<int[]> list = Arrays.asList(p1, p2, p3, p4);
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), list);
         assertThat(ms.exclusiveAtoms().count(), is(1));
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void countExclusive2() throws Exception {
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
         int[] p3 = {5, 3, 4};
         int[] p4 = {5, 4, 3};
         List<int[]> list = Arrays.asList(p1, p2, p3, p4);
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), list);
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), list);
         assertThat(ms.exclusiveAtoms().count(), is(2));
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void iterator() throws Exception {
-        Iterable<int[]> iterable = mock(Iterable.class);
-        Iterator<int[]> iterator = mock(Iterator.class);
-        when(iterable.iterator()).thenReturn(iterator);
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Iterator<int[]> iterator = Arrays.asList(new int[0]).iterator();
+        Iterable<int[]> iterable = () -> iterator;
+        Mappings ms = new Mappings(new AtomContainer(), new AtomContainer(), iterable);
         assertThat(ms.iterator(), is(sameInstance(iterator)));
+    }
+
+    private static final class CountingIterator implements Iterator<int[]> {
+        private final Iterator<int[]> delegate;
+        private int nextCalls;
+
+        CountingIterator(int[]... mappings) {
+            delegate = Arrays.asList(mappings).iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return delegate.hasNext();
+        }
+
+        @Override
+        public int[] next() {
+            nextCalls++;
+            return delegate.next();
+        }
     }
 
     private final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();

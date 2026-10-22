@@ -160,8 +160,7 @@ public class VFMCSMapper implements IMapper {
     }
 
     /**
-     * Creates a mapper with its own limits, as used by
-     * {@link org.openscience.cdk.smsd.MCS}. The global {@link TimeOut} is
+     * Creates a mapper with its own limits. The global {@link TimeOut} is
      * neither read nor set. {@link #getMaps} and {@link #countMaps} stop when
      * the time limit is reached or the thread is interrupted, see
      * {@link #isTimedOut()}. Once {@code maxMappings} equally good mappings
