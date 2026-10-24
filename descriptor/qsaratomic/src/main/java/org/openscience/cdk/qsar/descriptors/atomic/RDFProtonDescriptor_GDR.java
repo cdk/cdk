@@ -83,7 +83,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
             .createLoggingTool(RDFProtonDescriptor_GDR.class);
     private final        int          gdr_desc_length = 7;
 
-    private static String[] descriptorNames;
+    private final String[] descriptorNames;
 
     /**
      * Constructor for the RDFProtonDescriptor object

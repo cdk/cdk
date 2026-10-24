@@ -70,8 +70,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private SmilesParser sp;
-
     public ChiPathDescriptor() {}
 
     @Override
@@ -113,7 +111,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
 
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
-        if (sp == null) sp = new SmilesParser(container.getBuilder());
+        SmilesParser sp = new SmilesParser(container.getBuilder());
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
@@ -136,12 +134,12 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         try {
             List<List<Integer>> subgraph0 = order0(localAtomContainer);
             List<List<Integer>> subgraph1 = order1(localAtomContainer);
-            List<List<Integer>> subgraph2 = order2(localAtomContainer);
-            List<List<Integer>> subgraph3 = order3(localAtomContainer);
-            List<List<Integer>> subgraph4 = order4(localAtomContainer);
-            List<List<Integer>> subgraph5 = order5(localAtomContainer);
-            List<List<Integer>> subgraph6 = order6(localAtomContainer);
-            List<List<Integer>> subgraph7 = order7(localAtomContainer);
+            List<List<Integer>> subgraph2 = order2(localAtomContainer, sp);
+            List<List<Integer>> subgraph3 = order3(localAtomContainer, sp);
+            List<List<Integer>> subgraph4 = order4(localAtomContainer, sp);
+            List<List<Integer>> subgraph5 = order5(localAtomContainer, sp);
+            List<List<Integer>> subgraph6 = order6(localAtomContainer, sp);
+            List<List<Integer>> subgraph7 = order7(localAtomContainer, sp);
 
             double order0s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph0);
             double order1s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph1);
@@ -235,7 +233,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         return fragments;
     }
 
-    private List<List<Integer>> order2(IAtomContainer atomContainer) {
+    private List<List<Integer>> order2(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC"), false);
@@ -246,7 +244,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List<List<Integer>> order3(IAtomContainer atomContainer) {
+    private List<List<Integer>> order3(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCC"), false);
@@ -257,7 +255,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List<List<Integer>> order4(IAtomContainer atomContainer) {
+    private List<List<Integer>> order4(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCCC"), false);
@@ -268,7 +266,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List<List<Integer>> order5(IAtomContainer atomContainer) {
+    private List<List<Integer>> order5(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCCCC"), false);
@@ -279,7 +277,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List<List<Integer>> order6(IAtomContainer atomContainer) {
+    private List<List<Integer>> order6(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCCCCC"), false);
@@ -290,7 +288,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List<List<Integer>> order7(IAtomContainer atomContainer) {
+    private List<List<Integer>> order7(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCCCCCC"), false);

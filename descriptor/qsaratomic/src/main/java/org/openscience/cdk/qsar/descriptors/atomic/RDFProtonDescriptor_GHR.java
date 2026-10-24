@@ -81,7 +81,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
     private final static ILoggingTool LOGGER              = LoggingToolFactory
                                                                   .createLoggingTool(RDFProtonDescriptor_GHR.class);
 
-    private static String[]           descriptorNames;
+    private final String[]            descriptorNames;
     private final int                 ghr_desc_length     = 15;
 
     /**
