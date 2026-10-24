@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.PseudoAtom;
 
 class AtomValenceToolTest {
 
@@ -36,5 +37,12 @@ class AtomValenceToolTest {
                     AtomValenceTool.getValence(new Atom(symbol)),
                     "Unexpected valence for atom with symbol " + symbol);
         }
+    }
+
+    @Test
+    void hasValence() {
+        Assertions.assertTrue(AtomValenceTool.hasValence(new Atom("C")));
+        Assertions.assertFalse(AtomValenceTool.hasValence(new Atom("Pt")));
+        Assertions.assertFalse(AtomValenceTool.hasValence(new PseudoAtom("*")));
     }
 }

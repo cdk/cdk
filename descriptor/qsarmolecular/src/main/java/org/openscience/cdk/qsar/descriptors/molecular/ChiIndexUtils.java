@@ -23,6 +23,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
@@ -125,7 +126,8 @@ class ChiIndexUtils {
      * @param atomContainer The target <code>AtomContainer</code>
      * @param fragList      A list of fragments
      * @return The valence corrected chi index
-     * @throws CDKException if the <code>IsotopeFactory</code> cannot be created
+     * @throws CDKException if no valence is defined in AtomValenceTool for an atom of a fragment, i.e. for an
+     *                      unsupported element or a pseudo atom
      */
     public static double evalValenceIndex(IAtomContainer atomContainer, List<List<Integer>> fragList) throws CDKException {
 
@@ -169,9 +171,26 @@ class ChiIndexUtils {
         return sum;
     }
 
-    private static int getValenceElectronCount(IAtom atom) {
+    private static int getValenceElectronCount(IAtom atom) throws CDKException {
+        if (!AtomValenceTool.hasValence(atom))
+            throw new CDKException(noValenceMessage(atom));
         int valency = AtomValenceTool.getValence(atom);
         return valency - atom.getFormalCharge();
+    }
+
+    /**
+     * Returns the message for an atom without a valence in AtomValenceTool. Pseudo atoms (e.g. '*' or R groups) are
+     * named as such, because their symbol 'R' is no element.
+     *
+     * @param atom the atom without a valence
+     * @return the message
+     */
+    private static String noValenceMessage(IAtom atom) {
+        if (atom instanceof IPseudoAtom || atom.getAtomicNumber() == null || atom.getAtomicNumber() == 0) {
+            String label = atom instanceof IPseudoAtom ? ((IPseudoAtom) atom).getLabel() : null;
+            return "No valence defined for pseudo atom " + (label != null ? label : atom.getSymbol());
+        }
+        return "No valence defined for element " + atom.getSymbol();
     }
 
     /**

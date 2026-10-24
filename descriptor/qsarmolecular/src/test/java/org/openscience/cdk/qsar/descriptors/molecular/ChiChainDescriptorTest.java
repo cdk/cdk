@@ -9,6 +9,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -262,9 +263,12 @@ class ChiChainDescriptorTest extends MolecularDescriptorTest {
     void testCovalentPlatinum() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
-        Assertions.assertThrows(NullPointerException.class, () -> {
-            descriptor.calculate(mol).getValue();
-        });
+        DescriptorValue value = descriptor.calculate(mol);
+        Assertions.assertNotNull(value.getException());
+        Assertions.assertTrue(value.getException().getMessage().contains("Pt"));
+        DoubleArrayResult ret = (DoubleArrayResult) value.getValue();
+        for (int i = 0; i < ret.length(); i++)
+            Assertions.assertTrue(Double.isNaN(ret.get(i)));
     }
 
     //    @Test public void testDan277() throws CDKException {

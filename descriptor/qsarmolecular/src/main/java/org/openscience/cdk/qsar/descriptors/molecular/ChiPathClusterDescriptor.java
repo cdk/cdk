@@ -149,7 +149,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
             order5v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph5);
             order6v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph6);
         } catch (CDKException e) {
-            return getDummyDescriptorValue(new CDKException("Error in substructure search: " + e.getMessage()));
+            return getDummyDescriptorValue(new CDKException("Error in valence index calculation: " + e.getMessage()));
         }
 
         DoubleArrayResult retval = new DoubleArrayResult();

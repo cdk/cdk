@@ -48,4 +48,24 @@ class AtomValenceDescriptorTest extends AtomicDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("CCCl"); //
         Assertions.assertEquals(7, ((IntegerResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).intValue());
     }
+
+    @Test
+    void testUnsupportedElement() throws Exception {
+        IAtomicDescriptor descriptor = new AtomValenceDescriptor();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("Cl[Pt]Cl");
+        Exception exception = descriptor.calculate(mol.getAtom(1), mol).getException();
+        Assertions.assertNotNull(exception);
+        Assertions.assertEquals("No valence defined for element Pt", exception.getMessage());
+    }
+
+    @Test
+    void testPseudoAtom() throws Exception {
+        IAtomicDescriptor descriptor = new AtomValenceDescriptor();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("*CCO");
+        Exception exception = descriptor.calculate(mol.getAtom(0), mol).getException();
+        Assertions.assertNotNull(exception);
+        Assertions.assertEquals("No valence defined for pseudo atom *", exception.getMessage());
+    }
 }
