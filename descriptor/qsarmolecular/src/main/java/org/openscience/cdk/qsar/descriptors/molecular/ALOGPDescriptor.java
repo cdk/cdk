@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,7 +38,6 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.AtomicProperties;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -381,10 +381,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
      * @param atomContainer the molecule to calculate the descriptor for
      * @param fragment EState fragments (EState atom type) for each atom of the molecule
      * @param rs the ring set of the molecule
+     * @param isAromaticRing for each ring of rs, whether it is aromatic
      * @return double[]{alogp, alogp2, amr}
      * @throws CDKException if the descriptor cannot be calculated
      */
-    private double[] calculate(IAtomContainer atomContainer, String[] fragment, IRingSet rs) throws CDKException {
+    private double[] calculate(IAtomContainer atomContainer, String[] fragment, IRingSet rs, boolean[] isAromaticRing) throws CDKException {
         double alogp  = 0.0;
         double amr = 0.0;
         // counts of each type of fragment in the molecule
@@ -410,7 +411,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     calcGroup017_019_020_038_to_041(i, atomContainer, fragment, alogpfrag, frags);
                     calcGroup021_to_023_040(i, atomContainer, fragment, alogpfrag, frags);
                     calcGroup024_027_030_033_042(i, atomContainer, fragment, alogpfrag, frags);
-                    calcGroup025_026_028_029_031_032_034_035_043_044(i, rs, atomContainer, fragment, alogpfrag, frags);
+                    calcGroup025_026_028_029_031_032_034_035_043_044(i, rs, isAromaticRing, atomContainer, fragment, alogpfrag, frags);
                     calcGroup056_57(i, atomContainer, fragment, alogpfrag, frags);
                     calcGroup058_61(i, atomContainer, fragment, alogpfrag, frags);
                     calcGroup059_060_063(i, atomContainer, fragment, alogpfrag, frags);
@@ -885,7 +886,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
     }
 
-    private void calcGroup025_026_028_029_031_032_034_035_043_044(int i, IRingSet rs, IAtomContainer atomContainer, String[] fragment, int[] alogpfrag, int[] frags) {
+    private void calcGroup025_026_028_029_031_032_034_035_043_044(int i, IRingSet rs, boolean[] isAromaticRing, IAtomContainer atomContainer, String[] fragment, int[] alogpfrag, int[] frags) {
         // 25: R--CR--R
         // 26: R--CX--R
         // 28: R--CR--X
@@ -908,7 +909,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         int sameringatomscount = 0;
         for (int j = 0; j <= nbors.size() - 1; j++) {
-            if (inSameAromaticRing(atomContainer, atm, nbors.get(j), rs)) {
+            if (inSameAromaticRing(atomContainer, atm, nbors.get(j), rs, isAromaticRing)) {
                 sameringatomscount++;
             }
         }
@@ -916,7 +917,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         if (sameringatomscount == 2) {
             int count = 0;
             for (int j = 0; j <= nbors.size() - 1; j++) {
-                if (inSameAromaticRing(atomContainer, atm, nbors.get(j), rs)) {
+                if (inSameAromaticRing(atomContainer, atm, nbors.get(j), rs, isAromaticRing)) {
                     sameringatoms[count] = nbors.get(j);
                     count++;
                 } else {
@@ -1984,13 +1985,13 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
     }
 
-    private boolean inSameAromaticRing(IAtomContainer atomContainer, IAtom atom1, IAtom atom2, IRingSet rs) {
+    private boolean inSameAromaticRing(IAtomContainer atomContainer, IAtom atom1, IAtom atom2, IRingSet rs, boolean[] isAromaticRing) {
         boolean sameRing = false;
 
         for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
             IRing r = (IRing) rs.getAtomContainer(i);
 
-            if (!r.getFlag(IChemObject.AROMATIC))
+            if (!isAromaticRing[i])
                 continue;
 
             boolean haveOne = false;
@@ -2024,8 +2025,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         //TODO Ideally we should explicit H addition should be cached
         IRingSet rs;
         try {
-            AllRingsFinder arf = new AllRingsFinder();
-            rs = arf.findAllRings(container);
+            // unlike AllRingsFinder, Cycles does not set the ring flags of the atoms, so the molecule is not changed
+            rs = Cycles.all(container).toRingSet();
         } catch (Exception e) {
             return getDummyDescriptorValue(new CDKException("Could not find all rings: " + e.getMessage()));
         }
@@ -2034,15 +2035,17 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         EStateAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher();
         eStateMatcher.setRingSet(rs);
 
-        for (IAtomContainer ring : rs.atomContainers()) {
+        // a ring is aromatic if all its bonds are aromatic; kept in an array instead of a flag of the ring
+        boolean[] isAromaticRing = new boolean[rs.getAtomContainerCount()];
+        for (int r = 0; r < rs.getAtomContainerCount(); r++) {
             boolean arom = true;
-            for (IBond bond : ring.bonds()) {
+            for (IBond bond : rs.getAtomContainer(r).bonds()) {
                 if (!bond.isAromatic()) {
                     arom = false;
                     break;
                 }
             }
-            ring.setFlag(IChemObject.AROMATIC, arom);
+            isAromaticRing[r] = arom;
         }
 
         for (int i = 0; i < container.getAtomCount(); i++) {
@@ -2056,7 +2059,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         double[] ret;
         try {
-            ret = calculate(container, fragment, rs);
+            ret = calculate(container, fragment, rs, isAromaticRing);
         } catch (CDKException e) {
             return getDummyDescriptorValue(new CDKException(e.getMessage()));
         }
