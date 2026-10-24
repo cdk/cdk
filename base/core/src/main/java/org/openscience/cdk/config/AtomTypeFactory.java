@@ -23,10 +23,10 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -92,7 +92,7 @@ public class AtomTypeFactory {
 
     private static final ILoggingTool                 logger                = LoggingToolFactory
                                                                               .createLoggingTool(AtomTypeFactory.class);
-    private static Map<String, AtomTypeFactory> tables                = null;
+    private static final Map<String, AtomTypeFactory> tables          = new ConcurrentHashMap<>();
     private Map<String,IAtomType>               atomTypes;
 
     /**
@@ -150,19 +150,23 @@ public class AtomTypeFactory {
      *  <li>org/openscience/cdk/dict/data/cdk-atom-types.owl
      *  <li>org/openscience/cdk/dict/data/sybyl-atom-types.owl
      * </ul>
+     * <p>
+     * This method is thread-safe: the data file is read only once, and every call with the same data file returns
+     * the same AtomTypeFactory, also if called concurrently. Note: The factory is created within
+     * {@link ConcurrentHashMap#computeIfAbsent}, so creating it must not call this method.
      *
      * @param  configFile             String the name of the data file
      * @param  builder                INewChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
      */
     public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) {
-        if (tables == null) {
-            tables = new Hashtable<>();
+        // look up first: on Java 8, computeIfAbsent locks even if the factory exists already
+        AtomTypeFactory factory = tables.get(configFile);
+        if (factory != null) {
+            return factory;
         }
-        if (!(tables.containsKey(configFile))) {
-            tables.put(configFile, new AtomTypeFactory(configFile, builder));
-        }
-        return tables.get(configFile);
+        // atomic, the data file is read only once even if called concurrently
+        return tables.computeIfAbsent(configFile, f -> new AtomTypeFactory(f, builder));
     }
 
     /**
