@@ -20,6 +20,7 @@ package org.openscience.cdk.atomtype;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -35,6 +36,14 @@ import org.xml.sax.SAXParseException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Checks the functionality of the AtomTypeFactory.
@@ -71,6 +80,39 @@ class AtomTypeFactoryTest {
         AtomTypeFactory atf = AtomTypeFactory.getInstance(configFile, new ChemObject().getBuilder());
         Assertions.assertNotNull(atf);
         Assertions.assertNotEquals(0, atf.getSize());
+    }
+
+    @Test
+    void testGetInstance_String_IChemObjectBuilder_concurrent(@TempDir Path tmp) throws Exception {
+        // copy the list to a new file name so the factory is not already cached by another test
+        Path configFile = tmp.resolve("jmol_atomtypes.txt");
+        try (InputStream in = getClass().getClassLoader()
+                                        .getResourceAsStream("org/openscience/cdk/config/data/jmol_atomtypes.txt")) {
+            Files.copy(in, configFile);
+        }
+        int nThreads = 32;
+        CountDownLatch ready = new CountDownLatch(nThreads);
+        CountDownLatch start = new CountDownLatch(1);
+        ExecutorService executor = Executors.newFixedThreadPool(nThreads);
+        try {
+            List<Future<AtomTypeFactory>> results = new ArrayList<>();
+            for (int i = 0; i < nThreads; i++) {
+                results.add(executor.submit(() -> {
+                    ready.countDown();
+                    start.await();
+                    return AtomTypeFactory.getInstance(configFile.toString(), new ChemObject().getBuilder());
+                }));
+            }
+            ready.await();
+            start.countDown();
+            AtomTypeFactory expected = results.get(0).get();
+            Assertions.assertNotNull(expected);
+            Assertions.assertNotEquals(0, expected.getSize());
+            for (Future<AtomTypeFactory> result : results)
+                Assertions.assertSame(expected, result.get());
+        } finally {
+            executor.shutdownNow();
+        }
     }
 
     @Test
