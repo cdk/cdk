@@ -81,7 +81,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 public class ChiChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class);
-    private SmilesParser          sp;
 
     private static final String[] NAMES  = {"SCH-3", "SCH-4", "SCH-5", "SCH-6", "SCH-7", "VCH-3", "VCH-4", "VCH-5",
             "VCH-6", "VCH-7"             };
@@ -131,7 +130,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
 
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
-        if (sp == null) sp = new SmilesParser(container.getBuilder());
+        SmilesParser sp = new SmilesParser(container.getBuilder());
 
         // we don't make a clone, since removeHydrogens returns a deep copy
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
@@ -153,10 +152,10 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         }
 
         List subgraph3 = order3(localAtomContainer);
-        List subgraph4 = order4(localAtomContainer);
-        List subgraph5 = order5(localAtomContainer);
-        List subgraph6 = order6(localAtomContainer);
-        List subgraph7 = order7(localAtomContainer);
+        List subgraph4 = order4(localAtomContainer, sp);
+        List subgraph5 = order5(localAtomContainer, sp);
+        List subgraph6 = order6(localAtomContainer, sp);
+        List subgraph7 = order7(localAtomContainer, sp);
 
         double order3s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph3);
         double order4s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph4);
@@ -228,7 +227,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         return ret;
     }
 
-    private List order4(IAtomContainer atomContainer) {
+    private List order4(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[2];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1CCC1"), false);
@@ -240,7 +239,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List order5(IAtomContainer atomContainer) {
+    private List order5(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[3];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1CCCC1"), false);
@@ -253,7 +252,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List order6(IAtomContainer atomContainer) {
+    private List order6(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[9];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CCCC1"), false);
@@ -272,7 +271,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List order7(IAtomContainer atomContainer) {
+    private List order7(IAtomContainer atomContainer, SmilesParser sp) {
         String[] smiles = {
                 "C1CCCCC1C",
                 // 5-ring cases

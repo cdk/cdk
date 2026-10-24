@@ -89,7 +89,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
     private final static ILoggingTool LOGGER = LoggingToolFactory
             .createLoggingTool(RDFProtonDescriptor_G3R.class);
 
-    private static String[] names;
+    private final String[] names;
 
     /**
      * Constructor for the RDFProtonDescriptor object

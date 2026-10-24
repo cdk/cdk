@@ -304,14 +304,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static String[] names;
+    private static final String[] NAMES;
     private static final SmartsPattern[] SMARTS = EStateFragments.getPatterns();
 
-    public KierHallSmartsDescriptor() {
+    static {
         String[] tmp = EStateFragments.getNames();
-        names = new String[tmp.length];
+        NAMES = new String[tmp.length];
         for (int i = 0; i < tmp.length; i++)
-            names[i] = "khs." + tmp[i];
+            NAMES[i] = "khs." + tmp[i];
+    }
+
+    public KierHallSmartsDescriptor() {
     }
 
     /**
@@ -362,7 +365,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
 
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

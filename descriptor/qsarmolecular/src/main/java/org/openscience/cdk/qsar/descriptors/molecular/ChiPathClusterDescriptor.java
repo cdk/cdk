@@ -75,7 +75,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiPathClusterDescriptor.class);
-    private SmilesParser          sp;
 
     private static final String[] NAMES  = {"SPC-4", "SPC-5", "SPC-6", "VPC-4", "VPC-5", "VPC-6"};
 
@@ -115,7 +114,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
 
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
-        if (sp == null) sp = new SmilesParser(container.getBuilder());
+        SmilesParser sp = new SmilesParser(container.getBuilder());
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
@@ -135,9 +134,9 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
             return getDummyDescriptorValue(new CDKException("Error in hydrogen addition: " + e.getMessage()));
         }
 
-        List subgraph4 = order4(localAtomContainer);
-        List subgraph5 = order5(localAtomContainer);
-        List subgraph6 = order6(localAtomContainer);
+        List subgraph4 = order4(localAtomContainer, sp);
+        List subgraph5 = order5(localAtomContainer, sp);
+        List subgraph6 = order6(localAtomContainer, sp);
 
         double order4s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph4);
         double order5s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph5);
@@ -191,7 +190,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
         return new DoubleArrayResultType(6);
     }
 
-    private List order4(IAtomContainer atomContainer) {
+    private List order4(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)CC"), false);
@@ -202,7 +201,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List order5(IAtomContainer atomContainer) {
+    private List order5(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[3];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)CCC"), false);
@@ -215,7 +214,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
-    private List order6(IAtomContainer atomContainer) {
+    private List order6(IAtomContainer atomContainer, SmilesParser sp) {
         QueryAtomContainer[] queries = new QueryAtomContainer[6];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)(C)CCC"), false);

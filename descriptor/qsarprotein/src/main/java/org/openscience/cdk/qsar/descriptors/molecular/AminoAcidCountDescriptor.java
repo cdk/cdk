@@ -61,7 +61,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
 
     private final IAtomContainerSet substructureSet;
 
-    private static String[]   names;
+    private final String[]    names;
 
     /**
      *  Constructor for the AromaticAtomsCountDescriptor object.
