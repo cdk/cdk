@@ -89,12 +89,21 @@ public class AtomTools {
             int nLigands = noCoordLigands.size();
             int nwanted = nLigands;
             String elementType = refAtom.getSymbol();
+            List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(refAtom);
+            int nwithCoords = 0;
+            if (connectedAtoms != null) {
+                for (IAtom ligand : connectedAtoms) {
+                    if (ligand.getPoint3d() != null) {
+                        nwithCoords++;
+                    }
+                }
+            }
             // try to deal with lone pairs on small hetero
-            if (elementType.equals("N") || elementType.equals("O") || elementType.equals("S")) {
-                nwanted = 3;
+            if ("N".equals(elementType) || "O".equals(elementType) || "S".equals(elementType)) {
+                nwanted = nwithCoords > 0 ? Math.max(nLigands, 4 - nwithCoords) : 3;
             }
             Point3d[] newPoints = calculate3DCoordinatesForLigands(atomContainer, refAtom, nwanted, length, angle);
-            for (int j = 0; j < nLigands; j++) {
+            for (int j = 0; j < nLigands && j < newPoints.length; j++) {
                 IAtom ligand = noCoordLigands.get(j);
                 Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
                 ligand.setPoint3d(newPoint);
@@ -113,10 +122,12 @@ public class AtomTools {
      */
     public static Point3d rescaleBondLength(IAtom atom1, IAtom atom2, Point3d point2) {
         Point3d point1 = atom1.getPoint3d();
-        double d1 = atom1.getCovalentRadius();
-        double d2 = atom2.getCovalentRadius();
+        Double cr1 = atom1.getCovalentRadius();
+        Double cr2 = atom2.getCovalentRadius();
+        double d1 = (cr1 != null && !Double.isNaN(cr1)) ? cr1 : 0.0;
+        double d2 = (cr2 != null && !Double.isNaN(cr2)) ? cr2 : 0.0;
         // in case we have no covalent radii, set to 1.0
-        double distance = (d1 < 0.1 || d2 < 0.1) ? 1.0 : atom1.getCovalentRadius() + atom2.getCovalentRadius();
+        double distance = (d1 < 0.1 || d2 < 0.1) ? 1.0 : d1 + d2;
         Vector3d vect = new Vector3d(point2);
         vect.sub(point1);
         vect.normalize();
