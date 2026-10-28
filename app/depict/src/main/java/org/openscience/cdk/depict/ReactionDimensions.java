@@ -31,8 +31,9 @@ class ReactionDimensions {
     final double padding;
     final double scale;
 
-    double[]   xOffsets, yOffsets;
-    double[] xOffsetSide, yOffsetSide;
+    double[] xOffsets, yOffsets;
+    double[] xOffsetAbove, yOffsetAbove;
+    double[] yOffsetBelow;
 
     ReactionDimensions(Dimensions sideDim,
                        Dimensions mainDim,
@@ -79,8 +80,9 @@ class ReactionDimensions {
 
         result.xOffsets = resize(xOffsets, amount);
         result.yOffsets = resize(yOffsets, amount);
-        result.xOffsetSide = resize(xOffsetSide, amount);
-        result.yOffsetSide = resize(yOffsetSide, amount);
+        result.xOffsetAbove = resize(xOffsetAbove, amount);
+        result.yOffsetAbove = resize(yOffsetAbove, amount);
+        result.yOffsetBelow = resize(yOffsetBelow, amount);
         return result;
     }
 
@@ -91,12 +93,16 @@ class ReactionDimensions {
     Dimensions calcTotalDimensions(String fmt) {
         final double firstRowHeight = yOffsets[1];
 
-        final int nSideCol = xOffsetSide.length - 1;
-        final int nSideRow = yOffsetSide.length - 1;
+        final int nAboveCol = xOffsetAbove.length - 1;
+        final int nAboveRow = yOffsetAbove.length - 1;
+        final int nBelowRow = yOffsetBelow.length - 1;
 
-        double mainCompOffset = (sideDim.h + padding + ((nSideRow-1) * padding)) - (firstRowHeight / 2);
-        if (mainCompOffset < 0)
-            mainCompOffset = 0;
+        double aboveArrowOverhang = (sideDim.h + (nAboveRow * padding)) - (firstRowHeight / 2);
+        if (aboveArrowOverhang < 0)
+            aboveArrowOverhang = 0;
+        double bellowArrowOverhang = (condDim.h + (nBelowRow * padding)) - (firstRowHeight / 2);
+        if (bellowArrowOverhang < 0)
+            bellowArrowOverhang = 0;
 
         double titleExtra = Math.max(0, titleDim.h);
         if (titleExtra > 0)
@@ -108,7 +114,8 @@ class ReactionDimensions {
         double offsetWidth = xOffsets[xOffsets.length - 1];
         return new Dimensions(offsetWidth, mainDim.h)
                       .add(Math.max(0, nCol - 1) * padding, (nRow - 1) * padding)
-                      .add(0, mainCompOffset)
+                      .add(0, aboveArrowOverhang)
+                      .add(0, bellowArrowOverhang)
                       .add(0, titleExtra);
     }
 }

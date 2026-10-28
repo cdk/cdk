@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.depict;
 
-import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -497,7 +496,14 @@ public final class DepictionGenerator {
     private ReactionBounds getReactionBounds(IReaction rxn, Color fgcol, AtomNumbering atomNumbering) throws CDKException {
         final List<IAtomContainer> reactants = toList(rxn.getReactants());
         final List<IAtomContainer> products = toList(rxn.getProducts());
-        final List<IAtomContainer> agents = toList(rxn.getAgents());
+        final List<IAtomContainer> above = toList(rxn.getAgents());
+        final List<IAtomContainer> below = new ArrayList<>();
+        for (IAtomContainer agent : above) {
+            if (Boolean.TRUE.equals(agent.getProperty(CDKConstants.PLACE_BELOW_ARROW)))
+                below.add(agent);
+        }
+        above.removeAll(below);
+
         List<LayoutBackup> layoutBackups = new ArrayList<>();
 
         // set ids for tagging elements
@@ -510,7 +516,7 @@ public final class DepictionGenerator {
 
         prepareCoords(reactants);
         prepareCoords(products);
-        prepareCoords(agents);
+        prepareCoords(above);
 
         // highlighting
         final Map<IChemObject, Color> mappingHighlight = new HashMap<>();
@@ -527,9 +533,10 @@ public final class DepictionGenerator {
         final DepictionGenerator copy = this.withParam(BasicSceneGenerator.Scale.class, scale);
         final RendererModel model = copy.getModel();
 
-        // reactant/product/agent element generation, we number the reactants, then products then agents
+        // reactant/product/agent element generation, we number the reactants, then products then above
         List<Bounds> reactantBounds = copy.generate(reactants, model, atomNumbering);
-        List<Bounds> agentBounds = copy.generate(toList(rxn.getAgents()), model, atomNumbering);
+        List<Bounds> aboveBounds = copy.generate(above, model, atomNumbering);
+        List<Bounds> belowBounds = copy.generate(below, model, atomNumbering);
         List<Bounds> productBounds = copy.generate(toList(rxn.getProducts()), model, atomNumbering);
 
         // generate a 'plus' element
@@ -557,11 +564,14 @@ public final class DepictionGenerator {
         reactionBounds.plus = plus;
         reactionBounds.reactants.addAll(reactantBounds);
         reactionBounds.products.addAll(productBounds);
-        reactionBounds.aboveArrow.addAll(agentBounds);
+        reactionBounds.aboveArrow.addAll(aboveBounds);
         reactionBounds.title = title;
         reactionBounds.reactantLabels.addAll(reactantTitles);
         reactionBounds.productLabels.addAll(productTitles);
-        reactionBounds.belowArrow.add(conditions);
+        if (!conditions.isEmpty())
+            reactionBounds.belowArrow.add(conditions);
+        if (!belowBounds.isEmpty())
+            reactionBounds.belowArrow.addAll(belowBounds);
         reactionBounds.direction = rxn.getDirection();
         return reactionBounds;
     }
