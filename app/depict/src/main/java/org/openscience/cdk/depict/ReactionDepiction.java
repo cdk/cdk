@@ -39,6 +39,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -72,30 +73,33 @@ final class ReactionDepiction extends Depiction {
         final double padding = required.padding;
 
         List<Bounds> mainComp = reactionBounds.getMainComponents();
-        List<Bounds> sideComps = reactionBounds.aboveArrow;
+        List<Bounds> aboveArrow = reactionBounds.aboveArrow;
+        List<Bounds> belowArrow = reactionBounds.belowArrow;
         int arrowIdx = reactionBounds.getArrowIndex();
         double arrowHeight = reactionBounds.plus.height() * required.scale;
 
         // work out the required space of the main and side components separately
         // will draw these in two passes (main then side) hence want different offsets for each
-        final int nSideCol = required.xOffsetSide.length - 1;
-        final int nSideRow = required.yOffsetSide.length - 1;
+        final int nAboveCol = required.xOffsetAbove.length - 1;
+        final int nAboveRow = required.yOffsetAbove.length - 1;
+        final int nBelowRow = required.yOffsetBelow.length - 1;
 
         // compound the zoom, fitting and scaling into a single value
-        double mainCompOffset;
+        double aboveArrowOverhang = (required.sideDim.h + (nAboveRow * padding)) - (required.mainRowHeight() / 2);
+        double belowArrowOverhang = (required.condDim.h + (nBelowRow * padding)) - (required.mainRowHeight() / 2);
 
         // shift product x-offset to make room for the arrow / side components
-        mainCompOffset = (required.sideDim.h + (nSideRow * padding)) - (required.mainRowHeight() / 2);
-
         int nCol = required.xOffsets.length - 1;
         int nRow = required.yOffsets.length - 1;
 
         // MAIN COMPONENTS DRAW
         // x,y base coordinates include the margin and centering (only if fitting to a size)
         final double totalRequiredWidth = Math.max(0, nCol - 1) * padding + required.xOffsets[nCol];
-        final double totalRequiredHeight = Math.max(0, nRow - 1) * padding + (!reactionBounds.title.isEmpty() ? padding : 0) + Math.max(mainCompOffset, 0) + required.mainDim.h + Math.max(0, required.titleDim.h);
+        final double totalRequiredHeight = Math.max(0, nRow - 1) * padding + (!reactionBounds.title.isEmpty() ? padding : 0) + Math.max(aboveArrowOverhang, 0) + Math.max(belowArrowOverhang,0) + required.mainDim.h + Math.max(0, required.titleDim.h);
         double xBase = viewBounds.getX() + (viewBounds.getWidth() - totalRequiredWidth) / 2;
-        double yBase = viewBounds.getY() + Math.max(mainCompOffset, 0) + ((viewBounds.getHeight() - totalRequiredHeight) / 2);
+        double yBase = viewBounds.getY() +
+                       Math.max(aboveArrowOverhang,0) +
+                       ((viewBounds.getHeight() - totalRequiredHeight) / 2);
         for (int i = 0; i < mainComp.size(); i++) {
 
             final int row = i / nCol;
@@ -134,34 +138,34 @@ final class ReactionDepiction extends Depiction {
             draw(visitor, zoom, reactionBounds.title, rect(0, y, viewBounds.getWidth(), h));
         }
 
-        // SIDE COMPONENTS DRAW
+        // Position/Draw the component above the arrow.
         xBase += arrowIdx * padding + required.xOffsets[arrowIdx];
-        yBase -= mainCompOffset;
-        for (int i = 0; i < sideComps.size(); i++) {
-            final int row = i / nSideCol;
-            final int col = i % nSideCol;
+        yBase -= aboveArrowOverhang;
+        for (int i = 0; i < aboveArrow.size(); i++) {
+            final int row = i / nAboveCol;
+            final int col = i % nAboveCol;
 
             // calc the 'view' bounds:
             //  amount of padding depends on which row or column we are in.
             //  the width/height of this col/row can be determined by the next offset
-            double x = xBase + (col+1) * padding + required.xOffsetSide[col];
-            double y = yBase + row * padding + required.yOffsetSide[row];
-            double w = (required.xOffsetSide[col + 1] - required.xOffsetSide[col]);
-            double h = (required.yOffsetSide[row + 1] - required.yOffsetSide[row]);
+            double x = xBase + (col+1) * padding + required.xOffsetAbove[col];
+            double y = yBase + row * padding + required.yOffsetAbove[row];
+            double w = (required.xOffsetAbove[col + 1] - required.xOffsetAbove[col]);
+            double h = (required.yOffsetAbove[row + 1] - required.yOffsetAbove[row]);
 
-            draw(visitor, zoom, sideComps.get(i), rect(x, y, w, h));
+            draw(visitor, zoom, aboveArrow.get(i), rect(x, y, w, h));
         }
 
-        // CONDITIONS DRAW
-        if (!reactionBounds.belowArrow.isEmpty()) {
-            yBase += mainCompOffset; // back to center
-            yBase += 2*padding + arrowHeight;  // now just bellow arrow
+        // Position/Draw the components below the arrow (stacked in a single coumn)
+        yBase += aboveArrowOverhang + (required.yOffsets[1]/2) + padding;
+        for (int row = 0; row < belowArrow.size(); row++) {
+            double x = xBase - padding;
+            double y = yBase + row * padding + required.yOffsetBelow[row];
+            double w = (required.xOffsets[arrowIdx + 1] - required.xOffsets[arrowIdx]);
+            double h = (required.yOffsetBelow[row + 1] - required.yOffsetBelow[row]);
             draw(visitor, zoom,
-                 reactionBounds.belowArrow.get(0),
-                 rect(xBase,
-                      yBase,
-                      required.condDim.w,
-                      required.condDim.h));
+                 belowArrow.get(row),
+                 rect(x, y, w, h));
         }
     }
 
@@ -327,8 +331,8 @@ final class ReactionDepiction extends Depiction {
         final double padding = srcDim.padding;
         final double firstRowHeight = srcDim.yOffsets[1];
 
-        final int nSideCol = srcDim.xOffsetSide.length - 1;
-        final int nSideRow = srcDim.yOffsetSide.length - 1;
+        final int nSideCol = srcDim.xOffsetAbove.length - 1;
+        final int nSideRow = srcDim.yOffsetAbove.length - 1;
 
         // need padding in calculation
         double mainCompOffset = srcDim.sideDim.h > 0 ? srcDim.sideDim.h + (nSideRow * padding) - (firstRowHeight / 2) : 0;
