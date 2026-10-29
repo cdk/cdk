@@ -107,6 +107,7 @@ final class ReactionBounds {
 
         double[] xOffsets, yOffsets;
         double[] xOffsetSide, yOffsetSide;
+        double[] yOffsetBelow;
 
         if (hasMainRowLabels()) {
             nRow = 2;
@@ -122,14 +123,16 @@ final class ReactionBounds {
 
         // important we flip x/y so things above the arrow get stacked
         Dimension sideGrid = Dimensions.determineGrid(aboveArrow.size());
-        Dimensions prelimSideDim = Dimensions.ofGrid(aboveArrow,
+        Dimensions aboveArrowDim = Dimensions.ofGrid(aboveArrow,
                                                      yOffsetSide = new double[sideGrid.width + 1],
                                                      xOffsetSide = new double[sideGrid.height + 1]);
 
-        Bounds conditions = belowArrow.isEmpty() ? new Bounds() : belowArrow.get(0);
+        Dimensions belowArrowDim = Dimensions.ofGrid(belowArrow,
+                                                     yOffsetBelow = new double[belowArrow.size() + 1],
+                                                     new double[2]);
         double middleRequired = 2*padding + arrowHeadLength +
-                Math.max(prelimSideDim.w + Math.max(0, xOffsetSide.length-2) * padding,
-                                                     conditions.width());
+                Math.max(aboveArrowDim.w + Math.max(0, xOffsetSide.length-2) * padding,
+                         belowArrowDim.w);
 
         ReactionDimensions result;
         if (middleRequired < minArrowWidth) {
@@ -143,13 +146,14 @@ final class ReactionBounds {
                 xOffsetSide[i] += xAdjust;
 
             // need to recenter agents
-            if (conditions.width() > prelimSideDim.w) {
+            if (belowArrowDim.w > aboveArrowDim.w) {
                 for (int i = 0; i < xOffsetSide.length; i++)
-                    xOffsetSide[i] += (conditions.width() - prelimSideDim.w) / 2;
+                    xOffsetSide[i] += (belowArrowDim.w - aboveArrowDim.w) / 2;
             }
+
             // update side dims
-            Dimensions sideDim = new Dimensions(minArrowWidth, prelimSideDim.h);
-            Dimensions condDim = new Dimensions(minArrowWidth, conditions.height());
+            Dimensions sideDim = new Dimensions(minArrowWidth, aboveArrowDim.h);
+            Dimensions condDim = new Dimensions(minArrowWidth, belowArrowDim.h);
             Dimensions titleDim = new Dimensions(title.width(),
                                                  title.height());
 
@@ -162,18 +166,18 @@ final class ReactionBounds {
             // above/below is larger than arrow, make the arrow as big as needed
 
             // need to re-center agents
-            if (conditions.width() > prelimSideDim.w) {
+            if (belowArrowDim.w > aboveArrowDim.w) {
                 for (int i = 0; i < xOffsetSide.length; i++)
-                    xOffsetSide[i] += (conditions.width() - prelimSideDim.w) / 2;
+                    xOffsetSide[i] += (belowArrowDim.w - aboveArrowDim.w) / 2;
             }
 
             for (int j=getArrowIndex()+1; j<xOffsets.length; j++)
                 xOffsets[j] += middleRequired;
 
-            Dimensions sideDim = new Dimensions(prelimSideDim.w,
-                                                prelimSideDim.h);
+            Dimensions sideDim = new Dimensions(aboveArrowDim.w,
+                                                aboveArrowDim.h);
             Dimensions condDim = new Dimensions(middleRequired,
-                                                conditions.height());
+                                                belowArrowDim.h);
             Dimensions titleDim = new Dimensions(title.width(),
                                                  title.height());
             result = new ReactionDimensions(sideDim, mainDim, condDim, titleDim, padding);
@@ -181,8 +185,9 @@ final class ReactionBounds {
 
         result.xOffsets = xOffsets;
         result.yOffsets = yOffsets;
-        result.xOffsetSide = xOffsetSide;
-        result.yOffsetSide = yOffsetSide;
+        result.xOffsetAbove = xOffsetSide;
+        result.yOffsetAbove = yOffsetSide;
+        result.yOffsetBelow = yOffsetBelow;
 
         return result;
     }
