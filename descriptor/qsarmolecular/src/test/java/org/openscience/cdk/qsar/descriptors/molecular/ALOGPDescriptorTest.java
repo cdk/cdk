@@ -25,9 +25,11 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -68,6 +70,27 @@ class ALOGPDescriptorTest extends MolecularDescriptorTest {
         DescriptorValue v = descriptor.calculate(mol);
         Assertions.assertEquals(1.719, ((DoubleArrayResult) v.getValue()).get(0), 0.01);
         Assertions.assertEquals(20.585, ((DoubleArrayResult) v.getValue()).get(2), 0.01);
+    }
+
+    /**
+     * The descriptor must not change the molecule, e.g. by setting the ring flags of its atoms.
+     */
+    @Test
+    void testMoleculeNotChanged() throws Exception {
+        IAtomContainer mol = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("Cc1ccccc1"); // toluene
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        for (IAtom atom : mol.atoms())
+            atom.setIsInRing(false);
+        for (IBond bond : mol.bonds())
+            bond.setIsInRing(false);
+
+        DescriptorValue v = descriptor.calculate(mol);
+        Assertions.assertNull(v.getException());
+        for (IAtom atom : mol.atoms())
+            Assertions.assertFalse(atom.isInRing());
+        for (IBond bond : mol.bonds())
+            Assertions.assertFalse(bond.isInRing());
     }
 
 }
