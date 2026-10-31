@@ -202,6 +202,8 @@ final class SvgDrawVisitor implements IDrawVisitor {
     }
 
     String getFill(Color col) {
+        if (col == null)
+            return "";
         if (col.getAlpha() == 255) {
             return String.format(" fill='#%06X'", (0xFFFFFF & col.getRGB()));
         } else {
