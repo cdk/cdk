@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.renderer.visitor;
 
+import org.openscience.cdk.renderer.elements.TextElement;
+
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -60,7 +62,8 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
     }
 
     /**
-     * Calculates the boundaries of a text string in screen coordinates.
+     * Calculates the boundaries of a text string in screen coordinates. The
+     * text is aligned to the center.
      *
      * @param text     the text string
      * @param xCoord   the world x-coordinate of where the text should be placed
@@ -68,7 +71,31 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * @param graphics the graphics to which the text is provided as output
      * @return         the screen coordinates
      */
-    protected Rectangle2D getTextBounds(String text, double xCoord, double yCoord, Graphics2D graphics) {
+    public Rectangle2D getTextBounds(String text,
+                                     double xCoord,
+                                     double yCoord,
+                                     Graphics2D graphics) {
+        return getTextBounds(text,
+                             xCoord, yCoord,
+                             TextElement.Align.Center,
+                             graphics);
+    }
+
+    /**
+     * Calculates the boundaries of a text string in screen coordinates.
+     *
+     * @param text     the text string
+     * @param xCoord   the world x-coordinate of where the text should be placed
+     * @param yCoord   the world y-coordinate of where the text should be placed
+     * @param align    the alignment of the text
+     * @param graphics the graphics to which the text is provided as output
+     * @return         the screen coordinates
+     */
+    public Rectangle2D getTextBounds(String text,
+                                     double xCoord,
+                                     double yCoord,
+                                     TextElement.Align align,
+                                     Graphics2D graphics) {
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D bounds = fontMetrics.getStringBounds(text, graphics);
 
@@ -78,7 +105,14 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
         double width = bounds.getWidth() + widthPad;
         double height = bounds.getHeight() + heightPad;
         int[] point = this.transformPoint(xCoord, yCoord);
-        return new Rectangle2D.Double(point[0] - width / 2, point[1] - height / 2, width, height);
+        double x = point[0];
+        if (align == TextElement.Align.Center)
+            x = (int) (point[0] - (width / 2));
+        else if (align == TextElement.Align.Right)
+            x = (int) (point[0] - width);
+        return new Rectangle2D.Double(x,
+                                      point[1] - height / 2,
+                                      width, height);
     }
 
     /**
@@ -95,11 +129,38 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * @param graphics the graphics to which the text is provided as output
      * @return         the screen coordinates
      */
-    protected Point getTextBasePoint(String text, double xCoord, double yCoord, Graphics2D graphics) {
+    public Point getTextBasePoint(String text, double xCoord, double yCoord,
+                                  Graphics2D graphics) {
+        return getTextBasePoint(text, xCoord, yCoord,
+                                TextElement.Align.Center, graphics);
+    }
+
+    /**
+     * Calculates the base point where text should be rendered, as text in Java
+     * is typically placed using the left-lower corner point in screen coordinates.
+     * However, because the Java coordinate system is inverted in the y-axis with
+     * respect to scientific coordinate systems (Java has 0,0 in the top left
+     * corner, while in science we have 0,0 in the lower left corner), some
+     * special action is needed, involving the size of the text.
+     *
+     * @param text     the text string
+     * @param xCoord   the world x-coordinate of where the text should be placed
+     * @param yCoord   the world y-coordinate of where the text should be placed
+     * @param align    the alignment of the text
+     * @param graphics the graphics to which the text is provided as output
+     * @return         the screen coordinates
+     */
+    public Point getTextBasePoint(String text, double xCoord, double yCoord,
+                                  TextElement.Align align,
+                                  Graphics2D graphics) {
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D stringBounds = fontMetrics.getStringBounds(text, graphics);
         int[] point = this.transformPoint(xCoord, yCoord);
-        int baseX = (int) (point[0] - (stringBounds.getWidth() / 2));
+        int baseX = point[0]; // Align.Leff
+        if (align == TextElement.Align.Center)
+            baseX = (int) (point[0] - (stringBounds.getWidth() / 2));
+        else if (align == TextElement.Align.Right)
+            baseX = (int) (point[0] - stringBounds.getWidth());
 
         // correct the baseline by the ascent
         int baseY = (int) (point[1] + (fontMetrics.getAscent() - stringBounds.getHeight() / 2));
