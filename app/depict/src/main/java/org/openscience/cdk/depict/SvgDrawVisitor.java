@@ -480,7 +480,17 @@ final class SvgDrawVisitor implements IDrawVisitor {
         sb.append(" x='").append(toStr(points[0])).append("'");
         sb.append(" y='").append(toStr(points[1])).append("'");
         sb.append(getFill(elem.color));
-        sb.append(" text-anchor='middle'");
+        switch (elem.align) {
+            case Left:
+                sb.append(" text-anchor='start'");
+                break;
+            case Center:
+                sb.append(" text-anchor='middle'");
+                break;
+            case Right:
+                sb.append(" text-anchor='end'");
+                break;
+        }
         // todo need font manager for scaling...
         sb.append(">");
         appendEscaped(sb, elem.text);
