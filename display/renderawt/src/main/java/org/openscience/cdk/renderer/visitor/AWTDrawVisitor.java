@@ -47,6 +47,7 @@ import javax.vecmath.Vector2d;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
@@ -264,13 +265,20 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     private void visit(TextElement textElement) {
         this.graphics.setFont(this.fontManager.getFont());
-        Point point = this.getTextBasePoint(textElement.text, textElement.xCoord, textElement.yCoord, graphics);
-        Rectangle2D textBounds = this.getTextBounds(textElement.text, textElement.xCoord, textElement.yCoord, graphics);
-        if (textElement.backColor != null)
+        Point point = this.getTextBasePoint(textElement.text,
+                                            textElement.xCoord,
+                                            textElement.yCoord,
+                                            textElement.align,
+                                            graphics);
+        Rectangle2D textBounds = this.getTextBounds(textElement.text,
+                                                    textElement.xCoord,
+                                                    textElement.yCoord,
+                                                    textElement.align,
+                                                    graphics);
+        if (textElement.backColor != null) {
             this.graphics.setColor(textElement.backColor);
-        else
-            this.graphics.setColor(getBackgroundColor());
-        this.graphics.fill(textBounds);
+            this.graphics.fill(textBounds);
+        }
         this.graphics.setColor(textElement.color);
         this.graphics.drawString(textElement.text, point.x, point.y);
     }
@@ -557,8 +565,12 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     private void visit(TextGroupElement textGroup) {
         this.graphics.setFont(this.fontManager.getFont());
-        Point point = super.getTextBasePoint(textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
-        Rectangle2D textBounds = this.getTextBounds(textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
+        Point point = super.getTextBasePoint(textGroup.text,
+                                             textGroup.xCoord, textGroup.yCoord,
+                                             TextElement.Align.Center, graphics);
+        Rectangle2D textBounds = this.getTextBounds(textGroup.text,
+                                                    textGroup.xCoord, textGroup.yCoord,
+                                                    TextElement.Align.Center, graphics);
         this.graphics.setColor(getBackgroundColor());
         this.graphics.fill(textBounds);
         this.graphics.setColor(textGroup.color);
@@ -618,7 +630,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
             this.graphics.drawString(child.text, childx, childy);
             if (child.subscript != null) {
-                Rectangle2D childBounds = getTextBounds(child.text, childx, childy, graphics);
+                Rectangle2D childBounds = getTextBounds(child.text, childx, childy,
+                                                        TextElement.Align.Center,
+                                                        graphics);
                 int scx = (int) (childx + (childBounds.getWidth() * 0.75));
                 int scy = (int) (childy + (childBounds.getHeight() / 3));
                 Font font = this.graphics.getFont(); // TODO : move to font manager
