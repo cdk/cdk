@@ -115,6 +115,7 @@ final class StandardSgroupGenerator {
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null || sgroups.isEmpty())
             return;
+        sgroups.sort((o1, o2) -> -Integer.compare(o1.getAtoms().size(), o2.getAtoms().size()));
 
         // select abbreviations that should be contracted
         for (Sgroup sgroup : sgroups) {
@@ -170,6 +171,8 @@ final class StandardSgroupGenerator {
         Color refcolor = null;
 
         for (IAtom atom : sgroupAtoms) {
+            if (StandardGenerator.isHidden(atom))
+                return false;
             if ((color = atom.getProperty(StandardGenerator.HIGHLIGHT_COLOR)) != null) {
                 atomHighlight++;
                 if (refcolor == null)
