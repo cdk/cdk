@@ -27,6 +27,7 @@ package org.openscience.cdk.renderer.elements;
 
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -234,6 +235,16 @@ public final class Bounds implements IRenderingElement {
         return (minY + maxY) / 2;
     }
 
+    /**
+     * Check if the point is within the area specified by the
+     * bounds.
+     * @param p the point
+     * @return the point is within the bounds
+     */
+    public boolean contains(Point2d p) {
+        return minX <= p.x && p.x <= maxX &&
+               minY <= p.y && p.y <= maxY;
+    }
 
     /**
      * The bounds are empty and contain no elements.

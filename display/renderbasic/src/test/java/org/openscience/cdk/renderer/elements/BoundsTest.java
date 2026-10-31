@@ -27,9 +27,13 @@ package org.openscience.cdk.renderer.elements;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.vecmath.Point2d;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author John May
@@ -49,6 +53,13 @@ class BoundsTest extends AbstractElementTest {
     @Test
     void testHeight() throws Exception {
         assertThat(new Bounds(2, 2, 7, 6).height(), is(closeTo(4d, 0.1)));
+    }
+
+    @Test
+    void testContains() throws Exception {
+        assertTrue(new Bounds(2, 2, 7, 6).contains(new Point2d(3, 5)));
+        assertFalse(new Bounds(2, 2, 7, 6).contains(new Point2d(1.9, 5)));
+        assertTrue(new Bounds(2, 2, 7, 6).contains(new Point2d(2, 2)));
     }
 
     @Test
