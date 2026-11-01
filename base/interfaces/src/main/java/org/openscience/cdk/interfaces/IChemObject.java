@@ -105,6 +105,13 @@ public interface IChemObject extends ICDKObject {
     int MARKUSH = 0x2000;
 
     /**
+     * This flag can be used when depicted structures to hide certain parts,
+     * for example the things are abbreviated (display shortcuts). You can also
+     * check after depiction if something was visible or not.
+     */
+    int HIDDEN = 0x4000;
+
+    /**
      * Use this to add yourself to this IChemObject as a listener. In order to do
      * so, you must implement the ChemObjectListener Interface.
      *

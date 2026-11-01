@@ -59,9 +59,7 @@ public class RendererModel implements Serializable, Cloneable {
 
     private Map<IAtom, String>                 toolTipTextMap       = new HashMap<>();
 
-    private IAtom                              highlightedAtom      = null;
-
-    private IBond                              highlightedBond      = null;
+    private IChemObject                        highlighted          = null;
 
     private IAtomContainer                     externalSelectedPart = null;
 
@@ -306,12 +304,36 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
+     * Returns the chem object currently highlighted, normally the atom/bond
+     * under the mouse pointer.
+     *
+     * @return the chemobj currently highlighted
+     */
+    public IChemObject getHighlighted() {
+        return this.highlighted;
+    }
+
+    /**
+     * Sets the highlighted {@link IChemObject}. This is usually the atom/bond
+     * under the mouse pointer.
+     *
+     * @param chemObject
+     *            The chem object to be highlighted
+     */
+    public void setHighlighted(IChemObject chemObject) {
+        if ((this.highlighted != null) || (chemObject != null)) {
+            this.highlighted = chemObject;
+            fireChange();
+        }
+    }
+
+    /**
      * Returns the atom currently highlighted.
      *
      * @return the atom currently highlighted
      */
     public IAtom getHighlightedAtom() {
-        return this.highlightedAtom;
+        return this.highlighted instanceof IAtom ? (IAtom)highlighted : null;
     }
 
     /**
@@ -319,13 +341,11 @@ public class RendererModel implements Serializable, Cloneable {
      *
      * @param highlightedAtom
      *            The atom to be highlighted
+     * @deprecated Use #setHighlighted
      */
+    @Deprecated
     public void setHighlightedAtom(IAtom highlightedAtom) {
-        if ((this.highlightedAtom != null) || (highlightedAtom != null)) {
-            this.highlightedAtom = highlightedAtom;
-            this.highlightedBond = null;
-            fireChange();
-        }
+        setHighlighted(highlightedAtom);
     }
 
     /**
@@ -334,7 +354,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @return the Bond currently highlighted
      */
     public IBond getHighlightedBond() {
-        return this.highlightedBond;
+        return this.highlighted instanceof IBond ? (IBond)highlighted : null;
     }
 
     /**
@@ -342,13 +362,11 @@ public class RendererModel implements Serializable, Cloneable {
      *
      * @param highlightedBond
      *            The Bond to be currently highlighted
+     * @deprecated Use #setHighlighted
      */
+    @Deprecated
     public void setHighlightedBond(IBond highlightedBond) {
-        if ((this.highlightedBond != null) || (highlightedBond != null)) {
-            this.highlightedBond = highlightedBond;
-            this.highlightedAtom = null;
-            fireChange();
-        }
+        setHighlighted(highlightedBond);
     }
 
     /**

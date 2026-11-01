@@ -27,6 +27,15 @@ import java.awt.Color;
  */
 public class TextElement implements IRenderingElement {
 
+    /**
+     * Horizontal alignment of text.
+     */
+    public enum Align {
+        Left,
+        Center,
+        Right
+    }
+
     /** The x coordinate where the text should be displayed. */
     public final double xCoord;
 
@@ -42,29 +51,33 @@ public class TextElement implements IRenderingElement {
     /** Background color */
     public final Color  backColor;
 
-    /**
-     * Constructs a new TextElement with the content <code>text</code> to be
-     * drawn at position (x,y) in the color <code>color</code>.
-     *
-     * @param xCoord     x coordinate where the text should be displayed
-     * @param yCoord     y coordinate where the text should be displayed
-     * @param text  the text to be drawn
-     * @param color the color of the text
-     */
-    public TextElement(double xCoord, double yCoord, String text, Color color) {
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
-        this.text = text;
-        this.color = color;
-        this.backColor = null;
-    }
+    public final Align align;
 
-    public TextElement(double xCoord, double yCoord, String text, Color color, Color backColor) {
+    public TextElement(double xCoord, double yCoord, String text,
+                       Color color, Color backColor, Align align) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.text = text;
         this.color = color;
         this.backColor = backColor;
+        this.align = align;
+    }
+
+    public TextElement(double xCoord, double yCoord, String text,
+                       Color color, Color backColor) {
+        this(xCoord, yCoord, text, color, backColor, Align.Center);
+    }
+
+    public TextElement(double xCoord, double yCoord, String text, Color color) {
+        this(xCoord, yCoord, text, color, null, Align.Center);
+    }
+
+    public TextElement(double xCoord, double yCoord, String text) {
+        this(xCoord, yCoord, text, Color.BLACK, null, Align.Center);
+    }
+
+    public TextElement(double xCoord, double yCoord, String text, Align align) {
+        this(xCoord, yCoord, text, Color.BLACK, null, align);
     }
 
     /** {@inheritDoc} */
@@ -72,5 +85,4 @@ public class TextElement implements IRenderingElement {
     public void accept(IRenderingVisitor visotor) {
         visotor.visit(this);
     }
-
 }

@@ -143,7 +143,6 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Marks atoms and bonds as being hidden from the actual depiction. Set this
      * property to non-null to indicate this.
      */
-    public final static String          HIDDEN       = "stdgen.hidden";
     public final static String          HIDDEN_FULLY = "stdgen.hidden.fully";
 
     private final Font                  font;
@@ -230,6 +229,17 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
+     * Unhide all atoms/bonds of a container ready for a next render path.
+     * @param container the container
+     */
+    private static void unhide(IAtomContainer container) {
+        for (IAtom atom : container.atoms())
+            StandardGenerator.unhide(atom);
+        for (IBond bond : container.bonds())
+            StandardGenerator.unhide(bond);
+    }
+
+    /**
      *{@inheritDoc}
      */
     @Override
@@ -237,8 +247,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         if (container.getAtomCount() == 0) return new ElementGroup();
 
+        // reset all visibility flags
+        unhide(container);
+
         Map<IAtom,String> symbolRemap = new HashMap<>();
         StandardSgroupGenerator.prepareDisplayShortcuts(container, symbolRemap);
+
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
 
@@ -1201,7 +1215,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @return whether it is hidden
      */
     static boolean isHidden(IChemObject chemobj) {
-        return Boolean.TRUE.equals(chemobj.getProperty(HIDDEN));
+        return chemobj.is(IChemObject.HIDDEN);
     }
 
     /**
@@ -1220,7 +1234,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param chemobj a chem obj (atom or bond) to hide
      */
     static void hide(IChemObject chemobj) {
-        chemobj.setProperty(HIDDEN, true);
+        chemobj.set(IChemObject.HIDDEN);
     }
 
     /**
@@ -1228,7 +1242,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param chemobj a chem obj (atom or bond) to hide
      */
     static void hideFully(IChemObject chemobj) {
-        chemobj.setProperty(HIDDEN_FULLY, true);
+        chemobj.set(IChemObject.HIDDEN);
     }
 
     /**
@@ -1236,7 +1250,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param chemobj a chem obj (atom or bond) to unhide
      */
     static void unhide(IChemObject chemobj) {
-        chemobj.setProperty(HIDDEN, false);
+        chemobj.clear(IChemObject.HIDDEN);
         chemobj.setProperty(HIDDEN_FULLY, false);
     }
 
