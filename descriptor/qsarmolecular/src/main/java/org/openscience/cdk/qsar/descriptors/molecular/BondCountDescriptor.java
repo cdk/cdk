@@ -153,7 +153,8 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
 
         int bondCount = 0;
         for (IBond bond : container.bonds()) {
-            if (bondMatch(bond.getOrder(), order)) {
+            if (bondMatch(bond.getOrder(), order) && bond.getBegin().getAtomicNumber() != IElement.H
+                    && bond.getEnd().getAtomicNumber() != IElement.H) {
                 bondCount += 1;
             }
         }

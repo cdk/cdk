@@ -26,6 +26,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -83,5 +84,21 @@ class BondCountDescriptorTest extends MolecularDescriptorTest {
         Assertions.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
         mol = sp.parseSmiles("CC#N");
         Assertions.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    void testSingleBondCountWithExplicitHydrogens() throws Exception {
+        descriptor.setParameters(new String[]{"s"});
+        IAtomContainer mol = sp.parseSmiles("CCO");
+        Assertions.assertEquals(2,
+                ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        Assertions.assertEquals(2,
+                ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+
+        descriptor.setParameters(new String[]{""});
+        Assertions.assertEquals(2,
+                ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 }
