@@ -80,4 +80,19 @@ class FMFDescriptorTest extends MolecularDescriptorTest {
         Assertions.assertEquals(0.862, result.doubleValue(), 0.001);
     }
 
+    @Test
+    void testClenbuterolWithExplicitHydrogens() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("Clc1cc(cc(Cl)c1N)C(O)CNC(C)(C)C");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+
+        // Six framework atoms out of seventeen heavy atoms.
+        Assertions.assertEquals(6.0 / 17.0,
+                ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
+
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        Assertions.assertEquals(6.0 / 17.0,
+                ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
+    }
 }

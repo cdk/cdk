@@ -30,6 +30,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.DoubleResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * An implementation of the FMF descriptor characterizing complexity of a molecule.
@@ -65,6 +66,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
     public DescriptorValue calculate(IAtomContainer container) {
 
         container = clone(container); // don't mod original
+        int heavyAtomCount = AtomContainerManipulator.getHeavyAtoms(container).size();
 
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 3);
         DoubleResult result;
@@ -73,9 +75,9 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
             IAtomContainer[] framework = fragmenter.getFrameworksAsContainers();
             IAtomContainer[] ringSystems = fragmenter.getRingSystemsAsContainers();
             if (framework.length == 1) {
-                result = new DoubleResult(framework[0].getAtomCount() / (double) container.getAtomCount());
+                result = new DoubleResult(framework[0].getAtomCount() / (double) heavyAtomCount);
             } else if (framework.length == 0 && ringSystems.length == 1) {
-                result = new DoubleResult(ringSystems[0].getAtomCount() / (double) container.getAtomCount());
+                result = new DoubleResult(ringSystems[0].getAtomCount() / (double) heavyAtomCount);
             } else
                 result = new DoubleResult(0.0);
         } catch (CDKException e) {
