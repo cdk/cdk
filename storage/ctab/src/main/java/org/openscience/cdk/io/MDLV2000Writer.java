@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -497,9 +498,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     }
                     break;
             }
-            if (container.getAtom(f) instanceof IPseudoAtom) {
+            if (atom instanceof IPseudoAtom &&
+                !(atom instanceof IFragmentAtom && ((IFragmentAtom)atom).isExpanded())) {
                 //according to http://www.google.co.uk/url?sa=t&ct=res&cd=2&url=http%3A%2F%2Fwww.mdl.com%2Fdownloads%2Fpublic%2Fctfile%2Fctfile.pdf&ei=MsJjSMbjAoyq1gbmj7zCDQ&usg=AFQjCNGaJSvH4wYy4FTXIaQ5f7hjoTdBAw&sig2=eSfruNOSsdMFdlrn7nhdAw an R group is written as R#
-                IPseudoAtom pseudoAtom = (IPseudoAtom) container.getAtom(f);
+                IPseudoAtom pseudoAtom = (IPseudoAtom) atom;
                 String label = pseudoAtom.getLabel();
                 if (label == null) // set to empty string if null
                     label = "";
@@ -548,7 +550,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 line.append(formatMDLString("L", 3));
             } else {
 
-                line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
+                line.append(formatMDLString(atom.getSymbol(), 3));
             }
 
             // atom properties

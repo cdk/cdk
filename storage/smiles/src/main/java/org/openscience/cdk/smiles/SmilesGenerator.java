@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -808,7 +809,8 @@ public final class SmilesGenerator {
         Map<IAtom, Integer> atomidx = new HashMap<>();
         for (int idx = 0; idx < mol.getAtomCount(); idx++) {
             IAtom atom = mol.getAtom(idx);
-            if (atom instanceof IPseudoAtom) {
+            if (atom instanceof IPseudoAtom &&
+                !(atom instanceof IFragmentAtom && ((IFragmentAtom)atom).isExpanded())) {
 
                 if (state.atomLabels == null)
                     state.atomLabels = new HashMap<>();

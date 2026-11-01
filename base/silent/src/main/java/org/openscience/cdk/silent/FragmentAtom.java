@@ -24,6 +24,7 @@ package org.openscience.cdk.silent;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IFragmentAtom;
 
 /**
@@ -43,6 +44,16 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
     public FragmentAtom() {
         fragment = this.getBuilder().newInstance(IAtomContainer.class);
         isExpanded = false;
+    }
+
+    @Override
+    public Integer getAtomicNumber() {
+        return isExpanded ? super.getAtomicNumber() : IElement.Wildcard;
+    }
+
+    @Override
+    public String getSymbol() {
+        return isExpanded ? super.getSymbol() : super.getLabel();
     }
 
     @Override

@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.renderer.RendererModel;
@@ -724,6 +725,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
                 if (remapped) {
                     symbols[i] = atomGenerator.generateAbbreviatedSymbol(symbolRemap.get(atom), hPosition);
+                } else if (atom instanceof IFragmentAtom && !((IFragmentAtom) atom).isExpanded()) {
+                    symbols[i] = atomGenerator.generateAbbreviatedSymbol(atom.getSymbol(), hPosition);
                 } else if (donutGen.isChargeDelocalised(atom)) {
                     Integer charge = atom.getFormalCharge();
                     atom.setFormalCharge(0);
