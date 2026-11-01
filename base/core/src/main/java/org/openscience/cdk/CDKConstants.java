@@ -211,6 +211,7 @@ public class CDKConstants {
      */
     public final static String      CIP_DESCRIPTOR               = "cip.label";
 
+
     /* **************************************
      * Some predefined flags - keep the * numbers below 50 free for other *
      * purposes ***************************************
@@ -404,6 +405,16 @@ public class CDKConstants {
      */
     public static final String      REACTION_ROLE                = "cdk:ReactionRole";
 
+    /**
+     * Set this property to true on a molecule contained in a reaction to place
+     * it below the arrow when a reaction is laid out. Normally solvents/
+     * conditions/atmospheres are placed below the arrow. Note it is also
+     * possible to manually specify some text via the {@link #REACTION_CONDITIONS}
+     * property (placed on the reaction).
+     *
+     * @see #REACTION_CONDITIONS
+     */
+    public final static String      PLACE_BELOW_ARROW            = "cdk:PlaceBelowArrow";
 
     /**
      * Property used for reactions when converted to/from molecules. It defines

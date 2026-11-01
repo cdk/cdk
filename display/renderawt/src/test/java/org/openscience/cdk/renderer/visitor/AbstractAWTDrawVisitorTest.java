@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.TextElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 
 /**
@@ -71,6 +72,30 @@ class AbstractAWTDrawVisitorTest {
     }
 
     @Test
+    void testGetTextBoundsAligned() {
+        AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
+        visitor.setTransform(new AffineTransform());
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
+        Rectangle2D left = visitor.getTextBounds("Foo", 3, 5,
+                                                 TextElement.Align.Left,
+                                                 g2d);
+        Rectangle2D center = visitor.getTextBounds("Foo", 3, 5,
+                                                 TextElement.Align.Center,
+                                                 g2d);
+        Rectangle2D right = visitor.getTextBounds("Foo", 3, 5,
+                                                 TextElement.Align.Right,
+                                                 g2d);
+        Assertions.assertNotNull(left);
+        Assertions.assertNotNull(center);
+        Assertions.assertNotNull(right);
+        Assertions.assertTrue(left.getMinX() > center.getMinX());
+        Assertions.assertTrue(center.getMinX() > right.getMinX());
+        Assertions.assertEquals(center.getMinY(), right.getMinY(), 0.01);
+        Assertions.assertEquals(center.getMinY(), left.getMinY(), 0.01);
+    }
+
+    @Test
     void testTransformPoint() {
         AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
         visitor.setTransform(new AffineTransform()); // no transform
@@ -87,5 +112,23 @@ class AbstractAWTDrawVisitorTest {
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         Point point = visitor.getTextBasePoint("Foo", 3, 5, g2d);
         Assertions.assertNotNull(point);
+    }
+
+    @Test
+    void testGetTextBasePointAligned() {
+        AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
+        visitor.setTransform(new AffineTransform());
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
+        Point pLeft = visitor.getTextBasePoint("Foo", 3, 5, TextElement.Align.Left, g2d);
+        Point pCenter = visitor.getTextBasePoint("Foo", 3, 5, TextElement.Align.Center, g2d);
+        Point pRight = visitor.getTextBasePoint("Foo", 3, 5, TextElement.Align.Right, g2d);
+        Assertions.assertNotNull(pLeft);
+        Assertions.assertNotNull(pCenter);
+        Assertions.assertNotNull(pRight);
+        Assertions.assertTrue(pLeft.x > pCenter.x);
+        Assertions.assertTrue(pCenter.x > pRight.x);
+        Assertions.assertEquals(pCenter.y, pRight.y, 0.01);
+        Assertions.assertEquals(pCenter.y, pLeft.y, 0.01);
     }
 }
