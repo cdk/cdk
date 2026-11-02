@@ -293,7 +293,7 @@ public class SmallRingDescriptor extends AbstractMolecularDescriptor implements 
         markRingBlocks(mol, atomAdj, ringBlock);
 
         ArrayList<int[]> rings = new ArrayList<>();
-        for (int rsz = 3; rsz <= 7; rsz++) {
+        for (int rsz = 3; rsz <= 9; rsz++) {
             int[] path = new int[rsz];
             for (int n = 0; n < na; n++)
                 if (ringBlock[n] > 0) {
@@ -301,7 +301,7 @@ public class SmallRingDescriptor extends AbstractMolecularDescriptor implements 
                     recursiveRingFind(path, 1, rsz, ringBlock[n], rings, atomAdj, ringBlock);
                 }
         }
-        // all rings of size 3 through 7
+        // all rings of size 3 through 9
         return rings.toArray(new int[rings.size()][]);
     }
 

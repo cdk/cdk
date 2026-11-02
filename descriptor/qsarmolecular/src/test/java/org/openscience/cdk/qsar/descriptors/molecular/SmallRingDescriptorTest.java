@@ -37,6 +37,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -46,10 +47,12 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Test for small rings descriptor.
@@ -81,6 +84,23 @@ class SmallRingDescriptorTest extends MolecularDescriptorTest {
     // included to shutdown the warning messages for not having tests for trivial methods
     @Test
     void nop() throws Exception {}
+
+    @Test
+    void testEightAndNineMemberedRings() throws Exception {
+        Assertions.assertEquals(1, ringCount("C1CCCCCC1", "nRings7"));
+        Assertions.assertEquals(1, ringCount("C1CCCCCCC1", "nRings8"));
+        Assertions.assertEquals(1, ringCount("C1CCCCCCC1", "nSmallRings"));
+        Assertions.assertEquals(1, ringCount("C1CCCCCCCC1", "nRings9"));
+        Assertions.assertEquals(1, ringCount("C1CCCCCCCC1", "nSmallRings"));
+        // a ten-membered ring is not a small ring
+        Assertions.assertEquals(0, ringCount("C1CCCCCCCCC1", "nSmallRings"));
+    }
+
+    private int ringCount(String smiles, String name) throws Exception {
+        IAtomContainer mol = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
+        DescriptorValue value = descriptor.calculate(mol);
+        return ((IntegerArrayResult) value.getValue()).get(Arrays.asList(value.getNames()).indexOf(name));
+    }
 
     // run through the cases
     private void validate(InputStream in) throws Exception {
