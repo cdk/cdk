@@ -138,7 +138,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
         table.put("S+2.0+5.0+3+0+0+2+0+0+1+0", 21.7); //39
 
         table.put("P+1.0+3.0+3+0+0+0+0+3+0+0", 13.59); //40
-        table.put("P+2.0+3.0+3+0+0+0+0+1+1+0", 34.14); //41
+        table.put("P+2.0+3.0+2+0+0+0+0+1+1+0", 34.14); //41
         table.put("P+2.0+5.0+4+0+0+0+0+3+1+0", 9.81); //42
         table.put("P+2.0+5.0+4+1+0+0+0+3+1+0", 23.47); //43
         return Collections.unmodifiableMap(table);
