@@ -19,6 +19,7 @@
 package org.openscience.cdk.formula.rules;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class RDBERule implements IRule {
 
-    private static Map<String, int[]> oxidationStateTable = null;
+    private static final Map<String, int[]> oxidationStateTable = createTable();
 
     private static final ILoggingTool       logger              = LoggingToolFactory.createLoggingTool(RDBERule.class);
     private double                    min                 = -0.5;
@@ -72,7 +73,6 @@ public class RDBERule implements IRule {
      *  Constructor for the RDBE object.
      */
     public RDBERule() {
-        createTable();
     }
 
     /**
@@ -231,51 +231,50 @@ public class RDBERule implements IRule {
     /**
      * Create the table with the common oxidation states
      */
-    private void createTable() {
-        if (oxidationStateTable == null) {
-            oxidationStateTable = new HashMap<>();
-            oxidationStateTable.put("H", new int[]{1});
-            //            oxidationStateTable.put("Li", 1);
-            //            oxidationStateTable.put("Be", 2);
-            oxidationStateTable.put("B", new int[]{3});
-            oxidationStateTable.put("C", new int[]{4});
-            oxidationStateTable.put("N", new int[]{3});
-            oxidationStateTable.put("O", new int[]{2});
-            oxidationStateTable.put("F", new int[]{1});
-            oxidationStateTable.put("Na", new int[]{1});
-            oxidationStateTable.put("Mg", new int[]{2});
-            oxidationStateTable.put("Al", new int[]{3});
-            oxidationStateTable.put("Si", new int[]{4});
-            oxidationStateTable.put("P", new int[]{3, 5});
-            oxidationStateTable.put("S", new int[]{2, 4, 6});
-            oxidationStateTable.put("Cl", new int[]{1});
-            //            oxidationStateTable.put("K", 1);
-            //            oxidationStateTable.put("Ca", 2);
-            //            oxidationStateTable.put("Ga", 3);
-            //            oxidationStateTable.put("Ge", 4);
-            //            oxidationStateTable.put("As", 5);
-            //            oxidationStateTable.put("Se", 6);
-            //            oxidationStateTable.put("Br", 7);
-            //            oxidationStateTable.put("Rb", 1);
-            //            oxidationStateTable.put("Sr", 2);
-            //            oxidationStateTable.put("In", 3);
-            //            oxidationStateTable.put("Sn", 4);
-            //            oxidationStateTable.put("Sb", 5);
-            //            oxidationStateTable.put("Te", 6);
-            oxidationStateTable.put("I", new int[]{1});
-            //            oxidationStateTable.put("Cs", 1);
-            //            oxidationStateTable.put("Ba", 2);
-            //            oxidationStateTable.put("Tl", 3);
-            //            oxidationStateTable.put("Pb", 4);
-            //            oxidationStateTable.put("Bi", 5);
-            //            oxidationStateTable.put("Po", 6);
-            //            oxidationStateTable.put("At", 7);
-            //            oxidationStateTable.put("Fr", 1);
-            //            oxidationStateTable.put("Ra", 2);
-            //            oxidationStateTable.put("Cu", 2);
-            //            oxidationStateTable.put("Mn", 2);
-            //            oxidationStateTable.put("Co", 2);
-        }
+    private static Map<String, int[]> createTable() {
+        Map<String, int[]> table = new HashMap<>();
+        table.put("H", new int[]{1});
+        //            table.put("Li", 1);
+        //            table.put("Be", 2);
+        table.put("B", new int[]{3});
+        table.put("C", new int[]{4});
+        table.put("N", new int[]{3});
+        table.put("O", new int[]{2});
+        table.put("F", new int[]{1});
+        table.put("Na", new int[]{1});
+        table.put("Mg", new int[]{2});
+        table.put("Al", new int[]{3});
+        table.put("Si", new int[]{4});
+        table.put("P", new int[]{3, 5});
+        table.put("S", new int[]{2, 4, 6});
+        table.put("Cl", new int[]{1});
+        //            table.put("K", 1);
+        //            table.put("Ca", 2);
+        //            table.put("Ga", 3);
+        //            table.put("Ge", 4);
+        //            table.put("As", 5);
+        //            table.put("Se", 6);
+        //            table.put("Br", 7);
+        //            table.put("Rb", 1);
+        //            table.put("Sr", 2);
+        //            table.put("In", 3);
+        //            table.put("Sn", 4);
+        //            table.put("Sb", 5);
+        //            table.put("Te", 6);
+        table.put("I", new int[]{1});
+        //            table.put("Cs", 1);
+        //            table.put("Ba", 2);
+        //            table.put("Tl", 3);
+        //            table.put("Pb", 4);
+        //            table.put("Bi", 5);
+        //            table.put("Po", 6);
+        //            table.put("At", 7);
+        //            table.put("Fr", 1);
+        //            table.put("Ra", 2);
+        //            table.put("Cu", 2);
+        //            table.put("Mn", 2);
+        //            table.put("Co", 2);
+        return Collections.unmodifiableMap(table);
     }
 
     public class Combinations {
