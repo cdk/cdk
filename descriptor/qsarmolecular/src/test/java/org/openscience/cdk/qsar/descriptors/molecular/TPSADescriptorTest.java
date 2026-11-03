@@ -121,6 +121,20 @@ class TPSADescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
+    void testPhosphorusDoubleBond() throws Exception {
+        TPSADescriptor tpsa = new TPSADescriptor();
+        IAtomContainer phosphaalkene = sp.parseSmiles("CP=C");
+        IAtomContainer iminophosphine = sp.parseSmiles("CP=NC");
+        IAtomContainer phosphine = sp.parseSmiles("CP(C)C");
+        Assertions.assertEquals(34.14,
+                        ((DoubleResult) tpsa.calculate(phosphaalkene).getValue()).doubleValue(), 0.01);
+        Assertions.assertEquals(46.50,
+                        ((DoubleResult) tpsa.calculate(iminophosphine).getValue()).doubleValue(), 0.01);
+        Assertions.assertEquals(13.59,
+                        ((DoubleResult) tpsa.calculate(phosphine).getValue()).doubleValue(), 0.01);
+    }
+
+    @Test
     void testRing() throws Exception {
         sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C1CCCC1CCC2CCCNC2");
