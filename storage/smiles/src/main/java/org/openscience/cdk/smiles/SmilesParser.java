@@ -769,7 +769,7 @@ public final class SmilesParser {
                 if (atomToWedgeFrom == null)
                     continue;
                 if (cxstate.atomCoords == null) {
-                  handleRdkitAtropisomerExtension(atomToMol, atomToWedgeFrom, bondToWedge, style);
+                    handleRdkitAtropisomerExtension(atomToMol, atomToWedgeFrom, bondToWedge, style);
                 } else {
                     if (bondToWedge.getBegin().equals(atomToWedgeFrom)) {
                         bondToWedge.setDisplay(style);
@@ -1273,7 +1273,7 @@ public final class SmilesParser {
     private void handleRdkitAtropisomerExtension(Map<IAtom, IAtomContainer> atomToMol,
                                                  IAtom atomToWedgeFrom,
                                                  IBond bondToWedge,
-                                                 IBond.Display style) {
+                                                 IBond.Display style) throws InvalidSmilesException {
         // check for RDKit atropisomers
         if (!isAtropisomerAtom(atomToWedgeFrom))
             return;
@@ -1346,9 +1346,21 @@ public final class SmilesParser {
                     }
 
                     IAtomContainer mol = atomToMol.get(atomToWedgeFrom);
-                    mol.addStereoElement(new Atropisomeric(atropisomerBond,
-                                                           storeOrder.toArray(new IAtom[4]),
-                                                           cfg));
+                    Atropisomeric newStereo = new Atropisomeric(atropisomerBond,
+                                                                storeOrder.toArray(new IAtom[4]),
+                                                                cfg);
+                    // only define the atropisomer once
+                    IStereoElement<?,?> existing = null;
+                    for (IStereoElement<?,?> se : mol.stereoElements()) {
+                        if (se.getFocus().equals(atropisomerBond))
+                            existing = se;
+                    }
+                    if (existing == null) {
+                        mol.addStereoElement(newStereo);
+                    } else if (existing.getConfig() != newStereo.getConfig() &&
+                               mode != IChemObjectReader.Mode.RELAXED) {
+                        throw new InvalidSmilesException("Atropisomer defined twice with different configurations!");
+                    }
                 }
             }
         }
