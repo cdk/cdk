@@ -115,6 +115,7 @@ final class StandardSgroupGenerator {
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null || sgroups.isEmpty())
             return;
+        sgroups = new ArrayList<>(sgroups); // ensure sortable!
         sgroups.sort((o1, o2) -> -Integer.compare(o1.getAtoms().size(), o2.getAtoms().size()));
 
         // select abbreviations that should be contracted
