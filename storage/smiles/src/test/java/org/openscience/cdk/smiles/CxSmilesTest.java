@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.isomorphism.matchers.RGroupQueryManipulator;
 import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -48,6 +49,7 @@ import org.openscience.cdk.stereo.Atropisomeric;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -431,13 +433,20 @@ class CxSmilesTest {
         assertThat(smigen.create(mol), is("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6:c:,Sg:c:7,8:c:,Sg:c:9:c:,Sg:mix:0,1,2,3,4,5,6,7,8,9:mix:,Sg:mix:7,8,9:mix:,SgH:3:0.4,4:1.2|"));
     }
 
-
-    static Atropisomeric findAtropisomerStereo(IAtomContainer mol) {
+    static List<Atropisomeric> findAtropisomerStereos(IAtomContainer mol) {
+        List<Atropisomeric> stereos = new ArrayList<>();
         for (IStereoElement<?,?> se : mol.stereoElements()) {
             if (se.getConfigClass() == IStereoElement.Atropisomeric)
-                return (Atropisomeric)se;
+                stereos.add((Atropisomeric)se);
         }
-        return null;
+        return stereos;
+    }
+
+
+    static Atropisomeric assertSingleAtropisomer(IAtomContainer mol) {
+        List<Atropisomeric> stereos = findAtropisomerStereos(mol);
+        Assertions.assertEquals(1, stereos.size(), "Expected a single atropisomeric config!");
+        return stereos.get(0);
     }
 
     @Test
@@ -445,7 +454,7 @@ class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("Oc1ccc2ccccc2c1-c1c(O)ccc2ccccc12 |wU:10.10|    (S)-(−)-1,1′-Bi(2-napthol)");
-        Atropisomeric at = findAtropisomerStereo(mol);
+        Atropisomeric at = assertSingleAtropisomer(mol);
         assertNotNull(at);
         assertEquals(IStereoElement.LEFT, at.getConfigOrder());
     }
@@ -455,9 +464,30 @@ class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("Oc1ccc2ccccc2c1-c1c(O)ccc2ccccc12 |wU:10.11|    (R)-(−)-1,1′-Bi(2-napthol)");
-        Atropisomeric at = findAtropisomerStereo(mol);
+        Atropisomeric at = assertSingleAtropisomer(mol);
         assertNotNull(at);
         assertEquals(IStereoElement.RIGHT, at.getConfigOrder());
+    }
+
+    @Test
+    void testRdkitAtropisomers_R_Binol_okay() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("Oc1ccc2ccccc2c1-c1c(O)ccc2ccccc12 |wU:10.11,wD:10.13|");
+        Atropisomeric at = assertSingleAtropisomer(mol);
+        assertNotNull(at);
+        assertEquals(IStereoElement.RIGHT, at.getConfigOrder());
+    }
+
+    @Test
+    void testRdkitAtropisomers_R_Binol_invalid() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        smipar.setMode(IChemObjectReader.Mode.DEFAULT);
+        Assertions.assertThrows(InvalidSmilesException.class,
+                                () -> {smipar.parseSmiles("Oc1ccc2ccccc2c1-c1c(O)ccc2ccccc12 |wU:10.11,wU:10.13|");});
+        smipar.setMode(IChemObjectReader.Mode.RELAXED);
+        assertSingleAtropisomer(smipar.parseSmiles("Oc1ccc2ccccc2c1-c1c(O)ccc2ccccc12 |wU:10.11,wU:10.13|"));
     }
 
     @Test
@@ -465,7 +495,7 @@ class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("Oc1ccc2ccccc2c1-c1c(O)ccc2ccccc12 |wD:10.10|    (R)-(−)-1,1′-Bi(2-napthol)");
-        Atropisomeric at = findAtropisomerStereo(mol);
+        Atropisomeric at = assertSingleAtropisomer(mol);
         assertNotNull(at);
         assertEquals(IStereoElement.RIGHT, at.getConfigOrder());
     }
@@ -475,7 +505,7 @@ class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("C=CC(=O)N1CCN(c2nc(=O)n(-c3c(C)ccnc3C(C)C)c3nc(-c4c(O)cccc4F)c(F)cc23)[C@@H](C)C1 |wU:12.23|    (m)-sotorasib");
-        Atropisomeric at = findAtropisomerStereo(mol);
+        Atropisomeric at = assertSingleAtropisomer(mol);
         assertNotNull(at);
         assertEquals(IStereoElement.LEFT, at.getConfigOrder());
     }
@@ -485,7 +515,7 @@ class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("C=CC(=O)N1CCN(c2nc(=O)n(-c3c(C)ccnc3C(C)C)c3nc(-c4c(O)cccc4F)c(F)cc23)[C@@H](C)C1 |wU:12.11|    (p)-sotorasib");
-        Atropisomeric at = findAtropisomerStereo(mol);
+        Atropisomeric at = assertSingleAtropisomer(mol);
         assertNotNull(at);
         assertEquals(IStereoElement.RIGHT, at.getConfigOrder());
     }
