@@ -108,8 +108,10 @@ public class Orbitals {
      */
     public Vector getValues(int index, Matrix m) {
         if (m.rows != 3) return null;
-        assert basis != null;
-        Vector result = basis.getValues(0, m).mul(C.matrix[0][index]);
+        if (basis == null) return null;
+        Vector values = basis.getValues(0, m);
+        if (values == null) return null;
+        Vector result = values.mul(C.matrix[0][index]);
         for (int i = 1; i < count_basis; i++)
             if (C.matrix[i][index] != 0d) result.add(basis.getValues(i, m).mul(C.matrix[0][index]));
         return result;
