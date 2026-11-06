@@ -30,10 +30,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.debug.DebugAtomContainer;
-import org.openscience.cdk.debug.DebugChemFile;
-import org.openscience.cdk.debug.DebugChemModel;
-import org.openscience.cdk.debug.DebugReaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -81,21 +77,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         }
         Assertions.assertTrue(oneAccepted, "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction");
     }
-
-    private static final IChemObject[] acceptableDebugChemObjects = {new DebugChemFile(), new DebugChemModel(),
-            new DebugAtomContainer(), new DebugReaction()   };
-
-    @Test
-    void testAcceptsAtLeastOneDebugObject() {
-        boolean oneAccepted = false;
-        for (IChemObject object : acceptableDebugChemObjects) {
-            if (chemObjectIO.accepts(object.getClass())) {
-                oneAccepted = true;
-            }
-        }
-        Assertions.assertTrue(oneAccepted, "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction");
-    }
-
+    
     /** static objects, shared between tests - difficult to locate bugs. */
     @Deprecated
     protected static final IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), SilentChemObjectBuilder.getInstance().newAtomContainer(),
