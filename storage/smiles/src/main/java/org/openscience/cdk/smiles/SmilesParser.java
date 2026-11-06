@@ -515,7 +515,7 @@ public final class SmilesParser {
      */
     private void handleFragmentGrouping(IReactionSet rxns, CxSmilesState cxstate) {
 
-        if (cxstate.fragGroups == null && cxstate.racemicFrags == null)
+        if (cxstate.fragGroups == null && !cxstate.racemic && cxstate.racemicFrags == null)
             return; // nothing to do here
 
         final int reactant = 1;
@@ -541,6 +541,20 @@ public final class SmilesParser {
                 roleMap.computeIfAbsent(mol, k -> new ArrayList<>()).add(product);
         }
 
+        // global racemic flag => everything is racemic!
+        if (cxstate.racemic) {
+            for (IReaction reaction : rxns.reactions()) {
+                for (IAtomContainer mol : reaction) {
+                    for (IStereoElement<?, ?> e : mol.stereoElements()) {
+                        if (e.getConfigClass() == IStereoElement.TH) {
+                            e.setGroupInfo(IStereoElement.GRP_RAC1);
+                        }
+                    }
+                }
+            }
+        }
+
+        // per-component racemic flag => these components are racemic!
         if (cxstate.racemicFrags != null) {
             for (Integer grp : cxstate.racemicFrags) {
                 if (grp >= fragments.size())

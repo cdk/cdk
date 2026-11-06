@@ -693,4 +693,35 @@ class CxSmilesTest {
         Assertions.assertEquals("[NH3][Pt][PH3]", smigen.create(smipar.parseSmiles("[NH3][Pt][PH3] |C:1.0|")));
         Assertions.assertEquals("[NH3][Pt][PH3]", smigen.create(smipar.parseSmiles("[NH3][Pt][PH3] |C:1.0,1.1|")));
     }
+
+    @Test
+    public void testRacemicReactionFlag() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
+        IReaction reaction = smipar.parseReactionSmiles("C[C@H](O)CN>>C[C@H](O)CN(=O)=O |r|");
+        Assertions.assertEquals("C[C@H](O)CN>>C[C@H](O)CN(=O)=O |r|",
+                                smigen.create(reaction));
+    }
+
+    @Test
+    public void testRacAtomReactionFlags() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
+        IReaction reaction = smipar.parseReactionSmiles("C[C@H](O)CN>>C[C@H](O)CN(=O)=O |&1:1,6|");
+        Assertions.assertEquals("C[C@H](O)CN>>C[C@H](O)CN(=O)=O |r|",
+                                smigen.create(reaction));
+    }
+
+    @Test
+    public void testRacemicReactionFlags() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
+        IReaction reaction = smipar.parseReactionSmiles("C[C@H](O)CN>>C[C@H](O)CN(=O)=O |r:0|");
+        // the 'a' (absolute) is redundant because SMILES is asbolute by default, but not an issue to emit it
+        Assertions.assertEquals("C[C@H](O)CN>>C[C@H](O)CN(=O)=O |&1:1,a:6|",
+                                smigen.create(reaction));
+    }
 }
