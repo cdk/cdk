@@ -203,6 +203,38 @@ class InChIToStructureTest extends CDKTestCase {
         assertThat(((IDoubleBondStereochemistry) se).getStereo(), is(IDoubleBondStereochemistry.Conformation.TOGETHER));
     }
 
+    @Test
+    void unknownButeneDoubleBondStereoIsNotAssigned() throws Exception {
+        InChIToStructure parser = InChIToStructure.fromInChI("InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3?",
+                SilentChemObjectBuilder.getInstance());
+        IAtomContainer container = parser.getAtomContainer();
+
+        int doubleBonds = 0;
+        for (IBond bond : container.bonds()) {
+            if (bond.getOrder() == Order.DOUBLE)
+                doubleBonds++;
+        }
+        Assertions.assertEquals(1, doubleBonds);
+        Assertions.assertFalse(container.stereoElements().iterator().hasNext());
+    }
+
+    @Test
+    void unknownDoubleBondStereoPreservesTetrahedralCentre() throws Exception {
+        InChIToStructure parser = InChIToStructure.fromInChI(
+                "InChI=1S/C5H10O/c1-3-4-5(2)6/h3-6H,1-2H3/b4-3?/t5-/m1/s1",
+                SilentChemObjectBuilder.getInstance());
+        IAtomContainer container = parser.getAtomContainer();
+
+        Iterator<IStereoElement> ses = container.stereoElements().iterator();
+        Assertions.assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
+        assertThat(((ITetrahedralChirality) se).getChiralAtom(), is(container.getAtom(4)));
+        Assertions.assertFalse(ses.hasNext());
+        assertThat(InChIGeneratorFactory.getInstance().getInChIGenerator(container).getInchi(),
+                containsString("/t5-/m1/s1"));
+    }
+
     /**
      * (R)-penta-2,3-diene
      */
