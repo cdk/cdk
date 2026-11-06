@@ -186,6 +186,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
      * @return the shape which will highlight the atom
      */
     private static Shape createAtomHighlight(IAtom atom, double radius) {
+        assert atom.getPoint2d() != null;
         double x = atom.getPoint2d().x;
         double y = atom.getPoint2d().y;
 

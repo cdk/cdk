@@ -377,7 +377,7 @@ public class ConformerContainer implements List<IAtomContainer> {
     @Override
     public int indexOf(Object o) {
         IAtomContainer atomContainer = (IAtomContainer) o;
-        if (!atomContainer.getTitle().equals(title)) return -1;
+        if (!title.equals(atomContainer.getTitle())) return -1;
 
         if (atomContainer.getAtomCount() != this.atomContainer.getAtomCount()) return -1;
 
