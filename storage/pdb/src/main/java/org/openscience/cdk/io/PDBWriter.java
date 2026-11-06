@@ -218,8 +218,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
                 fsb.reset(POSITION_FORMAT).format(position.z);
                 buffer.append(fsb);
 
-                buffer.append("  1.00  0.00           ") // occupancy + temperature factor
-                      .append(atom.getSymbol());
+                buffer.append("  1.00  0.00          ") // occupancy + temperature factor
+                      .append(String.format("%2s", atom.getSymbol()));
                 Integer formalCharge = atom.getFormalCharge();
                 if (formalCharge == CDKConstants.UNSET) {
                     buffer.append("+0");
