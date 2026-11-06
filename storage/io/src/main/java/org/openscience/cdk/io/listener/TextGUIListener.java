@@ -142,7 +142,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
                         this.out.print("> ");
                         this.out.flush();
                         String answer = in.readLine();
-                        if (answer.length() == 0) {
+                        if (answer == null || answer.isEmpty()) {
                             // pressed ENTER -> take default
                         } else if (setting instanceof OptionIOSetting) {
                             ((OptionIOSetting) setting).setSetting(Integer.parseInt(answer));

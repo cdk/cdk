@@ -323,6 +323,7 @@ final class CorrectGeometricConfiguration {
     private Point2d reflect(Point2d p, IBond bond) {
         IAtom a = bond.getBegin();
         IAtom b = bond.getEnd();
+        assert a.getPoint2d() != null && b.getPoint2d() != null;
         return reflect(p, a.getPoint2d().x, a.getPoint2d().y, b.getPoint2d().x, b.getPoint2d().y);
     }
 

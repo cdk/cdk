@@ -153,14 +153,14 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         }
 
         final String line = readLine();
-        if (line.startsWith("M  V30 ")) {
+        if (line != null && line.startsWith("M  V30 ")) {
             String command = line.substring(7);
             if (command.endsWith("-")) {
                 command = command.substring(0, command.length() - 1);
                 command += readCommand();
             }
             return command;
-        } else if (line.startsWith("M  END")) {
+        } else if (line != null && line.startsWith("M  END")) {
             return "";
         } else {
             throw new CDKException("Could not read MDL file: unexpected line: " + line);

@@ -250,6 +250,7 @@ public class GeometryTools {
         sintheta = Math.sin(angle);
 
         Point3d p = atom.getPoint3d();
+        assert atom.getPoint3d() != null;
         p.x -= p1.x;
         p.y -= p1.y;
         p.z -= p1.z;
@@ -924,6 +925,7 @@ public class GeometryTools {
         double[] lengths = new double[container.getBondCount()];
         for (int i = 0; i < container.getBondCount(); i++) {
             final IBond bond = container.getBond(i);
+            assert bond.getBegin() != null && bond.getEnd() != null;
             final IAtom atom1 = bond.getBegin();
             final IAtom atom2 = bond.getEnd();
             if (atom1.getPoint2d() == null || atom2.getPoint2d() == null)

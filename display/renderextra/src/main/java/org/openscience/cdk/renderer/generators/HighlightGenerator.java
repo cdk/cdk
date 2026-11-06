@@ -201,7 +201,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
      * @return the shape which will highlight the atom
      */
     private static Shape createBondHighlight(IBond bond, double radius) {
-
+        assert bond.getBegin() != null && bond.getEnd() != null;
         double x1 = bond.getBegin().getPoint2d().x;
         double x2 = bond.getEnd().getPoint2d().x;
         double y1 = bond.getBegin().getPoint2d().y;

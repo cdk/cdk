@@ -161,8 +161,9 @@ public class SMILESReader extends DefaultChemObjectReader {
      */
     private IAtomContainerSet readAtomContainerSet(IAtomContainerSet som) {
         try {
-            String line = input.readLine().trim();
+            String line = input.readLine();
             while (line != null) {
+                line = line.trim();
                 logger.debug("Line: ", line);
 
                 final String name = suffix(line);

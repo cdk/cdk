@@ -191,6 +191,10 @@ public class FormatFactory {
     private IChemFormat getXYZFormat(BufferedReader buffer) throws IOException{
     	
         String line = buffer.readLine();
+        if (line == null) {
+            LOGGER.error("No lines to read");
+            return null;
+        }
         // is it a XYZ file?
         StringTokenizer tokenizer = new StringTokenizer(line.trim());
         try {

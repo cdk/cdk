@@ -239,6 +239,7 @@ final class NonplanarBonds {
     // moves multiple bonds into angles
     private boolean snapBondsToPosition(IAtom beg, List<IBond> bonds, double... angles) {
         Point2d p = beg.getPoint2d();
+        assert p != null;
         Point2d ref = new Point2d(p.x, p.y + 1);
         if (angles.length != bonds.size())
             throw new IllegalArgumentException();
