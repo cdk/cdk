@@ -619,6 +619,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * @return the parsed dimensions value: 2 for "2D", 3 for "3D", and 0 otherwise
      */
     private static int parseDimensions(String info) {
+        if (info == null)
+            return 0;
         if (info.startsWith("2D", 20))
             return 2;
         if (info.startsWith("3D", 20))
@@ -649,7 +651,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         if (!line3.isEmpty())
             state.mol.setProperty(CDKConstants.COMMENT, line3);
         final String line4 = readLine();
-        if (!line4.contains("3000")) {
+        if (line4 == null || !line4.contains("3000")) {
             throw new CDKException("This file is not a MDL V3000 molfile.");
         }
         return readLine();

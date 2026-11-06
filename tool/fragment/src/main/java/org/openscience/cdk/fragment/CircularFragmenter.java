@@ -646,6 +646,7 @@ public class CircularFragmenter {
      * @return the copied bond
      */
     private IBond deeperCopy(IBond bond, IAtom begin, IAtom end) {
+        assert begin.getContainer() != null;
         IBond newBond = begin.getContainer().newBond(begin, end, bond.getOrder());
         newBond.setIsAromatic(bond.isAromatic());
         newBond.setDisplay(bond.getDisplay());

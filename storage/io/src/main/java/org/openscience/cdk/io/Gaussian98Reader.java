@@ -472,7 +472,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             do {
                 line = input.readLine().trim();
                 summary.append(line);
-            } while (!(line.indexOf('@') >= 0));
+            } while (line != null && !(line.indexOf('@') >= 0));
         } catch (Exception exc) {
             logger.debug("syntax problem while parsing summary of g98 section: ");
             logger.debug(exc);

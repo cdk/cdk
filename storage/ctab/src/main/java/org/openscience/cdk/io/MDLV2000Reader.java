@@ -1548,13 +1548,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             atom.setAtomicNumber(elem.number());
             return atom;
         }
-        if (symbol.equals("D") && optHydIso.isSet()) {
+        if ("D".equals(symbol) && optHydIso.isSet()) {
             handleError("invalid symbol: " + symbol, lineNum, 31, 33);
             IAtom atom = builder.newInstance(IAtom.class, "H");
             atom.setMassNumber(2);
             return atom;
         }
-        if (symbol.equals("T") && optHydIso.isSet()) {
+        if ("T".equals(symbol) && optHydIso.isSet()) {
             handleError("invalid symbol: " + symbol, lineNum, 31, 33);
             IAtom atom = builder.newInstance(IAtom.class, "H");
             atom.setMassNumber(3);
@@ -1569,7 +1569,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         // will be renumbered later by RGP if R1, R2 etc. if not renumbered then
         // 'R' is a better label than 'R#' if now RGP is specified
-        if (symbol.equals("R#")) symbol = "R";
+        if ("R#".equals(symbol)) symbol = "R";
 
         IAtom atom = builder.newInstance(IPseudoAtom.class, symbol);
         atom.setSymbol(symbol);

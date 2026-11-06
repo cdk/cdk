@@ -154,7 +154,7 @@ public class HINReader extends DefaultChemObjectReader {
         IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
         IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
         IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
-        String info;
+        String info = null;
 
         StringTokenizer tokenizer;
         List<String> aroringText = new ArrayList<>();
@@ -166,6 +166,7 @@ public class HINReader extends DefaultChemObjectReader {
             // read in header info
             while (true) {
                 line = input.readLine();
+                if (line == null) break;
                 if (line.startsWith("mol")) {
                     info = getMolName(line);
                     break;

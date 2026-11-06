@@ -317,6 +317,7 @@ public class MurckoFragmenter implements IFragmenter {
         // now we split this framework and recurse.
         assert currentFramework != null;
         for (IBond bond : currentFramework.bonds()) {
+            assert bond.getBegin() != null && bond.getEnd() != null;
             if (islinker(bond) || isZeroAtomLinker(bond)) {
                 List<IAtomContainer> candidates = FragmentUtils.splitMolecule(currentFramework, bond);
                 for (IAtomContainer candidate : candidates) {
@@ -413,7 +414,7 @@ public class MurckoFragmenter implements IFragmenter {
 
     private void markSideChains(IAtomContainer atomContainer) {
         for (IAtom atom : atomContainer.atoms()) {
-            if (!isring(atom) && !islinker(atom)) atom.setProperty(IS_SIDECHAIN_ATOM, true);
+            if (!atom.isInRing() && !islinker(atom)) atom.setProperty(IS_SIDECHAIN_ATOM, true);
         }
     }
 
@@ -504,10 +505,6 @@ public class MurckoFragmenter implements IFragmenter {
         return frameMap.values().toArray(new IAtomContainer[0]);
     }
 
-    private boolean isring(IAtom atom) {
-        return atom.getFlag(IChemObject.IN_RING);
-    }
-
     private boolean islinker(IAtom atom) {
         Boolean o = atom.getProperty(IS_LINKER_ATOM);
         return o != null && o;
@@ -523,8 +520,9 @@ public class MurckoFragmenter implements IFragmenter {
     }
 
     private boolean isZeroAtomLinker(IBond bond) {
-        boolean isRingBond = bond.getFlag(IChemObject.IN_RING);
-        return isring(bond.getBegin()) && isring(bond.getEnd()) && !isRingBond;
+        boolean isRingBond = bond.isInRing();
+        assert bond.getBegin() != null && bond.getEnd() != null;
+        return bond.getBegin().isInRing() && bond.getEnd().isInRing() && !isRingBond;
     }
 
     private boolean hasframework(IAtomContainer atomContainer) {
@@ -532,7 +530,7 @@ public class MurckoFragmenter implements IFragmenter {
         boolean hasRing = false;
         for (IAtom atom : atomContainer.atoms()) {
             if (islinker(atom)) hasLinker = true;
-            if (isring(atom)) hasRing = true;
+            if (atom.isInRing()) hasRing = true;
             if (hasLinker && hasRing) break;
         }
 
