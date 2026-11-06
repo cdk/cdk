@@ -481,6 +481,10 @@ public class InChIToStructure {
                 assert stereoElement != null;
                 molecule.addStereoElement(stereoElement);
             } else if (stereo0d.getType() == InchiStereoType.DoubleBond) {
+                if (stereo0d.getParity() != InchiStereoParity.ODD
+                        && stereo0d.getParity() != InchiStereoParity.EVEN)
+                    continue;
+
                 boolean extended = false;
                 InchiAtom[] neighbors = stereo0d.getAtoms();
 
