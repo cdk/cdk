@@ -73,8 +73,8 @@ public class RebondTool {
         Iterator<IAtom> atoms = container.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
-            double myCovalentRadius = atom.getCovalentRadius();
-            if (myCovalentRadius == 0.0) {
+            Double myCovalentRadius = atom.getCovalentRadius();
+            if (myCovalentRadius == null || myCovalentRadius == 0.0) {
                 throw new CDKException("Atom(s) does not have covalentRadius defined.");
             }
             if (myCovalentRadius > maxCovalentRadius) maxCovalentRadius = myCovalentRadius;
@@ -92,6 +92,7 @@ public class RebondTool {
      * Rebonds one atom by looking up nearby atom using the binary space partition tree.
      */
     private void bondAtom(IAtomContainer container, IAtom atom) {
+        assert atom.getPoint3d() != null;
         double myCovalentRadius = atom.getCovalentRadius();
         double searchRadius = myCovalentRadius + maxCovalentRadius + bondTolerance;
         Point tupleAtom = new Point(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);

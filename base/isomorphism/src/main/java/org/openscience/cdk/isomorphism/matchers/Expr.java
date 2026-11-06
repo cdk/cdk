@@ -187,11 +187,15 @@ public final class Expr {
     }
 
     private static boolean isInRingSize(IAtom atom, int size) {
+        if (atom.getContainer() == null)
+            throw new IllegalArgumentException("Atom is not in a container");
         boolean[] visit = new boolean[atom.getContainer().getAtomCount()];
         return isInRingSize(atom, null, atom, 1, size, visit);
     }
 
     private static boolean isInSmallRingSize(IAtom atom, int size) {
+        if (atom.getContainer() == null)
+            throw new IllegalArgumentException("Atom is not in a container");
         // invariant: this function is only called on atoms in rings
         IAtomContainer mol      = atom.getContainer();
         int[]          distTo   = new int[mol.getAtomCount()];
@@ -730,6 +734,8 @@ public final class Expr {
     }
 
     private static int getRingCount(IAtom atom) {
+        if (atom.getContainer() == null)
+            throw new IllegalArgumentException("Atom is not in a container");
         final IAtomContainer mol = atom.getContainer();
         // we used to have a cache here but this would be incorrect if
         // an IAtomContainer was reused - better would be if we did the

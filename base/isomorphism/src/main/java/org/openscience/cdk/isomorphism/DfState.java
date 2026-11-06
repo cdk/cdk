@@ -247,6 +247,8 @@ final class DfState implements Iterable<int[]> {
      * @param atom the root atom.
      */
     void setRoot(IAtom atom) {
+        if (atom.getContainer() == null)
+            throw new IllegalArgumentException("Atom is not in a container");
         setMol(atom.getContainer());
         numMapped = 1;
         int aidx = atom.getIndex();

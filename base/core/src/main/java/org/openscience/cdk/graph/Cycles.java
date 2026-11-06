@@ -472,6 +472,8 @@ public final class Cycles {
      * @see #smallRingSizes(IAtomContainer, int[])
      */
     public static int smallRingSize(IAtom atom, int max) {
+        if (atom.getContainer() == null)
+            throw new IllegalArgumentException("Atom is not in a container");
         if (!atom.isInRing())
             return 0;
         int[] visit = new int[atom.getContainer().getAtomCount()];
@@ -505,6 +507,8 @@ public final class Cycles {
      * @see #smallRingSizes(IAtomContainer, int[])
      */
     public static int smallRingSize(IAtom atom) {
+        if (atom.getContainer() == null)
+            throw new IllegalArgumentException("Atom is not in a container");
         return smallRingSize(atom, atom.getContainer().getAtomCount());
     }
 
@@ -556,6 +560,8 @@ public final class Cycles {
      *         larger than 'max'
      */
     public static int smallRingSize(IBond bond, int max) {
+        if (bond.getContainer() == null)
+            throw new IllegalArgumentException("Bond is not in a container");
         int[] visit = new int[bond.getContainer().getAtomCount()];
         return smallRingSize(bond, visit, max);
     }
@@ -570,6 +576,8 @@ public final class Cycles {
      *         larger than 'max'
      */
     public static int smallRingSize(IBond bond) {
+        if (bond.getContainer() == null)
+            throw new IllegalArgumentException("Bond is not in a container");
         return smallRingSize(bond, bond.getContainer().getAtomCount());
     }
 

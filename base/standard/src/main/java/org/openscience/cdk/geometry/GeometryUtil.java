@@ -363,6 +363,8 @@ public final class GeometryUtil {
         sintheta = Math.sin(angle);
 
         Point3d p = atom.getPoint3d();
+        if (p == null)
+            throw new IllegalArgumentException("Atom does not have 3D coordinates set");
         p.x -= p1.x;
         p.y -= p1.y;
         p.z -= p1.z;

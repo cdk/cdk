@@ -251,14 +251,18 @@ public interface IBond extends IElectronContainer {
      *
      * @return the begin atom
      */
-    IAtom getBegin();
+    default IAtom getBegin() {
+        return getAtom(0);
+    }
 
     /**
      * Access the end (or second) atom of the bond.
      *
      * @return the end atom
      */
-    IAtom getEnd();
+    default IAtom getEnd() {
+        return getAtom(1);
+    }
 
     int getIndex();
 
