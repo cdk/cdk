@@ -831,7 +831,7 @@ final class MCSGraph {
             for (int atom = 0; atom < atomCount; atom++)
                 keys[atom] = symbolHash[atom];
             int[] symbol = denseRanks(keys);
-            long degrees = maxDegree() + 1;
+            long degrees = maxDegree() + 1L;
             for (int atom = 0; atom < atomCount; atom++)
                 keys[atom] = (choices[atom] * degrees + degree(atom)) * atomCount + symbol[atom];
             return denseRanks(keys);

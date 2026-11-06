@@ -1701,7 +1701,7 @@ final class MCSSearch {
             boolean[] queryRingBonds = query.ringBonds(), targetRingBonds = target.ringBonds();
             long queryPartCount = Parts.count(query, queryRingBonds);
             long targetPartCount = Parts.count(target, targetRingBonds);
-            long labels = graph.atomClasses + query.bondCount + target.bondCount;
+            long labels = ((long)graph.atomClasses) + query.bondCount + target.bondCount;
             if (queryPartCount == query.atomCount || targetPartCount == target.atomCount
                 || queryPartCount * targetPartCount > MAX_PART_PAIRS
                 || (queryPartCount + targetPartCount) * labels > MAX_COUNTS)

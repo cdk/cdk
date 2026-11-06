@@ -648,7 +648,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         final String infoLine = readLine();
         state.dimensions = parseDimensions(infoLine);
         final String line3 = readLine();
-        if (!line3.isEmpty())
+        if (line3 != null && !line3.isEmpty())
             state.mol.setProperty(CDKConstants.COMMENT, line3);
         final String line4 = readLine();
         if (line4 == null || !line4.contains("3000")) {

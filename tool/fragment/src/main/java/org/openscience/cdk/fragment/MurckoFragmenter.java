@@ -516,6 +516,7 @@ public class MurckoFragmenter implements IFragmenter {
     }
 
     private boolean islinker(IBond bond) {
+        assert bond.getBegin() != null && bond.getEnd() != null;
         return islinker(bond.getBegin()) || islinker(bond.getEnd());
     }
 
