@@ -364,7 +364,7 @@ public final class Isotopes implements IsotopeFactory {
             return major;
         // is it a common isotope?
         for (IIsotope isotope : COMMON_ISOTOPES) {
-            if (isotope.getMassNumber() == mass)
+            if (isotope.getAtomicNumber() == elem && isotope.getMassNumber() == mass)
                 return isotope;
             if (isotope.getAtomicNumber() > elem)
                 break;

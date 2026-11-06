@@ -166,6 +166,35 @@ class IsotopesTest extends CDKTestCase {
     }
 
     @Test
+    void testGetFluorine18() {
+        IIsotope isotope = Isotopes.get(IElement.F, 18);
+        Assertions.assertNotNull(isotope);
+        Assertions.assertEquals(IElement.F, isotope.getAtomicNumber().intValue());
+        Assertions.assertEquals(18, isotope.getMassNumber().intValue());
+    }
+
+    @Test
+    void testGetXenon131() {
+        IIsotope isotope = Isotopes.get(IElement.Xe, 131);
+        Assertions.assertNotNull(isotope);
+        Assertions.assertEquals(IElement.Xe, isotope.getAtomicNumber().intValue());
+        Assertions.assertEquals(131, isotope.getMassNumber().intValue());
+    }
+
+    @Test
+    void testGetCommonIsotope() {
+        IIsotope isotope = Isotopes.get(IElement.C, 13);
+        Assertions.assertNotNull(isotope);
+        Assertions.assertEquals(IElement.C, isotope.getAtomicNumber().intValue());
+        Assertions.assertEquals(13, isotope.getMassNumber().intValue());
+    }
+
+    @Test
+    void testGetAbsentIsotope() {
+        Assertions.assertNull(Isotopes.get(IElement.C, 99));
+    }
+
+    @Test
     void testGetIsotopesMc() throws Exception {
         Assertions.assertEquals(5, Isotopes.getInstance().isotopes(IElement.Mc).size());
     }
