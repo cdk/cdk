@@ -229,7 +229,7 @@ class PDBWriterTest extends ChemObjectIOTest {
     void elementColumnsPreserveHalogens() throws Exception {
         IAtomContainer mol = builder.newAtomContainer();
         String[] symbols = {"Cl", "C", "Br"};
-        String[] elementFields = {"Cl", " C", "Br"};
+        String[] elementFields = {"CL", " C", "BR"};
 
         for (int i = 0; i < symbols.length; i++) {
             IAtom atom = new Atom(symbols[i], new Point3d(1.5 * i, 0, 0));
