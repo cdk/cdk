@@ -440,8 +440,10 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
 
     private void visit(RectangleElement rectangle) {
-        int[] p1 = this.transformPoint(rectangle.xCoord, rectangle.yCoord);
-        int[] p2 = this.transformPoint(rectangle.xCoord + rectangle.width, rectangle.yCoord + rectangle.height);
+        double[] p1 = new double[]{rectangle.xCoord, rectangle.yCoord};
+        double[] p2 = new double[]{rectangle.xCoord + rectangle.width, rectangle.yCoord + rectangle.height};
+        transformPoint(p1);
+        transformPoint(p2);
         this.graphics.setColor(rectangle.color);
         if (rectangle.filled) {
             this.graphics.fill(new Rectangle2D.Double(p1[0], p1[1], p2[0] - p1[0], p2[1] - p1[1]));

@@ -77,6 +77,8 @@ import java.util.jar.JarFile;
  */
 public class DescriptorEngine {
 
+    private static final int MAXIMUM_JAR_ENTRIES = 10000;
+
     private static final String                      rdfNS       = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
     private Dictionary                         dict;
@@ -545,8 +547,11 @@ public class DescriptorEngine {
         for (String jar : jars) {
             logger.debug("Looking in " + jar);
             try (JarFile jarFile = new JarFile(jar)) {
+                int num_entires = 0;
                 Enumeration enumeration = jarFile.entries();
                 while (enumeration.hasMoreElements()) {
+                    if (num_entires++ > MAXIMUM_JAR_ENTRIES)
+                        throw new IOException("Too many JAR entries");
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
                     if (jarEntry.toString().contains(".class,")) {
                         String className = jarEntry.toString().replace('/', '.').replaceAll(".class,", "");
@@ -617,8 +622,11 @@ public class DescriptorEngine {
         for (String jar : jars) {
             logger.debug("Looking in " + jar);
             try (JarFile jarFile = new JarFile(jar)) {
+                int num_entires = 0;
                 Enumeration enumeration = jarFile.entries();
                 while (enumeration.hasMoreElements()) {
+                    if (num_entires++ > MAXIMUM_JAR_ENTRIES)
+                        throw new IOException("Too many JAR entries");
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
                     if (jarEntry.toString().endsWith(".class")) {
                         String tmp = jarEntry.toString().replace('/', '.').replaceAll("\\.class", "");
