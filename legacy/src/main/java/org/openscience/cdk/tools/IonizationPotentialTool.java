@@ -92,11 +92,11 @@ public class IonizationPotentialTool {
     public static double predictIP(IAtomContainer container, IBond bond) throws CDKException {
         double value = 0;
 
-        if (bond.getOrder().equals(IBond.Order.SINGLE)) return value;
+        if (IBond.Order.SINGLE.equals(bond.getOrder())) return value;
 
         //if some of the atoms belongs to some of the heteroatom family than
         // it can not ionized
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < bond.getAtomCount(); i++) {
             IAtom atom = bond.getAtom(i);
             if (familyHalogen(atom))
                 return value;

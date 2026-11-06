@@ -132,8 +132,12 @@ public class ZMatrixReader extends DefaultChemObjectReader {
 
         try {
             String line = input.readLine();
-            while (line.startsWith("#"))
+            while (line != null && line.startsWith("#"))
                 line = input.readLine();
+
+            if (line == null)
+                return file;
+
             /*
              * while (input.ready() && line != null) {
              */

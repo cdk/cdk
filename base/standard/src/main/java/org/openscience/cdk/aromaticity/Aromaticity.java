@@ -313,6 +313,7 @@ public final class Aromaticity {
      * @param bond the bond
      */
     private static void makeAromatic(final IBond bond) {
+        assert bond.getBegin() != null && bond.getEnd() != null;
         bond.set(AROMATIC);
         bond.getBegin().set(AROMATIC);
         bond.getEnd().set(AROMATIC);
