@@ -27,6 +27,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -218,8 +219,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
                 fsb.reset(POSITION_FORMAT).format(position.z);
                 buffer.append(fsb);
 
-                buffer.append("  1.00  0.00           ") // occupancy + temperature factor
-                      .append(atom.getSymbol());
+                buffer.append("  1.00  0.00          ") // occupancy + temperature factor
+                      .append(String.format("%2s", atom.getSymbol().toUpperCase(Locale.ROOT)));
                 Integer formalCharge = atom.getFormalCharge();
                 if (formalCharge == CDKConstants.UNSET) {
                     buffer.append("+0");

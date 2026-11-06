@@ -226,6 +226,54 @@ class PDBWriterTest extends ChemObjectIOTest {
     }
 
     @Test
+    void elementColumnsPreserveHalogens() throws Exception {
+        IAtomContainer mol = builder.newAtomContainer();
+        String[] symbols = {"Cl", "C", "Br"};
+        String[] elementFields = {"CL", " C", "BR"};
+
+        for (int i = 0; i < symbols.length; i++) {
+            IAtom atom = new Atom(symbols[i], new Point3d(1.5 * i, 0, 0));
+            atom.setFormalCharge(0);
+            atom.setImplicitHydrogenCount(i == 1 ? 2 : 0);
+            mol.addAtom(atom);
+        }
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+
+        String output = getAsString(mol);
+        int atomLines = 0;
+        for (String line : output.split("\n")) {
+            if (line.startsWith("ATOM  ") || line.startsWith("HETATM")) {
+                Assertions.assertEquals(elementFields[atomLines], line.substring(76, 78));
+                atomLines++;
+            }
+        }
+        Assertions.assertEquals(3, atomLines);
+
+        ChemFile file;
+        try (PDBReader reader = new PDBReader(new StringReader(output))) {
+            file = reader.read(new ChemFile());
+        }
+
+        Assertions.assertEquals(1, file.getChemSequenceCount());
+        IChemSequence sequence = file.getChemSequence(0);
+        Assertions.assertEquals(1, sequence.getChemModelCount());
+        IChemModel model = sequence.getChemModel(0);
+        Assertions.assertNotNull(model.getMoleculeSet());
+        Assertions.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
+
+        IAtomContainer restored = model.getMoleculeSet().getAtomContainer(0);
+        Assertions.assertEquals(3, restored.getAtomCount());
+        Assertions.assertEquals(2, restored.getBondCount());
+        Assertions.assertNotNull(restored.getBond(restored.getAtom(0), restored.getAtom(1)));
+        Assertions.assertNotNull(restored.getBond(restored.getAtom(1), restored.getAtom(2)));
+        for (int i = 0; i < symbols.length; i++) {
+            Assertions.assertEquals(symbols[i], restored.getAtom(i).getSymbol());
+            Assertions.assertEquals(1.5 * i, restored.getAtom(i).getPoint3d().x, 0.001);
+        }
+    }
+
+    @Test
     void writeMoleculeWithBond() throws CDKException, IOException {
         IAtomContainer mol = singleBondMolecule();
         String[] lines = getAsStringArray(mol);
