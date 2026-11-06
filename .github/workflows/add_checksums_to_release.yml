@@ -64,7 +64,7 @@ jobs:
         run: find . -print | sort | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
 
       - name: 📢 Add checksum files as assets to GitHub release $RELEASE_TAG
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@29e53e917877a24fad85510ded594ab3c9ca12de # v2
         id: upload_checksum_files_as_release_assets
         with:
           file_glob: true
