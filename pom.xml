@@ -43,8 +43,8 @@
         <junit.version>5.14.3</junit.version>
         <mockito.version>4.11.0</mockito.version>
 
-        <log4j.version>2.25.5</log4j.version>
-        <cmlxom.version>4.16</cmlxom.version>
+        <log4j.version>2.26.1</log4j.version>
+        <cmlxom.version>4.20</cmlxom.version>
     </properties>
     <licenses>
         <license>
