@@ -20,7 +20,6 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -31,7 +30,7 @@ import static org.mockito.Mockito.mock;
  * Checks the functionality of the IsomorphismTester
  *
  */
-class AnyOrderQueryBondTest extends CDKTestCase {
+class AnyOrderQueryBondTest {
 
     /**
      * @cdk.bug 1305

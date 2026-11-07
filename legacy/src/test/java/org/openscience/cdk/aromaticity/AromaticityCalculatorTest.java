@@ -20,7 +20,6 @@ package org.openscience.cdk.aromaticity;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
@@ -30,7 +29,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  */
-class AromaticityCalculatorTest extends CDKTestCase {
+class AromaticityCalculatorTest {
 
     AromaticityCalculatorTest() {
         super();

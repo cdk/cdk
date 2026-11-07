@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the ChemObjectChangeEvent class.
@@ -30,7 +29,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.event.ChemObjectChangeEvent
  */
-class ChemObjectChangeEventTest extends CDKTestCase {
+class ChemObjectChangeEventTest {
 
     @BeforeAll
     static void setUp() {}

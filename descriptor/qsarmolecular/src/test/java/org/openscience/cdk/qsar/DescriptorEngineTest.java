@@ -20,14 +20,13 @@ package org.openscience.cdk.qsar;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *
  */
-class DescriptorEngineTest extends CDKTestCase {
+class DescriptorEngineTest {
 
     DescriptorEngineTest() {}
 

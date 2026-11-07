@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -35,7 +34,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  * @author         kaihartmann
  * @cdk.created    2005-05-24
  */
-class RingPartitionerTest extends CDKTestCase {
+class RingPartitionerTest {
 
     static boolean standAlone = false;
 

@@ -24,7 +24,6 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomType;
 
@@ -33,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  */
-class AtomTypeManipulatorTest extends CDKTestCase {
+class AtomTypeManipulatorTest {
 
     AtomTypeManipulatorTest() {
         super();

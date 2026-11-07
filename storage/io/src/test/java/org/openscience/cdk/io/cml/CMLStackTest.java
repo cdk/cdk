@@ -24,7 +24,6 @@ package org.openscience.cdk.io.cml;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -32,7 +31,7 @@ import static org.hamcrest.CoreMatchers.is;
  * TestCase for the CMLStack class.
  *
  */
-class CMLStackTest extends CDKTestCase {
+class CMLStackTest {
 
     @Test
     void testPush_String() {

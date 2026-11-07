@@ -22,7 +22,6 @@ package org.openscience.cdk.dict;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the DictRef class.
@@ -30,7 +29,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictRef
  */
-class DictRefTest extends CDKTestCase {
+class DictRefTest {
 
     DictRefTest() {
         super();

@@ -26,7 +26,6 @@ package org.openscience.cdk.graph;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ import java.util.List;
  *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
-class BiconnectivityInspectorTest extends CDKTestCase {
+class BiconnectivityInspectorTest {
 
     @Test
     void testBiconnectedSets() {

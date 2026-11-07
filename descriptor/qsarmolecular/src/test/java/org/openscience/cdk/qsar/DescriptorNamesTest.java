@@ -27,7 +27,6 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.IImplementationSpecification;
@@ -42,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * TestSuite that runs all tests for the DescriptorEngine.
  *
  */
-class DescriptorNamesTest extends CDKTestCase {
+class DescriptorNamesTest {
 
     DescriptorNamesTest() {}
 

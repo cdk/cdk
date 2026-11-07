@@ -21,14 +21,13 @@ package org.openscience.cdk.ringsearch.cyclebasis;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
  */
-class SimpleCycleTest extends CDKTestCase {
+class SimpleCycleTest {
 
     SimpleCycleTest() {
         super();

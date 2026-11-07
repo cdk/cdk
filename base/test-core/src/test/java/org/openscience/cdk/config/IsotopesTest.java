@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
@@ -39,7 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Checks the functionality of the IsotopeFactory
  *
  */
-class IsotopesTest extends CDKTestCase {
+class IsotopesTest {
 
     @Test
     void testGetInstance_IChemObjectBuilder() throws Exception {

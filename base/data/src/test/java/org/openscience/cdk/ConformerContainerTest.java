@@ -11,11 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class ConformerContainerTest extends CDKTestCase {
+class ConformerContainerTest {
 
     private IAtomContainer   base;
     private IAtomContainer[] confs;

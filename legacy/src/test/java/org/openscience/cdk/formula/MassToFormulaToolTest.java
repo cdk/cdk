@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ import java.util.List;
  *
  */
 @Deprecated
-class MassToFormulaToolTest extends CDKTestCase {
+class MassToFormulaToolTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

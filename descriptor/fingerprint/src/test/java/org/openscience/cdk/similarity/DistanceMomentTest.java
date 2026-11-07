@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -15,7 +14,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  */
-class DistanceMomentTest extends CDKTestCase {
+class DistanceMomentTest {
 
     boolean standAlone = false;
 

@@ -24,14 +24,13 @@ package org.openscience.cdk.io.cml;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemFile;
 
 /**
  * TestCase for the {@link CMLModuleStack} class.
  *
  */
-class CMLModuleStackTest extends CDKTestCase {
+class CMLModuleStackTest {
 
     @Test
     void testPush_String() {

@@ -24,7 +24,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -37,7 +36,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Checks the functionality of the IsomorphismTester
  *
  */
-class IsomorphismTesterTest extends CDKTestCase {
+class IsomorphismTesterTest {
 
     private IAtomContainer pinene_1 = null;
     private IAtomContainer pinene_2 = null;

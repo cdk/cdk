@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.interfaces.IAtom;
@@ -40,7 +39,7 @@ import org.openscience.cdk.io.MDLRXNReader;
 
 /**
  */
-class ReactionSetManipulatorTest extends CDKTestCase {
+class ReactionSetManipulatorTest {
 
     private IChemObjectBuilder builder;
     private ReactionSet        set;

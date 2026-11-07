@@ -19,7 +19,6 @@ package org.openscience.cdk.iupac;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
@@ -36,7 +35,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  *
  * @author Stephen Tomkinson
  */
-class ParserTest extends CDKTestCase {
+class ParserTest {
 
     private final IsomorphismTester comparer = new IsomorphismTester();
 

@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,7 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  */
-class EStateAtomTypeMatcherTest extends CDKTestCase {
+class EStateAtomTypeMatcherTest {
 
     private static EStateAtomTypeMatcher matcher;
     private IAtomContainer               mol = null;

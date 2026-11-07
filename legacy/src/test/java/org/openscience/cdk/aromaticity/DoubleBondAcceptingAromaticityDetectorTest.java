@@ -31,7 +31,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
@@ -56,7 +55,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @author steinbeck
  * @author egonw
  */
-class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
+class DoubleBondAcceptingAromaticityDetectorTest {
 
     DoubleBondAcceptingAromaticityDetectorTest() {
         super();

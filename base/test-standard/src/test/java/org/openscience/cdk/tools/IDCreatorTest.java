@@ -26,7 +26,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -34,7 +33,7 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
  */
-class IDCreatorTest extends CDKTestCase {
+class IDCreatorTest {
 
     IDCreatorTest() {
         super();

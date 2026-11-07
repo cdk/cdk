@@ -22,7 +22,6 @@ package org.openscience.cdk.config;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.io.InputStream;
 
@@ -30,7 +29,7 @@ import java.io.InputStream;
  * Checks the functionality of the TXTBasedAtomTypeConfigurator.
  *
  */
-class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase {
+class CDKBasedAtomTypeConfiguratorTest {
 
     @Test
     void testCDKBasedAtomTypeConfigurator() {

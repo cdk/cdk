@@ -30,7 +30,6 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Isotopes;
@@ -63,7 +62,7 @@ import static org.openscience.cdk.tools.manipulator.AtomContainerManipulator.*;
 
 /**
  */
-class AtomContainerManipulatorTest extends CDKTestCase {
+class AtomContainerManipulatorTest {
 
     private IAtomContainer ac;
 

@@ -21,13 +21,12 @@ package org.openscience.cdk.smiles;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
  */
-class InvPairTest extends CDKTestCase {
+class InvPairTest {
 
     InvPairTest() {
         super();

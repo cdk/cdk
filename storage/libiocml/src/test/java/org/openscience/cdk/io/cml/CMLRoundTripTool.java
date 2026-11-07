@@ -27,7 +27,6 @@ import java.io.ByteArrayInputStream;
 import nu.xom.Element;
 
 import org.junit.jupiter.api.Assertions;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -46,7 +45,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5+
  */
-class CMLRoundTripTool extends CDKTestCase {
+class CMLRoundTripTool {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTool.class);
 

@@ -21,7 +21,6 @@ package org.openscience.cdk.atomtype;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -33,7 +32,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * types as the first perception.
  *
  */
-class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
+class RepeatedCDKAtomTypeMatcherSMILESTest {
 
     private static SmilesParser       smilesParser;
     private static CDKAtomTypeMatcher atomTypeMatcher;

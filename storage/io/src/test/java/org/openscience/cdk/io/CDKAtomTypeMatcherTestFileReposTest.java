@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
@@ -46,7 +45,7 @@ import java.util.Objects;
  *
  * @see org.openscience.cdk.atomtype.CDKAtomTypeMatcher
  */
-class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
+class CDKAtomTypeMatcherTestFileReposTest {
 
 
     @Test

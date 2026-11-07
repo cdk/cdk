@@ -25,14 +25,13 @@ package org.openscience.cdk.smsd.tools;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  * @author Asad
  */
-class BondEnergiesTest extends CDKTestCase {
+class BondEnergiesTest {
 
     @Test
     void testGetInstance() throws Exception {

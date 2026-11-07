@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
@@ -49,7 +48,7 @@ import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smiles;
  * @author Dazhi Jiao
  * @cdk.require ant1.6
  */
-class RecursiveTest extends CDKTestCase {
+class RecursiveTest {
 
     private int nmatch;
     private int nqmatch;

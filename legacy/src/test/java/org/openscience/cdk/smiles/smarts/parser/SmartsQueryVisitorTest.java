@@ -21,7 +21,6 @@ package org.openscience.cdk.smiles.smarts.parser;
 import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 
 /**
@@ -31,7 +30,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
  * @cdk.created 2007-05-10
  * @cdk.keyword SMARTS
  */
-class SmartsQueryVisitorTest extends CDKTestCase {
+class SmartsQueryVisitorTest {
 
     void visit(String smarts) throws Exception {
         SMARTSParser parser = new SMARTSParser(new StringReader(smarts));

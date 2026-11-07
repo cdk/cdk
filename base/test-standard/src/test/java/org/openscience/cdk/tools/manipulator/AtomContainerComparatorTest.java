@@ -23,7 +23,6 @@ import java.util.Comparator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,7 +32,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  */
-class AtomContainerComparatorTest extends CDKTestCase {
+class AtomContainerComparatorTest {
 
     AtomContainerComparatorTest() {
         super();

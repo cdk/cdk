@@ -20,11 +20,10 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class QueueTest extends CDKTestCase {
+class QueueTest {
 
     QueueTest() {
         super();

@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -38,7 +37,7 @@ import javax.vecmath.Point3d;
 
 /**
  */
-class BondToolsTest extends CDKTestCase {
+class BondToolsTest {
 
     BondToolsTest() {
         super();

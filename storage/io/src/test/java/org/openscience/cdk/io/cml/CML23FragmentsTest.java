@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,7 +54,7 @@ import java.util.Iterator;
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-class CML23FragmentsTest extends CDKTestCase {
+class CML23FragmentsTest {
 
     @Test
     void testAtomId() throws Exception {

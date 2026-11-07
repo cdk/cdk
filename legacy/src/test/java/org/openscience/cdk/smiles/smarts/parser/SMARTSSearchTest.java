@@ -26,7 +26,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -57,7 +56,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Dazhi Jiao
  * @cdk.require ant1.6
  */
-class SMARTSSearchTest extends CDKTestCase {
+class SMARTSSearchTest {
 
     private static final ILoggingTool        logger = LoggingToolFactory.createLoggingTool(SMARTSSearchTest.class);
 

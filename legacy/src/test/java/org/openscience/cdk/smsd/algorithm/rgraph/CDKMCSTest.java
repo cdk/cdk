@@ -31,7 +31,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -58,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author     Syed Asad Rahman
  * @cdk.require java1.5+
  */
-class CDKMCSTest extends CDKTestCase {
+class CDKMCSTest {
 
     private final boolean standAlone = false;
 
