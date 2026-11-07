@@ -110,7 +110,19 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
     private final byte[]          m_bits;
 
-    private final Map<String,SmartsPattern> cache = new HashMap<>();
+    // compiled SMARTS and the elements a molecule must contain to match them
+    private static final class Query {
+        final SmartsPattern pattern;
+        final ElementMask   required;
+
+        Query(String smarts) {
+            this.pattern = SmartsPattern.create(smarts);
+            this.pattern.setPrepare(false);
+            this.required = ElementMask.required(smarts);
+        }
+    }
+
+    private final Map<String,Query> cache = new HashMap<>();
 
     /* Use the Extended Smallest Set of Smallest Rings (ESSSR) for ring bits */
     private final boolean esssr;
@@ -326,19 +338,23 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
     class CountSubstructures {
 
         private final IAtomContainer mol;
+        private final ElementMask    present;
 
         public CountSubstructures(IAtomContainer m) {
             mol = m;
+            present = ElementMask.of(m);
         }
 
         public int countSubstructure(String smarts) throws CDKException {
-            SmartsPattern ptrn = cache.get(smarts);
-            if (ptrn == null) {
-                ptrn = SmartsPattern.create(smarts);
-                ptrn.setPrepare(false);
-                cache.put(smarts, ptrn);
+            Query query = cache.get(smarts);
+            if (query == null) {
+                query = new Query(smarts);
+                cache.put(smarts, query);
             }
-            return ptrn.matchAll(mol).countUnique();
+            // no point searching if an element the SMARTS needs isn't there
+            if (!present.containsAll(query.required))
+                return 0;
+            return query.pattern.matchAll(mol).countUnique();
         }
     }
 
