@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author maclean
  */
-public class EquitablePartitionRefinerTest {
+class EquitablePartitionRefinerTest {
 
     MockRefinable makeExampleTable() {
         int[][] table = new int[4][];

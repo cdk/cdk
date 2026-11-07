@@ -44,7 +44,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  * @version 04/22/2012
  */
 
-public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
+class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 
     @Test
     void testAllHeavyAtomsPlaced_benzene() {

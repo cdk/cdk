@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.elements.LineElement;
  *
  * @author     maclean
  */
-public class BasicGeneratorTest extends AbstractGeneratorTest {
+class BasicGeneratorTest extends AbstractGeneratorTest {
 
     private BasicGenerator generator;
 

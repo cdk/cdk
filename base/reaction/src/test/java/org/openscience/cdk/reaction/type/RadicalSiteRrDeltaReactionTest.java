@@ -48,7 +48,7 @@ import java.util.List;
  * TestSuite that runs a test for the RadicalSiteRrDeltaReaction.
  *
  */
-public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
+class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
 
 	private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

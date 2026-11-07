@@ -32,7 +32,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
  */
-public class MappingGeneratorTest extends AbstractGeneratorTest {
+class MappingGeneratorTest extends AbstractGeneratorTest {
 
     private MappingGenerator generator;
 

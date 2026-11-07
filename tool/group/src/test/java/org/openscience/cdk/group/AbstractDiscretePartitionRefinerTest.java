@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author maclean
  */
-public class AbstractDiscretePartitionRefinerTest {
+class AbstractDiscretePartitionRefinerTest {
 
     public class Graph {
 

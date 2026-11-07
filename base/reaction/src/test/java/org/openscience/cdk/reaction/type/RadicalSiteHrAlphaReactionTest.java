@@ -48,7 +48,7 @@ import java.util.List;
  * TestSuite that runs a test for the RadicalSiteHrAlphaReaction.
  *
  */
-public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
+class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

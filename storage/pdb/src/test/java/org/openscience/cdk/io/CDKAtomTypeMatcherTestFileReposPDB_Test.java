@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
-public class CDKAtomTypeMatcherTestFileReposPDB_Test {
+class CDKAtomTypeMatcherTestFileReposPDB_Test {
 
     @Test
     void testPDBfiles() throws Exception {

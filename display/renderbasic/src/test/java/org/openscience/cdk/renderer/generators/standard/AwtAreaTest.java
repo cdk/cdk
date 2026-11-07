@@ -73,7 +73,7 @@ class AwtAreaTest {
     }
 
     @Test
-    public void textExpandLine() {
+    void textExpandLine() {
         Area area = new LineElement(0, 0, 1, 1, 1, null).toArea();
         Area expanded = AwtArea.expand(area, 1);
         assertPath(pathFromSvgOps("M 0.164 -1.473 L -0.351 -1.422 " +
@@ -90,7 +90,7 @@ class AwtAreaTest {
     }
 
     @Test
-    public void textExpandPath() {
+    void textExpandPath() {
         GeneralPath path = new GeneralPath(
                 Arrays.asList(new MoveTo(0, 0),
                               new LineTo(1, 0),
@@ -109,7 +109,7 @@ class AwtAreaTest {
     }
 
     @Test
-    public void textExpandPath2() {
+    void textExpandPath2() {
         GeneralPath path = new GeneralPath(
                 Arrays.asList(new MoveTo(0, 0),
                               new LineTo(-1, 0),
@@ -128,7 +128,7 @@ class AwtAreaTest {
     }
 
     @Test
-    public void textExpandPathWithCutout() {
+    void textExpandPathWithCutout() {
         // Letter 'A'
         Path2D path = pathFromSvgOps("M 9.189 -5.527 L 6.729 -11.758 " +
                                      "L 4.258 -5.527 Z M 11.357 0.000 " +

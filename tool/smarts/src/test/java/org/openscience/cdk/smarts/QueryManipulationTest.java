@@ -29,10 +29,10 @@ import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
-public class QueryManipulationTest {
+class QueryManipulationTest {
 
     @Test
-    public void testDegreeOnly() {
+    void testDegreeOnly() {
         String smarts = "[C,N]CCO";
         IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(query, smarts));
@@ -42,7 +42,7 @@ public class QueryManipulationTest {
     }
 
     @Test
-    public void testDegreeWithElement() {
+    void testDegreeWithElement() {
         String smarts = "[C,N]CCO";
         IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(query, smarts));
@@ -52,7 +52,7 @@ public class QueryManipulationTest {
     }
 
     @Test
-    public void testDegreeWithAlipElement() {
+    void testDegreeWithAlipElement() {
         String smarts = "[C,N]CCO";
         IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(query, smarts));
@@ -62,7 +62,7 @@ public class QueryManipulationTest {
     }
 
     @Test
-    public void testDegreeWithAlipElement2() {
+    void testDegreeWithAlipElement2() {
         String smarts = "[C,N]CCO";
         IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(query, smarts));
@@ -72,7 +72,7 @@ public class QueryManipulationTest {
     }
 
     @Test
-    public void testDegreeWithAlip3() {
+    void testDegreeWithAlip3() {
         String smarts = "[C,N]CCO";
         IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(query, smarts));
@@ -82,7 +82,7 @@ public class QueryManipulationTest {
     }
 
     @Test
-    public void testQueryNotChanged() {
+    void testQueryNotChanged() {
         for (String smarts : new String[]{"[!#6]C", "[#7,#8]C", "[C;R]C"}) {
             IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
             Assertions.assertTrue(Smarts.parse(query, smarts));
@@ -94,7 +94,7 @@ public class QueryManipulationTest {
     }
 
     @Test
-    public void testNegatedElement() {
+    void testNegatedElement() {
         String smarts = "[!#6]C";
         IAtomContainer query = SilentChemObjectBuilder.getInstance().newAtomContainer();
         Assertions.assertTrue(Smarts.parse(query, smarts));

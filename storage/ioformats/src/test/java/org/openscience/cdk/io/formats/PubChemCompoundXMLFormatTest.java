@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  */
-public class PubChemCompoundXMLFormatTest extends ChemFormatMatcherTest {
+class PubChemCompoundXMLFormatTest extends ChemFormatMatcherTest {
 
     PubChemCompoundXMLFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) PubChemCompoundXMLFormat.getInstance());

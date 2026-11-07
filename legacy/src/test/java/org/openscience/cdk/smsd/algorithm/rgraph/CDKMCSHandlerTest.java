@@ -46,7 +46,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  * @author     Syed Asad Rahman
  * @author     egonw
  */
-public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
+class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     @BeforeAll
     static void setMCSAlgorithm() {

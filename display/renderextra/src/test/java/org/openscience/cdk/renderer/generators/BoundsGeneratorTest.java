@@ -32,7 +32,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
  */
-public class BoundsGeneratorTest extends AbstractGeneratorTest {
+class BoundsGeneratorTest extends AbstractGeneratorTest {
 
     private BoundsGenerator generator;
 

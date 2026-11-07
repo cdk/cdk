@@ -162,7 +162,7 @@ class AtomPlacerTest {
     }
 
     @Test
-    public void testPlaceAtOrigin() {
+    void testPlaceAtOrigin() {
         IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 4));
         AtomPlacer placer = new AtomPlacer(m);
@@ -172,7 +172,7 @@ class AtomPlacerTest {
     }
 
     @Test
-    public void testPlaceReject() {
+    void testPlaceReject() {
         IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 4));
         m.getAtom(0).setPoint2d(new Point2d(5.0, 5.0));
@@ -181,7 +181,7 @@ class AtomPlacerTest {
     }
 
     @Test
-    public void testPlaceReject2() {
+    void testPlaceReject2() {
         IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 4));
         AtomPlacer placer = new AtomPlacer(m);
@@ -191,7 +191,7 @@ class AtomPlacerTest {
     }
 
     @Test
-    public void testPlaceAtCenter2d() {
+    void testPlaceAtCenter2d() {
         IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 0));
         m.addAtom(atom("C", 3, 0, 2.5));
@@ -211,7 +211,7 @@ class AtomPlacerTest {
     }
 
     @Test
-    public void testPlaceSproutFromChain() {
+    void testPlaceSproutFromChain() {
         IAtomContainer m = SilentChemObjectBuilder.getInstance().newAtomContainer();
         m.addAtom(atom("C", 3, 2.5, 2.5));
         m.addAtom(atom("C", 2, 3.36, 2.0));

@@ -775,7 +775,7 @@ class CIPToolTest {
      * CIP designations. Order of input bonds should not change CIP R/S designation.
      */
     @Test
-    public void testPermutingBondOrderingDoesNotChangeCIPDesignation() throws Exception {
+    void testPermutingBondOrderingDoesNotChangeCIPDesignation() throws Exception {
     	String read1 = "\n"
     			+ "   JSDraw212042315552D\n"
     			+ "\n"

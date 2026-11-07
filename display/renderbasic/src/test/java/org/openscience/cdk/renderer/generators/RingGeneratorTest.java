@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
-public class RingGeneratorTest extends AbstractGeneratorTest {
+class RingGeneratorTest extends AbstractGeneratorTest {
 
     private RingGenerator generator;
 

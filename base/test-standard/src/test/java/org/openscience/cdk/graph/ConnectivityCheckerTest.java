@@ -450,7 +450,7 @@ class ConnectivityCheckerTest {
     }
 
     @Test
-    public void strictSplittingMulticenterBonds() throws CDKException {
+    void strictSplittingMulticenterBonds() throws CDKException {
         assertStrictSplit("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|",
                     "c1ccccc1", "*Cl");
         assertStrictSplit("c1ccccc1.*Cl.n1ccccc1.*Br |m:6:0.1.2.3.4.5,14:8.9.10.11.12.13|",
@@ -458,7 +458,7 @@ class ConnectivityCheckerTest {
     }
 
     @Test
-    public void nonStrictSplittingMulticenterBonds() throws CDKException {
+    void nonStrictSplittingMulticenterBonds() throws CDKException {
         assertNonStrictSplit("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|",
                              "c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
         assertNonStrictSplit("c1ccccc1.*Cl.n1ccccc1.*Br |m:6:0.1.2.3.4.5,14:8.9.10.11.12.13|",
@@ -466,7 +466,7 @@ class ConnectivityCheckerTest {
     }
 
     @Test
-    public void strictSplittingComponentGrouping() throws CDKException {
+    void strictSplittingComponentGrouping() throws CDKException {
         assertStrictSplit("c1ccccc1[O-].[Na+]>> |f:0.1|",
                     "c1ccccc1[O-]", "[Na+]");
         assertStrictSplit("c1ccccc1[O-].[Na+]>[K+].[K+].[O-]C(=O)[O-]> |f:0.1,2.3.4|",
@@ -474,7 +474,7 @@ class ConnectivityCheckerTest {
     }
 
     @Test
-    public void nonStrictSplittingComponentGrouping() throws CDKException {
+    void nonStrictSplittingComponentGrouping() throws CDKException {
         assertNonStrictSplit("c1ccccc1[O-].[Na+]>> |f:0.1|",
                              "c1ccccc1[O-].[Na+]");
         assertNonStrictSplit("c1ccccc1[O-].[Na+]>[K+].[K+].[O-]C(=O)[O-]> |f:0.1,2.3.4|",

@@ -50,7 +50,7 @@ import java.util.List;
  * Generalized Reaction: A=B + [H+] => [A+]-B-H.
  *
  */
-public class AdductionProtonPBReactionTest extends ReactionProcessTest {
+class AdductionProtonPBReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();

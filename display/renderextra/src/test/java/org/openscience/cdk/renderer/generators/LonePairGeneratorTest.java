@@ -32,7 +32,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
  */
-public class LonePairGeneratorTest extends AbstractGeneratorTest {
+class LonePairGeneratorTest extends AbstractGeneratorTest {
 
     private LonePairGenerator generator;
 

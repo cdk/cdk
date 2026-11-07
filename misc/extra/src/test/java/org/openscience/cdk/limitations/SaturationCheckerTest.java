@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * @see org.openscience.cdk.tools.SaturationChecker
  */
 @Disabled("Limitations actually cause failing tests")
-public class SaturationCheckerTest {
+class SaturationCheckerTest {
 
     private static SaturationChecker satcheck = null;
 

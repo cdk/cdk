@@ -51,7 +51,7 @@ import java.util.List;
  * Generalized Reaction: [X-] + [H+] => X -H.
  *
  */
-public class AdductionProtonLPReactionTest extends ReactionProcessTest {
+class AdductionProtonLPReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();

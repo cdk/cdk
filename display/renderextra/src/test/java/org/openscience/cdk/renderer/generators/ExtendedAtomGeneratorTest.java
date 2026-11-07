@@ -55,7 +55,7 @@ import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  */
-public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
+class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
 
     private ExtendedAtomGenerator generator;
 
