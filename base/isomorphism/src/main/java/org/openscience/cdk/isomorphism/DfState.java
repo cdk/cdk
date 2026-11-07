@@ -141,9 +141,8 @@ final class DfState implements Iterable<int[]> {
                         "All atoms must be IQueryAtoms!");
         }
 
+        // frames are allocated on demand, see store()
         this.stack = new StackFrame[stackSize + 2];
-        for (int i = 0; i < stack.length; i++)
-            this.stack[i] = new StackFrame();
 
         this.numAtoms = amap.length - skip.size();
         this.query = tmp;
@@ -166,10 +165,12 @@ final class DfState implements Iterable<int[]> {
         this.amap = state.amap.clone();
         this.avisit = state.avisit != null ? state.avisit.clone() : null;
         this.mol = state.mol;
-        // deep copy of the stack-frame
+        // deep copy of the stack-frames in use, the rest are allocated on
+        // demand (see store())
         this.stack = new StackFrame[state.stack.length];
-        for (int i = 0; i < stack.length; i++)
-            this.stack[i] = new StackFrame(state.stack[i]);
+        for (int i = 0; i <= state.sptr; i++)
+            if (state.stack[i] != null)
+                this.stack[i] = new StackFrame(state.stack[i]);
         this.sptr = state.sptr;
     }
 
@@ -282,12 +283,12 @@ final class DfState implements Iterable<int[]> {
      */
     private void store(int bidx, IQueryAtom queryatom) {
         ++sptr;
-        stack[sptr].bidx = bidx;
-        stack[sptr].iter = null;
-        if (queryatom != null)
-            stack[sptr].atom = queryatom;
-        else
-            stack[sptr].atom = null;
+        StackFrame frame = stack[sptr];
+        if (frame == null)
+            frame = stack[sptr] = new StackFrame();
+        frame.bidx = bidx;
+        frame.iter = null;
+        frame.atom = queryatom;
     }
 
     /**
