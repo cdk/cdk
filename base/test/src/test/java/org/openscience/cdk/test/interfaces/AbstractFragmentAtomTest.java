@@ -32,7 +32,9 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
     public void testIsExpanded() {
         IFragmentAtom a = (IFragmentAtom) newChemObject();
         Assertions.assertNotNull(a);
-        Assertions.assertFalse(a.isExpanded()); // test the default state
+        Assertions.assertTrue(a.isExpanded()); // test the default state
+        a.setExpanded(false);
+        Assertions.assertFalse(a.isExpanded());
     }
 
     @Test

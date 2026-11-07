@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -418,6 +419,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @return atom symbol
      */
     private String getSymbol(IAtom atom, int elem) {
+        if (atom instanceof IFragmentAtom)
+            return atom.getSymbol();
         if (atom instanceof IPseudoAtom)
             return ((IPseudoAtom) atom).getLabel();
         String symbol = Elements.ofNumber(elem).symbol();

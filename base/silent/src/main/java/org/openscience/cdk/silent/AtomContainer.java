@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -195,6 +196,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         // re-check the common case now we've un-boxed
         if (atom.getClass() == Atom.class) {
             return new BaseAtomRef(this, atom);
+        } else if (atom instanceof IFragmentAtom) {
+            return new FragmentAtomRef(this, (IFragmentAtom) atom);
         } else if (atom instanceof IPseudoAtom) {
             return new PsuedoAtomRef(this, (IPseudoAtom) atom);
         } else if (atom instanceof IQueryAtom) {
@@ -1873,7 +1876,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
     private static class BaseAtomRef extends AtomRef {
 
         private int idx = -1;
-        private final IAtomContainer mol;
+        protected final IAtomContainer mol;
         private final List<IBond> bonds = new ArrayList<>(4);
 
         private BaseAtomRef(IAtomContainer mol, IAtom atom) {
@@ -1927,7 +1930,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         }
     }
 
-    private static final class PsuedoAtomRef extends BaseAtomRef implements IPseudoAtom {
+    private static class PsuedoAtomRef extends BaseAtomRef implements IPseudoAtom {
 
         private final IPseudoAtom pseudo;
 
@@ -1957,20 +1960,43 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         }
 
         @Override
-        public int hashCode() {
-            return deref().hashCode();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof BondRef)
-                return deref().equals(((BondRef) obj).deref());
-            return deref().equals(obj);
-        }
-
-        @Override
         public IPseudoAtom clone() throws CloneNotSupportedException {
             return new PsuedoAtomRef(super.mol, pseudo.clone());
+        }
+    }
+
+    private static final class FragmentAtomRef extends PsuedoAtomRef implements IFragmentAtom {
+
+        private final IFragmentAtom atom;
+
+        private FragmentAtomRef(IAtomContainer mol, IFragmentAtom atom) {
+            super(mol, atom);
+            this.atom = atom;
+        }
+
+        @Override
+        public boolean isExpanded() {
+            return atom.isExpanded();
+        }
+
+        @Override
+        public void setExpanded(boolean expanded) {
+            atom.setExpanded(expanded);
+        }
+
+        @Override
+        public IAtomContainer getFragment() {
+            return atom.getFragment();
+        }
+
+        @Override
+        public void setFragment(IAtomContainer fragment) {
+            atom.setFragment(fragment);
+        }
+
+        @Override
+        public IFragmentAtom clone() throws CloneNotSupportedException {
+            return new FragmentAtomRef(mol, (IFragmentAtom)atom.clone());
         }
     }
 
