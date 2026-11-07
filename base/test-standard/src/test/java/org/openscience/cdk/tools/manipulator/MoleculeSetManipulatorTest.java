@@ -27,7 +27,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -39,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20
  */
-class MoleculeSetManipulatorTest extends CDKTestCase {
+class MoleculeSetManipulatorTest {
 
     private IAtomContainer    mol1       = null;
     private IAtomContainer    mol2       = null;

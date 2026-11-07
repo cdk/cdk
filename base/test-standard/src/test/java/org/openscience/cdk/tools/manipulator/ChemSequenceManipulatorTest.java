@@ -27,7 +27,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -46,7 +45,7 @@ import org.openscience.cdk.tools.IDCreator;
 
 /**
  */
-class ChemSequenceManipulatorTest extends CDKTestCase {
+class ChemSequenceManipulatorTest {
 
     private IAtomContainer    molecule1    = null;
     private IAtomContainer    molecule2    = null;

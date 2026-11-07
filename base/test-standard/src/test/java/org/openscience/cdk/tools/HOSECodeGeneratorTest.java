@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -582,7 +580,7 @@ class HOSECodeGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void testSymmetryAndStop() throws Exception {
+    void testSymmetryAndStop() throws Exception {
         String filename = "symmetryandstopinhose.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

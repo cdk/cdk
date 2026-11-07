@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  */
-public class IsotopePatternRuleTest extends FormulaRuleTest {
+class IsotopePatternRuleTest extends FormulaRuleTest {
 
     private static IChemObjectBuilder builder;
 

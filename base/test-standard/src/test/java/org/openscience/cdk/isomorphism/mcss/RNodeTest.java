@@ -20,11 +20,10 @@ package org.openscience.cdk.isomorphism.mcss;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class RNodeTest extends CDKTestCase {
+class RNodeTest {
 
     @Test
     void testRNode_int_int() {

@@ -22,11 +22,10 @@ import javax.vecmath.Point3d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class ZMatrixToolsTest extends CDKTestCase {
+class ZMatrixToolsTest {
 
     @Test
     void testZmatrixToCartesian_arraydouble_arrayint_arraydouble_arrayint_arraydouble_arrayint() {

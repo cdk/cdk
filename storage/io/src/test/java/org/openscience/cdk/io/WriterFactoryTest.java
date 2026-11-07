@@ -24,7 +24,6 @@ package org.openscience.cdk.io;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.DataFeatures;
@@ -33,7 +32,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * TestCase for the writing files.
  *
  */
-class WriterFactoryTest extends CDKTestCase {
+class WriterFactoryTest {
 
     private final WriterFactory factory = new WriterFactory();
 

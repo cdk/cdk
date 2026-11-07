@@ -20,7 +20,6 @@ package org.openscience.cdk.graph.matrix;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -30,7 +29,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  */
-class ConnectionMatrixTest extends CDKTestCase {
+class ConnectionMatrixTest {
 
     private final static SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 

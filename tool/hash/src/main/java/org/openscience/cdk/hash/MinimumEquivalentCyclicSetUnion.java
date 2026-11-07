@@ -27,7 +27,6 @@ package org.openscience.cdk.hash;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ringsearch.RingSearch;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;

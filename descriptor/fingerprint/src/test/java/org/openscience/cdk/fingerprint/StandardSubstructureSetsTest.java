@@ -24,11 +24,10 @@ package org.openscience.cdk.fingerprint;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class StandardSubstructureSetsTest extends CDKTestCase {
+class StandardSubstructureSetsTest {
 
     @Test
     void testGetFunctionalGroupSubstructureSet() throws Exception {

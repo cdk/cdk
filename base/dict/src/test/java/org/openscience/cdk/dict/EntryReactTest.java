@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  */
-public class EntryReactTest extends AbstractEntryTest {
+class EntryReactTest extends AbstractEntryTest {
 
     @BeforeEach
     void setTestClass() {

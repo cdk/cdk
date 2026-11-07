@@ -51,7 +51,7 @@ import java.util.List;
  * Generalized Reaction: RC-C#[O+] => R[C] + |C#[O+]
  *
  */
-public class CarbonylEliminationReactionTest extends ReactionProcessTest {
+class CarbonylEliminationReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();

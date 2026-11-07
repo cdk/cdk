@@ -24,7 +24,6 @@ import java.util.Iterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -35,7 +34,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  */
-class ReactionSchemeManipulatorTest extends CDKTestCase {
+class ReactionSchemeManipulatorTest {
 
     private IChemObjectBuilder builder;
 

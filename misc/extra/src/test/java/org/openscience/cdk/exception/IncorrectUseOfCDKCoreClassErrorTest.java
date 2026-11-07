@@ -25,7 +25,7 @@ package org.openscience.cdk.exception;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class IncorrectUseOfCDKCoreClassErrorTest {
+class IncorrectUseOfCDKCoreClassErrorTest {
 
     @Test
     void testMessage() {

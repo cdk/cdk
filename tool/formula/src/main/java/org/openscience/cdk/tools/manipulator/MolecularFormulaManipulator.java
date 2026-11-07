@@ -33,7 +33,6 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.IOException;
 import java.util.*;
 
 /**

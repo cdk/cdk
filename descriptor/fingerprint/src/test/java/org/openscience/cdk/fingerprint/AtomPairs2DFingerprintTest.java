@@ -122,7 +122,7 @@ class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
 
     /* See: https://sourceforge.net/p/cdk/mailman/message/59396625/ */
     @Test
-    public void testOnlyRetainPathsOfInterestInCountFp() throws Exception {
+    void testOnlyRetainPathsOfInterestInCountFp() throws Exception {
         IFingerprinter fingerprinter = new AtomPairs2DFingerprinter();
         IAtomContainer mol = parser.parseSmiles("c1ccccc1O");
         ICountFingerprint fp = fingerprinter.getCountFingerprint(mol);

@@ -79,7 +79,7 @@ import java.util.List;
  *
  */
 
-public class RearrangementAnionReactionTest extends ReactionProcessTest {
+class RearrangementAnionReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();

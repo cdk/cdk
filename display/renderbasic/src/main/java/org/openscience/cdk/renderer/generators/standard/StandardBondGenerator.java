@@ -68,7 +68,6 @@ import java.util.stream.Collectors;
 
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
-import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.*;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.*;

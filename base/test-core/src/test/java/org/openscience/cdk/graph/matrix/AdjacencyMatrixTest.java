@@ -21,14 +21,13 @@ package org.openscience.cdk.graph.matrix;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  */
-class AdjacencyMatrixTest extends CDKTestCase {
+class AdjacencyMatrixTest {
 
     private static SmilesParser sp;
 

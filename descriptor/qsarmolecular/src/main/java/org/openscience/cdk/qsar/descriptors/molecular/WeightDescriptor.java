@@ -18,15 +18,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.IOException;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;

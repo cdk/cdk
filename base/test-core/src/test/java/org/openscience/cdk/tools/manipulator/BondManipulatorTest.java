@@ -24,7 +24,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -33,7 +32,7 @@ import org.openscience.cdk.silent.Atom;
 
 /**
  */
-class BondManipulatorTest extends CDKTestCase {
+class BondManipulatorTest {
 
     @Test
     void testGetAtomArray_IBond() {

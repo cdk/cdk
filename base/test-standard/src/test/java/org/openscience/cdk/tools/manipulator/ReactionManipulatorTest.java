@@ -23,7 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.io.MDLRXNReader;
@@ -43,7 +42,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author uli-f
  * @cdk.created 2003-07-23
  */
-class ReactionManipulatorTest extends CDKTestCase {
+class ReactionManipulatorTest {
 
     private IReaction reaction;
     private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();

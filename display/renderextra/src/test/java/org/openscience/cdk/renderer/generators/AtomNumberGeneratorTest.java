@@ -32,7 +32,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
  */
-public class AtomNumberGeneratorTest extends AbstractGeneratorTest {
+class AtomNumberGeneratorTest extends AbstractGeneratorTest {
 
     private AtomNumberGenerator generator;
 

@@ -24,7 +24,6 @@ package org.openscience.cdk.io.iterator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -34,7 +33,7 @@ import java.io.InputStream;
 
 /**
  */
-class IteratingPCCompoundASNReaderTest extends CDKTestCase {
+class IteratingPCCompoundASNReaderTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReaderTest.class);
 

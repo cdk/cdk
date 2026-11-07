@@ -30,7 +30,6 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Isotopes;
@@ -63,7 +62,7 @@ import static org.openscience.cdk.tools.manipulator.AtomContainerManipulator.*;
 
 /**
  */
-class AtomContainerManipulatorTest extends CDKTestCase {
+class AtomContainerManipulatorTest {
 
     private IAtomContainer ac;
 
@@ -1863,7 +1862,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void suppressInorganicHydrogens() throws CDKException {
+    void suppressInorganicHydrogens() throws CDKException {
         String smi = "C[Pt@SP3](F)(Cl)[H]";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1883,7 +1882,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void suppressInorganicHydrogensMultipleH() throws CDKException {
+    void suppressInorganicHydrogensMultipleH() throws CDKException {
         String smi = "C[Co@OH1H](F)(Cl)([H])[H]";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1907,7 +1906,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
 
 
     @Test
-    public void suppressInorganicHydrogens2() throws CDKException {
+    void suppressInorganicHydrogens2() throws CDKException {
         String smi = "C[Pt@SP3](F)(Cl)[H]";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1917,7 +1916,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void suppressInorganicHydrogens3() throws CDKException {
+    void suppressInorganicHydrogens3() throws CDKException {
         String smi = "C[Pt@OH1]([H])([H])([H])([H])C";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1927,7 +1926,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void suppressInorganicHydrogens4() throws CDKException {
+    void suppressInorganicHydrogens4() throws CDKException {
         String smi = "C[Pt@OH1](Cl)(Cl)(Cl)(Cl)[H]";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1937,7 +1936,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void suppressInorganicHydrogens5() throws CDKException {
+    void suppressInorganicHydrogens5() throws CDKException {
         String smi = "C[Pt@TB1](Cl)(Cl)(Cl)[H]";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1947,7 +1946,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void convertImplicitToExplicit() throws CDKException {
+    void convertImplicitToExplicit() throws CDKException {
         String smi = "C[Pt@OH25H2](Cl)(Cl)Cl";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1957,7 +1956,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void convertImplicitToExplicit2() throws CDKException {
+    void convertImplicitToExplicit2() throws CDKException {
         String smi = "C[Pt@OH25H2](Cl)Cl"; // also a lone pair!
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1967,7 +1966,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void suppressExtendedTetrahedral() throws CDKException {
+    void suppressExtendedTetrahedral() throws CDKException {
         String smi = "CC([H])=[C@]=C([H])C";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1977,7 +1976,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void suppressExtendedTetrahedral2() throws CDKException {
+    void suppressExtendedTetrahedral2() throws CDKException {
         String smi = "CC([H])=[C@]=C(C)[H]";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1987,7 +1986,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void explExtendedTetrahedral() throws CDKException {
+    void explExtendedTetrahedral() throws CDKException {
         String smi = "[C]C=[C@]=C[C]";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -2006,7 +2005,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testMolecularHydrogens() throws CDKException {
+    void testMolecularHydrogens() throws CDKException {
         assertHydrogenConversion("[H][H]", "[H][H]", HydrogenState.Minimal);
         // note the SMILES does not represent the interanl state, it really is "[HH]"!
         assertHydrogenConversion("[H][H]", "[H][H]", HydrogenState.Unsafe);
@@ -2015,26 +2014,26 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testBridgedHydrogen() throws CDKException {
+    void testBridgedHydrogen() throws CDKException {
         assertHydrogenConversion("B1[H]B[H]1", "B1[H]B[H]1", HydrogenState.Minimal);
         assertHydrogenConversion("B1[H]B[H]1", "B.B", HydrogenState.Unsafe);
         assertHydrogenConversion("B1[H]B[H]1", "B1([H]B([H]1)[H])[H]", HydrogenState.Explicit);
     }
 
     @Test
-    public void testHydrogenIsotope() throws CDKException {
+    void testHydrogenIsotope() throws CDKException {
         assertHydrogenConversion("[H]C[2H]", "C[2H]", HydrogenState.Minimal);
         assertHydrogenConversion("[H]C[2H]", "C", HydrogenState.Unsafe);
     }
 
     @Test
-    public void testMappedHydrogen() throws CDKException {
+    void testMappedHydrogen() throws CDKException {
         assertHydrogenConversion("[H:1]C[H:2]", "[H:1]C[H:2]", HydrogenState.Minimal);
         assertHydrogenConversion("[H:1]C[H:2]", "C", HydrogenState.Unsafe);
     }
 
     @Test
-    public void testHydrogenIon() throws CDKException {
+    void testHydrogenIon() throws CDKException {
         assertHydrogenConversion("[H+]", "[H+]", HydrogenState.Minimal);
         assertHydrogenConversion("[H+]", "[H+]", HydrogenState.Unsafe);
         assertHydrogenConversion("[H+]C", "[H+]C", HydrogenState.Minimal);
@@ -2042,7 +2041,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testSru() throws CDKException {
+    void testSru() throws CDKException {
         assertHydrogenConversion("CCC[H] |Sg:n:1,2:n:ht|", "CCC[H] |Sg:n:1,2:n:ht|",
                                  HydrogenState.Minimal);
         assertHydrogenConversion("CCC[H] |Sg:n:1,2:n:ht|",
@@ -2061,7 +2060,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testSimpleChiralHydrogens() throws CDKException {
+    void testSimpleChiralHydrogens() throws CDKException {
         assertHydrogenConversion("C[C@H](CO)Cl", "C[C@H](CO)Cl", HydrogenState.Minimal);
         assertHydrogenConversion("C[C@H](CO)Cl", "C([C@](C(O[H])([H])[H])(Cl)[H])([H])([H])[H]", HydrogenState.Explicit);
         assertHydrogenConversion("C[C@H](CO)Cl", "C[C@](CO)(Cl)[H]", HydrogenState.Stereo);
@@ -2071,7 +2070,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     // we add a hydrogen so it can be wedged, the other stereo can be wedged
     // without being ambiguous
     @Test
-    public void testCongestedStereo() throws CDKException {
+    void testCongestedStereo() throws CDKException {
         assertHydrogenConversion("O[C@H](Cl)[C@H]([C@H](Br)(Cl))[C@H](Br)F",
                                  "O[C@H](Cl)[C@H]([C@H](Br)Cl)[C@H](Br)F", HydrogenState.Minimal);
         assertHydrogenConversion("O[C@H](Cl)[C@H]([C@H](Br)(Cl))[C@H](Br)F",
@@ -2083,7 +2082,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     // we add a hydrogen so it can be wedged, the other stereo can be wedged
     // without being ambiguous
     @Test
-    public void testBridgeHead() throws CDKException {
+    void testBridgeHead() throws CDKException {
         assertHydrogenConversion("C1CCC[C@H]2[C@H]1CCCC2",
                                  "C1CCC[C@H]2[C@H]1CCCC2", HydrogenState.Minimal);
         assertHydrogenConversion("C1CCC[C@H]2[C@H]1CCCC2",
@@ -2093,7 +2092,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testAdjacentStereo() throws CDKException {
+    void testAdjacentStereo() throws CDKException {
         assertHydrogenConversion("O[C@@H]1[C@@H](N)C[C@@H](N)[C@@H]([C@H]1O)O[C@H]2OCCC[C@H]2O",
                                  "O[C@@H]1[C@@H](N)C[C@@H](N)[C@@H]([C@H]1O)O[C@H]2OCCC[C@H]2O", HydrogenState.Minimal);
         assertHydrogenConversion("O[C@@H]1[C@@H](N)C[C@@H](N)[C@@H]([C@H]1O)O[C@H]2OCCC[C@H]2O",
@@ -2104,7 +2103,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testExtendedCisTrans() throws CDKException {
+    void testExtendedCisTrans() throws CDKException {
         assertHydrogenConversion("C/C=C=C=C(\\[H])C",
                                  "C/C=C=C=C/C", HydrogenState.Minimal);
         assertHydrogenConversion("C/C=C=C=C(\\[H])C",
@@ -2118,7 +2117,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testAllene() throws CDKException {
+    void testAllene() throws CDKException {
         assertHydrogenConversion("CC=[C@]=CC",
                                  "CC=[C@]=CC", HydrogenState.Minimal);
         assertHydrogenConversion("CC=[C@]=CC",
@@ -2134,7 +2133,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testOctahedral() throws CDKException {
+    void testOctahedral() throws CDKException {
         assertHydrogenConversion("N[C@OH1H2](Cl)(Cl)Cl",
                                  "N[C@OH1H2](Cl)(Cl)Cl", HydrogenState.Minimal);
         assertHydrogenConversion("N[C@OH1H2](Cl)(Cl)Cl",
@@ -2146,7 +2145,7 @@ class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testBadCisTrans() throws CDKException {
+    void testBadCisTrans() throws CDKException {
         assertHydrogenConversion("C/C=C/([H])[H]",
                                  "CC=C", HydrogenState.Minimal);
     }

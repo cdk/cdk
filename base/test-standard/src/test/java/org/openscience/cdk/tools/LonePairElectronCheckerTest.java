@@ -24,7 +24,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author         Miguel Rojas
  * @cdk.created    2006-04-01
  */
-class LonePairElectronCheckerTest extends CDKTestCase {
+class LonePairElectronCheckerTest {
 
     private static LonePairElectronChecker lpcheck = null;
 

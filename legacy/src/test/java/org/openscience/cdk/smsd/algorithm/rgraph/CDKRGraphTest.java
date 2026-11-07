@@ -20,13 +20,12 @@ package org.openscience.cdk.smsd.algorithm.rgraph;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author     Syed Asad Rahman
  * @cdk.require java1.5+
  */
-class CDKRGraphTest extends CDKTestCase {
+class CDKRGraphTest {
 
     @Test
     void testRGraph() {

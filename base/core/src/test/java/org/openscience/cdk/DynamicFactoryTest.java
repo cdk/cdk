@@ -48,7 +48,7 @@ import static org.openscience.cdk.DynamicFactory.key;
  *
  * @author John May
  */
-public class DynamicFactoryTest {
+class DynamicFactoryTest {
 
     /**
      * Ensure a negative size throws an exception.

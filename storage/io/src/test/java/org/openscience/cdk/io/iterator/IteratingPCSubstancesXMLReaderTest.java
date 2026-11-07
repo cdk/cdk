@@ -27,7 +27,6 @@ import java.io.InputStreamReader;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -37,7 +36,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  */
-class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
+class IteratingPCSubstancesXMLReaderTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCSubstancesXMLReaderTest.class);
 

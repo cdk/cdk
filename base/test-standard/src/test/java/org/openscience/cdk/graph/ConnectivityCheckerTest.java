@@ -45,7 +45,6 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -65,7 +64,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author steinbeck
  * @cdk.created 2001-07-24
  */
-class ConnectivityCheckerTest extends CDKTestCase {
+class ConnectivityCheckerTest {
 
     ConnectivityCheckerTest() {
         super();
@@ -451,7 +450,7 @@ class ConnectivityCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void strictSplittingMulticenterBonds() throws CDKException {
+    void strictSplittingMulticenterBonds() throws CDKException {
         assertStrictSplit("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|",
                     "c1ccccc1", "*Cl");
         assertStrictSplit("c1ccccc1.*Cl.n1ccccc1.*Br |m:6:0.1.2.3.4.5,14:8.9.10.11.12.13|",
@@ -459,7 +458,7 @@ class ConnectivityCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void nonStrictSplittingMulticenterBonds() throws CDKException {
+    void nonStrictSplittingMulticenterBonds() throws CDKException {
         assertNonStrictSplit("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|",
                              "c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
         assertNonStrictSplit("c1ccccc1.*Cl.n1ccccc1.*Br |m:6:0.1.2.3.4.5,14:8.9.10.11.12.13|",
@@ -467,7 +466,7 @@ class ConnectivityCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void strictSplittingComponentGrouping() throws CDKException {
+    void strictSplittingComponentGrouping() throws CDKException {
         assertStrictSplit("c1ccccc1[O-].[Na+]>> |f:0.1|",
                     "c1ccccc1[O-]", "[Na+]");
         assertStrictSplit("c1ccccc1[O-].[Na+]>[K+].[K+].[O-]C(=O)[O-]> |f:0.1,2.3.4|",
@@ -475,7 +474,7 @@ class ConnectivityCheckerTest extends CDKTestCase {
     }
 
     @Test
-    public void nonStrictSplittingComponentGrouping() throws CDKException {
+    void nonStrictSplittingComponentGrouping() throws CDKException {
         assertNonStrictSplit("c1ccccc1[O-].[Na+]>> |f:0.1|",
                              "c1ccccc1[O-].[Na+]");
         assertNonStrictSplit("c1ccccc1[O-].[Na+]>[K+].[K+].[O-]C(=O)[O-]> |f:0.1,2.3.4|",

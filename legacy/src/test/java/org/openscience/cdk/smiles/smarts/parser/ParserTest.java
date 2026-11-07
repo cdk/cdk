@@ -20,7 +20,6 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
@@ -38,7 +37,7 @@ import java.io.StringReader;
  * @author Egon Willighagen
  * @cdk.require ant1.6
  */
-class ParserTest extends CDKTestCase {
+class ParserTest {
 
     private void parse(String smarts) throws Exception {
         //SMARTSParser.parse(smarts);

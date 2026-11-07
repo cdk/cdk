@@ -24,14 +24,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.io.StringReader;
-import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.lessThan;
@@ -55,7 +53,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void internalWedgeCues() throws CDKException {
+    void internalWedgeCues() throws CDKException {
         IAtomContainer mol = loadMolfile(
                         "\n" +
                         "  CDK     11012421112D\n" +
@@ -84,7 +82,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void externalWedgeCues() throws CDKException {
+    void externalWedgeCues() throws CDKException {
         IAtomContainer mol = loadMolfile(
                 "\n" +
                         "  CDK     11012421192D\n" +
@@ -115,7 +113,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void testCubane() throws CDKException {
+    void testCubane() throws CDKException {
         IAtomContainer mol = loadMolfile(
                 "\n" +
                         "  CDK     11012421192D\n" +
@@ -149,7 +147,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void noCues() throws CDKException {
+    void noCues() throws CDKException {
         IAtomContainer mol = loadMolfile(
                 "\n" +
                         "  CDK     11012421192D\n" +
@@ -183,7 +181,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void overlapRings() throws CDKException {
+    void overlapRings() throws CDKException {
         IAtomContainer mol = loadMolfile(
                 "\n" +
                         "  CDK     11012421192D\n" +

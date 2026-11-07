@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -33,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * Checks the functionality of the RebondTool.
  *
  */
-class RebondToolTest extends CDKTestCase {
+class RebondToolTest {
 
     RebondToolTest() {
         super();

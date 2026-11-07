@@ -19,7 +19,6 @@
 package org.openscience.cdk.io;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
@@ -32,7 +31,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
@@ -46,7 +44,7 @@ import java.util.Objects;
  *
  * @see org.openscience.cdk.atomtype.CDKAtomTypeMatcher
  */
-class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
+class CDKAtomTypeMatcherTestFileReposTest {
 
 
     @Test

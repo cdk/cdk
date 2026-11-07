@@ -49,7 +49,7 @@ import java.util.List;
  * Generalized Reaction: [A*]-B=C => A=B-[c*].
  *
  */
-public class RearrangementRadicalReactionTest extends ReactionProcessTest {
+class RearrangementRadicalReactionTest extends ReactionProcessTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

@@ -29,13 +29,11 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.VASPFormat;
 
 import java.io.InputStream;
 

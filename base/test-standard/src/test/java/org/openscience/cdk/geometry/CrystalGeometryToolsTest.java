@@ -20,7 +20,6 @@ package org.openscience.cdk.geometry;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -37,7 +36,7 @@ import javax.vecmath.Vector3d;
  *
  * @see org.openscience.cdk.geometry.CrystalGeometryTools
  */
-class CrystalGeometryToolsTest extends CDKTestCase {
+class CrystalGeometryToolsTest {
 
     CrystalGeometryToolsTest() {
         super();

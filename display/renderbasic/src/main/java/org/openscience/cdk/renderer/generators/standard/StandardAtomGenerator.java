@@ -37,7 +37,6 @@ import org.openscience.cdk.renderer.generators.standard.StandardGenerator.Pseudo
 
 import java.awt.Font;
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

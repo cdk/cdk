@@ -33,30 +33,30 @@ import org.openscience.cdk.interfaces.IElement;
 class ElementsTest {
 
     @Test
-    public void testIsMetal_int() {
+    void testIsMetal_int() {
     	Assertions.assertFalse(Elements.isMetal((int)Elements.CARBON.getAtomicNumber()));
     	Assertions.assertTrue(Elements.isMetal((int)Elements.IRON.getAtomicNumber()));
     }
 
     @Test
-    public void testIsMetal_IAtom() {
+    void testIsMetal_IAtom() {
     	Assertions.assertFalse(Elements.isMetal(new Atom(Elements.CARBON)));
     	Assertions.assertTrue(Elements.isMetal(new Atom(Elements.IRON)));
     }
 
     @Test
-    public void testIsMetal_int_negativeValues() {
+    void testIsMetal_int_negativeValues() {
     	// negative atomic numbers are by implementation 'metal'
     	Assertions.assertTrue(Elements.isMetal(-12));
     }
 
     @Test
-    public void testElectronegativity() {
+    void testElectronegativity() {
     	Assertions.assertTrue(Math.abs(2.55 - Elements.Carbon.electronegativity().doubleValue()) < 0.01);
     }
 
     @Test
-    public void testIsMetalloid_int() {
+    void testIsMetalloid_int() {
         Assertions.assertTrue(Elements.isMetalloid((int)Elements.BORON.getAtomicNumber()));
         Assertions.assertTrue(Elements.isMetalloid((int)Elements.SILICON.getAtomicNumber()));
         Assertions.assertTrue(Elements.isMetalloid((int)Elements.GERMANIUM.getAtomicNumber()));
@@ -76,7 +76,7 @@ class ElementsTest {
     }
 
     @Test
-    public void testIsMetalloid_IAtom() {
+    void testIsMetalloid_IAtom() {
         Assertions.assertTrue(Elements.isMetalloid(new Atom(Elements.BORON)));
         Assertions.assertTrue(Elements.isMetalloid(new Atom(Elements.SILICON)));
         Assertions.assertFalse(Elements.isMetalloid(new Atom(Elements.Unknown.toIElement())));
@@ -86,7 +86,7 @@ class ElementsTest {
     }
 
     @Test
-    public void testIsValid_Symbol() {
+    void testIsValid_Symbol() {
         Assertions.assertTrue(Elements.isValid("C"));
         Assertions.assertTrue(Elements.isValid("Cl"));
         Assertions.assertTrue(Elements.isValid("cl")); // case-insensitive
@@ -96,7 +96,7 @@ class ElementsTest {
     }
 
     @Test
-    public void testIsValid_Number() {
+    void testIsValid_Number() {
         Assertions.assertFalse(Elements.isValid(0));
         Assertions.assertTrue(Elements.isValid(IElement.C));
         Assertions.assertTrue(Elements.isValid(IElement.Br));

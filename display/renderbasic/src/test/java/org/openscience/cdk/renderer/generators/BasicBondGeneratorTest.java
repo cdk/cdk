@@ -18,7 +18,7 @@ import org.openscience.cdk.renderer.elements.MarkedElement;
  *
  * @author     maclean
  */
-public class BasicBondGeneratorTest extends AbstractGeneratorTest {
+class BasicBondGeneratorTest extends AbstractGeneratorTest {
 
     private BasicBondGenerator generator;
 

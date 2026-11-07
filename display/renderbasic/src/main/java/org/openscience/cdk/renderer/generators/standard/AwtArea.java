@@ -27,16 +27,11 @@ import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.elements.path.Type;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.logging.LogManager;
 
 final class AwtArea {
 

@@ -36,8 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
-
 /**
  * A stereo encoder factory for tetrahedral centres. This factory generates
  * {@link StereoEncoder}s for centres with specified by 2D and 3D coordinates.

@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class RGroupQueryManipulatorTest {
+class RGroupQueryManipulatorTest {
 
     private static void assertEnumerated(IRGroupQuery rgroupQuery, String ... expected) throws Exception {
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -65,7 +65,7 @@ public class RGroupQueryManipulatorTest {
     }
 
     @Test
-    public void testToAtomContainer() throws Exception {
+    void testToAtomContainer() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
 
@@ -101,7 +101,7 @@ public class RGroupQueryManipulatorTest {
     }
 
     @Test
-    public void testToRgroupQuery() throws Exception {
+    void testToRgroupQuery() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
 
@@ -135,7 +135,7 @@ public class RGroupQueryManipulatorTest {
     // when an Rgroup has multiple attachments the ordering of the bonds is
     // important, in CXSMILES this is specified by ligand order (LO)
     @Test
-    public void testToRgroupQueryLigandOrdering() throws Exception {
+    void testToRgroupQueryLigandOrdering() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
 
@@ -163,7 +163,7 @@ public class RGroupQueryManipulatorTest {
     // when an Rgroup has multiple attachments the ordering of the bonds is
     // important, in CXSMILES this is specified by ligand order (LO)
     @Test
-    public void testToRgroupQueryLigandOrdering2() throws Exception {
+    void testToRgroupQueryLigandOrdering2() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
 

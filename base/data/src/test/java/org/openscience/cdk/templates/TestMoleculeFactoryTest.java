@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests minimal functionality of methods not tested elsewhere.
  */
-public class TestMoleculeFactoryTest {
+class TestMoleculeFactoryTest {
 
 	@Test void makePhenylAmine() { Assertions.assertNotNull(TestMoleculeFactory.makePhenylAmine()); }
 	@Test void makeFusedRings() { Assertions.assertNotNull(TestMoleculeFactory.makeFusedRings()); }

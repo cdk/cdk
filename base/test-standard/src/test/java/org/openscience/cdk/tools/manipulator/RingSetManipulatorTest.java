@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,7 +42,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  */
-class RingSetManipulatorTest extends CDKTestCase {
+class RingSetManipulatorTest {
 
     private IChemObjectBuilder builder;
 

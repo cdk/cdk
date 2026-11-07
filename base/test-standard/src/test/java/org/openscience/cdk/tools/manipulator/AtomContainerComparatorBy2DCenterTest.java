@@ -28,14 +28,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Test class for {@link org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter}
  */
-class AtomContainerComparatorBy2DCenterTest extends CDKTestCase {
+class AtomContainerComparatorBy2DCenterTest {
 
     AtomContainerComparatorBy2DCenterTest() {
         super();

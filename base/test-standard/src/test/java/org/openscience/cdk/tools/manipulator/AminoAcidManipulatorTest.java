@@ -20,7 +20,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -28,7 +27,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  */
-class AminoAcidManipulatorTest extends CDKTestCase {
+class AminoAcidManipulatorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

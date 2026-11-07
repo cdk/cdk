@@ -26,7 +26,6 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -43,7 +42,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * (http://jchempaint.sf.org/).
  *
  */
-class JChemPaintTest extends CDKTestCase {
+class JChemPaintTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(JChemPaintTest.class);
 

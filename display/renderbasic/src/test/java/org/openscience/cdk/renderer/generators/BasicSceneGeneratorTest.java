@@ -38,7 +38,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  *
  * @author     maclean
  */
-public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
+class BasicSceneGeneratorTest extends AbstractGeneratorTest {
 
     private BasicSceneGenerator generator;
 

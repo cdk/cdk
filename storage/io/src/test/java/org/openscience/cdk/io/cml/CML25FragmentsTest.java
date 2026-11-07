@@ -26,7 +26,6 @@ import java.io.ByteArrayInputStream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -43,7 +42,7 @@ import org.openscience.cdk.silent.ChemFile;
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-class CML25FragmentsTest extends CDKTestCase {
+class CML25FragmentsTest {
 
     @Disabled("Functionality not yet implemented")
     void testIsotopeRef() throws Exception {

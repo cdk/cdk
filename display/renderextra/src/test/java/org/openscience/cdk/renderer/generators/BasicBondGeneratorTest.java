@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @author     maclean
  */
-public class BasicBondGeneratorTest extends AbstractGeneratorTest {
+class BasicBondGeneratorTest extends AbstractGeneratorTest {
 
     private BasicBondGenerator generator;
 

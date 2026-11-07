@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.smarts.SmartsResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -63,7 +62,7 @@ import java.util.List;
 /**
  * @cdk.require java1.4+
  */
-class UniversalIsomorphismTesterTest extends CDKTestCase {
+class UniversalIsomorphismTesterTest {
 
     private final boolean                            standAlone = false;
     private UniversalIsomorphismTester uiTester;

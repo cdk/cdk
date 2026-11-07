@@ -52,7 +52,7 @@ import java.util.List;
  * FIXME: REACT: The tests fail if I don't put the smiles, strange
  *
  */
-public class PiBondingMovementReactionTest extends ReactionProcessTest {
+class PiBondingMovementReactionTest extends ReactionProcessTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

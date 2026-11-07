@@ -40,8 +40,6 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;

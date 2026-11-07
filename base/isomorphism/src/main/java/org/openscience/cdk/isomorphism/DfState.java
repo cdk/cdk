@@ -23,14 +23,12 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

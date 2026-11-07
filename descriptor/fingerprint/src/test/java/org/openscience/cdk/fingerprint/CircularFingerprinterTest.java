@@ -47,7 +47,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.openscience.cdk.CDK;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -70,7 +69,7 @@ import javax.vecmath.Point3d;
 
 /**
  */
-class CircularFingerprinterTest extends CDKTestCase {
+class CircularFingerprinterTest {
 
     private static final ILoggingTool   logger     = LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
 

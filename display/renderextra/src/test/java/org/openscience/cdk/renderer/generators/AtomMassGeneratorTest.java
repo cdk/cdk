@@ -32,7 +32,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
  */
-public class AtomMassGeneratorTest extends BasicAtomGeneratorTest {
+class AtomMassGeneratorTest extends BasicAtomGeneratorTest {
 
     private AtomMassGenerator generator;
 

@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
@@ -58,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Unit testing for the {@link VFMapper}, {@link VFState}, {@link Match} class.
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
-class VFLibTest extends CDKTestCase {
+class VFLibTest {
 
     private static IAtomContainer hexane;
     private static IQuery         hexaneQuery;
