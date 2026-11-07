@@ -20,7 +20,6 @@ package org.openscience.cdk.config;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -29,7 +28,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * Checks the functionality of the {@link ImmutableAtomType}.
  *
  */
-class ImmutableAtomTypeTest extends CDKTestCase {
+class ImmutableAtomTypeTest {
 
 	@Test
     void testToString() throws NoSuchAtomTypeException {

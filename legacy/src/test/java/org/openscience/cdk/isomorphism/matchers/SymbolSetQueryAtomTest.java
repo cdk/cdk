@@ -23,14 +23,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 
 /**
  * Checks the functionality of the IsomorphismTester
  *
  */
-class SymbolSetQueryAtomTest extends CDKTestCase {
+class SymbolSetQueryAtomTest {
 
     private static SymbolSetQueryAtom symbolSet = null;
 

@@ -23,7 +23,6 @@ import java.io.InputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.NoSuchAtomException;
@@ -41,7 +40,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  */
-class SpanningTreeTest extends CDKTestCase {
+class SpanningTreeTest {
 
     private static SpanningTree azulene = null;
     private static SpanningTree ethane  = null;

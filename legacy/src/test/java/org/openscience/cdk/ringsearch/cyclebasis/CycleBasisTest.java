@@ -28,7 +28,6 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * This class tests the CycleBasis class.
@@ -37,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
 
-class CycleBasisTest extends CDKTestCase {
+class CycleBasisTest {
 
     private CycleBasis  basis;
     private SimpleGraph g;

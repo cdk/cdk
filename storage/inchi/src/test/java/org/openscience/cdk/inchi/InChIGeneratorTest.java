@@ -46,7 +46,6 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.stereo.TetrahedralChirality;
-import org.openscience.cdk.test.CDKTestCase;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -59,7 +58,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @see org.openscience.cdk.inchi.InChIGenerator
  */
-class InChIGeneratorTest extends CDKTestCase {
+class InChIGeneratorTest {
 
     private static InChIGeneratorFactory factory;
 

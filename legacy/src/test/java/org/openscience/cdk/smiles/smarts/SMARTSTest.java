@@ -23,7 +23,6 @@ import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -54,7 +53,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @cdk.require java1.4+
  */
-class SMARTSTest extends CDKTestCase {
+class SMARTSTest {
 
     private UniversalIsomorphismTester uiTester;
 

@@ -29,11 +29,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  */
-class RingManipulatorTest extends CDKTestCase {
+class RingManipulatorTest {
 
     RingManipulatorTest() {
         super();

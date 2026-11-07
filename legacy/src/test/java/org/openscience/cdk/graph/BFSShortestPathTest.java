@@ -23,13 +23,12 @@ import java.util.List;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  */
-class BFSShortestPathTest extends CDKTestCase {
+class BFSShortestPathTest {
 
     BFSShortestPathTest() {
         super();

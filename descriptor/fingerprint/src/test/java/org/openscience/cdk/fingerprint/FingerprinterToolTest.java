@@ -28,7 +28,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
@@ -37,7 +36,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  */
-class FingerprinterToolTest extends CDKTestCase {
+class FingerprinterToolTest {
 
     FingerprinterToolTest() {
         super();

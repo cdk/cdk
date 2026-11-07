@@ -23,7 +23,6 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
@@ -37,7 +36,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * Checks the functionality of the MorganNumberTools.
  *
  */
-class MorganNumbersToolsTest extends CDKTestCase {
+class MorganNumbersToolsTest {
 
     MorganNumbersToolsTest() {
         super();

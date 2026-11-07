@@ -27,11 +27,10 @@ import java.awt.Color;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 
-class JmolColorsTest extends CDKTestCase {
+class JmolColorsTest {
 
     @Test
     void testGetAtomColor() {

@@ -45,7 +45,6 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -65,7 +64,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author steinbeck
  * @cdk.created 2001-07-24
  */
-class ConnectivityCheckerTest extends CDKTestCase {
+class ConnectivityCheckerTest {
 
     ConnectivityCheckerTest() {
         super();

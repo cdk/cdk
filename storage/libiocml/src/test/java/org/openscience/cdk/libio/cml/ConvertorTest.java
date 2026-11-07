@@ -28,7 +28,6 @@ import nu.xom.Serializer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -39,7 +38,7 @@ import java.io.IOException;
 
 /**
  */
-class ConvertorTest extends CDKTestCase {
+class ConvertorTest {
 
     /**
      * @cdk.bug 1748257

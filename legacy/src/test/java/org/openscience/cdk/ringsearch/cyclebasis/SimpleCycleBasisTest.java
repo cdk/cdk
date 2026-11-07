@@ -27,7 +27,6 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * This class tests the SimpleCycleBasis class.
@@ -35,7 +34,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
-class SimpleCycleBasisTest extends CDKTestCase {
+class SimpleCycleBasisTest {
 
     private static SimpleGraph      g;
     private static SimpleCycleBasis basis;

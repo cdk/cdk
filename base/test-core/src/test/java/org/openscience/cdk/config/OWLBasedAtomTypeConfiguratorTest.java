@@ -23,14 +23,13 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.silent.ChemObject;
 
 /**
  * Checks the functionality of the {@link OWLBasedAtomTypeConfigurator}.
  *
  */
-class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
+class OWLBasedAtomTypeConfiguratorTest {
 
     @Test
     void testCDKBasedAtomTypeConfigurator() {

@@ -25,7 +25,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomType;
 
@@ -33,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * Checks the functionality of the AtomTypeReader.
  *
  */
-class OWLAtomTypeReaderTest extends CDKTestCase {
+class OWLAtomTypeReaderTest {
 
     private final String OWL_CONTENT = "<?xml version=\"1.0\"?>" + "<!DOCTYPE rdf:RDF ["
                                              + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"

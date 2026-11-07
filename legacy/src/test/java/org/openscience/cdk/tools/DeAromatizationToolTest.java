@@ -28,14 +28,13 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Tests the DeAromatizationTool.
  *
  */
-class DeAromatizationToolTest extends CDKTestCase {
+class DeAromatizationToolTest {
 
     DeAromatizationToolTest() {
         super();

@@ -35,7 +35,6 @@ import org.mockito.Mockito;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.ReactionScheme;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -67,7 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.require java1.5+
  */
-class CML2WriterTest extends CDKTestCase {
+class CML2WriterTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CML2WriterTest.class);
 

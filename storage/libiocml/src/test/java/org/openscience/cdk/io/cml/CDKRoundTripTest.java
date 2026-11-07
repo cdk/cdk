@@ -28,7 +28,6 @@ import javax.vecmath.Point3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -40,7 +39,7 @@ import org.openscience.cdk.tools.diff.AtomDiff;
 
 /**
  */
-class CDKRoundTripTest extends CDKTestCase {
+class CDKRoundTripTest {
 
     private static final IChemObjectBuilder builder   = SilentChemObjectBuilder.getInstance();
 

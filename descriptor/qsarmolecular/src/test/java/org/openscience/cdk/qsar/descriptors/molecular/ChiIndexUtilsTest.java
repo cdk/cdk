@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -30,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  */
-class ChiIndexUtilsTest extends CDKTestCase {
+class ChiIndexUtilsTest {
 
     private IChemObjectBuilder builder;
 

@@ -5,14 +5,13 @@ import java.io.InputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 
 /**
  */
-class TopologicalMatrixTest extends CDKTestCase {
+class TopologicalMatrixTest {
 
     @Disabled // not actually asserting anything
     void testTopologicalMatrix_IAtomContainer() throws Exception {

@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,7 +40,7 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.*;
 
-class DoubleBondStereochemistryTest extends CDKTestCase {
+class DoubleBondStereochemistryTest {
 
     private static IAtomContainer molecule;
     private static IBond[]        ligands;

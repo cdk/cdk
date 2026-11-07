@@ -26,7 +26,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -47,7 +46,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @see org.openscience.cdk.io.SMILESReader
  */
-class IteratingSMILESReaderTest extends CDKTestCase {
+class IteratingSMILESReaderTest {
 
     private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSMILESReaderTest.class);
 

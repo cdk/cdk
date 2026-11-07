@@ -30,7 +30,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -44,7 +43,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  */
-class PathToolsTest extends CDKTestCase {
+class PathToolsTest {
 
     private static IAtomContainer molecule;
     private static SmilesParser   sp;

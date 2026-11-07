@@ -26,7 +26,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -38,7 +37,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-class ChemObjectIOInstantionTests extends CDKTestCase {
+class ChemObjectIOInstantionTests {
 
     private final static String      IO_FORMATS_LIST = "io-formats.set";
 

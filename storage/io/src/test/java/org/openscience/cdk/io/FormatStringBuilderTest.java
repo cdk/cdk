@@ -25,12 +25,11 @@ package org.openscience.cdk.io;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author     egonw
  */
-class FormatStringBuilderTest extends CDKTestCase {
+class FormatStringBuilderTest {
 
     private FormatStringBuilder fsb;
 

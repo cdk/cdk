@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.stereo.TetrahedralChirality;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -53,7 +52,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * TestCase for the {@link InChIToStructure} class.
  *
  */
-class InChIToStructureTest extends CDKTestCase {
+class InChIToStructureTest {
 
     @Test
     void testConstructor_String_IChemObjectBuilder() throws CDKException {

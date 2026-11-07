@@ -25,14 +25,13 @@ package org.openscience.cdk.smsd.tools;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author Asad
  */
 @Tag("SlowTest")
 // test uses Thread.sleep...
-class TimeManagerTest extends CDKTestCase {
+class TimeManagerTest {
 
     @Test
     void testTimeManager() throws Exception {

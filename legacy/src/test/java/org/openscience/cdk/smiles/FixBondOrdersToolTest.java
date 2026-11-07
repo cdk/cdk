@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,7 +43,7 @@ import java.time.Duration;
  * @author         Rajarshi Guha
  * @cdk.created    2006-09-18
  */
-class FixBondOrdersToolTest extends CDKTestCase {
+class FixBondOrdersToolTest {
 
     private static FixBondOrdersTool fbot;
 

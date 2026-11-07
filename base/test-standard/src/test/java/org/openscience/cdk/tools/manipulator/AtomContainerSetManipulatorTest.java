@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,7 +41,7 @@ import org.openscience.cdk.interfaces.IRing;
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20
  */
-class AtomContainerSetManipulatorTest extends CDKTestCase {
+class AtomContainerSetManipulatorTest {
 
     private IAtomContainer    mol1       = null;
     private IAtomContainer    mol2       = null;

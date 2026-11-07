@@ -26,7 +26,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,7 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  */
-class SSSRFinderTest extends CDKTestCase {
+class SSSRFinderTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SSSRFinderTest.class);
 

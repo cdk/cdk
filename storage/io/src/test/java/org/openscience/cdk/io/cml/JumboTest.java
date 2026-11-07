@@ -26,7 +26,6 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -42,7 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * (http://www.xml-cml.org/).
  *
  */
-class JumboTest extends CDKTestCase {
+class JumboTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(JumboTest.class);
 

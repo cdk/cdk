@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -46,7 +45,7 @@ import org.openscience.cdk.io.CMLReader;
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
-class CMLFragmentsTest extends CDKTestCase {
+class CMLFragmentsTest {
 
     @Test
     void testAtomId() throws Exception {

@@ -22,13 +22,12 @@ package org.openscience.cdk.config.atomtypes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the {@link OWLAtomTypeHandler}.
  *
  */
-class OWLAtomTypeHandlerTest extends CDKTestCase {
+class OWLAtomTypeHandlerTest {
 
     // serious testing is done in OWLAtomTypeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:

@@ -28,7 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -51,7 +50,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  */
-class ChemModelManipulatorTest extends CDKTestCase {
+class ChemModelManipulatorTest {
 
     private final static ILoggingTool logger      = LoggingToolFactory
                                                           .createLoggingTool(ChemModelManipulatorTest.class);

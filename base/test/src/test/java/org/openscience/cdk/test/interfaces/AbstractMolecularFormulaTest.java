@@ -14,13 +14,12 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IMolecularFormula} implementations.
  *
  */
-public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
+public abstract class AbstractMolecularFormulaTest {
 
     private static IChemObjectBuilder builder;
 

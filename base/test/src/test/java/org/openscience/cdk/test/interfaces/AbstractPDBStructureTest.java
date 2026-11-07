@@ -10,13 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBStructure;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of {@link org.openscience.cdk.interfaces.IPDBStructure} implementations.
  *
  */
-public abstract class AbstractPDBStructureTest extends CDKTestCase {
+public abstract class AbstractPDBStructureTest {
 
     public static IChemObjectBuilder getBuilder() {
         return object.getBuilder();

@@ -23,7 +23,6 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.fingerprint.CircularFingerprinter.FP;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -42,7 +41,7 @@ import static org.hamcrest.collection.IsIn.isIn;
 
 /**
  */
-class CircularFingerprintSmartsTest extends CDKTestCase {
+class CircularFingerprintSmartsTest {
 
 	private static final ILoggingTool logger = LoggingToolFactory
 			.createLoggingTool(CircularFingerprintSmartsTest.class);

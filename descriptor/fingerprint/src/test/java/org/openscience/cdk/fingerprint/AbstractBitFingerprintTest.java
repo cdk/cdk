@@ -23,11 +23,10 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.jupiter.api.Assertions;
-import org.openscience.cdk.test.CDKTestCase;
 
 import org.junit.jupiter.api.Test;
 
-abstract class AbstractBitFingerprintTest extends CDKTestCase {
+abstract class AbstractBitFingerprintTest {
 
     private IBitFingerprint                bitsetFP;
     private final Class<? extends IBitFingerprint> C;

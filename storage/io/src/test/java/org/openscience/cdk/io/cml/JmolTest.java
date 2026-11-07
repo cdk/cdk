@@ -29,7 +29,6 @@ import javax.vecmath.Vector3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -47,7 +46,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
  *
  */
-class JmolTest extends CDKTestCase {
+class JmolTest {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(JmolTest.class);
 

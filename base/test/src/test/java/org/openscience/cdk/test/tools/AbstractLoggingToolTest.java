@@ -7,12 +7,11 @@ package org.openscience.cdk.test.tools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ILoggingTool;
 
 /**
  */
-public abstract class AbstractLoggingToolTest extends CDKTestCase {
+public abstract class AbstractLoggingToolTest {
 
     public abstract ILoggingTool getLoggingTool();
 
