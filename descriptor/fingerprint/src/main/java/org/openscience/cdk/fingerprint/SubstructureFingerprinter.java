@@ -1,4 +1,5 @@
 /* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+ *                    2026  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,9 +24,11 @@
 package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.smarts.SmartsElements;
 import org.openscience.cdk.smarts.SmartsPattern;
 
 import java.util.*;
@@ -370,11 +373,46 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
     private static final class Key {
         final String smarts;
         final Pattern pattern;
+        // Elements (as atomic number bits, 0-127) a molecule must contain to
+        // possibly match, if none are required there is nothing to check
+        final long reqLo, reqHi;
 
         public Key(String smarts, Pattern pattern) {
             this.smarts = smarts;
             this.pattern = pattern;
+            long lo = 0, hi = 0;
+            for (int z : SmartsElements.requiredElements(smarts)) {
+                if (z < 0 || z >= 128) { // can't be represented, don't filter
+                    lo = hi = 0;
+                    break;
+                }
+                if (z < 64) lo |= 1L << z;
+                else        hi |= 1L << (z - 64);
+            }
+            this.reqLo = lo;
+            this.reqHi = hi;
         }
+
+        /**
+         * Cheap test, if false the molecule lacks an element the pattern
+         * needs and the (expensive) substructure match can be skipped.
+         */
+        boolean mayMatch(long presentLo, long presentHi) {
+            return (reqLo & ~presentLo) == 0 && (reqHi & ~presentHi) == 0;
+        }
+    }
+
+    /** The elements (atomic numbers 0-127) found in the molecule, as 2 bit masks. */
+    private static long[] elementsOf(IAtomContainer container) {
+        long lo = 0, hi = 0;
+        for (IAtom atom : container.atoms()) {
+            Integer z = atom.getAtomicNumber();
+            if (z == null || z < 0 || z >= 128)
+                continue;
+            if (z < 64) lo |= 1L << z;
+            else        hi |= 1L << (z - 64);
+        }
+        return new long[]{lo, hi};
     }
 
     private final List<Key> keys = new ArrayList<>();
@@ -423,9 +461,11 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         }
 
         SmartsPattern.prepare(atomContainer);
+        final long[] present = elementsOf(atomContainer);
         BitSet fingerPrint = new BitSet(keys.size());
         for (int i = 0; i < keys.size(); i++) {
-            if (keys.get(i).pattern.matches(atomContainer))
+            Key key = keys.get(i);
+            if (key.mayMatch(present[0], present[1]) && key.pattern.matches(atomContainer))
                 fingerPrint.set(i, true);
         }
         return new BitSetFingerprint(fingerPrint);
@@ -442,11 +482,13 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         // init SMARTS invariants (connectivity, degree, etc)
         SmartsPattern.prepare(atomContainer);
 
+        final long[] present = elementsOf(atomContainer);
         final Map<Integer, Integer> map = new TreeMap<>();
         for (int i = 0; i < keys.size(); i++) {
-            Pattern ptrn = keys.get(i).pattern;
-            int count = ptrn.matchAll(atomContainer)
-                            .countUnique();
+            Key key = keys.get(i);
+            int count = key.mayMatch(present[0], present[1])
+                      ? key.pattern.matchAll(atomContainer).countUnique()
+                      : 0;
             map.put(i, count);
         }
 
