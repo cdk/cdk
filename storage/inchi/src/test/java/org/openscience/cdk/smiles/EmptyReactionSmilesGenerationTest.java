@@ -35,21 +35,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EmptyReactionSmilesGenerationTest {
 
     @Test
-    public void emptyReactionInstance_smilesFlavorCanonical_test() throws CDKException {
+    void emptyReactionInstance_smilesFlavorCanonical_test() throws CDKException {
         SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Canonical);
         IReaction reaction = SilentChemObjectBuilder.getInstance().newReaction();
         assertThat(smilesGenerator.create(reaction)).isEqualTo(">>");
     }
 
     @Test
-    public void emptyReactionInstance_smilesFlavorStereo_test() throws CDKException {
+    void emptyReactionInstance_smilesFlavorStereo_test() throws CDKException {
         SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Stereo);
         IReaction reaction = SilentChemObjectBuilder.getInstance().newReaction();
         assertThat(smilesGenerator.create(reaction)).isEqualTo(">>");
     }
 
     @Test
-    public void emptyReactionInstance_smilesFlavorCanonicalStereo_test() throws CDKException {
+    void emptyReactionInstance_smilesFlavorCanonicalStereo_test() throws CDKException {
         SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.Stereo);
         IReaction reaction = SilentChemObjectBuilder.getInstance().newReaction();
         assertThat(smilesGenerator.create(reaction)).isEqualTo(">>");

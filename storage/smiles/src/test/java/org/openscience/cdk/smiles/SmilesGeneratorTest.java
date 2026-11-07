@@ -1372,7 +1372,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingAtomsUpdatesOctahedral() throws CDKException {
+    void deletingAtomsUpdatesOctahedral() throws CDKException {
         String smi = "C[Pt@OH1](Cl)(Cl)(Cl)(Cl)*";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1384,7 +1384,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingAtomsUpdatesTetrahedral() throws CDKException {
+    void deletingAtomsUpdatesTetrahedral() throws CDKException {
         String smi = "C[C@](N)(O)*";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1396,7 +1396,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingAtomsUpdatesTetrahedral2() throws CDKException {
+    void deletingAtomsUpdatesTetrahedral2() throws CDKException {
         String smi = "C[C@](N)(O)*";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1408,7 +1408,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingBondUpdatesCisTrans() throws CDKException {
+    void deletingBondUpdatesCisTrans() throws CDKException {
         String smi = "C/C=C/C";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1418,7 +1418,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingBondUpdatesCisTrans2() throws CDKException {
+    void deletingBondUpdatesCisTrans2() throws CDKException {
         String smi = "C/C=C/C";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1428,7 +1428,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingBondUpdatesCisTrans3() throws CDKException {
+    void deletingBondUpdatesCisTrans3() throws CDKException {
         String smi = "C/C=C(/C)CC";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1442,7 +1442,7 @@ class SmilesGeneratorTest extends CDKTestCase {
      * https://github.com/cdk/cdk/issues/1221
      */
     @Test
-    public void deletingAtomDoesNotUpdateCisTrans() throws CDKException {
+    void deletingAtomDoesNotUpdateCisTrans() throws CDKException {
         String smi = "C[C@@H](O)CC[C@H](C)/C=C(/C)C(=O)O";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1452,7 +1452,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingAtomDoesNotUpdateExtendedTetrahedral() throws CDKException {
+    void deletingAtomDoesNotUpdateExtendedTetrahedral() throws CDKException {
         String smi = "OCC=[C@]=CC";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1462,7 +1462,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingAtomDoesNotUpdateExtendedTetrahedral2() throws CDKException {
+    void deletingAtomDoesNotUpdateExtendedTetrahedral2() throws CDKException {
         String smi = "OCC=C=[C@]=C=CC";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1472,7 +1472,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingAtomDoesNotUpdateExtendedCisTrans() throws CDKException {
+    void deletingAtomDoesNotUpdateExtendedCisTrans() throws CDKException {
         String smi = "OC/C=C=C=C/C";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1483,7 +1483,7 @@ class SmilesGeneratorTest extends CDKTestCase {
 
 
     @Test
-    public void deletingAtomUpdatesExtendedTetrahedral() throws CDKException {
+    void deletingAtomUpdatesExtendedTetrahedral() throws CDKException {
         String smi = "OCC=[C@]=CC";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1494,7 +1494,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingAtomUpdatesExtendedTetrahedral2() throws CDKException {
+    void deletingAtomUpdatesExtendedTetrahedral2() throws CDKException {
         String smi = "OCC=C=[C@]=C=CC";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1505,7 +1505,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingAtomUpdatesExtendedTetrahedral3() throws CDKException {
+    void deletingAtomUpdatesExtendedTetrahedral3() throws CDKException {
         String smi = "OCC=C=[C@]=C=CC";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
@@ -1516,7 +1516,7 @@ class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test
-    public void deletingAtomUpdatesExtendedCisTrans() throws CDKException {
+    void deletingAtomUpdatesExtendedCisTrans() throws CDKException {
         String smi = "OC/C=C=C=C/C";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);

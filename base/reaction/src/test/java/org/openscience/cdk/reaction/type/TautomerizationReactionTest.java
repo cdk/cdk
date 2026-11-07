@@ -49,7 +49,7 @@ import java.util.List;
  * Generalized Reaction: X=Y-Z-H => X(H)-Y=Z.
  *
  */
-public class TautomerizationReactionTest extends ReactionProcessTest {
+class TautomerizationReactionTest extends ReactionProcessTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

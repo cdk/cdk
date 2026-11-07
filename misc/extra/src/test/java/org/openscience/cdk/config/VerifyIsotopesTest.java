@@ -34,9 +34,10 @@ import java.util.List;
  * Verify the 'Isotopes' class captures everything from the XML with
  * enough precission.
  */
-public class VerifyIsotopesTest {
+class VerifyIsotopesTest {
 
-    @Test public void verifyIsotopeData() throws IOException {
+    @Test
+    void verifyIsotopeData() throws IOException {
         IsotopeFactory expected = XMLIsotopeFactory.getInstance(SilentChemObjectBuilder.getInstance());
         IsotopeFactory actual = Isotopes.getInstance();
 

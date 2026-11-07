@@ -50,7 +50,7 @@ import java.util.List;
  * Generalized Reaction: [C1+]-C2 => C1=C2 + [H+].
  *
  */
-public class HyperconjugationReactionTest extends ReactionProcessTest {
+class HyperconjugationReactionTest extends ReactionProcessTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

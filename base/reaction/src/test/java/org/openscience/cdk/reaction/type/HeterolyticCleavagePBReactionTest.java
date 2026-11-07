@@ -55,7 +55,7 @@ import java.util.List;
  * the bond will be removed or simply the order decreased.
  *
  */
-public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
+class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();

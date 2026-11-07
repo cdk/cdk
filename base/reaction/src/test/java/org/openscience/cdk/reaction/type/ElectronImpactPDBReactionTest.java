@@ -50,7 +50,7 @@ import java.util.List;
  *
  */
 
-public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
+class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();

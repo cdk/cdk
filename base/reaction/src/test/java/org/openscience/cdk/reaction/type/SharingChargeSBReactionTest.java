@@ -53,7 +53,7 @@ import java.util.List;
  * Generalized Reaction: [A+]=B => A| + [B+].
  *
  */
-public class SharingChargeSBReactionTest extends ReactionProcessTest {
+class SharingChargeSBReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();

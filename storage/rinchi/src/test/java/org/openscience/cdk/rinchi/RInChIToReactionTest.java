@@ -42,7 +42,7 @@ class RInChIToReactionTest {
     private final SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Canonical);
 
     @Test
-    public void rinchiToReaction_rinchiIsNull_test() {
+    void rinchiToReaction_rinchiIsNull_test() {
         // arrange
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         // act
@@ -53,7 +53,7 @@ class RInChIToReactionTest {
     }
 
     @Test
-    public void rinchiToReaction_builderIsNull_test() {
+    void rinchiToReaction_builderIsNull_test() {
         // act
         RInChIToReaction rInChIToReaction = new RInChIToReaction("", null);
         // assert
@@ -98,7 +98,7 @@ class RInChIToReactionTest {
 
     @ParameterizedTest
     @MethodSource("rinchiToReaction_argumentProvider")
-    public void rinchiToReaction_test(String rinchi, String rAuxInfo, String expectedReaction, StatusMessagesOutput.Status expectedStatus, List<String> expectedMessages) throws CDKException {
+    void rinchiToReaction_test(String rinchi, String rAuxInfo, String expectedReaction, StatusMessagesOutput.Status expectedStatus, List<String> expectedMessages) throws CDKException {
         // arrange
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         // act

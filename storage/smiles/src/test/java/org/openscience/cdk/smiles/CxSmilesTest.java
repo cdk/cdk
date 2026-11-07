@@ -597,7 +597,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testRgroupParsingExplAttach() throws CDKException {
+    void testRgroupParsingExplAttach() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -611,7 +611,7 @@ class CxSmilesTest {
     // attachment points in Rgroups can be implied, when load the structure
     // we make these explicit
     @Test
-    public void testRgroupParsingImplAttach() throws CDKException {
+    void testRgroupParsingImplAttach() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -623,7 +623,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testRgroupParsingImplAttachLinker() throws CDKException {
+    void testRgroupParsingImplAttachLinker() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -635,7 +635,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testRgroupParsingExplAttachLinker() throws CDKException {
+    void testRgroupParsingExplAttachLinker() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -647,7 +647,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testRgroupParsingExplAttachLinker2() throws CDKException {
+    void testRgroupParsingExplAttachLinker2() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -659,7 +659,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testRgroupComponentGrouping() throws CDKException {
+    void testRgroupComponentGrouping() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -671,7 +671,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testRgroupNesting() throws CDKException {
+    void testRgroupNesting() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -685,7 +685,7 @@ class CxSmilesTest {
     // in this case R2 is defined twice with different definitions, we
     // rename one of them to R3 as it is loaded
     @Test
-    public void testRgroupNesting2() throws CDKException {
+    void testRgroupNesting2() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -700,7 +700,7 @@ class CxSmilesTest {
     // rename one of them to R3 as it is loaded, and then another R3 is renamed
     // to R4
     @Test
-    public void testRgroupNesting3() throws CDKException {
+    void testRgroupNesting3() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -712,7 +712,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testDativeBonds() throws CDKException {
+    void testDativeBonds() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -725,7 +725,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testRacemicReactionFlag() throws CDKException {
+    void testRacemicReactionFlag() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -735,7 +735,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testRacAtomReactionFlags() throws CDKException {
+    void testRacAtomReactionFlags() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);
@@ -745,7 +745,7 @@ class CxSmilesTest {
     }
 
     @Test
-    public void testRacemicReactionFlags() throws CDKException {
+    void testRacemicReactionFlags() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols);

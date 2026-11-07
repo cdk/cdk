@@ -49,7 +49,7 @@ import java.util.List;
  * Generalized Reaction: [A*+]-B-H => [A+]=B + [H*].
  *
  */
-public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTest {
+class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

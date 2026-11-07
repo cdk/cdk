@@ -53,7 +53,7 @@ import java.util.List;
  *
  */
 
-public class SharingAnionReactionTest extends ReactionProcessTest {
+class SharingAnionReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();

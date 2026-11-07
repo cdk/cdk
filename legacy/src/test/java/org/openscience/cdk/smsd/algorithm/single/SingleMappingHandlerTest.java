@@ -46,7 +46,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
  */
-public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
+class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
 
     @BeforeAll
     static void setMCSAlgorithm() {

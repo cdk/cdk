@@ -53,7 +53,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void internalWedgeCues() throws CDKException {
+    void internalWedgeCues() throws CDKException {
         IAtomContainer mol = loadMolfile(
                         "\n" +
                         "  CDK     11012421112D\n" +
@@ -82,7 +82,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void externalWedgeCues() throws CDKException {
+    void externalWedgeCues() throws CDKException {
         IAtomContainer mol = loadMolfile(
                 "\n" +
                         "  CDK     11012421192D\n" +
@@ -113,7 +113,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void testCubane() throws CDKException {
+    void testCubane() throws CDKException {
         IAtomContainer mol = loadMolfile(
                 "\n" +
                         "  CDK     11012421192D\n" +
@@ -147,7 +147,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void noCues() throws CDKException {
+    void noCues() throws CDKException {
         IAtomContainer mol = loadMolfile(
                 "\n" +
                         "  CDK     11012421192D\n" +
@@ -181,7 +181,7 @@ class ZOrderingTest {
     }
 
     @Test
-    public void overlapRings() throws CDKException {
+    void overlapRings() throws CDKException {
         IAtomContainer mol = loadMolfile(
                 "\n" +
                         "  CDK     11012421192D\n" +

@@ -89,7 +89,7 @@ class AbsoluteSMILESTest {
     }
 
     @Test
-    public void testLargeMoleculeCanon() throws CDKException {
+    void testLargeMoleculeCanon() throws CDKException {
         SmilesParser smipar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         StringBuilder smi1 = new StringBuilder();

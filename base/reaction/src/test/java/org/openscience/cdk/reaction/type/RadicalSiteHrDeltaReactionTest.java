@@ -49,7 +49,7 @@ import java.util.List;
  * Generalized Reaction: [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*].
  *
  */
-public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
+class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 

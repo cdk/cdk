@@ -32,7 +32,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
  */
-public class RadicalGeneratorTest extends AbstractGeneratorTest {
+class RadicalGeneratorTest extends AbstractGeneratorTest {
 
     private RadicalGenerator generator;
 

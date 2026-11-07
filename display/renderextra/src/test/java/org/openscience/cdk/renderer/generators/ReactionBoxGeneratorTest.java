@@ -32,7 +32,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
  */
-public class ReactionBoxGeneratorTest extends AbstractGeneratorTest {
+class ReactionBoxGeneratorTest extends AbstractGeneratorTest {
 
     private ReactionBoxGenerator generator;
 
