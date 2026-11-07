@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.IImplementationSpecification;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;

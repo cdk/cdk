@@ -26,7 +26,6 @@ package org.openscience.cdk.fingerprint;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * Generates a fingerprint for a given {@link IAtomContainer}. Fingerprints are

@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -48,10 +47,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
-import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
-import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
-import static org.openscience.cdk.interfaces.IBond.Stereo.UP;
-import static org.openscience.cdk.interfaces.IBond.Stereo.UP_INVERTED;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 

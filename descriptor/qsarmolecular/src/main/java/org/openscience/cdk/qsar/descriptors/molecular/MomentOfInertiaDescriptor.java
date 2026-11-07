@@ -19,12 +19,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.IOException;
-
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;

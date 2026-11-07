@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;

@@ -51,7 +51,6 @@ import uk.ac.ebi.beam.Configuration;
 import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.GraphBuilder;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

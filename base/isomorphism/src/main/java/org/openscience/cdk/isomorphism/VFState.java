@@ -28,8 +28,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
-
 /**
  * Vento-Foggia (VF) state for matching isomorphisms (identity) {@cdk.cite
  * Cordella04}.  Note: no heuristics or sorting are performed as all and

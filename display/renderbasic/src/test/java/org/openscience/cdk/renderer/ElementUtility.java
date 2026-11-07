@@ -26,7 +26,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
