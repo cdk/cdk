@@ -24,12 +24,10 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 

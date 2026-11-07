@@ -20,7 +20,6 @@ package org.openscience.cdk.silent;
 
 import java.util.*;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;

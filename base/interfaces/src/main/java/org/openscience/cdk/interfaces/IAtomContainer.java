@@ -21,7 +21,6 @@ package org.openscience.cdk.interfaces;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IBond.Order;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**

@@ -20,7 +20,6 @@ package org.openscience.cdk.graph.matrix;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Calculator for a connection matrix representation of this AtomContainer. An

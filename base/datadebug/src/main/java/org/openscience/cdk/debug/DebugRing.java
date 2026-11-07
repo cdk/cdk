@@ -21,7 +21,6 @@ package org.openscience.cdk.debug;
 import java.util.List;
 import java.util.Map;
 
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;

@@ -26,7 +26,6 @@ package org.openscience.cdk.stereo;
 import org.openscience.cdk.interfaces.IAtom;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
