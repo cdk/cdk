@@ -1,0 +1,1 @@
+tagSearchIndex = [{"l":"Constant Field Values","h":"","k":"18","u":"constant-values.html"},{"l":"Overview","h":"package org.openscience.cdk.rinchi","k":"16","u":"org/openscience/cdk/rinchi/package-summary.html#overview-heading"},{"l":"Serialized Form","h":"","k":"18","u":"serialized-form.html"}];updateSearchResults();
