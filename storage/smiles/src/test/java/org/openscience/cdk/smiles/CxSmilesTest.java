@@ -143,7 +143,7 @@ class CxSmilesTest {
     @Test
     void positionalVariation() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("**.c1ccccc1CC |m:1:2.3.4.5.6.7|");
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = Sgroup.get(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getType(), is(SgroupType.ExtMulticenter));
         assertThat(sgroups.get(0).getAtoms().size(), is(7));
@@ -153,7 +153,7 @@ class CxSmilesTest {
     @Test
     void structuralRepeatUnit() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("**.c1ccccc1CC |Sg:n:8:m:ht|");
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = Sgroup.get(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getType(), is(SgroupType.CtabStructureRepeatUnit));
         assertThat(sgroups.get(0).getSubscript(), is("m"));
@@ -165,7 +165,7 @@ class CxSmilesTest {
     @Test
     void markushFragment() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("**.c1ccccc1CC |m:1:2.3.4.5.6.7,Sg:n:8:m:ht,$R';;;;;;;;;_AP1$|");
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = Sgroup.get(mol);
         // P-var and F-var
         assertThat(sgroups.size(), is(2));
         // atom-labels
@@ -220,7 +220,7 @@ class CxSmilesTest {
     @Test
     void trailingAtomLabelSemiColonAndAtomValues() throws Exception {
         IAtomContainer mol = smipar.parseSmiles("[H]C1=C([H])N2C(=O)C(=C([O-])[N+](CC3=CN=C(Cl)S3)=C2C(C)=C1[H])C1=CC(*)=CC=C1.** |$;;;;;;;;;;;;;;;;;;;;;;;;;;R;;;;RA;$,$_AV:;;;;;;;;;;;;;;;;;;;;;;;;2;;;4;5;6;;$,c:1,18,22,29,31,t:7,12,14,26,m:31:29.28.27.25.24.23|");
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = Sgroup.get(mol);
         assertThat(mol.getAtom(26), is(instanceOf(IPseudoAtom.class)));
         assertThat(mol.getAtom(30), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom)mol.getAtom(26)).getLabel(), is("R"));
@@ -576,7 +576,7 @@ class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IReaction rxn = smipar.parseReactionSmiles("C1=CC=CC=C1C(Br)C(=O)Cl>O=C(O)c1ccccc1O>C=1C=CC=C(C1)C(C(=O)OC=2C(=CC=CC2)C(O)=O)Br |SgD::solvent:DIPEA|");
-        List<Sgroup> sgroups = rxn.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = Sgroup.get(rxn);
         Assertions.assertEquals(1, sgroups.size());
         Assertions.assertEquals("DIPEA", sgroups.get(0).getValue(SgroupKey.Data));
         SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Default + SmiFlavor.UseAromaticSymbols + SmiFlavor.CxDataSgroups);

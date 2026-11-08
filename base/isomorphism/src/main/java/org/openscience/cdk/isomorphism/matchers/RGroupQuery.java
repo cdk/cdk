@@ -263,7 +263,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
             IAtomContainer rootClone;
             try {
                 rootClone = root.clone();
-                rootClone.setProperty(CDKConstants.CTAB_SGROUPS, Collections.emptyList());
+                Sgroup.set(rootClone, Collections.emptyList());
             } catch (CloneNotSupportedException e) {
                 //Abort with CDK exception
                 throw new CDKException("clone() failed; could not perform R-group substitution.");
@@ -603,12 +603,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
     @Override
     public void setRootAttachmentPoints(Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints) {
 
-        List<Sgroup> sgroups = rootStructure.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            sgroups = new ArrayList<>();
-        else
-            sgroups = new ArrayList<>(sgroups);
-
+        List<Sgroup> sgroups = Sgroup.get(rootStructure);
         sgroups.removeIf(sgrp -> sgrp.getType() == SgroupType.ExtAttachOrdering);
 
         if (rootAttachmentPoints != null) {
@@ -624,20 +619,14 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
             }
         }
 
-        rootStructure.setProperty(CDKConstants.CTAB_SGROUPS,
-                                  sgroups);
+        Sgroup.set(rootStructure, sgroups);
     }
 
     @Override
     public Map<IAtom, Map<Integer, IBond>> getRootAttachmentPoints() {
-        List<Sgroup> sgroups = rootStructure.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            return Collections.emptyMap();
-
         Map<IAtom, Map<Integer,IBond>> result = new HashMap<>();
-        for (Sgroup sgroup : sgroups) {
-            if (sgroup.getType() == SgroupType.ExtAttachOrdering &&
-                sgroup.getAtoms().size() == 1) {
+        for (Sgroup sgroup : Sgroup.get(rootStructure, SgroupType.ExtAttachOrdering)) {
+            if (sgroup.getAtoms().size() == 1) {
                 IAtom atom = sgroup.getAtoms().iterator().next();
                 Map<Integer,IBond> val = new LinkedHashMap<>();
                 for (IBond bond : sgroup.getBonds())
@@ -645,7 +634,6 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, IRGroup
                 result.put(atom, val);
             }
         }
-
         return result;
     }
 

@@ -26,7 +26,6 @@ package org.openscience.cdk.depict;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -495,8 +494,7 @@ class AbbreviationsTest {
         factory.add("*c1ccccc1 Ph");
         IAtomContainer mol = smi("c1ccccc1CCc1cscc1");
         factory.apply(mol);
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        assertEquals(0, sgroups.size());
+        assertEquals(0, Sgroup.get(mol).size());
     }
 
     @Test
@@ -505,8 +503,7 @@ class AbbreviationsTest {
         factory.add("*c1ccccc1 Ph");
         IAtomContainer mol = smi("c1ccccc1CBr");
         factory.apply(mol);
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        assertEquals(0, sgroups.size());
+        assertEquals(0, Sgroup.get(mol).size());
     }
 
     @Test
@@ -695,7 +692,7 @@ class AbbreviationsTest {
         sgroup.addAtom(mol.getAtom(8));
         sgroup.setType(SgroupType.CtabAbbreviation);
         sgroup.setSubscript("n-Bu");
-        mol.setProperty(CDKConstants.CTAB_SGROUPS, Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(0));
     }

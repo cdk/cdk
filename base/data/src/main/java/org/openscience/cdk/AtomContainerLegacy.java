@@ -265,19 +265,13 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
             }
             stereoElements.removeAll(staleStereo);
         }
-        List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
-            List<Sgroup> staleSgroups = new ArrayList<>();
-            for (Sgroup sgroup : sgroups) {
-                if (isStale(sgroup))
-                    staleSgroups.add(sgroup);
-            }
-            if (!staleSgroups.isEmpty()) {
-                sgroups = new ArrayList<>(sgroups); // ensure mutable
-                sgroups.removeAll(staleSgroups);
-                setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
-            }
+
+        List<Sgroup> staleSgroups = new ArrayList<>();
+        for (Sgroup sgroup : Sgroup.get(this)) {
+            if (isStale(sgroup))
+                staleSgroups.add(sgroup);
         }
+        Sgroup.remove(this, staleSgroups);
     }
 
     /**
@@ -373,13 +367,10 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         }
 
         // update Sgroups
-        List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
-            for (Sgroup sgroup : sgroups) {
-                if (sgroup.getAtoms().contains(oldAtom)) {
-                    sgroup.removeAtom(oldAtom);
-                    sgroup.addAtom(atom);
-                }
+        for (Sgroup sgroup : Sgroup.get(this)) {
+            if (sgroup.getAtoms().contains(oldAtom)) {
+                sgroup.removeAtom(oldAtom);
+                sgroup.addAtom(atom);
             }
         }
 
@@ -1194,19 +1185,13 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
             stereoElements.removeAll(stereoToRemove);
 
             // consider any sgroups involving this atom is now invalid
-            List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
-            if (sgroups != null) {
-                List<Sgroup> sgrpToRemove = new ArrayList<>();
-                for (Sgroup sgroup : sgroups) {
-                    if (sgroup.getAtoms().contains(atom))
-                        sgrpToRemove.add(sgroup);
-                }
-                if (!sgrpToRemove.isEmpty()) {
-                    sgroups = new ArrayList<>(sgroups); // ensure mutable
-                    sgroups.removeAll(sgrpToRemove);
-                    setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
-                }
+            List<Sgroup> sgrpToRemove = new ArrayList<>();
+            for (Sgroup sgroup : Sgroup.get(this)) {
+                if (sgroup.getAtoms().contains(atom))
+                    sgrpToRemove.add(sgroup);
             }
+            if (!sgrpToRemove.isEmpty())
+                Sgroup.remove(this, sgrpToRemove);
 
             removeAtomOnly(position);
         }
@@ -1512,13 +1497,12 @@ public class AtomContainerLegacy extends ChemObject implements IAtomContainer, I
         }
 
         // update sgroups
-        Collection<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
+        Collection<Sgroup> sgroups = Sgroup.get(this);
+        if (!sgroups.isEmpty()) {
             Map<IChemObject,IChemObject> replace = new HashMap<>();
             replace.putAll(atomMap);
             replace.putAll(bondMap);
-            clone.setProperty(CDKConstants.CTAB_SGROUPS,
-                              SgroupManipulator.copy(sgroups, replace));
+            Sgroup.set(clone, SgroupManipulator.copy(sgroups, replace));
         }
 
         return clone;

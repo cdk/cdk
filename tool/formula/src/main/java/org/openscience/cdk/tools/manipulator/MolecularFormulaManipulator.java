@@ -1080,22 +1080,20 @@ public class MolecularFormulaManipulator {
 
         // mark multi-center attachments to be excluded from the formula
         Set<IAtom> mattach = null;
-        List<Sgroup> sgroups = atomContainer.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
-            for (Sgroup sgroup : sgroups) {
-                if (sgroup.getType() == SgroupType.ExtMulticenter) {
-                    for (IBond bond : sgroup.getBonds()) {
-                        for (IAtom atom : sgroup.getAtoms()) {
-                            if (bond.contains(atom)) {
-                                if (mattach == null)
-                                    mattach = new HashSet<>();
-                                mattach.add(atom);
-                            }
+        for (Sgroup sgroup : Sgroup.get(atomContainer, SgroupType.ExtMulticenter)) {
+            if (sgroup.getType() == SgroupType.ExtMulticenter) {
+                for (IBond bond : sgroup.getBonds()) {
+                    for (IAtom atom : sgroup.getAtoms()) {
+                        if (bond.contains(atom)) {
+                            if (mattach == null)
+                                mattach = new HashSet<>();
+                            mattach.add(atom);
                         }
                     }
                 }
             }
         }
+
         if (mattach == null)
             mattach = Collections.emptySet();
 

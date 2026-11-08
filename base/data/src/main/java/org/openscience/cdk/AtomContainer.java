@@ -123,6 +123,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
             addLonePair(lp);
         for (IStereoElement se : src.stereoElements())
             addStereoElement(se);
+        Sgroup.set(this, Sgroup.get(src));
     }
 
     private <T> T[] grow(T[] arr, int required) {
@@ -354,19 +355,12 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
             }
             stereo.removeAll(staleStereo);
         }
-        List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
-            List<Sgroup> staleSgroups = new ArrayList<>();
-            for (Sgroup sgroup : sgroups) {
-                if (isStale(sgroup))
-                    staleSgroups.add(sgroup);
-            }
-            if (!staleSgroups.isEmpty()) {
-                sgroups = new ArrayList<>(sgroups); // ensure mutable
-                sgroups.removeAll(staleSgroups);
-                setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
-            }
+        List<Sgroup> staleSgroups = new ArrayList<>();
+        for (Sgroup sgroup : Sgroup.get(this)) {
+            if (isStale(sgroup))
+                staleSgroups.add(sgroup);
         }
+        Sgroup.remove(this, staleSgroups);
     }
 
     /**
@@ -576,13 +570,10 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         }
 
         // update Sgroups
-        List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
-            for (Sgroup sgroup : sgroups) {
-                if (sgroup.getAtoms().contains(org)) {
-                    sgroup.removeAtom(org);
-                    sgroup.addAtom(rep);
-                }
+        for (Sgroup sgroup : Sgroup.get(this)) {
+            if (sgroup.getAtoms().contains(org)) {
+                sgroup.removeAtom(org);
+                sgroup.addAtom(rep);
             }
         }
 
@@ -1059,6 +1050,9 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
             this.addStereoElement(se);
         }
 
+        // copy over any Sgroups
+        Sgroup.add(this, Sgroup.get(that));
+
         notifyChanged();
     }
 
@@ -1452,19 +1446,12 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
             stereo.removeAll(stereoToRemove);
 
             // consider any sgroups involving this atom is now invalid
-            List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
-            if (sgroups != null) {
-                List<Sgroup> sgrpToRemove = new ArrayList<>();
-                for (Sgroup sgroup : sgroups) {
-                    if (sgroup.getAtoms().contains(atom))
-                        sgrpToRemove.add(sgroup);
-                }
-                if (!sgrpToRemove.isEmpty()) {
-                    sgroups = new ArrayList<>(sgroups); // ensure mutable
-                    sgroups.removeAll(sgrpToRemove);
-                    setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
-                }
+            List<Sgroup> sgrpToRemove = new ArrayList<>();
+            for (Sgroup sgroup : Sgroup.get(this)) {
+                if (sgroup.getAtoms().contains(atom))
+                    sgrpToRemove.add(sgroup);
             }
+            Sgroup.remove(this, sgrpToRemove);
             
             removeAtomOnly(atomref.getIndex());
         }
@@ -1756,13 +1743,12 @@ public class AtomContainer extends ChemObject implements IAtomContainer {
         }
 
         // update sgroups
-        Collection<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
+        Collection<Sgroup> sgroups = Sgroup.get(this);
+        if (!sgroups.isEmpty()) {
             Map<IChemObject,IChemObject> replace = new HashMap<>();
             replace.putAll(atomMap);
             replace.putAll(bondMap);
-            clone.setProperty(CDKConstants.CTAB_SGROUPS,
-                              SgroupManipulator.copy(sgroups, replace));
+            Sgroup.set(clone, SgroupManipulator.copy(sgroups, replace));
         }
 
         return clone;

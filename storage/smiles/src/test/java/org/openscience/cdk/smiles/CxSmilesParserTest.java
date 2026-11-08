@@ -415,7 +415,7 @@ class CxSmilesParserTest {
     void variableAttachCrossingBonds() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[H]OCCO.C* |lp:1:2,4:2,m:6:3.2,Sg:n:1,2,3,5::ht|");
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = Sgroup.get(mol);
         Sgroup sru = null;
         for (Sgroup sgroup : sgroups) {
             if (sgroup.getType() == SgroupType.CtabStructureRepeatUnit) {

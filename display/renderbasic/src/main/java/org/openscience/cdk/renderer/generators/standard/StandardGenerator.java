@@ -820,42 +820,36 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         }
 
         // ligand/attachment ordering annotations on bonds
-        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
+        List<TextOutline> attachNumOutlines = new ArrayList<>();
+        double maxRadius = 0;
 
-            List<TextOutline> attachNumOutlines = new ArrayList<>();
-            double maxRadius = 0;
+        for (Sgroup sgroup : Sgroup.get(container, SgroupType.ExtAttachOrdering)) {
+            int number = 1;
+            Set<IBond> bonds = sgroup.getBonds();
+            // if there is only a single bond we do not need to annotate
+            // the ordering.
+            if (bonds.size() == 1)
+                continue;
+            for (IBond bond : bonds) {
+                Point2d beg = bond.getBegin().getPoint2d();
+                Point2d end = bond.getEnd().getPoint2d();
+                Point2d mid = VecmathUtil.midpoint(beg, end);
 
-            for (Sgroup sgroup : sgroups) {
-                if (sgroup.getType() == SgroupType.ExtAttachOrdering) {
-                    int number = 1;
-                    Set<IBond> bonds = sgroup.getBonds();
-                    // if there is only a single bond we do not need to annotate
-                    // the ordering.
-                    if (bonds.size() == 1)
-                        continue;
-                    for (IBond bond : bonds) {
-                        Point2d beg = bond.getBegin().getPoint2d();
-                        Point2d end = bond.getEnd().getPoint2d();
-                        Point2d mid = VecmathUtil.midpoint(beg, end);
+                final TextOutline outline = generateAnnotation(mid,
+                                                               Integer.toString(number++),
+                                                               new Vector2d(0,0),
+                                                               0,
+                                                               annScale,
+                                                               font.deriveFont(Font.BOLD),
+                                                               null);
 
-                        final TextOutline outline = generateAnnotation(mid,
-                                                                       Integer.toString(number++),
-                                                                       new Vector2d(0,0),
-                                                                       0,
-                                                                       annScale,
-                                                                       font.deriveFont(Font.BOLD),
-                                                                       null);
+                attachNumOutlines.add(outline);
 
-                        attachNumOutlines.add(outline);
-
-                        double w = outline.getBounds().getWidth();
-                        double h = outline.getBounds().getHeight();
-                        double r = Math.sqrt(w * w + h * h)/2;
-                        if (r > maxRadius)
-                            maxRadius = r;
-                    }
-                }
+                double w = outline.getBounds().getWidth();
+                double h = outline.getBounds().getHeight();
+                double r = Math.sqrt(w * w + h * h)/2;
+                if (r > maxRadius)
+                    maxRadius = r;
             }
 
             for (TextOutline outline : attachNumOutlines) {

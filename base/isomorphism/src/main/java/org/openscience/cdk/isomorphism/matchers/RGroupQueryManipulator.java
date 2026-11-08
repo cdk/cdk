@@ -98,9 +98,7 @@ public class RGroupQueryManipulator {
         IAtomContainer root = rgq.getRootStructure();
         if (root != null) {
             mol.add(root);
-            List<Sgroup> rootSgroups = root.getProperty(CDKConstants.CTAB_SGROUPS);
-            if (rootSgroups != null)
-                sgroups.addAll(rootSgroups);
+            sgroups.addAll(Sgroup.get(root));
         }
 
         int componentNum = setComponentGroup(mol, 1);
@@ -113,14 +111,12 @@ public class RGroupQueryManipulator {
                 setRgroupLabel(molDef, label);
                 componentNum = setComponentGroup(molDef, componentNum);
                 mol.add(molDef);
-                List<Sgroup> defSgroups = molDef.getProperty(CDKConstants.CTAB_SGROUPS);
-                if (defSgroups != null)
-                    sgroups.addAll(defSgroups);
+                sgroups.addAll(Sgroup.get(molDef));
             }
         }
 
         mol.set(IChemObject.MARKUSH);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+        Sgroup.set(mol, sgroups);
         return mol;
     }
 

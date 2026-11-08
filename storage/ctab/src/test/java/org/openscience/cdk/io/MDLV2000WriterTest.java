@@ -62,7 +62,6 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -774,8 +773,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
         Sgroup sgroup = new Sgroup();
         for (IAtom atom : mol.atoms())
             sgroup.addAtom(atom);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
 
         StringWriter sw = new StringWriter();
         try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
@@ -1089,8 +1087,7 @@ class MDLV2000WriterTest extends ChemObjectIOTest {
             patoms.add(atom);
 
         sgroup.putValue(SgroupKey.CtabParentAtomList, patoms);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
         StringWriter sw = new StringWriter();
         try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mol);

@@ -23,10 +23,14 @@
 
 package org.openscience.cdk.sgroup;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Generic CTab Sgroup (substructure group) that stores all other types of group. This representation
@@ -226,5 +230,89 @@ public class Sgroup {
     public <T> T downcast() {
         // ToDo - Implement
         return (T) this;
+    }
+
+    /**
+     * Convenience function to access the Sgroups stored on the provided
+     * {@link IChemObject} (typically an {@link IAtomContainer}). The Sgroups
+     * are stored in an unmodifiable collection on a property
+     * ({@link CDKConstants#CTAB_SGROUPS}).
+     *
+     * @param chemObj the chem object.
+     * @return a modifiable list of the current sgroups
+     */
+    public static List<Sgroup> get(IChemObject chemObj) {
+        Collection<Sgroup> stored = chemObj.getProperty(CDKConstants.CTAB_SGROUPS);
+        return stored != null ? new ArrayList<>(stored) : new ArrayList<>();
+    }
+
+    public static List<Sgroup> get(IChemObject chemObj, SgroupType type) {
+        return get(chemObj).stream()
+                           .filter(s -> s.getType() == type)
+                           .collect(Collectors.toList());
+    }
+
+    /**
+     * Convenience function to set the Sgroups on the provided
+     * {@link IChemObject} (typically an {@link IAtomContainer}). The Sgroups
+     * are stored in an unmodifiable collection on a property
+     * ({@link CDKConstants#CTAB_SGROUPS}). This function overwrites any
+     * existing Sgroups
+     *
+     * @param chemObj the chem object.
+     * @param sgroups the new sgroups to store
+     */
+    public static void set(IChemObject chemObj, Iterable<Sgroup> sgroups) {
+        List<Sgroup> list = new ArrayList<>();
+        for (Sgroup sgroup : sgroups)
+            list.add(sgroup);
+        chemObj.setProperty(CDKConstants.CTAB_SGROUPS,
+                            Collections.unmodifiableList(list));
+    }
+
+    /**
+     * Convenience function to add to the Sgroups on the provided
+     * {@link IChemObject} (typically an {@link IAtomContainer}). The Sgroups
+     * are stored in an unmodifiable collection on a property
+     * ({@link CDKConstants#CTAB_SGROUPS}). The existing Sgroups are kept and
+     * the new ones are added.
+     *
+     * @param chemObj the chem object.
+     * @param sgroups the new sgroups to store
+     * @see #set(IChemObject, Iterable)
+     * @see #get
+     */
+    public static void add(IChemObject chemObj, Iterable<Sgroup> sgroups) {
+        if (!sgroups.iterator().hasNext())
+            return;
+        List<Sgroup> stored = get(chemObj);
+        for (Sgroup sgroup : sgroups)
+            stored.add(sgroup);
+        set(chemObj, stored);
+    }
+
+    public static void remove(IChemObject chemObj, Iterable<Sgroup> sgroups) {
+        if (!sgroups.iterator().hasNext())
+            return;
+        List<Sgroup> stored = get(chemObj);
+        for (Sgroup sgroup : sgroups)
+            stored.remove(sgroup);
+        set(chemObj, stored);
+    }
+
+    /**
+     * Convenience function to add to the Sgroups on the provided
+     * {@link IChemObject} (typically an {@link IAtomContainer}). The Sgroups
+     * are stored in an unmodifiable collection on a property
+     * ({@link CDKConstants#CTAB_SGROUPS}). The existing Sgroups are kept and
+     * the new one is added.
+     *
+     * @param chemObj the chem object.
+     * @param sgroup the new sgroup to store
+     * @see #set(IChemObject, Iterable)
+     * @see #get
+     */
+    public static void add(IChemObject chemObj, Sgroup sgroup) {
+        add(chemObj, Collections.singletonList(sgroup));
     }
 }

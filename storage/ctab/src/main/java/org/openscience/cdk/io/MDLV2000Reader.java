@@ -1445,7 +1445,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     newSgroup.addParent(sgroupCpyList.get(sgroupOrgList.indexOf(parent)));
                 }
             }
-            container.setProperty(CDKConstants.CTAB_SGROUPS, sgroupCpyList);
+            Sgroup.set(container, sgroupCpyList);
         }
     }
 

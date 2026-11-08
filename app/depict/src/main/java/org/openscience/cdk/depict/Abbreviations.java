@@ -525,11 +525,8 @@ public class Abbreviations implements Iterable<String> {
         // mark which atoms have already been abbreviated or are
         // part of an existing Sgroup
         Set<IAtom> usedAtoms = new HashSet<>();
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
-            for (Sgroup sgroup : sgroups)
-                usedAtoms.addAll(sgroup.getAtoms());
-        }
+        for (Sgroup sgroup : Sgroup.get(mol))
+            usedAtoms.addAll(sgroup.getAtoms());
 
         final List<Sgroup> newSgroups = new ArrayList<>();
         final List<Sgroup> allSgroups = new ArrayList<>();
@@ -1138,12 +1135,7 @@ public class Abbreviations implements Iterable<String> {
      */
     public int apply(final IAtomContainer mol, final Map<IAtom, Integer> atomSets) {
         List<Sgroup> newSgroups = generate(mol, atomSets);
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-
-        if (sgroups == null)
-            sgroups = new ArrayList<>();
-        else
-            sgroups = new ArrayList<>(sgroups);
+        List<Sgroup> sgroups = Sgroup.get(mol);
 
         int numAtoms = mol.getAtomCount();
         int numRingAtoms = countRingAtoms(mol);
@@ -1152,7 +1144,7 @@ public class Abbreviations implements Iterable<String> {
             if (shouldContract(sgroup, numAtoms, numRingAtoms))
                 sgroups.add(sgroup);
         }
-        mol.setProperty(CDKConstants.CTAB_SGROUPS, Collections.unmodifiableList(sgroups));
+        Sgroup.set(mol, sgroups);
         return sgroups.size() - prev;
     }
 

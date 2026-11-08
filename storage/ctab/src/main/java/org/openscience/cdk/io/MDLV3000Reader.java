@@ -1041,12 +1041,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     for (IAtom endpt : endpts)
                         sgroup.addAtom(endpt);
 
-                    List<Sgroup> sgroups = readData.getProperty(CDKConstants.CTAB_SGROUPS);
-                    if (sgroups == null)
-                        readData.setProperty(CDKConstants.CTAB_SGROUPS, sgroups = new ArrayList<>(4));
                     if (MDLV2000Reader.fixCrossingBonds(sgroup))
                         handleError("Fixed incorrect SBL list on SGroup " + sgroup.getSubscript());
-                    sgroups.add(sgroup);
+                    Sgroup.add(readData, sgroup);
                 }
 
                 // set flags of atoms participating in bond to aromatic if bond has flag set to aromatic
@@ -1134,11 +1131,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             sgroup.setSubscript(label);
                         }
                     }
-                    List<Sgroup> sgroups = readData.getProperty(CDKConstants.CTAB_SGROUPS);
-                    if (sgroups == null)
-                        sgroups = new ArrayList<>();
-                    sgroups.add(sgroup);
-                    readData.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+                    Sgroup.add(readData, sgroup);
                 } else {
                     logger.warn("Skipping unrecognized SGROUP type: " + type);
                 }

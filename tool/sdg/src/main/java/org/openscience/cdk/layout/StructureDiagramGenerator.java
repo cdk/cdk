@@ -1271,10 +1271,10 @@ public class StructureDiagramGenerator {
     }
 
     private List<IBond> getNonContractedNonTerminalBonds(IAtomContainer mol, boolean includeRingBonds) {
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = Sgroup.get(mol);
         List<IBond> result = new ArrayList<>();
         Set<IBond> xbonds = new HashSet<>();
-        if (sgroups != null) {
+        if (!sgroups.isEmpty()) {
             Set<IAtom> hidden = new HashSet<>();
             for (Sgroup sgroup : sgroups) {
                 if (sgroup.getType() == SgroupType.CtabAbbreviation) {
@@ -1490,8 +1490,8 @@ public class StructureDiagramGenerator {
         if (minXAdjust < 0) minmax[0] += minXAdjust;
         if (maxXAdjust > 0) minmax[2] += maxXAdjust;
 
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null && !sgroups.isEmpty()) {
+        List<Sgroup> sgroups = Sgroup.get(mol);
+        if (!sgroups.isEmpty()) {
             // TODO better logic we can place the bracket then work out the
             //  bounds!
             boolean hasBracket = false;
@@ -1975,8 +1975,8 @@ public class StructureDiagramGenerator {
         }
 
         // multi-attach metal pi bonds charges should not be considered
-        List<Sgroup> sgroups = molecule.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
+        List<Sgroup> sgroups = Sgroup.get(molecule);
+        if (!sgroups.isEmpty()) {
             for (Sgroup sgroup : sgroups) {
                 if (sgroup.getType() == SgroupType.ExtMulticenter) {
                     Set<IBond> bonds = sgroup.getBonds();
@@ -2772,14 +2772,8 @@ public class StructureDiagramGenerator {
      * @param mol molecule to place the multiple groups of
      */
     private void placeMultipleGroups(IAtomContainer mol) {
-        final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            return;
-        final List<Sgroup> multipleGroups = new ArrayList<>();
-        for (Sgroup sgroup : sgroups) {
-            if (sgroup.getType() == SgroupType.CtabMultipleGroup)
-                multipleGroups.add(sgroup);
-        }
+        final List<Sgroup> multipleGroups
+                = Sgroup.get(mol, SgroupType.CtabMultipleGroup);
         if (multipleGroups.isEmpty())
             return;
 
@@ -2970,8 +2964,8 @@ public class StructureDiagramGenerator {
 
     private void placePositionalVariation(final IAtomContainer mol) {
 
-        final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
+        final List<Sgroup> sgroups = Sgroup.get(mol);
+        if (!sgroups.isEmpty())
             return;
 
         boolean hasMultiAttach = false;
@@ -3456,8 +3450,8 @@ public class StructureDiagramGenerator {
      * @param mol molecule
      */
     private void placeSgroupBrackets(IAtomContainer mol) {
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null) return;
+        List<Sgroup> sgroups = Sgroup.get(mol);
+        if (sgroups.isEmpty()) return;
 
         // index all crossing bonds
         final Map<IBond,List<Sgroup>> bondMap = new HashMap<>();

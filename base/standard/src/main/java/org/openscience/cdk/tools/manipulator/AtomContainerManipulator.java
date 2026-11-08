@@ -50,7 +50,6 @@ import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -267,8 +266,8 @@ public class AtomContainerManipulator {
         if (idx < 0)
             return false;
         container.setAtom(idx, newAtom);
-        List<Sgroup> sgroups  = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
+        List<Sgroup> sgroups = Sgroup.get(container);
+        if (!sgroups.isEmpty()) {
             boolean updated = false;
             List<Sgroup> replaced = new ArrayList<>();
             for (Sgroup org : sgroups) {
@@ -293,8 +292,7 @@ public class AtomContainerManipulator {
                 }
             }
             if (updated) {
-                container.setProperty(CDKConstants.CTAB_SGROUPS,
-                                      Collections.unmodifiableList(replaced));
+                Sgroup.set(container, replaced);
             }
         }
 
