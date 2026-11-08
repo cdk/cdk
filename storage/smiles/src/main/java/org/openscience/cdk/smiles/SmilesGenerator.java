@@ -557,13 +557,6 @@ public final class SmilesGenerator {
         return create(reaction, new int[ReactionManipulator.getAtomCount(reaction)]);
     }
 
-    // utility method that safely collects the Sgroup from a molecule
-    private void safeAddSgroups(List<Sgroup> sgroups, IAtomContainer mol) {
-        List<Sgroup> molSgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (molSgroups != null)
-            sgroups.addAll(molSgroups);
-    }
-
     /**
      * Create a SMILES for a reaction of the flavour specified in the constructor and
      * write the output order to the provided array.
@@ -581,23 +574,18 @@ public final class SmilesGenerator {
         IAtomContainer    agentPart    = reaction.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer    productPart  = reaction.getBuilder().newInstance(IAtomContainer.class);
 
-        List<Sgroup> sgroups = reaction.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            sgroups = new ArrayList<>();
-        else
-            sgroups = new ArrayList<>(sgroups); // ensure not immutable
-
+        List<Sgroup> sgroups = Sgroup.get(reaction);
         for (IAtomContainer reactant : reactants.atomContainers()) {
             reactantPart.add(reactant);
-            safeAddSgroups(sgroups, reactant);
+            sgroups.addAll(Sgroup.get(reactant));
         }
         for (IAtomContainer agent : agents.atomContainers()) {
             agentPart.add(agent);
-            safeAddSgroups(sgroups, agent);
+            sgroups.addAll(Sgroup.get(agent));
         }
         for (IAtomContainer product : products.atomContainers()) {
             productPart.add(product);
-            safeAddSgroups(sgroups, product);
+            sgroups.addAll(Sgroup.get(product));
         }
 
         int[] reactantOrder = new int[reactantPart.getAtomCount()];
@@ -633,7 +621,7 @@ public final class SmilesGenerator {
             unified.add(reactantPart);
             unified.add(agentPart);
             unified.add(productPart);
-            unified.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+            Sgroup.set(unified, sgroups);
 
             // base CXSMILES state information
             final CxSmilesState cxstate = getCxSmilesState(flavour, unified);
@@ -865,9 +853,9 @@ public final class SmilesGenerator {
             }
         }
 
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = Sgroup.get(mol);
         Map<Sgroup, CxSmilesState.CxSgroup> mapping = new HashMap<>();
-        if (sgroups != null) {
+        if (!sgroups.isEmpty()) {
             state.mysgroups = new ArrayList<>();
             state.positionVar = new HashMap<>();
             state.ligandOrdering = new HashMap<>();

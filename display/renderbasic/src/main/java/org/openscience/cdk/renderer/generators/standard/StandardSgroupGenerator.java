@@ -23,7 +23,6 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -113,10 +112,9 @@ final class StandardSgroupGenerator {
      */
     static void prepareDisplayShortcuts(IAtomContainer container, Map<IAtom, String> symbolRemap) {
 
-        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null || sgroups.isEmpty())
+        List<Sgroup> sgroups = Sgroup.get(container);
+        if (sgroups.isEmpty())
             return;
-        sgroups = new ArrayList<>(sgroups); // ensure sortable!
         sgroups.sort((o1, o2) -> -Integer.compare(o1.getAtoms().size(), o2.getAtoms().size()));
 
         Set<IAtom> hidden = new HashSet<>();
@@ -360,9 +358,9 @@ final class StandardSgroupGenerator {
     IRenderingElement generateSgroups(IAtomContainer container, AtomSymbol[] symbols) {
 
         ElementGroup result = new ElementGroup();
-        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = Sgroup.get(container);
 
-        if (sgroups == null || sgroups.isEmpty())
+        if (sgroups.isEmpty())
             return result;
 
         Map<IAtom, AtomSymbol> symbolMap = new HashMap<>();

@@ -444,15 +444,13 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             return;
 
         // collect multicenter Sgroups before output
-        final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        final List<Sgroup> sgroups = Sgroup.get(mol);
         final Map<IBond,Sgroup> multicenterSgroups = new HashMap<>();
-        if (sgroups != null) {
-            for (Sgroup sgroup : sgroups) {
-                if (sgroup.getType() != SgroupType.ExtMulticenter)
-                    continue;
-                for (IBond bond : sgroup.getBonds())
-                    multicenterSgroups.put(bond, sgroup);
-            }
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getType() != SgroupType.ExtMulticenter)
+                continue;
+            for (IBond bond : sgroup.getBonds())
+                multicenterSgroups.put(bond, sgroup);
         }
 
         writer.write("BEGIN BOND\n");
@@ -604,20 +602,6 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     }
 
     /**
-     * Safely access the Sgroups of a molecule retuning an empty list
-     * if none are defined.
-     *
-     * @param mol molecule
-     * @return the sgroups
-     */
-    private List<Sgroup> getSgroups(IAtomContainer mol) {
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            sgroups = new ArrayList<>(0);
-        return sgroups;
-    }
-
-    /**
      * Returns the number of dimensions (2D or 3D) of a given molecule.
      *
      * @param mol the molecule to determine the number of dimensions for
@@ -764,7 +748,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     private void writeMol(IAtomContainer mol) throws IOException, CDKException {
         writeHeader(mol);
 
-        final List<Sgroup> sgroups = getSgroups(mol);
+        final List<Sgroup> sgroups = Sgroup.get(mol);
 
         int numSgroups = 0;
         for (Sgroup sgroup : sgroups)

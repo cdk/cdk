@@ -22,7 +22,6 @@ package org.openscience.cdk.graph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -365,9 +364,9 @@ class ConnectivityCheckerTest {
             IAtomContainer container1 = containerSet.getAtomContainer(0);
             IAtomContainer container2 = containerSet.getAtomContainer(1);
             IAtomContainer h2o = container1.getAtomCount() <= 3 ? container1 : container2;
-            Assertions.assertNull(h2o.getProperty(CDKConstants.CTAB_SGROUPS));
+            Assertions.assertTrue(Sgroup.get(h2o).isEmpty());
             IAtomContainer otherContainer = h2o == container1 ? container2 : container1;
-            List<Sgroup> sgroups = otherContainer.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(otherContainer);
             Assertions.assertEquals(1, sgroups.size());
             Sgroup sgroup = sgroups.get(0);
             Assertions.assertEquals(SgroupType.CtabStructureRepeatUnit, sgroup.getType());
@@ -404,13 +403,13 @@ class ConnectivityCheckerTest {
             IAtomContainer part2 = acset.getAtomContainer(1);
             Assertions.assertEquals("C1CCCCC1 |Sg:c:0,1,2,3,4,5::|", smigen.create(part1));
             Assertions.assertEquals("CO |Sg:c:0,1::|", smigen.create(part2));
-            List<Sgroup> sgroups1 = part1.getProperty(CDKConstants.CTAB_SGROUPS);
-            List<Sgroup> sgroups2 = part2.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups1 = Sgroup.get(part1);
+            List<Sgroup> sgroups2 = Sgroup.get(part2);
             Assertions.assertEquals(1, sgroups1.size());
             Assertions.assertEquals(0, sgroups1.get(0).getParents().size());
             Assertions.assertEquals(1, sgroups2.size());
             Assertions.assertEquals(0, sgroups2.get(0).getParents().size());
-            List<Sgroup> orgSgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> orgSgroups = Sgroup.get(mol);
             assertThat(orgSgroups.size(), is(3));
             assertNonEmptySgrpParent(orgSgroups);
         }

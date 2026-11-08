@@ -23,7 +23,6 @@ package org.openscience.cdk.layout;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -69,7 +68,6 @@ import java.io.StringReader;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -1160,8 +1158,7 @@ class StructureDiagramGeneratorTest {
         sgroup.addAtom(mol.getAtom(2));
         sgroup.addBond(mol.getBond(0));
         sgroup.addBond(mol.getBond(2));
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
 
         layout(mol);
         List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
@@ -1190,8 +1187,7 @@ class StructureDiagramGeneratorTest {
         sgroup.putValue(SgroupKey.CtabConnectivity, "HT");
         for (IAtom atom : mol.atoms())
             sgroup.addAtom(atom);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
 
         layout(mol);
         List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
@@ -1235,8 +1231,7 @@ class StructureDiagramGeneratorTest {
         sgroup2.addAtom(mol.getAtom(3));
         sgroup2.addBond(mol.getBond(1));
         sgroup2.addBond(mol.getBond(3));
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Arrays.asList(sgroup1, sgroup2));
+        Sgroup.add(mol, Arrays.asList(sgroup1, sgroup2));
 
         layout(mol);
         List<SgroupBracket> brackets1 = sgroup1.getValue(SgroupKey.CtabBracket);
@@ -1284,7 +1279,7 @@ class StructureDiagramGeneratorTest {
         sgroup2.addAtom(mol.getAtom(4));
         sgroup2.addAtom(mol.getAtom(5));
 
-        mol.setProperty(CDKConstants.CTAB_SGROUPS, Arrays.asList(sgroup1, sgroup2));
+        Sgroup.add(mol, Arrays.asList(sgroup1, sgroup2));
         layout(mol);
 
         int numCrossing = 0;
@@ -1313,7 +1308,7 @@ class StructureDiagramGeneratorTest {
                 break;
         }
         sgroup.putValue(SgroupKey.CtabParentAtomList, patoms);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS, Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
         layout(mol);
         for (int i = 0; i < 6; i++) {
             Assertions2d.assertEquals(mol.getAtom(i).getPoint2d(),

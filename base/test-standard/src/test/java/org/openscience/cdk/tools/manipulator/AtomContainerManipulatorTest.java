@@ -1670,7 +1670,7 @@ class AtomContainerManipulatorTest {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("CCC([H])CC |Sg:n:1,2,3,4:n:ht|");
         AtomContainerManipulator.suppressHydrogens(mol);
-        Collection<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        Collection<Sgroup> sgroups = Sgroup.get(mol);
         Assertions.assertNotNull(sgroups);
         assertThat(sgroups.size(), is(1));
         Sgroup sgroup = sgroups.iterator().next();

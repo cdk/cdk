@@ -8,7 +8,6 @@ package org.openscience.cdk.test.interfaces;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -32,7 +31,6 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 import javax.vecmath.Point2d;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -3262,10 +3260,9 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         sgroup.addAtom(a2);
         sgroup.addBond(b1);
         sgroup.addBond(b2);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
         IAtomContainer clone = mol.clone();
-        Collection<Sgroup> sgroups = clone.getProperty(CDKConstants.CTAB_SGROUPS);
+        Collection<Sgroup> sgroups = Sgroup.get(clone);
         Assertions.assertNotNull(sgroups);
         assertThat(sgroups.size(), is(1));
         Sgroup clonedSgroup = sgroups.iterator().next();
@@ -3305,10 +3302,9 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         SgroupBracket bracket2 = new SgroupBracket(1, 2, 3, 4);
         sgroup.addBracket(bracket1);
         sgroup.addBracket(bracket2);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
         IAtomContainer clone = mol.clone();
-        Collection<Sgroup> sgroups = clone.getProperty(CDKConstants.CTAB_SGROUPS);
+        Collection<Sgroup> sgroups = Sgroup.get(clone);
         Assertions.assertNotNull(sgroups);
         assertThat(sgroups.size(), is(1));
         Sgroup clonedSgroup = sgroups.iterator().next();
@@ -3373,11 +3369,10 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         sgroup.addAtom(a2);
         sgroup.addBond(b1);
         sgroup.addBond(b2);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Collections.singletonList(sgroup));
-        Assertions.assertEquals(1, mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        Sgroup.add(mol, sgroup);
+        Assertions.assertEquals(1, Sgroup.get(mol).size());
         mol.removeAtom(a2);
-        Assertions.assertEquals(0, mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        Assertions.assertEquals(0, Sgroup.get(mol).size());
     }
 
     @Test public void updateSgroupWithAtomReplace() throws CloneNotSupportedException {
@@ -3402,12 +3397,11 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         sgroup.addAtom(a2);
         sgroup.addBond(b1);
         sgroup.addBond(b2);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                Collections.singletonList(sgroup));
-        Assertions.assertEquals(1, mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        Sgroup.add(mol, sgroup);
+        Assertions.assertEquals(1, Sgroup.get(mol).size());
         IAtom a2new = mol.getBuilder().newAtom();
         mol.setAtom(1, a2new);
-        List<Sgroup> updatedSgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> updatedSgroups = Sgroup.get(mol);
         Assertions.assertEquals(1, updatedSgroups.size());
         Assertions.assertFalse(updatedSgroups.get(0).getAtoms().contains(a2));
         Assertions.assertTrue(updatedSgroups.get(0).getAtoms().contains(a2new));
@@ -3435,11 +3429,10 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         sgroup.addAtom(a2);
         sgroup.addBond(b1);
         sgroup.addBond(b2);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                Collections.singletonList(sgroup));
-        Assertions.assertEquals(1, mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        Sgroup.add(mol, sgroup);
+        Assertions.assertEquals(1, Sgroup.get(mol).size());
         mol.setAtoms(new IAtom[]{a3, a2, a1});
-        List<Sgroup> sgroupsAfter = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroupsAfter = Sgroup.get(mol);
         Assertions.assertEquals(1, sgroupsAfter.size());
     }
 
@@ -3465,11 +3458,10 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         sgroup.addAtom(a2);
         sgroup.addBond(b1);
         sgroup.addBond(b2);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                Collections.singletonList(sgroup));
-        Assertions.assertEquals(1, mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        Sgroup.add(mol, sgroup);
+        Assertions.assertEquals(1, Sgroup.get(mol).size());
         mol.setBonds(new IBond[]{b2, b1});
-        List<Sgroup> sgroupsAfter = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroupsAfter = Sgroup.get(mol);
         Assertions.assertEquals(1, sgroupsAfter.size());
     }
 
@@ -3490,13 +3482,12 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         sgroup.setType(SgroupType.CtabStructureRepeatUnit);
         sgroup.setSubscript("n");
         sgroup.addAtom(a2);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                Collections.singletonList(sgroup));
-        Assertions.assertEquals(1, mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        Sgroup.add(mol, sgroup);
+        Assertions.assertEquals(1, Sgroup.get(mol).size());
         mol.setAtoms(new IAtom[]{mol.getBuilder().newAtom(),
                                  mol.getBuilder().newAtom(),
                                  mol.getBuilder().newAtom()});
-        List<Sgroup> sgroupsAfter = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroupsAfter = Sgroup.get(mol);
         Assertions.assertEquals(0, sgroupsAfter.size());
     }
 
@@ -3522,13 +3513,12 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         sgroup.addAtom(a2);
         sgroup.addBond(b1);
         sgroup.addBond(b2);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                Collections.singletonList(sgroup));
-        Assertions.assertEquals(1, mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        Sgroup.add(mol, sgroup);
+        Assertions.assertEquals(1, Sgroup.get(mol).size());
         mol.setBonds(new IBond[]{mol.getBuilder().newBond(),
                 mol.getBuilder().newBond(),
                 mol.getBuilder().newBond()});
-        List<Sgroup> sgroupsAfter = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroupsAfter = Sgroup.get(mol);
         Assertions.assertEquals(0, sgroupsAfter.size());
     }
 

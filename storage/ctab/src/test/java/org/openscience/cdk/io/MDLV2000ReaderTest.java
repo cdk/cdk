@@ -1711,7 +1711,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupAbbreviation() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-abbrv.mol"))) {
             final IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(1));
             Sgroup sgroup = sgroups.get(0);
@@ -1725,7 +1725,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupRepeatUnit() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru.mol"))) {
             IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(1));
             Sgroup sgroup = sgroups.get(0);
@@ -1754,7 +1754,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupUnorderedMixture() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-unord-mixture.mol"))) {
             IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(3));
             // first sgroup
@@ -1778,7 +1778,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupExpandedAbbreviation() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("triphenyl-phosphate-expanded.mol"))) {
             IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(3));
             // first sgroup
@@ -1825,7 +1825,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupBracketStyle() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bracketstyles.mol"))) {
             IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(2));
             Sgroup sgroup = sgroups.get(0);
@@ -2126,7 +2126,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             MDLV2000Reader     mdlr     = new MDLV2000Reader(in);
             IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
             IAtomContainer mol = mdlr.read(builder.newAtomContainer());
-            List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(mol);
             Sgroup dataSgroup = null;
             for (Sgroup sgroup : sgroups) {
                 if (sgroup.getType() == SgroupType.CtabData) {
@@ -2428,7 +2428,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new StringReader(molfile))) {
             IAtomContainer mol = mdlv2000Reader.read(builder.newAtomContainer());
-            List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(mol);
             Assertions.assertEquals(3, sgroups.size());
             for (Sgroup sgroup : sgroups) {
                 Assertions.assertEquals(1, sgroup.getBonds().size());

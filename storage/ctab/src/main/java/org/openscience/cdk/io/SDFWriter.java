@@ -22,17 +22,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Set;
-
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -50,6 +39,15 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.util.Set;
 
 /**
  * Writes MDL SD files ({@cdk.cite DAL92}). A MDL SD file contains one or more molecules,
@@ -311,13 +309,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
             return true;
 
         // check for positional variation, this can be output in V3000 and not V2000
-        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
-            for (Sgroup sgroup : sgroups)
-                if (sgroup.getType() == SgroupType.ExtMulticenter)
-                    return true;
-        }
-        return false;
+        return !Sgroup.get(container, SgroupType.ExtMulticenter).isEmpty();
     }
 
     private void initIOSettings() {

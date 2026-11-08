@@ -31,7 +31,14 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -56,7 +63,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class MDLV3000WriterTest {
@@ -371,7 +380,6 @@ class MDLV3000WriterTest {
         mol.getAtom(1).setImplicitHydrogenCount(2);
         mol.getAtom(2).setImplicitHydrogenCount(0);
         mol.getAtom(3).setImplicitHydrogenCount(1);
-        List<Sgroup> sgroups = new ArrayList<>();
         Sgroup sgroup = new Sgroup();
         sgroup.addAtom(mol.getAtom(1));
         sgroup.addAtom(mol.getAtom(2));
@@ -380,8 +388,7 @@ class MDLV3000WriterTest {
         sgroup.setType(SgroupType.CtabStructureRepeatUnit);
         sgroup.setSubscript("n");
         sgroup.putValue(SgroupKey.CtabConnectivity, "HH");
-        sgroups.add(sgroup);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+        Sgroup.add(mol, sgroup);
         String res = writeToStr(mol);
         assertThat(res, CoreMatchers.containsString("M  V30 1 SRU 0 ATOMS=(2 2 3) XBONDS=(2 1 3) LABEL=n CONNECT=HH\n"));
     }
@@ -402,7 +409,6 @@ class MDLV3000WriterTest {
             mol.getAtom(1 + i).setImplicitHydrogenCount(2);
         mol.getAtom(mol.getAtomCount() - 1).setImplicitHydrogenCount(1);
 
-        List<Sgroup> sgroups = new ArrayList<>();
         Sgroup sgroup = new Sgroup();
         for (int i = 0; i < repeatAtoms; i++)
             sgroup.addAtom(mol.getAtom(i + 1));
@@ -411,8 +417,7 @@ class MDLV3000WriterTest {
         sgroup.putValue(SgroupKey.CtabParentAtomList, Collections.singleton(mol.getAtom(1)));
         sgroup.setType(SgroupType.CtabMultipleGroup);
         sgroup.setSubscript(Integer.toString(repeatAtoms));
-        sgroups.add(sgroup);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+        Sgroup.add(mol, sgroup);
         String res = writeToStr(mol);
         assertThat(res, CoreMatchers.containsString("M  V30 1 MUL 0 ATOMS=(50 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 2-\n"
                                                     + "M  V30 2 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 -\n"

@@ -1136,13 +1136,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     }
 
     private void writeSgroups(IAtomContainer container, BufferedWriter writer, Map<IAtom, Integer> atomidxs) throws IOException {
-        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            return;
-
-        // going to modify
-        sgroups = new ArrayList<>(sgroups);
-
+        List<Sgroup> sgroups = Sgroup.get(container);
 
         // remove non-ctab Sgroups
         sgroups.removeIf(sgroup -> !sgroup.getType().isCtabStandard());

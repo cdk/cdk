@@ -223,13 +223,12 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         }
 
         // update sgroups
-        Collection<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
+        Collection<Sgroup> sgroups = Sgroup.get(this);
+        if (!sgroups.isEmpty()) {
             Map<IChemObject,IChemObject> replace = new HashMap<>();
             replace.putAll(atomMap);
             replace.putAll(bondMap);
-            clone.setProperty(CDKConstants.CTAB_SGROUPS,
-                              SgroupManipulator.copy(sgroups, replace));
+            Sgroup.set(clone, SgroupManipulator.copy(sgroups, replace));
         }
 
         return clone;

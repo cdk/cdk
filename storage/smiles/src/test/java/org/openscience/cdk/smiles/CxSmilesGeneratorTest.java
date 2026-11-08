@@ -24,7 +24,6 @@
 package org.openscience.cdk.smiles;
 
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -233,8 +232,7 @@ class CxSmilesGeneratorTest {
         sgroup.setType(SgroupType.CtabData);
         sgroup.putValue(SgroupKey.DataFieldName, "cdk.Arrow");
         sgroup.putValue(SgroupKey.Data, "NGO");
-        reaction.setProperty(CDKConstants.CTAB_SGROUPS,
-                             Collections.singletonList(sgroup));
+        Sgroup.add(reaction, sgroup);
         assertThat(smigen.create(reaction),
                    is(">> |SgD::cdk.Arrow:NGO|"));
     }
