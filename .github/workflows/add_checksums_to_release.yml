@@ -32,7 +32,7 @@ jobs:
 
       - name: 🔽 Download assets of GitHub release ${{ env.RELEASE_TAG }} matching the pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }}
         run: |
-          gh release download ${{ env.RELEASE_TAG }} \
+          gh release download "$RELEASE_TAG" \
             --repo ${{ github.repository }} \
             --pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }} \
             --dir ${{ env.ASSETS_FOLDER }}/${{ env.BINARY_RELEASE_ASSETS_FOLDER }}
@@ -44,9 +44,9 @@ jobs:
             while IFS= read -r -d '' file; do
               filename=$(basename "$file")
               checksum256=$(sha256sum "$file" | cut -d ' ' -f 1)
-              echo "$checksum256  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/${{ env.RELEASE_TAG }}-checksums-sha256.txt
+              echo "$checksum256  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/"$RELEASE_TAG"-checksums-sha256.txt
               checksum512=$(sha512sum "$file" | cut -d ' ' -f 1)
-              echo "$checksum512  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/${{ env.RELEASE_TAG }}-checksums-sha512.txt
+              echo "$checksum512  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/"$RELEASE_TAG"-checksums-sha512.txt
           done
 
       - name: 🐈 Cat contents of checksum files
@@ -73,6 +73,6 @@ jobs:
 
       - name: 🖨️ Print {name, url} of all assets of GitHub release ${{ env.RELEASE_TAG }}
         run: |
-          gh release view ${{ env.RELEASE_TAG }} \
+          gh release view "$RELEASE_TAG" \
             --repo ${{ github.repository }} --json assets | \
             jq ".assets[] | { name: .name, url: .url }"
