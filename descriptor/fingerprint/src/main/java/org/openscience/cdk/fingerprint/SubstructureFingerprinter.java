@@ -1,4 +1,5 @@
 /* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+ *                    2026  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -370,10 +371,14 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
     private static final class Key {
         final String smarts;
         final Pattern pattern;
+        // elements a molecule must contain to possibly match, if it lacks
+        // one the (expensive) substructure match can be skipped
+        final ElementMask required;
 
         public Key(String smarts, Pattern pattern) {
             this.smarts = smarts;
             this.pattern = pattern;
+            this.required = ElementMask.required(smarts);
         }
     }
 
@@ -423,9 +428,11 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         }
 
         SmartsPattern.prepare(atomContainer);
+        final ElementMask present = ElementMask.of(atomContainer);
         BitSet fingerPrint = new BitSet(keys.size());
         for (int i = 0; i < keys.size(); i++) {
-            if (keys.get(i).pattern.matches(atomContainer))
+            Key key = keys.get(i);
+            if (present.containsAll(key.required) && key.pattern.matches(atomContainer))
                 fingerPrint.set(i, true);
         }
         return new BitSetFingerprint(fingerPrint);
@@ -442,11 +449,13 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         // init SMARTS invariants (connectivity, degree, etc)
         SmartsPattern.prepare(atomContainer);
 
+        final ElementMask present = ElementMask.of(atomContainer);
         final Map<Integer, Integer> map = new TreeMap<>();
         for (int i = 0; i < keys.size(); i++) {
-            Pattern ptrn = keys.get(i).pattern;
-            int count = ptrn.matchAll(atomContainer)
-                            .countUnique();
+            Key key = keys.get(i);
+            int count = present.containsAll(key.required)
+                      ? key.pattern.matchAll(atomContainer).countUnique()
+                      : 0;
             map.put(i, count);
         }
 
