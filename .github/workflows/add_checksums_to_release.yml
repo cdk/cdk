@@ -18,22 +18,21 @@ env:
   BINARY_RELEASE_ASSETS_FOLDER: 'binary'     # directory binary releases get downloaded to
   CHECKSUM_RELEASE_ASSETS_FOLDER: 'checksum' # directory checksum files get written to
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}      # required by gh CLI
+  RELEASE_TAG: ${{ inputs.release-tag }}     # which tag to update
 
 jobs:
   add_checksums_to_release:
     name: Add files with checksums as assets to a given release
     runs-on: 'ubuntu-24.04'
-    env:
-      RELEASE_TAG: ${{ inputs.release-tag }}
     steps:
       - name: 📁 Create directory for release assets
         run: |
           mkdir --parents ${{ env.ASSETS_FOLDER }}/${{ env.BINARY_RELEASE_ASSETS_FOLDER }}
           mkdir --parents ${{ env.ASSETS_FOLDER }}/${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}
 
-      - name: 🔽 Download assets of GitHub release $RELEASE_TAG matching the pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }}
+      - name: 🔽 Download assets of GitHub release ${{ env.RELEASE_TAG }} matching the pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }}
         run: |
-          gh release download $RELEASE_TAG \
+          gh release download ${{ env.RELEASE_TAG }} \
             --repo ${{ github.repository }} \
             --pattern ${{ env.BINARY_RELEASE_ASSETS_PATTERN }} \
             --dir ${{ env.ASSETS_FOLDER }}/${{ env.BINARY_RELEASE_ASSETS_FOLDER }}
@@ -45,9 +44,9 @@ jobs:
             while IFS= read -r -d '' file; do
               filename=$(basename "$file")
               checksum256=$(sha256sum "$file" | cut -d ' ' -f 1)
-              echo "$checksum256  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/${RELEASE_TAG}-checksums-sha256.txt
+              echo "$checksum256  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/${{ env.RELEASE_TAG }}-checksums-sha256.txt
               checksum512=$(sha512sum "$file" | cut -d ' ' -f 1)
-              echo "$checksum512  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/${RELEASE_TAG}-checksums-sha512.txt
+              echo "$checksum512  $filename" >> ${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/${{ env.RELEASE_TAG }}-checksums-sha512.txt
           done
 
       - name: 🐈 Cat contents of checksum files
@@ -63,17 +62,17 @@ jobs:
       - name: 🌳️ Tree the current working directory
         run: find . -print | sort | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
 
-      - name: 📢 Add checksum files as assets to GitHub release $RELEASE_TAG
+      - name: 📢 Add checksum files as assets to GitHub release ${{ env.RELEASE_TAG }}
         uses: svenstaro/upload-release-action@29e53e917877a24fad85510ded594ab3c9ca12de # v2
         id: upload_checksum_files_as_release_assets
         with:
           file_glob: true
           file: ${{ env.ASSETS_FOLDER }}/${{ env.CHECKSUM_RELEASE_ASSETS_FOLDER }}/*.txt
-          tag: $RELEASE_TAG
+          tag: ${{ env.RELEASE_TAG }}
           overwrite: true  # ensures that re-runs of workflow do not fail
 
-      - name: 🖨️ Print {name, url} of all assets of GitHub release $RELEASE_TAG
+      - name: 🖨️ Print {name, url} of all assets of GitHub release ${{ env.RELEASE_TAG }}
         run: |
-          gh release view $RELEASE_TAG \
+          gh release view ${{ env.RELEASE_TAG }} \
             --repo ${{ github.repository }} --json assets | \
             jq ".assets[] | { name: .name, url: .url }"
