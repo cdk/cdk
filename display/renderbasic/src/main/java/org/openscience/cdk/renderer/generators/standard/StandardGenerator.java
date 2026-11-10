@@ -229,26 +229,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Unhide all atoms/bonds of a container ready for a next render path.
-     * @param container the container
-     */
-    private static void unhide(IAtomContainer container) {
-        for (IAtom atom : container.atoms())
-            StandardGenerator.unhide(atom);
-        for (IBond bond : container.bonds())
-            StandardGenerator.unhide(bond);
-    }
-
-    /**
      *{@inheritDoc}
      */
     @Override
     public IRenderingElement generate(IAtomContainer container, RendererModel parameters) {
 
         if (container.getAtomCount() == 0) return new ElementGroup();
-
-        // reset all visibility flags
-        unhide(container);
 
         Map<IAtom,String> symbolRemap = new HashMap<>();
         StandardSgroupGenerator.prepareDisplayShortcuts(container, symbolRemap);
@@ -1243,6 +1229,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     static void hideFully(IChemObject chemobj) {
         chemobj.set(IChemObject.HIDDEN);
+        chemobj.setProperty(HIDDEN_FULLY, true);
     }
 
     /**
