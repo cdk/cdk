@@ -219,6 +219,34 @@ class RDBERuleTest extends FormulaRuleTest {
     }
 
     /**
+     * A unit test for bromobenzene.
+     */
+    @Test
+    void testBromobenzene() throws Exception {
+
+        RDBERule rule = new RDBERule();
+
+        IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C6H5Br", builder);
+
+        Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(4.0, rule.getRDBEValue(formula).get(0), 0.0001);
+    }
+
+    /**
+     * A unit test for chlorobenzene.
+     */
+    @Test
+    void testChlorobenzene() throws Exception {
+
+        RDBERule rule = new RDBERule();
+
+        IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C6H5Cl", builder);
+
+        Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
+        Assertions.assertEquals(4.0, rule.getRDBEValue(formula).get(0), 0.0001);
+    }
+
+    /**
      * A unit test suite for JUnit.NH4+
      *
      *
