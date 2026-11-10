@@ -1,16 +1,16 @@
 cff-version: 1.2.0
 message: Please cite the following article when using this software.
 type: software
-version: 2.9
-date-released: 2023-08-21
-title: 'cdk/cdk: CDK 2.9'
-url: https://zenodo.org/record/8270947
-doi: 10.5281/ZENODO.8270947
+version: 2.14.1
+date-released: 2025-11-10
+title: 'cdk/cdk: CDK 2.14.1'
+url: https://zenodo.org/records/24105960
+doi: 10.5281/zenodo.24083274
 identifiers:
   - type: doi
-    value: 10.5281/ZENODO.8270947
+    value: 10.5281/zenodo.24083274
   - type: url
-    value: https://zenodo.org/record/8270947
+    value: https://zenodo.org/records/24105960
 preferred-citation:
   authors:
     - family-names: Willighagen
