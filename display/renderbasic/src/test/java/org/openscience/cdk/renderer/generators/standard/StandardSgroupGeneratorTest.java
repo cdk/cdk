@@ -63,7 +63,7 @@ class StandardSgroupGeneratorTest {
     }
 
     @Test
-    public void testBasicAbbreviation() throws InvalidSmilesException {
+    void testBasicAbbreviation() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = smipar.parseSmiles("c1ccccc1OP(=O)(Oc1ccccc1)Oc1ccccc1");
 
@@ -89,7 +89,7 @@ class StandardSgroupGeneratorTest {
     }
 
     @Test
-    public void testBasicAbbreviationPartialHighlight() throws InvalidSmilesException {
+    void testBasicAbbreviationPartialHighlight() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = smipar.parseSmiles("c1ccccc1OP(=O)(Oc1ccccc1)Oc1ccccc1");
 
@@ -117,7 +117,7 @@ class StandardSgroupGeneratorTest {
     }
 
     @Test
-    public void testBasicAbbreviationFullHighlight() throws InvalidSmilesException {
+    void testBasicAbbreviationFullHighlight() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = smipar.parseSmiles("c1ccccc1OP(=O)(Oc1ccccc1)Oc1ccccc1");
 
@@ -149,7 +149,7 @@ class StandardSgroupGeneratorTest {
     }
 
     @Test
-    public void testNestedAbbreviation() throws InvalidSmilesException {
+    void testNestedAbbreviation() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = smipar.parseSmiles("c1ccccc1OP(=O)(Oc1ccccc1)Oc1ccccc1");
 
@@ -194,7 +194,7 @@ class StandardSgroupGeneratorTest {
 
 
     @Test
-    public void testNestedAbbreviationExpanded() throws InvalidSmilesException {
+    void testNestedAbbreviationExpanded() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = smipar.parseSmiles("c1ccccc1OP(=O)(Oc1ccccc1)Oc1ccccc1");
 
@@ -242,7 +242,7 @@ class StandardSgroupGeneratorTest {
     }
 
     @Test
-    public void testNestedAbbreviationExpandedReset() throws InvalidSmilesException {
+    void testNestedAbbreviationExpandedReset() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = smipar.parseSmiles("c1ccccc1OP(=O)(Oc1ccccc1)Oc1ccccc1");
 
@@ -301,7 +301,7 @@ class StandardSgroupGeneratorTest {
      * the atoms.
      */
     @Test
-    public void testFullyAbbreviated() throws InvalidSmilesException {
+    void testFullyAbbreviated() throws InvalidSmilesException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = smipar.parseSmiles("NN");
 
