@@ -398,8 +398,10 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
                 if (!foundmatch) na++;
             }
             double n = ac.getAtomCount();
+            // The limit of p * log(p) at p = 0 is zero.
             gamma[i] = -1.0
-                    * ((ns / n) * Math.log(ns / n) / Math.log(2.0) + (na / n) * Math.log(1.0 / n) / Math.log(2.0));
+                    * ((ns == 0.0 ? 0.0 : (ns / n) * Math.log(ns / n) / Math.log(2.0))
+                    + (na / n) * Math.log(1.0 / n) / Math.log(2.0));
             gamma[i] = 1.0 / (1.0 + gamma[i]);
             //logger.debug("ns = "+ns+" na = "+na+"  gamma = "+gamma[i]);
         }
