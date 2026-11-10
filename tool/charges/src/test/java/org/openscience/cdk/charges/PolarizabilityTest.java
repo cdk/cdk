@@ -19,11 +19,13 @@
 package org.openscience.cdk.charges;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  Description of the Class
@@ -66,10 +68,91 @@ class PolarizabilityTest {
     /**
      *  A unit test for JUnit
      */
-    @Disabled
     @Test
-    void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt() {
-        Assertions.fail("Not tested yet");
+    void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt() throws Exception {
+        Polarizability pol = new Polarizability();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCO");
+        IAtomContainer before = mol.clone();
+        IAtomContainer explicit = mol.clone();
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(explicit);
+        int[][] distanceMatrix = PathTools.computeFloydAPSP(AdjacencyMatrix.getMatrix(explicit));
+
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            double expected = pol.calculateGHEffectiveAtomPolarizability(explicit, explicit.getAtom(i), 100, false);
+            double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(i), true, distanceMatrix);
+            assertUnchanged(before, mol);
+            Assertions.assertEquals(expected, result, 0.000001);
+        }
+    }
+
+    @Test
+    void testGetPolarizabilityFactorDoesNotModifyInput() throws Exception {
+        Polarizability pol = new Polarizability();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCO");
+        IAtomContainer before = mol.clone();
+        IAtomContainer explicit = mol.clone();
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(explicit);
+
+        double expected = pol.getPolarizabilitiyFactorForAtom(explicit, explicit.getAtom(2));
+        double result = pol.getPolarizabilitiyFactorForAtom(mol, mol.getAtom(2));
+        assertUnchanged(before, mol);
+        Assertions.assertEquals(expected, result, 0.000001);
+    }
+
+    @Test
+    void testCalculateMeanPolarizabilityDoesNotModifyInput() throws Exception {
+        Polarizability pol = new Polarizability();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCO");
+        IAtomContainer before = mol.clone();
+        IAtomContainer explicit = mol.clone();
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(explicit);
+
+        double expected = pol.calculateKJMeanMolecularPolarizability(explicit);
+        double result = pol.calculateKJMeanMolecularPolarizability(mol);
+        assertUnchanged(before, mol);
+        Assertions.assertEquals(expected, result, 0.000001);
+    }
+
+    @Test
+    void testCalculateEffectivePolarizabilityDoesNotModifyInput() throws Exception {
+        Polarizability pol = new Polarizability();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCO");
+        IAtomContainer before = mol.clone();
+        IAtomContainer explicit = mol.clone();
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(explicit);
+
+        double expected = pol.calculateGHEffectiveAtomPolarizability(explicit, explicit.getAtom(0), 100, false);
+        double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(0), 100, true);
+        assertUnchanged(before, mol);
+        Assertions.assertEquals(expected, result, 0.000001);
+        Assertions.assertEquals(4.10475, result, 0.000001);
+    }
+
+    @Test
+    void testCalculateBondPolarizabilityDoesNotModifyInput() throws Exception {
+        Polarizability pol = new Polarizability();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCO");
+        IAtomContainer before = mol.clone();
+        IAtomContainer explicit = mol.clone();
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(explicit);
+
+        double expected = pol.calculateBondPolarizability(explicit, explicit.getBond(1));
+        double result = pol.calculateBondPolarizability(mol, mol.getBond(1));
+        assertUnchanged(before, mol);
+        Assertions.assertEquals(expected, result, 0.000001);
+    }
+
+    private void assertUnchanged(IAtomContainer before, IAtomContainer after) {
+        Assertions.assertEquals(before.getAtomCount(), after.getAtomCount());
+        for (int i = 0; i < before.getAtomCount(); i++) {
+            Assertions.assertEquals(before.getAtom(i).getImplicitHydrogenCount(),
+                    after.getAtom(i).getImplicitHydrogenCount(), "Implicit hydrogen count changed for atom " + i);
+        }
     }
 
     /**

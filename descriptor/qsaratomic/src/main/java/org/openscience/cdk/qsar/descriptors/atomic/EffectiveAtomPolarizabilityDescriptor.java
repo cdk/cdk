@@ -22,9 +22,6 @@ import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -111,25 +108,7 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         double polarizability;
         try {
-            // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-            String originalAtomtypeName = atom.getAtomTypeName();
-            Integer originalNeighborCount = atom.getFormalNeighbourCount();
-            Integer originalHCount = atom.getImplicitHydrogenCount();
-            Integer originalValency = atom.getValency();
-            IAtomType.Hybridization originalHybridization = atom.getHybridization();
-            boolean originalFlag = atom.getFlag(IChemObject.VISITED);
-            Double originalBondOrderSum = atom.getBondOrderSum();
-            Order originalMaxBondOrder = atom.getMaxBondOrder();
             polarizability = pol.calculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
-            // restore original props
-            atom.setAtomTypeName(originalAtomtypeName);
-            atom.setFormalNeighbourCount(originalNeighborCount);
-            atom.setValency(originalValency);
-            atom.setImplicitHydrogenCount(originalHCount);
-            atom.setFlag(IChemObject.VISITED, originalFlag);
-            atom.setHybridization(originalHybridization);
-            atom.setMaxBondOrder(originalMaxBondOrder);
-            atom.setBondOrderSum(originalBondOrderSum);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     polarizability), getDescriptorNames());
         } catch (Exception ex1) {
