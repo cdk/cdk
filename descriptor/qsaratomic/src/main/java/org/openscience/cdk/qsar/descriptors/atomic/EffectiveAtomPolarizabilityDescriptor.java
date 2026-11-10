@@ -97,8 +97,9 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
     }
 
     /**
-     *  The method calculates the Effective Atom Polarizability of a given atom
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
+     *  Calculates the effective polarizability of a given atom without modifying the molecule.
+     *  Aromaticity and implicit hydrogen counts must be prepared beforehand; explicit hydrogens
+     *  are also supported. Unset implicit hydrogen counts are treated as zero.
      *
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
