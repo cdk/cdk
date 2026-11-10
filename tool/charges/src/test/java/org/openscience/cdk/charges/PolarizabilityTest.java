@@ -23,9 +23,13 @@ import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.Collections;
 
 /**
  *  Description of the Class
@@ -147,11 +151,155 @@ class PolarizabilityTest {
         Assertions.assertEquals(expected, result, 0.000001);
     }
 
+    @Test
+    void testAromaticAndChargedAtomsMatchExplicitHydrogens() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("c1ccccc1[O-]");
+        // The factors use partial charge, rather than the SMILES formal charge.
+        mol.getAtom(6).setCharge(-1.0);
+        mol.getAtom(0).setFlag(IChemObject.VISITED, true);
+        mol.getBond(0).setFlag(IChemObject.VISITED, true);
+        assertMatchesExplicitHydrogens(mol);
+    }
+
+    @Test
+    void testDoubleBondsWithMixedHydrogensMatchExplicitHydrogens() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[2H]C=C");
+        assertMatchesExplicitHydrogens(mol);
+    }
+
+    @Test
+    void testPhosphorusWithImplicitHydrogenMatchesExplicitHydrogens() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CP(=O)O");
+        Assertions.assertEquals(1, mol.getAtom(1).getImplicitHydrogenCount().intValue());
+        Assertions.assertEquals(3, mol.getConnectedBondsCount(mol.getAtom(1)));
+        assertMatchesExplicitHydrogens(mol);
+    }
+
+    @Test
+    void testUnsetImplicitHydrogenCountsAreTreatedAsZero() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCO");
+        for (IAtom atom : mol.atoms()) {
+            atom.setImplicitHydrogenCount(null);
+        }
+        assertMatchesExplicitHydrogens(mol);
+    }
+
+    @Test
+    void testImplicitHydrogensAreIgnoredWhenNotRequested() throws Exception {
+        Polarizability pol = new Polarizability();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C=C");
+        IAtomContainer before = mol.clone();
+        int[][] distanceMatrix = PathTools.computeFloydAPSP(AdjacencyMatrix.getMatrix(mol));
+
+        double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(0), 100, false);
+        assertUnchanged(before, mol);
+        Assertions.assertEquals(2.764, result, 0.000001);
+        result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(0), false, distanceMatrix);
+        assertUnchanged(before, mol);
+        Assertions.assertEquals(2.764, result, 0.000001);
+    }
+
+    @Test
+    void testDisconnectedHydrogensPreserveNegativeMatrixDistance() throws Exception {
+        Polarizability pol = new Polarizability();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C.C");
+        assertMatchesExplicitHydrogens(mol);
+        IAtomContainer before = mol.clone();
+        IAtomContainer explicit = mol.clone();
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(explicit);
+        int[][] distanceMatrix = {{0, -1}, {-1, 0}};
+        int[][] explicitMatrix = PathTools.computeFloydAPSP(AdjacencyMatrix.getMatrix(explicit));
+        for (int[] row : explicitMatrix) {
+            for (int i = 0; i < row.length; i++) {
+                if (row[i] >= explicit.getAtomCount()) row[i] = -1;
+            }
+        }
+
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            double expected = pol.calculateGHEffectiveAtomPolarizability(explicit, explicit.getAtom(i), false,
+                    explicitMatrix);
+            Assertions.assertEquals(13.06, expected, 0.000001);
+            double result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(i), true, distanceMatrix);
+            assertUnchanged(before, mol);
+            Assertions.assertEquals(expected, result, 0.000001);
+            result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(i), true, explicitMatrix);
+            assertUnchanged(before, mol);
+            Assertions.assertEquals(expected, result, 0.000001);
+        }
+    }
+
+    private void assertMatchesExplicitHydrogens(IAtomContainer mol) throws Exception {
+        Polarizability pol = new Polarizability();
+        IAtomContainer before = mol.clone();
+        IAtomContainer explicit = mol.clone();
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(explicit);
+        int[][] distanceMatrix = PathTools.computeFloydAPSP(AdjacencyMatrix.getMatrix(mol));
+        int[][] explicitMatrix = PathTools.computeFloydAPSP(AdjacencyMatrix.getMatrix(explicit));
+
+        double expected = pol.calculateKJMeanMolecularPolarizability(explicit);
+        double result = pol.calculateKJMeanMolecularPolarizability(mol);
+        assertUnchanged(before, mol);
+        Assertions.assertEquals(expected, result, 0.000001);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            expected = pol.getPolarizabilitiyFactorForAtom(explicit, explicit.getAtom(i));
+            result = pol.getPolarizabilitiyFactorForAtom(mol, mol.getAtom(i));
+            assertUnchanged(before, mol);
+            Assertions.assertEquals(expected, result, 0.000001);
+            for (int cutoff : new int[]{-1, 0, 1, 2, 3, 100}) {
+                expected = effectivePolarizabilityWithLegacySearch(pol, explicit, explicit.getAtom(i), cutoff);
+                Assertions.assertEquals(expected,
+                        pol.calculateGHEffectiveAtomPolarizability(explicit, explicit.getAtom(i), cutoff, false),
+                        0.000001);
+                result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(i), cutoff, true);
+                assertUnchanged(before, mol);
+                Assertions.assertEquals(expected, result, 0.000001, "Cutoff " + cutoff + ", atom " + i);
+            }
+            expected = pol.calculateGHEffectiveAtomPolarizability(explicit, explicit.getAtom(i), false, explicitMatrix);
+            result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(i), true, distanceMatrix);
+            assertUnchanged(before, mol);
+            Assertions.assertEquals(expected, result, 0.000001);
+            result = pol.calculateGHEffectiveAtomPolarizability(mol, mol.getAtom(i), true, explicitMatrix);
+            assertUnchanged(before, mol);
+            Assertions.assertEquals(expected, result, 0.000001);
+        }
+        for (int i = 0; i < mol.getBondCount(); i++) {
+            expected = pol.calculateBondPolarizability(explicit, explicit.getBond(i));
+            result = pol.calculateBondPolarizability(mol, mol.getBond(i));
+            assertUnchanged(before, mol);
+            Assertions.assertEquals(expected, result, 0.000001);
+        }
+    }
+
+    private double effectivePolarizabilityWithLegacySearch(Polarizability pol, IAtomContainer explicit, IAtom atom,
+                                                          int cutoff) {
+        double result = pol.getPolarizabilitiyFactorForAtom(explicit, atom);
+        for (IAtom current : explicit.atoms()) {
+            if (!current.equals(atom)) {
+                int distance = PathTools.breadthFirstTargetSearch(explicit, Collections.singletonList(atom), current,
+                        0, cutoff);
+                double factor = pol.getPolarizabilitiyFactorForAtom(explicit, current);
+                result += distance == 1 ? factor : Math.pow(0.5, distance - 1) * factor;
+            }
+        }
+        return result;
+    }
+
     private void assertUnchanged(IAtomContainer before, IAtomContainer after) {
         Assertions.assertEquals(before.getAtomCount(), after.getAtomCount());
+        Assertions.assertEquals(before.getBondCount(), after.getBondCount());
         for (int i = 0; i < before.getAtomCount(); i++) {
             Assertions.assertEquals(before.getAtom(i).getImplicitHydrogenCount(),
                     after.getAtom(i).getImplicitHydrogenCount(), "Implicit hydrogen count changed for atom " + i);
+            Assertions.assertArrayEquals(before.getAtom(i).getFlags(), after.getAtom(i).getFlags());
+        }
+        for (int i = 0; i < before.getBondCount(); i++) {
+            Assertions.assertArrayEquals(before.getBond(i).getFlags(), after.getBond(i).getFlags());
         }
     }
 
