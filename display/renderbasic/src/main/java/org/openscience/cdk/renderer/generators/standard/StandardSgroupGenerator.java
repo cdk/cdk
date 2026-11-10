@@ -56,6 +56,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -118,22 +119,22 @@ final class StandardSgroupGenerator {
         sgroups = new ArrayList<>(sgroups); // ensure sortable!
         sgroups.sort((o1, o2) -> -Integer.compare(o1.getAtoms().size(), o2.getAtoms().size()));
 
+        Set<IAtom> hidden = new HashSet<>();
+
         // select abbreviations that should be contracted
         for (Sgroup sgroup : sgroups) {
             if (sgroup.getType() == SgroupType.CtabAbbreviation) {
-                Boolean expansion = sgroup.getValue(SgroupKey.CtabExpansion);
                 // abbreviation is displayed as expanded
-                if (expansion != null && expansion)
-                    continue;
-                // no or empty label, skip it
-                if (sgroup.getSubscript() == null || sgroup.getSubscript().isEmpty())
-                    continue;
-
-                // only contract if the atoms are either partially or fully highlighted
-                if (checkAbbreviationHighlight(container, sgroup))
-                    contractAbbreviation(container, symbolRemap, sgroup);
+                if (shouldContract(container, sgroup, hidden)) {
+                    contractAbbreviation(container,
+                                         symbolRemap,
+                                         sgroup,
+                                         hidden);
+                } else {
+                    ensureVisible(container, sgroup, hidden);
+                }
             } else if (sgroup.getType() == SgroupType.CtabMultipleGroup) {
-                hideMultipleParts(container, sgroup);
+                hideMultipleParts(container, sgroup, hidden);
             } else if (sgroup.getType() == SgroupType.ExtMulticenter) {
                 Set<IAtom> atoms = sgroup.getAtoms();
                 // should only be one bond
@@ -150,6 +151,48 @@ final class StandardSgroupGenerator {
         }
     }
 
+    private static void ensureVisible(IAtomContainer container,
+                                      Sgroup sgroup,
+                                      Set<IAtom> hidden) {
+        // make sure it is visible!
+        Set<IAtom> atoms = sgroup.getAtoms();
+        for (IAtom atom : atoms) {
+            if (!hidden.contains(atom))
+                StandardGenerator.unhide(atom);
+        }
+        for (IBond bond : container.bonds()) {
+            IAtom begin = bond.getBegin();
+            IAtom end = bond.getEnd();
+            if (atoms.contains(begin) && atoms.contains(end) &&
+                !hidden.contains(begin) && !hidden.contains(end))
+                StandardGenerator.unhide(bond);
+        }
+    }
+
+    private static boolean shouldContract(IAtomContainer container,
+                                          Sgroup sgroup,
+                                          Set<IAtom> hidden) {
+        // user has manually indicated the group should be expanded
+        Boolean expansion = sgroup.getValue(SgroupKey.CtabExpansion);
+        if (expansion != null && expansion)
+            return false;
+
+        // the label is null or empty
+        String label = sgroup.getSubscript();
+        if (label == null || label.trim().isEmpty())
+            return false;
+
+        // the label in part of full has already been hidden by another
+        // Sgroup
+        for (IAtom atom : sgroup.getAtoms()) {
+            if (hidden.contains(atom))
+                return false;
+        }
+
+        // check if there is partial highlighting
+        return hasConsistentHighlight(container, sgroup);
+    }
+
     /**
      * Checks whether the given abbreviation Sgroup either has no highlight or is fully highlighted. If an
      * abbreviation is partially highlighted we don't want to contract it as this would hide the part
@@ -159,7 +202,7 @@ final class StandardSgroupGenerator {
      * @param sgroup abbreviation Sgroup
      * @return the abbreviation can be contracted
      */
-    private static boolean checkAbbreviationHighlight(IAtomContainer container, Sgroup sgroup) {
+    private static boolean hasConsistentHighlight(IAtomContainer container, Sgroup sgroup) {
         assert sgroup.getType() == SgroupType.CtabAbbreviation;
 
         Set<IAtom> sgroupAtoms = sgroup.getAtoms();
@@ -172,8 +215,6 @@ final class StandardSgroupGenerator {
         Color refcolor = null;
 
         for (IAtom atom : sgroupAtoms) {
-            if (StandardGenerator.isHidden(atom))
-                return false;
             if ((color = atom.getProperty(StandardGenerator.HIGHLIGHT_COLOR)) != null) {
                 atomHighlight++;
                 if (refcolor == null)
@@ -213,7 +254,14 @@ final class StandardSgroupGenerator {
      * @param container molecule
      * @param sgroup    multiple group display shortcut
      */
-    private static void hideMultipleParts(IAtomContainer container, Sgroup sgroup) {
+    private static void hideMultipleParts(IAtomContainer container,
+                                          Sgroup sgroup,
+                                          Set<IAtom> hidden) {
+
+        for (IAtom atom : sgroup.getAtoms()) {
+            if (hidden.contains(atom))
+                return;
+        }
 
         final Set<IBond> crossing = sgroup.getBonds();
         final Set<IAtom> atoms = sgroup.getAtoms();
@@ -226,8 +274,10 @@ final class StandardSgroupGenerator {
                 StandardGenerator.hide(bond);
         }
         for (IAtom atom : atoms) {
-            if (!parentAtoms.contains(atom))
+            if (!parentAtoms.contains(atom)) {
                 StandardGenerator.hide(atom);
+                hidden.add(atom);
+            }
         }
         for (IBond bond : crossing) {
             StandardGenerator.unhide(bond);
@@ -242,8 +292,10 @@ final class StandardSgroupGenerator {
      * @param container molecule
      * @param sgroup    abbreviation group display shortcut
      */
-    private static void contractAbbreviation(IAtomContainer container, Map<IAtom, String> symbolRemap,
-                                             Sgroup sgroup) {
+    private static void contractAbbreviation(IAtomContainer container,
+                                             Map<IAtom, String> symbolRemap,
+                                             Sgroup sgroup,
+                                             Set<IAtom> hidden) {
 
         final Set<IBond> crossing = sgroup.getBonds();
         final Set<IAtom> atoms = sgroup.getAtoms();
@@ -266,6 +318,7 @@ final class StandardSgroupGenerator {
 
         for (IAtom atom : atoms) {
             StandardGenerator.hide(atom);
+            hidden.add(atom);
         }
         for (IBond bond : container.bonds()) {
             if (atoms.contains(bond.getBegin()) ||
@@ -277,10 +330,12 @@ final class StandardSgroupGenerator {
             IAtom a1 = bond.getBegin();
             IAtom a2 = bond.getEnd();
             StandardGenerator.unhide(a1);
+            StandardGenerator.unhide(a2);
+            hidden.remove(a1);
+            hidden.remove(a2);
             if (atoms.contains(a1))
                 symbolRemap.put(a1, sgroup.getSubscript());
-            StandardGenerator.unhide(a2);
-            if (atoms.contains(a2))
+            else if (atoms.contains(a2))
                 symbolRemap.put(a2, sgroup.getSubscript());
         }
     }
@@ -329,7 +384,8 @@ final class StandardSgroupGenerator {
 
             switch (sgroup.getType()) {
                 case CtabAbbreviation:
-                    result.add(generateAbbreviationSgroup(container, sgroup));
+                    if (needsAbbreviationLabel(container, sgroup))
+                        result.add(generateAbbreviationSgroup(container, sgroup));
                     break;
                 case CtabMultipleGroup:
                     result.add(generateMultipleSgroup(sgroup, symbolMap));
@@ -373,14 +429,19 @@ final class StandardSgroupGenerator {
         }
     }
 
+    static boolean needsAbbreviationLabel(IAtomContainer container, Sgroup sgroup)
+    {
+        // connected abbreviations are handled by remapping symbols
+        if (!sgroup.getBonds().isEmpty())
+            return false;
+        if (!shouldContract(container, sgroup, Collections.emptySet()))
+            return false;
+        return hasConsistentHighlight(container, sgroup);
+    }
+
     private IRenderingElement generateAbbreviationSgroup(IAtomContainer mol, Sgroup sgroup) {
         String label = sgroup.getSubscript();
-        // already handled by symbol remapping
-        if (sgroup.getBonds().size() > 0 || label == null || label.isEmpty()) {
-            return new ElementGroup();
-        }
-        if (!checkAbbreviationHighlight(mol, sgroup))
-            return new ElementGroup();
+
         // we're showing a label where there were no atoms before, we put it in the
         // middle of all of those which were hidden
         Set<IAtom> sgroupAtoms = sgroup.getAtoms();
