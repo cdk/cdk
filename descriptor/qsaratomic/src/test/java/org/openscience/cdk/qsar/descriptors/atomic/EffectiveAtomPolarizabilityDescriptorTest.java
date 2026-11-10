@@ -26,6 +26,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -38,6 +39,27 @@ class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorTest {
     @BeforeEach
     void setUp() throws Exception {
         setDescriptor(EffectiveAtomPolarizabilityDescriptor.class);
+    }
+
+    @Test
+    void testCalculateDoesNotModifyInput() throws Exception {
+        IAtomicDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCO");
+        IAtomContainer before = mol.clone();
+
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            IAtomContainer explicit = before.clone();
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(explicit);
+            double expected = ((DoubleResult) descriptor.calculate(explicit.getAtom(i), explicit).getValue()).doubleValue();
+            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            Assertions.assertEquals(before.getAtomCount(), mol.getAtomCount());
+            for (int j = 0; j < before.getAtomCount(); j++) {
+                Assertions.assertEquals(before.getAtom(j).getImplicitHydrogenCount(),
+                        mol.getAtom(j).getImplicitHydrogenCount(), "Implicit hydrogen count changed for atom " + j);
+            }
+            Assertions.assertEquals(expected, result, 0.000001);
+        }
     }
 
     /**

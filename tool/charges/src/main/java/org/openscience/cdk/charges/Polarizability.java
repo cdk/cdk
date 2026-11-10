@@ -56,6 +56,16 @@ public class Polarizability {
      */
     public Polarizability() {}
 
+    private IAtomContainer copyAndAddExplicitHydrogens(IAtomContainer container) {
+        try {
+            IAtomContainer copy = container.clone();
+            addExplicitHydrogens(copy);
+            return copy;
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("Could not clone atom container", e);
+        }
+    }
+
     private void addExplicitHydrogens(IAtomContainer container) {
         try {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
@@ -79,8 +89,8 @@ public class Polarizability {
      *@return       The polarizabilitiyFactorForAtom value
      */
     public double getPolarizabilitiyFactorForAtom(IAtomContainer atomContainer, IAtom atom) {
-        IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-        addExplicitHydrogens(acH);
+        IAtomContainer acH = copyAndAddExplicitHydrogens(atomContainer);
+        atom = acH.getAtom(atomContainer.indexOf(atom));
         return getKJPolarizabilityFactor(acH, atom);
     }
 
@@ -92,8 +102,7 @@ public class Polarizability {
      */
     public double calculateKJMeanMolecularPolarizability(IAtomContainer atomContainer) {
         double polarizabilitiy = 0;
-        IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-        addExplicitHydrogens(acH);
+        IAtomContainer acH = copyAndAddExplicitHydrogens(atomContainer);
         for (int i = 0; i < acH.getAtomCount(); i++) {
             polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
         }
@@ -116,8 +125,8 @@ public class Polarizability {
 
         IAtomContainer acH;
         if (addExplicitH) {
-            acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-            addExplicitHydrogens(acH);
+            acH = copyAndAddExplicitHydrogens(atomContainer);
+            atom = acH.getAtom(atomContainer.indexOf(atom));
         } else {
             acH = atomContainer;
         }
@@ -156,10 +165,11 @@ public class Polarizability {
             boolean addExplicitH, int[][] distanceMatrix) {
         double polarizabilitiy = 0;
 
+        int atomIndex = atomContainer.indexOf(atom);
         IAtomContainer acH;
         if (addExplicitH) {
-            acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-            addExplicitHydrogens(acH);
+            acH = copyAndAddExplicitHydrogens(atomContainer);
+            atom = acH.getAtom(atomIndex);
         } else {
             acH = atomContainer;
         }
@@ -167,7 +177,6 @@ public class Polarizability {
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {
             if (!acH.getAtom(i).equals(atom)) {
-                int atomIndex = atomContainer.indexOf(atom);
                 bond = distanceMatrix[atomIndex][i];
                 if (bond == 1) {
                     polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
@@ -188,8 +197,8 @@ public class Polarizability {
      */
     public double calculateBondPolarizability(IAtomContainer atomContainer, IBond bond) {
         double polarizabilitiy = 0;
-        IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-        addExplicitHydrogens(acH);
+        IAtomContainer acH = copyAndAddExplicitHydrogens(atomContainer);
+        bond = acH.getBond(atomContainer.indexOf(bond));
         if (bond.getAtomCount() == 2) {
             polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getBegin());
             polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getEnd());
