@@ -167,7 +167,8 @@ public class MMElementRule implements IRule {
         double isValid = 1.0;
         for (IElement element : MolecularFormulaManipulator.elements(formula)) {
             int occur = MolecularFormulaManipulator.getElementCount(formula, element);
-            if (occur > hashMap.get(element.getSymbol())) {
+            Integer limit = hashMap.get(element.getSymbol());
+            if (limit != null && occur > limit) {
                 isValid = 0.0;
                 break;
             }

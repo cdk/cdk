@@ -126,4 +126,32 @@ class MMElementRuleTest extends FormulaRuleTest {
 
         Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
     }
+
+    @Test
+    void testIodobenzene() throws Exception {
+
+        IRule rule = new MMElementRule();
+
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 6);
+        formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 5);
+        formula.addIsotope(builder.newInstance(IIsotope.class, "I"), 1);
+
+        Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
+    }
+
+    @Test
+    void testSodiumAdduct() throws Exception {
+
+        IRule rule = new MMElementRule();
+
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 6);
+        formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);
+        formula.addIsotope(builder.newInstance(IIsotope.class, "O"), 6);
+        formula.addIsotope(builder.newInstance(IIsotope.class, "Na"), 1);
+        formula.setCharge(1);
+
+        Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
+    }
 }
