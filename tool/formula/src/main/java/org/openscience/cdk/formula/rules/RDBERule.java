@@ -248,6 +248,7 @@ public class RDBERule implements IRule {
         table.put("P", new int[]{3, 5});
         table.put("S", new int[]{2, 4, 6});
         table.put("Cl", new int[]{1});
+        table.put("Br", new int[]{1});
         //            table.put("K", 1);
         //            table.put("Ca", 2);
         //            table.put("Ga", 3);

@@ -93,4 +93,15 @@ public class AtomValenceTool {
         return valencesTable.get(atom.getSymbol());
     }
 
+    /**
+     * Checks whether a valence is defined for the element of the given atom,
+     * i.e. whether {@link #getValence(IAtom)} can be used for it.
+     *
+     * @param atom the atom
+     * @return true if a valence is defined for the element of the atom
+     */
+    public static boolean hasValence(IAtom atom) {
+        return valencesTable.containsKey(atom.getSymbol());
+    }
+
 }

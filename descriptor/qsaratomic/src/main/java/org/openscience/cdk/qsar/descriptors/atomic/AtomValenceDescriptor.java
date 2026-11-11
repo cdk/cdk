@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.AtomValenceTool;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -90,9 +91,28 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
 
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
+        if (!AtomValenceTool.hasValence(atom))
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN), getDescriptorNames(),
+                    new CDKException(noValenceMessage(atom)));
         int atomValence = AtomValenceTool.getValence(atom);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
                 atomValence), getDescriptorNames());
+    }
+
+    /**
+     * Returns the message for an atom without a valence in AtomValenceTool. Pseudo atoms (e.g. '*' or R groups) are
+     * named as such, because their symbol 'R' is no element.
+     *
+     * @param atom the atom without a valence
+     * @return the message
+     */
+    private static String noValenceMessage(IAtom atom) {
+        if (atom instanceof IPseudoAtom || atom.getAtomicNumber() == null || atom.getAtomicNumber() == 0) {
+            String label = atom instanceof IPseudoAtom ? ((IPseudoAtom) atom).getLabel() : null;
+            return "No valence defined for pseudo atom " + (label != null ? label : atom.getSymbol());
+        }
+        return "No valence defined for element " + atom.getSymbol();
     }
 
     /**

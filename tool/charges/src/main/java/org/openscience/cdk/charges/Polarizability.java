@@ -19,29 +19,22 @@
 package org.openscience.cdk.charges;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.graph.ShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Calculation of the polarizability of a molecule by the method of Kang and
  * Jhon and Gasteiger based on {@cdk.cite KJ81} and {@cdk.cite GH82}
  * Limitations in parameterization of atoms:
  * H, Csp3, Csp2, Csp2arom, Csp3, Nsp3, Nsp2, Nsp3,
- * P, Osp3 and Osp2. Aromaticity must be calculated beforehand.
+ * P, Osp3 and Osp2. Aromaticity and implicit hydrogen counts must be
+ * calculated beforehand. Unset (null) implicit hydrogen counts are treated
+ * as zero; atom types and hydrogen counts are not perceived here. Implicit
+ * hydrogens are counted without modifying the input molecule.
  *
  * @author         chhoppe
  * @cdk.created    2004-11-03
@@ -49,27 +42,12 @@ import java.util.List;
  */
 public class Polarizability {
 
-    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Polarizability.class);
+    private static final double HYDROGEN_POLARIZABILITY = 0.387;
 
     /**
      * Constructor for the Polarizability object.
      */
     public Polarizability() {}
-
-    private void addExplicitHydrogens(IAtomContainer container) {
-        try {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-            for (IAtom atom : container.atoms()) {
-                IAtomType type = matcher.findMatchingAtomType(container, atom);
-                AtomTypeManipulator.configure(atom, type);
-            }
-            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-            hAdder.addImplicitHydrogens(container);
-            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
-        } catch (Exception ex1) {
-            logger.debug("Error in hydrogen addition");
-        }
-    }
 
     /**
      *  Gets the polarizabilitiyFactorForAtom.
@@ -79,9 +57,7 @@ public class Polarizability {
      *@return       The polarizabilitiyFactorForAtom value
      */
     public double getPolarizabilitiyFactorForAtom(IAtomContainer atomContainer, IAtom atom) {
-        IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-        addExplicitHydrogens(acH);
-        return getKJPolarizabilityFactor(acH, atom);
+        return getKJPolarizabilityFactor(atomContainer, atom, true);
     }
 
     /**
@@ -92,10 +68,9 @@ public class Polarizability {
      */
     public double calculateKJMeanMolecularPolarizability(IAtomContainer atomContainer) {
         double polarizabilitiy = 0;
-        IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-        addExplicitHydrogens(acH);
-        for (int i = 0; i < acH.getAtomCount(); i++) {
-            polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
+        for (IAtom atom : atomContainer.atoms()) {
+            polarizabilitiy += getKJPolarizabilityFactor(atomContainer, atom, true);
+            polarizabilitiy += getImplicitHydrogenCount(atom) * HYDROGEN_POLARIZABILITY;
         }
         return polarizabilitiy;
     }
@@ -105,38 +80,31 @@ public class Polarizability {
      *
      * @param  atomContainer                     IAtomContainer
      * @param  atom                   atom for which effective atom polarizability should be calculated
-     * @param  influenceSphereCutOff  cut off for spheres which should taken into account for calculation
-     * @param addExplicitH if set to true, then explicit H's will be added, otherwise it assumes that they have
-     *  been added to the molecule before being called
+     * @param  influenceSphereCutOff  maximum distance searched; atoms beyond the cutoff or disconnected from the
+     *                               target retain the historical distance of -1 and its weight of 4
+     * @param addExplicitH if true, include implicit hydrogens without adding atoms; otherwise only explicit
+     *                     hydrogens are counted
      * @return polarizabilitiy
      */
     public double calculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom,
             int influenceSphereCutOff, boolean addExplicitH) {
-        double polarizabilitiy = 0;
-
-        IAtomContainer acH;
-        if (addExplicitH) {
-            acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-            addExplicitHydrogens(acH);
-        } else {
-            acH = atomContainer;
+        double polarizabilitiy = getKJPolarizabilityFactor(atomContainer, atom, addExplicitH);
+        ShortestPaths paths = new ShortestPaths(atomContainer, atom);
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+            IAtom current = atomContainer.getAtom(i);
+            int distance = paths.distanceTo(i);
+            if (!current.equals(atom)) {
+                int bond = distance == Integer.MAX_VALUE || distance > influenceSphereCutOff ? -1 : distance;
+                polarizabilitiy += getDistanceWeight(bond)
+                        * getKJPolarizabilityFactor(atomContainer, current, addExplicitH);
+            }
+            if (addExplicitH) {
+                // An implicit H is one bond beyond its parent, including at the cutoff.
+                int bond = distance == Integer.MAX_VALUE || distance >= influenceSphereCutOff ? -1 : distance + 1;
+                polarizabilitiy += getDistanceWeight(bond) * HYDROGEN_POLARIZABILITY
+                        * getImplicitHydrogenCount(current);
+            }
         }
-
-        List<IAtom> startAtom = new ArrayList<>(1);
-        startAtom.add(0, atom);
-        double bond;
-
-        polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
-        for (int i = 0; i < acH.getAtomCount(); i++) {
-            if (!acH.getAtom(i).equals(atom)) {
-                bond = PathTools.breadthFirstTargetSearch(acH, startAtom, acH.getAtom(i), 0, influenceSphereCutOff);
-                if (bond == 1) {
-                    polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
-                } else {
-                    polarizabilitiy += (Math.pow(0.5, bond - 1) * getKJPolarizabilityFactor(acH, acH.getAtom(i)));
-                }//if bond==0
-            }//if !=atom
-        }//for
         return polarizabilitiy;
     }
 
@@ -145,37 +113,34 @@ public class Polarizability {
      *
      * @param atomContainer         IAtomContainer
      * @param atom                  atom for which effective atom polarizability should be calculated
-     * @param addExplicitH          if set to true, then explicit H's will be added, otherwise it assumes that they have
-     *                              been added to the molecule before being called
-     * @param distanceMatrix        an n x n matrix of topological distances between all the atoms in the molecule.
-     *                              if this argument is non-null, then BFS will not be used and instead path lengths will be looked up. This
-     *                              form of the method is useful, if it is being called for multiple atoms in the same molecule
+     * @param addExplicitH          if true, include implicit hydrogens without adding atoms; otherwise only explicit
+     *                              hydrogens are counted
+     * @param distanceMatrix        a non-null matrix of topological distances indexed by the atoms in atomContainer,
+     *                              in their current order, including any explicit hydrogens already present. For
+     *                              addExplicitH=true, implicit hydrogens need no rows or columns: their distances are
+     *                              their parents' distances plus one, except that -1 remains -1 for unreachable atoms
+     *                              and hydrogens, preserving its weight of 4. With an all-heavy-atom input, a heavy-atom
+     *                              matrix is sufficient. A matrix from an explicit-hydrogen copy is also accepted if the
+     *                              original atom indices are preserved; extra rows and columns are ignored.
      * @return polarizabilitiy
      */
     public double calculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom,
             boolean addExplicitH, int[][] distanceMatrix) {
-        double polarizabilitiy = 0;
-
-        IAtomContainer acH;
-        if (addExplicitH) {
-            acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-            addExplicitHydrogens(acH);
-        } else {
-            acH = atomContainer;
+        int atomIndex = atomContainer.indexOf(atom);
+        double polarizabilitiy = getKJPolarizabilityFactor(atomContainer, atom, addExplicitH);
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+            IAtom current = atomContainer.getAtom(i);
+            double distance = current.equals(atom) ? 0 : distanceMatrix[atomIndex][i];
+            if (!current.equals(atom)) {
+                polarizabilitiy += getDistanceWeight(distance)
+                        * getKJPolarizabilityFactor(atomContainer, current, addExplicitH);
+            }
+            if (addExplicitH) {
+                double hydrogenDistance = distance == -1 ? -1 : distance + 1;
+                polarizabilitiy += getDistanceWeight(hydrogenDistance) * HYDROGEN_POLARIZABILITY
+                        * getImplicitHydrogenCount(current);
+            }
         }
-        double bond;
-        polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
-        for (int i = 0; i < acH.getAtomCount(); i++) {
-            if (!acH.getAtom(i).equals(atom)) {
-                int atomIndex = atomContainer.indexOf(atom);
-                bond = distanceMatrix[atomIndex][i];
-                if (bond == 1) {
-                    polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
-                } else {
-                    polarizabilitiy += (Math.pow(0.5, bond - 1) * getKJPolarizabilityFactor(acH, acH.getAtom(i)));
-                }//if bond==0
-            }//if !=atom
-        }//for
         return polarizabilitiy;
     }
 
@@ -188,13 +153,20 @@ public class Polarizability {
      */
     public double calculateBondPolarizability(IAtomContainer atomContainer, IBond bond) {
         double polarizabilitiy = 0;
-        IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-        addExplicitHydrogens(acH);
         if (bond.getAtomCount() == 2) {
-            polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getBegin());
-            polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getEnd());
+            polarizabilitiy += getKJPolarizabilityFactor(atomContainer, bond.getBegin(), true);
+            polarizabilitiy += getKJPolarizabilityFactor(atomContainer, bond.getEnd(), true);
         }
         return (polarizabilitiy / 2);
+    }
+
+    private double getDistanceWeight(double distance) {
+        return distance == 1 ? 1 : Math.pow(0.5, distance - 1);
+    }
+
+    private int getImplicitHydrogenCount(IAtom atom) {
+        Integer count = atom.getImplicitHydrogenCount();
+        return count == null ? 0 : count;
     }
 
     /**
@@ -202,15 +174,16 @@ public class Polarizability {
      *
      *@param  atomContainer    AtomContainer
      *@param  atom  Atom
+     *@param  includeImplicitH  whether implicit hydrogens contribute to atom environments
      *@return       double polarizabilitiyFactor
      */
-    private double getKJPolarizabilityFactor(IAtomContainer atomContainer, IAtom atom) {
+    private double getKJPolarizabilityFactor(IAtomContainer atomContainer, IAtom atom, boolean includeImplicitH) {
         double polarizabilitiyFactor = 0;
         String AtomSymbol;
         AtomSymbol = atom.getSymbol();
         switch (AtomSymbol) {
             case "H":
-                polarizabilitiyFactor = 0.387;
+                polarizabilitiyFactor = HYDROGEN_POLARIZABILITY;
                 break;
             case "C":
                 if (atom.getFlag(IChemObject.AROMATIC)) {
@@ -218,7 +191,7 @@ public class Polarizability {
                 } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
                     polarizabilitiyFactor = 1.064;/* 1.064 */
                 } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
-                    if (getNumberOfHydrogen(atomContainer, atom) == 0) {
+                    if (getNumberOfHydrogen(atomContainer, atom, includeImplicitH) == 0) {
                         polarizabilitiyFactor = 1.382;
                     } else {
                         polarizabilitiyFactor = 1.37;
@@ -251,7 +224,8 @@ public class Polarizability {
                 }
                 break;
             case "P":
-                if (atomContainer.getConnectedBondsCount(atom) == 4
+                if (atomContainer.getConnectedBondsCount(atom)
+                    + (includeImplicitH ? getImplicitHydrogenCount(atom) : 0) == 4
                     && atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
                     polarizabilitiyFactor = 0;
                 }
@@ -262,7 +236,7 @@ public class Polarizability {
                 } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
                     polarizabilitiyFactor = 3.20;/* 3.19 */
                 } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
-                    if (getNumberOfHydrogen(atomContainer, atom) == 0) {
+                    if (getNumberOfHydrogen(atomContainer, atom, includeImplicitH) == 0) {
                         polarizabilitiyFactor = 3.51;
                     } else {
                         polarizabilitiyFactor = 3.50;
@@ -292,12 +266,13 @@ public class Polarizability {
      *
      *@param  atomContainer    Description of the Parameter
      *@param  atom  Description of the Parameter
+     *@param  includeImplicitH  whether implicit hydrogens are counted
      *@return       The numberOfHydrogen value
      */
-    private int getNumberOfHydrogen(IAtomContainer atomContainer, IAtom atom) {
+    private int getNumberOfHydrogen(IAtomContainer atomContainer, IAtom atom, boolean includeImplicitH) {
         java.util.List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
         IAtom connectedAtom;
-        int hCounter = 0;
+        int hCounter = includeImplicitH ? getImplicitHydrogenCount(atom) : 0;
         for (IBond bond : bonds) {
             connectedAtom = bond.getOther(atom);
             if (connectedAtom.getAtomicNumber() == IElement.H) {
