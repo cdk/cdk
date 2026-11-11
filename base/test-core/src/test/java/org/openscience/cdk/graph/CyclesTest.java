@@ -509,7 +509,7 @@ class CyclesTest {
         IAtomContainer container = TestMoleculeFactory.make123Triazole();
         Assertions.assertInstanceOf(IChemObjectListener.class, container);
         for (int i=0; i<10; i++) {
-            IRingSet ignore = Cycles.edgeShort(container).toRingSet();
+            Cycles.edgeShort(container).toRingSet();
         }
         for (IAtom atom : container.atoms())
             Assertions.assertEquals(1, atom.getListenerCount());
