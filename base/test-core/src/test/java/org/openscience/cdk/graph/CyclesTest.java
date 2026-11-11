@@ -8,6 +8,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -501,5 +502,18 @@ class CyclesTest {
             Assertions.assertEquals(0, Cycles.smallRingSize(bond, 5));
             Assertions.assertEquals(6, Cycles.smallRingSize(bond, 6));
         }
+    }
+
+    @Test
+    public void testAvoidListenerProliferation() {
+        IAtomContainer container = TestMoleculeFactory.make123Triazole();
+        Assertions.assertInstanceOf(IChemObjectListener.class, container);
+        for (int i=0; i<10; i++) {
+            IRingSet ignore = Cycles.edgeShort(container).toRingSet();
+        }
+        for (IAtom atom : container.atoms())
+            Assertions.assertEquals(1, atom.getListenerCount());
+        for (IBond bond : container.bonds())
+            Assertions.assertEquals(1, bond.getListenerCount());
     }
 }
