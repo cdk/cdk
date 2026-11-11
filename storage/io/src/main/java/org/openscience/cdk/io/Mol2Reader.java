@@ -384,7 +384,9 @@ public class Mol2Reader extends DefaultChemObjectReader {
                                     bond.setOrder(Order.DOUBLE);
                                 } else if ("3".equals(orderStr)) {
                                     bond.setOrder(Order.TRIPLE);
-                                } else if ("am".equals(orderStr) || "ar".equals(orderStr)) {
+                                } else if ("am".equals(orderStr)) {
+                                    bond.setOrder(Order.SINGLE);
+                                } else if ("ar".equals(orderStr)) {
                                     bond.setOrder(Order.SINGLE);
                                     bond.setFlag(IChemObject.AROMATIC, true);
                                     bond.getBegin().setFlag(IChemObject.AROMATIC, true);
