@@ -26,6 +26,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.test.interfaces.AbstractChemObjectTest;
 
 /**
@@ -70,5 +72,16 @@ class ChemObjectTest extends AbstractChemObjectTest {
         co1.setID("a1");
         co2.setID("a2");
         Assertions.assertFalse(co1.compare(co2));
+    }
+
+    @Test
+    void uniqueListeners() {
+        ChemObject chemobj = new ChemObject();
+        IChemObjectListener listener = event -> {
+
+        };
+        chemobj.addListener(listener);
+        chemobj.addListener(listener);
+        Assertions.assertEquals(1, chemobj.getListenerCount());
     }
 }
