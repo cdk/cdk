@@ -25,6 +25,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -94,9 +95,6 @@ final class QueryStereoFilter implements Predicate<int[]> {
      * @param target target container
      */
     public QueryStereoFilter(IAtomContainer query, IAtomContainer target) {
-
-        if (!(query instanceof IQueryAtomContainer))
-            throw new IllegalArgumentException("match predicate is for SMARTS only");
 
         this.query = query;
         this.target = target;
@@ -177,7 +175,7 @@ final class QueryStereoFilter implements Predicate<int[]> {
         ITetrahedralChirality queryElement  = (ITetrahedralChirality) queryElements[u];
         ITetrahedralChirality targetElement = (ITetrahedralChirality) targetElements[v];
 
-        IAtom queryAtom  = query.getAtom(u);
+        IAtom queryAtom  = AtomRef.deref(query.getAtom(u));
         IAtom targetAtom = target.getAtom(v);
 
         // check if unspecified was allowed
