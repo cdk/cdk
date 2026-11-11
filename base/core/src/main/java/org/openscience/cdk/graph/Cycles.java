@@ -29,8 +29,11 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -145,7 +148,9 @@ public final class Cycles {
 
     /**
      * Convert the cycles to a {@link IRingSet} containing the {@link IAtom}s
-     * and {@link IBond}s of the input molecule.
+     * and {@link IBond}s of the input molecule. Note if you have used the
+     * default chembobject builder with listener/notify support these rings do
+     * not register the listeners to avoid proliferation.
      *
      * @return ringset for the cycles
      */
@@ -1089,6 +1094,21 @@ public final class Cycles {
             rings.addAtomContainer(toRing(container, cycle, bondMap));
         }
 
+        // avoid listener proliferation
+        if (rings instanceof IChemObjectListener) {
+            for (IAtomContainer ring : rings.atomContainers()) {
+                ring.removeListener((IChemObjectListener) rings);
+                for (IAtom atom : ring.atoms())
+                    atom.removeListener(ring);
+                for (IBond bond : ring.bonds())
+                    bond.removeListener(ring);
+                for (ISingleElectron se : ring.singleElectrons())
+                    se.removeListener(ring);
+                for (ILonePair lp : ring.lonePairs())
+                    lp.removeListener(ring);
+            }
+        }
+
         return rings;
     }
 
@@ -1117,6 +1137,17 @@ public final class Cycles {
         IAtomContainer ring = builder.newInstance(IAtomContainer.class, 0, 0, 0, 0);
         ring.setAtoms(atoms);
         ring.setBonds(bonds);
+
+        if (ring.getAtom(0).getListenerCount() != 0) {
+            for (IAtom atom : ring.atoms())
+                atom.removeListener(ring);
+            for (IBond bond : ring.bonds())
+                bond.removeListener(ring);
+            for (ISingleElectron se : ring.singleElectrons())
+                se.removeListener(ring);
+            for (ILonePair lp : ring.lonePairs())
+                lp.removeListener(ring);
+        }
 
         return builder.newInstance(IRing.class, ring);
     }

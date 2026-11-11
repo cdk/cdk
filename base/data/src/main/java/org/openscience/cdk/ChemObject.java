@@ -31,12 +31,15 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *  The base class for all chemical objects in this cdk. It provides methods for
@@ -60,7 +63,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     /**
      * List for listener administration.
      */
-    private List<IChemObjectListener> chemObjectListeners;
+    private Collection<IChemObjectListener> chemObjectListeners;
     /**
      *  A hashtable for the storage of any kind of properties of this IChemObject.
      */
@@ -107,9 +110,9 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *
      *@return    List with the ChemObjects associated.
      */
-    private List<IChemObjectListener> lazyChemObjectListeners() {
+    private Collection<IChemObjectListener> lazyChemObjectListeners() {
         if (chemObjectListeners == null) {
-            chemObjectListeners = new ArrayList<>();
+            chemObjectListeners = new LinkedHashSet<>();
         }
         return chemObjectListeners;
     }
@@ -123,13 +126,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      */
     @Override
     public void addListener(IChemObjectListener col) {
-        List<IChemObjectListener> listeners = lazyChemObjectListeners();
-
-        if (!listeners.contains(col)) {
-            listeners.add(col);
-        }
-        // Should we throw an exception if col is already in here or
-        // just silently ignore it?
+        lazyChemObjectListeners().add(col);
     }
 
     /**
@@ -157,11 +154,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
         if (chemObjectListeners == null) {
             return;
         }
-
-        List<IChemObjectListener> listeners = lazyChemObjectListeners();
-        if (listeners.contains(col)) {
-            listeners.remove(col);
-        }
+        lazyChemObjectListeners().remove(col);
     }
 
     /**
@@ -171,9 +164,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     @Override
     public void notifyChanged() {
         if (getNotification() && getListenerCount() > 0) {
-            List<IChemObjectListener> listeners = lazyChemObjectListeners();
-            for (Object listener : listeners) {
-                ((IChemObjectListener) listener).stateChanged(new ChemObjectChangeEvent(this));
+            for (IChemObjectListener listener : lazyChemObjectListeners()) {
+                listener.stateChanged(new ChemObjectChangeEvent(this));
             }
         }
     }
@@ -190,9 +182,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     @Override
     public void notifyChanged(IChemObjectChangeEvent evt) {
         if (getNotification() && getListenerCount() > 0) {
-            List<IChemObjectListener> listeners = lazyChemObjectListeners();
-            for (Object listener : listeners) {
-                ((IChemObjectListener) listener).stateChanged(evt);
+            for (IChemObjectListener listener : lazyChemObjectListeners()) {
+                listener.stateChanged(evt);
             }
         }
     }
