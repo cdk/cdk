@@ -156,6 +156,81 @@ class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
+    void testAromaticPyridone() throws Exception {
+        String mol2 = "@<TRIPOS>MOLECULE\n"
+                + "2-pyridone\n"
+                + "7 7 0 0 0\n"
+                + "SMALL\n"
+                + "NO_CHARGES\n"
+                + "@<TRIPOS>ATOM\n"
+                + "1 N1 0.0000 1.0000 0.0000 N.am\n"
+                + "2 C2 0.8660 0.5000 0.0000 C.ar\n"
+                + "3 C3 0.8660 -0.5000 0.0000 C.ar\n"
+                + "4 C4 0.0000 -1.0000 0.0000 C.ar\n"
+                + "5 C5 -0.8660 -0.5000 0.0000 C.ar\n"
+                + "6 C6 -0.8660 0.5000 0.0000 C.ar\n"
+                + "7 O7 1.7320 1.0000 0.0000 O.2\n"
+                + "@<TRIPOS>BOND\n"
+                + "1 1 2 ar\n"
+                + "2 2 3 ar\n"
+                + "3 3 4 ar\n"
+                + "4 4 5 ar\n"
+                + "5 5 6 ar\n"
+                + "6 6 1 ar\n"
+                + "7 2 7 2\n";
+        Mol2Reader reader = new Mol2Reader(new StringReader(mol2));
+        IAtomContainer molecule = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+        reader.close();
+        Assertions.assertEquals(7, molecule.getAtomCount());
+        Assertions.assertEquals(7, molecule.getBondCount());
+        for (int i = 0; i < 6; i++) {
+            IBond bond = molecule.getBond(i);
+            Assertions.assertEquals(IBond.Order.SINGLE, bond.getOrder());
+            Assertions.assertTrue(bond.isAromatic());
+            Assertions.assertTrue(molecule.getAtom(i).isAromatic());
+        }
+        Assertions.assertEquals(IBond.Order.DOUBLE, molecule.getBond(6).getOrder());
+        Assertions.assertFalse(molecule.getBond(6).isAromatic());
+        Assertions.assertFalse(molecule.getAtom(6).isAromatic());
+    }
+
+    @Test
+    void testNonAromaticLactam() throws Exception {
+        String mol2 = "@<TRIPOS>MOLECULE\n"
+                + "2-pyrrolidinone\n"
+                + "6 6 0 0 0\n"
+                + "SMALL\n"
+                + "NO_CHARGES\n"
+                + "@<TRIPOS>ATOM\n"
+                + "1 N1 0.0000 1.0000 0.0000 N.am\n"
+                + "2 C2 0.9511 0.3090 0.0000 C.2\n"
+                + "3 C3 0.5878 -0.8090 0.0000 C.3\n"
+                + "4 C4 -0.5878 -0.8090 0.0000 C.3\n"
+                + "5 C5 -0.9511 0.3090 0.0000 C.3\n"
+                + "6 O6 1.9022 0.6180 0.0000 O.2\n"
+                + "@<TRIPOS>BOND\n"
+                + "1 1 2 am\n"
+                + "2 2 3 1\n"
+                + "3 3 4 1\n"
+                + "4 4 5 1\n"
+                + "5 5 1 1\n"
+                + "6 2 6 2\n";
+        Mol2Reader reader = new Mol2Reader(new StringReader(mol2));
+        IAtomContainer molecule = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+        reader.close();
+        Assertions.assertEquals(6, molecule.getAtomCount());
+        Assertions.assertEquals(6, molecule.getBondCount());
+        Assertions.assertEquals(IBond.Order.SINGLE, molecule.getBond(0).getOrder());
+        Assertions.assertEquals(IBond.Order.DOUBLE, molecule.getBond(5).getOrder());
+        for (IBond bond : molecule.bonds()) {
+            Assertions.assertFalse(bond.isAromatic());
+        }
+        for (IAtom atom : molecule.atoms()) {
+            Assertions.assertFalse(atom.isAromatic());
+        }
+    }
+
+    @Test
     void testReadingIDs() throws Exception {
         String filename = "fromWebsite.mol2";
         InputStream ins = this.getClass().getResourceAsStream(filename);
