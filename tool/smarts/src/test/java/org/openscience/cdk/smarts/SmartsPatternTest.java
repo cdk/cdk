@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.isomorphism.Mappings;
@@ -36,6 +37,8 @@ import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -491,6 +494,22 @@ class SmartsPatternTest {
         assertMatch("[N,*]", "CC=CC", 4, 4);
         assertMatch("C~,=C", "CC=CC", 6, 3);
         assertMatch("C=,~C", "CC=CC", 6, 3);
+    }
+
+    @Test
+    void testQueryIndexes() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmartsPattern pat = SmartsPattern.create("CCO", bldr);
+        IAtomContainer mol = smi("CCO");
+        int count = 0;
+        for (Map<IBond,IBond> map : pat.matchAll(mol).toBondMap()) {
+            for (Map.Entry<IBond,IBond> pair : map.entrySet()) {
+                count++;
+                Assertions.assertEquals(pair.getKey().getIndex(),
+                                        pair.getValue().getIndex());
+            }
+        }
+        Assertions.assertEquals(2, count);
     }
 
     IAtomContainer smi(String smi) throws Exception {
