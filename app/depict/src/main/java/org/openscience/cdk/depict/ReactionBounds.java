@@ -140,17 +140,6 @@ final class ReactionBounds {
             // the arrow is bigger than the things above/below the arrow,
             // ensure these are centered relative to the arrow
 
-            // adjust x-offset so side components are centered
-            double xAdjust = (minArrowWidth - middleRequired) / 2;
-            for (int i = 0; i < xOffsetSide.length; i++)
-                xOffsetSide[i] += xAdjust;
-
-            // need to recenter agents
-            if (belowArrowDim.w > aboveArrowDim.w) {
-                for (int i = 0; i < xOffsetSide.length; i++)
-                    xOffsetSide[i] += (belowArrowDim.w - aboveArrowDim.w) / 2;
-            }
-
             // update side dims
             Dimensions sideDim = new Dimensions(minArrowWidth, aboveArrowDim.h);
             Dimensions condDim = new Dimensions(minArrowWidth, belowArrowDim.h);
@@ -162,15 +151,7 @@ final class ReactionBounds {
             result = new ReactionDimensions(sideDim, mainDim, condDim, titleDim, padding);
         }
         else {
-
             // above/below is larger than arrow, make the arrow as big as needed
-
-            // need to re-center agents
-            if (belowArrowDim.w > aboveArrowDim.w) {
-                for (int i = 0; i < xOffsetSide.length; i++)
-                    xOffsetSide[i] += (belowArrowDim.w - aboveArrowDim.w) / 2;
-            }
-
             for (int j=getArrowIndex()+1; j<xOffsets.length; j++)
                 xOffsets[j] += middleRequired;
 
