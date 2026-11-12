@@ -17,6 +17,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -465,7 +466,7 @@ class CyclesTest {
     }
 
     @Test
-    void testSmallRing_bond_spiro() throws InvalidSmilesException {
+    void testSmallRingSize_bond_spiro() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("C1CCCC11CCC1");
         Cycles.markRingAtomsAndBonds(mol); // required
         Assertions.assertEquals(5, Cycles.smallRingSize(mol.getBond(0)));
@@ -486,6 +487,72 @@ class CyclesTest {
     }
 
     @Test
+    void testSmallRing_Atom_spiro() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles("C1CCCC11CCC1");
+        Cycles.markRingAtomsAndBonds(mol); // required
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getAtom(0)).size());
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getAtom(1)).size());
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getAtom(2)).size());
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getAtom(3)).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getAtom(4)).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getAtom(5)).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getAtom(6)).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getAtom(7)).size());
+        // limit=4
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getAtom(0), 5).size());
+        Assertions.assertEquals(0, Cycles.smallRing(mol.getAtom(0), 4).size());
+        Assertions.assertEquals(0, Cycles.smallRing(mol.getAtom(3), 4).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getAtom(4), 4).size());
+        // limit=3
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getAtom(4), 4).size());
+        Assertions.assertEquals(0, Cycles.smallRing(mol.getAtom(4), 3).size());
+    }
+
+    @Test
+    void testSmallRing_bond_spiro() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles("C1CCCC11CCC1");
+        Cycles.markRingAtomsAndBonds(mol); // required
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getBond(0)).size());
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getBond(1)).size());
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getBond(2)).size());
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getBond(3)).size());
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getBond(4)).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getBond(5)).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getBond(6)).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getBond(7)).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getBond(8)).size());
+        // limit=4
+        Assertions.assertEquals(0, Cycles.smallRing(mol.getBond(3), 4).size());
+        Assertions.assertEquals(5, Cycles.smallRing(mol.getBond(3), 5).size());
+        Assertions.assertEquals(4, Cycles.smallRing(mol.getBond(7), 4).size());
+        // limit=3
+        Assertions.assertEquals(0, Cycles.smallRing(mol.getBond(3), 3).size());
+        Assertions.assertEquals(0, Cycles.smallRing(mol.getBond(7), 3).size());
+    }
+
+    private static void assertCycle(List<IBond> bonds) {
+        IAtom atom = bonds.get(0).getConnectedAtom(bonds.get(1));
+        Assertions.assertNotNull(atom);
+        for (int i = 1; i < bonds.size(); i++) {
+            atom = bonds.get(i).getOther(atom);
+            Assertions.assertNotNull(atom);
+        }
+        Assertions.assertTrue(bonds.get(0).contains(atom));
+    }
+
+    @Test
+    void testHugeSmallRing() throws InvalidSmilesException {
+        String smi = "Cc1ccc(cc1)N/C=c1/c(c2c[nH]c3ccc(cc3)n(c3ccc(cc3)n(c3ccc(cc3)[nH]cc3c(c(c[nH]c4ccc(cc4)n(c4ccc(cc4)n(c4ccc(cc4)[nH]cc4c(c(c[nH]c5ccc(cc5)n(c5ccc(cc5)n(c5ccc(cc5)[nH]cc5c(c(c[nH]c6ccc(cc6)n(c6ccc(cc6)n(c6ccc(cc6)[nH]cc6c(c(c[nH]c7ccc(cc7)n(c7ccc(cc7)n(c7ccc(cc7)[nH]cc7c(c(c[nH]c8ccc(cc8)n(c8cc(ccc8)n(c8ccc(cc8)[nH]cc8c(c(c[nH]c9ccc(cc9)n(c9ccc(cc9)n(c9ccc(cc9)[nH]cc(c2=O)c1=O)-c1ccc(cc1)NC)-c1ccc(cc1)NC)c(/c(c8=O)=C\\NC)=O)=O)-c1ccc(cc1)NC)-c1ccc(cc1)NC)c(/c(c7=O)=C/NC)=O)=O)-c1ccc(cc1)NC)-c1ccc(cc1)NC)c(/c(c6=O)=C\\NC)=O)=O)C)C)c(/c(c5=O)=C\\NC)=O)=O)-c1ccc(cc1)NC)C)c(/c(c4=O)=C/NC)=O)=O)C)-c1ccc(cc1)NC)c(/c(c3=O)=C/NC)=O)=O)-c1ccc(cc1)NC)-c1ccc(cc1)NC)=O";
+        IAtomContainer mol = loadSmiles(smi);
+        Cycles.markRingAtomsAndBonds(mol); // required
+        List<IBond> bonds =  Cycles.smallRing(mol.getBond(12));
+        Assertions.assertEquals(146, bonds.size());
+
+        // check the cycle is valid
+        assertCycle(bonds);
+    }
+
+    @Test
     void testSmallRing_bond_fusedDifferentSizes() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("C1C2CCC12");
         Cycles.markRingAtomsAndBonds(mol); // required
@@ -495,7 +562,7 @@ class CyclesTest {
     }
 
     @Test
-    void testSmallRing_bond_naphthalene() throws InvalidSmilesException {
+    void testSmallRingSize_bond_naphthalene() throws InvalidSmilesException {
         IAtomContainer mol = loadSmiles("c1ccc2ccccc2c1");
         Cycles.markRingAtomsAndBonds(mol); // required
         for (IBond bond : mol.bonds()) {
@@ -505,10 +572,21 @@ class CyclesTest {
     }
 
     @Test
+    void testSmallRing_bond_naphthalene() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmiles("c1ccc2ccccc2c1");
+        Cycles.markRingAtomsAndBonds(mol); // required
+        for (IBond bond : mol.bonds()) {
+            List<IBond> bonds = Cycles.smallRing(bond, 6);
+            Assertions.assertEquals(6, bonds.size());
+            assertCycle(bonds);
+        }
+    }
+
+    @Test
     public void testAvoidListenerProliferation() {
         IAtomContainer container = TestMoleculeFactory.make123Triazole();
         Assertions.assertInstanceOf(IChemObjectListener.class, container);
-        for (int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             Cycles.edgeShort(container).toRingSet();
         }
         for (IAtom atom : container.atoms())

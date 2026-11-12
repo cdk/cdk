@@ -41,6 +41,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
@@ -584,6 +585,151 @@ public final class Cycles {
         if (bond.getContainer() == null)
             throw new IllegalArgumentException("Bond is not in a container");
         return smallRingSize(bond, bond.getContainer().getAtomCount());
+    }
+
+    /**
+     * Efficiently retrieve the path of one of the smallest rings through the
+     * provided atom. A linear time breath first search (BFS) is performed to
+     * find a path of it's connected bonds.
+     * <p/>
+     * There may be multiple small rings of equal size (e.g. a
+     * 6,6-ring fusion as in naphthalene), this only returns one of them.
+     *
+     * @param atom the atom to check
+     * @return the small ring, empty if not found
+     */
+    public static List<IBond> smallRing(IAtom atom) {
+        IAtomContainer container = atom.getContainer();
+        if (container == null)
+            throw new IllegalArgumentException("Bond does not belong to a container!");
+        return smallRing(atom,
+                         container.getBondCount());
+    }
+
+    /**
+     * Efficiently retrieve the path of one of the smallest rings through the
+     * provided bond. A linear time breath first search (BFS) is performed to
+     * find a path between the two atoms of the bond without travelling through
+     * that bond. There may be multiple small rings of equal size (e.g. a
+     * 6,6-ring fusion as in naphthalene), this only returns one of them.
+     *
+     * @param bond the bond to check
+     * @return the small ring, empty if not found
+     */
+    public static List<IBond> smallRing(IBond bond) {
+        IAtomContainer container = bond.getContainer();
+        if (container == null)
+            throw new IllegalArgumentException("Bond does not belong to a container!");
+        return smallRing(bond,
+                         container.getBondCount());
+    }
+
+    /**
+     * Efficiently retrieve the path of one of the smallest rings through the
+     * provided atom. A linear time breath first search (BFS) is performed to
+     * find a path of it's connected bonds.
+     * <p/>
+     * There may be multiple small rings of equal size (e.g. a
+     * 6,6-ring fusion as in naphthalene), this only returns one of them.
+     *
+     * @param atom the atom to check
+     * @param max the maximum ring size you are prepared to find (by default the
+     *            number of bonds in the molecule)
+     * @return the small ring, empty if not found
+     */
+    public static List<IBond> smallRing(IAtom atom, int max) {
+        if (!atom.isInRing())
+            return Collections.emptyList();
+        List<IBond> best = new ArrayList<>();
+        // prev is used because we only need to check n-1 ring bonds
+        IBond prev = null;
+        for (IBond bond : atom.bonds()) {
+            if (!bond.isInRing())
+                continue;
+            if (prev != null) {
+                List<IBond> path = smallRing(bond, max);
+                if (path.isEmpty())
+                    continue;
+                if (best.isEmpty() || path.size() < best.size())
+                    best = path;
+            }
+            prev = bond;
+        }
+        return best;
+    }
+
+    /**
+     * Efficiently retrieve the path of one of the smallest rings through the
+     * provided bond. A linear time breath first search (BFS) is performed to
+     * find a path between the two atoms of the bond without travelling through
+     * that bond. There may be multiple small rings of equal size (e.g. a
+     * 6,6-ring fusion as in naphthalene), this only returns one of them.
+     *
+     * @param bond the bond to check
+     * @param max the maximum ring size you are prepared to find (by default the
+     *            number of bonds in the molecule)
+     * @return the small ring, empty if not found
+     */
+    public static List<IBond> smallRing(IBond bond, int max) {
+        if (!bond.isInRing())
+            return Collections.emptyList();
+
+        IAtomContainer container = bond.getContainer();
+        if (container == null)
+            throw new IllegalArgumentException("Bond does not belong to a container!");
+
+        // bondTo - records the bond taken to reach a given atom,
+        // distTo - is how far from the start we are
+        // visit - marks bonds we have allready traversed
+        IBond[]   bondTo = new IBond[container.getAtomCount()];
+        int[]     distTo = new int[container.getAtomCount()];
+        boolean[] visit  = new boolean[container.getBondCount()];
+
+        int smallest = max == 0 ? container.getBondCount()+1 : max;
+        List<IBond> bonds = new ArrayList<>(smallest);
+
+        IAtom src = bond.getBegin();
+        IAtom dst = bond.getEnd();
+        Arrays.fill(distTo, container.getAtomCount()+1);
+        distTo[src.getIndex()] = 0;
+        visit[bond.getIndex()] = true;
+
+        Deque<IAtom> queue = new ArrayDeque<>();
+        queue.add(src);
+        while (!queue.isEmpty()) {
+            IAtom a = queue.poll();
+            int dist = distTo[a.getIndex()] + 1;
+            if (dist >= smallest)
+                continue;
+            for (IBond b : a.bonds()) {
+                if (!b.isInRing() || visit[b.getIndex()])
+                    continue;
+                visit[b.getIndex()] = true;
+                IAtom nbr = b.getOther(a);
+                if (nbr.equals(dst)) {
+                    if (dist < smallest)
+                        bonds.clear();
+                    smallest = dist;
+                    bonds.add(bond);
+                    bonds.add(b);
+                    IAtom tmp = a;
+                    b = bondTo[tmp.getIndex()];
+                    while (b != null) {
+                        bonds.add(b);
+                        tmp = b.getOther(tmp);
+                        b = bondTo[tmp.getIndex()];
+                    }
+                } else if (dist < distTo[nbr.getIndex()]) {
+                    distTo[nbr.getIndex()] = dist;
+                    bondTo[nbr.getIndex()] = b;
+                    queue.add(nbr);
+                }
+            }
+        }
+
+        if (bonds.isEmpty())
+            return Collections.emptyList();
+        return bonds;
     }
 
     /**
