@@ -202,7 +202,7 @@ public final class ShortestPaths {
 
                 if (dist > limit) continue;
 
-                // distance is less then the current closest distance
+                // distance is less than the current closest distance
                 if (dist < distTo[w]) {
                     distTo[w] = dist;
                     routeTo[w] = new SequentialRoute(routeTo[v], w);
