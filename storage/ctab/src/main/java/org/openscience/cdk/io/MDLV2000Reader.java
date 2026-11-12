@@ -1410,7 +1410,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     // we could be more strict and raise an error if we see an
                     // SCD after SED...
                     sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
-                    String data = line.substring(11, Math.min(79,length));
+                    String data = line.substring(11, Math.min(80,length));
                     String curr = sgroup.getValue(SgroupKey.Data);
                     if (curr != null) data = curr + data;
                     sgroup.putValue(SgroupKey.Data, data);
