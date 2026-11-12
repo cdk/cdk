@@ -39,6 +39,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -137,8 +138,36 @@ final class ReactionDepiction extends Depiction {
             draw(visitor, zoom, reactionBounds.title, rect(0, y, viewBounds.getWidth(), h));
         }
 
+        double arrowHeadBeg = 0;
+        double arrowHeadEnd = 0;
+        if (reactionBounds.direction != null) {
+            switch (reactionBounds.direction) {
+                case FORWARD:
+                case RETRO_SYNTHETIC:
+                case NO_GO:
+                    arrowHeadEnd = padding;
+                    break;
+                case BACKWARD:
+                    arrowHeadBeg = padding;
+                    break;
+                case BIDIRECTIONAL:
+                case RESONANCE:
+                    arrowHeadBeg = arrowHeadEnd = padding;
+                    break;
+                case UNDIRECTED:
+                    arrowHeadBeg = -(padding/2);
+                    break;
+            }
+        }
+
+        double arrowWidth = (required.xOffsets[arrowIdx+1] - required.xOffsets[arrowIdx]) -
+                            (arrowHeadBeg + arrowHeadEnd);
+
+        double aboveWidth = required.xOffsetAbove[nAboveCol] + (nAboveCol-1) * padding;
+        double aboveCentering = Math.max(arrowWidth - aboveWidth, 0) / 2;
+
         // Position/Draw the component above the arrow.
-        xBase += arrowIdx * padding + required.xOffsets[arrowIdx];
+        xBase += arrowIdx * padding + required.xOffsets[arrowIdx] + arrowHeadBeg;
         yBase -= aboveArrowOverhang;
         for (int i = 0; i < aboveArrow.size(); i++) {
             final int row = i / nAboveCol;
@@ -147,9 +176,9 @@ final class ReactionDepiction extends Depiction {
             // calc the 'view' bounds:
             //  amount of padding depends on which row or column we are in.
             //  the width/height of this col/row can be determined by the next offset
-            double x = xBase + (col+1) * padding + required.xOffsetAbove[col];
-            double y = yBase + row * padding + required.yOffsetAbove[row];
+            double x = xBase + aboveCentering + col * padding + required.xOffsetAbove[col];
             double w = (required.xOffsetAbove[col + 1] - required.xOffsetAbove[col]);
+            double y = yBase + row * padding + required.yOffsetAbove[row];
             double h = (required.yOffsetAbove[row + 1] - required.yOffsetAbove[row]);
 
             draw(visitor, zoom, aboveArrow.get(i), rect(x, y, w, h));
@@ -158,13 +187,11 @@ final class ReactionDepiction extends Depiction {
         // Position/Draw the components below the arrow (stacked in a single coumn)
         yBase += aboveArrowOverhang + (required.yOffsets[1]/2) + padding;
         for (int row = 0; row < belowArrow.size(); row++) {
-            double x = xBase - padding;
             double y = yBase + row * padding + required.yOffsetBelow[row];
-            double w = (required.xOffsets[arrowIdx + 1] - required.xOffsets[arrowIdx]);
             double h = (required.yOffsetBelow[row + 1] - required.yOffsetBelow[row]);
             draw(visitor, zoom,
                  belowArrow.get(row),
-                 rect(x, y, w, h));
+                 rect(xBase, y, arrowWidth, h));
         }
     }
 
@@ -176,8 +203,6 @@ final class ReactionDepiction extends Depiction {
         final double zoom = model.get(BasicSceneGenerator.ZoomFactor.class);
         final double margin = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
         final double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin) / (scale * zoom);
-
-        ReactionDimensions reactionDimensions = reactionBounds.getDimensions(padding);
 
         ReactionDimensions required = reactionBounds.getDimensions(padding).resize(scale * zoom);
         Dimensions total = required.calcTotalDimensions(null);
