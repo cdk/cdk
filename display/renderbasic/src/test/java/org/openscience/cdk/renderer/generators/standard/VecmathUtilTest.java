@@ -26,8 +26,12 @@ package org.openscience.cdk.renderer.generators.standard;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
@@ -253,5 +257,58 @@ class VecmathUtilTest {
         assertThat(vector.x, closeTo(1, 0.01));
         assertThat(vector.y, closeTo(0, 0.01));
         assertThat(vector.length(), closeTo(1d, 0.01));
+    }
+
+
+    static void assertEquals(Vector2d expected,
+                             Vector2d actual) {
+        Assertions.assertNotNull(actual);
+        Assertions.assertEquals(expected.x, actual.x, 0.01);
+        Assertions.assertEquals(expected.y, actual.y, 0.01);
+    }
+
+    @Test
+    void testDbRefTrivial() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C=CC |(4.02,-2.7,;5.52,-2.7,;6.27,-4,)|");
+        IBond db = mol.getBond(0);
+        Vector2d expected = VecmathUtil.newUnitVector(mol.getAtom(1).getPoint2d(),
+                                                      mol.getAtom(2).getPoint2d());
+        assertEquals(expected,
+                     VecmathUtil.getDbRef(DoubleBondAlign.Right, db, db.getEnd().bonds()));
+    }
+
+    @Test
+    void testDbRef() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C(C)(C)=CC |(7.59,-6.9,;6.84,-8.2,;6.84,-5.6,;9.09,-6.9,;9.84,-5.6,)|");
+        IBond db = mol.getBond(2);
+        Assertions.assertEquals(IBond.Order.DOUBLE, db.getOrder());
+        Vector2d expectedEnd = VecmathUtil.newUnitVector(mol.getAtom(3).getPoint2d(),
+                                                      mol.getAtom(4).getPoint2d());
+        assertEquals(expectedEnd,
+                     VecmathUtil.getDbRef(DoubleBondAlign.Left, db, db.getEnd().bonds()));
+        Assertions.assertNull(
+                VecmathUtil.getDbRef(DoubleBondAlign.Right, db, db.getEnd().bonds()));
+
+        Vector2d expectedBeg = VecmathUtil.newUnitVector(mol.getAtom(0).getPoint2d(),
+                                                         mol.getAtom(1).getPoint2d());
+        assertEquals(expectedBeg,
+                     VecmathUtil.getDbRef(DoubleBondAlign.Right, db, db.getBegin().bonds()));
+    }
+
+    // both bonds on same side
+    @Test
+    void testDbRefCornerCase() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C(C)=C(C)C |(7.59,-6.9,;6.53,-7.96,;9.09,-6.9,;8.03,-7.96,;9.47,-8.35,)|");
+        IBond db = mol.getBond(1);
+        Assertions.assertEquals(IBond.Order.DOUBLE, db.getOrder());
+        Vector2d expectedEnd = VecmathUtil.newUnitVector(mol.getAtom(2).getPoint2d(),
+                                                         mol.getAtom(3).getPoint2d());
+        assertEquals(expectedEnd,
+                     VecmathUtil.getDbRef(DoubleBondAlign.Right, db, db.getEnd().bonds()));
+        Assertions.assertNull(
+                VecmathUtil.getDbRef(DoubleBondAlign.Left, db, db.getEnd().bonds()));
     }
 }

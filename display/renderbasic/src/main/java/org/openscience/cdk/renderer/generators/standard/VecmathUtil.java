@@ -286,6 +286,62 @@ final class VecmathUtil {
     }
 
     /**
+     * Specialised function to find the reference bond to offset the
+     * second line of a double bond. This function is similar to
+     * {@link #getNearestVector} except that it uses the signed angles to find
+     * the closest and can return null.
+     *
+     * @param align the double bond alignment
+     * @param db the double bond
+     * @param bonds the bonds to check (connected to fromAtom)
+     * @return the vector to use, or null if none
+     */
+    static Vector2d getDbRef(DoubleBondAlign align,
+                             IBond db,
+                             Iterable<IBond> bonds) {
+
+
+        final List<Vector2d> vectors = new ArrayList<>(4);
+        IAtom ref = null;
+        for (IBond b : bonds) {
+            if (b.equals(db)) continue;
+            ref = db.getConnectedAtom(b);
+            vectors.add(newUnitVector(ref.getPoint2d(),
+                                      b.getOther(ref).getPoint2d()));
+        }
+
+        if (vectors.isEmpty())
+            return null;
+
+        Vector2d o = newUnitVector(ref.getPoint2d(),
+                                   db.getOther(ref).getPoint2d());
+
+        Vector2d best = null;
+        double bestAngle = Math.PI;
+
+        final int sign;
+        if (db.getBegin().equals(ref))
+            sign = align == DoubleBondAlign.Left ? -1 : +1;
+        else
+            sign = align == DoubleBondAlign.Left ? +1 : -1;
+
+        for (Vector2d v : vectors) {
+            double signedAngle = Math.atan2(v.x * o.y - v.y * o.x,
+                                            v.x * o.x + v.y * o.y);
+            if ((int)Math.signum(signedAngle) != sign)
+                continue;
+            double angle = Math.abs(signedAngle);
+            if (angle < bestAngle) {
+                bestAngle = angle;
+                best = v;
+            }
+        }
+
+        // may be null!
+        return best;
+    }
+
+    /**
      * Tau = (2π) ~ 6.283 radians ~ 360 degrees
      */
     private final static double TAU = 2 * Math.PI;
