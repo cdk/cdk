@@ -733,54 +733,6 @@ final class StandardBondGenerator {
     }
 
     /**
-     * Special condition for drawing offset bonds. If the double bond is adjacent to two bonds
-     * and one of those bonds is wedge (with this atom at the wide end) and the other is plain
-     * single bond, we can improve aesthetics by offsetting the double bond.
-     *
-     * @param atom an atom
-     * @param bonds bonds connected to 'atom'
-     * @return special case
-     */
-    private boolean specialOffsetBondNextToWedge(IAtom atom, List<IBond> bonds) {
-        if (bonds.size() != 2) return false;
-        if (atWideEndOfWedge(atom, bonds.get(0)) && isPlainBond(bonds.get(1))) return true;
-        if (atWideEndOfWedge(atom, bonds.get(1)) && isPlainBond(bonds.get(0))) return true;
-        return false;
-    }
-
-    /**
-     * Select a plain bond from a list of bonds. If no bond was found, the first
-     * is returned.
-     *
-     * @param bonds list of bonds
-     * @return a plain bond
-     * @see #isPlainBond(org.openscience.cdk.interfaces.IBond)
-     */
-    private IBond selectPlainSingleBond(List<IBond> bonds) {
-        for (IBond bond : bonds) {
-            if (isPlainBond(bond)) return bond;
-        }
-        return bonds.get(0);
-    }
-
-    private IBond selectUnsetAromBond(List<IBond> bonds) {
-        for (IBond bond : bonds) {
-            if (bond.isAromatic() && bond.getOrder() == UNSET) return bond;
-        }
-        return null;
-    }
-
-    /**
-     * A plain bond is a single bond with no stereochemistry type.
-     *
-     * @param bond the bond to check
-     * @return the bond is plain
-     */
-    private static boolean isPlainBond(IBond bond) {
-        return SINGLE.equals(bond.getOrder()) && (bond.getDisplay() == null || bond.getDisplay() == IBond.Display.Solid);
-    }
-
-    /**
      * Check if the provided bond is a wedge (bold or hashed) and whether the atom is at the wide
      * end.
      *
@@ -788,7 +740,7 @@ final class StandardBondGenerator {
      * @param bond bond to check
      * @return the atom is at the wide end of the wedge in the provided bond
      */
-    private boolean atWideEndOfWedge(final IAtom atom, final IBond bond) {
+    static boolean atWideEndOfWedge(final IAtom atom, final IBond bond) {
         if (bond.getDisplay() == null) return false;
         switch (bond.getDisplay()) {
             case Bold:

@@ -39,8 +39,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
+import static org.openscience.cdk.renderer.generators.standard.StandardBondGenerator.atWideEndOfWedge;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newPerpendicularVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVector;
 
@@ -101,14 +103,21 @@ final class DoubleBondAligner {
         // acyclic and one end has only one other bond this determines which
         // side we go
         if (!bond.isInRing()) {
-            if (bonds1.size() == 1 && bonds2.size() != 1) {
-                return winding(bonds1.get(0), bond) <= 0 ? DoubleBondAlign.Right
-                                                         : DoubleBondAlign.Left;
-            } else if (bonds2.size() == 1) {
-                return winding(bonds2.get(0), bond) <= 0 ? DoubleBondAlign.Left
-                                                         : DoubleBondAlign.Right;
-            } else if (bonds1.size() > 1 && bonds2.size() > 1)
+            List<IBond> unwedged1 = bonds1.stream()
+                                          .filter(b -> !atWideEndOfWedge(bond.getBegin(), b))
+                                          .collect(Collectors.toList());
+            List<IBond> unwedged2 = bonds2.stream()
+                                          .filter(b -> !atWideEndOfWedge(bond.getEnd(), b))
+                                          .collect(Collectors.toList());
+            if (unwedged1.size() == 1 && unwedged2.size() != 1) {
+                return winding(unwedged1.get(0), bond) <= 0 ? DoubleBondAlign.Right
+                                                            : DoubleBondAlign.Left;
+            } else if (unwedged2.size() == 1) {
+                return winding(unwedged2.get(0), bond) <= 0 ? DoubleBondAlign.Left
+                                                            : DoubleBondAlign.Right;
+            } else if (unwedged1.size() > 1 && unwedged2.size() > 1) {
                 return DoubleBondAlign.Center;
+            }
         }
 
         // Macrocycle -> we place the bond inside the polygon of the ring
