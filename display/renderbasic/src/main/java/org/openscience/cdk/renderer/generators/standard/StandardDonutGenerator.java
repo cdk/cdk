@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import org.openscience.cdk.exception.Intractable;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -136,7 +137,24 @@ final class StandardDonutGenerator {
     void generate() {
         if (!delocalisedDonuts)
             return;
-        smallest = Cycles.edgeShort(mol).toRingSet();
+
+        boolean hasAromatic = false;
+        for (IBond bond : mol.bonds()) {
+            if (bond.isAromatic()) {
+                hasAromatic = true;
+            }
+        }
+
+        // fail fast, no aromatic bonds anyways!
+        if (!hasAromatic)
+            return;
+
+        try {
+            smallest = Cycles.edgeShort().find(mol, 8).toRingSet();
+        } catch (Intractable e) {
+            // ignored - should not happen since max length is specified
+        }
+
         for (IAtomContainer ring : smallest.atomContainers()) {
             if (!canDelocalise(ring))
                 continue;

@@ -26,14 +26,11 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.geometry.GeometryUtil;
-import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
@@ -49,7 +46,6 @@ import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
@@ -59,8 +55,6 @@ import java.awt.Font;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +96,8 @@ final class StandardBondGenerator {
 
     // indexes of atoms and rings
     private final Map<IAtom, Integer>        atomIndexMap = new HashMap<>();
-    private final Map<IBond, IAtomContainer> ringMap;
+
+    private final DoubleBondAligner          doubleBondAligner;
 
     // parameters
     private final double                     scale;
@@ -145,7 +140,8 @@ final class StandardBondGenerator {
         // index atoms and rings
         for (int i = 0; i < container.getAtomCount(); i++)
             atomIndexMap.put(container.getAtom(i), i);
-        ringMap = ringPreferenceMap(container, donutGenerator.smallest);
+
+        this.doubleBondAligner = new DoubleBondAligner(container, symbols);
 
         // set parameters
         this.scale = parameters.get(BasicSceneGenerator.Scale.class);
@@ -716,128 +712,24 @@ final class StandardBondGenerator {
      */
     private IRenderingElement generateDoubleBond(IBond bond, boolean arom) {
 
-        final boolean cyclic = ringMap.containsKey(bond);
-
-        // select offset bonds from either the preferred ring or the whole structure
-        final IAtomContainer refContainer = cyclic ? ringMap.get(bond) : container;
-
-        final int length = refContainer.getAtomCount();
-        final int index1 = refContainer.indexOf(bond.getBegin());
-        final int index2 = refContainer.indexOf(bond.getEnd());
-
-        // if the bond is in a cycle we are using ring bonds to determine offset, since rings
-        // have been normalised and ordered to wind anti-clockwise we want to get the atoms
-        // in the order they are in the ring.
-        final boolean outOfOrder = cyclic && index1 == (index2 + 1) % length;
-
-        final IAtom atom1 = outOfOrder ? bond.getEnd() : bond.getBegin();
-        final IAtom atom2 = outOfOrder ? bond.getBegin() : bond.getEnd();
-
         // MDL V3000 + ChemDraw use "unspecified" to mean both wavy and crossed
         // hopefully at this point CDK has parsed it but in-case not we allow it
         // here
+        IAtom begin = bond.getBegin();
+        IAtom end = bond.getEnd();
         if (IBond.Display.Crossed == bond.getDisplay() ||
-            IBond.Display.Wavy == bond.getDisplay())
-            return generateCrossedDoubleBond(atom1, atom2);
-
-        final List<IBond> atom1Bonds = refContainer.getConnectedBondsList(atom1);
-        final List<IBond> atom2Bonds = refContainer.getConnectedBondsList(atom2);
-
-        atom1Bonds.remove(bond);
-        atom2Bonds.remove(bond);
-
-        if (cyclic) {
-            // get the winding relative to the ring
-            final int wind1 = winding(atom1Bonds.get(0), bond);
-            final int wind2 = winding(bond, atom2Bonds.get(0));
-            if (wind1 > 0) {
-                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, arom);
-            } else if (wind2 > 0) {
-                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, arom);
-            } else {
-                // special case, offset line is drawn on the opposite side for
-                // when concave in macro cycle
-                //
-                //           ---
-                //         a --- b
-                //        /       \
-                //    -- x         x --
-                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, true, arom);
-            }
-        } else if (!(hasDisplayedSymbol(atom1) && hasDisplayedSymbol(atom2))) {
-            if (atom1Bonds.size() == 1 && atom2Bonds.isEmpty())
-                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, arom);
-            else if (atom2Bonds.size() == 1 && atom1Bonds.isEmpty())
-                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, arom);
-            else if (specialOffsetBondNextToWedge(atom1, atom1Bonds))
-                return generateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds, arom);
-            else if (specialOffsetBondNextToWedge(atom2, atom2Bonds))
-                return generateOffsetDoubleBond(bond, atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds, arom);
-            else if (atom1Bonds.size() == 1)
-                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, arom);
-            else if (atom2Bonds.size() == 1)
-                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, arom);
-            else if (selectUnsetAromBond(atom1Bonds) != null)
-                return generateOffsetDoubleBond(bond, atom1, atom2, selectUnsetAromBond(atom1Bonds), atom2Bonds, arom);
-            else if (selectUnsetAromBond(atom2Bonds) != null)
-                return generateOffsetDoubleBond(bond, atom2, atom1, selectUnsetAromBond(atom2Bonds), atom1Bonds, arom);
-            else
-                return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
+            IBond.Display.Wavy == bond.getDisplay()) {
+            return generateCrossedDoubleBond(begin, end);
         } else {
-            if (arom) {
-                return generateDashedBond(atom1, atom2);
+            DoubleBondAlign align = doubleBondAligner.alignment(bond);
+            if (align == DoubleBondAlign.Center) {
+                return generateCenteredDoubleBond(bond, begin, end);
             } else {
-                return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
+                return generateOffsetDoubleBond(bond,
+                                                begin, end,
+                                                align, arom);
             }
         }
-    }
-
-    /**
-     * Special condition for drawing offset bonds. If the double bond is adjacent to two bonds
-     * and one of those bonds is wedge (with this atom at the wide end) and the other is plain
-     * single bond, we can improve aesthetics by offsetting the double bond.
-     *
-     * @param atom an atom
-     * @param bonds bonds connected to 'atom'
-     * @return special case
-     */
-    private boolean specialOffsetBondNextToWedge(IAtom atom, List<IBond> bonds) {
-        if (bonds.size() != 2) return false;
-        if (atWideEndOfWedge(atom, bonds.get(0)) && isPlainBond(bonds.get(1))) return true;
-        if (atWideEndOfWedge(atom, bonds.get(1)) && isPlainBond(bonds.get(0))) return true;
-        return false;
-    }
-
-    /**
-     * Select a plain bond from a list of bonds. If no bond was found, the first
-     * is returned.
-     *
-     * @param bonds list of bonds
-     * @return a plain bond
-     * @see #isPlainBond(org.openscience.cdk.interfaces.IBond)
-     */
-    private IBond selectPlainSingleBond(List<IBond> bonds) {
-        for (IBond bond : bonds) {
-            if (isPlainBond(bond)) return bond;
-        }
-        return bonds.get(0);
-    }
-
-    private IBond selectUnsetAromBond(List<IBond> bonds) {
-        for (IBond bond : bonds) {
-            if (bond.isAromatic() && bond.getOrder() == UNSET) return bond;
-        }
-        return null;
-    }
-
-    /**
-     * A plain bond is a single bond with no stereochemistry type.
-     *
-     * @param bond the bond to check
-     * @return the bond is plain
-     */
-    private static boolean isPlainBond(IBond bond) {
-        return SINGLE.equals(bond.getOrder()) && (bond.getDisplay() == null || bond.getDisplay() == IBond.Display.Solid);
     }
 
     /**
@@ -848,7 +740,7 @@ final class StandardBondGenerator {
      * @param bond bond to check
      * @return the atom is at the wide end of the wedge in the provided bond
      */
-    private boolean atWideEndOfWedge(final IAtom atom, final IBond bond) {
+    static boolean atWideEndOfWedge(final IAtom atom, final IBond bond) {
         if (bond.getDisplay() == null) return false;
         switch (bond.getDisplay()) {
             case Bold:
@@ -875,32 +767,17 @@ final class StandardBondGenerator {
      *
      * @param atom1      first atom
      * @param atom2      second atom
-     * @param atom1Bond  the reference bond used to decide which side the bond is offset
-     * @param atom2Bonds the bonds connected to atom 2
+     * @param align   the double bond position
      * @return the rendered bond element
      */
-    private IRenderingElement generateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond,
-            List<IBond> atom2Bonds, boolean dashed) {
-        return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bond, atom2Bonds, false, dashed);
-    }
+    private IRenderingElement generateOffsetDoubleBond(IBond bond,
+                                                       IAtom atom1,
+                                                       IAtom atom2,
+                                                       DoubleBondAlign align,
+                                                       boolean dashed) {
 
-    /**
-     * Displays an offset double bond as per the IUPAC recomendation (GR-1.10) {@cdk.cite
-     * Brecher08}. An offset bond has one line drawn between the two atoms and other draw to one
-     * side. The side is determined by the 'atom1Bond' parameter. The first atom should not have a
-     * displayed symbol.
-     *
-     * @param atom1      first atom
-     * @param atom2      second atom
-     * @param atom1Bond  the reference bond used to decide which side the bond is offset
-     * @param atom2Bonds the bonds connected to atom 2
-     * @param invert     invert the offset (i.e. opposite to reference bond)
-     * @return the rendered bond element
-     */
-    private IRenderingElement generateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond,
-            List<IBond> atom2Bonds, boolean invert, boolean dashed) {
-
-        assert atom1Bond != null;
+        assert align == DoubleBondAlign.Left ||
+               align == DoubleBondAlign.Right;
 
         final Point2d atom1Point = atom1.getPoint2d();
         final Point2d atom2Point = atom2.getPoint2d();
@@ -910,14 +787,13 @@ final class StandardBondGenerator {
 
         final Vector2d unit = newUnitVector(atom1Point, atom2Point);
         Vector2d perpendicular = newPerpendicularVector(unit);
+        if (align == DoubleBondAlign.Right)
+            perpendicular = negate(perpendicular);
 
-        final Vector2d reference = newUnitVector(atom1.getPoint2d(), atom1Bond.getOther(atom1).getPoint2d());
-
-        // there are two perpendicular vectors, this check ensures we have one on the same side as
-        // the reference
-        if (reference.dot(perpendicular) < 0) perpendicular = negate(perpendicular);
-        // caller requested inverted drawing
-        if (invert) perpendicular = negate(perpendicular);
+        List<IBond> atom1Bonds = container.getConnectedBondsList(atom1);
+        List<IBond> atom2Bonds = container.getConnectedBondsList(atom2);
+        atom1Bonds.remove(bond);
+        atom2Bonds.remove(bond);
 
         // when the symbol is terminal, we move it such that it is between the two lines
         if (atom2Bonds.isEmpty() && hasDisplayedSymbol(atom2)) {
@@ -931,25 +807,23 @@ final class StandardBondGenerator {
         double atom1Offset = 0;
         double atom2Offset = 0;
 
-        if (dashed || !hasDisplayedSymbol(atom1)) {
-            atom1Offset = adjacentLength(sum(reference, unit), perpendicular, separation);
+        // the first atom may have zero or more bonds which we can use to get the offset
+        // we find the one which is closest to the perpendicular vector
+        if (!atom1Bonds.isEmpty() && (dashed || !hasDisplayedSymbol(atom1))) {
+            Vector2d closest = getDbRef(align, bond, atom1Bonds);
+            if (closest != null)
+                atom1Offset = adjacentLength(sum(closest, unit), perpendicular, separation);
         }
-
-        // reference bond may be on the other side (invert specified) - the offset needs negating
-        if (reference.dot(perpendicular) < 0) atom1Offset = -atom1Offset;
 
         // the second atom may have zero or more bonds which we can use to get the offset
         // we find the one which is closest to the perpendicular vector
         if (!atom2Bonds.isEmpty() && (dashed || !hasDisplayedSymbol(atom2))) {
-            Vector2d closest = getNearestVector(perpendicular, atom2, atom2Bonds);
-            atom2Offset = adjacentLength(sum(closest, negate(unit)), perpendicular, separation);
-
-            // closest bond may still be on the other side, if so the offset needs
-            // negating
-            if (closest.dot(perpendicular) < 0) atom2Offset = -atom2Offset;
+            Vector2d closest = getDbRef(align, bond, atom2Bonds);
+            if (closest != null)
+                atom2Offset = adjacentLength(sum(closest, negate(unit)), perpendicular, separation);
         }
 
-        final double halfBondLength = atom1Point.distance(atom2BackOffPoint) / 2;
+        final double halfBondLength = atom1BackOffPoint.distance(atom2BackOffPoint) / 2;
         if (atom1Offset > halfBondLength || atom1Offset < 0) atom1Offset = 0;
         if (atom2Offset > halfBondLength || atom2Offset < 0) atom2Offset = 0;
 
@@ -959,15 +833,13 @@ final class StandardBondGenerator {
         switch (bond.getDisplay()) {
             case Bold:
                 group.add(generateBoldBond(atom1, atom2,
-                                           Collections.singletonList(atom1Bond), atom2Bonds));
+                                           atom1Bonds, atom2Bonds));
                 break;
             case Hash:
                 group.add(generateHashBond(atom1, atom2,
-                                           Collections.singletonList(atom1Bond), atom2Bonds));
+                                           atom1Bonds, atom2Bonds));
                 break;
             case Dash:
-                group.add(generateDashedBond(atom1, atom2));
-                break;
             case Dot:
                 group.add(generateDashedBond(atom1, atom2));
                 break;
@@ -1004,12 +876,12 @@ final class StandardBondGenerator {
      *
      * @param atom1      an atom
      * @param atom2      the other atom
-     * @param atom1Bonds bonds to the first atom (excluding that being rendered)
-     * @param atom2Bonds bonds to the second atom (excluding that being rendered)
      * @return the rendering element
      */
-    private IRenderingElement generateCenteredDoubleBond(IBond bond, IAtom atom1, IAtom atom2, List<IBond> atom1Bonds,
-            List<IBond> atom2Bonds) {
+    private IRenderingElement generateCenteredDoubleBond(IBond bond, IAtom atom1, IAtom atom2) {
+
+        List<IBond> atom1Bonds = container.getConnectedBondsList(atom1);
+        List<IBond> atom2Bonds = container.getConnectedBondsList(atom2);
 
         final Point2d atom1BackOffPoint = backOffPoint(atom1, atom2);
         final Point2d atom2BackOffPoint = backOffPoint(atom2, atom1);
@@ -1653,260 +1525,5 @@ final class StandardBondGenerator {
         // move the point away from the intersect by the desired back off amount
         final Vector2d unit = newUnitVector(fromPoint, toPoint);
         return new Point2d(sum(intersect, scale(unit, backOff)));
-    }
-
-    /**
-     * Determine the winding of two bonds. The winding is > 0 for anti clockwise and < 0
-     * for clockwise and is relative to bond 1.
-     *
-     * @param bond1 first bond
-     * @param bond2 second bond
-     * @return winding relative to bond
-     * @throws java.lang.IllegalArgumentException bonds share no atoms
-     */
-    static int winding(IBond bond1, IBond bond2) {
-        final IAtom atom1 = bond1.getBegin();
-        final IAtom atom2 = bond1.getEnd();
-        if (bond2.contains(atom1)) {
-            return winding(atom2.getPoint2d(), atom1.getPoint2d(), bond2.getOther(atom1).getPoint2d());
-        } else if (bond2.contains(atom2)) {
-            return winding(atom1.getPoint2d(), atom2.getPoint2d(), bond2.getOther(atom2).getPoint2d());
-        } else {
-            throw new IllegalArgumentException("Bonds do not share any atoms");
-        }
-    }
-
-    /**
-     * Creates a mapping of bonds to preferred rings (stored as IAtomContainers).
-     *
-     * @param container structure representation
-     * @param smallest smallest ring set to use (e.g. through each bond)
-     * @return bond to ring map
-     */
-    static Map<IBond, IAtomContainer> ringPreferenceMap(IAtomContainer container,
-                                                        IRingSet smallest) {
-
-        if (smallest == null)
-            smallest = Cycles.edgeShort(container).toRingSet();
-
-        final List<IAtomContainer> rings = AtomContainerSetManipulator.getAllAtomContainers(smallest);
-
-        rings.sort(new RingBondOffsetComparator(container));
-
-        final Map<IBond, IAtomContainer> ringMap = new HashMap<>();
-
-        // index bond -> ring based on the first encountered bond
-        for (IAtomContainer ring : rings) {
-            normalizeRingWinding(ring);
-            for (IBond bond : ring.bonds()) {
-                if (ringMap.containsKey(bond)) continue;
-                ringMap.put(bond, ring);
-            }
-        }
-
-        return Collections.unmodifiableMap(ringMap);
-    }
-
-    /**
-     * Creates a mapping of bonds to preferred rings (stored as IAtomContainers).
-     *
-     * @param container structure representation
-     * @return bond to ring map
-     */
-    static Map<IBond, IAtomContainer> ringPreferenceMap(IAtomContainer container) {
-        return ringPreferenceMap(container, Cycles.edgeShort(container).toRingSet());
-    }
-
-    /**
-     * Normalise the ring ordering in a ring such that the overall winding is anti clockwise.
-     * The normalisation exploits the fact that (most) rings will be drawn with more convex
-     * turns (i.e. close to 30 degrees). This not bullet proof, consider a hexagon drawn as
-     * a three point star.
-     *
-     * @param container the ring to normalize
-     */
-    static void normalizeRingWinding(IAtomContainer container) {
-
-        int prev = container.getAtomCount() - 1;
-        int curr = 0;
-        int next = 1;
-
-        int n = container.getAtomCount();
-
-        int winding = 0;
-
-        while (curr < n) {
-            winding += winding(container.getAtom(prev).getPoint2d(), container.getAtom(curr).getPoint2d(), container
-                    .getAtom(next % n).getPoint2d());
-            prev = curr;
-            curr = next;
-            next = next + 1;
-        }
-
-        if (winding < 0) {
-            IAtom[] atoms = new IAtom[n];
-            for (int i = 0; i < n; i++)
-                atoms[n - i - 1] = container.getAtom(i);
-            container.setAtoms(atoms);
-        }
-    }
-
-    /**
-     * Determine the winding of three points using the determinant.
-     *
-     * @param a first point
-     * @param b second point
-     * @param c third point
-     * @return < 0 = clockwise, 0 = linear, > 0 anti-clockwise
-     */
-    static int winding(Point2d a, Point2d b, Point2d c) {
-        return (int) Math.signum((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
-    }
-
-    /**
-     * Order rings by preference of double bond offset. Rings that appear first have preference of
-     * the double bond.
-     *
-     * 1. rings of size 6, 5, 7, 4, 3 are preferred (in that order) 2. rings with more double bonds
-     * are preferred 3. rings with a higher carbon count are preferred
-     */
-    static final class RingBondOffsetComparator implements Comparator<IAtomContainer> {
-
-        private static final int[] PREFERENCE_INDEX = new int[8];
-
-        static {
-            int preference = 0;
-            for (int size : new int[]{6, 5, 7, 4, 3}) {
-                PREFERENCE_INDEX[size] = preference++;
-            }
-        }
-
-        private final boolean hasMetal;
-        private final IAtomContainer mol;
-
-        /**
-         * Create a new comparator.
-         */
-        RingBondOffsetComparator(IAtomContainer mol) {
-            hasMetal = hasMetal(mol);
-            this.mol = mol;
-        }
-
-        RingBondOffsetComparator() {
-            hasMetal = false;
-            this.mol = null;
-        }
-
-        private static boolean hasMetal(IAtomContainer mol) {
-            for (IAtom atom : mol.atoms())
-                if (Elements.isMetal(atom))
-                    return true;
-            return false;
-        }
-
-        /**
-         *{@inheritDoc}
-         */
-        @Override
-        public int compare(IAtomContainer ringa, IAtomContainer ringb) {
-
-            // non-metal rings (e.g. carbo/hetro cycles first)
-            if (hasMetal) {
-                int cmp = Boolean.compare(hasMetal(ringa),
-                                          hasMetal(ringb));
-                if (cmp != 0)
-                    return cmp;
-            }
-
-            // order by size 6,5,7,4,3,rest
-            int sizeCmp = Integer.compare(sizePreference(ringa.getAtomCount()),
-                    sizePreference(ringb.getAtomCount()));
-            if (sizeCmp != 0) return sizeCmp;
-
-            // now order by number of double bonds
-            int piBondCmp = Integer.compare(nDoubleBonds(ringa), nDoubleBonds(ringb));
-            if (piBondCmp != 0) return -piBondCmp;
-
-            // the ring with more atoms with only 2 ring bonds
-            int nSimpleRing = Integer.compare(nSimpleRingAtoms(ringa), nSimpleRingAtoms(ringb));
-            if (nSimpleRing != 0) return -nSimpleRing;
-
-            // order by element frequencies, all carbon rings are preferred
-            int[] freqA = countLightElements(ringa);
-            int[] freqB = countLightElements(ringb);
-
-            for (Elements element : Arrays.asList(Elements.Carbon, Elements.Nitrogen, Elements.Oxygen, Elements.Sulfur,
-                    Elements.Phosphorus)) {
-                int elemCmp = Integer.compare(freqA[element.number()], freqB[element.number()]);
-                if (elemCmp != 0) return -elemCmp;
-            }
-
-
-            return 0;
-        }
-
-        /**
-         * Convert an absolute size value into the size preference.
-         *
-         * @param size number of atoms or bonds in a ring
-         * @return size preference
-         */
-        static int sizePreference(int size) {
-            if (size < 3) throw new IllegalArgumentException("a ring must have at least 3 atoms");
-            if (size > 7) return size;
-            return PREFERENCE_INDEX[size];
-        }
-
-        /**
-         * Count the number of double bonds in a container.
-         *
-         * @param container structure representation
-         * @return number of double bonds
-         */
-        static int nDoubleBonds(IAtomContainer container) {
-            int count = 0;
-            for (IBond bond : container.bonds())
-                if (IBond.Order.DOUBLE.equals(bond.getOrder())) count++;
-            return count;
-        }
-
-        int nSimpleRingAtoms(IAtomContainer ring) {
-            if (mol == null) return 0;
-            int count = 0;
-            for (IAtom atom : ring.atoms()) {
-                int rcount = 0;
-
-                List<IBond> bonds = mol.getConnectedBondsList(atom);
-                if (bonds.size() == 2) {
-                    rcount = 2; // a ring atom with 2 bonds, they MUST be cyclic
-                } else {
-                    for (IBond bond : bonds) {
-                        if (bond.isInRing())
-                            rcount++;
-                    }
-                }
-
-                if (rcount == 2)
-                    count++;
-            }
-            return count;
-        }
-
-        /**
-         * Count the light elements (atomic number < 19) in an atom container. The count is provided
-         * as a frequency vector indexed by atomic number.
-         *
-         * @param container structure representation
-         * @return frequency vector of atomic numbers 0-18
-         */
-        static int[] countLightElements(IAtomContainer container) {
-            // count elements up to Argon (number=18)
-            int[] freq = new int[19];
-            for (IAtom atom : container.atoms()) {
-                if (atom.getAtomicNumber() >= 0 && atom.getAtomicNumber() < 19)
-                    freq[atom.getAtomicNumber()]++;
-            }
-            return freq;
-        }
     }
 }
