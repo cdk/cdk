@@ -228,8 +228,11 @@ final class ReactionDepiction extends Depiction {
         final Graphics2D g2 = img.createGraphics();
         final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
         visitor.setTransform(AffineTransform.getScaleInstance(1, -1));
-        visitor.visit(new RectangleElement(0, -(int) Math.ceil(canvasSize.h), (int) Math.ceil(canvasSize.w), (int) Math.ceil(canvasSize.h),
-                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
+        visitor.visit(new RectangleElement(0, 0,
+                                           (int) Math.ceil(canvasSize.w),
+                                           (int) -Math.ceil(canvasSize.h),
+                                           true,
+                                           model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         double xOffset = margin;
         double yOffset = margin;
@@ -308,11 +311,11 @@ final class ReactionDepiction extends Depiction {
 
         // background color
         visitor.setTransform(AffineTransform.getScaleInstance(1, -1));
-        visitor.visit(new RectangleElement(0,
-                                           -(int) Math.ceil(totalWithMargin.h),
-                                           (int) Math.ceil(totalWithMargin.w),
-                                           (int) Math.ceil(totalWithMargin.h),
-                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
+        visitor.visit(new RectangleElement(0, 0,
+                                           (int) Math.ceil(canvasSize.w),
+                                           (int) -Math.ceil(canvasSize.h),
+                                           true,
+                                           model.get(BasicSceneGenerator.BackgroundColor.class)));
 
 //        // debug margins
 //        visitor.visit(new RectangleElement(margin,
