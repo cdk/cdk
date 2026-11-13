@@ -1400,7 +1400,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // 0123456789012345...
                 //           1
                 //
-                // d...: Line of data for data Sgroup sss (69 chars per line, columns 12-80)
+                // d...: Data for Sgroup sss, written in 69-character chunks (columns 12-80),
+                // read from column 12 to the end of the line.
                 //
                 // SCD where C = Continue, SED where E = End
                 // Formally multi-line data should have one or more SCD's and
@@ -1410,7 +1411,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     // we could be more strict and raise an error if we see an
                     // SCD after SED...
                     sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
-                    String data = line.substring(11, Math.min(80,length));
+                    String data = length > 11 ? line.substring(11, length) : "";
                     String curr = sgroup.getValue(SgroupKey.Data);
                     if (curr != null) data = curr + data;
                     sgroup.putValue(SgroupKey.Data, data);
