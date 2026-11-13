@@ -154,10 +154,9 @@ final class ReactionSetDepiction extends Depiction {
         final Graphics2D g2 = img.createGraphics();
         final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
         visitor.setTransform(AffineTransform.getScaleInstance(1, -1));
-        visitor.visit(new RectangleElement(0,
-                                           -(int) Math.ceil(canvasSize.h),
+        visitor.visit(new RectangleElement(0, 0,
                                            (int) Math.ceil(canvasSize.w),
-                                           (int) Math.ceil(canvasSize.h),
+                                           (int) -Math.ceil(canvasSize.h),
                                            true,
                                            model.get(BasicSceneGenerator.BackgroundColor.class)));
 
@@ -270,10 +269,9 @@ final class ReactionSetDepiction extends Depiction {
         }
 
         visitor.setTransform(AffineTransform.getScaleInstance(1, -1));
-        visitor.visit(new RectangleElement(0,
-                                           -(int) Math.ceil(canvasSize.h),
-                                           (int) Math.ceil(canvasSize.w),
-                                           (int) Math.ceil(canvasSize.h),
+        visitor.visit(new RectangleElement(0, 0,
+                                           (int) Math.ceil(total.w),
+                                           (int) -Math.ceil(total.h),
                                            true,
                                            model.get(BasicSceneGenerator.BackgroundColor.class)));
 
