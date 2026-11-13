@@ -23,14 +23,12 @@ import java.util.List;
 
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -38,7 +36,6 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -80,8 +77,24 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class ChiChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class);
+    // the fragment queries of every order (any atom, any bond), created once: a pattern can be matched by
+    // several threads at the same time
+    private static final Pattern[] ORDER_4 = ChiIndexUtils.createPatterns(
+            "*1~*~*~*~1", "*~*1~*~*~1");
+    private static final Pattern[] ORDER_5 = ChiIndexUtils.createPatterns(
+            "*1~*~*~*~*~1", "*~*1~*~*~*~1", "*~*1~*~*~1~*");
+    private static final Pattern[] ORDER_6 = ChiIndexUtils.createPatterns(
+            "*~*1~*~*~*~*~1", "*~*1~*~*(~*)~*~1", "*~*1(~*)~*~*~*~1", "*~*~*1~*~*~*~1", "*1~*~*~*~*~*~1",
+            "*~*1~*~*~*~1~*", "*~*1~*(~*)~*~1~*", "*~*~*~*1~*~*~1", "*~*~*1~*~*~1~*");
+    private static final Pattern[] ORDER_7 = ChiIndexUtils.createPatterns(
+            "*1~*~*~*~*~*~1~*", "*1~*~*~*~*~1(~*)~*", "*1(~*)~*(~*)~*~*~*~1", "*1(~*)~*~*(~*)~*~*~1",
+            "*1~*~*~*~*~1~*~*", "*1(~*)~*(~*)~*(~*)~*~1", "*1~*~*(~*)~*~1~*~*", "*1~*(~*)~*~*~1~*~*",
+            "*1~*~*~*~1~*~*~*", "*1~*~*~*~1~*(~*)~*", "*1~*~*~*~1(~*)~*~*", "*1~*~*(~*)~*~1(~*)~*",
+            "*1~*(~*)~*~*~1(~*)~*", "*1(~*)~*(~*)~*~1~*~*", "*1~*(~*)(~*)~*~1(~*)~*", "*1~*~*~1~*~*~*~*",
+            "*1~*(~*)~*~1~*~*~*", "*1~*(~*~*)~*~1~*~*", "*1~*(~*)~*~1~*(~*)~*", "*1~*(~*)~*~1(~*)~*~*",
+            "*1~*~*~1~*~*(~*)~*", "*1~*~*~1~*(~*)~*~*", "*1~*~*~1~*(~*)(~*)~*");
 
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class);
     private static final String[] NAMES  = {"SCH-3", "SCH-4", "SCH-5", "SCH-6", "SCH-7", "VCH-3", "VCH-4", "VCH-5",
             "VCH-6", "VCH-7"             };
 
@@ -130,8 +143,6 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
 
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
-        SmilesParser sp = new SmilesParser(container.getBuilder());
-
         // we don't make a clone, since removeHydrogens returns a deep copy
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
@@ -151,11 +162,11 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
             return getDummyDescriptorValue(new CDKException("Error in adding hydrogens: " + e.getMessage()));
         }
 
-        List subgraph3 = order3(localAtomContainer);
-        List subgraph4 = order4(localAtomContainer, sp);
-        List subgraph5 = order5(localAtomContainer, sp);
-        List subgraph6 = order6(localAtomContainer, sp);
-        List subgraph7 = order7(localAtomContainer, sp);
+        List<List<Integer>> subgraph3 = order3(localAtomContainer);
+        List<List<Integer>> subgraph4 = order4(localAtomContainer);
+        List<List<Integer>> subgraph5 = order5(localAtomContainer);
+        List<List<Integer>> subgraph6 = order6(localAtomContainer);
+        List<List<Integer>> subgraph7 = order7(localAtomContainer);
 
         double order3s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph3);
         double order4s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph4);
@@ -208,7 +219,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         return new DoubleArrayResultType(10);
     }
 
-    private List order3(IAtomContainer container) {
+    private List<List<Integer>> order3(IAtomContainer container) {
         List<List<Integer>> ret = new ArrayList<>();
 
         IRingSet rings = Cycles.sssr(container).toRingSet();
@@ -227,70 +238,19 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         return ret;
     }
 
-    private List order4(IAtomContainer atomContainer, SmilesParser sp) {
-        QueryAtomContainer[] queries = new QueryAtomContainer[2];
-        try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1CCC1"), false);
-            queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CC1"), false);
-        } catch (InvalidSmilesException e) {
-            LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class)
-                              .warn("Unexpected Error:", e);
-        }
-        return ChiIndexUtils.getFragments(atomContainer, queries);
+    private List<List<Integer>> order4(IAtomContainer atomContainer) {
+        return ChiIndexUtils.getFragments(atomContainer, ORDER_4);
     }
 
-    private List order5(IAtomContainer atomContainer, SmilesParser sp) {
-        QueryAtomContainer[] queries = new QueryAtomContainer[3];
-        try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1CCCC1"), false);
-            queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CCC1"), false);
-            queries[2] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CC1(C)"), false);
-        } catch (InvalidSmilesException e) {
-            LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class)
-                              .warn("Unexpected Error:", e);
-        }
-        return ChiIndexUtils.getFragments(atomContainer, queries);
+    private List<List<Integer>> order5(IAtomContainer atomContainer) {
+        return ChiIndexUtils.getFragments(atomContainer, ORDER_5);
     }
 
-    private List order6(IAtomContainer atomContainer, SmilesParser sp) {
-        QueryAtomContainer[] queries = new QueryAtomContainer[9];
-        try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CCCC1"), false);
-            queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CC(C)C1"), false);
-            queries[2] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1(C)(CCC1)"), false);
-            queries[3] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC1CCC1"), false);
-            queries[4] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1CCCCC1"), false);
-            queries[5] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CCC1(C)"), false);
-            queries[6] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1C(C)C1(C)"), false);
-            queries[7] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCC1CC1"), false);
-            queries[8] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC1CC1(C)"), false);
-        } catch (InvalidSmilesException e) {
-            LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class)
-                              .warn("Unexpected Error:", e);
-        }
-        return ChiIndexUtils.getFragments(atomContainer, queries);
+    private List<List<Integer>> order6(IAtomContainer atomContainer) {
+        return ChiIndexUtils.getFragments(atomContainer, ORDER_6);
     }
 
-    private List order7(IAtomContainer atomContainer, SmilesParser sp) {
-        String[] smiles = {
-                "C1CCCCC1C",
-                // 5-ring cases
-                "C1CCCC1(C)(C)", "C1(C)C(C)CCC1", "C1(C)CC(C)CC1",
-                "C1CCCC1(CC)",
-                // 4-ring cases
-                "C1(C)C(C)C(C)C1", "C1CC(C)C1(CC)", "C1C(C)CC1(CC)", "C1CCC1(CCC)", "C1CCC1C(C)(C)", "C1CCC1(C)(CC)",
-                "C1CC(C)C1(C)(C)", "C1C(C)CC1(C)(C)",
-                // 3-ring cases
-                "C1(C)C(C)C1(CC)", "C1C(C)(C)C1(C)(C)", "C1CC1CCCC", "C1C(C)C1(CCC)", "C1C(CC)C1(CC)",
-                "C1C(C)C1C(C)(C)", "C1C(C)C1(C)(CC)", "C1CC1CC(C)(C)", "C1CC1C(C)CC", "C1CC1C(C)(C)(C)"};
-        QueryAtomContainer[] queries = new QueryAtomContainer[smiles.length];
-        try {
-            for (int i = 0; i < smiles.length; i++)
-                queries[i] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles(smiles[i]), false);
-        } catch (InvalidSmilesException e) {
-            LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class)
-                              .warn("Unexpected Error:", e);
-        }
-        return ChiIndexUtils.getFragments(atomContainer, queries);
+    private List<List<Integer>> order7(IAtomContainer atomContainer) {
+        return ChiIndexUtils.getFragments(atomContainer, ORDER_7);
     }
 }

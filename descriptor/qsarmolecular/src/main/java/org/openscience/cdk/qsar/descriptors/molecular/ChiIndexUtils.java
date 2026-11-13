@@ -24,15 +24,11 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.qsar.AtomValenceTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.smarts.SmartsPattern;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -46,54 +42,40 @@ import java.util.List;
 class ChiIndexUtils {
 
     /**
-     * Gets the fragments from a target <code>AtomContainer</code> matching a set of query fragments.
-     * 
-     * This method returns a list of lists. Each list contains the atoms of the target <code>AtomContainer</code>
-     * that arise in the mapping of bonds in the target molecule to the bonds in the query fragment.
-     * The query fragments should be constructed
-     * using the <code>createAnyAtomAnyBondContainer</code> method of the <code>QueryAtomContainerCreator</code>
-     * CDK class, since we are only interested in connectivity and not actual atom or bond type information.
+     * Creates the patterns of fragment queries given as SMARTS, e.g. "*~*~*" for a path of three atoms. A pattern
+     * can be matched by several threads at the same time, so the patterns can be created once and reused.
+     *
+     * @param smarts the queries; only any atom ('*') and any bond ('~') are expected
+     * @return the patterns, in the order of the queries
+     */
+    static Pattern[] createPatterns(String... smarts) {
+        Pattern[] patterns = new Pattern[smarts.length];
+        for (int i = 0; i < smarts.length; i++) {
+            // any atom/any bond queries need no ring or aromaticity perception of the target
+            patterns[i] = SmartsPattern.create(smarts[i]).setPrepare(false);
+        }
+        return patterns;
+    }
+
+    /**
+     * Gets the fragments from a target matching the given patterns, see {@link #createPatterns(String...)}.
+     * Every set of bonds that matches a pattern is one fragment.
      *
      * @param atomContainer The target <code>AtomContainer</code>
-     * @param queries       An array of query fragments
-     * @return A list of lists, each list being the atoms that match the query fragments
+     * @param patterns      The patterns of the fragment queries
+     * @return A list of lists, each list being the atoms that match a query fragment
      */
-    public static List<List<Integer>> getFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries) {
-        UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
-        List<List<Integer>> uniqueSubgraphs = new ArrayList<>();
-        for (QueryAtomContainer query : queries) {
-            List<List<RMap>> subgraphMaps = null;
-            try {
-                // we get the list of bond mappings
-                subgraphMaps = universalIsomorphismTester.getSubgraphMaps(atomContainer, query);
-            } catch (CDKException e) {
-                LoggingToolFactory.createLoggingTool(ChiIndexUtils.class)
-                                  .warn("Unexpected Error:", e);
-            }
-            if (subgraphMaps == null) continue;
-            if (subgraphMaps.size() == 0) continue;
-
-            // get the atom paths in the unique set of bond maps
-            uniqueSubgraphs.addAll(getUniqueBondSubgraphs(subgraphMaps, atomContainer));
-        }
-
-        // lets run a check on the length of each returned fragment and delete
-        // any that don't match the length of out query fragments. Note that since
-        // sometimes a fragment might be a ring, it will have number of atoms
-        // equal to the number of bonds, where as a fragment with no rings
-        // will have number of atoms equal to the number of bonds+1. So we need to check
-        // fragment size against all unique query sizes - I get lazy and don't check
-        // unique query sizes, but the size of each query
-        List<List<Integer>> retValue = new ArrayList<>();
-        for (List<Integer> fragment : uniqueSubgraphs) {
-            for (QueryAtomContainer query : queries) {
-                if (fragment.size() == query.getAtomCount()) {
-                    retValue.add(fragment);
-                    break;
-                }
+    static List<List<Integer>> getFragments(IAtomContainer atomContainer, Pattern[] patterns) {
+        List<List<Integer>> fragments = new ArrayList<>();
+        for (Pattern pattern : patterns) {
+            for (int[] mapping : pattern.matchAll(atomContainer).uniqueBonds()) {
+                List<Integer> fragment = new ArrayList<>(mapping.length);
+                for (int atomIndex : mapping)
+                    fragment.add(atomIndex);
+                fragments.add(fragment);
             }
         }
-        return retValue;
+        return fragments;
     }
 
     /**
@@ -253,49 +235,4 @@ class ChiIndexUtils {
         if (conditions == 5) return 2.22;
         return -1;
     }
-
-    /**
-     * Converts a set of bond mappings to a unique set of atom paths.
-     * 
-     * This method accepts a <code>List</code> of bond mappings. It first
-     * reduces the set to a unique set of bond maps and then for each bond map
-     * converts it to a series of atoms making up the bonds.
-     *
-     * @param subgraphs A <code>List</code> of bon mappings
-     * @param ac        The molecule we are examining
-     * @return A unique <code>List</code> of atom paths
-     */
-    private static List<List<Integer>> getUniqueBondSubgraphs(List<List<RMap>> subgraphs, IAtomContainer ac) {
-        List<List<Integer>> bondList = new ArrayList<>();
-        for (List<RMap> subgraph : subgraphs) {
-            List<RMap> current = subgraph;
-            List<Integer> ids = new ArrayList<>();
-            for (RMap aCurrent : current) {
-                RMap rmap = aCurrent;
-                ids.add(rmap.getId1());
-            }
-            Collections.sort(ids);
-            bondList.add(ids);
-        }
-
-        // get the unique set of bonds
-        HashSet<List<Integer>> hs = new HashSet<>(bondList);
-        bondList = new ArrayList<>(hs);
-
-        List<List<Integer>> paths = new ArrayList<>();
-        for (List<Integer> aBondList1 : bondList) {
-            List<Integer> aBondList = aBondList1;
-            List<Integer> tmp = new ArrayList<>();
-            for (Object anABondList : aBondList) {
-                int bondNumber = (Integer) anABondList;
-                for (IAtom atom : ac.getBond(bondNumber).atoms()) {
-                    Integer atomInt = ac.indexOf(atom);
-                    if (!tmp.contains(atomInt)) tmp.add(atomInt);
-                }
-            }
-            paths.add(tmp);
-        }
-        return paths;
-    }
-
 }
