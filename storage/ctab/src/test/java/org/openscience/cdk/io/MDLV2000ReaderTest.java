@@ -2026,13 +2026,14 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void dataSgroupReadsColumn80() throws Exception {
+    void dataSgroupReadsFullLines() throws Exception {
         String digits = "0123456789012345678901234567890123456789012345678901234567890123456789"; // 70 characters
         String letters = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopq"; // 69 characters
-        // SCD/SED data occupy columns 12-80: 69 characters
+        String longData = "Some long data Sgroup, the semantics are you read but break here --->"
+                + "aditional text is on a new line";
+        assertThat(readSgroupData("M  SED   1 " + longData + "\n"), is(longData));
         assertThat(readSgroupData("M  SED   1 " + digits.substring(0, 68) + "\n"), is(digits.substring(0, 68)));
         assertThat(readSgroupData("M  SED   1 " + digits.substring(0, 69) + "\n"), is(digits.substring(0, 69)));
-        assertThat(readSgroupData("M  SED   1 " + digits + "\n"), is(digits.substring(0, 69)));
         assertThat(readSgroupData("M  SCD   1 " + digits.substring(0, 69) + "\n"
                                   + "M  SCD   1 " + letters + "\n"
                                   + "M  SED   1 \n"),
