@@ -109,6 +109,7 @@ final class MolGridDepiction extends Depiction {
         // create the image for rendering
         final BufferedImage img = new BufferedImage((int) Math.ceil(total.w), (int) Math.ceil(total.h),
                                                     BufferedImage.TYPE_4BYTE_ABGR);
+
         // we use the AWT for vector graphics if though we're raster because
         // fractional strokes can be figured out by interpolation, without
         // when we shrink diagrams bonds can look too bold/chubby
@@ -116,8 +117,11 @@ final class MolGridDepiction extends Depiction {
         final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
 
         visitor.setTransform(AffineTransform.getScaleInstance(1,-1));
-        visitor.visit(new RectangleElement(0, -(int) Math.ceil(total.h), (int) Math.ceil(total.w), (int) Math.ceil(total.h),
-                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
+        visitor.visit(new RectangleElement(0, 0,
+                                           (int) Math.ceil(total.w),
+                                           (int) -Math.ceil(total.h),
+                                           true,
+                                           model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the zoom, fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
@@ -231,9 +235,11 @@ final class MolGridDepiction extends Depiction {
         }
 
         visitor.setTransform(AffineTransform.getScaleInstance(1,-1));
-        visitor.visit(new RectangleElement(0, -(int) Math.ceil(total.h), (int) Math.ceil(total.w), (int) Math.ceil(total.h),
-                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
-
+        visitor.visit(new RectangleElement(0, 0,
+                                           (int) Math.ceil(total.w),
+                                           (int) -Math.ceil(total.h),
+                                           true,
+                                           model.get(BasicSceneGenerator.BackgroundColor.class)));
         // compound the fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
 
