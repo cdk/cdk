@@ -21,6 +21,7 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.exception.Intractable;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -70,7 +71,7 @@ final class DoubleBondAligner {
      * Determine the alignment of a double bond.
      *
      * @param bond the bond to determine
-     * @return the position
+     * @return the alignment
      */
     DoubleBondAlign alignment(IBond bond) {
 
@@ -117,12 +118,19 @@ final class DoubleBondAligner {
                                                             : DoubleBondAlign.Right;
             } else if (unwedged1.size() > 1 && unwedged2.size() > 1) {
                 return DoubleBondAlign.Center;
+            } else {
+                // arbitrary choice, left vs right
+                return DoubleBondAlign.Right;
             }
         }
 
-        // Macrocycle -> we place the bond inside the polygon of the ring
-        if (bond.isInRing() && Cycles.smallRingSize(bond, 8) == 0) {
-            Path2D path = comparator.getRingInfo(bond).getAwtPath();
+        assert bond.isInRing();
+        RingInfo smallRing = comparator.getSmallRingInfo(bond);
+
+        // Macrocycle (no small ring info) ->
+        // we place the bond inside the polygon of the ring
+        if (smallRing == null) {
+            Path2D path = comparator.getMacroPath(bond);
             Point2d p1 = bond.getBegin().getPoint2d();
             Point2d p2 = bond.getEnd().getPoint2d();
             final Vector2d unit = newUnitVector(p1, p2);
@@ -165,30 +173,11 @@ final class DoubleBondAligner {
         private int numMetals;
         private int numHetero;
         private final IRing ring;
-        private Path2D polygon;
 
         public RingInfo(IRing ring) {
             this.ring = ring;
             this.size = ring.getBondCount();
             init(ring);
-        }
-
-        /**
-         * Get the AWT Path2D polygon for this ring.
-         * @return the path
-         */
-        Path2D getAwtPath() {
-            if (polygon == null) {
-                polygon = new Path2D.Double();
-                polygon.moveTo(ring.getAtom(0).getPoint2d().x,
-                               ring.getAtom(0).getPoint2d().y);
-                for (int i = 1; i < ring.getAtomCount(); i++) {
-                    Point2d p = ring.getAtom(i).getPoint2d();
-                    polygon.lineTo(p.x, p.y);
-                }
-                polygon.closePath();
-            }
-            return polygon;
         }
 
         /**
@@ -262,14 +251,15 @@ final class DoubleBondAligner {
 
     /**
      * A comparator sorts bonds to determine how we place the second line of
-     * a double bond (DoublerPosition). Ring bonds are preferred over chain
+     * a double bond (DoubleBondAlign). Ring bonds are preferred over chain
      * bonds and then the {@link RingInfo} is used to split ties.
      */
     static final class BondComparator implements Comparator<IBond> {
 
+        public static final int SMALL_RING_SIZE = 8;
         private final IAtomContainer mol;
         private Map<IBond, RingInfo> ringInfo;
-
+        private final Map<IBond, Path2D> macroPaths = new HashMap<>();
 
         BondComparator(IAtomContainer mol) {
             this.mol = mol;
@@ -282,11 +272,17 @@ final class DoubleBondAligner {
          * @param b the bond
          * @return the ring info
          */
-        RingInfo getRingInfo(IBond b) {
+        RingInfo getSmallRingInfo(IBond b) {
             if (ringInfo == null) {
                 ringInfo = new HashMap<>();
                 List<RingInfo> tmp = new ArrayList<>();
-                IRingSet ringSet = Cycles.edgeShort(mol).toRingSet();
+                IRingSet ringSet;
+                try {
+                    ringSet = Cycles.edgeShort().find(mol, SMALL_RING_SIZE)
+                                    .toRingSet();
+                } catch (Intractable ignored) {
+                    return null;
+                }
                 for (IAtomContainer ring : ringSet)
                     tmp.add(new RingInfo((IRing) ring));
                 Collections.sort(tmp);
@@ -296,6 +292,49 @@ final class DoubleBondAligner {
                 }
             }
             return ringInfo.get(b);
+        }
+
+        /**
+         * Lazily the Path2D of a ring which contains the given bond. This is
+         * intended for macrocycles. Once a macrocycle is computed the path
+         * is cached for all bonds in that cycle.
+         *
+         * @param macroBond the macro bond
+         * @return the Path2D
+         */
+        public Path2D getMacroPath(IBond macroBond) {
+            Path2D path = macroPaths.get(macroBond);
+            if (path != null)
+                return path;
+            assert macroBond.isInRing();
+            
+            List<IBond> bonds = Cycles.smallRing(macroBond);
+            assert bonds.size() >= 3;
+
+            // convert the bond path to an atom path
+            List<IAtom> atoms = new ArrayList<>();
+            IAtom atom = bonds.get(0).getConnectedAtom(bonds.get(1));
+            atoms.add(atom);
+            for (int i = 1; i < bonds.size(); i++) {
+                atoms.add(atom = bonds.get(i).getOther(atom));
+            }
+            assert bonds.get(0).contains(atoms.get(atoms.size()-1));
+            assert atoms.size() == bonds.size();
+
+            path = new Path2D.Double();
+            path.moveTo(atoms.get(0).getPoint2d().x,
+                        atoms.get(0).getPoint2d().y);
+            for (int i = 1; i < atoms.size(); i++) {
+                Point2d p = atoms.get(i).getPoint2d();
+                path.lineTo(p.x, p.y);
+            }
+            path.closePath();
+
+            // cache for calls from other bonds
+            for (IBond bond : bonds)
+                macroPaths.putIfAbsent(bond, path);
+
+            return path;
         }
 
         /**
@@ -317,7 +356,15 @@ final class DoubleBondAligner {
             else if (!a.isInRing() && !b.isInRing())
                 return 0;
             // we need to actually check some stats
-            return getRingInfo(a).compareTo(getRingInfo(b));
+            RingInfo ringA = getSmallRingInfo(a);
+            RingInfo ringB = getSmallRingInfo(b);
+            if (ringA == null && ringB == null)
+                return 0;
+            else if (ringA != null && ringB == null)
+                return -1;
+            else if (ringA == null)
+                return +1;
+            return ringA.compareTo(ringB);
         }
     }
 
