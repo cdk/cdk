@@ -118,7 +118,7 @@ public class IsotopePatternRule implements IRule {
             }
             params[0] = params0;
         }
-        params[1] = toleranceMass;
+        params[1] = is.getTolerance();
         return params;
     }
 
