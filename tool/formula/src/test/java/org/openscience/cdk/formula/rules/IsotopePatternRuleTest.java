@@ -93,6 +93,39 @@ class IsotopePatternRuleTest extends FormulaRuleTest {
 
         Assertions.assertNotNull(objects[0]);
         Assertions.assertEquals(2, objects.length);
+        Assertions.assertEquals(0.0001, (Double) objects[1], 0.0);
+    }
+
+    /**
+     * A unit test suite for JUnit.
+     *
+     *
+     */
+    @Test
+    void testParametersRoundTrip() throws Exception {
+
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(Isotopes.major(IElement.C), 5);
+        formula.addIsotope(Isotopes.major(IElement.H), 13);
+        formula.addIsotope(Isotopes.major(IElement.N), 2);
+        formula.addIsotope(Isotopes.major(IElement.O), 2);
+        formula.setCharge(0);
+
+        List<double[]> spectrum = new ArrayList<>();
+        spectrum.add(new double[]{133.0977, 100.00});
+        spectrum.add(new double[]{134.09475, 0.6});
+        spectrum.add(new double[]{134.1010, 5.4});
+
+        IRule rule = new IsotopePatternRule();
+        Object[] params = new Object[2];
+        params[0] = spectrum;
+        params[1] = 0.0001;
+        rule.setParameters(params);
+
+        IRule restored = new IsotopePatternRule();
+        restored.setParameters(rule.getParameters());
+
+        Assertions.assertEquals(rule.validate(formula), restored.validate(formula), 0.0);
     }
 
     /**
