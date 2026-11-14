@@ -2312,7 +2312,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return the field name
      */
     static String dataHeader(final String line) {
-        if (line.length() > 2 && line.charAt(0) != '>' && line.charAt(1) != ' ') return null;
+        if (line.isEmpty() || line.charAt(0) != '>') return null;
         int i = line.indexOf('<', 2);
         if (i < 0) return null;
         int j = line.indexOf('>', i);
