@@ -2057,6 +2057,37 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    private static String readSgroupData(String dataLines) throws Exception {
+        String input = "\n\n\n"
+                + "  1  0  0  0  0  0            999 V2000\n"
+                + "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\n"
+                + "M  STY  1   1 DAT\n"
+                + "M  SAL   1  1   1\n"
+                + "M  SDT   1 FIELD\n"
+                + dataLines
+                + "M  END\n";
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+            return (String) sgroups.get(0).getValue(SgroupKey.Data);
+        }
+    }
+
+    @Test
+    void dataSgroupReadsFullLines() throws Exception {
+        String digits = "0123456789012345678901234567890123456789012345678901234567890123456789"; // 70 characters
+        String letters = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopq"; // 69 characters
+        String longData = "Some long data Sgroup, the semantics are you read but break here --->"
+                + "aditional text is on a new line";
+        assertThat(readSgroupData("M  SED   1 " + longData + "\n"), is(longData));
+        assertThat(readSgroupData("M  SED   1 " + digits.substring(0, 68) + "\n"), is(digits.substring(0, 68)));
+        assertThat(readSgroupData("M  SED   1 " + digits.substring(0, 69) + "\n"), is(digits.substring(0, 69)));
+        assertThat(readSgroupData("M  SCD   1 " + digits.substring(0, 69) + "\n"
+                                  + "M  SCD   1 " + letters + "\n"
+                                  + "M  SED   1 \n"),
+                   is(digits.substring(0, 69) + letters));
+    }
+
     @Test
     void testNoChiralFlag() throws Exception {
         final String input = "\n" +
