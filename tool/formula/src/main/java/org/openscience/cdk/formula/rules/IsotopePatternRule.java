@@ -58,7 +58,7 @@ public class IsotopePatternRule implements IRule {
     private static final ILoggingTool      logger        = LoggingToolFactory.createLoggingTool(IsotopePatternRule.class);
 
     /** Accuracy on the mass measuring isotope pattern*/
-    private staitc final double DEFAULT_TOLERANCE_MASS = 0.001;
+    private static final double DEFAULT_TOLERANCE_MASS = 0.001;
 
     private IsotopePattern           pattern;
 
