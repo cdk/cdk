@@ -95,19 +95,24 @@ public class MolecularFormulaGenerator implements IFormulaGenerator {
         // instead we simply fallback to the full enumeration method
         if (maxMass - minMass >= 1) return true;
         if (maxMass > 400000) return true;
+
+        int alphabetSize = 0;
+        double smallestMass = Double.POSITIVE_INFINITY;
+        for (IIsotope i : mfRange.isotopes()) {
+            if (mfRange.getIsotopeCountMax(i) > 0) {
+                alphabetSize++;
+                smallestMass = Math.min(smallestMass, i.getExactMass());
+            }
+        }
+
         // if the number of elements to decompose is very small
         // we fall back to the full enumeration methods as the
         // minimal decomposable mass of a certain residue class might
         // exceed the 32 bit integer space
-        if (mfRange.getIsotopeCount() <= 2) return true;
+        if (alphabetSize <= 2) return true;
 
         // if the mass of the smallest element in alphabet is large
         // it is more efficient to use the full enumeration method
-        double smallestMass = Double.POSITIVE_INFINITY;
-        for (IIsotope i : mfRange.isotopes()) {
-            smallestMass = Math.min(smallestMass, i.getExactMass());
-        }
-
         return smallestMass > 5;
     }
 

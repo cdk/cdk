@@ -322,6 +322,59 @@ class MolecularFormulaGeneratorTest {
                 .getMolecularFormula(0)));
     }
 
+    @Test
+    void testDisabledElementsDoNotChangeCarbonFormulas() throws Exception {
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(Isotopes.major(IElement.C), 0, 10);
+
+        MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 119.9, 120.1, mfRange);
+        IMolecularFormulaSet expected = generator.getAllFormulas();
+        Assertions.assertEquals(1, expected.size());
+        Assertions.assertEquals("C10", MolecularFormulaManipulator.getString(expected.getMolecularFormula(0)));
+
+        mfRange.addIsotope(Isotopes.major(IElement.H), 0, 0);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 0, 0);
+
+        generator = new MolecularFormulaGenerator(builder, 119.9, 120.1, mfRange);
+        Assertions.assertTrue(generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
+        IMolecularFormulaSet actual = generator.getAllFormulas();
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(MolecularFormulaManipulator.getString(expected.getMolecularFormula(0)),
+                                MolecularFormulaManipulator.getString(actual.getMolecularFormula(0)));
+    }
+
+    @Test
+    void testUseFullEnumerationWithTwoEnabledElements() throws Exception {
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(Isotopes.major(IElement.C), 0, 10);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 0, 20);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 0, 0);
+
+        MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 26.015, 26.016, mfRange);
+        Assertions.assertTrue(generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
+        IMolecularFormulaSet formulas = generator.getAllFormulas();
+        Assertions.assertEquals(1, formulas.size());
+        Assertions.assertEquals("C2H2", MolecularFormulaManipulator.getString(formulas.getMolecularFormula(0)));
+    }
+
+    @Test
+    void testAllElementsDisabled() throws Exception {
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(Isotopes.major(IElement.C), 0, 0);
+        mfRange.addIsotope(Isotopes.major(IElement.H), 0, 0);
+        mfRange.addIsotope(Isotopes.major(IElement.O), 0, 0);
+
+        MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 0, 0.1, mfRange);
+        Assertions.assertTrue(generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
+        IMolecularFormulaSet formulas = generator.getAllFormulas();
+        Assertions.assertEquals(1, formulas.size());
+        Assertions.assertEquals(0, formulas.getMolecularFormula(0).getIsotopeCount());
+        Assertions.assertNull(generator.getNextFormula());
+
+        generator = new MolecularFormulaGenerator(builder, 119.9, 120.1, mfRange);
+        Assertions.assertEquals(0, generator.getAllFormulas().size());
+    }
+
     /**
      * Test to find MF=C10000, MW=120000.0 using only carbons.
      */
@@ -406,6 +459,10 @@ class MolecularFormulaGeneratorTest {
 
         MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 1023.000, 1023.002, mfRange);
         Assertions.assertTrue(generator.formulaGenerator instanceof FullEnumerationFormulaGenerator, "generator implementation should be instance of FullEnumerationFormulaGenerator");
+
+        mfRange.addIsotope(Isotopes.major(IElement.H), 0, 0);
+        generator = new MolecularFormulaGenerator(builder, 1023.000, 1023.002, mfRange);
+        Assertions.assertTrue(generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
     }
 
     /**
@@ -473,6 +530,10 @@ class MolecularFormulaGeneratorTest {
 
         MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 230.002, 230.004, mfRange);
         Assertions.assertTrue(generator.formulaGenerator instanceof RoundRobinFormulaGenerator, "generator implementation should be instance of RoundRobinFormulaGenerator");
+
+        mfRange.addIsotope(Isotopes.major(IElement.S), 0, 0);
+        generator = new MolecularFormulaGenerator(builder, 230.002, 230.004, mfRange);
+        Assertions.assertTrue(generator.formulaGenerator instanceof RoundRobinFormulaGenerator);
     }
 
     /**
