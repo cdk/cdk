@@ -1504,7 +1504,17 @@ public class CMLCoreModule implements ICMLModule {
             if (atomCustomProperty.get(i) != null) {
                 Iterator<String> it = atomCustomProperty.get(i).iterator();
                 while (it.hasNext()) {
-                    currentAtom.setProperty(it.next(), it.next());
+                    String key = it.next();
+                    String value = it.next();
+                    if (CDKConstants.ATOM_ATOM_MAPPING.equals(key)) {
+                        try {
+                            currentAtom.setProperty(key, Integer.valueOf(value));
+                        } catch (NumberFormatException exception) {
+                            logger.warn("Ignoring invalid atom-atom mapping: ", value);
+                        }
+                    } else {
+                        currentAtom.setProperty(key, value);
+                    }
                 }
             }
 

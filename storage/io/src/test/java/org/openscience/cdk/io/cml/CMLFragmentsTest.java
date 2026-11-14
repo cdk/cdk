@@ -28,6 +28,7 @@ import javax.vecmath.Vector3d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,6 +58,26 @@ class CMLFragmentsTest {
         Assertions.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
         Assertions.assertEquals("a1", atom.getID());
+    }
+
+    @Test
+    void testInvalidAtomAtomMapping() throws Exception {
+        String cmlString = "<molecule id='m1'><atomArray>"
+                + "<atom id='a1' elementType='C'>"
+                + "<scalar title='cdk:AtomAtomMapping'>not-an-integer</scalar>"
+                + "<scalar title='customAtomProperty'>007</scalar></atom>"
+                + "<atom id='a2' elementType='C'>"
+                + "<scalar title='cdk:AtomAtomMapping'>2147483648</scalar></atom>"
+                + "</atomArray></molecule>";
+
+        IAtomContainer mol = checkForSingleMoleculeFile(parseCMLString(cmlString));
+
+        Assertions.assertEquals(2, mol.getAtomCount());
+        for (IAtom atom : mol.atoms()) {
+            Assertions.assertEquals(0, atom.getMapIdx());
+            Assertions.assertNull(atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING));
+        }
+        Assertions.assertEquals("007", mol.getAtom(0).getProperty("customAtomProperty"));
     }
 
     @Test

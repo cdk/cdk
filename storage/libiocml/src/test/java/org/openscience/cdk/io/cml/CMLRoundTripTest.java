@@ -627,6 +627,54 @@ class CMLRoundTripTest extends CDKTestCase {
         }
     }
 
+    @Test
+    void testAtomAtomMapping() throws Exception {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        Atom atom1 = new Atom("C");
+        atom1.setImplicitHydrogenCount(3);
+        atom1.setMapIdx(7);
+        Atom atom2 = new Atom("C");
+        atom2.setImplicitHydrogenCount(3);
+        atom2.setMapIdx(42);
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addBond(new Bond(atom1, atom2, IBond.Order.SINGLE));
+
+        IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
+
+        Assertions.assertEquals(2, roundTrippedMol.getAtomCount());
+        Assertions.assertEquals(1, roundTrippedMol.getBondCount());
+        Assertions.assertEquals(atom1.getMapIdx(), roundTrippedMol.getAtom(0).getMapIdx());
+        Assertions.assertEquals(atom2.getMapIdx(), roundTrippedMol.getAtom(1).getMapIdx());
+    }
+
+    @Test
+    void testUnmappedAtom() throws Exception {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        mol.addAtom(new Atom("C"));
+
+        IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
+
+        Assertions.assertEquals(1, roundTrippedMol.getAtomCount());
+        IAtom atom = roundTrippedMol.getAtom(0);
+        Assertions.assertEquals(0, atom.getMapIdx());
+        Assertions.assertNull(atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING));
+    }
+
+    @Test
+    void testNumericAtomPropertyRemainsString() throws Exception {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        Atom atom = new Atom("C");
+        atom.setProperty("customAtomProperty", "007");
+        mol.addAtom(atom);
+
+        IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
+
+        Object value = roundTrippedMol.getAtom(0).getProperty("customAtomProperty");
+        Assertions.assertTrue(value instanceof String);
+        Assertions.assertEquals("007", value);
+    }
+
     /**
      * Tests whether the custom bond properties survive the CML round-trip
      * @throws Exception
