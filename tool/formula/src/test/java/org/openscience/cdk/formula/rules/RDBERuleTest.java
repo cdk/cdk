@@ -100,6 +100,39 @@ class RDBERuleTest extends FormulaRuleTest {
 
     }
 
+    @Test
+    void testValidateAboveMaximum() throws Exception {
+
+        IRule rule = new RDBERule();
+        rule.setParameters(new Object[]{0.0, 10.0});
+
+        IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C20H10", builder);
+
+        Assertions.assertEquals(0.0, rule.validate(formula), 0.0001);
+    }
+
+    @Test
+    void testValidateAtMaximum() throws Exception {
+
+        IRule rule = new RDBERule();
+        rule.setParameters(new Object[]{0.0, 10.0});
+
+        IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C20H22", builder);
+
+        Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
+    }
+
+    @Test
+    void testValidateMaximumAboveThirty() throws Exception {
+
+        IRule rule = new RDBERule();
+        rule.setParameters(new Object[]{0.0, 40.0});
+
+        IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C40H10", builder);
+
+        Assertions.assertEquals(1.0, rule.validate(formula), 0.0001);
+    }
+
     /**
      * A unit test suite for JUnit.
      *

@@ -124,7 +124,7 @@ public class RDBERule implements IRule {
 
         List<Double> RDBEList = getRDBEValue(formula);
         for (double RDBE : RDBEList) {
-            if (min <= RDBE && RDBE <= 30) if (validate(formula, RDBE)) return 1.0;
+            if (min <= RDBE && RDBE <= max) if (validate(formula, RDBE)) return 1.0;
         }
 
         return 0.0;
