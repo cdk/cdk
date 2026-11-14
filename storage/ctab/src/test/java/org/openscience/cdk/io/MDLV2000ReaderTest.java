@@ -48,6 +48,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -1272,6 +1273,53 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void dataHeader_3() {
         assertThat(MDLV2000Reader.dataHeader("> 55 (MD-08974) <BOILING.POINT> DT12"), is("BOILING.POINT"));
+    }
+
+    @Test
+    void dataHeader_requiresLeadingMarker() {
+        assertThat(MDLV2000Reader.dataHeader(""), is(nullValue()));
+        assertThat(MDLV2000Reader.dataHeader("p < 0.05 and q > 0.1"), is(nullValue()));
+        assertThat(MDLV2000Reader.dataHeader(" <NAME>"), is(nullValue()));
+        assertThat(MDLV2000Reader.dataHeader("  > <NAME>"), is(nullValue()));
+    }
+
+    @Test
+    void dataHeader_validVariants() {
+        assertThat(MDLV2000Reader.dataHeader(">  <NAME>"), is("NAME"));
+        assertThat(MDLV2000Reader.dataHeader("> <NAME>"), is("NAME"));
+        assertThat(MDLV2000Reader.dataHeader(">  25  <NAME>"), is("NAME"));
+        assertThat(MDLV2000Reader.dataHeader("> <NAME> (DT12)"), is("NAME"));
+        assertThat(MDLV2000Reader.dataHeader("> <NAME> extra text"), is("NAME"));
+    }
+
+    @Test
+    void sdValueWithAngleBracketsRoundTrip() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer molecule = builder.newAtomContainer();
+        molecule.addAtom(builder.newInstance(IAtom.class, "C"));
+        molecule.setProperty("COMPARISON", "p < 0.05 and q > 0.1");
+        molecule.setProperty("AFTER", "retained");
+
+        StringWriter output = new StringWriter();
+        try (SDFWriter writer = new SDFWriter(output)) {
+            writer.write(molecule);
+        }
+
+        try (MDLV2000Reader reader = new MDLV2000Reader(new StringReader(output.toString()))) {
+            IAtomContainer read = reader.read(builder.newAtomContainer());
+            assertThat(read.getProperty("COMPARISON"), is("p < 0.05 and q > 0.1"));
+            assertThat(read.getProperty("AFTER"), is("retained"));
+            assertThat(read.getProperties(), is(molecule.getProperties()));
+        }
+
+        try (IteratingSDFReader reader = new IteratingSDFReader(new StringReader(output.toString()), builder)) {
+            assertThat(reader.hasNext(), is(true));
+            IAtomContainer read = reader.next();
+            assertThat(read.getProperty("COMPARISON"), is("p < 0.05 and q > 0.1"));
+            assertThat(read.getProperty("AFTER"), is("retained"));
+            assertThat(read.getProperties(), is(molecule.getProperties()));
+            assertThat(reader.hasNext(), is(false));
+        }
     }
 
     @Test
