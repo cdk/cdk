@@ -53,7 +53,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  */
 public class GaussianInputWriter extends DefaultChemObjectWriter {
 
-    static BufferedWriter writer;
+    BufferedWriter writer;
 
     IOSetting             method;
     IOSetting             basis;

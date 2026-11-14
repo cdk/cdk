@@ -24,9 +24,13 @@ package org.openscience.cdk.io.program;
 
 import java.io.StringWriter;
 
+import javax.vecmath.Point3d;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.test.io.ChemObjectIOTest;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -63,5 +67,30 @@ class GaussianInputWriterTest extends ChemObjectIOTest {
         gaussianWriter.close();
         String output = writer.toString();
         Assertions.assertNotSame(0, output.length());
+    }
+
+    @Test
+    void testIndependentWriters() throws Exception {
+        IAtomContainer helium = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        helium.addAtom(new Atom("He", new Point3d(0.0, 0.0, 0.0)));
+        IAtomContainer neon = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        neon.addAtom(new Atom("Ne", new Point3d(0.0, 0.0, 0.0)));
+        StringWriter heliumOutput = new StringWriter();
+        StringWriter neonOutput = new StringWriter();
+
+        try (GaussianInputWriter heliumWriter = new GaussianInputWriter(heliumOutput)) {
+            try (GaussianInputWriter neonWriter = new GaussianInputWriter(neonOutput)) {
+                heliumWriter.write(helium);
+                neonWriter.write(neon);
+            }
+            helium.getAtom(0).setPoint3d(new Point3d(1.0, 0.0, 0.0));
+            heliumWriter.write(helium);
+        }
+
+        Assertions.assertTrue(heliumOutput.toString().contains("He 0 0.0 0.0 0.0"));
+        Assertions.assertTrue(heliumOutput.toString().contains("He 0 1.0 0.0 0.0"));
+        Assertions.assertFalse(heliumOutput.toString().contains("Ne 0 "));
+        Assertions.assertTrue(neonOutput.toString().contains("Ne 0 0.0 0.0 0.0"));
+        Assertions.assertFalse(neonOutput.toString().contains("He 0 "));
     }
 }
