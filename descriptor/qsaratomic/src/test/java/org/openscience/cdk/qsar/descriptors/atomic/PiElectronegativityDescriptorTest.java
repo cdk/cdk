@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -57,6 +58,36 @@ class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
     @BeforeEach
     void setUp() throws Exception {
         setDescriptor(PiElectronegativityDescriptor.class);
+    }
+
+    @Test
+    void testLonePairPreparation() throws Exception {
+        SmilesParser sp = new SmilesParser(builder);
+        IAtomContainer mol = sp.parseSmiles("FC");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        addExplicitHydrogens(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        Assertions.assertEquals(5, mol.getAtomCount());
+        Assertions.assertEquals(0, mol.getLonePairCount());
+
+        IAtomContainer saturated = mol.clone();
+        lpcheck.saturate(saturated);
+        Assertions.assertEquals(3, saturated.getLonePairCount());
+
+        IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
+        descriptor.setParameters(new Object[]{10, true});
+        double first = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+        int lonePairsAfterFirst = mol.getLonePairCount();
+        double second = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+        double expected = ((DoubleResult) descriptor.calculate(saturated.getAtom(0), saturated).getValue()).doubleValue();
+        Assertions.assertTrue(Double.isFinite(expected) && expected > 0.0);
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(0, lonePairsAfterFirst, "Input lone pairs after the first call"),
+                () -> Assertions.assertEquals(0, mol.getLonePairCount(), "Input lone pairs after the second call"),
+                () -> Assertions.assertEquals(first, second, 1e-9, "Repeated calculations"),
+                () -> Assertions.assertEquals(expected, first, 1e-9, "Calculation with pre-added lone pairs"));
     }
 
     /**
