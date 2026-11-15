@@ -135,10 +135,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     /** Delimits Structure-Data (SD) Files. */
     private static final String SDF_RECORD_DELIMITER = "$$$$";
 
-    /** An unnamed SD header needs a DT field number, optionally with registry numbers. */
-    private static final Pattern SD_FIELD_NUMBER_HEADER = Pattern.compile(
-            ">\\s++(?:(?:[0-9]++|\\([^()]*+\\))\\s*+)*+DT[0-9]++" +
-            "(?:\\s*+(?:[0-9]++|\\([^()]*+\\)))*+\\s*+");
+    /** Keep delimited names intact and allow adjacent header components. */
+    private static final Pattern SD_DATA_HEAD_PART = Pattern.compile(
+            "<[^>]*>|\\([^()]*\\)|DT[0-9]+|[0-9]+|[^ \\t]+");
 
     /** Valid pseudo labels. */
     private static final Set<String> PSEUDO_LABELS    = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("*","A","Q","L","LP","R","R#")));
@@ -2283,14 +2282,15 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         while (!endOfRecord(line = input.readLine())) {
 
-            final String newHeader = dataHeader(line);
+            final DataHead newHeader = new DataHead();
+            final String fieldName = dataHeader(line);
 
-            // Preserve named-header leniency and recognize unnamed numbered fields.
-            if (newHeader != null || SD_FIELD_NUMBER_HEADER.matcher(line).matches()) {
+            // Keep the existing named-header acceptance.
+            if (parseDataHead(newHeader, line) || fieldName != null) {
 
                 if (header != null) container.setProperty(header, data.toString());
 
-                header = newHeader;
+                header = fieldName;
                 wrap = false;
                 data.setLength(0);
 
@@ -2308,6 +2308,49 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
 
         if (header != null) container.setProperty(header, data.toString());
+    }
+
+    private static final class DataHead {
+        Integer fieldNum;
+        String fieldName;
+        Integer intRegNum;
+        String extRegNum;
+    }
+
+    /** Parse an SD header with at most one of each component type. */
+    private static boolean parseDataHead(DataHead header, String text) {
+        if (text == null || text.isEmpty() || text.charAt(0) != '>')
+            return false;
+        Matcher parts = SD_DATA_HEAD_PART.matcher(text);
+        parts.region(1, text.length());
+        try {
+            while (parts.find()) {
+                String part = parts.group();
+                if (part.startsWith("<") && part.endsWith(">")) {
+                    // Preserve dataHeader()'s search for a name from index 2.
+                    if (header.fieldName != null || parts.start() == 1)
+                        return false;
+                    header.fieldName = part.substring(1, part.length() - 1);
+                } else if (part.matches("\\([^()]*\\)")) {
+                    if (header.extRegNum != null)
+                        return false;
+                    header.extRegNum = part.substring(1, part.length() - 1);
+                } else if (part.matches("DT[1-9][0-9]*")) {
+                    if (header.fieldNum != null)
+                        return false;
+                    header.fieldNum = Integer.parseInt(part.substring(2));
+                } else if (part.matches("[1-9][0-9]*")) {
+                    if (header.intRegNum != null)
+                        return false;
+                    header.intRegNum = Integer.parseInt(part);
+                } else {
+                    return false;
+                }
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return header.fieldName != null || header.fieldNum != null;
     }
 
     /**
