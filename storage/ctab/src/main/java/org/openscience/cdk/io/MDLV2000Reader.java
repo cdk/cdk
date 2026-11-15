@@ -135,6 +135,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     /** Delimits Structure-Data (SD) Files. */
     private static final String SDF_RECORD_DELIMITER = "$$$$";
 
+    /** An unnamed SD header needs a DT field number, optionally with registry numbers. */
+    private static final Pattern SD_FIELD_NUMBER_HEADER = Pattern.compile(
+            ">\\s++(?:(?:[0-9]++|\\([^()]*+\\))\\s*+)*+DT[0-9]++" +
+            "(?:\\s*+(?:[0-9]++|\\([^()]*+\\)))*+\\s*+");
+
     /** Valid pseudo labels. */
     private static final Set<String> PSEUDO_LABELS    = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("*","A","Q","L","LP","R","R#")));
     
@@ -2279,7 +2284,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             final String newHeader = dataHeader(line);
 
-            if (newHeader != null) {
+            // Preserve named-header leniency and recognize unnamed numbered fields.
+            if (newHeader != null || SD_FIELD_NUMBER_HEADER.matcher(line).matches()) {
 
                 if (header != null) container.setProperty(header, data.toString());
 
@@ -2287,7 +2293,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 wrap = false;
                 data.setLength(0);
 
-            } else {
+            } else if (header != null) {
 
                 if (data.length() > 0 || !line.equals(" ")) line = line.trim();
 
