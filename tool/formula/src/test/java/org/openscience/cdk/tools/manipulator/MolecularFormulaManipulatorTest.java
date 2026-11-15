@@ -1254,6 +1254,17 @@ class MolecularFormulaManipulatorTest {
     }
 
     @Test
+    void deprotonateHClInsufficientHydrogens() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("HCl", bldr);
+        String formula = MolecularFormulaManipulator.getString(mf);
+        Integer charge = mf.getCharge();
+        Assertions.assertFalse(adjustProtonation(mf, -2));
+        assertThat(MolecularFormulaManipulator.getString(mf), is(formula));
+        assertThat(mf.getCharge(), is(charge));
+    }
+
+    @Test
     void deprontateHCl() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("HCl", bldr);
