@@ -85,6 +85,7 @@ import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -1351,6 +1352,108 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         verify(mock).setProperty("ALTERNATE.NAMES", "SYLVAN");
         verify(mock).setProperty("DATE", "09-23-1980");
         verify(mock).setProperty("CRC.NUMBER", "F-0213");
+    }
+
+    @Test
+    void readNonStructuralData_fieldNumberBetweenNamedFields() throws Exception {
+        for (String header : new String[]{"> DT1255", "> 25 DT1255",
+                "> 55(MD-08974)DT1255", "> DT1255 (MD-08974) 55"}) {
+            String sb = "> <A>\nvalA\n\n" +
+                    header + "\nnumbered\nignored\n\n" +
+                    "> <B>\nvalB\n\n$$$$\n";
+            BufferedReader input = new BufferedReader(new StringReader(sb));
+            IAtomContainer mock = mock(IAtomContainer.class);
+
+            MDLV2000Reader.readNonStructuralData(input, mock);
+
+            verify(mock).setProperty("A", "valA");
+            verify(mock).setProperty("B", "valB");
+            verifyNoMoreInteractions(mock);
+        }
+    }
+
+    @Test
+    void readNonStructuralData_fieldNumberBeforeNamedField() throws Exception {
+        String sb = "> DT1255\nnumbered\nignored\n\n" +
+                "> <A>\nvalA\n\n$$$$\n";
+        BufferedReader input = new BufferedReader(new StringReader(sb));
+        IAtomContainer mock = mock(IAtomContainer.class);
+
+        MDLV2000Reader.readNonStructuralData(input, mock);
+
+        verify(mock).setProperty("A", "valA");
+        verifyNoMoreInteractions(mock);
+    }
+
+    @Test
+    void readNonStructuralData_namedHeaderWithFieldNumber() throws Exception {
+        for (String header : new String[]{"> 55 (MD-08974) <A> DT12",
+                ">25 <A>", ">55(MD-08974)<A>DT12"}) {
+            String sb = header + "\n" +
+                    "p < 0.05 and q > 0.1\nsecond line\n\n" +
+                    "> <B>\nvalB\n\n$$$$\n";
+            BufferedReader input = new BufferedReader(new StringReader(sb));
+            IAtomContainer mock = mock(IAtomContainer.class);
+
+            MDLV2000Reader.readNonStructuralData(input, mock);
+
+            verify(mock).setProperty("A", "p < 0.05 and q > 0.1\nsecond line");
+            verify(mock).setProperty("B", "valB");
+            verifyNoMoreInteractions(mock);
+        }
+    }
+
+    @Test
+    void readNonStructuralData_greaterThanValue() throws Exception {
+        for (String value : new String[]{">1", ">10000", "> 5 mg", "<5",
+                "> text DT1255", "> DT1255 mg", "> (MD-08974)", "> (DT1255)",
+                "> DT1255 (MD-08974) extra"}) {
+            String sb = "> <A>\n" + value + "\n\n$$$$\n";
+            BufferedReader input = new BufferedReader(new StringReader(sb));
+            IAtomContainer mock = mock(IAtomContainer.class);
+
+            MDLV2000Reader.readNonStructuralData(input, mock);
+
+            verify(mock).setProperty("A", value);
+            verifyNoMoreInteractions(mock);
+        }
+    }
+
+    @Test
+    void readNonStructuralData_greaterThanValueBetweenNamedFields() throws Exception {
+        for (String value : new String[]{">1", ">10000", "> 5 mg", "<5",
+                "> text DT1255", "> DT1255 mg", "> (MD-08974)", "> (DT1255)",
+                "> DT1255 (MD-08974) extra"}) {
+            String sb = "> <A>\n" + value + "\n\n" +
+                    "> <B>\nvalB\n\n$$$$\n";
+            BufferedReader input = new BufferedReader(new StringReader(sb));
+            IAtomContainer mock = mock(IAtomContainer.class);
+
+            MDLV2000Reader.readNonStructuralData(input, mock);
+
+            verify(mock).setProperty("A", value);
+            verify(mock).setProperty("B", "valB");
+            verifyNoMoreInteractions(mock);
+        }
+    }
+
+    @Test
+    void readNonStructuralData_longHeaderLikeValue() throws Exception {
+        StringBuilder tokens = new StringBuilder();
+        for (int i = 0; i < 10000; i++) tokens.append("1 (R) ");
+
+        for (String value : new String[]{"> " + tokens + "x", "> DT1255 " + tokens + "x"}) {
+            String sb = "> <A>\n" + value + "\n\n" +
+                    "> <B>\nvalB\n\n$$$$\n";
+            BufferedReader input = new BufferedReader(new StringReader(sb));
+            IAtomContainer mock = mock(IAtomContainer.class);
+
+            MDLV2000Reader.readNonStructuralData(input, mock);
+
+            verify(mock).setProperty("A", value);
+            verify(mock).setProperty("B", "valB");
+            verifyNoMoreInteractions(mock);
+        }
     }
 
     @Test
