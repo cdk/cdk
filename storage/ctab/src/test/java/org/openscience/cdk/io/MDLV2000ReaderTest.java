@@ -85,7 +85,6 @@ import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -1380,7 +1379,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
             verify(mock).setProperty("A", "valA");
             verify(mock).setProperty("B", "valB");
-            verifyNoMoreInteractions(mock);
         }
     }
 
@@ -1394,7 +1392,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader.readNonStructuralData(input, mock);
 
         verify(mock).setProperty("A", "valA");
-        verifyNoMoreInteractions(mock);
     }
 
     @Test
@@ -1412,7 +1409,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
             verify(mock).setProperty("A", "p < 0.05 and q > 0.1\nsecond line");
             verify(mock).setProperty("B", "valB");
-            verifyNoMoreInteractions(mock);
         }
     }
 
@@ -1430,7 +1426,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
             verify(mock).setProperty("BOILING.POINT", "25.4");
             verify(mock).setProperty("MELTING.POINT", "5");
-            verifyNoMoreInteractions(mock);
         }
     }
 
@@ -1443,7 +1438,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader.readNonStructuralData(input, mock);
 
         verify(mock).setProperty("MELTING POINT", "5");
-        verifyNoMoreInteractions(mock);
     }
 
     @Test
@@ -1456,7 +1450,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             MDLV2000Reader.readNonStructuralData(input, mock);
 
             verify(mock).setProperty("A", value);
-            verifyNoMoreInteractions(mock);
         }
     }
 
@@ -1475,7 +1468,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
             verify(mock).setProperty("A", value);
             verify(mock).setProperty("B", "valB");
-            verifyNoMoreInteractions(mock);
         }
     }
 

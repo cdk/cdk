@@ -135,10 +135,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     /** Delimits Structure-Data (SD) Files. */
     private static final String SDF_RECORD_DELIMITER = "$$$$";
 
-    /** Keep delimited names intact and allow adjacent header components. */
-    private static final Pattern SD_DATA_HEAD_PART = Pattern.compile(
-            "<[^>]*>|\\([^()]*\\)|DT[0-9]+|[0-9]+|[^ \\t]+");
-
     /** Valid pseudo labels. */
     private static final Set<String> PSEUDO_LABELS    = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("*","A","Q","L","LP","R","R#")));
     
@@ -2282,14 +2278,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         while (!endOfRecord(line = input.readLine())) {
 
             final DataHead newHeader = new DataHead();
-            final String fieldName = dataHeader(line);
 
-            // Keep the existing named-header acceptance.
-            if (parseDataHead(newHeader, line) || fieldName != null) {
+            if (parseDataHead(newHeader, line)) {
 
                 if (header != null) container.setProperty(header, data.toString());
 
-                header = fieldName;
+                header = newHeader.fieldName;
                 wrap = false;
                 data.setLength(0);
 
@@ -2316,21 +2310,42 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         String extRegNum;
     }
 
-    /** Parse an SD header with at most one of each component type. */
+    /** Parse a named SD header or an unnamed header with at most one of each component type. */
     private static boolean parseDataHead(DataHead header, String text) {
         if (text == null || text.isEmpty() || text.charAt(0) != '>')
             return false;
-        Matcher parts = SD_DATA_HEAD_PART.matcher(text);
-        parts.region(1, text.length());
+        // Keep the first name from index 2, even among otherwise unstructured text.
+        int nameStart = text.indexOf('<', 2);
+        if (nameStart >= 0) {
+            int nameEnd = text.indexOf('>', nameStart + 1);
+            if (nameEnd >= 0) {
+                header.fieldName = text.substring(nameStart + 1, nameEnd);
+                return true;
+            }
+        }
         try {
-            while (parts.find()) {
-                String part = parts.group();
-                if (part.startsWith("<") && part.endsWith(">")) {
-                    // Preserve dataHeader()'s search for a name from index 2.
-                    if (header.fieldName != null || parts.start() == 1)
+            for (int pos = 1; pos < text.length();) {
+                char ch = text.charAt(pos);
+                if (ch == ' ' || ch == '\t') {
+                    pos++;
+                    continue;
+                }
+                int start = pos++;
+                if (ch == '<' || ch == '(') {
+                    int end = text.indexOf(ch == '<' ? '>' : ')', pos);
+                    if (end < 0)
                         return false;
-                    header.fieldName = part.substring(1, part.length() - 1);
-                } else if (part.matches("\\([^()]*\\)")) {
+                    pos = end + 1;
+                } else {
+                    while (pos < text.length()) {
+                        ch = text.charAt(pos);
+                        if (ch == ' ' || ch == '\t' || ch == '<' || ch == '(')
+                            break;
+                        pos++;
+                    }
+                }
+                String part = text.substring(start, pos);
+                if (part.startsWith("(") && part.endsWith(")") && part.indexOf('(', 1) < 0) {
                     if (header.extRegNum != null)
                         return false;
                     header.extRegNum = part.substring(1, part.length() - 1);
@@ -2349,7 +2364,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         } catch (NumberFormatException e) {
             return false;
         }
-        return header.fieldName != null || header.fieldNum != null;
+        // Only unnamed headers require a field number and fully classified, unique parts.
+        return header.fieldNum != null;
     }
 
     /**
@@ -2361,12 +2377,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return the field name
      */
     static String dataHeader(final String line) {
-        if (line.isEmpty() || line.charAt(0) != '>') return null;
-        int i = line.indexOf('<', 2);
-        if (i < 0) return null;
-        int j = line.indexOf('>', i);
-        if (j < 0) return null;
-        return line.substring(i + 1, j);
+        DataHead header = new DataHead();
+        return parseDataHead(header, line) ? header.fieldName : null;
     }
 
     /**
