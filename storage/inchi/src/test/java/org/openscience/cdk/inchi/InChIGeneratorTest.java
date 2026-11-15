@@ -990,6 +990,34 @@ class InChIGeneratorTest {
     }
 
     @Test
+    void warnOnEmptyStructureOption() {
+        InchiOptions options = InChIOptionParser.parseString("WarnOnEmptyStructure");
+        assertThat(options.getFlags()).containsExactly(InchiFlag.WarnOnEmptyStructure);
+        assertThat(options.getTimeoutMilliSeconds()).isZero();
+    }
+
+    @Test
+    void timeoutOption() {
+        InchiOptions options = InChIOptionParser.parseString("W60");
+        assertThat(options.getFlags()).isEmpty();
+        assertThat(options.getTimeoutMilliSeconds()).isEqualTo(60000);
+    }
+
+    @Test
+    void timeoutAndWarnOnEmptyStructureOptions() {
+        InchiOptions options = InChIOptionParser.parseString("-W60, /WarnOnEmptyStructure");
+        assertThat(options.getFlags()).containsExactly(InchiFlag.WarnOnEmptyStructure);
+        assertThat(options.getTimeoutMilliSeconds()).isEqualTo(60000);
+    }
+
+    @Test
+    void malformedTimeoutOption() {
+        InchiOptions options = InChIOptionParser.parseString("W60 WW30 FixedH");
+        assertThat(options.getFlags()).containsExactly(InchiFlag.FixedH);
+        assertThat(options.getTimeoutMilliSeconds()).isEqualTo(60000);
+    }
+
+    @Test
     void testTc99() throws CDKException {
         IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         ac.addAtom(new Atom("99Tc"));
