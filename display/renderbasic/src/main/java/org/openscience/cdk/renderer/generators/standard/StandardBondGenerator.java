@@ -60,10 +60,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
 import static org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
-import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.*;
+import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.BondSeparation;
+import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.HashSpacing;
+import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.WaveSpacing;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.*;
 
 /**

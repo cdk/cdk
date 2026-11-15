@@ -40,6 +40,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
@@ -217,6 +218,18 @@ final class DoubleBondAligner {
         }
 
         @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+            RingInfo ringInfo = (RingInfo) o;
+            return size == ringInfo.size && numDouble == ringInfo.numDouble && numMetals == ringInfo.numMetals && numHetero == ringInfo.numHetero && Objects.equals(ring, ringInfo.ring);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(size, numDouble, numMetals, numHetero, ring);
+        }
+
+        @Override
         public int compareTo(RingInfo o) {
             // 1. fewer metals
             int cmp = Integer.compare(numMetals, o.numMetals);
@@ -306,17 +319,20 @@ final class DoubleBondAligner {
             Path2D path = macroPaths.get(macroBond);
             if (path != null)
                 return path;
-            assert macroBond.isInRing();
+            if (!macroBond.isInRing())
+                throw new IllegalArgumentException("Bond should be in a ring");
             
             List<IBond> bonds = Cycles.smallRing(macroBond);
-            assert bonds.size() >= 3;
+            if (!macroBond.isInRing())
+                throw new IllegalArgumentException("Bond should be in a ring");
 
             // convert the bond path to an atom path
             List<IAtom> atoms = new ArrayList<>();
             IAtom atom = bonds.get(0).getConnectedAtom(bonds.get(1));
             atoms.add(atom);
             for (int i = 1; i < bonds.size(); i++) {
-                atoms.add(atom = bonds.get(i).getOther(atom));
+                atom = bonds.get(i).getOther(atom);
+                atoms.add(atom);
             }
             assert bonds.get(0).contains(atoms.get(atoms.size()-1));
             assert atoms.size() == bonds.size();
@@ -347,7 +363,8 @@ final class DoubleBondAligner {
                 return -1;
             else if (a == null && b != null)
                 return +1;
-            assert a != null;
+            else if (a == null) // b == null as well!
+                return 0;
             // ring bonds preferred to chain bonds
             if (a.isInRing() && !b.isInRing())
                 return -1;
