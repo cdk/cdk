@@ -479,7 +479,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
                 case '>':  sb.append("&gt;"); break;
                 case '&':  sb.append("&amp;"); break;
                 default:
-                    if (ch < 0x1f)
+                    if (ch < 0x20)
                         sb.append("\uFFFD"); // control chars
                     else if (ch > 0xFFFD)
                         sb.append("\uFFFD");

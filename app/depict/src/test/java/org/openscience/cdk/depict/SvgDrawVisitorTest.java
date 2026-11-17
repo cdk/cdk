@@ -88,6 +88,14 @@ class SvgDrawVisitorTest {
         assertThat(output.getAttribute("id"), is(id));
         assertThat(output.getAttribute("class"), is(classes + " mol"));
     }
+  
+    @Test
+    void textReplacesUnitSeparator() {
+        SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
+        visitor.visit(new TextElement(25, 25, "A\u001FB < C", Color.BLACK));
+        assertThat(visitor.toString(), StringContains.containsString(
+                ">A\uFFFDB &lt; C</text>"));
+    }
 
     @Test
     void empty() {
