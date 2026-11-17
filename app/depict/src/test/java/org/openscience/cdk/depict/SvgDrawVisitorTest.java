@@ -34,11 +34,44 @@ import org.openscience.cdk.renderer.elements.TextElement;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.RoundRectangle2D;
+import java.io.StringReader;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.xml.sax.InputSource;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class SvgDrawVisitorTest {
+
+    @Test
+    void textReplacesXmlControlCharacters() throws Exception {
+        StringBuilder input = new StringBuilder();
+        StringBuilder expected = new StringBuilder();
+        for (char ch = 0; ch < 0x20; ch++) {
+            if (ch == '\t' || ch == '\n' || ch == '\r')
+                continue;
+            input.append(ch);
+            expected.append('\uFFFD');
+        }
+        assertThat(svgText(input.toString()), is(expected.toString()));
+    }
+
+    @Test
+    void textPreservesLegalXmlCharacters() throws Exception {
+        String input = "A\tB\n<>&\u03B1\u4E2D\uFFFD" + new String(Character.toChars(0x1F9EA));
+        assertThat(svgText(input), is(input));
+        // XML parsers normalize a literal carriage return to a line feed.
+        assertThat(svgText("A\rB"), is("A\nB"));
+    }
+
+    private String svgText(String text) throws Exception {
+        SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
+        visitor.visit(new TextElement(25, 25, text, Color.BLACK));
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        return factory.newDocumentBuilder().parse(new InputSource(new StringReader(visitor.toString())))
+                .getElementsByTagName("text").item(0).getTextContent();
+    }
 
     @Test
     void empty() {
