@@ -27,6 +27,9 @@ import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.api.parallel.Resources;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.MarkedElement;
@@ -37,12 +40,54 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Locale;
+import java.io.StringReader;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @ResourceLock(Resources.LOCALE)
 class SvgDrawVisitorTest {
+
+    @Test
+    void markedLineAttributes() throws Exception {
+        assertMarkedAttributes(new LineElement(0, 0, 1, 1, 0.5, Color.BLACK), "line");
+    }
+
+    @Test
+    void markedPathAttributes() throws Exception {
+        assertMarkedAttributes(GeneralPath.shapeOf(new RoundRectangle2D.Double(0, 0, 10, 10, 2, 2),
+                                                  Color.BLACK), "path");
+    }
+
+    @Test
+    void markedGroupAttributes() throws Exception {
+        assertMarkedAttributes(new RectangleElement(0, 0, 10, 10, Color.BLACK), "g");
+    }
+
+    private void assertMarkedAttributes(IRenderingElement element, String tag) throws Exception {
+        String id = "molecule'\"<&>";
+        String classes = "label'\"<&>\tline\nreturn\r";
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        mol.setProperty(MarkedElement.ID_KEY, id);
+        mol.setProperty(MarkedElement.CLASS_KEY, classes);
+        RendererModel model = new RendererModel();
+        model.set(RendererModel.MarkedOutput.class, true);
+        SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
+        visitor.setRendererModel(model);
+        visitor.visit(MarkedElement.markupMol(element, mol));
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        Element output = (Element) factory.newDocumentBuilder()
+                .parse(new InputSource(new StringReader(visitor.toString())))
+                .getElementsByTagName(tag).item("g".equals(tag) ? 1 : 0);
+        assertThat(output.getAttribute("id"), is(id));
+        assertThat(output.getAttribute("class"), is(classes + " mol"));
+    }
 
     @Test
     void empty() {
