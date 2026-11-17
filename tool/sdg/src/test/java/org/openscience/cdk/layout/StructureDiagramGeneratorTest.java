@@ -92,6 +92,39 @@ import static org.hamcrest.Matchers.lessThan;
 class StructureDiagramGeneratorTest {
 
     @Test
+    void trioxaCageRingBondLengthsAndStereo() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        String[] inputs = {"CC12COC(OC1)(OC2)C3CC3", "CC12CO[B-](OC1)(OC2)C3CC3",
+                           "CC12[C@H](F)OC(OC1)(OC2)C3CC3", "CC12[C@@H](F)O[B-](OC1)(OC2)C3CC3",
+                           "CC12COC(OC1)(OC2)c3ccccc3", "CC12CO[B-](OC1)(OC2)c3ccccc3"};
+        for (String input : inputs) {
+            for (boolean reverse : new boolean[]{false, true}) {
+                IAtomContainer mol = parser.parseSmiles(input);
+                if (reverse) {
+                    IAtom[] atoms = new IAtom[mol.getAtomCount()];
+                    for (int i = 0; i < atoms.length; i++)
+                        atoms[i] = mol.getAtom(atoms.length - i - 1);
+                    mol.setAtoms(atoms);
+                }
+                String expected = SmilesGenerator.isomeric().create(mol);
+                new StructureDiagramGenerator().generateCoordinates(mol);
+                // Include attached rings, whose existing templates have rounded coordinates.
+                int ringBonds = 0;
+                for (IBond bond : mol.bonds()) {
+                    if (bond.isInRing()) {
+                        ringBonds++;
+                        assertThat(bond.getBegin().getPoint2d().distance(bond.getEnd().getPoint2d()),
+                                   closeTo(1.5, 0.001));
+                    }
+                }
+                Assertions.assertTrue(ringBonds >= 9);
+                mol.setStereoElements(StereoElementFactory.using2DCoordinates(mol).createAll());
+                Assertions.assertEquals(expected, SmilesGenerator.isomeric().create(mol));
+            }
+        }
+    }
+
+    @Test
     void bridgedCageSubstituentsPointOutwards() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         for (String input : new String[]{"CC12COC(OC1)(OC2)C3CC3", "CC12CO[B-](OC1)(OC2)C3CC3",
