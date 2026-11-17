@@ -54,6 +54,7 @@ import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -89,6 +90,33 @@ import static org.hamcrest.Matchers.lessThan;
  *@cdk.created    August 29, 2003
  */
 class StructureDiagramGeneratorTest {
+
+    @Test
+    void epoxideOnFusedRingJunction() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        // The two six-membered rings and the epoxide share the same bond.
+        String[] inputs = {
+            "C123OC1(CCCC2)CCCC3",
+            "C[C@@]12[C@](CCC1C3C(=CC2)[C@@]45O[C@@]4(CC6(OCCO6)CC5)CC3)(O)CC(=C(F)F)F"
+        };
+        for (String input : inputs) {
+            for (boolean templates : new boolean[]{true, false}) {
+                IAtomContainer mol = parser.parseSmiles(input);
+                String expected = SmilesGenerator.isomeric().create(mol);
+                StructureDiagramGenerator generator = new StructureDiagramGenerator();
+                generator.setUseIdentityTemplates(templates);
+                generator.generateCoordinates(mol);
+                for (int i = 0; i < mol.getAtomCount(); i++) {
+                    for (int j = i + 1; j < mol.getAtomCount(); j++) {
+                        Assertions.assertTrue(mol.getAtom(i).getPoint2d().distance(mol.getAtom(j).getPoint2d()) > 0.5,
+                                              "Distinct atoms must not overlap: " + i + ", " + j);
+                    }
+                }
+                mol.setStereoElements(StereoElementFactory.using2DCoordinates(mol).createAll());
+                Assertions.assertEquals(expected, SmilesGenerator.isomeric().create(mol));
+            }
+        }
+    }
 
     private static final StructureDiagramGenerator SDG = new StructureDiagramGenerator();
 

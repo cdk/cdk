@@ -859,7 +859,19 @@ public class RingPlacer {
                     (numSharedAtoms > 2  && handleType == BRIDGED)) {
 
                     final Point2d sharedAtomsCenter = GeometryUtil.get2DCenter(sharedAtoms);
-                    final Point2d oldRingCenter = GeometryUtil.get2DCenter(ring);
+                    // More than two rings can share a bond (e.g. an epoxide
+                    // on a fused ring junction). Recursing through the smaller
+                    // ring would place the next large ring over the first one.
+                    IAtomContainer reference = ring;
+                    if (numSharedAtoms == 2 && sharedAtoms.getBondCount() == 1) {
+                        for (IAtomContainer candidate : rs.atomContainers()) {
+                            if (candidate.getFlag(IChemObject.PLACED)
+                                    && candidate.getAtomCount() > reference.getAtomCount()
+                                    && candidate.contains(sharedAtoms.getBond(0)))
+                                reference = candidate;
+                        }
+                    }
+                    final Point2d oldRingCenter = GeometryUtil.get2DCenter(reference);
                     final Vector2d tempVector = (new Vector2d(sharedAtomsCenter));
                     final Vector2d newRingCenterVector = new Vector2d(tempVector);
                     newRingCenterVector.sub(new Vector2d(oldRingCenter));
