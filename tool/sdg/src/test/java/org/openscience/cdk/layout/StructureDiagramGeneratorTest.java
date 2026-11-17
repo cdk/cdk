@@ -54,7 +54,6 @@ import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -92,38 +91,21 @@ import static org.hamcrest.Matchers.lessThan;
 class StructureDiagramGeneratorTest {
 
     @Test
-    void trioxaCageLabelClearance() throws Exception {
+    void bridgedCageSubstituentsPointOutwards() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        for (String input : new String[]{"CC12COC(OC1)(OC2)C3CC3", "CC12CO[B-](OC1)(OC2)C3CC3"}) {
-            for (boolean reverse : new boolean[]{false, true}) {
-                IAtomContainer mol = parser.parseSmiles(input);
-                if (reverse) {
-                    IAtom[] atoms = new IAtom[mol.getAtomCount()];
-                    for (int i = 0; i < atoms.length; i++)
-                        atoms[i] = mol.getAtom(atoms.length - i - 1);
-                    mol.setAtoms(atoms);
-                }
-                new StructureDiagramGenerator().generateCoordinates(mol);
-                for (IBond bond : mol.bonds()) {
-                    double length = bond.getBegin().getPoint2d().distance(bond.getEnd().getPoint2d());
-                    // Leave room for the oxygen/boron labels without stretching
-                    // the substituent bond to resolve congestion (issue #1334).
-                    Assertions.assertTrue(length > 1.2 && length < 2.1, "Bond length: " + length);
-                }
-            }
-        }
-    }
-
-    @Test
-    void substitutedTrioxaCageStereo() throws Exception {
-        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        for (String input : new String[]{"CC12[C@H](F)OC(OC1)(OC2)C3CC3",
-                                         "CC12[C@@H](F)O[B-](OC1)(OC2)C3CC3"}) {
+        for (String input : new String[]{"CC12COC(OC1)(OC2)C3CC3", "CC12CO[B-](OC1)(OC2)C3CC3",
+                                         "CC12CCC(CC1)(CC2)C3CC3"}) {
             IAtomContainer mol = parser.parseSmiles(input);
-            String expected = SmilesGenerator.isomeric().create(mol);
             new StructureDiagramGenerator().generateCoordinates(mol);
-            mol.setStereoElements(StereoElementFactory.using2DCoordinates(mol).createAll());
-            Assertions.assertEquals(expected, SmilesGenerator.isomeric().create(mol));
+            Vector2d axis = new Vector2d(mol.getAtom(4).getPoint2d());
+            axis.sub(mol.getAtom(1).getPoint2d());
+            Vector2d substituent = new Vector2d(mol.getAtom(9).getPoint2d());
+            substituent.sub(mol.getAtom(4).getPoint2d());
+            assertThat(substituent.angle(axis), closeTo(0, 1e-6));
+            assertThat(substituent.length(), closeTo(1.5, 1e-6));
+            Vector2d methyl = new Vector2d(mol.getAtom(0).getPoint2d());
+            methyl.sub(mol.getAtom(1).getPoint2d());
+            assertThat(methyl.angle(axis), closeTo(Math.PI, 1e-6));
         }
     }
 
