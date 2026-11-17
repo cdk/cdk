@@ -92,6 +92,25 @@ import static org.hamcrest.Matchers.lessThan;
 class StructureDiagramGeneratorTest {
 
     @Test
+    void bridgedCageSubstituentsPointOutwards() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        for (String input : new String[]{"CC12COC(OC1)(OC2)C3CC3", "CC12CO[B-](OC1)(OC2)C3CC3",
+                                         "CC12CCC(CC1)(CC2)C3CC3"}) {
+            IAtomContainer mol = parser.parseSmiles(input);
+            new StructureDiagramGenerator().generateCoordinates(mol);
+            Vector2d axis = new Vector2d(mol.getAtom(4).getPoint2d());
+            axis.sub(mol.getAtom(1).getPoint2d());
+            Vector2d substituent = new Vector2d(mol.getAtom(9).getPoint2d());
+            substituent.sub(mol.getAtom(4).getPoint2d());
+            assertThat(substituent.angle(axis), closeTo(0, 1e-6));
+            assertThat(substituent.length(), closeTo(1.5, 1e-6));
+            Vector2d methyl = new Vector2d(mol.getAtom(0).getPoint2d());
+            methyl.sub(mol.getAtom(1).getPoint2d());
+            assertThat(methyl.angle(axis), closeTo(Math.PI, 1e-6));
+        }
+    }
+
+    @Test
     void epoxideOnFusedRingJunction() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         // The two six-membered rings and the epoxide share the same bond.
