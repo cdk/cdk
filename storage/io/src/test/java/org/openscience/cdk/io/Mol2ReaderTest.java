@@ -37,6 +37,7 @@ import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -74,6 +75,49 @@ class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertTrue(reader.accepts(AtomContainer.class));
     }
 
+    @Test
+    void testPartialCharges() throws Exception {
+        String mol2 = "@<TRIPOS>MOLECULE\nwater\n3 2\nSMALL\nUSER_CHARGES\n"
+                + "@<TRIPOS>ATOM\n"
+                + "1 O1 0 0 0 O.3 1 WATER -0.834\n"
+                + "2 H1 1 0 0 H 1 WATER 0.417\n"
+                + "3 H2 0 1 0 H 1 WATER 4.17e-1 BACKBONE\n"
+                + "@<TRIPOS>BOND\n1 1 2 1\n2 1 3 1\n";
+        try (Mol2Reader reader = new Mol2Reader(new StringReader(mol2))) {
+            IAtomContainer molecule = reader.read(new AtomContainer());
+            Assertions.assertEquals(-0.834, molecule.getAtom(0).getCharge());
+            Assertions.assertEquals(0.417, molecule.getAtom(1).getCharge());
+            Assertions.assertEquals(0.417, molecule.getAtom(2).getCharge());
+            for (IAtom atom : molecule.atoms())
+                Assertions.assertEquals(0, atom.getFormalCharge());
+        }
+    }
+
+    @Test
+    void testOmittedPartialCharges() throws Exception {
+        String mol2 = "@<TRIPOS>MOLECULE\nwater\n3 2\nSMALL\nNO_CHARGES\n"
+                + "@<TRIPOS>ATOM\n"
+                + "1 O1 0 0 0 O.3\n"
+                + "2 H1 1 0 0 H 1\n"
+                + "3 H2 0 1 0 H 1 WATER\n"
+                + "@<TRIPOS>BOND\n1 1 2 1\n2 1 3 1\n";
+        try (Mol2Reader reader = new Mol2Reader(new StringReader(mol2))) {
+            IAtomContainer molecule = reader.read(new AtomContainer());
+            Assertions.assertEquals(3, molecule.getAtomCount());
+            for (IAtom atom : molecule.atoms())
+                Assertions.assertNull(atom.getCharge());
+        }
+    }
+
+    @Test
+    void testInvalidPartialCharge() throws Exception {
+        String mol2 = "@<TRIPOS>MOLECULE\noxygen\n1 0\nSMALL\nUSER_CHARGES\n"
+                + "@<TRIPOS>ATOM\n1 O1 0 0 0 O.3 1 RES invalid\n";
+        try (Mol2Reader reader = new Mol2Reader(new StringReader(mol2))) {
+            Assertions.assertThrows(CDKException.class, () -> reader.read(new AtomContainer()));
+        }
+    }
+
     /**
      * Test example from website. See
      * <a href="http://www.tripos.com/custResources/mol2Files/mol2_format3.html">Tripos example</a>.
@@ -107,6 +151,9 @@ class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertEquals("C", m.getAtom(0).getSymbol());
         Assertions.assertEquals("H", m.getAtom(6).getAtomTypeName());
         Assertions.assertEquals("H", m.getAtom(6).getSymbol());
+
+        for (IAtom atom : m.atoms())
+            Assertions.assertEquals(0.0, atom.getCharge());
 
         for (int i = 0; i < 6; i++) {
             IBond bond = m.getBond(i);
