@@ -25,6 +25,8 @@ package org.openscience.cdk.depict;
 
 import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.ResourceLock;
+import org.junit.jupiter.api.parallel.Resources;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -37,6 +39,7 @@ import org.openscience.cdk.renderer.elements.TextElement;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Locale;
 import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -46,6 +49,7 @@ import org.xml.sax.InputSource;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@ResourceLock(Resources.LOCALE)
 class SvgDrawVisitorTest {
 
     @Test
@@ -215,6 +219,22 @@ class SvgDrawVisitorTest {
         visitor.setTransform(AffineTransform.getTranslateInstance(15, 15));
         visitor.visit(GeneralPath.outlineOf(new RoundRectangle2D.Double(0, 0, 10, 10, 2, 2), 1.0, new Color(255,0,0,126)));
         assertThat(visitor.toString(), StringContains.containsString("stroke='#FF0000' stroke-opacity='0.49'"));
+    }
+
+    @Test
+    void transparencyWithDecimalCommaLocale() {
+        Locale previous = Locale.getDefault(Locale.Category.FORMAT);
+        try {
+            Locale.setDefault(Locale.Category.FORMAT, Locale.GERMANY);
+            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
+            Color color = new Color(255, 0, 0, 126);
+            visitor.visit(GeneralPath.shapeOf(new RoundRectangle2D.Double(0, 0, 10, 10, 2, 2), color));
+            visitor.visit(GeneralPath.outlineOf(new RoundRectangle2D.Double(15, 0, 10, 10, 2, 2), 1.0, color));
+            assertThat(visitor.toString(), StringContains.containsString("fill='#FF0000' opacity='0.49'"));
+            assertThat(visitor.toString(), StringContains.containsString("stroke='#FF0000' stroke-opacity='0.49'"));
+        } finally {
+            Locale.setDefault(Locale.Category.FORMAT, previous);
+        }
     }
 
 }

@@ -205,7 +205,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
         if (col.getAlpha() == 255) {
             return String.format(" fill='#%06X'", (0xFFFFFF & col.getRGB()));
         } else {
-            return String.format(" fill='#%06X' opacity='%.2f'", (0xFFFFFF & col.getRGB()), col.getAlpha()/255d);
+            return String.format(Locale.ROOT, " fill='#%06X' opacity='%.2f'", (0xFFFFFF & col.getRGB()), col.getAlpha()/255d);
         }
     }
 
@@ -213,7 +213,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
         if (col.getAlpha() == 255) {
             return String.format(" stroke='#%06X'", (0xFFFFFF & col.getRGB()));
         } else {
-            return String.format(" stroke='#%06X' stroke-opacity='%.2f'", (0xFFFFFF & col.getRGB()), col.getAlpha()/255d);
+            return String.format(Locale.ROOT, " stroke='#%06X' stroke-opacity='%.2f'", (0xFFFFFF & col.getRGB()), col.getAlpha()/255d);
         }
     }
 
