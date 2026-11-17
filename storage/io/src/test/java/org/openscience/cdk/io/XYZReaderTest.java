@@ -25,15 +25,20 @@ package org.openscience.cdk.io;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+
+import javax.vecmath.Point3d;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -58,6 +63,42 @@ class XYZReaderTest extends SimpleChemObjectReaderTest {
     void testAccepts() {
         XYZReader reader = new XYZReader();
         Assertions.assertTrue(reader.accepts(ChemFile.class));
+    }
+
+    @Test
+    void testChargeRoundTrip() throws Exception {
+        IAtomContainer molecule = new AtomContainer();
+        Atom oxygen = new Atom("O", new Point3d(0, 0, 0));
+        oxygen.setCharge(-0.834);
+        molecule.addAtom(oxygen);
+        Atom hydrogen = new Atom("H", new Point3d(1, 0, 0));
+        hydrogen.setCharge(0.417);
+        molecule.addAtom(hydrogen);
+        StringWriter output = new StringWriter();
+        try (XYZWriter writer = new XYZWriter(output)) {
+            writer.write(molecule);
+        }
+        try (XYZReader reader = new XYZReader(new StringReader(output.toString()))) {
+            ChemFile file = reader.read(new ChemFile());
+            IAtomContainer result = file.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
+            Assertions.assertEquals(-0.834, result.getAtom(0).getCharge());
+            Assertions.assertEquals(0.417, result.getAtom(1).getCharge());
+        }
+    }
+
+    @Test
+    void testOptionalChargeAndVector() throws Exception {
+        String xyz = "3\noptional charges and vectors\n"
+                + "O 0 0 0 -0.834 1 2 3\n"
+                + "H 1 0 0\n"
+                + "H 0 1 0 4 5 6\n";
+        try (XYZReader reader = new XYZReader(new StringReader(xyz))) {
+            ChemFile file = reader.read(new ChemFile());
+            IAtomContainer molecule = file.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
+            Assertions.assertEquals(-0.834, molecule.getAtom(0).getCharge());
+            Assertions.assertEquals(0.0, molecule.getAtom(1).getCharge());
+            Assertions.assertEquals(0.0, molecule.getAtom(2).getCharge());
+        }
     }
 
     @Test

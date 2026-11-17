@@ -183,7 +183,7 @@ public class XYZReader extends DefaultChemObjectReader {
                             y = Double.valueOf(tokenizer.nextToken());
                             z = Double.valueOf(tokenizer.nextToken());
 
-                            if (fields == 8) charge = Double.valueOf(tokenizer.nextToken());
+                            if (fields == 5 || fields == 8) charge = Double.valueOf(tokenizer.nextToken());
 
                             IAtom atom = file.getBuilder().newInstance(IAtom.class, atomtype, new Point3d(x, y, z));
                             atom.setCharge(charge);
