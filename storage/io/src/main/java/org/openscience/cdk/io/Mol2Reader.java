@@ -362,7 +362,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             try {
                                 atom.setCharge(Double.parseDouble(tokenizer.nextToken()));
                             } catch (NumberFormatException nfExc) {
-                                throw new CDKException("Error while reading atom charge", nfExc);
+                                handleError("Invalid partial charge", nfExc);
                             }
                         }
                         molecule.addAtom(atom);
