@@ -114,6 +114,12 @@ class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         String mol2 = "@<TRIPOS>MOLECULE\noxygen\n1 0\nSMALL\nUSER_CHARGES\n"
                 + "@<TRIPOS>ATOM\n1 O1 0 0 0 O.3 1 RES invalid\n";
         try (Mol2Reader reader = new Mol2Reader(new StringReader(mol2))) {
+            IAtomContainer molecule = reader.read(new AtomContainer());
+            Assertions.assertEquals(1, molecule.getAtomCount());
+            Assertions.assertNull(molecule.getAtom(0).getCharge());
+        }
+        try (Mol2Reader reader = new Mol2Reader(new StringReader(mol2))) {
+            reader.setReaderMode(IChemObjectReader.Mode.STRICT);
             Assertions.assertThrows(CDKException.class, () -> reader.read(new AtomContainer()));
         }
     }
