@@ -35,6 +35,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -875,6 +876,66 @@ class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             Assertions.assertFalse(Double.isNaN(result));
+        }
+    }
+
+    @Test
+    void testDoesNotMutateInputAtomContainer() throws Exception {
+        SmilesParser sp = new SmilesParser(builder);
+        IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])F");
+        Assertions.assertEquals(6, mol.getAtomCount());
+        Assertions.assertEquals(0, mol.getLonePairCount());
+        assertUnconfiguredAndUncharged(mol);
+
+        IAtomContainer snapshot = mol.clone();
+        IAtomContainer saturated = mol.clone();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(saturated);
+        lpcheck.saturate(saturated);
+
+        PartialPiChargeDescriptor firstDescriptor = new PartialPiChargeDescriptor();
+        firstDescriptor.setParameters(new Object[]{6, true});
+        double[] first = new double[mol.getAtomCount()];
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            first[i] = ((DoubleResult) firstDescriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+        }
+        String diffAfterCall = AtomContainerDiff.diff(snapshot, mol);
+        int lonePairsAfterCall = mol.getLonePairCount();
+        assertUnconfiguredAndUncharged(mol);
+
+        PartialPiChargeDescriptor secondDescriptor = new PartialPiChargeDescriptor();
+        secondDescriptor.setParameters(new Object[]{6, true});
+        PartialPiChargeDescriptor saturatedDescriptor = new PartialPiChargeDescriptor();
+        saturatedDescriptor.setParameters(new Object[]{6, true});
+
+        boolean hasNonZeroPiCharge = false;
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            double cached = ((DoubleResult) firstDescriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double second = ((DoubleResult) secondDescriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double expected = ((DoubleResult) saturatedDescriptor.calculate(saturated.getAtom(i), saturated).getValue())
+                    .doubleValue();
+            Assertions.assertEquals(first[i], cached, 1e-9, "Cached calculation mismatch at atom " + i);
+            Assertions.assertEquals(first[i], second, 1e-9, "Repeated calculation mismatch at atom " + i);
+            Assertions.assertEquals(expected, first[i], 1e-9, "Pre-saturated comparison mismatch at atom " + i);
+            if (Math.abs(first[i]) > 1e-4) {
+                hasNonZeroPiCharge = true;
+            }
+        }
+        Assertions.assertTrue(hasNonZeroPiCharge, "Expected non-zero pi partial charges for [H]C([H])=C([H])F");
+        Assertions.assertEquals(0, lonePairsAfterCall, "Input lone pairs should remain 0");
+        Assertions.assertEquals("", diffAfterCall, "Input IAtomContainer must not be mutated");
+    }
+
+    /**
+     * Asserts that all atoms in the container have no perceived atom type, valency, hybridization, or charge.
+     *
+     * @param container the atom container to inspect
+     */
+    private static void assertUnconfiguredAndUncharged(IAtomContainer container) {
+        for (IAtom atom : container.atoms()) {
+            Assertions.assertNull(atom.getCharge(), "Expected null charge");
+            Assertions.assertNull(atom.getAtomTypeName(), "Expected null atomTypeName");
+            Assertions.assertNull(atom.getValency(), "Expected null valency");
+            Assertions.assertNull(atom.getHybridization(), "Expected null hybridization");
         }
     }
 }

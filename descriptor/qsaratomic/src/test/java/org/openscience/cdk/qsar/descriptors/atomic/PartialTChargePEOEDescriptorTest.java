@@ -27,11 +27,14 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -372,6 +375,92 @@ class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
                     .doubleValue();
 
             Assertions.assertEquals(testResult[i], result, 0.3);
+        }
+    }
+
+    @Test
+    void testDoesNotMutateInputAtomContainer() throws Exception {
+        SmilesParser sp = new SmilesParser(builder);
+        IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])F");
+        Assertions.assertEquals(6, mol.getAtomCount());
+        Assertions.assertEquals(0, mol.getLonePairCount());
+        assertUnconfiguredAndUncharged(mol);
+
+        IAtomContainer snapshot = mol.clone();
+        IAtomContainer saturated = mol.clone();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(saturated);
+        lpcheck.saturate(saturated);
+
+        PartialTChargePEOEDescriptor firstDescriptor = new PartialTChargePEOEDescriptor();
+        double[] first = new double[mol.getAtomCount()];
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            first[i] = ((DoubleResult) firstDescriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+        }
+        String diffAfterCall = AtomContainerDiff.diff(snapshot, mol);
+        int lonePairsAfterCall = mol.getLonePairCount();
+        assertUnconfiguredAndUncharged(mol);
+
+        PartialTChargePEOEDescriptor secondDescriptor = new PartialTChargePEOEDescriptor();
+        PartialTChargePEOEDescriptor saturatedDescriptor = new PartialTChargePEOEDescriptor();
+
+        boolean hasNonZeroCharge = false;
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            double cached = ((DoubleResult) firstDescriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double second = ((DoubleResult) secondDescriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double expected = ((DoubleResult) saturatedDescriptor.calculate(saturated.getAtom(i), saturated).getValue())
+                    .doubleValue();
+            Assertions.assertEquals(first[i], cached, 1e-9, "Cached calculation mismatch at atom " + i);
+            Assertions.assertEquals(first[i], second, 1e-9, "Repeated calculation mismatch at atom " + i);
+            Assertions.assertEquals(expected, first[i], 1e-9, "Pre-saturated comparison mismatch at atom " + i);
+            if (Math.abs(first[i]) > 1e-4) {
+                hasNonZeroCharge = true;
+            }
+        }
+        Assertions.assertTrue(hasNonZeroCharge, "Expected non-zero total partial charges for [H]C([H])=C([H])F");
+        Assertions.assertEquals(0, lonePairsAfterCall, "Input lone pairs should remain 0");
+        Assertions.assertEquals("", diffAfterCall, "Input IAtomContainer must not be mutated");
+    }
+
+    @Test
+    void testCalculateReturnsNaNDescriptorValueOnException() throws Exception {
+        SmilesParser sp = new SmilesParser(builder);
+        IAtomContainer mol = sp.parseSmiles("C[Se]C");
+
+        IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
+        DescriptorValue value = descriptor.calculate(mol.getAtom(1), mol);
+
+        Assertions.assertNotNull(value);
+        Assertions.assertTrue(Double.isNaN(((DoubleResult) value.getValue()).doubleValue()));
+        Assertions.assertNotNull(value.getException());
+
+        IAtomContainer uncloneable = new AtomContainer() {
+
+            @Override
+            public IAtomContainer clone() throws CloneNotSupportedException {
+                throw new CloneNotSupportedException("clone disabled");
+            }
+        };
+        uncloneable.addAtom(builder.newInstance(IAtom.class, "C"));
+
+        IAtomicDescriptor cloneDescriptor = new PartialTChargePEOEDescriptor();
+        DescriptorValue cloneError = cloneDescriptor.calculate(uncloneable.getAtom(0), uncloneable);
+
+        Assertions.assertNotNull(cloneError);
+        Assertions.assertTrue(Double.isNaN(((DoubleResult) cloneError.getValue()).doubleValue()));
+        Assertions.assertTrue(cloneError.getException() instanceof CloneNotSupportedException);
+    }
+
+    /**
+     * Asserts that all atoms in the container have no perceived atom type, valency, hybridization, or charge.
+     *
+     * @param container the atom container to inspect
+     */
+    private static void assertUnconfiguredAndUncharged(IAtomContainer container) {
+        for (IAtom atom : container.atoms()) {
+            Assertions.assertNull(atom.getCharge(), "Expected null charge");
+            Assertions.assertNull(atom.getAtomTypeName(), "Expected null atomTypeName");
+            Assertions.assertNull(atom.getValency(), "Expected null valency");
+            Assertions.assertNull(atom.getHybridization(), "Expected null hybridization");
         }
     }
 }
