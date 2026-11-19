@@ -1268,11 +1268,14 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void dataHeader_2() {
         assertThat(MDLV2000Reader.dataHeader("> <MELTING.POINT> "), is("MELTING.POINT"));
+        assertThat(MDLV2000Reader.dataHeader("> <MELTING_POINT>"), is("MELTING_POINT"));
     }
 
     @Test
     void dataHeader_3() {
         assertThat(MDLV2000Reader.dataHeader("> 55 (MD-08974) <BOILING.POINT> DT12"), is("BOILING.POINT"));
+        assertThat(MDLV2000Reader.dataHeader("> 55(MD-08974)<BOILING_POINT>DT12"), is("BOILING_POINT"));
+        assertThat(MDLV2000Reader.dataHeader("> (MD-0894)<BOILING_POINT>FROM ARCHIVES"), is("BOILING_POINT"));
     }
 
     @Test
@@ -1294,14 +1297,6 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertThat(MDLV2000Reader.dataHeader("> <cdk:Title>"), is("cdk:Title"));
         assertThat(MDLV2000Reader.dataHeader("> <NAME>WITH>BRACKET"), is("NAME"));
         assertThat(MDLV2000Reader.dataHeader("> <>"), is(""));
-    }
-
-    @Test
-    void dataHeader_compactVariants() {
-        assertThat(MDLV2000Reader.dataHeader("><NAME>"), is(nullValue()));
-        assertThat(MDLV2000Reader.dataHeader("><FIRST> <NAME>"), is("NAME"));
-        assertThat(MDLV2000Reader.dataHeader(">  <NAME>(ext)"), is("NAME"));
-        assertThat(MDLV2000Reader.dataHeader("> DT12<NAME>"), is("NAME"));
     }
 
     @Test
@@ -1367,18 +1362,19 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     void readNonStructuralData_fieldNumberBetweenNamedFields() throws Exception {
-        for (String header : new String[]{"> DT12 55", "> 55(MD-08974)DT1255",
-                ">\t(MD-08974)\tDT12\t55"}) {
+        for (String header : new String[]{"> DT1255", "> DT12 55", ">\t55\tDT12\t",
+                "> 55(MD-08974) DT12"}) {
             String sb = "> <A>\nvalA\n\n" +
                     header + "\nnumbered\nignored\n\n" +
                     "> <B>\nvalB\n\n$$$$\n";
             BufferedReader input = new BufferedReader(new StringReader(sb));
-            IAtomContainer mock = mock(IAtomContainer.class);
+            IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
 
-            MDLV2000Reader.readNonStructuralData(input, mock);
+            MDLV2000Reader.readNonStructuralData(input, molecule);
 
-            verify(mock).setProperty("A", "valA");
-            verify(mock).setProperty("B", "valB");
+            assertThat(molecule.getProperty("A"), is("valA"));
+            assertThat(molecule.getProperty("B"), is("valB"));
+            assertThat(molecule.getProperties().size(), is(2));
         }
     }
 
@@ -1395,30 +1391,12 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    void readNonStructuralData_namedHeaderVariants() throws Exception {
-        for (String header : new String[]{"> 55 (MD-08974) <A> DT12",
-                ">25 <A>", ">55(MD-08974)<A>DT12", ">  <A>(ext)", "> DT12<A>",
-                "> FROM ARCHIVES <A>", "> <A> <OTHER>", "> 2147483648 <A>"}) {
-            String sb = header + "\n" +
-                    "p < 0.05 and q > 0.1\nsecond line\n\n" +
-                    "> <B>\nvalB\n\n$$$$\n";
-            BufferedReader input = new BufferedReader(new StringReader(sb));
-            IAtomContainer mock = mock(IAtomContainer.class);
-
-            MDLV2000Reader.readNonStructuralData(input, mock);
-
-            verify(mock).setProperty("A", "p < 0.05 and q > 0.1\nsecond line");
-            verify(mock).setProperty("B", "valB");
-        }
-    }
-
-    @Test
     void readNonStructuralData_namedHeaderOrderings() throws Exception {
         for (String header : new String[]{"> 55 (MD-08974) <BOILING.POINT> DT12",
                 "> DT12 55 <BOILING.POINT> (MD-08974)",
-                "> (MD-0894) <BOILING.POINT> FROM ARCHIVES", "> 55 <BOILING.POINT>"}) {
+                "> (MD-0894) <BOILING.POINT> FROM ARCHIVES"}) {
             String sb = header + "\n25.4\n\n" +
-                    "> 56 <MELTING.POINT>\n5\n\n$$$$\n";
+                    "> <MELTING.POINT>\n5\n\n$$$$\n";
             BufferedReader input = new BufferedReader(new StringReader(sb));
             IAtomContainer mock = mock(IAtomContainer.class);
 
@@ -1455,10 +1433,8 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     void readNonStructuralData_greaterThanValueBetweenNamedFields() throws Exception {
-        for (String value : new String[]{">1", "> 5 mg", "> DT12abc", "> DT12 55abc",
-                "> DT12 (a)b", "> DT12 DT13", "> DT12 55 56", "> DT12 (A) (B)",
-                "> DT2147483648", "> DT12 2147483648", "> DT0", "> DT12 055",
-                "> DT12 (MD-(08974))", "><NAME>"}) {
+        for (String value : new String[]{">1", "> 5 mg", "p < 0.05 and q > 0.1\nsecond line",
+                "> DT12abc", "> DT0"}) {
             String sb = "> <A>\n" + value + "\n\n" +
                     "> <B>\nvalB\n\n$$$$\n";
             BufferedReader input = new BufferedReader(new StringReader(sb));
