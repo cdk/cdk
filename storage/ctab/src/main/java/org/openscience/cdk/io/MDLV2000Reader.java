@@ -2275,10 +2275,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         boolean wrap = false;
 
         final StringBuilder data = new StringBuilder(80);
+        final DataHead newHeader = new DataHead();
 
         while (!endOfRecord(line = input.readLine())) {
-
-            final DataHead newHeader = new DataHead();
 
             if (parseDataHead(newHeader, line)) {
 
@@ -2305,17 +2304,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     private static final class DataHead {
-        Integer fieldNum;
         String fieldName;
-        Integer intRegNum;
-        String extRegNum;
     }
 
-    /** Parse a named SD header or an unnamed header with at most one of each component type. */
+    /** Recognize a data-item boundary and set its field name, if present. */
     private static boolean parseDataHead(DataHead header, String text) {
         if (text == null || text.isEmpty() || text.charAt(0) != '>')
             return false;
-        // Keep the first name from index 2, even among otherwise unstructured text.
         int nameStart = text.indexOf('<', 2);
         if (nameStart >= 0) {
             int nameEnd = text.indexOf('>', nameStart + 1);
@@ -2324,49 +2319,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 return true;
             }
         }
-        try {
-            for (int pos = 1; pos < text.length();) {
-                char ch = text.charAt(pos);
-                if (ch == ' ' || ch == '\t') {
-                    pos++;
-                    continue;
-                }
-                int start = pos++;
-                if (ch == '<' || ch == '(') {
-                    int end = text.indexOf(ch == '<' ? '>' : ')', pos);
-                    if (end < 0)
-                        return false;
-                    pos = end + 1;
-                } else {
-                    while (pos < text.length()) {
-                        ch = text.charAt(pos);
-                        if (ch == ' ' || ch == '\t' || ch == '<' || ch == '(')
-                            break;
-                        pos++;
-                    }
-                }
-                String part = text.substring(start, pos);
-                if (part.startsWith("(") && part.endsWith(")") && part.indexOf('(', 1) < 0) {
-                    if (header.extRegNum != null)
-                        return false;
-                    header.extRegNum = part.substring(1, part.length() - 1);
-                } else if (part.matches("DT[1-9][0-9]*")) {
-                    if (header.fieldNum != null)
-                        return false;
-                    header.fieldNum = Integer.parseInt(part.substring(2));
-                } else if (part.matches("[1-9][0-9]*")) {
-                    if (header.intRegNum != null)
-                        return false;
-                    header.intRegNum = Integer.parseInt(part);
-                } else {
-                    return false;
-                }
+
+        for (int start = text.indexOf("DT", 2); start >= 0; start = text.indexOf("DT", start + 2)) {
+            char before = text.charAt(start - 1);
+            if (before != ' ' && before != '\t')
+                continue;
+            int end = start + 2;
+            if (end == text.length() || text.charAt(end) < '1' || text.charAt(end) > '9')
+                continue;
+            end++;
+            while (end < text.length() && CharIter.isDigit(text.charAt(end)))
+                end++;
+            if (end == text.length() || text.charAt(end) == ' ' || text.charAt(end) == '\t') {
+                header.fieldName = null;
+                return true;
             }
-        } catch (NumberFormatException e) {
-            return false;
         }
-        // Only unnamed headers require a field number and fully classified, unique parts.
-        return header.fieldNum != null;
+        return false;
     }
 
     /**
