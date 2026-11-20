@@ -149,7 +149,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
             if (lpeChecker) {
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-                lpcheck.saturate(atomContainer);
+                lpcheck.saturate(clone);
             }
             localAtom = clone.getAtom(atomContainer.indexOf(atom));
         } catch (CloneNotSupportedException | CDKException e) {

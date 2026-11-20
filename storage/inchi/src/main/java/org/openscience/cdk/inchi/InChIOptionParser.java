@@ -56,28 +56,23 @@ final class InChIOptionParser {
                 case ',':
                     pos++; // skip
                     break;
-                case 'W': // timeout
-                    pos++;
+                default:
                     int next = getIndexOfEither(optstr,',',' ', pos);
                     if (next < 0)
                         next = optstr.length();
-                    String substring = optstr.substring(pos, next);
-                    try {
-                        // Note: locale sensitive e.g. 0,01 but we can not pass in milliseconds so doesn't matter so much
-                        options.withTimeoutMilliSeconds((int)(1000*Double.parseDouble(substring)));
-                    } catch (NumberFormatException ex) {
-                        logger.warn("Invalid timtoue:" + substring);
-                    }
-                    break;
-                default:
-                    next = getIndexOfEither(optstr,',',' ', pos);
-                    if (next < 0)
-                        next = optstr.length();
-                    InchiFlag flag = optMap.get(optstr.substring(pos, next));
+                    String token = optstr.substring(pos, next);
+                    InchiFlag flag = optMap.get(token);
                     if (flag != null)
                         options.withFlag(flag);
-                    else
-                        logger.warn("Ignore unrecognized InChI flag:" + optstr.substring(pos, next));
+                    else if (token.charAt(0) == 'W') {
+                        String timeout = token.substring(1);
+                        try {
+                            options.withTimeoutMilliSeconds((int)(1000*Double.parseDouble(timeout)));
+                        } catch (NumberFormatException ex) {
+                            logger.warn("Invalid timeout:" + timeout);
+                        }
+                    } else
+                        logger.warn("Ignore unrecognized InChI flag:" + token);
                     pos = next;
             }
         }

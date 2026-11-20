@@ -236,11 +236,15 @@ public class AtomPlacer {
         distanceMeasure.add(newDirection);
 
         /*
-         * get the two sharedAtom partners with the smallest distance to the new
-         * center
+         * Get the two neighbours closest in angle to the new direction.
+         * Projected bonds in bridged rings may be shorter than the other bonds;
+         * ranking by distance can select an internal bridge instead of the
+         * neighbours bounding the free angle.
          */
         sortedAtoms = AtomContainerManipulator.getAtomArray(placedNeighbours);
-        GeometryUtil.sortBy2DDistance(sortedAtoms, distanceMeasure);
+        final Vector2d outward = new Vector2d(newDirection);
+        Arrays.sort(sortedAtoms, Comparator.comparingDouble(
+                neighbour -> newVector(neighbour.getPoint2d(), atom.getPoint2d()).angle(outward)));
         Vector2d closestPoint1 = new Vector2d(sortedAtoms[0].getPoint2d());
         Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2d());
         closestPoint1.sub(new Vector2d(atom.getPoint2d()));

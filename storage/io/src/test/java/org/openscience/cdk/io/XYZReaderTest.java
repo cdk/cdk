@@ -22,7 +22,10 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,6 +34,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -119,6 +123,73 @@ class XYZReaderTest extends SimpleChemObjectReaderTest {
         Assertions.assertEquals(3.1625, m.getAtom(62).getPoint3d().x, 0.0001);
         Assertions.assertEquals(3.1270, m.getAtom(62).getPoint3d().y, 0.0001);
         Assertions.assertEquals(-0.9362, m.getAtom(62).getPoint3d().z, 0.0001);
+    }
+
+    @Test
+    void testSingleFrameWithTrailingBlankLinesStringReader() throws Exception {
+        String xyz = "1\nhelium\nHe 0.0 0.0 0.0\n\n\n";
+        try (XYZReader reader = new XYZReader(new StringReader(xyz))) {
+            assertFrames(reader.read(new ChemFile()), 1);
+        }
+    }
+
+    @Test
+    void testTwoFramesWithTrailingBlankLinesStringReader() throws Exception {
+        String xyz = "1\nhelium\nHe 0.0 0.0 0.0\n"
+                   + "2\nhydrogen\nH 0.0 0.0 0.0\nH 0.0 0.0 0.74\n\n\n";
+        try (XYZReader reader = new XYZReader(new StringReader(xyz))) {
+            assertFrames(reader.read(new ChemFile()), 1, 2);
+        }
+    }
+
+    @Test
+    void testSingleFrameWithTrailingBlankLinesInputStream() throws Exception {
+        String xyz = "1\nhelium\nHe 0.0 0.0 0.0\n\n\n";
+        try (XYZReader reader = new XYZReader(new ByteArrayInputStream(xyz.getBytes(StandardCharsets.US_ASCII)))) {
+            assertFrames(reader.read(new ChemFile()), 1);
+        }
+    }
+
+    @Test
+    void testTwoFramesWithTrailingBlankLinesInputStream() throws Exception {
+        String xyz = "1\nhelium\nHe 0.0 0.0 0.0\n"
+                   + "2\nhydrogen\nH 0.0 0.0 0.0\nH 0.0 0.0 0.74\n\n\n";
+        try (XYZReader reader = new XYZReader(new ByteArrayInputStream(xyz.getBytes(StandardCharsets.US_ASCII)))) {
+            assertFrames(reader.read(new ChemFile()), 1, 2);
+        }
+    }
+
+    @Test
+    void testBlankLinesAtFrameBoundaries() throws Exception {
+        String xyz = "\n \t\n1\n\nHe 0.0 0.0 0.0\n\n \t\n"
+                   + "2\nhydrogen\nH 0.0 0.0 0.0\nH 0.0 0.0 0.74\n \t\n";
+        try (XYZReader reader = new XYZReader(new StringReader(xyz))) {
+            ChemFile chemFile = reader.read(new ChemFile());
+            assertFrames(chemFile, 1, 2);
+            Assertions.assertEquals("", chemFile.getChemSequence(0).getChemModel(0)
+                                               .getMoleculeSet().getAtomContainer(0).getTitle());
+        }
+    }
+
+    @Test
+    void testMalformedAtomRowStillFails() throws Exception {
+        String xyz = "1\nhelium\nHe invalid 0.0 0.0\n";
+        try (XYZReader reader = new XYZReader(new StringReader(xyz))) {
+            Assertions.assertThrows(NumberFormatException.class, () -> reader.read(new ChemFile()));
+        }
+    }
+
+    private void assertFrames(ChemFile chemFile, int... atomCounts) {
+        Assertions.assertNotNull(chemFile);
+        Assertions.assertEquals(1, chemFile.getChemSequenceCount());
+        IChemSequence sequence = chemFile.getChemSequence(0);
+        Assertions.assertEquals(atomCounts.length, sequence.getChemModelCount());
+        for (int i = 0; i < atomCounts.length; i++) {
+            IAtomContainerSet molecules = sequence.getChemModel(i).getMoleculeSet();
+            Assertions.assertNotNull(molecules);
+            Assertions.assertEquals(1, molecules.getAtomContainerCount());
+            Assertions.assertEquals(atomCounts[i], molecules.getAtomContainer(0).getAtomCount());
+        }
     }
 
 }

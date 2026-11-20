@@ -141,8 +141,9 @@ public class XYZReader extends DefaultChemObjectReader {
         StringTokenizer tokenizer;
 
         try {
-            String line = input.readLine();
-            while (input.ready() && line != null) {
+            String line;
+            while ((line = input.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;
                 // parse frame by frame
                 tokenizer = new StringTokenizer(line, "\t ,;");
 
@@ -194,7 +195,6 @@ public class XYZReader extends DefaultChemObjectReader {
                 setOfMolecules.addAtomContainer(m);
                 chemModel.setMoleculeSet(setOfMolecules);
                 chemSequence.addChemModel(chemModel);
-                line = input.readLine();
             }
             file.addChemSequence(chemSequence);
         } catch (IOException e) {

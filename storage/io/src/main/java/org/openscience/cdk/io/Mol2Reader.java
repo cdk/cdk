@@ -355,6 +355,16 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             logger.debug(nfExc);
                             throw new CDKException(error, nfExc);
                         }
+                        // Optional fields: subst_id, subst_name, charge, status_bit.
+                        if (tokenizer.hasMoreTokens()) tokenizer.nextToken();
+                        if (tokenizer.hasMoreTokens()) tokenizer.nextToken();
+                        if (tokenizer.hasMoreTokens()) {
+                            try {
+                                atom.setCharge(Double.parseDouble(tokenizer.nextToken()));
+                            } catch (NumberFormatException nfExc) {
+                                handleError("Invalid partial charge", nfExc);
+                            }
+                        }
                         molecule.addAtom(atom);
                     }
                 } else if (line.startsWith("@<TRIPOS>BOND")) {
