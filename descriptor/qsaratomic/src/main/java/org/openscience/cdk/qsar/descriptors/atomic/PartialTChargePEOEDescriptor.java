@@ -152,45 +152,56 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         if (!isCachedAtomContainer(ac)) {
-            IAtomContainer mol;
+            AtomContainerStateSnapshot snapshot = AtomContainerStateSnapshot.capture(ac);
             try {
-                mol = ac.clone();
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-            } catch (CloneNotSupportedException | CDKException e) {
-                return getDummyDescriptorValue(e);
-            }
-
-            if (lpeChecker) {
-                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-                try {
-                    lpcheck.saturate(mol);
-                } catch (CDKException e) {
-                    return getDummyDescriptorValue(e);
+                DescriptorValue error = computeAndCacheCharges(ac);
+                if (error != null) {
+                    return error;
                 }
-            }
-
-            if (maxIterations != -1) pepe.setMaxGasteigerIters(maxIterations);
-            if (maxResonStruc != -1) pepe.setMaxResoStruc(maxResonStruc);
-
-            try {
-                peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-                List<Double> peoeAtom = new ArrayList<>();
-                for (IAtom value : mol.atoms()) peoeAtom.add(value.getCharge());
-
-                for (IAtom iAtom : mol.atoms()) iAtom.setCharge(0.0);
-
-                pepe.assignGasteigerPiPartialCharges(mol, true);
-                for (int i = 0; i < ac.getAtomCount(); i++)
-                    cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(peoeAtom.get(i)
-                            + mol.getAtom(i).getCharge()));
-
-            } catch (Exception e) {
-                return getDummyDescriptorValue(e);
+            } finally {
+                snapshot.restore();
             }
         }
 
         return getCachedDescriptorValue(atom) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
                 getParameters(), getCachedDescriptorValue(atom), NAMES) : null;
+    }
+
+    private DescriptorValue computeAndCacheCharges(IAtomContainer ac) {
+        try {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(e);
+        }
+
+        if (lpeChecker) {
+            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            try {
+                lpcheck.saturate(ac);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
+        }
+
+        if (maxIterations != -1) pepe.setMaxGasteigerIters(maxIterations);
+        if (maxResonStruc != -1) pepe.setMaxResoStruc(maxResonStruc);
+
+        try {
+            peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
+            List<Double> peoeAtom = new ArrayList<>();
+            for (IAtom value : ac.atoms()) peoeAtom.add(value.getCharge());
+
+            for (IAtom iAtom : ac.atoms()) iAtom.setCharge(0.0);
+
+            pepe.assignGasteigerPiPartialCharges(ac, true);
+            for (int i = 0; i < ac.getAtomCount(); i++)
+                cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(peoeAtom.get(i)
+                        + ac.getAtom(i).getCharge()));
+
+        } catch (Exception e) {
+            return getDummyDescriptorValue(e);
+        }
+        return null;
     }
 
     /**

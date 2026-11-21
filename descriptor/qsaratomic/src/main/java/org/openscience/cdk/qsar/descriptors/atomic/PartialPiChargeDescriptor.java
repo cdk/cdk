@@ -151,40 +151,51 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         if (!isCachedAtomContainer(ac)) {
-            IAtomContainer mol;
+            AtomContainerStateSnapshot snapshot = AtomContainerStateSnapshot.capture(ac);
             try {
-                mol = ac.clone();
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-            } catch (CloneNotSupportedException | CDKException e) {
-                return getDummyDescriptorValue(e);
-            }
-
-            if (lpeChecker) {
-                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-                try {
-                    lpcheck.saturate(mol);
-                } catch (CDKException e) {
-                    return getDummyDescriptorValue(e);
+                DescriptorValue error = computeAndCacheCharges(ac);
+                if (error != null) {
+                    return error;
                 }
-            }
-
-            if (maxIterations != -1) pepe.setMaxGasteigerIters(maxIterations);
-            if (maxResonStruc != -1) pepe.setMaxResoStruc(maxResonStruc);
-            try {
-                for (int i = 0; i < mol.getAtomCount(); i++)
-                    mol.getAtom(i).setCharge(0.0);
-                pepe.assignGasteigerPiPartialCharges(mol, true);
-                for (int i = 0; i < ac.getAtomCount(); i++) {
-                    // assume same order, so mol.getAtom(i) == ac.getAtom(i)
-                    cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(mol.getAtom(i).getCharge()));
-                }
-            } catch (Exception exception) {
-                return getDummyDescriptorValue(exception);
+            } finally {
+                snapshot.restore();
             }
         }
 
         return getCachedDescriptorValue(atom) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
                 getParameters(), getCachedDescriptorValue(atom), NAMES) : null;
+    }
+
+    private DescriptorValue computeAndCacheCharges(IAtomContainer ac) {
+        try {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(e);
+        }
+
+        if (lpeChecker) {
+            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            try {
+                lpcheck.saturate(ac);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
+        }
+
+        if (maxIterations != -1) pepe.setMaxGasteigerIters(maxIterations);
+        if (maxResonStruc != -1) pepe.setMaxResoStruc(maxResonStruc);
+        try {
+            for (int i = 0; i < ac.getAtomCount(); i++)
+                ac.getAtom(i).setCharge(0.0);
+            pepe.assignGasteigerPiPartialCharges(ac, true);
+            for (int i = 0; i < ac.getAtomCount(); i++) {
+                // assume same order, so ac.getAtom(i) corresponds directly
+                cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(ac.getAtom(i).getCharge()));
+            }
+        } catch (Exception exception) {
+            return getDummyDescriptorValue(exception);
+        }
+        return null;
     }
 
     /**
