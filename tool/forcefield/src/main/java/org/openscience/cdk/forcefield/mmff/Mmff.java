@@ -130,12 +130,11 @@ public class Mmff {
         // restore aromatic flags and mark the MMFF aromatic bonds
         for (IChemObject chemObj : oldArom)
             chemObj.setFlag(IChemObject.AROMATIC, true);
-        for (IBond bond : mol.bonds()) {
-            if (aromBonds.contains(bond))
-                bond.setProperty(MMFF_AROM, true);
-            else
-                bond.removeProperty(MMFF_AROM);
-        }
+        // clear existing bond MMFF_AROM flags
+        for (IBond bond : mol.bonds())
+            bond.removeProperty(MMFF_AROM);
+        for (IBond bond : aromBonds)
+            bond.setProperty(MMFF_AROM, true);
 
         return !hasUnkType;
     }
