@@ -7,6 +7,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -89,5 +90,44 @@ class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("CC=CC(C)=O");
         //logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
         Assertions.assertEquals(4, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    void testAcetoneAtomOrder() throws Exception {
+        Assertions.assertAll(
+                () -> assertPiSystemSizeInBothHydrogenForms("CC(=O)C", 2),
+                () -> assertPiSystemSizeInBothHydrogenForms("O=C(C)C", 2));
+    }
+
+    @Test
+    void testEtheneHydrogenForms() throws Exception {
+        assertPiSystemSizeInBothHydrogenForms("C=C", 2);
+    }
+
+    @Test
+    void testEthanolHasNoPiSystem() throws Exception {
+        assertPiSystemSizeInBothHydrogenForms("CCO", 0);
+    }
+
+    @Test
+    void testTetramethylammoniumHasNoPiSystem() throws Exception {
+        assertPiSystemSizeInBothHydrogenForms("C[N+](C)(C)C", 0);
+    }
+
+    private void assertPiSystemSizeInBothHydrogenForms(String smiles, int expected) throws Exception {
+        Object[] params = {Boolean.FALSE};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles(smiles);
+        int implicit = piSystemSize(mol);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        int explicit = piSystemSize(mol);
+        Assertions.assertAll(smiles,
+                () -> Assertions.assertEquals(expected, implicit, "implicit hydrogens"),
+                () -> Assertions.assertEquals(expected, explicit, "explicit hydrogens"));
+    }
+
+    private int piSystemSize(IAtomContainer mol) {
+        return ((IntegerResult) descriptor.calculate(mol).getValue()).intValue();
     }
 }

@@ -178,13 +178,15 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
                 startSphere = new ArrayList<>();
                 path = new ArrayList<>();
                 startSphere.add(container.getAtom(i));
+                visited[i] = true;
+                path.add(container.getAtom(i));
                 try {
                     breadthFirstSearch(container, startSphere, path, visited);
                 } catch (CDKException e) {
                     logger.error("Could not determine largest pi system, returning dummy descriptor value, exception message: " + e.getMessage(), e);
                     return getDummyDescriptorValue(e);
                 }
-                if (path.size() > largestPiSystemAtomsCount) {
+                if (path.size() > 1 && path.size() > largestPiSystemAtomsCount) {
                     largestPiSystemAtomsCount = path.size();
                 }
             }
