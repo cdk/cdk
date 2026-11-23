@@ -53,6 +53,16 @@ class MmffParamSetTest {
     void crd() {
         assertThat(mmffParams.getCrd(32), is(1));
     }
+
+    @Test
+    void biphenylConnectingBondClass() {
+        assertThat(mmffParams.getBondCls(37, 37, 1, false), is(1));
+    }
+
+    @Test
+    void aromaticRingBondClass() {
+        assertThat(mmffParams.getBondCls(37, 37, 1, true), is(0));
+    }
     
     @Test
     void bciBetween1And18() {
