@@ -28,6 +28,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -343,6 +344,40 @@ class MmffTest {
         assertPartialCharges(mol,
                              0.0, 0.28, -0.56, 0.28, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
         assertPartialChargeSum(mol, 0);
+    }
+
+    @Test
+    void forgoiPartialCharges() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmi("COC(=O)c1ccc(I)cc1");
+        Assertions.assertTrue(mmff.assignAtomTypes(mol));
+        Assertions.assertTrue(mmff.partialCharges(mol));
+        Assertions.assertEquals(0.6338, mol.getAtom(2).getCharge(), 0.001, "ester carbon");
+        Assertions.assertEquals(0.0862, mol.getAtom(4).getCharge(), 0.001, "ipso carbon");
+    }
+
+    @Test
+    void styrenePartialCharges() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmi("C=Cc1ccccc1");
+        Assertions.assertTrue(mmff.assignAtomTypes(mol));
+        Assertions.assertTrue(mmff.partialCharges(mol));
+        Assertions.assertEquals(-0.1784, mol.getAtom(1).getCharge(), 0.001, "vinyl carbon");
+        Assertions.assertEquals(0.0284, mol.getAtom(2).getCharge(), 0.001, "ipso carbon");
+    }
+
+    @Test
+    void retypePhenolAsCyclohexadienone() throws InvalidSmilesException {
+        IAtomContainer mol = loadSmi("[H]OC1=CC=CC=C1");
+        Assertions.assertTrue(mmff.assignAtomTypes(mol));
+
+        // Move the phenolic H to the adjacent carbon to form O=C1CC=CC=C1.
+        mol.removeBond(mol.getAtom(0), mol.getAtom(1));
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.getBond(mol.getAtom(1), mol.getAtom(2)).setOrder(IBond.Order.DOUBLE);
+        mol.getBond(mol.getAtom(2), mol.getAtom(3)).setOrder(IBond.Order.SINGLE);
+
+        Assertions.assertTrue(mmff.assignAtomTypes(mol));
+        Assertions.assertTrue(mmff.partialCharges(mol));
+        Assertions.assertEquals(-0.1356, mol.getAtom(7).getCharge(), 0.001, "vinyl carbon next to carbonyl");
     }
 
     private IAtomContainer loadSmi(String smi) throws InvalidSmilesException {

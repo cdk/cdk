@@ -169,11 +169,8 @@ enum MmffParamSet {
     int getBondCls(int type1, int type2, int bord, boolean barom) {
         MmffProp prop1 = properties[checkType(type1)];
         MmffProp prop2 = properties[checkType(type2)];
-        // non-arom atoms with sbmb (single-bond-multi-bond)
-        if (bord == 1 && !prop1.arom && prop1.sbmb && !prop2.arom && prop2.sbmb)
-            return 1;
-        // non-arom bond between arom atoms
-        if (bord == 1 && !barom && prop1.arom && prop2.arom)
+        // single, non-aromatic bond between atoms that both have sbmb = 1, or between aromatic atoms
+        if (bord == 1 && !barom && ((prop1.sbmb && prop2.sbmb) || (prop1.arom && prop2.arom)))
             return 1;
         return 0;
     }
