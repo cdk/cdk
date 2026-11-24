@@ -70,6 +70,23 @@ class GaussianInputWriterTest extends ChemObjectIOTest {
     }
 
     @Test
+    void writeMolecularCharge() throws Exception {
+        IAtomContainer hydroxide = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        Atom hydrogen = new Atom("H", new Point3d(0.0, 0.0, 0.0));
+        hydrogen.setFormalCharge(null);
+        hydroxide.addAtom(hydrogen);
+        Atom oxygen = new Atom("O", new Point3d(0.0, 0.0, 0.97));
+        oxygen.setFormalCharge(-1);
+        hydroxide.addAtom(oxygen);
+
+        StringWriter output = new StringWriter();
+        try (GaussianInputWriter writer = new GaussianInputWriter(output)) {
+            writer.write(hydroxide);
+        }
+        Assertions.assertEquals("-1 1", output.toString().split("\n\n")[2].split("\n")[0]);
+    }
+
+    @Test
     void testIndependentWriters() throws Exception {
         IAtomContainer helium = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         helium.addAtom(new Atom("He", new Point3d(0.0, 0.0, 0.0)));
