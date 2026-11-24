@@ -102,6 +102,23 @@ class PDBWriterTest extends ChemObjectIOTest {
     }
 
     @Test
+    void writeCrystalCellParameters() throws Exception {
+        ICrystal crystal = builder.newInstance(ICrystal.class);
+        crystal.setA(new Vector3d(10, 0, 0));
+        crystal.setB(new Vector3d(-5, 5 * Math.sqrt(3), 0));
+        crystal.setC(new Vector3d(0, 0, 25.125));
+
+        StringWriter output = new StringWriter();
+        try (PDBWriter writer = new PDBWriter(output)) {
+            writer.write(crystal);
+        }
+
+        String cellRecord = output.toString().split("\n")[1];
+        Assertions.assertTrue(cellRecord.startsWith("CRYST1   10.000   10.000   25.125  90.00  90.00 120.00"),
+                              cellRecord);
+    }
+
+    @Test
     void testRoundTrip_fractionalCoordinates() throws Exception {
         StringWriter sWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(sWriter);

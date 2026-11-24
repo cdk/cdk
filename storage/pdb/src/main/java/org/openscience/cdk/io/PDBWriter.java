@@ -288,21 +288,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
             Vector3d b = crystal.getB();
             Vector3d c = crystal.getC();
             double[] ucParams = CrystalGeometryTools.cartesianToNotional(a, b, c);
-            final String LENGTH_FORMAT = "%4.3f";
-            final String ANGLE_FORMAT = "%3.3f";
-            FormatStringBuilder fsb = new FormatStringBuilder("");
-            fsb.reset(LENGTH_FORMAT).format(ucParams[0]);
-            writer.write("CRYST1 " + fsb);
-            fsb.reset(LENGTH_FORMAT).format(ucParams[1]);
-            writer.write(fsb.toString());
-            fsb.reset(LENGTH_FORMAT).format(ucParams[2]);
-            writer.write(fsb.toString());
-            fsb.reset(ANGLE_FORMAT).format(ucParams[3]);
-            writer.write(fsb.toString());
-            fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
-            writer.write(fsb.toString());
-            fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
-            writer.write(fsb.toString());
+            writer.write(String.format(Locale.ROOT, "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f",
+                                       ucParams[0], ucParams[1], ucParams[2], ucParams[3], ucParams[4], ucParams[5]));
             writer.write('\n');
 
             // before saving the atoms, we need to create cartesian coordinates
