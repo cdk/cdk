@@ -183,11 +183,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         // next line is empty
         writer.write('\n');
 
-        /*
-         * next line contains two digits the first is the total charge the
-         * second is boolean indicating: 0 = open shell 1 = closed shell
-         */
-        writer.write("0 "); // FIXME: should write total charge of molecule
+        int charge = 0;
+        for (IAtom atom : mol.atoms()) {
+            Integer formalCharge = atom.getFormalCharge();
+            if (formalCharge != null)
+                charge += formalCharge;
+        }
+        writer.write(Integer.toString(charge));
+        writer.write(' ');
         if (shell.isSet()) {
             writer.write("0");
         } else {
