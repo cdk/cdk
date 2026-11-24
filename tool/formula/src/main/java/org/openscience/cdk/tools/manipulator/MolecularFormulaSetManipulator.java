@@ -23,6 +23,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.interfaces.IElement;
@@ -102,61 +103,46 @@ public class MolecularFormulaSetManipulator {
     }
 
     /**
-     * Remove all those IMolecularFormula which are not fit theirs IElement
-     * occurrence into a limits. The limits are given from formulaMax and formulaMin.
-     * In the minimal IMolecularFormula must contain all those IElement found in the
-     * minimal IMolecularFormula.
+     * Retain formulas whose element counts are within the inclusive bounds.
+     * An element absent from a bound has a count of zero in that bound.
      *
      * @param formulaSet  IMolecularFormulaSet to look for
      * @param formulaMax  A IMolecularFormula which contains the maximal representation of the Elements
      * @param formulaMin  A IMolecularFormula which contains the minimal representation of the Elements
-     * @return            A IMolecularFormulaSet with only the IMolecularFormula which the IElements
-     * 						are into the correct occurrence
+     * @return            the matching formulas, or null if the minimum contains an element absent from the maximum
      */
     public static IMolecularFormulaSet remove(IMolecularFormulaSet formulaSet, IMolecularFormula formulaMin,
             IMolecularFormula formulaMax) {
 
-        // prove the correlation between maximum and minimum molecularFormula
-        if (!validCorrelation(formulaMin, formulaMax)) return null;
+        if (!containsOnlyElementsOf(formulaMin, formulaMax)) return null;
 
         IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
-
+        List<IElement> elements = MolecularFormulaManipulator.elements(formulaMax);
         for (IMolecularFormula formula : formulaSet.molecularFormulas()) {
-            boolean flagPass = true;
+            if (!containsOnlyElementsOf(formula, formulaMax)) continue;
 
-            // the formula must contain all element found into the formulaMin
-            if (!validCorrelation(formula, formulaMin)) continue;
-
-            for (IElement element : MolecularFormulaManipulator.elements(formulaMin)) {
+            boolean matches = true;
+            for (IElement element : elements) {
                 int occur = MolecularFormulaManipulator.getElementCount(formula, element);
                 int occurMax = MolecularFormulaManipulator.getElementCount(formulaMax, element);
                 int occurMin = MolecularFormulaManipulator.getElementCount(formulaMin, element);
 
-                if (!(occurMin <= occur) || !(occur <= occurMax)) {
-                    flagPass = false;
+                if (occur < occurMin || occur > occurMax) {
+                    matches = false;
                     break;
                 }
 
             }
-            if (flagPass) // stored if each IElement occurrence is into the limits
+            if (matches)
                 newFormulaSet.addMolecularFormula(formula);
 
         }
         return newFormulaSet;
     }
 
-    /**
-     * In the minimal IMolecularFormula must contain all those IElement found in the
-     * minimal IMolecularFormula.
-     *
-     * @param formulaMax  A IMolecularFormula which contains the maximal representation of the Elements
-     * @param formulaMin  A IMolecularFormula which contains the minimal representation of the Elements
-     * @return            True, if the correlation is valid
-     */
-    private static boolean validCorrelation(IMolecularFormula formulaMin, IMolecularFormula formulamax) {
-        for (IElement element : MolecularFormulaManipulator.elements(formulaMin)) {
-            if (!MolecularFormulaManipulator.containsElement(formulamax, element)) return false;
-
+    private static boolean containsOnlyElementsOf(IMolecularFormula formula, IMolecularFormula allowed) {
+        for (IElement element : MolecularFormulaManipulator.elements(formula)) {
+            if (!MolecularFormulaManipulator.containsElement(allowed, element)) return false;
         }
         return true;
     }
