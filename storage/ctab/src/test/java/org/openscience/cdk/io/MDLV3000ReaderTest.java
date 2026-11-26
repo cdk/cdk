@@ -166,7 +166,7 @@ class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"))) {
             IAtomContainer container = reader.read(DefaultChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(container.getBondCount(), is(8));
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(1));
             assertThat(sgroups.get(0).getType(), is(SgroupType.ExtMulticenter));

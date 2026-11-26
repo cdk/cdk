@@ -115,6 +115,7 @@ import Jama.Matrix;
  */
 public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
+    private static final double LOG_2 = 0.6931471805599453; // Math.log(2.0);
     static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(WHIMDescriptor.class);
     String              type;
     final Map<String, Double> hashatwt;
@@ -383,8 +384,8 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
 
         // look for symmetric & asymmetric atoms for the gamma descriptor
         for (int i = 0; i < 3; i++) {
-            double ns = 0.0;
-            double na = 0.0;
+            int ns = 0;
+            int na = 0;
             for (int j = 0; j < ac.getAtomCount(); j++) {
                 boolean foundmatch = false;
                 for (int k = 0; k < ac.getAtomCount(); k++) {
@@ -398,8 +399,10 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
                 if (!foundmatch) na++;
             }
             double n = ac.getAtomCount();
+            // The limit of p * log(p) at p = 0 is zero.
             gamma[i] = -1.0
-                    * ((ns / n) * Math.log(ns / n) / Math.log(2.0) + (na / n) * Math.log(1.0 / n) / Math.log(2.0));
+                       * ((ns == 0 ? 0 : (ns / n) * Math.log(ns / n) / LOG_2)
+                       + (na / n) * Math.log(1.0 / n) / LOG_2);
             gamma[i] = 1.0 / (1.0 + gamma[i]);
             //logger.debug("ns = "+ns+" na = "+na+"  gamma = "+gamma[i]);
         }

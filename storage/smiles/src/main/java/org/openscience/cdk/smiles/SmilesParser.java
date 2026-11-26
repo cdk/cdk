@@ -252,7 +252,7 @@ public final class SmilesParser {
             rset.addReaction(reaction);
             parseRxnCXSMILES(title, rset);
             reaction.setProperty(CDKConstants.TITLE, rset.getProperty(CDKConstants.TITLE));
-            reaction.setProperty(CDKConstants.CTAB_SGROUPS, rset.getProperty(CDKConstants.CTAB_SGROUPS));
+            Sgroup.set(reaction, Sgroup.get(rset));
         } catch (Exception e) {
             throw new InvalidSmilesException("Error parsing CXSMILES", e);
         }
@@ -1095,7 +1095,7 @@ public final class SmilesParser {
 
         // assign Sgroups
         for (Map.Entry<IChemObject, List<Sgroup>> e : sgroupMap.entrySet())
-            e.getKey().setProperty(CDKConstants.CTAB_SGROUPS, new ArrayList<>(e.getValue()));
+            Sgroup.set(e.getKey(), new ArrayList<>(e.getValue()));
 
         if (cxstate.atomHighlight != null || cxstate.bongHighlight != null) {
             AtomBondSelection selection = new AtomBondSelection();
@@ -1195,13 +1195,7 @@ public final class SmilesParser {
 
                     rootStructure.add(rDef);
 
-                    List<Sgroup> childSgroups = rDef.getProperty(CDKConstants.CTAB_SGROUPS);
-                    if (childSgroups != null) {
-                        List<Sgroup> mainSgroups = rootStructure.getProperty(CDKConstants.CTAB_SGROUPS);
-                        mainSgroups = mainSgroups != null ? new ArrayList<>(mainSgroups) : new ArrayList<>();
-                        mainSgroups.addAll(childSgroups);
-                        rootStructure.setProperty(CDKConstants.CTAB_SGROUPS, mainSgroups);
-                    }
+                    Sgroup.add(rootStructure, Sgroup.get(rDef));
                 }
             }
         }

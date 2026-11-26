@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -105,16 +104,10 @@ final class VarAttachFilter implements Predicate<int[]> {
      * @return the var bonds to check
      */
     private static List<VarBond> indexVarBonds(IAtomContainer query) {
-        List<Sgroup> sgroups = query.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            return Collections.emptyList();
-
         Map<IAtom, Set<Integer>> map = new HashMap<>();
         Set<IBond> bonds = new HashSet<>();
 
-        for (Sgroup sgroup : sgroups) {
-            if (sgroup.getType() != SgroupType.ExtMulticenter)
-                continue;
+        for (Sgroup sgroup : Sgroup.get(query, SgroupType.ExtMulticenter)) {
 
             // the Sgroups has the varIdxs to attach to AND the '*' atom, we know
             // which is which as one is in the 'bond' (should only be one bond)
@@ -222,14 +215,7 @@ final class VarAttachFilter implements Predicate<int[]> {
      * @return it has multicenter/variable attachments
      */
     static boolean hasVariableAttachment(IAtomContainer query) {
-        List<Sgroup> sgroups = query.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            return false;
-        for (Sgroup sgroup : sgroups) {
-            if (sgroup.getType() == SgroupType.ExtMulticenter)
-                return true;
-        }
-        return false;
+        return !Sgroup.get(query, SgroupType.ExtMulticenter).isEmpty();
     }
 
     /**
@@ -239,14 +225,8 @@ final class VarAttachFilter implements Predicate<int[]> {
      * @return it has multicenter/variable attachments
      */
     static Set<IAtom> getAttachAtoms(IAtomContainer query) {
-        List<Sgroup> sgroups = query.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            return Collections.emptySet();
         Set<IAtom> attach = new HashSet<>();
-        for (Sgroup sgroup : sgroups) {
-            if (sgroup.getType() != SgroupType.ExtMulticenter)
-                continue;
-
+        for (Sgroup sgroup : Sgroup.get(query, SgroupType.ExtMulticenter)) {
             // the Sgroups has the atoms to attach to AND the '*' atom, we know
             // which is which as one is in the 'bond' (should only be one bond)
             for (IBond bond : sgroup.getBonds()) {

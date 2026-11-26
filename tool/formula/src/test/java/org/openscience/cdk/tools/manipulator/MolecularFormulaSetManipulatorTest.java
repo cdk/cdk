@@ -216,6 +216,24 @@ class MolecularFormulaSetManipulatorTest {
 
     }
 
+    @Test
+    void optionalElementsAreLimitedByTheMaximumFormula() {
+        IMolecularFormula minimum = MolecularFormulaManipulator.getMolecularFormula("CH4", builder);
+        IMolecularFormula maximum = MolecularFormulaManipulator.getMolecularFormula("C2H6O", builder);
+        IMolecularFormula methanol = MolecularFormulaManipulator.getMolecularFormula("CH4O", builder);
+        IMolecularFormulaSet candidates = new MolecularFormulaSet();
+        candidates.addMolecularFormula(minimum);
+        candidates.addMolecularFormula(methanol);
+        candidates.addMolecularFormula(MolecularFormulaManipulator.getMolecularFormula("C2H6O2", builder));
+        candidates.addMolecularFormula(MolecularFormulaManipulator.getMolecularFormula("CH4S", builder));
+
+        IMolecularFormulaSet matches = MolecularFormulaSetManipulator.remove(candidates, minimum, maximum);
+
+        Assertions.assertEquals(2, matches.size());
+        Assertions.assertSame(minimum, matches.getMolecularFormula(0));
+        Assertions.assertSame(methanol, matches.getMolecularFormula(1));
+    }
+
     /**
      * A unit test suite for JUnit.
      *

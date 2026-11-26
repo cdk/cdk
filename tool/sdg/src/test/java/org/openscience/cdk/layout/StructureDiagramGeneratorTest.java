@@ -23,7 +23,6 @@ package org.openscience.cdk.layout;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -54,6 +53,7 @@ import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -68,7 +68,6 @@ import java.io.StringReader;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +88,52 @@ import static org.hamcrest.Matchers.lessThan;
  *@cdk.created    August 29, 2003
  */
 class StructureDiagramGeneratorTest {
+
+    @Test
+    void bridgedCageSubstituentsPointOutwards() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        for (String input : new String[]{"CC12COC(OC1)(OC2)C3CC3", "CC12CO[B-](OC1)(OC2)C3CC3",
+                                         "CC12CCC(CC1)(CC2)C3CC3"}) {
+            IAtomContainer mol = parser.parseSmiles(input);
+            new StructureDiagramGenerator().generateCoordinates(mol);
+            Vector2d axis = new Vector2d(mol.getAtom(4).getPoint2d());
+            axis.sub(mol.getAtom(1).getPoint2d());
+            Vector2d substituent = new Vector2d(mol.getAtom(9).getPoint2d());
+            substituent.sub(mol.getAtom(4).getPoint2d());
+            assertThat(substituent.angle(axis), closeTo(0, 1e-6));
+            assertThat(substituent.length(), closeTo(1.5, 1e-6));
+            Vector2d methyl = new Vector2d(mol.getAtom(0).getPoint2d());
+            methyl.sub(mol.getAtom(1).getPoint2d());
+            assertThat(methyl.angle(axis), closeTo(Math.PI, 1e-6));
+        }
+    }
+
+    @Test
+    void epoxideOnFusedRingJunction() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        // The two six-membered rings and the epoxide share the same bond.
+        String[] inputs = {
+            "C123OC1(CCCC2)CCCC3",
+            "C[C@@]12[C@](CCC1C3C(=CC2)[C@@]45O[C@@]4(CC6(OCCO6)CC5)CC3)(O)CC(=C(F)F)F"
+        };
+        for (String input : inputs) {
+            for (boolean templates : new boolean[]{true, false}) {
+                IAtomContainer mol = parser.parseSmiles(input);
+                String expected = SmilesGenerator.isomeric().create(mol);
+                StructureDiagramGenerator generator = new StructureDiagramGenerator();
+                generator.setUseIdentityTemplates(templates);
+                generator.generateCoordinates(mol);
+                for (int i = 0; i < mol.getAtomCount(); i++) {
+                    for (int j = i + 1; j < mol.getAtomCount(); j++) {
+                        Assertions.assertTrue(mol.getAtom(i).getPoint2d().distance(mol.getAtom(j).getPoint2d()) > 0.5,
+                                              "Distinct atoms must not overlap: " + i + ", " + j);
+                    }
+                }
+                mol.setStereoElements(StereoElementFactory.using2DCoordinates(mol).createAll());
+                Assertions.assertEquals(expected, SmilesGenerator.isomeric().create(mol));
+            }
+        }
+    }
 
     private static final StructureDiagramGenerator SDG = new StructureDiagramGenerator();
 
@@ -1113,8 +1158,7 @@ class StructureDiagramGeneratorTest {
         sgroup.addAtom(mol.getAtom(2));
         sgroup.addBond(mol.getBond(0));
         sgroup.addBond(mol.getBond(2));
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
 
         layout(mol);
         List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
@@ -1143,8 +1187,7 @@ class StructureDiagramGeneratorTest {
         sgroup.putValue(SgroupKey.CtabConnectivity, "HT");
         for (IAtom atom : mol.atoms())
             sgroup.addAtom(atom);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
 
         layout(mol);
         List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
@@ -1188,8 +1231,7 @@ class StructureDiagramGeneratorTest {
         sgroup2.addAtom(mol.getAtom(3));
         sgroup2.addBond(mol.getBond(1));
         sgroup2.addBond(mol.getBond(3));
-        mol.setProperty(CDKConstants.CTAB_SGROUPS,
-                        Arrays.asList(sgroup1, sgroup2));
+        Sgroup.add(mol, Arrays.asList(sgroup1, sgroup2));
 
         layout(mol);
         List<SgroupBracket> brackets1 = sgroup1.getValue(SgroupKey.CtabBracket);
@@ -1237,7 +1279,7 @@ class StructureDiagramGeneratorTest {
         sgroup2.addAtom(mol.getAtom(4));
         sgroup2.addAtom(mol.getAtom(5));
 
-        mol.setProperty(CDKConstants.CTAB_SGROUPS, Arrays.asList(sgroup1, sgroup2));
+        Sgroup.add(mol, Arrays.asList(sgroup1, sgroup2));
         layout(mol);
 
         int numCrossing = 0;
@@ -1266,7 +1308,7 @@ class StructureDiagramGeneratorTest {
                 break;
         }
         sgroup.putValue(SgroupKey.CtabParentAtomList, patoms);
-        mol.setProperty(CDKConstants.CTAB_SGROUPS, Collections.singletonList(sgroup));
+        Sgroup.add(mol, sgroup);
         layout(mol);
         for (int i = 0; i < 6; i++) {
             Assertions2d.assertEquals(mol.getAtom(i).getPoint2d(),

@@ -21,7 +21,6 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -42,7 +41,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -106,11 +104,8 @@ final class Hydrogens {
     }
 
     private static Set<IAtom> getAllCrossingAtoms(IAtomContainer container) {
-        Collection<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            return Collections.emptySet();
         Set<IAtom> xatoms = new HashSet<>();
-        for (Sgroup sgroup : sgroups) {
+        for (Sgroup sgroup : Sgroup.get(container)) {
             for (IBond bond : sgroup.getBonds()) {
                 xatoms.add(bond.getBegin());
                 xatoms.add(bond.getEnd());
@@ -386,10 +381,9 @@ final class Hydrogens {
                                       Set<IBond> bondsContracted,
                                       Set<IAtom> atomsToSproutFrom,
                                       Set<IAtom> sproutedAtoms) {
-        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
+        List<Sgroup> sgroups = Sgroup.get(container);
+        if (sgroups.isEmpty())
             return;
-        sgroups = new ArrayList<>(sgroups); // ensure we can modify
         for (Iterator<Sgroup> iterator = sgroups.iterator(); iterator.hasNext(); ) {
             Sgroup sgroup = iterator.next();
 
@@ -430,7 +424,7 @@ final class Hydrogens {
                 }
             }
         }
-        container.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+        Sgroup.set(container, sgroups);
     }
 
     static void normalize(IAtomContainer container,

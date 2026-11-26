@@ -237,8 +237,10 @@ public class Mol2Writer extends DefaultChemObjectWriter {
                     final IAtomType bondAtom1Type = matcher.findMatchingAtomType(mol, bondAtom1);
                     final IAtomType bondAtom2Type = matcher.findMatchingAtomType(mol, bondAtom2);
                     if (bondAtom1Type != null && bondAtom2Type != null && 
-                            ((bondAtom1Type.getAtomTypeName().equals("N.am") && bondAtom2Type.getAtomTypeName().equals("C.2"))
-                            || (bondAtom2Type.getAtomTypeName().equals("N.am") && bondAtom1Type.getAtomTypeName().equals("C.2")))) {
+                            ((bondAtom1Type.getAtomTypeName().equals("N.am") && bondAtom2Type.getAtomTypeName().equals("C.2")
+                                    && hasCarbonyl(mol, bondAtom2))
+                            || (bondAtom2Type.getAtomTypeName().equals("N.am") && bondAtom1Type.getAtomTypeName().equals("C.2")
+                                    && hasCarbonyl(mol, bondAtom1)))) {
                         sybylBondOrder = "am";
                     }
                 } catch (CDKException e) {
@@ -255,5 +257,15 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         } catch (IOException e) {
             throw e;
         }
+    }
+
+    private boolean hasCarbonyl(IAtomContainer mol, IAtom carbon) {
+        for (IBond bond : mol.getConnectedBondsList(carbon)) {
+            // N.am also includes thioamides in the Sybyl atom type mapping.
+            String symbol = bond.getOther(carbon).getSymbol();
+            if (bond.getOrder() == IBond.Order.DOUBLE && ("O".equals(symbol) || "S".equals(symbol)))
+                return true;
+        }
+        return false;
     }
 }

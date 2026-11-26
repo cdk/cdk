@@ -2477,8 +2477,7 @@ public final class Smarts {
             }
         }
 
-        if (!sgroups.isEmpty())
-            mol.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+        Sgroup.set(mol, sgroups);
     }
 
     /**

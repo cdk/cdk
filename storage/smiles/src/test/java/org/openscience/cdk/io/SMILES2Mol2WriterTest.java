@@ -43,6 +43,37 @@ class SMILES2Mol2WriterTest {
 
     private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
+    @Test
+    void testWriterForVinylAmide() throws Exception {
+        assertBondTypes("CC(=O)NC=C", "3 2 4 am", "4 4 5 1");
+    }
+
+    @Test
+    void testWriterForVinylAmideReversed() throws Exception {
+        assertBondTypes("C=CNC(C)=O", "3 3 4 am", "2 2 3 1");
+    }
+
+    @Test
+    void testWriterForVinylThioamide() throws Exception {
+        assertBondTypes("CC(=S)NC=C", "3 2 4 am", "4 4 5 1");
+    }
+
+    @Test
+    void testWriterForImide() throws Exception {
+        assertBondTypes("CC(=O)NC(C)=O", "3 2 4 am", "4 4 5 am");
+    }
+
+    private void assertBondTypes(String smiles, String... bonds) throws Exception {
+        IAtomContainer molecule = new SmilesParser(builder).parseSmiles(smiles);
+        StringWriter output = new StringWriter();
+        try (Mol2Writer writer = new Mol2Writer(output)) {
+            writer.write(molecule);
+        }
+        String mol2 = output.toString();
+        for (String bond : bonds)
+            Assertions.assertTrue(mol2.contains("\n" + bond + "\n"), mol2);
+    }
+
     /**
      * @throws org.openscience.cdk.exception.CDKException
      * @throws java.io.IOException

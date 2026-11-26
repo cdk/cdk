@@ -22,7 +22,6 @@ package org.openscience.cdk.renderer.generators.standard;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,8 +34,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,8 +75,7 @@ class StandardSgroupGeneratorTest {
         sgroup.setType(SgroupType.CtabAbbreviation);
         sgroup.addBond(container.getBond(6)); // C-O
         sgroup.setSubscript("Ph");
-        container.setProperty(CDKConstants.CTAB_SGROUPS,
-                              Collections.singletonList(sgroup));
+        Sgroup.add(container, sgroup);
 
         StandardSgroupGenerator.prepareDisplayShortcuts(container, remap);
         Assertions.assertEquals(1, remap.size());
@@ -104,8 +100,7 @@ class StandardSgroupGeneratorTest {
         sgroup.setType(SgroupType.CtabAbbreviation);
         sgroup.addBond(container.getBond(6)); // C-O
         sgroup.setSubscript("Ph");
-        container.setProperty(CDKConstants.CTAB_SGROUPS,
-                              Collections.singletonList(sgroup));
+        Sgroup.add(container, sgroup);
 
         container.getAtom(0).setProperty(StandardGenerator.HIGHLIGHT_COLOR,
                                          Color.RED);
@@ -132,8 +127,7 @@ class StandardSgroupGeneratorTest {
         sgroup.setType(SgroupType.CtabAbbreviation);
         sgroup.addBond(container.getBond(6)); // C-O
         sgroup.setSubscript("Ph");
-        container.setProperty(CDKConstants.CTAB_SGROUPS,
-                              Collections.singletonList(sgroup));
+        Sgroup.add(container, sgroup);
 
         for (int i=0; i<6; i++) {
             container.getAtom(i).setProperty(StandardGenerator.HIGHLIGHT_COLOR,
@@ -171,8 +165,8 @@ class StandardSgroupGeneratorTest {
         sgroup2.setType(SgroupType.CtabAbbreviation);
         sgroup2.addBond(container.getBond(7)); // O-P
         sgroup2.setSubscript("OPh");
-        container.setProperty(CDKConstants.CTAB_SGROUPS,
-                              Arrays.asList(sgroup1, sgroup2));
+        Sgroup.add(container, sgroup1);
+        Sgroup.add(container, sgroup2);
 
         remap = new HashMap<>();
         StandardSgroupGenerator.prepareDisplayShortcuts(container, remap);
@@ -182,8 +176,8 @@ class StandardSgroupGeneratorTest {
         assertHiddenBonds(7, container);
 
         // order does not matter
-        container.setProperty(CDKConstants.CTAB_SGROUPS,
-                              Arrays.asList(sgroup2, sgroup1));
+        Sgroup.add(container, sgroup2);
+        Sgroup.add(container, sgroup1);
         remap = new HashMap<>();
         StandardSgroupGenerator.prepareDisplayShortcuts(container, remap);
         Assertions.assertEquals(1, remap.size());
@@ -216,8 +210,8 @@ class StandardSgroupGeneratorTest {
         sgroup2.setType(SgroupType.CtabAbbreviation);
         sgroup2.addBond(container.getBond(7)); // O-P
         sgroup2.setSubscript("OPh");
-        container.setProperty(CDKConstants.CTAB_SGROUPS,
-                              Arrays.asList(sgroup1, sgroup2));
+        Sgroup.add(container, sgroup1);
+        Sgroup.add(container, sgroup2);
         // expand!
         sgroup2.putValue(SgroupKey.CtabExpansion, true);
 
@@ -229,8 +223,8 @@ class StandardSgroupGeneratorTest {
         assertHiddenBonds(6, container);
 
         // order does not matter
-        container.setProperty(CDKConstants.CTAB_SGROUPS,
-                              Arrays.asList(sgroup2, sgroup1));
+        Sgroup.add(container, sgroup2);
+        Sgroup.add(container, sgroup1);
         remap = new HashMap<>();
         StandardSgroupGenerator.prepareDisplayShortcuts(container, remap);
         Assertions.assertEquals(1, remap.size());
@@ -264,8 +258,8 @@ class StandardSgroupGeneratorTest {
         sgroup2.setType(SgroupType.CtabAbbreviation);
         sgroup2.addBond(container.getBond(7)); // O-P
         sgroup2.setSubscript("OPh");
-        container.setProperty(CDKConstants.CTAB_SGROUPS,
-                              Arrays.asList(sgroup1, sgroup2));
+        Sgroup.add(container, sgroup1);
+        Sgroup.add(container, sgroup2);
         // not expand!
         sgroup2.putValue(SgroupKey.CtabExpansion, false);
         remap = new HashMap<>();
@@ -314,8 +308,7 @@ class StandardSgroupGeneratorTest {
             sgroup.addAtom(container.getAtom(i));
         sgroup.setType(SgroupType.CtabAbbreviation);
         sgroup.setSubscript("N2H2");
-        container.setProperty(CDKConstants.CTAB_SGROUPS,
-                              Collections.singletonList(sgroup));
+        Sgroup.add(container, sgroup);
 
         remap = new HashMap<>();
         StandardSgroupGenerator.prepareDisplayShortcuts(container, remap);

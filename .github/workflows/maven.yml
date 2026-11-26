@@ -13,7 +13,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        java: [ 8, 11, 17, 21, 25]
+        java: [ 8, 27 ]
     name: Java ${{ matrix.java }}
 
     steps:
@@ -54,7 +54,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           MAVEN_OPTS: -Xss16m  -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=cdk -Pjacoco
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=cdk -Pjacoco -pl '!legacy'
       - name: push JaCoCo stats to codecov.io
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 #v7.1.1
         env:

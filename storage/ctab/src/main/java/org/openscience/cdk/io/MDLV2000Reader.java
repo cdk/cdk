@@ -1446,7 +1446,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     newSgroup.addParent(sgroupCpyList.get(sgroupOrgList.indexOf(parent)));
                 }
             }
-            container.setProperty(CDKConstants.CTAB_SGROUPS, sgroupCpyList);
+            Sgroup.set(container, sgroupCpyList);
         }
     }
 
@@ -2275,20 +2275,19 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         boolean wrap = false;
 
         final StringBuilder data = new StringBuilder(80);
+        final DataHead newHeader = new DataHead();
 
         while (!endOfRecord(line = input.readLine())) {
 
-            final String newHeader = dataHeader(line);
-
-            if (newHeader != null) {
+            if (parseDataHead(newHeader, line)) {
 
                 if (header != null) container.setProperty(header, data.toString());
 
-                header = newHeader;
+                header = newHeader.fieldName;
                 wrap = false;
                 data.setLength(0);
 
-            } else {
+            } else if (header != null) {
 
                 if (data.length() > 0 || !line.equals(" ")) line = line.trim();
 
@@ -2304,6 +2303,41 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         if (header != null) container.setProperty(header, data.toString());
     }
 
+    private static final class DataHead {
+        String fieldName;
+    }
+
+    /** Recognize a data-item boundary and set its field name, if present. */
+    private static boolean parseDataHead(DataHead header, String text) {
+        if (text == null || text.isEmpty() || text.charAt(0) != '>')
+            return false;
+        int nameStart = text.indexOf('<', 2);
+        if (nameStart >= 0) {
+            int nameEnd = text.indexOf('>', nameStart + 1);
+            if (nameEnd >= 0) {
+                header.fieldName = text.substring(nameStart + 1, nameEnd);
+                return true;
+            }
+        }
+
+        for (int start = text.indexOf("DT", 2); start >= 0; start = text.indexOf("DT", start + 2)) {
+            char before = text.charAt(start - 1);
+            if (before != ' ' && before != '\t')
+                continue;
+            int end = start + 2;
+            if (end == text.length() || text.charAt(end) < '1' || text.charAt(end) > '9')
+                continue;
+            end++;
+            while (end < text.length() && CharIter.isDigit(text.charAt(end)))
+                end++;
+            if (end == text.length() || text.charAt(end) == ' ' || text.charAt(end) == '\t') {
+                header.fieldName = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Obtain the field name from a potential SD data header. If the header
      * does not contain a field name, then null is returned. The method does
@@ -2313,12 +2347,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return the field name
      */
     static String dataHeader(final String line) {
-        if (line.isEmpty() || line.charAt(0) != '>') return null;
-        int i = line.indexOf('<', 2);
-        if (i < 0) return null;
-        int j = line.indexOf('>', i);
-        if (j < 0) return null;
-        return line.substring(i + 1, j);
+        DataHead header = new DataHead();
+        return parseDataHead(header, line) ? header.fieldName : null;
     }
 
     /**

@@ -50,7 +50,6 @@ import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -267,8 +266,8 @@ public class AtomContainerManipulator {
         if (idx < 0)
             return false;
         container.setAtom(idx, newAtom);
-        List<Sgroup> sgroups  = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups != null) {
+        List<Sgroup> sgroups = Sgroup.get(container);
+        if (!sgroups.isEmpty()) {
             boolean updated = false;
             List<Sgroup> replaced = new ArrayList<>();
             for (Sgroup org : sgroups) {
@@ -293,8 +292,7 @@ public class AtomContainerManipulator {
                 }
             }
             if (updated) {
-                container.setProperty(CDKConstants.CTAB_SGROUPS,
-                                      Collections.unmodifiableList(replaced));
+                Sgroup.set(container, replaced);
             }
         }
 
@@ -555,7 +553,7 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Get the total formal charge on a molecule.
+     * Get the total formal charge on a molecule, ignoring atoms with an unset formal charge.
      *
      * @param atomContainer the atom container to consider
      * @return The summed formal charges of all atoms in this AtomContainer.
@@ -568,7 +566,7 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Get the total formal negative charge on a molecule.
+     * Get the total negative formal charge on a molecule, ignoring atoms with an unset formal charge.
      *
      * @param atomContainer the atom container to consider
      * @return The summed negative formal charges of all atoms in this AtomContainer.
@@ -576,14 +574,14 @@ public class AtomContainerManipulator {
     public static int getTotalNegativeFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            int chargeI = atomContainer.getAtom(i).getFormalCharge();
-            if (chargeI < 0) charge += chargeI;
+            Integer chargeI = atomContainer.getAtom(i).getFormalCharge();
+            if (chargeI != null && chargeI < 0) charge += chargeI;
         }
         return charge;
     }
 
     /**
-     * Get the total positive formal charge on a molecule.
+     * Get the total positive formal charge on a molecule, ignoring atoms with an unset formal charge.
      *
      * @param atomContainer the atom container to consider
      * @return The summed positive formal charges of all atoms in this AtomContainer.
@@ -591,8 +589,8 @@ public class AtomContainerManipulator {
     public static int getTotalPositiveFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            int chargeI = atomContainer.getAtom(i).getFormalCharge();
-            if (chargeI > 0) charge += chargeI;
+            Integer chargeI = atomContainer.getAtom(i).getFormalCharge();
+            if (chargeI != null && chargeI > 0) charge += chargeI;
         }
         return charge;
     }

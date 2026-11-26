@@ -962,6 +962,18 @@ class AtomContainerManipulatorTest {
         Assertions.assertEquals(1, totalCharge);
     }
 
+    @Test
+    void totalFormalChargesIgnoreUnsetAtoms() throws Exception {
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.parseSmiles("[Mg+2].[Cl-].O");
+        mol.getAtom(2).setFormalCharge(null);
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(2, AtomContainerManipulator.getTotalPositiveFormalCharge(mol)),
+                () -> Assertions.assertEquals(-1, AtomContainerManipulator.getTotalNegativeFormalCharge(mol)),
+                () -> Assertions.assertEquals(1, AtomContainerManipulator.getTotalFormalCharge(mol)));
+    }
+
     /**
      * Test total Exact Mass.
      *
@@ -1670,7 +1682,7 @@ class AtomContainerManipulatorTest {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("CCC([H])CC |Sg:n:1,2,3,4:n:ht|");
         AtomContainerManipulator.suppressHydrogens(mol);
-        Collection<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        Collection<Sgroup> sgroups = Sgroup.get(mol);
         Assertions.assertNotNull(sgroups);
         assertThat(sgroups.size(), is(1));
         Sgroup sgroup = sgroups.iterator().next();

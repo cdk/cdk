@@ -31,7 +31,6 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 
 import javax.vecmath.Point2d;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -73,12 +72,8 @@ final class ZOrdering {
      * @param mol the molecule
      */
     private static void orderMultiAndVarAttach(IAtomContainer mol) {
-        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null)
-            return;
-        for (Sgroup sgroup : sgroups) {
-            if (sgroup.getType() != SgroupType.ExtMulticenter ||
-                sgroup.getBonds().size() != 1)
+        for (Sgroup sgroup : Sgroup.get(mol, SgroupType.ExtMulticenter)) {
+            if (sgroup.getBonds().size() != 1)
                 continue;
             Set<IAtom> atoms = sgroup.getAtoms();
             Set<IBond> bonds = sgroup.getBonds();

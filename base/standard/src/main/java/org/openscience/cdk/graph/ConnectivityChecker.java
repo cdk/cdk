@@ -33,7 +33,6 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -140,30 +139,26 @@ public class ConnectivityChecker {
 
         int[] parts = cc.components();
         if (!ignoreMulticenterBonds) {
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-            if (sgroups != null) {
-                for (Sgroup sgroup : sgroups) {
-                    if (sgroup.getType() == SgroupType.ExtMulticenter) {
-                        if (sgroup.getBonds().isEmpty())
-                            continue;
-                        IBond bond = sgroup.getBonds().iterator().next();
-                        IAtom attach = null;
-                        if (sgroup.getAtoms().contains(bond.getBegin())) {
-                            attach = bond.getBegin();
-                        } else if (sgroup.getAtoms().contains(bond.getEnd())) {
-                            attach = bond.getEnd();
-                        }
-                        if (attach != null) {
-                            for (IAtom a : sgroup.getAtoms()) {
-                                relabel(parts,
-                                        parts[container.indexOf(attach)],
-                                        parts[container.indexOf(a)]);
-                            }
-                        }
+            for (Sgroup sgroup : Sgroup.get(container, SgroupType.ExtMulticenter)) {
+                if (sgroup.getBonds().isEmpty())
+                    continue;
+                IBond bond = sgroup.getBonds().iterator().next();
+                IAtom attach = null;
+                if (sgroup.getAtoms().contains(bond.getBegin())) {
+                    attach = bond.getBegin();
+                } else if (sgroup.getAtoms().contains(bond.getEnd())) {
+                    attach = bond.getEnd();
+                }
+                if (attach != null) {
+                    for (IAtom a : sgroup.getAtoms()) {
+                        relabel(parts,
+                                parts[container.indexOf(attach)],
+                                parts[container.indexOf(a)]);
                     }
                 }
             }
         }
+
 
         if (!ignoreComponentGrouping) {
 
@@ -241,15 +236,6 @@ public class ConnectivityChecker {
         return mol;
     }
 
-    private static void addSgroup(IAtomContainer component, Sgroup sgroup) {
-        List<Sgroup> sgroups = component.getProperty(CDKConstants.CTAB_SGROUPS);
-        if (sgroups == null) {
-            sgroups = new ArrayList<>();
-            component.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
-        }
-        sgroups.add(sgroup);
-    }
-
     /**
      * Split a molecule based on the provided component array. Note this function
      * can also be used to split a single molecule, breaking bonds and distributing
@@ -314,14 +300,14 @@ public class ConnectivityChecker {
 
         // split Sgroups, only keep if all atoms/bond in the sgroup
         // are consistent and in the same container
-        List<Sgroup> sgroups = SgroupManipulator.copy(container.getProperty(CDKConstants.CTAB_SGROUPS),
+        List<Sgroup> sgroups = SgroupManipulator.copy(Sgroup.get(container),
                                                       new HashMap<>());
         if (sgroups != null) {
             Map<Sgroup,IAtomContainer> sgroupMap = new HashMap<>();
             for (Sgroup sgroup : sgroups) {
                 IAtomContainer component = getComponent(componentsMap, sgroup);
                 if (component != null) {
-                    addSgroup(component, sgroup);
+                    Sgroup.add(component, sgroup);
                 }
             }
             // remove any parents that were split

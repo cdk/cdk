@@ -47,6 +47,33 @@ import static org.hamcrest.Matchers.closeTo;
 class AtomPlacerTest {
 
     @Test
+    void bridgeheadSubstituentDirectionIgnoresProjectedBondLength() {
+        for (double rotation : new double[]{0, Math.PI / 2, Math.PI, 7 * Math.PI / 4}) {
+            for (double scale : new double[]{0.5, 1, 2}) {
+                IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+                IAtomContainer placed = mol.getBuilder().newAtomContainer();
+                IAtomContainer unplaced = mol.getBuilder().newAtomContainer();
+                double[][] coords = {{0, 0}, {-1.3, 0.75}, {1.3, 0.75}, {0.25 * scale, scale}};
+                double cos = Math.cos(rotation), sin = Math.sin(rotation);
+                for (double[] xy : coords) {
+                    IAtom atom = atom("C", 0);
+                    atom.setPoint2d(new Point2d(cos * xy[0] - sin * xy[1], sin * xy[0] + cos * xy[1]));
+                    mol.addAtom(atom);
+                    if (mol.getAtomCount() > 1)
+                        placed.addAtom(atom);
+                }
+                IAtom substituent = atom("C", 3);
+                mol.addAtom(substituent);
+                unplaced.addAtom(substituent);
+                new AtomPlacer(mol).distributePartners(mol.getAtom(0), placed,
+                        new Point2d(-1.5 * sin, 1.5 * cos), unplaced, 1.5);
+                assertThat(substituent.getPoint2d().x, closeTo(1.5 * sin, 1e-6));
+                assertThat(substituent.getPoint2d().y, closeTo(-1.5 * cos, 1e-6));
+            }
+        }
+    }
+
+    @Test
     void emptyAtomsListTest() {
         List<IAtom> atoms = new ArrayList<>();
         // switch on debugging, to see if NPE is thrown

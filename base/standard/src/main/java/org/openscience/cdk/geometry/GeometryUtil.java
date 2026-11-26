@@ -23,7 +23,6 @@
 
 package org.openscience.cdk.geometry;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -176,15 +175,12 @@ public final class GeometryUtil {
             }
         }
         // scale Sgroup brackets
-        if (atomCon.getProperty(CDKConstants.CTAB_SGROUPS) != null) {
-            List<Sgroup> sgroups = atomCon.getProperty(CDKConstants.CTAB_SGROUPS);
-            for (Sgroup sgroup : sgroups) {
-                List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
-                if (brackets != null) {
-                    for (SgroupBracket bracket : brackets) {
-                        bracket.getFirstPoint().scale(scaleFactor);
-                        bracket.getSecondPoint().scale(scaleFactor);
-                    }
+        for (Sgroup sgroup : Sgroup.get(atomCon)) {
+            List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+            if (brackets != null) {
+                for (SgroupBracket bracket : brackets) {
+                    bracket.getFirstPoint().scale(scaleFactor);
+                    bracket.getSecondPoint().scale(scaleFactor);
                 }
             }
         }
@@ -223,15 +219,12 @@ public final class GeometryUtil {
             }
         }
         // translate Sgroup brackets
-        if (atomCon.getProperty(CDKConstants.CTAB_SGROUPS) != null) {
-            List<Sgroup> sgroups = atomCon.getProperty(CDKConstants.CTAB_SGROUPS);
-            for (Sgroup sgroup : sgroups) {
-                List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
-                if (brackets != null) {
-                    for (SgroupBracket bracket : brackets) {
-                        bracket.getFirstPoint().add(vector);
-                        bracket.getSecondPoint().add(vector);
-                    }
+        for (Sgroup sgroup : Sgroup.get(atomCon)) {
+            List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+            if (brackets != null) {
+                for (SgroupBracket bracket : brackets) {
+                    bracket.getFirstPoint().add(vector);
+                    bracket.getSecondPoint().add(vector);
                 }
             }
         }

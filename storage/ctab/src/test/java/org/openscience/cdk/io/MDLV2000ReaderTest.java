@@ -1268,11 +1268,14 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     void dataHeader_2() {
         assertThat(MDLV2000Reader.dataHeader("> <MELTING.POINT> "), is("MELTING.POINT"));
+        assertThat(MDLV2000Reader.dataHeader("> <MELTING_POINT>"), is("MELTING_POINT"));
     }
 
     @Test
     void dataHeader_3() {
         assertThat(MDLV2000Reader.dataHeader("> 55 (MD-08974) <BOILING.POINT> DT12"), is("BOILING.POINT"));
+        assertThat(MDLV2000Reader.dataHeader("> 55(MD-08974)<BOILING_POINT>DT12"), is("BOILING_POINT"));
+        assertThat(MDLV2000Reader.dataHeader("> (MD-0894)<BOILING_POINT>FROM ARCHIVES"), is("BOILING_POINT"));
     }
 
     @Test
@@ -1290,6 +1293,10 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertThat(MDLV2000Reader.dataHeader(">  25  <NAME>"), is("NAME"));
         assertThat(MDLV2000Reader.dataHeader("> <NAME> (DT12)"), is("NAME"));
         assertThat(MDLV2000Reader.dataHeader("> <NAME> extra text"), is("NAME"));
+        assertThat(MDLV2000Reader.dataHeader("> <MELTING POINT>"), is("MELTING POINT"));
+        assertThat(MDLV2000Reader.dataHeader("> <cdk:Title>"), is("cdk:Title"));
+        assertThat(MDLV2000Reader.dataHeader("> <NAME>WITH>BRACKET"), is("NAME"));
+        assertThat(MDLV2000Reader.dataHeader("> <>"), is(""));
     }
 
     @Test
@@ -1351,6 +1358,93 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         verify(mock).setProperty("ALTERNATE.NAMES", "SYLVAN");
         verify(mock).setProperty("DATE", "09-23-1980");
         verify(mock).setProperty("CRC.NUMBER", "F-0213");
+    }
+
+    @Test
+    void readNonStructuralData_fieldNumberBetweenNamedFields() throws Exception {
+        for (String header : new String[]{"> DT1255", "> DT12 55", ">\t55\tDT12\t",
+                "> 55(MD-08974) DT12"}) {
+            String sb = "> <A>\nvalA\n\n" +
+                    header + "\nnumbered\nignored\n\n" +
+                    "> <B>\nvalB\n\n$$$$\n";
+            BufferedReader input = new BufferedReader(new StringReader(sb));
+            IAtomContainer molecule = SilentChemObjectBuilder.getInstance().newAtomContainer();
+
+            MDLV2000Reader.readNonStructuralData(input, molecule);
+
+            assertThat(molecule.getProperty("A"), is("valA"));
+            assertThat(molecule.getProperty("B"), is("valB"));
+            assertThat(molecule.getProperties().size(), is(2));
+        }
+    }
+
+    @Test
+    void readNonStructuralData_fieldNumberBeforeNamedField() throws Exception {
+        String sb = "> DT1255\nnumbered\nignored\n\n" +
+                "> <A>\nvalA\n\n$$$$\n";
+        BufferedReader input = new BufferedReader(new StringReader(sb));
+        IAtomContainer mock = mock(IAtomContainer.class);
+
+        MDLV2000Reader.readNonStructuralData(input, mock);
+
+        verify(mock).setProperty("A", "valA");
+    }
+
+    @Test
+    void readNonStructuralData_namedHeaderOrderings() throws Exception {
+        for (String header : new String[]{"> 55 (MD-08974) <BOILING.POINT> DT12",
+                "> DT12 55 <BOILING.POINT> (MD-08974)",
+                "> (MD-0894) <BOILING.POINT> FROM ARCHIVES"}) {
+            String sb = header + "\n25.4\n\n" +
+                    "> <MELTING.POINT>\n5\n\n$$$$\n";
+            BufferedReader input = new BufferedReader(new StringReader(sb));
+            IAtomContainer mock = mock(IAtomContainer.class);
+
+            MDLV2000Reader.readNonStructuralData(input, mock);
+
+            verify(mock).setProperty("BOILING.POINT", "25.4");
+            verify(mock).setProperty("MELTING.POINT", "5");
+        }
+    }
+
+    @Test
+    void readNonStructuralData_fieldNameWithBlank() throws Exception {
+        String sb = "> <MELTING POINT>\n5\n\n$$$$\n";
+        BufferedReader input = new BufferedReader(new StringReader(sb));
+        IAtomContainer mock = mock(IAtomContainer.class);
+
+        MDLV2000Reader.readNonStructuralData(input, mock);
+
+        verify(mock).setProperty("MELTING POINT", "5");
+    }
+
+    @Test
+    void readNonStructuralData_greaterThanValue() throws Exception {
+        for (String value : new String[]{">1", ">10000"}) {
+            String sb = "> <A>\n" + value + "\n\n$$$$\n";
+            BufferedReader input = new BufferedReader(new StringReader(sb));
+            IAtomContainer mock = mock(IAtomContainer.class);
+
+            MDLV2000Reader.readNonStructuralData(input, mock);
+
+            verify(mock).setProperty("A", value);
+        }
+    }
+
+    @Test
+    void readNonStructuralData_greaterThanValueBetweenNamedFields() throws Exception {
+        for (String value : new String[]{">1", "> 5 mg", "p < 0.05 and q > 0.1\nsecond line",
+                "> DT12abc", "> DT0"}) {
+            String sb = "> <A>\n" + value + "\n\n" +
+                    "> <B>\nvalB\n\n$$$$\n";
+            BufferedReader input = new BufferedReader(new StringReader(sb));
+            IAtomContainer mock = mock(IAtomContainer.class);
+
+            MDLV2000Reader.readNonStructuralData(input, mock);
+
+            verify(mock).setProperty("A", value);
+            verify(mock).setProperty("B", "valB");
+        }
     }
 
     @Test
@@ -1617,7 +1711,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupAbbreviation() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-abbrv.mol"))) {
             final IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(1));
             Sgroup sgroup = sgroups.get(0);
@@ -1631,7 +1725,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupRepeatUnit() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru.mol"))) {
             IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(1));
             Sgroup sgroup = sgroups.get(0);
@@ -1660,7 +1754,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupUnorderedMixture() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-unord-mixture.mol"))) {
             IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(3));
             // first sgroup
@@ -1684,7 +1778,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupExpandedAbbreviation() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("triphenyl-phosphate-expanded.mol"))) {
             IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(3));
             // first sgroup
@@ -1731,7 +1825,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     void testSgroupBracketStyle() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bracketstyles.mol"))) {
             IAtomContainer container = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(container);
             Assertions.assertNotNull(sgroups);
             assertThat(sgroups.size(), is(2));
             Sgroup sgroup = sgroups.get(0);
@@ -2032,7 +2126,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             MDLV2000Reader     mdlr     = new MDLV2000Reader(in);
             IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
             IAtomContainer mol = mdlr.read(builder.newAtomContainer());
-            List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(mol);
             Sgroup dataSgroup = null;
             for (Sgroup sgroup : sgroups) {
                 if (sgroup.getType() == SgroupType.CtabData) {
@@ -2334,7 +2428,7 @@ class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         try (MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new StringReader(molfile))) {
             IAtomContainer mol = mdlv2000Reader.read(builder.newAtomContainer());
-            List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups = Sgroup.get(mol);
             Assertions.assertEquals(3, sgroups.size());
             for (Sgroup sgroup : sgroups) {
                 Assertions.assertEquals(1, sgroup.getBonds().size());
