@@ -50,6 +50,21 @@ class GaussianInputWriterTest extends ChemObjectIOTest {
     }
 
     @Test
+    void writeRamanFrequencyRoute() throws Exception {
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        molecule.addAtom(new Atom("H", new Point3d(0, 0, 0)));
+        molecule.addAtom(new Atom("H", new Point3d(0, 0, 0.74)));
+
+        StringWriter output = new StringWriter();
+        try (GaussianInputWriter writer = new GaussianInputWriter(output)) {
+            writer.getSetting("Command").setSetting("IR frequency calculation (with Raman)");
+            writer.write(molecule);
+        }
+        String route = output.toString().split("\n", 2)[0];
+        Assertions.assertTrue(route.endsWith(" freq=raman"), route);
+    }
+
+    @Test
     void testAccepts() {
         GaussianInputWriter reader = new GaussianInputWriter();
         Assertions.assertTrue(reader.accepts(IAtomContainer.class));
