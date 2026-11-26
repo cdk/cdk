@@ -166,7 +166,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         } else if (commandString.equals("IR frequency calculation")) {
             writer.write("freq");
         } else if (commandString.equals("IR frequency calculation (with Raman)")) {
-            writer.write("freq=noraman");
+            writer.write("freq=raman");
         } else {
             // assume that user knows what he's doing
             writer.write(commandString);
