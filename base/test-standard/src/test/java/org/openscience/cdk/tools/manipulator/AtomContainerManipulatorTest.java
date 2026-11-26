@@ -962,6 +962,18 @@ class AtomContainerManipulatorTest {
         Assertions.assertEquals(1, totalCharge);
     }
 
+    @Test
+    void totalFormalChargesIgnoreUnsetAtoms() throws Exception {
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.parseSmiles("[Mg+2].[Cl-].O");
+        mol.getAtom(2).setFormalCharge(null);
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(2, AtomContainerManipulator.getTotalPositiveFormalCharge(mol)),
+                () -> Assertions.assertEquals(-1, AtomContainerManipulator.getTotalNegativeFormalCharge(mol)),
+                () -> Assertions.assertEquals(1, AtomContainerManipulator.getTotalFormalCharge(mol)));
+    }
+
     /**
      * Test total Exact Mass.
      *
