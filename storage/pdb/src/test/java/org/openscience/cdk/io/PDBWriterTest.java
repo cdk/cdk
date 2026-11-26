@@ -25,6 +25,7 @@ package org.openscience.cdk.io;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Arrays;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -83,8 +84,11 @@ class PDBWriterTest extends ChemObjectIOTest {
         writer.close();
 
         String output = sWriter.toString();
-        Assertions.assertNotNull(output);
-        Assertions.assertTrue(output.length() > 0);
+        String[] records = Arrays.stream(output.split("\n"))
+                                 .map(line -> line.substring(0, 6).trim())
+                                 .toArray(String[]::new);
+        Assertions.assertArrayEquals(new String[]{"HEADER", "CRYST1", "ATOM", "END"}, records,
+                                     Arrays.toString(records));
 
         PDBReader reader = new PDBReader();
         ChemFile chemFile = reader.read(new ChemFile());
@@ -197,6 +201,7 @@ class PDBWriterTest extends ChemObjectIOTest {
         writer.writeMolecule(mol);
         writer.close();
         String asString = stringWriter.toString();
+        Assertions.assertTrue(asString.startsWith("HEADER"));
         Assertions.assertTrue(asString.contains("ATOM"));
     }
 

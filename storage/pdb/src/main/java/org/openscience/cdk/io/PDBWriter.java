@@ -172,9 +172,13 @@ public class PDBWriter extends DefaultChemObjectWriter {
      * @param molecule the Molecule to write
      */
     public void writeMolecule(IAtomContainer molecule) throws CDKException {
+        writeMolecule(molecule, true);
+    }
 
+    private void writeMolecule(IAtomContainer molecule, boolean includeHeader) throws CDKException {
         try {
-            writeHeader();
+            if (includeHeader)
+                writeHeader();
             int atomNumber = 1;
 
             String hetatmRecordName = (writeAsHET.isSet()) ? "HETATM" : "ATOM  ";
@@ -315,7 +319,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                     atom.setPoint3d(cart);
                 }
             }
-            writeMolecule(crystal.getBuilder().newInstance(IAtomContainer.class, crystal));
+            writeMolecule(crystal.getBuilder().newInstance(IAtomContainer.class, crystal), false);
         } catch (IOException exception) {
             throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
         }
