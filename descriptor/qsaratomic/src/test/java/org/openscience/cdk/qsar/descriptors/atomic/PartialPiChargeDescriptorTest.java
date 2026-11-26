@@ -24,17 +24,22 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -875,6 +880,144 @@ class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
             Assertions.assertFalse(Double.isNaN(result));
+        }
+    }
+
+    @Test
+    void testDoesNotMutateInputAtomContainer() throws Exception {
+        SmilesParser sp = new SmilesParser(builder);
+        IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])F");
+        Assertions.assertEquals(6, mol.getAtomCount());
+        Assertions.assertEquals(0, mol.getLonePairCount());
+        assertUnconfiguredAndUncharged(mol);
+
+        IAtomContainer snapshot = mol.clone();
+        IAtomContainer saturated = mol.clone();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(saturated);
+        lpcheck.saturate(saturated);
+
+        PartialPiChargeDescriptor firstDescriptor = new PartialPiChargeDescriptor();
+        firstDescriptor.setParameters(new Object[]{6, true});
+        double[] first = new double[mol.getAtomCount()];
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            first[i] = ((DoubleResult) firstDescriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+        }
+        String diffAfterCall = AtomContainerDiff.diff(snapshot, mol);
+        int lonePairsAfterCall = mol.getLonePairCount();
+        assertUnconfiguredAndUncharged(mol);
+
+        PartialPiChargeDescriptor secondDescriptor = new PartialPiChargeDescriptor();
+        secondDescriptor.setParameters(new Object[]{6, true});
+        PartialPiChargeDescriptor saturatedDescriptor = new PartialPiChargeDescriptor();
+        saturatedDescriptor.setParameters(new Object[]{6, true});
+
+        boolean hasNonZeroPiCharge = false;
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            double cached = ((DoubleResult) firstDescriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double second = ((DoubleResult) secondDescriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double expected = ((DoubleResult) saturatedDescriptor.calculate(saturated.getAtom(i), saturated).getValue())
+                    .doubleValue();
+            Assertions.assertEquals(first[i], cached, 1e-9, "Cached calculation mismatch at atom " + i);
+            Assertions.assertEquals(first[i], second, 1e-9, "Repeated calculation mismatch at atom " + i);
+            Assertions.assertEquals(expected, first[i], 1e-9, "Pre-saturated comparison mismatch at atom " + i);
+            if (Math.abs(first[i]) > 1e-4) {
+                hasNonZeroPiCharge = true;
+            }
+        }
+        Assertions.assertTrue(hasNonZeroPiCharge, "Expected non-zero pi partial charges for [H]C([H])=C([H])F");
+        Assertions.assertEquals(0, lonePairsAfterCall, "Input lone pairs should remain 0");
+        Assertions.assertEquals("", diffAfterCall, "Input IAtomContainer must not be mutated");
+    }
+
+    @Test
+    void testPreservesExistingAtomAndContainerState() throws Exception {
+        SmilesParser sp = new SmilesParser(builder);
+        IAtomContainer mol = sp.parseSmiles("FC1=C([H])C([H])=C([H])C([H])=C1[H]");
+        IAtom fAtom = mol.getAtom(0);
+        Assertions.assertEquals("F", fAtom.getSymbol());
+
+        fAtom.setCharge(0.42);
+        fAtom.setAtomTypeName("CUSTOM_TYPE");
+        fAtom.setID("atom-f");
+        fAtom.set(IChemObject.VISITED | IChemObject.PLACED);
+        fAtom.setProperty("custom.key", "custom.val");
+        mol.getBond(0).set(IChemObject.PLACED | IChemObject.REACTIVE_CENTER);
+        mol.set(IChemObject.AROMATIC);
+        mol.setProperty("mol.key", "mol.val");
+        ILonePair existingLp = builder.newInstance(ILonePair.class, fAtom);
+        mol.addLonePair(existingLp);
+
+        IAtomContainer before = mol.clone();
+        PartialPiChargeDescriptor descriptor = new PartialPiChargeDescriptor();
+        descriptor.setParameters(new Object[]{6, true});
+        DescriptorValue value = descriptor.calculate(fAtom, mol);
+
+        Assertions.assertNotNull(value);
+        Assertions.assertFalse(Double.isNaN(((DoubleResult) value.getValue()).doubleValue()));
+        Assertions.assertEquals("", AtomContainerDiff.diff(before, mol), "Input IAtomContainer must not be mutated");
+        Assertions.assertEquals(0.42, fAtom.getCharge(), 1e-9);
+        Assertions.assertEquals("CUSTOM_TYPE", fAtom.getAtomTypeName());
+        Assertions.assertEquals("atom-f", fAtom.getID());
+        Assertions.assertTrue(fAtom.is(IChemObject.VISITED | IChemObject.PLACED));
+        Assertions.assertFalse(fAtom.getFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR));
+        Assertions.assertEquals("custom.val", fAtom.getProperty("custom.key"));
+        Assertions.assertNull(fAtom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));
+        Assertions.assertNull(fAtom.getProperty("org.openscience.cdk.renderer.color"));
+        Assertions.assertTrue(mol.getBond(0).is(IChemObject.PLACED | IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(mol.getFlag(IChemObject.AROMATIC));
+        Assertions.assertEquals("mol.val", mol.getProperty("mol.key"));
+        Assertions.assertEquals(1, mol.getLonePairCount());
+        Assertions.assertSame(existingLp, mol.getLonePair(0));
+    }
+
+    @Test
+    void testCalculateReturnsNaNAndRestoresStateOnException() throws Exception {
+        SmilesParser sp = new SmilesParser(builder);
+        IAtomContainer mol = sp.parseSmiles("FC([H])=C([H])[H].C[Se]C");
+        IAtom fAtom = mol.getAtom(0);
+        Assertions.assertEquals("F", fAtom.getSymbol());
+        fAtom.setCharge(0.42);
+        fAtom.setAtomTypeName("CUSTOM_F");
+        fAtom.setID("atom-0");
+        fAtom.set(IChemObject.VISITED | IChemObject.PLACED);
+        fAtom.setProperty("custom.key", "custom.val");
+        mol.getBond(0).set(IChemObject.PLACED | IChemObject.REACTIVE_CENTER);
+        mol.set(IChemObject.AROMATIC);
+        mol.setProperty("mol.key", "mol.val");
+
+        IAtomContainer before = mol.clone();
+        PartialPiChargeDescriptor descriptor = new PartialPiChargeDescriptor();
+        descriptor.setParameters(new Object[]{6, true});
+        DescriptorValue value = descriptor.calculate(fAtom, mol);
+
+        Assertions.assertNotNull(value);
+        Assertions.assertTrue(Double.isNaN(((DoubleResult) value.getValue()).doubleValue()));
+        Assertions.assertNotNull(value.getException());
+        Assertions.assertEquals(0, mol.getLonePairCount());
+        Assertions.assertEquals("", AtomContainerDiff.diff(before, mol), "Input state must be restored on error");
+        Assertions.assertEquals(0.42, fAtom.getCharge(), 1e-9);
+        Assertions.assertEquals("CUSTOM_F", fAtom.getAtomTypeName());
+        Assertions.assertEquals("atom-0", fAtom.getID());
+        Assertions.assertTrue(fAtom.is(IChemObject.VISITED | IChemObject.PLACED));
+        Assertions.assertFalse(fAtom.getFlag(IChemObject.HYDROGEN_BOND_ACCEPTOR));
+        Assertions.assertEquals("custom.val", fAtom.getProperty("custom.key"));
+        Assertions.assertNull(fAtom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));
+        Assertions.assertTrue(mol.getBond(0).is(IChemObject.PLACED | IChemObject.REACTIVE_CENTER));
+        Assertions.assertTrue(mol.getFlag(IChemObject.AROMATIC));
+        Assertions.assertEquals("mol.val", mol.getProperty("mol.key"));
+    }
+
+    /**
+     * Asserts that all atoms in the container have no perceived atom type, valency, hybridization, or charge.
+     *
+     * @param container the atom container to inspect
+     */
+    private static void assertUnconfiguredAndUncharged(IAtomContainer container) {
+        for (IAtom atom : container.atoms()) {
+            Assertions.assertNull(atom.getCharge(), "Expected null charge");
+            Assertions.assertNull(atom.getAtomTypeName(), "Expected null atomTypeName");
+            Assertions.assertNull(atom.getValency(), "Expected null valency");
+            Assertions.assertNull(atom.getHybridization(), "Expected null hybridization");
         }
     }
 }

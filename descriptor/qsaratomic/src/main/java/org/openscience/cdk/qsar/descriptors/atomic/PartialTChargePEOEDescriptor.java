@@ -23,8 +23,6 @@ import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -138,6 +136,11 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
         return NAMES;
     }
 
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                Double.NaN), NAMES, e);
+    }
+
     /**
      *  The method returns partial total charges assigned to an heavy atom through PEOE method.
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
@@ -148,63 +151,57 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
-        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-        Double originalCharge = atom.getCharge();
-        String originalAtomtypeName = atom.getAtomTypeName();
-        Integer originalNeighborCount = atom.getFormalNeighbourCount();
-        Integer originalValency = atom.getValency();
-        IAtomType.Hybridization originalHybridization = atom.getHybridization();
-        Double originalBondOrderSum = atom.getBondOrderSum();
-        Order originalMaxBondOrder = atom.getMaxBondOrder();
         if (!isCachedAtomContainer(ac)) {
+            AtomContainerStateSnapshot snapshot = AtomContainerStateSnapshot.capture(ac);
             try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-            } catch (CDKException e) {
-                new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), NAMES, e);
-            }
-
-            if (lpeChecker) {
-                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-                try {
-                    lpcheck.saturate(ac);
-                } catch (CDKException e) {
-                    new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                            Double.NaN), NAMES, e);
+                DescriptorValue error = computeAndCacheCharges(ac);
+                if (error != null) {
+                    return error;
                 }
-            }
-
-            if (maxIterations != -1) pepe.setMaxGasteigerIters(maxIterations);
-            if (maxResonStruc != -1) pepe.setMaxResoStruc(maxResonStruc);
-
-            try {
-                peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
-                List<Double> peoeAtom = new ArrayList<>();
-                for (IAtom value : ac.atoms()) peoeAtom.add(value.getCharge());
-
-                for (IAtom iAtom : ac.atoms()) iAtom.setCharge(0.0);
-
-                pepe.assignGasteigerPiPartialCharges(ac, true);
-                for (int i = 0; i < ac.getAtomCount(); i++)
-                    cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(peoeAtom.get(i)
-                            + ac.getAtom(i).getCharge()));
-
-            } catch (Exception e) {
-                new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), NAMES, e);
+            } finally {
+                snapshot.restore();
             }
         }
-        // restore original props
-        atom.setCharge(originalCharge);
-        atom.setAtomTypeName(originalAtomtypeName);
-        atom.setFormalNeighbourCount(originalNeighborCount);
-        atom.setValency(originalValency);
-        atom.setHybridization(originalHybridization);
-        atom.setMaxBondOrder(originalMaxBondOrder);
-        atom.setBondOrderSum(originalBondOrderSum);
 
         return getCachedDescriptorValue(atom) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
                 getParameters(), getCachedDescriptorValue(atom), NAMES) : null;
+    }
+
+    private DescriptorValue computeAndCacheCharges(IAtomContainer ac) {
+        try {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(e);
+        }
+
+        if (lpeChecker) {
+            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            try {
+                lpcheck.saturate(ac);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
+        }
+
+        if (maxIterations != -1) pepe.setMaxGasteigerIters(maxIterations);
+        if (maxResonStruc != -1) pepe.setMaxResoStruc(maxResonStruc);
+
+        try {
+            peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
+            List<Double> peoeAtom = new ArrayList<>();
+            for (IAtom value : ac.atoms()) peoeAtom.add(value.getCharge());
+
+            for (IAtom iAtom : ac.atoms()) iAtom.setCharge(0.0);
+
+            pepe.assignGasteigerPiPartialCharges(ac, true);
+            for (int i = 0; i < ac.getAtomCount(); i++)
+                cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(peoeAtom.get(i)
+                        + ac.getAtom(i).getCharge()));
+
+        } catch (Exception e) {
+            return getDummyDescriptorValue(e);
+        }
+        return null;
     }
 
     /**
